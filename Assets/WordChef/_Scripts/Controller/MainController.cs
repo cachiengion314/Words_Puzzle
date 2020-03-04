@@ -37,7 +37,7 @@ public class MainController : BaseController {
         {
             Timer.Schedule(this, 0.5f, () =>
             {
-                DialogController.instance.ShowDialog(DialogType.HowtoPlay);
+                //DialogController.instance.ShowDialog(DialogType.HowtoPlay);
             });
         }
 
@@ -68,5 +68,12 @@ public class MainController : BaseController {
         {
             DialogController.instance.ShowDialog(DialogType.Pause);
         }
+    }
+
+    public void OpenChapterScene()
+    {
+        Debug.Log("jjsdasda");
+        CUtils.LoadScene(1, true);
+        Sound.instance.PlayButton();
     }
 }
