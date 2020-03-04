@@ -20,7 +20,11 @@ public enum DialogType
     RewardedVideo,
     RateGame,
     Shop2,
-	Objective
+	Objective,
+	Dictionary,
+	Bee,
+	Facebook,
+	Mail
 };
 
 public enum DialogShow

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour
 {
@@ -56,4 +57,15 @@ public class CanvasController : MonoBehaviour
     {
         //TweenControl.GetInstance().ScaleFromZero(_panelBottom.gameObject, 0.3f, null, EaseType.InOutQuad);
     }
+
+    public void OnPressedBtn(GameObject obj)
+    {
+        obj.transform.localScale = Vector3.one * 0.95f;
+    }
+
+    public void OnNormalBtn(GameObject obj)
+    {
+        obj.transform.localScale = Vector3.one;
+    }
+
 }
