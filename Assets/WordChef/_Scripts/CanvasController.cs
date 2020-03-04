@@ -25,7 +25,7 @@ public class CanvasController : MonoBehaviour
     private void Init()
     {
         _panelCenter.transform.localScale = Vector3.zero;
-        _panelBottom.transform.localScale = Vector3.zero;
+        //_panelBottom.transform.localScale = Vector3.zero;
     }
 
     void CanvasActive()
@@ -54,6 +54,6 @@ public class CanvasController : MonoBehaviour
 
     private void ShowPanelBottom()
     {
-        TweenControl.GetInstance().ScaleFromZero(_panelBottom.gameObject, 0.3f, null, EaseType.InOutQuad);
+        //TweenControl.GetInstance().ScaleFromZero(_panelBottom.gameObject, 0.3f, null, EaseType.InOutQuad);
     }
 }

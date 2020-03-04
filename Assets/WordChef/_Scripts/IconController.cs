@@ -18,13 +18,17 @@ public class IconController : MonoBehaviour
 
     private void AnimIcon()
     {
-        TweenControl.GetInstance().DelayCall(transform, _timeDelay, ()=> {
-            TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f, null);
+        TweenControl.GetInstance().DelayCall(transform, _timeDelay, () =>
+        {
+            TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f, null, EaseType.InOutBack);
             TweenControl.GetInstance().MoveRectY(transform as RectTransform, 50, _timeMove, () =>
             {
-                TweenControl.GetInstance().MoveRectY(transform as RectTransform, -10, _timeMove, () =>
+                TweenControl.GetInstance().MoveRectY(transform as RectTransform, -50, _timeMove, () =>
                 {
-                    TweenControl.GetInstance().MoveRectY(transform as RectTransform, 0, _timeMove, null, EaseType.InOutQuad);
+                    TweenControl.GetInstance().MoveRectY(transform as RectTransform, 20, _timeMove, () =>
+                    {
+                        TweenControl.GetInstance().MoveRectY(transform as RectTransform, 0, _timeMove, null, EaseType.Linear);
+                    });
                 });
             });
         });
