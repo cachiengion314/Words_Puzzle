@@ -24,7 +24,9 @@ public enum DialogType
 	Dictionary,
 	Bee,
 	Facebook,
-	Mail
+	Mail,
+	DailyGifts,
+	WeekenSale
 };
 
 public enum DialogShow
