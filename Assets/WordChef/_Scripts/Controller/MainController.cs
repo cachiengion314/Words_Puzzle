@@ -72,7 +72,7 @@ public class MainController : BaseController {
 
     public void OpenChapterScene()
     {
-        CUtils.LoadScene(1, true);
+        CUtils.LoadScene(1, false);
         Sound.instance.PlayButton();
     }
 }
