@@ -40,7 +40,6 @@ public class Dictionary : MonoBehaviour
 
     public void GetData()
     {
-        char[] s = { '[', ']' };
         var client = new WebClient();
         var text = client.DownloadString(url);
         JArray arrayJson = JArray.Parse(text);
@@ -61,7 +60,7 @@ public class Dictionary : MonoBehaviour
             textWordName.text = word.Key;
             foreach(WordData wordMean in  word.Value)
             {
-                textMean.text += wordMean.text + ", ";
+                textMean.text +="("+wordMean.partOfSpeech+") "+ wordMean.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
             }
         }
     }
