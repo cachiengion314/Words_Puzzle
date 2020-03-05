@@ -4,7 +4,8 @@ using UnityEngine;
 using System.Linq;
 using System.Text;
 
-public class WordRegion : MonoBehaviour {
+public class WordRegion : MonoBehaviour
+{
     public TextPreview textPreview;
     public Compliment compliment;
 
@@ -39,8 +40,8 @@ public class WordRegion : MonoBehaviour {
         numRow = (int)Mathf.Ceil(numWords / (float)numCol);
 
         int maxCellInWidth = 0;
-        
-        for(int i = numRow; i <= numWords;  i += numRow)
+
+        for (int i = numRow; i <= numWords; i += numRow)
         {
             maxCellInWidth += wordList[i - 1].Length;
         }
@@ -89,7 +90,7 @@ public class WordRegion : MonoBehaviour {
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress)
     {
         int lineIndex = 0;
-        
+
         foreach (var word in wordList)
         {
             LineWord line = Instantiate(MonoUtils.instance.lineWord);
@@ -106,10 +107,28 @@ public class WordRegion : MonoBehaviour {
             line.transform.SetParent(transform);
             line.transform.localScale = Vector3.one;
             line.transform.localPosition = Vector3.zero;
+            CPlayerPrefs.SetBool(line.name,false);
+            if (!line.isShown)
+                GetCellShowHint(line);
 
             lines.Add(line);
             lineIndex++;
         }
+    }
+
+    private void GetCellShowHint(LineWord line)
+    {
+        foreach (var cell in line.cells)
+        {
+            if (!line.usedBee)
+                cell.bg.color = new Color(1, 1, 1, 0.5f);
+        }
+    }
+
+    public bool IsUseBee()
+    {
+        var isUse = lines.Any(line => line.usedBee);
+        return isUse;
     }
 
     private void SetLinesPosition()
@@ -151,8 +170,8 @@ public class WordRegion : MonoBehaviour {
                 //}
                 //else
                 //{
-                    float gapY = cellSize + cellSize * Const.CELL_GAP_COEF_Y;
-                    y = gapY * (count - 1 - i) + (rt.rect.height - gapY * count + cellSize * Const.CELL_GAP_COEF_Y) / 2f;
+                float gapY = cellSize + cellSize * Const.CELL_GAP_COEF_Y;
+                y = gapY * (count - 1 - i) + (rt.rect.height - gapY * count + cellSize * Const.CELL_GAP_COEF_Y) / 2f;
                 //}
                 lines[i].transform.localPosition = new Vector2(x, y);
             }
@@ -172,7 +191,7 @@ public class WordRegion : MonoBehaviour {
 
                 compliment.Show(lineIndex);
                 lineIndex++;
-                if(lineIndex > 6) { lineIndex = 6; }             
+                if (lineIndex > 6) { lineIndex = 6; }
 
                 Sound.instance.Play(Sound.Others.Match);
             }
@@ -210,6 +229,26 @@ public class WordRegion : MonoBehaviour {
         }
     }
 
+    public void BeeClick()
+    {
+        int count = 0;
+
+        var lineNotShow = lines.FindAll(x => !x.isShown);
+        for (int i = 0; i < lineNotShow.Count; i++)
+        {
+            int index = i;
+            if (count < 5)
+            {
+                lineNotShow[index].ShowCellUseBee();
+                CheckGameComplete();
+                Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                count += 1;
+            }
+        }
+
+        Sound.instance.PlayButton();
+    }
+
     int hintLineIndex = -1;
     public void HintClick()
     {
@@ -220,7 +259,7 @@ public class WordRegion : MonoBehaviour {
             if (hintLineIndex + 1 >= lines.Count) hintLineIndex = -1;
             for (int i = hintLineIndex + 1; i < lines.Count; i++)
             {
-                if(!lines[i].isShown)
+                if (!lines[i].isShown)
                 {
                     line = lines[i];
                     hintLineIndex = i;
@@ -278,10 +317,10 @@ public class WordRegion : MonoBehaviour {
         if (!Prefs.IsLastLevel()) return;
 
         List<string> results = new List<string>();
-        foreach(var line in lines)
+        foreach (var line in lines)
         {
             StringBuilder sb = new StringBuilder();
-            foreach(var cell in line.cells)
+            foreach (var cell in line.cells)
             {
                 sb.Append(cell.isShown ? "1" : "0");
             }
@@ -331,7 +370,7 @@ public class WordRegion : MonoBehaviour {
         if (progress.Length == 0) return;
 
         int i = 0;
-        foreach(var line in lines)
+        foreach (var line in lines)
         {
             line.SetProgress(progress[i]);
             i++;

@@ -15,6 +15,8 @@ public class LineWord : MonoBehaviour
     //[HideInInspector]
     public bool isShown, RTL;
 
+    public bool usedBee;
+
     public void Build(bool RTL)
     {
         this.RTL = RTL;
@@ -105,6 +107,14 @@ public class LineWord : MonoBehaviour
         }
     }
 
+    private void ShowDoneAllCell()
+    {
+        foreach (var cell in cells)
+        {
+            cell.bg.color = new Color(1, 1, 1, 1);
+        }
+    }
+
     public void ShowHint()
     {
         if (!RTL)
@@ -118,6 +128,7 @@ public class LineWord : MonoBehaviour
                     if (i == cells.Count - 1)
                     {
                         isShown = true;
+                        ShowDoneAllCell();
                     }
                     return;
                 }
@@ -134,6 +145,7 @@ public class LineWord : MonoBehaviour
                     if (i == 0)
                     {
                         isShown = true;
+                        ShowDoneAllCell();
                     }
                     return;
                 }
@@ -151,8 +163,37 @@ public class LineWord : MonoBehaviour
         if (showDone)
         {
             isShown = true;
+            ShowDoneAllCell();
         }
 
+    }
+
+    public void ShowCellUseBee()
+    {
+        if (!CPlayerPrefs.GetBool(gameObject.name))
+        {
+            var cellNotShow = cells.FindAll(cell => !cell.isShown);
+            for (int i = 0; i < cellNotShow.Count; i++)
+            {
+                var cell = cellNotShow[i];
+                if (i == 0)
+                {
+                    cell.ShowTextBee();
+                }
+                else
+                {
+                    TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
+                }
+            }
+            var showDone = cells.All(cell => cell.isShown);
+            if (showDone)
+            {
+                isShown = true;
+                ShowDoneAllCell();
+            }
+            usedBee = true;
+            CPlayerPrefs.SetBool(gameObject.name, usedBee);
+        }
     }
 
     private Cell GetRandomCell(List<Cell> cells)
