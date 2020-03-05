@@ -25,7 +25,8 @@ public class CanvasController : MonoBehaviour
 
     private void Init()
     {
-        _panelCenter.transform.localScale = Vector3.zero;
+        if (_panelCenter != null)
+            _panelCenter.transform.localScale = Vector3.zero;
         //_panelBottom.transform.localScale = Vector3.zero;
     }
 
@@ -44,13 +45,17 @@ public class CanvasController : MonoBehaviour
 
     private void ShowPanelTop()
     {
-        TweenControl.GetInstance().MoveRect(_panelTop as RectTransform, Vector3.zero, 0.5f, null, EaseType.OutBack);
+        if (_panelTop != null)
+            TweenControl.GetInstance().MoveRect(_panelTop as RectTransform, Vector3.zero, 0.5f, null, EaseType.OutBack);
     }
 
     private void ShowPanelCenter()
     {
-        TweenControl.GetInstance().ScaleFromZero(_panelCenter.gameObject, 0.5f, null, EaseType.InOutQuad);
-        TweenControl.GetInstance().MoveRect(_panelCenter as RectTransform, Vector3.zero, 0.5f, null, EaseType.OutBack);
+        if (_panelCenter != null)
+        {
+            TweenControl.GetInstance().ScaleFromZero(_panelCenter.gameObject, 0.5f, null, EaseType.InOutQuad);
+            TweenControl.GetInstance().MoveRect(_panelCenter as RectTransform, Vector3.zero, 0.5f, null, EaseType.OutBack);
+        }
     }
 
     private void ShowPanelBottom()

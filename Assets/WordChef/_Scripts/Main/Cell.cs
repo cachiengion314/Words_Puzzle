@@ -44,12 +44,14 @@ public class Cell : MonoBehaviour
         isShown = true;
         originLetterScale = letterText.transform.localScale;
         ShowText();
+        bg.color = new Color(1, 1, 1, 0.5f);
         OnMoveToComplete();
     }
 
     public void ShowText()
     {
         letterText.text = letter;
+        bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);
     }
 }

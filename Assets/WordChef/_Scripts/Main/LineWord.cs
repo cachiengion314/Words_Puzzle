@@ -105,6 +105,14 @@ public class LineWord : MonoBehaviour
         }
     }
 
+    private void ShowDoneAllCell()
+    {
+        foreach (var cell in cells)
+        {
+            cell.bg.color = new Color(1, 1, 1, 1);
+        }
+    }
+
     public void ShowHint()
     {
         if (!RTL)
@@ -118,6 +126,7 @@ public class LineWord : MonoBehaviour
                     if (i == cells.Count - 1)
                     {
                         isShown = true;
+                        ShowDoneAllCell();
                     }
                     return;
                 }
@@ -134,6 +143,7 @@ public class LineWord : MonoBehaviour
                     if (i == 0)
                     {
                         isShown = true;
+                        ShowDoneAllCell();
                     }
                     return;
                 }
@@ -151,6 +161,7 @@ public class LineWord : MonoBehaviour
         if (showDone)
         {
             isShown = true;
+            ShowDoneAllCell();
         }
 
     }

@@ -32,6 +32,7 @@ public class MainController : BaseController {
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
         WordRegion.instance.Load(gameLevel);
+        BeeManager.instance.Load(CPlayerPrefs.GetInt("amount_bee",0));
 
         if (world == 0 && subWorld == 0 && level == 0)
         {
