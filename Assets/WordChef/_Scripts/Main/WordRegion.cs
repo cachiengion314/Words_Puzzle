@@ -107,7 +107,7 @@ public class WordRegion : MonoBehaviour
             line.transform.SetParent(transform);
             line.transform.localScale = Vector3.one;
             line.transform.localPosition = Vector3.zero;
-
+            CPlayerPrefs.SetBool(line.name,false);
             if (!line.isShown)
                 GetCellShowHint(line);
 
@@ -120,8 +120,15 @@ public class WordRegion : MonoBehaviour
     {
         foreach (var cell in line.cells)
         {
-            cell.bg.color = new Color(1, 1, 1, 0.5f);
+            if (!line.usedBee)
+                cell.bg.color = new Color(1, 1, 1, 0.5f);
         }
+    }
+
+    public bool IsUseBee()
+    {
+        var isUse = lines.Any(line => line.usedBee);
+        return isUse;
     }
 
     private void SetLinesPosition()
@@ -220,6 +227,26 @@ public class WordRegion : MonoBehaviour
                 compliment.ShowRandom();
             }
         }
+    }
+
+    public void BeeClick()
+    {
+        int count = 0;
+
+        var lineNotShow = lines.FindAll(x => !x.isShown);
+        for (int i = 0; i < lineNotShow.Count; i++)
+        {
+            int index = i;
+            if (count < 5)
+            {
+                lineNotShow[index].ShowCellUseBee();
+                CheckGameComplete();
+                Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                count += 1;
+            }
+        }
+
+        Sound.instance.PlayButton();
     }
 
     int hintLineIndex = -1;

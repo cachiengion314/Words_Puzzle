@@ -23,8 +23,18 @@ public class BeeController : MonoBehaviour
 
     public void OnBeeButtonClick()
     {
-        BeeManager.instance.SetAmountBee(-1);
-        UpdateAmountBee();
+        if (BeeManager.instance.CurrBee > 3)
+        {
+            if (WordRegion.instance.IsUseBee())
+                return;
+            BeeManager.instance.SetAmountBee(-4);
+            UpdateAmountBee();
+            WordRegion.instance.BeeClick();
+        }
+        else
+        {
+            DialogController.instance.ShowDialog(DialogType.Bee);
+        }
     }
 
     #region TEST BEE

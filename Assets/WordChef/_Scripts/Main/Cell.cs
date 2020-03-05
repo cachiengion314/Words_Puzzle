@@ -11,7 +11,6 @@ public class Cell : MonoBehaviour
     public Image iconCoin;
     public string letter;
     public bool isShown;
-    public bool isShownHint;
 
     private Vector3 originLetterScale;
 
@@ -44,10 +43,17 @@ public class Cell : MonoBehaviour
     public void ShowHint()
     {
         isShown = true;
-        isShownHint = true;
         originLetterScale = letterText.transform.localScale;
         ShowText();
         bg.color = new Color(1, 1, 1, 0.5f);
+        OnMoveToComplete();
+    }
+
+    public void ShowTextBee()
+    {
+        isShown = true;
+        originLetterScale = letterText.transform.localScale;
+        ShowText();
         OnMoveToComplete();
     }
 

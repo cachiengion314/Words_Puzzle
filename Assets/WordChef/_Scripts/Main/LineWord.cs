@@ -15,6 +15,8 @@ public class LineWord : MonoBehaviour
     //[HideInInspector]
     public bool isShown, RTL;
 
+    public bool usedBee;
+
     public void Build(bool RTL)
     {
         this.RTL = RTL;
@@ -164,6 +166,34 @@ public class LineWord : MonoBehaviour
             ShowDoneAllCell();
         }
 
+    }
+
+    public void ShowCellUseBee()
+    {
+        if (!CPlayerPrefs.GetBool(gameObject.name))
+        {
+            var cellNotShow = cells.FindAll(cell => !cell.isShown);
+            for (int i = 0; i < cellNotShow.Count; i++)
+            {
+                var cell = cellNotShow[i];
+                if (i == 0)
+                {
+                    cell.ShowTextBee();
+                }
+                else
+                {
+                    TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
+                }
+            }
+            var showDone = cells.All(cell => cell.isShown);
+            if (showDone)
+            {
+                isShown = true;
+                ShowDoneAllCell();
+            }
+            usedBee = true;
+            CPlayerPrefs.SetBool(gameObject.name, usedBee);
+        }
     }
 
     private Cell GetRandomCell(List<Cell> cells)
