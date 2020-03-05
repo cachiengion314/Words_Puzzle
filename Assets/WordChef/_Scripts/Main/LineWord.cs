@@ -58,6 +58,7 @@ public class LineWord : MonoBehaviour
         int i = 0;
         foreach (var cell in cells)
         {
+            Debug.Log(progress[i].ToString());
             if (progress[i] == '1')
             {
                 cell.isShown = true;
