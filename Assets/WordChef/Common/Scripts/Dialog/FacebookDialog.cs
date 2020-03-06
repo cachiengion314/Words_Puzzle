@@ -86,12 +86,12 @@ public class FacebookDialog : Dialog
             // AccessToken class will have session details
             var aToken = AccessToken.CurrentAccessToken;
             // Print current access token's User ID
-            FB.API("/me?fields=id,first_name", HttpMethod.GET, ShowInfoUser);
             // Print current access token's granted permissions
             foreach (string perm in aToken.Permissions)
             {
                 Debug.Log(perm);
             }
+            FB.API("/me?fields=id,first_name", HttpMethod.GET, ShowInfoUser);
         }
         else
         {
@@ -109,8 +109,7 @@ public class FacebookDialog : Dialog
         }
         else
         {
-            FB.API("/me?fields=id,first_name", HttpMethod.GET, ShowInfoUser);
-            return;
+            Debug.Log("Error GetInfo !");
         }
     }
     #endregion
