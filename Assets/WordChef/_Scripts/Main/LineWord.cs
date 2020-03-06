@@ -25,6 +25,7 @@ public class LineWord : MonoBehaviour
 
         for (int i = 0; i < numLetters; i++)
         {
+            int index = i;
             Cell cell = Instantiate(MonoUtils.instance.cell);
             cell.letter = answer[i].ToString();
             //cell.letterText.transform.localScale = Vector3.one * (cellSize / 80f);
@@ -42,6 +43,8 @@ public class LineWord : MonoBehaviour
             float y = cellSize / 2;
 
             cellTransform.localPosition = new Vector3(x, y);
+            cell.name = cell.name + index + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
+            cell.isBee = CPlayerPrefs.GetBool(cell.name);
             cells.Add(cell);
         }
     }

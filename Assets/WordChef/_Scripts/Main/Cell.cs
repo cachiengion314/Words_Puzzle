@@ -11,6 +11,7 @@ public class Cell : MonoBehaviour
     public Image iconCoin;
     public string letter;
     public bool isShown;
+    public bool isBee;
 
     private Vector3 originLetterScale;
 
@@ -46,14 +47,18 @@ public class Cell : MonoBehaviour
         originLetterScale = letterText.transform.localScale;
         ShowText();
         bg.color = new Color(1, 1, 1, 0.5f);
+        iconCoin.transform.localScale = Vector3.zero;
         OnMoveToComplete();
     }
 
     public void ShowTextBee()
     {
         isShown = true;
+        isBee = true;
+        CPlayerPrefs.SetBool(gameObject.name, isBee);
         originLetterScale = letterText.transform.localScale;
         ShowText();
+        bg.color = new Color(1, 1, 1, 0.5f);
         OnMoveToComplete();
     }
 
