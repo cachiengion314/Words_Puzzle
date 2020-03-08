@@ -16,56 +16,18 @@ public class FacebookDialog : Dialog
     [SerializeField] private Button _btnFbLogout;
     [SerializeField] private TextMeshProUGUI _txtNameUser;
 
-    void Awake()
+    void Start()
     {
-        InitFB();
+        InitUserFB();
+    }
+
+    private void InitUserFB()
+    {
+        _userName = FacebookController.instance.currUserName;
+        CheckLogin();
     }
 
     #region Login Facebook
-    private void InitFB()
-    {
-        if (!FB.IsInitialized)
-        {
-            // Initialize the Facebook SDK
-            FB.Init(InitCallback, OnHideUnity);
-        }
-        else
-        {
-            // Already initialized, signal an app activation App Event
-            FB.ActivateApp();
-            CheckLogin();
-
-        }
-    }
-    private void InitCallback()
-    {
-        if (FB.IsInitialized)
-        {
-            // Signal an app activation App Event
-            FB.ActivateApp();
-            // Continue with Facebook SDK
-            // ...
-            CheckLogin();
-        }
-        else
-        {
-            Debug.Log("Failed to Initialize the Facebook SDK");
-        }
-    }
-
-    private void OnHideUnity(bool isGameShown)
-    {
-        if (!isGameShown)
-        {
-            // Pause the game - we will need to hide
-            Time.timeScale = 0;
-        }
-        else
-        {
-            // Resume the game - we're getting focus again
-            Time.timeScale = 1;
-        }
-    }
 
     public void Logout()
     {
@@ -77,6 +39,13 @@ public class FacebookDialog : Dialog
     {
         var perms = new List<string>() { "public_profile", "email" };
         FB.LogInWithReadPermissions(perms, AuthCallback);
+    }
+
+    public void InviteFriends()
+    {
+        FB.AppRequest("Play with me !", null, null, null, null, null, "Word Puzzle", (result) => {
+            
+        });
     }
 
     void AuthCallback(ILoginResult result)
@@ -91,7 +60,7 @@ public class FacebookDialog : Dialog
             {
                 Debug.Log(perm);
             }
-            FB.API("/me?fields=id,first_name", HttpMethod.GET, ShowInfoUser);
+            FB.API("/me?fields=first_name", HttpMethod.GET, ShowInfoUser);
         }
         else
         {
@@ -101,11 +70,12 @@ public class FacebookDialog : Dialog
 
     void ShowInfoUser(IGraphResult result)
     {
-        CheckLogin();
         if (result.Error == null)
         {
             _userName = "" + result.ResultDictionary["first_name"];
+            CPlayerPrefs.SetString("user_name", _userName);
             ShowTextNameUser();
+            ShowBtnLogin(false);
         }
         else
         {
@@ -129,13 +99,12 @@ public class FacebookDialog : Dialog
     {
         if (FB.IsLoggedIn)
         {
-            FB.API("/me?fields=first_name", HttpMethod.GET, ShowInfoUser);
             ShowBtnLogin(false);
         }
         else
         {
-            _txtNameUser.text = "GUEST";
             ShowBtnLogin(true);
         }
+        ShowTextNameUser();
     }
 }

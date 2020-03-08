@@ -17,6 +17,7 @@ public class Cell : MonoBehaviour
 
     public void Animate()
     {
+        iconCoin.transform.localScale = Vector3.zero;
         Vector3 beginPosition = TextPreview.instance.transform.position;
         originLetterScale = letterText.transform.localScale;
         Vector3 middlePoint = CUtils.GetMiddlePoint(beginPosition, transform.position, -0.3f);

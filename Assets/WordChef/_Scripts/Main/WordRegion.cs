@@ -239,15 +239,16 @@ public class WordRegion : MonoBehaviour
         var lineNotShow = lines.FindAll(x => !x.isShown);
         foreach (var line in lineNotShow)
         {
-            if (count < 5)
+            if (count < 5 && line.cells.Count > 3)
             {
                 line.ShowCellUseBee();
+                BeeManager.instance.SetAmountBee(-1);
                 CheckGameComplete();
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                 count += 1;
             }
         }
-
+        
         Sound.instance.PlayButton();
     }
 
