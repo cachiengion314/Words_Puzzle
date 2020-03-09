@@ -16,6 +16,8 @@ public class DictionaryDialog : Dialog
     public string limit;
     public Text textWordName;
     public Text textMean;
+    public GameObject buttonClone;
+    public Transform groupWord;
 
     //string wordValid;
     string sourceDictionaries;
@@ -102,7 +104,14 @@ public class DictionaryDialog : Dialog
         }
     }
 
-
+    public void CloneButtonWord()
+    {
+        int numGroupWord;
+        if (listWordPassed.Length < 3)
+        {
+            
+        }
+    }
 
 }
 

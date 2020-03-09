@@ -43,8 +43,9 @@ public class FacebookDialog : Dialog
 
     public void InviteFriends()
     {
-        FB.AppRequest("Play with me !", null, null, null, null, null, "Word Puzzle", (result) => {
-            
+        FB.AppRequest("Play with me !", null, null, null, null, null, "Word Puzzle", (result) =>
+        {
+
         });
     }
 
