@@ -10,6 +10,7 @@ public class FacebookController : MonoBehaviour
     [HideInInspector] public string currUserName;
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (instance == null)
             instance = this;
         InitFB();
