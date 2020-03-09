@@ -497,6 +497,7 @@ public class CUtils
 
     public static void LoadScene(int sceneIndex, bool useScreenFader = false)
     {
+        BlockScreen.instance.Block(true);
         if (useScreenFader)
         {
             ScreenFader.instance.GotoScene(sceneIndex);

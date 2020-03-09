@@ -8,9 +8,7 @@ using UnityEngine.UI;
 
 public class FacebookDialog : Dialog
 {
-    private string _userID;
-    private string _userName;
-    private string _userEmail;
+    User _user;
 
     [SerializeField] private Button _btnFbLogin;
     [SerializeField] private Button _btnFbLogout;
@@ -23,8 +21,16 @@ public class FacebookDialog : Dialog
 
     private void InitUserFB()
     {
-        _userName = FacebookController.instance.currUserName;
+        _user = FacebookController.instance.user;
         CheckLogin();
+    }
+
+    private void ClearUser()
+    {
+        FacebookController.instance.user.id = "";
+        FacebookController.instance.user.name = "GUEST";
+        FacebookController.instance.user.email = "";
+        _user = FacebookController.instance.user;
     }
 
     #region Login Facebook
@@ -32,6 +38,7 @@ public class FacebookDialog : Dialog
     public void Logout()
     {
         FB.LogOut();
+        ClearUser();
         CheckLogin();
     }
 
@@ -61,7 +68,7 @@ public class FacebookDialog : Dialog
             {
                 Debug.Log(perm);
             }
-            FB.API("/me?fields=first_name", HttpMethod.GET, ShowInfoUser);
+            FB.API("/me?fields=id,first_name,email", HttpMethod.GET, ShowInfoUser);
         }
         else
         {
@@ -73,8 +80,11 @@ public class FacebookDialog : Dialog
     {
         if (result.Error == null)
         {
-            _userName = "" + result.ResultDictionary["first_name"];
-            CPlayerPrefs.SetString("user_name", _userName);
+            _user.id = "" + result.ResultDictionary["id"];
+            _user.name = "" + result.ResultDictionary["first_name"];
+            _user.email = "" + result.ResultDictionary["email"];
+            FacebookController.instance.user = _user;
+            CPlayerPrefs.SetString("user", JsonUtility.ToJson(_user));
             ShowTextNameUser();
             ShowBtnLogin(false);
         }
@@ -87,7 +97,9 @@ public class FacebookDialog : Dialog
 
     private void ShowTextNameUser()
     {
-        _txtNameUser.text = _userName;
+        _txtNameUser.text = _user.name;
+        Debug.Log("Id: "+_user.id);
+        Debug.Log("Email: "+_user.email);
     }
 
     private void ShowBtnLogin(bool isLogin)
