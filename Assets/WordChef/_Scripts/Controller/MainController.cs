@@ -28,6 +28,7 @@ public class MainController : BaseController {
         world = GameState.currentWorld;
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
+        Debug.Log(world + ", " + subWorld + ", " + level);
 
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
