@@ -83,8 +83,13 @@ public class FacebookDialog : Dialog
             _user.id = "" + result.ResultDictionary["id"];
             _user.name = "" + result.ResultDictionary["first_name"];
             _user.email = "" + result.ResultDictionary["email"];
+            _user.unlockedLevel = Prefs.unlockedLevel.ToString();
+            _user.unlockedWorld = Prefs.unlockedWorld.ToString();
+            _user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+            _user.levelProgress = Prefs.levelProgress;
             FacebookController.instance.user = _user;
-            CPlayerPrefs.SetString("user", JsonUtility.ToJson(_user));
+            var jsonData = JsonUtility.ToJson(_user);
+            CPlayerPrefs.SetString("user", jsonData);
             ShowTextNameUser();
             ShowBtnLogin(false);
         }
@@ -98,8 +103,6 @@ public class FacebookDialog : Dialog
     private void ShowTextNameUser()
     {
         _txtNameUser.text = _user.name;
-        Debug.Log("Id: "+_user.id);
-        Debug.Log("Email: "+_user.email);
     }
 
     private void ShowBtnLogin(bool isLogin)

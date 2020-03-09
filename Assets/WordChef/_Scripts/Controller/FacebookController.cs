@@ -80,6 +80,10 @@ public class FacebookController : MonoBehaviour
         us.id = jsonData.id;
         us.name = jsonData.name;
         us.email = jsonData.email;
+        us.unlockedSubWorld = jsonData.unlockedSubWorld;
+        us.unlockedLevel = jsonData.unlockedLevel;
+        us.unlockedWorld = jsonData.unlockedWorld;
+        us.levelProgress = jsonData.levelProgress;
         return us;
     }
 }
@@ -90,4 +94,9 @@ public struct User
     public string id;
     public string name;
     public string email;
+
+    public string unlockedWorld;
+    public string unlockedSubWorld;
+    public string unlockedLevel;
+    public string[] levelProgress;
 }
