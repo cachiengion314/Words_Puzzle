@@ -7,7 +7,7 @@ public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
 
-    [HideInInspector] public string currUserName;
+    public User user;
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -63,22 +63,31 @@ public class FacebookController : MonoBehaviour
     {
         if (FB.IsLoggedIn)
         {
-            currUserName = CPlayerPrefs.GetString("user_name", GetUserInfo());
+            user = UserData();
         }
         else
         {
-            currUserName = "GUEST";
+            user.id = "";
+            user.name = "GUEST";
+            user.email = "";
         }
     }
 
-    private string GetUserInfo()
+    private User UserData()
     {
-        var username = "";
-        var aToken = AccessToken.CurrentAccessToken;
-        FB.API("/me?fields=first_name", HttpMethod.GET, (result) =>
-        {
-            username = "" + result.ResultDictionary["first_name"];
-        });
-        return username;
+        User us = new User();
+        var jsonData = JsonUtility.FromJson<User>(CPlayerPrefs.GetString("user"));
+        us.id = jsonData.id;
+        us.name = jsonData.name;
+        us.email = jsonData.email;
+        return us;
     }
+}
+
+[System.Serializable]
+public struct User
+{
+    public string id;
+    public string name;
+    public string email;
 }
