@@ -43,7 +43,7 @@ public class ScreenFader : MonoBehaviour
     {
         FadeOut(() =>
         {
-            CUtils.LoadScene(sceneIndex);
+            SceneManager.LoadScene(sceneIndex);
         });
     }
 

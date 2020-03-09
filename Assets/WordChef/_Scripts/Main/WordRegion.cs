@@ -98,6 +98,7 @@ public class WordRegion : MonoBehaviour
             line.cellSize = cellSize;
             line.SetLineWidth();
             line.Build(ConfigController.Config.isWordRightToLeft);
+            line.name = line.name + lineIndex + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
 
             if (useProgress)
             {
@@ -107,7 +108,7 @@ public class WordRegion : MonoBehaviour
             line.transform.SetParent(transform);
             line.transform.localScale = Vector3.one;
             line.transform.localPosition = Vector3.zero;
-            CPlayerPrefs.SetBool(line.name,false);
+            line.usedBee = CPlayerPrefs.GetBool(line.name);
             if (!line.isShown)
                 GetCellShowHint(line);
 
@@ -120,8 +121,10 @@ public class WordRegion : MonoBehaviour
     {
         foreach (var cell in line.cells)
         {
-            if (!line.usedBee)
-                cell.bg.color = new Color(1, 1, 1, 0.5f);
+            //if (!cell.isBee)
+            cell.bg.color = new Color(1, 1, 1, 0.5f);
+            if (line.usedBee && !cell.isShown)
+                cell.iconCoin.transform.localScale = Vector3.one;
         }
     }
 
@@ -234,18 +237,18 @@ public class WordRegion : MonoBehaviour
         int count = 0;
 
         var lineNotShow = lines.FindAll(x => !x.isShown);
-        for (int i = 0; i < lineNotShow.Count; i++)
+        foreach (var line in lineNotShow)
         {
-            int index = i;
-            if (count < 5)
+            if (count < 5 && line.cells.Count > 3)
             {
-                lineNotShow[index].ShowCellUseBee();
+                line.ShowCellUseBee();
+                BeeManager.instance.SetAmountBee(-1);
                 CheckGameComplete();
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                 count += 1;
             }
         }
-
+        
         Sound.instance.PlayButton();
     }
 

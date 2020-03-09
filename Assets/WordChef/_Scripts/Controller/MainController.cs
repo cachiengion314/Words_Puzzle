@@ -44,7 +44,7 @@ public class MainController : BaseController {
         }
 
         //GameState.currentSubWorldName
-        levelNameText.text = "CHAP " + (level + 1);
+        levelNameText.text = "LEVEL " + (level + 1);
     }
 
     public void OnComplete()

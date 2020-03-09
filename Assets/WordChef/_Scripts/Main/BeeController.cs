@@ -27,9 +27,8 @@ public class BeeController : MonoBehaviour
         {
             if (WordRegion.instance.IsUseBee())
                 return;
-            BeeManager.instance.SetAmountBee(-4);
-            UpdateAmountBee();
             WordRegion.instance.BeeClick();
+            UpdateAmountBee();
         }
         else
         {
