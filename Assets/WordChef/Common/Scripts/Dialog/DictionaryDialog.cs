@@ -41,7 +41,11 @@ public class DictionaryDialog : Dialog
     protected void Start()
     {
         base.Start();
-        GetWordPassed();
+        //TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+        //{
+                    GetWordPassed();
+
+        //})
         if(listWordPassed!=null)
             CloneGroupWord();
     }
@@ -50,29 +54,54 @@ public class DictionaryDialog : Dialog
 
     public void GetWordPassed()
     {
-
-        passWorld = Prefs.unlockedWorld - 1 < 0 ? 0: Prefs.unlockedWorld-1 ;
-        passSubWorld = Prefs.unlockedSubWorld-1 < 0? 0 : Prefs.unlockedSubWorld - 1;
+        passWorld = Prefs.unlockedWorld - 1 < 0 ? 0: Prefs.unlockedWorld;
+        passSubWorld = Prefs.unlockedSubWorld-1 < 0? 0 : Prefs.unlockedSubWorld;
         passLevel = Prefs.unlockedLevel-1;
+
+
+        //Debug.Log(CPlayerPrefs.GetInt(PrefKeys.CURRENT_LEVEL, 1));
         Debug.Log(passWorld.ToString() + passSubWorld.ToString() + passLevel.ToString());
-        Debug.Log(Prefs.unlockedWorld.ToString() + Prefs.unlockedWorld.ToString() + Prefs.unlockedLevel.ToString());
+       
+        Debug.Log(GameState.unlockedWorld.ToString() + GameState.unlockedWorld.ToString() + GameState.unlockedLevel.ToString());
 
-
-        if (passLevel >=0)
+        if (passWorld == 0 && passSubWorld == 0&& passLevel <0)
         {
-            for(int i=0; i<=passWorld; i++)
+            wordPassed = null;
+        }
+        else 
+        {
+            for(int i=passWorld; i>=0; i--)
             {
-                for(int j=0; j<= passSubWorld; j++)
+                for (int j = passSubWorld; j>=0; j--)
                 {
-                    for(int k=0; k<=passLevel; k++)
+
+                    for (int k = passLevel; k >=0; k--)
                     {
                         gameLevel = Utils.Load(i, j, k);
                         wordPassed += gameLevel.answers;
                     }
+                    passLevel += 7;
                 }
+                passSubWorld += 7;
             }
         }
-        Debug.Log(wordPassed);
+        //if (passLevel >=0)
+        //{
+            //for(int i=0; i<=passWorld; i++)
+            //{
+            //    for(int j=0; j<= passSubWorld; j++)
+            //    {
+
+            //        for (int k = 0; k <= passLevel; k++)
+            //        {
+            //            gameLevel = Utils.Load(i, j, k);
+            //            wordPassed += gameLevel.answers;
+            //        }
+
+            //    }
+            //}
+        //}
+        //Debug.Log(wordPassed);
         if (wordPassed!=null)
             listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
     }
@@ -145,7 +174,7 @@ public class DictionaryDialog : Dialog
                 numGroupWord= (int)( listWordPassed.Count / 3+1);
             }
         }
-        Debug.Log("numGroupWord: " + numGroupWord);
+        //Debug.Log("numGroupWord: " + numGroupWord);
         for (int i=0; i<numGroupWord; i++)
         {
             GameObject groupWordClone;
@@ -166,7 +195,7 @@ public class DictionaryDialog : Dialog
                 buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
                 buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
                 listWordPassed.RemoveAt(0);
-                Debug.Log("listWordPassed.Count: " + listWordPassed.Count);
+                //Debug.Log("listWordPassed.Count: " + listWordPassed.Count);
                 if (listWordPassed.Count <2)
                 {
                     CloneButtonWord(groupWord, ref listWordPassed);
@@ -178,7 +207,6 @@ public class DictionaryDialog : Dialog
         {
             for (int j = 0; j < listWordPassed.Count-1; j++)
             {
-                Debug.Log("yesssss");
                 buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
                 buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
                 listWordPassed.RemoveAt(0);

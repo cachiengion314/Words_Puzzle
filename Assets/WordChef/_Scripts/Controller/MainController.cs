@@ -29,6 +29,8 @@ public class MainController : BaseController {
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
         Debug.Log(world + ", " + subWorld + ", " + level);
+        //save level pass;
+
 
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
