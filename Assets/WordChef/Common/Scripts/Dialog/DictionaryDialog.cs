@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Linq;
+using TMPro;
 
 
 public class DictionaryDialog : Dialog
@@ -15,12 +16,13 @@ public class DictionaryDialog : Dialog
     public bool useCanonical;
     public bool includeTags;
     public string limit;
-    public Text textWordName;
-    public Text textMean;
+
     public GameObject buttonWord;
     public GameObject groupWord;
+    public GameObject listGroupWord;
     public Transform content;
-    public static Dictionary<string, List<WordData>> wordsDict = new Dictionary<string, List<WordData>>();
+
+    
 
 
     //string wordValid;
@@ -28,82 +30,85 @@ public class DictionaryDialog : Dialog
     string sourceDictionaries;
     string keyApi;
     string url;
-    List<WordData> listMeanWord = new List<WordData>();
+    //List<WordData> listMeanWord = new List<WordData>();
     WordData wordData;
-    
-    
+    Dictionary<string, string> wordDiction =new Dictionary<string, string>();
+    Dictionary<string, List<string>> groupWordDiction=new Dictionary<string, List<string>>();
+    Dictionary<string, List<string>> dataGroupWordDiction= new Dictionary<string, List<string>>();
+    char[] keys;
+    List<string> defaultValue = new List<string>();
     private int passWorld, passSubWorld, passLevel;
     private GameLevel gameLevel;
     List<string> listWordPassed;
-    string wordPassed;
+
+    [HideInInspector]
+    public static string wordPassed;
     
 
     protected void Start()
     {
+   
         base.Start();
-        //TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
-        //{
-                    GetWordPassed();
-
-        //})
-        if(listWordPassed!=null)
-            CloneGroupWord();
+        keys = "ABCDFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        foreach (char key in keys)
+        {
+            groupWordDiction.Add(key.ToString(), defaultValue);
+        }
+        GetWordPassed();
+        if (listWordPassed != null)
+            CloneListGroupWord();
+            //CloneGroupWord();
     }
 
 
 
     public void GetWordPassed()
     {
-        passWorld = Prefs.unlockedWorld - 1 < 0 ? 0: Prefs.unlockedWorld;
-        passSubWorld = Prefs.unlockedSubWorld-1 < 0? 0 : Prefs.unlockedSubWorld;
-        passLevel = Prefs.unlockedLevel-1;
-
-
-        //Debug.Log(CPlayerPrefs.GetInt(PrefKeys.CURRENT_LEVEL, 1));
-        Debug.Log(passWorld.ToString() + passSubWorld.ToString() + passLevel.ToString());
-       
-        Debug.Log(GameState.unlockedWorld.ToString() + GameState.unlockedWorld.ToString() + GameState.unlockedLevel.ToString());
-
-        if (passWorld == 0 && passSubWorld == 0&& passLevel <0)
+        wordPassed = CPlayerPrefs.GetString("WordLevelSave");
+        Debug.Log(wordPassed);
+        if (wordPassed != null)
         {
-            wordPassed = null;
-        }
-        else 
-        {
-            for(int i=passWorld; i>=0; i--)
+            listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
+            listWordPassed.Sort();
+            listWordPassed.RemoveAt(0);
+            //char[] testString = listWordPassed[0].ToCharArray();
+            foreach(string word in listWordPassed)
             {
-                for (int j = passSubWorld; j>=0; j--)
-                {
-
-                    for (int k = passLevel; k >=0; k--)
-                    {
-                        gameLevel = Utils.Load(i, j, k);
-                        wordPassed += gameLevel.answers;
-                    }
-                    passLevel += 7;
-                }
-                passSubWorld += 7;
+                char[] charWord = word.ToCharArray();
+                wordDiction.Add(word, char.ToUpper(charWord[0]).ToString());
             }
-        }
-        //if (passLevel >=0)
-        //{
-            //for(int i=0; i<=passWorld; i++)
+       
+             dataGroupWordDiction= wordDiction.GroupBy(r => r.Value).ToDictionary(t =>t.Key, t => t.Select(r => r.Key).ToList());
+
+            //foreach (var data in dataGroupWordDiction)
             //{
-            //    for(int j=0; j<= passSubWorld; j++)
+            //    foreach(var word in data.Value)
             //    {
-
-            //        for (int k = 0; k <= passLevel; k++)
-            //        {
-            //            gameLevel = Utils.Load(i, j, k);
-            //            wordPassed += gameLevel.answers;
-            //        }
-
+            //        Debug.Log(data.Key + ": "+word);
             //    }
             //}
-        //}
-        //Debug.Log(wordPassed);
-        if (wordPassed!=null)
-            listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
+
+            foreach (KeyValuePair<string, List<string>> item in groupWordDiction)
+            {
+                //Debug.Log(item.Value.Count);
+                //Debug.Log(item.Key);
+                if (dataGroupWordDiction.ContainsKey(item.Key))
+                {
+                    //Debug.Log(item.Key);
+                    groupWordDiction[item.Key].AddRange(dataGroupWordDiction[item.Key]);
+                    foreach (string word in item.Value)
+                    {
+                        Debug.Log(item.Key+": " + word);
+                    }
+                }
+
+            }
+       
+
+        }
+
+
+
     }
 
     public void GetDataFromApi(string word)
@@ -131,8 +136,6 @@ public class DictionaryDialog : Dialog
             meaning += "(" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
         }
 
-        //if(!wordsDict.ContainsKey(word))
-        //    wordsDict.Add(word, listMeanWord);
         Debug.Log(word);
         MeanDialog.wordName = word;
         MeanDialog.wordMean = meaning.ToString();
@@ -141,77 +144,82 @@ public class DictionaryDialog : Dialog
 
     }
 
-    public void ShowWordData()
-    {
-        //GetDataFromApi();
-        //foreach (KeyValuePair<string, List<WordData>> word in wordsDict)
-        //{
-        //    textWordName.text = word.Key;
-        //    foreach (WordData wordMean in word.Value)
-        //    {
-        //        textMean.text += "(" + wordMean.partOfSpeech + ") " + wordMean.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
-        //    }
-        //}
-        
-    }
 
-    public void CloneGroupWord()
-    {
-        int numGroupWord;
-        int numWord = listWordPassed!=null?listWordPassed.Count:0;
-        if ( listWordPassed.Count < 3)
-        {
-            numGroupWord = 1;
-        }
-        else
-        {
-            if ( listWordPassed.Count % 3 == 0)
-            {
-                numGroupWord = (int)( listWordPassed.Count / 3);
-            }
-            else
-            {
-                numGroupWord= (int)( listWordPassed.Count / 3+1);
-            }
-        }
-        //Debug.Log("numGroupWord: " + numGroupWord);
-        for (int i=0; i<numGroupWord; i++)
-        {
-            GameObject groupWordClone;
-            groupWordClone = GameObject.Instantiate(groupWord,content.transform);
-            CloneButtonWord(groupWordClone, ref listWordPassed);
+    //public void CloneGroupWord()
+    //{
+    //    int numGroupWord;
+    //    int numWord = listWordPassed!=null?listWordPassed.Count:0;
+    //    if ( listWordPassed.Count < 3)
+    //    {
+    //        numGroupWord = 1;
+    //    }
+    //    else
+    //    {
+    //        if ( listWordPassed.Count % 3 == 0)
+    //        {
+    //            numGroupWord = (int)( listWordPassed.Count / 3);
+    //        }
+    //        else
+    //        {
+    //            numGroupWord= (int)( listWordPassed.Count / 3+1);
+    //        }
+    //    }
+    //    //Debug.Log("numGroupWord: " + numGroupWord);
+    //    for (int i=0; i<numGroupWord; i++)
+    //    {
+    //        GameObject groupWordClone;
+    //        groupWordClone = GameObject.Instantiate(groupWord, content.transform);
+    //        CloneButtonWord(groupWordClone, ref listWordPassed);
 
 
-        }
-    }
+    //    }
+    //}
 
-    public void CloneButtonWord(GameObject groupWord, ref List<string> listWordPassed)
+    public void CloneButtonWord(GameObject groupWord,List<string> listWordPassed)
     {
         GameObject buttonWordClone;
-        if (listWordPassed.Count >= 3)
+        buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
+        buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
+        listWordPassed.RemoveAt(0);
+
+        //if (listWordPassed.Count >= 3)
+        //{
+        //    for(int j=0; j<3; j++)
+        //    {
+        //        buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
+        //        buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
+        //        listWordPassed.RemoveAt(0);
+        //        //Debug.Log("listWordPassed.Count: " + listWordPassed.Count);
+        //        if (listWordPassed.Count <2)
+        //        {
+        //            CloneButtonWord(groupWord, ref listWordPassed);
+        //            break;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    for (int j = 0; j < listWordPassed.Count-1; j++)
+        //    {
+        //        buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
+        //        buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
+        //        listWordPassed.RemoveAt(0);
+        //    }
+        //}
+
+    }
+
+    public void CloneListGroupWord()
+    {
+        GameObject listGroupWordClone;
+
+        foreach ( KeyValuePair<string, List<string>> item in  groupWordDiction)
         {
-            for(int j=0; j<3; j++)
-            {
-                buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-                buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-                listWordPassed.RemoveAt(0);
-                //Debug.Log("listWordPassed.Count: " + listWordPassed.Count);
-                if (listWordPassed.Count <2)
-                {
-                    CloneButtonWord(groupWord, ref listWordPassed);
-                    break;
-                }
-            }
+            listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
+            listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key;
+            //CloneButtonWord(listGroupWordClone.transform.Find("GroupWord").gameObject, item.Value);   
         }
-        else
-        {
-            for (int j = 0; j < listWordPassed.Count-1; j++)
-            {
-                buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-                buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-                listWordPassed.RemoveAt(0);
-            }
-        }
+   
     }
 
 }
