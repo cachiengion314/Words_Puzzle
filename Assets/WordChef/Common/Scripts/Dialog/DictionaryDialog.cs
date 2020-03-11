@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Linq;
 using TMPro;
+using System.IO;
 
 
 public class DictionaryDialog : Dialog
@@ -21,33 +22,40 @@ public class DictionaryDialog : Dialog
     public GameObject groupWord;
     public GameObject listGroupWord;
     public Transform content;
-
+    public static DictionaryDialog instance;
     
 
 
+
+
     //string wordValid;
+    //List<WordData> listMeanWord = new List<WordData>();
     string meaning;
     string sourceDictionaries;
     string keyApi;
     string url;
-    //List<WordData> listMeanWord = new List<WordData>();
     WordData wordData;
     Dictionary<string, string> wordDiction =new Dictionary<string, string>();
     Dictionary<string, List<string>> groupWordDiction=new Dictionary<string, List<string>>();
     Dictionary<string, List<string>> dataGroupWordDiction= new Dictionary<string, List<string>>();
     char[] keys;
     List<string> defaultValue = new List<string>();
-    private int passWorld, passSubWorld, passLevel;
-    private GameLevel gameLevel;
     List<string> listWordPassed;
+    //static readonly string SAVE_FOLDER = Application.dataPath + "/saves/";
+    //Dictionary dict;
 
     [HideInInspector]
     public static string wordPassed;
-    
 
-    protected void Start()
+
+    protected override void Awake()
     {
-   
+        instance = this;
+        
+    }
+
+    protected override void Start()
+    {
         base.Start();
         keys = "ABCDFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
         foreach (char key in keys)
@@ -57,7 +65,6 @@ public class DictionaryDialog : Dialog
         GetWordPassed();
         if (listWordPassed != null)
             CloneListGroupWord();
-            //CloneGroupWord();
     }
 
 
@@ -71,34 +78,20 @@ public class DictionaryDialog : Dialog
             listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
             listWordPassed.Sort();
             listWordPassed.RemoveAt(0);
-            //char[] testString = listWordPassed[0].ToCharArray();
             foreach(string word in listWordPassed)
             {
                 char[] charWord = word.ToCharArray();
                 wordDiction.Add(word, char.ToUpper(charWord[0]).ToString());
             }
-       
-             dataGroupWordDiction= wordDiction.GroupBy(r => r.Value).ToDictionary(t =>t.Key, t => t.Select(r => r.Key).ToList());
 
-            //foreach (var data in dataGroupWordDiction)
-            //{
-            //    foreach(var word in data.Value)
-            //    {
-            //        Debug.Log(data.Key + ": "+word);
-            //    }
-            //}
+             dataGroupWordDiction= wordDiction.GroupBy(r => r.Value).ToDictionary(t =>t.Key, t => t.Select(r => r.Key).ToList());
 
             foreach (var item in dataGroupWordDiction)
             {
                 //Debug.Log(item.Key);
                 groupWordDiction[item.Key] = item.Value;
             }
-
-
         }
-
-
-
     }
 
     public void GetDataFromApi(string word)
@@ -113,63 +106,35 @@ public class DictionaryDialog : Dialog
             + "&useCanonical=" + useCanonical
             + "&includeTags=" + includeTags
             + "&api_key=" + keyApi;
-
+        
         var client = new WebClient();
         var text = client.DownloadString(url);
-        JArray arrayJson = JArray.Parse(text);
-        for (int i = 0; i < arrayJson.Count; i++)
+        if (text != null)
         {
-            wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
+            JArray arrayJson = JArray.Parse(text);
+            for (int i = 0; i < arrayJson.Count; i++)
+            {
+                wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
 
-            //listMeanWord.Add(wordData);
+                //listMeanWord.Add(wordData);
 
-            meaning += "(" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+                meaning += "(" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+            }
         }
-
+        else
+        {
+            meaning = "Can't get data, please check your wifi";
+        }
+        //return meaning;
         Debug.Log(word);
+        Debug.Log(meaning);
         MeanDialog.wordName = word;
         MeanDialog.wordMean = meaning.ToString();
-        Debug.Log(MeanDialog.wordName);
-        Debug.Log(MeanDialog.wordMean);
-
+        Dictionary.instance.SaveWord(word, meaning.ToString());
+        //Debug.Log(MeanDialog.wordName);
+        //Debug.Log(MeanDialog.wordMean);
     }
 
-
-
-
-    //public void CloneButtonWord(GameObject groupWord,List<string> listWordPassed)
-    //{
-    //    GameObject buttonWordClone;
-    //    buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-    //    buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-    //    listWordPassed.RemoveAt(0);
-
-        //if (listWordPassed.Count >= 3)
-        //{
-        //    for(int j=0; j<3; j++)
-        //    {
-        //        buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-        //        buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-        //        listWordPassed.RemoveAt(0);
-        //        //Debug.Log("listWordPassed.Count: " + listWordPassed.Count);
-        //        if (listWordPassed.Count <2)
-        //        {
-        //            CloneButtonWord(groupWord, ref listWordPassed);
-        //            break;
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    for (int j = 0; j < listWordPassed.Count-1; j++)
-        //    {
-        //        buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-        //        buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-        //        listWordPassed.RemoveAt(0);
-        //    }
-        //}
-
-    //}
 
     public void CloneListGroupWord()
     {
@@ -190,5 +155,9 @@ public class DictionaryDialog : Dialog
    
     }
 
+
 }
+
+
+
 

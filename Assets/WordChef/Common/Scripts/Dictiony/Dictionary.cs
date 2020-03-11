@@ -1,87 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
+using UnityEngine.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UnityEngine.UI;
+using System.Net;
+using System.Linq;
+using TMPro;
+using System.IO;
 
 
-//namespace DictionaryApi
-//{
-
-    public class Dictionary:MonoBehaviour
+public class Dictionary: MonoBehaviour
+{
+    public static Dictionary instance;
+    public static string SAVE_FOLDER;
+    void Awake()
     {
-        public string wordValid;
-        public bool includeRelated;
-        public string sourceDictionaries;
-        public bool useCanonical;
-        public bool includeTags;
-        public string limit;
-        public Text textWordName;
-        public Text textMean;
-        public static Dictionary instance;
-
-        string keyApi;
-        string url;
-        public static Dictionary<string, List<WordData>> wordsDict = new Dictionary<string, List<WordData>>();
-        List<WordData> listMeanWord = new List<WordData>();
-        WordData wordData;
-
-
-        private void Awake()
-        {
+        if (instance == null)
             instance = this;
-        }
-        private void Start()
+        SAVE_FOLDER = Application.dataPath + "/Saves/";
+        if (!Directory.Exists(SAVE_FOLDER))
         {
-
+            Directory.CreateDirectory(SAVE_FOLDER);
         }
+    }
 
-        public void GetDataFromApi()
+    public void SaveWord(string _name, string _mean)
+    {
+        Debug.Log("save: " + _name);
+        Debug.Log("save: " + _mean);
+        //List<string> listJson = new List<string>();
+        WordSave word = new WordSave
         {
-            sourceDictionaries = "wiktionary";
-            keyApi = "l7bgsd9titsbw82vtpzparyfrmt9yg2hibbeihv5uex8e5maa";
-            url = "https://api.wordnik.com/v4/word.json/" + wordValid
-                + "/definitions?limit=" + limit
-                + "&includeRelated=" + includeRelated
-                + "&sourceDictionaries=" + sourceDictionaries
-                + "&useCanonical=" + useCanonical
-                + "&includeTags=" + includeTags
-                + "&api_key=" + keyApi;
-
-            var client = new WebClient();
-            var text = client.DownloadString(url);
-            JArray arrayJson = JArray.Parse(text);
-            for (int i = 0; i < arrayJson.Count; i++)
-            {
-                wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
-                listMeanWord.Add(wordData);
-            }
-
-            wordsDict.Add(wordValid, listMeanWord);
-        }
-
-        public void ShowWordData()
+            name = _name,
+            mean = _mean
+        };
+        string json = JsonConvert.SerializeObject(word) + "|";
+        if (!File.Exists(SAVE_FOLDER + "saveword.txt"))
+            File.WriteAllText (SAVE_FOLDER+ "saveword.txt", json);
+        else
         {
-            GetDataFromApi();
-            foreach (KeyValuePair<string, List<WordData>> word in wordsDict)
-            {
-                textWordName.text = word.Key;
-                foreach (WordData wordMean in word.Value)
-                {
-                    textMean.text += "(" + wordMean.partOfSpeech + ") " + wordMean.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
-                }
-            }
+            File.AppendAllText(SAVE_FOLDER + "saveword.txt", json);
         }
-
 
     }
-//}
-//public class WordData 
-//{
-//    public string partOfSpeech;
-//    public string text;
-    
-//}
+}
+
+
+public class WordSave
+{
+    public string name;
+    public string mean;
+}
+
+
 
