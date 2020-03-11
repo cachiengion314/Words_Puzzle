@@ -8,7 +8,17 @@ public class ListGroupWord : MonoBehaviour
     bool statusGroupWord = true;
     public void OnButtonClick()
     {
-        transform.GetChild(1).gameObject.SetActive(statusGroupWord);
-        statusGroupWord = !statusGroupWord;
+        if (transform.GetChild(1).childCount > 0)
+        {
+            transform.GetChild(1).gameObject.SetActive(statusGroupWord);
+            statusGroupWord = !statusGroupWord;
+        }
+        else
+        {
+            transform.GetChild(2).gameObject.SetActive(statusGroupWord);
+            statusGroupWord = !statusGroupWord;
+
+        }
+
     }
 }

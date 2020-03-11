@@ -90,7 +90,7 @@ public class DictionaryDialog : Dialog
 
             foreach (var item in dataGroupWordDiction)
             {
-                Debug.Log(item.Key);
+                //Debug.Log(item.Key);
                 groupWordDiction[item.Key] = item.Value;
             }
 
@@ -135,42 +135,14 @@ public class DictionaryDialog : Dialog
     }
 
 
-    //public void CloneGroupWord()
+
+
+    //public void CloneButtonWord(GameObject groupWord,List<string> listWordPassed)
     //{
-    //    int numGroupWord;
-    //    int numWord = listWordPassed!=null?listWordPassed.Count:0;
-    //    if ( listWordPassed.Count < 3)
-    //    {
-    //        numGroupWord = 1;
-    //    }
-    //    else
-    //    {
-    //        if ( listWordPassed.Count % 3 == 0)
-    //        {
-    //            numGroupWord = (int)( listWordPassed.Count / 3);
-    //        }
-    //        else
-    //        {
-    //            numGroupWord= (int)( listWordPassed.Count / 3+1);
-    //        }
-    //    }
-    //    //Debug.Log("numGroupWord: " + numGroupWord);
-    //    for (int i=0; i<numGroupWord; i++)
-    //    {
-    //        GameObject groupWordClone;
-    //        groupWordClone = GameObject.Instantiate(groupWord, content.transform);
-    //        CloneButtonWord(groupWordClone, ref listWordPassed);
-
-
-    //    }
-    //}
-
-    public void CloneButtonWord(GameObject groupWord,List<string> listWordPassed)
-    {
-        GameObject buttonWordClone;
-        buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-        buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-        listWordPassed.RemoveAt(0);
+    //    GameObject buttonWordClone;
+    //    buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
+    //    buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
+    //    listWordPassed.RemoveAt(0);
 
         //if (listWordPassed.Count >= 3)
         //{
@@ -197,7 +169,7 @@ public class DictionaryDialog : Dialog
         //    }
         //}
 
-    }
+    //}
 
     public void CloneListGroupWord()
     {
@@ -210,7 +182,7 @@ public class DictionaryDialog : Dialog
             listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key;
             foreach(var word in item.Value)
             {
-                Debug.Log(item.Key + ": " + word);
+                //Debug.Log(item.Key + ": " + word);
                 buttonWordClone = GameObject.Instantiate(buttonWord, listGroupWordClone.GetComponent<ListGroupWord>().groupWord);
                 buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
             }

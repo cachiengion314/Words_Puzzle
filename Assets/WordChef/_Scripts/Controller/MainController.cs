@@ -58,7 +58,8 @@ public class MainController : BaseController {
     {
         if (isGameComplete) return;
         isGameComplete = true;
-        //DictionaryDialog.wordPassed += gameLevel.answers;
+        
+        //Save Passed Word
         if (!CPlayerPrefs.HasKey("WordLevelSave"))
         {
             CPlayerPrefs.SetString("WordLevelSave", gameLevel.answers);
@@ -69,6 +70,7 @@ public class MainController : BaseController {
             wordLevelSave += gameLevel.answers;
             CPlayerPrefs.SetString("WordLevelSave", wordLevelSave);
         }
+        // 
 
         Timer.Schedule(this, 1f, () =>
         {
