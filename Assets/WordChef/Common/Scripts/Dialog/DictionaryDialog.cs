@@ -88,22 +88,12 @@ public class DictionaryDialog : Dialog
             //    }
             //}
 
-            foreach (KeyValuePair<string, List<string>> item in groupWordDiction)
+            foreach (var item in dataGroupWordDiction)
             {
-                //Debug.Log(item.Value.Count);
-                //Debug.Log(item.Key);
-                if (dataGroupWordDiction.ContainsKey(item.Key))
-                {
-                    //Debug.Log(item.Key);
-                    groupWordDiction[item.Key].AddRange(dataGroupWordDiction[item.Key]);
-                    foreach (string word in item.Value)
-                    {
-                        Debug.Log(item.Key+": " + word);
-                    }
-                }
-
+                Debug.Log(item.Key);
+                groupWordDiction[item.Key] = item.Value;
             }
-       
+
 
         }
 
@@ -212,12 +202,18 @@ public class DictionaryDialog : Dialog
     public void CloneListGroupWord()
     {
         GameObject listGroupWordClone;
+        GameObject buttonWordClone;
 
         foreach ( KeyValuePair<string, List<string>> item in  groupWordDiction)
         {
             listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
             listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key;
-            //CloneButtonWord(listGroupWordClone.transform.Find("GroupWord").gameObject, item.Value);   
+            foreach(var word in item.Value)
+            {
+                Debug.Log(item.Key + ": " + word);
+                buttonWordClone = GameObject.Instantiate(buttonWord, listGroupWordClone.GetComponent<ListGroupWord>().groupWord);
+                buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
+            }
         }
    
     }

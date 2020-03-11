@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ListGroupWord : MonoBehaviour
 {
+    public Transform groupWord;
     bool statusGroupWord = true;
     public void OnButtonClick()
     {
