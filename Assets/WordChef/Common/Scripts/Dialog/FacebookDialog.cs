@@ -15,6 +15,7 @@ public class FacebookDialog : Dialog
     [SerializeField] private GameObject _notifyLogin;
     [SerializeField] private RankingController _rankingPfb;
     [SerializeField] private Transform _rootRanking;
+    [SerializeField] private GameObject _leaderBoard;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class FacebookDialog : Dialog
 
     private void InitUserFB()
     {
+        _leaderBoard.transform.localScale = Vector3.zero;
         CheckLogin();
     }
 
@@ -146,20 +148,22 @@ public class FacebookDialog : Dialog
 
     private void ShowLeaderboard()
     {
-        _rootRanking.gameObject.SetActive(true);
-        for (int i = 0; i < _rootRanking.childCount; i++)
-        {
-            Destroy(_rootRanking.GetChild(i).gameObject);
-        }
-        _notifyLogin.gameObject.SetActive(false);
-        FacebookController.instance.GetLeaderboard("DailyRanking", (result) =>
-        {
-            foreach (var player in result.Leaderboard)
+        TweenControl.GetInstance().ScaleFromZero(_leaderBoard,0.3f,()=> {
+            _rootRanking.gameObject.SetActive(true);
+            for (int i = 0; i < _rootRanking.childCount; i++)
             {
-                var ranking = Instantiate(_rankingPfb, _rootRanking);
-                ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
+                Destroy(_rootRanking.GetChild(i).gameObject);
             }
-            var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
+            _notifyLogin.gameObject.SetActive(false);
+            FacebookController.instance.GetLeaderboard("DailyRanking", (result) =>
+            {
+                foreach (var player in result.Leaderboard)
+                {
+                    var ranking = Instantiate(_rankingPfb, _rootRanking);
+                    ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
+                }
+                var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
+            });
         });
     }
 
