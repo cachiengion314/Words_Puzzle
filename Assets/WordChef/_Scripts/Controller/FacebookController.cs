@@ -1,4 +1,5 @@
 ﻿using Facebook.Unity;
+using Newtonsoft.Json;
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
@@ -28,9 +29,9 @@ public class FacebookController : MonoBehaviour
     {
         if(user.levelProgress.Length == 0)
             user.levelProgress = new string[] { "0" };
-        var jsonData = JsonUtility.ToJson(user);
+        var jsonData = JsonConvert.SerializeObject(user);
         CPlayerPrefs.SetString("user", jsonData);
-        if (PlayFabClientAPI.IsClientLoggedIn())
+        if (FB.IsLoggedIn)
         {
             var dicUserData = new Dictionary<string, string>();
             dicUserData.Add("UserData", jsonData);
@@ -44,12 +45,12 @@ public class FacebookController : MonoBehaviour
         UpdateStaticsUser();
         UpdateDataUser(keyValues,callback);
     }
-    public void GetUserData()
+    public void GetUserData(Action callback = null)
     {
-        ParserJsonData(CPlayerPrefs.GetString("user", JsonUtility.ToJson(UserDefault())));
-        if (PlayFabClientAPI.IsClientLoggedIn())
+        ParserJsonData(CPlayerPrefs.GetString("user", JsonConvert.SerializeObject(UserDefault())));
+        if (FB.IsLoggedIn)
         {
-            GetDataFromPlayfabs();
+            GetDataFromPlayfabs(callback);
         }
         else
         {
@@ -60,6 +61,7 @@ public class FacebookController : MonoBehaviour
     {
         PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest
         {
+            Version = 0,
             StatisticName = statisticName,
             MaxResultsCount = 10
         }, (resultLeaderboard) => { callback?.Invoke(resultLeaderboard); }, null);
@@ -114,11 +116,11 @@ public class FacebookController : MonoBehaviour
         return userDefault;
     }
 
-    private void GetDataFromPlayfabs()
+    private void GetDataFromPlayfabs(Action callback = null)
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest
         {
-            PlayFabId = result.PlayFabId
+            PlayFabId = result.PlayFabId,
         }, (result) =>
         {
             foreach (var data in result.Data)
@@ -129,13 +131,14 @@ public class FacebookController : MonoBehaviour
                 }
             }
             SetValueUser();
+            callback?.Invoke();
         }, null);
     }
 
     private void ParserJsonData(string value)
     {
         User us = new User();
-        var jsonData = JsonUtility.FromJson<User>(value);
+        var jsonData = JsonConvert.DeserializeObject<User>(value);
         us.id = jsonData.id;
         us.name = jsonData.name;
         us.email = jsonData.email;

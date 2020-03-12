@@ -37,15 +37,31 @@ public class FacebookDialog : Dialog
 
     public void Logout()
     {
-        CheckLogin();
+        PlayFabClientAPI.ForgetAllCredentials();
         FB.LogOut();
+        CheckLogin();
     }
 
     public void Login()
     {
-        _txtNameUser.text = "Loading...";
-        _btnFbLogin.gameObject.SetActive(false);
-        FB.Init(OnFacebookInitialized);
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            FacebookController.instance.GetUserData(() =>
+            {
+                ShowTextNameUser();
+                ShowBtnLogin(false);
+                ShowLeaderboard();
+            });
+        }
+        else
+        {
+            _txtNameUser.text = "Loading...";
+            _btnFbLogin.gameObject.SetActive(false);
+            if (FB.IsInitialized)
+                OnFacebookInitialized();
+            else
+                FB.Init(OnFacebookInitialized);
+        }
     }
 
     #region Facebook Init
@@ -96,10 +112,12 @@ public class FacebookDialog : Dialog
         }
         else
         {
-            FacebookController.instance.GetUserData();
-            ShowTextNameUser();
-            ShowBtnLogin(false);
-            ShowLeaderboard();
+            FacebookController.instance.GetUserData(() =>
+            {
+                ShowTextNameUser();
+                ShowBtnLogin(false);
+                ShowLeaderboard();
+            });
         }
         //_user.email = "";
         //_user.unlockedLevel = Prefs.unlockedLevel.ToString();
@@ -134,12 +152,14 @@ public class FacebookDialog : Dialog
             Destroy(_rootRanking.GetChild(i).gameObject);
         }
         _notifyLogin.gameObject.SetActive(false);
-        FacebookController.instance.GetLeaderboard("DailyRanking",(result)=> {
+        FacebookController.instance.GetLeaderboard("DailyRanking", (result) =>
+        {
             foreach (var player in result.Leaderboard)
             {
-                var ranking = Instantiate(_rankingPfb,_rootRanking);
-                ranking.UpdateRankingPlayer(player.DisplayName,player.StatValue);
+                var ranking = Instantiate(_rankingPfb, _rootRanking);
+                ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
             }
+            var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
         });
     }
 
@@ -156,7 +176,7 @@ public class FacebookDialog : Dialog
 
     private void CheckLogin()
     {
-        if (FB.IsLoggedIn)
+        if (PlayFabClientAPI.IsClientLoggedIn())
         {
             ShowLeaderboard();
             ShowBtnLogin(false);
