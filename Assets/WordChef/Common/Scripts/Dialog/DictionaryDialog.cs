@@ -23,7 +23,7 @@ public class DictionaryDialog : Dialog
     public GameObject listGroupWord;
     public Transform content;
     public static DictionaryDialog instance;
-    
+    public Text numWordPassedText;
 
 
 
@@ -41,6 +41,7 @@ public class DictionaryDialog : Dialog
     char[] keys;
     List<string> defaultValue = new List<string>();
     List<string> listWordPassed;
+    GameObject homecontroller;
     //static readonly string SAVE_FOLDER = Application.dataPath + "/saves/";
     //Dictionary dict;
 
@@ -48,10 +49,11 @@ public class DictionaryDialog : Dialog
     public static string wordPassed;
 
 
+
     protected override void Awake()
     {
         instance = this;
-        
+        homecontroller = GameObject.FindGameObjectWithTag("HomeController");
     }
 
     protected override void Start()
@@ -65,6 +67,9 @@ public class DictionaryDialog : Dialog
         GetWordPassed();
         if (listWordPassed != null)
             CloneListGroupWord();
+        numWordPassedText.text = "You have collected " + listWordPassed.Count + "/100000 words";
+
+
     }
 
 
@@ -118,7 +123,7 @@ public class DictionaryDialog : Dialog
 
                 //listMeanWord.Add(wordData);
 
-                meaning += "(" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+                meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
             }
         }
         else
@@ -130,9 +135,8 @@ public class DictionaryDialog : Dialog
         Debug.Log(meaning);
         MeanDialog.wordName = word;
         MeanDialog.wordMean = meaning.ToString();
-        Dictionary.instance.SaveWord(word, meaning.ToString());
-        //Debug.Log(MeanDialog.wordName);
-        //Debug.Log(MeanDialog.wordMean);
+        //Dictionary.instance.SaveWord(word, meaning.ToString());
+       
     }
 
 
@@ -145,6 +149,8 @@ public class DictionaryDialog : Dialog
         {
             listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
             listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key;
+            if(item.Value.Count>0)
+                listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count+" wds";
             foreach(var word in item.Value)
             {
                 //Debug.Log(item.Key + ": " + word);
@@ -155,7 +161,12 @@ public class DictionaryDialog : Dialog
    
     }
 
+    public void OnPlayClick()
+    {
+        homecontroller.GetComponent<HomeController>().OnClick(0);
+        gameObject.GetComponent<Dialog>().Close();
 
+    }
 }
 
 
