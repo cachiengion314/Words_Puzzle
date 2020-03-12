@@ -24,13 +24,14 @@ public class MainController : BaseController {
     {
         base.Start();
         CUtils.CloseBannerAd();
-
         world = GameState.currentWorld;
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
         Debug.Log(world + ", " + subWorld + ", " + level);
         //save level pass;
-
+        FacebookController.instance.user.unlockedLevel = level.ToString();
+        FacebookController.instance.user.unlockedWorld = world.ToString();
+        FacebookController.instance.user.unlockedSubWorld = subWorld.ToString();
 
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
@@ -47,6 +48,8 @@ public class MainController : BaseController {
 
         //GameState.currentSubWorldName
         levelNameText.text = "LEVEL " + (level + 1);
+
+        FacebookController.instance.SaveDataGame();
     }
 
     public void OnComplete()

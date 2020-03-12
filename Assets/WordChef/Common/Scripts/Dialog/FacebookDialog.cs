@@ -5,14 +5,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using PlayFab;
+using PlayFab.ClientModels;
 public class FacebookDialog : Dialog
 {
-    User _user;
-
     [SerializeField] private Button _btnFbLogin;
     [SerializeField] private Button _btnFbLogout;
     [SerializeField] private TextMeshProUGUI _txtNameUser;
+    [SerializeField] private GameObject _notifyLogin;
+    [SerializeField] private RankingController _rankingPfb;
+    [SerializeField] private Transform _rootRanking;
 
     void Start()
     {
@@ -21,7 +23,6 @@ public class FacebookDialog : Dialog
 
     private void InitUserFB()
     {
-        _user = FacebookController.instance.user;
         CheckLogin();
     }
 
@@ -30,23 +31,90 @@ public class FacebookDialog : Dialog
         FacebookController.instance.user.id = "";
         FacebookController.instance.user.name = "GUEST";
         FacebookController.instance.user.email = "";
-        _user = FacebookController.instance.user;
     }
 
-    #region Login Facebook
+    #region Dialog Control
 
     public void Logout()
     {
-        FB.LogOut();
-        ClearUser();
         CheckLogin();
+        FB.LogOut();
     }
 
     public void Login()
     {
-        var perms = new List<string>() { "public_profile", "email" };
-        FB.LogInWithReadPermissions(perms, AuthCallback);
+        _txtNameUser.text = "Loading...";
+        _btnFbLogin.gameObject.SetActive(false);
+        FB.Init(OnFacebookInitialized);
     }
+
+    #region Facebook Init
+    void OnFacebookInitialized()
+    {
+        var perms = new List<string>() { "public_profile", "email" };
+        FB.LogInWithReadPermissions(perms, OnFacebookLoggedIn);
+    }
+    void OnFacebookLoggedIn(ILoginResult result)
+    {
+        if (result == null || string.IsNullOrEmpty(result.Error))
+        {
+            PlayFabClientAPI.LoginWithFacebook(new LoginWithFacebookRequest
+            {
+                TitleId = PlayFabSettings.TitleId,
+                CreateAccount = true,
+                AccessToken = result.AccessToken.TokenString,
+                InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+                {
+                    GetPlayerProfile = true,
+                    GetUserAccountInfo = true,
+                    GetTitleData = true,
+                    GetPlayerStatistics = true
+                }
+            }, OnPlayfabFacebookAuthComplete, OnPlayfabFacebookAuthFailed);
+        }
+        else
+        {
+            Debug.Log("Facebook Auth Failed: " + result.Error + "\n" + result.RawResult);
+        }
+    }
+
+    void OnPlayfabFacebookAuthComplete(PlayFab.ClientModels.LoginResult result)
+    {
+        FacebookController.instance.result = result;
+
+        if (result.NewlyCreated)
+        {
+            FacebookController.instance.user.id = result.PlayFabId;
+            FacebookController.instance.user.name = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName;
+            FacebookController.instance.SaveDataGame((userResult) =>
+            {
+                FacebookController.instance.user.name = result.InfoResultPayload.PlayerProfile.DisplayName;
+                ShowTextNameUser();
+                ShowBtnLogin(false);
+                ShowLeaderboard();
+            });
+        }
+        else
+        {
+            FacebookController.instance.GetUserData();
+            ShowTextNameUser();
+            ShowBtnLogin(false);
+            ShowLeaderboard();
+        }
+        //_user.email = "";
+        //_user.unlockedLevel = Prefs.unlockedLevel.ToString();
+        //_user.unlockedWorld = Prefs.unlockedWorld.ToString();
+        //_user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+        //_user.levelProgress = Prefs.levelProgress;
+        //FacebookController.instance.user = _user;
+    }
+
+    void OnPlayfabFacebookAuthFailed(PlayFabError error)
+    {
+        Debug.Log("PlayFab Facebook Auth Failed ");
+    }
+    #endregion
+
 
     public void InviteFriends()
     {
@@ -56,53 +124,28 @@ public class FacebookDialog : Dialog
         });
     }
 
-    void AuthCallback(ILoginResult result)
-    {
-        if (FB.IsLoggedIn)
-        {
-            // AccessToken class will have session details
-            var aToken = AccessToken.CurrentAccessToken;
-            // Print current access token's User ID
-            // Print current access token's granted permissions
-            foreach (string perm in aToken.Permissions)
-            {
-                Debug.Log(perm);
-            }
-            FB.API("/me?fields=id,first_name,email", HttpMethod.GET, ShowInfoUser);
-        }
-        else
-        {
-            Debug.Log("User cancelled login");
-        }
-    }
-
-    void ShowInfoUser(IGraphResult result)
-    {
-        if (result.Error == null)
-        {
-            _user.id = "" + result.ResultDictionary["id"];
-            _user.name = "" + result.ResultDictionary["first_name"];
-            _user.email = "" + result.ResultDictionary["email"];
-            _user.unlockedLevel = Prefs.unlockedLevel.ToString();
-            _user.unlockedWorld = Prefs.unlockedWorld.ToString();
-            _user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
-            _user.levelProgress = Prefs.levelProgress;
-            FacebookController.instance.user = _user;
-            var jsonData = JsonUtility.ToJson(_user);
-            CPlayerPrefs.SetString("user", jsonData);
-            ShowTextNameUser();
-            ShowBtnLogin(false);
-        }
-        else
-        {
-            Debug.Log("Error GetInfo !");
-        }
-    }
     #endregion
+
+    private void ShowLeaderboard()
+    {
+        _rootRanking.gameObject.SetActive(true);
+        for (int i = 0; i < _rootRanking.childCount; i++)
+        {
+            Destroy(_rootRanking.GetChild(i).gameObject);
+        }
+        _notifyLogin.gameObject.SetActive(false);
+        FacebookController.instance.GetLeaderboard("DailyRanking",(result)=> {
+            foreach (var player in result.Leaderboard)
+            {
+                var ranking = Instantiate(_rankingPfb,_rootRanking);
+                ranking.UpdateRankingPlayer(player.DisplayName,player.StatValue);
+            }
+        });
+    }
 
     private void ShowTextNameUser()
     {
-        _txtNameUser.text = _user.name;
+        _txtNameUser.text = FacebookController.instance.user.name;
     }
 
     private void ShowBtnLogin(bool isLogin)
@@ -115,10 +158,14 @@ public class FacebookDialog : Dialog
     {
         if (FB.IsLoggedIn)
         {
+            ShowLeaderboard();
             ShowBtnLogin(false);
         }
         else
         {
+            _rootRanking.gameObject.SetActive(false);
+            _notifyLogin.gameObject.SetActive(true);
+            ClearUser();
             ShowBtnLogin(true);
         }
         ShowTextNameUser();

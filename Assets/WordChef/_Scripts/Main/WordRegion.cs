@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Text;
+using PlayFab;
 
 public class WordRegion : MonoBehaviour
 {
@@ -85,6 +86,10 @@ public class WordRegion : MonoBehaviour
         SetupLine(wordList, useProgress, levelProgress);
 
         SetLinesPosition();
+
+        FacebookController.instance.user.levelProgress = levelProgress;
+        FacebookController.instance.SaveDataGame();
+        CheckGameComplete();
     }
 
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress)
@@ -224,12 +229,12 @@ public class WordRegion : MonoBehaviour
         {
             ClearLevelProgress();
             MainController.instance.OnComplete();
-
             if (lines.Count >= 6)
             {
                 compliment.ShowRandom();
             }
         }
+        FacebookController.instance.SaveDataGame();
     }
 
     public void BeeClick()
@@ -331,6 +336,7 @@ public class WordRegion : MonoBehaviour
         }
 
         Prefs.levelProgress = results.ToArray();
+        FacebookController.instance.user.levelProgress = Prefs.levelProgress;
     }
 
     public string[] GetLevelProgress()
