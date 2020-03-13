@@ -14,6 +14,7 @@ public class LoginBonusController : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        _root.transform.localScale = Vector3.zero;
         CheckToday();
     }
 
