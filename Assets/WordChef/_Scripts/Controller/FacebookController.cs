@@ -15,8 +15,11 @@ public class FacebookController : MonoBehaviour
 
     public PlayFab.ClientModels.LoginResult result;
     public User user;
-    
+
     [SerializeField] private List<string> _keysStatic;
+
+    private string _jsondata;
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -25,17 +28,26 @@ public class FacebookController : MonoBehaviour
         GetUserData();
     }
 
+    public void Logout()
+    {
+        PlayFabClientAPI.ForgetAllCredentials();
+        FB.LogOut();
+    }
+
     public void SaveDataGame(Action<UpdateUserDataResult> callback = null)
     {
-        if(user.levelProgress.Length == 0)
-            user.levelProgress = new string[] { "0" };
-        var jsonData = JsonConvert.SerializeObject(user);
-        CPlayerPrefs.SetString("user", jsonData);
-        if (FB.IsLoggedIn)
+        if (PlayFabClientAPI.IsClientLoggedIn())
         {
+            user.id = result.PlayFabId;
+            user.name = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName;
+            _jsondata = SaveDataLocal();
             var dicUserData = new Dictionary<string, string>();
-            dicUserData.Add("UserData", jsonData);
-            UpdateUserData(dicUserData,(userResult) => { callback?.Invoke(userResult); });
+            dicUserData.Add("UserData", _jsondata);
+            UpdateUserData(dicUserData, (userResult) => { callback?.Invoke(userResult); });
+        }
+        else
+        {
+            _jsondata = SaveDataLocal();
         }
     }
 
@@ -43,25 +55,26 @@ public class FacebookController : MonoBehaviour
     {
         UpdateTitleDisplayName();
         UpdateStaticsUser();
-        UpdateDataUser(keyValues,callback);
+        UpdateDataUser(keyValues, callback);
     }
     public void GetUserData(Action callback = null)
     {
-        ParserJsonData(CPlayerPrefs.GetString("user", JsonConvert.SerializeObject(UserDefault())));
-        if (FB.IsLoggedIn)
+        if (PlayFabClientAPI.IsClientLoggedIn())
         {
             GetDataFromPlayfabs(callback);
         }
         else
         {
+            ParserJsonData(CPlayerPrefs.GetString("user", JsonConvert.SerializeObject(UserDefault())));
             SetValueUser();
         }
     }
     public void GetLeaderboard(string statisticName, Action<GetLeaderboardResult> callback = null)
     {
-        PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest
+        PlayFabClientAPI.GetFriendLeaderboard(new GetFriendLeaderboardRequest
         {
             Version = 0,
+            IncludeFacebookFriends = true,
             StatisticName = statisticName,
             MaxResultsCount = 10
         }, (resultLeaderboard) => { callback?.Invoke(resultLeaderboard); }, null);
@@ -72,7 +85,11 @@ public class FacebookController : MonoBehaviour
     {
         PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
         {
-            DisplayName = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName
+            DisplayName = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName,
+        }, null, null);
+        PlayFabClientAPI.UpdateAvatarUrl(new UpdateAvatarUrlRequest
+        {
+
         }, null, null);
     }
 
@@ -103,6 +120,15 @@ public class FacebookController : MonoBehaviour
     }
     #endregion
 
+    private string SaveDataLocal()
+    {
+        if (user.levelProgress.Length == 0)
+            user.levelProgress = new string[] { "0" };
+        var jsonData = JsonConvert.SerializeObject(user);
+        CPlayerPrefs.SetString("user", jsonData);
+        return jsonData;
+    }
+
     private User UserDefault()
     {
         User userDefault = new User();
@@ -115,9 +141,21 @@ public class FacebookController : MonoBehaviour
         userDefault.levelProgress = new string[] { "0" };
         return userDefault;
     }
+    private void GetFriendList()
+    {
+        PlayFabClientAPI.GetFriendsList(new GetFriendsListRequest
+        {
+            IncludeFacebookFriends = true
+        }, (resultFr) =>
+        {
+            Debug.Log(resultFr.Friends.Count);
+            //Debug.Log(resultFr.Friends[0].TitleDisplayName);
+        }, null);
+    }
 
     private void GetDataFromPlayfabs(Action callback = null)
     {
+        GetFriendList();
         PlayFabClientAPI.GetUserData(new GetUserDataRequest
         {
             PlayFabId = result.PlayFabId,
@@ -125,7 +163,7 @@ public class FacebookController : MonoBehaviour
         {
             foreach (var data in result.Data)
             {
-                if(data.Key.ToString() == "UserData")
+                if (data.Key.ToString() == "UserData")
                 {
                     ParserJsonData(data.Value.Value);
                 }
