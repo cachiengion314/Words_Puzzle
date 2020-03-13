@@ -10,8 +10,20 @@ public class ButtonWord : MyButton
     public void GetData()
     {
         string text = transform.GetChild(0).GetComponent<Text>().text.ToString();
-        Debug.Log(text);
-        DictionaryDialog.instance.GetDataFromApi(text);
+
+        if (!Dictionary.instance.CheckWExistInDictWordSaved(text))
+        {
+            Debug.Log("getDataApi");
+            DictionaryDialog.instance.GetDataFromApi(text);
+        }
+        else
+        {
+            Debug.Log("word had in device");
+            MeanDialog.wordName = text;
+            MeanDialog.wordMean = Dictionary.dictWordSaved[text];
+
+        }
+        
     }
 
      public override void OnButtonClick()

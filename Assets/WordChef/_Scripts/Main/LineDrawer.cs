@@ -37,10 +37,7 @@ public class LineDrawer : MonoBehaviour
 
     private void Update()
     {
-        //if (!pan)
-        //{
-        //    Debug.Log("huy");
-        //}
+    
 
         if (DialogController.instance.IsDialogShowing()) return;
         //if (SocialRegion.instance.isShowing) return;
