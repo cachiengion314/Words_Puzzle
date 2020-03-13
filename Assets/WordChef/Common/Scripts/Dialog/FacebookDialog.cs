@@ -13,6 +13,7 @@ public class FacebookDialog : Dialog
     [SerializeField] private Button _btnFbLogout;
     [SerializeField] private TextMeshProUGUI _txtNameUser;
     [SerializeField] private GameObject _notifyLogin;
+    [SerializeField] private LoadingController _animLoading;
     [SerializeField] private RankingController _rankingPfb;
     [SerializeField] private Transform _rootRanking;
     [SerializeField] private GameObject _leaderBoard;
@@ -24,6 +25,7 @@ public class FacebookDialog : Dialog
 
     private void InitUserFB()
     {
+        _animLoading.gameObject.SetActive(false);
         _leaderBoard.transform.localScale = Vector3.zero;
         CheckLogin();
     }
@@ -69,6 +71,7 @@ public class FacebookDialog : Dialog
     #region Facebook Init
     void OnFacebookInitialized()
     {
+        _animLoading.gameObject.SetActive(true);
         var perms = new List<string>() { "public_profile", "email" };
         FB.LogInWithReadPermissions(perms, OnFacebookLoggedIn);
     }
@@ -76,6 +79,7 @@ public class FacebookDialog : Dialog
     {
         if (result == null || string.IsNullOrEmpty(result.Error))
         {
+            _animLoading.PlayLoading();
             PlayFabClientAPI.LoginWithFacebook(new LoginWithFacebookRequest
             {
                 TitleId = PlayFabSettings.TitleId,
@@ -110,6 +114,7 @@ public class FacebookDialog : Dialog
                 ShowTextNameUser();
                 ShowBtnLogin(false);
                 ShowLeaderboard();
+                _animLoading.gameObject.SetActive(false);
             });
         }
         else
@@ -119,6 +124,7 @@ public class FacebookDialog : Dialog
                 ShowTextNameUser();
                 ShowBtnLogin(false);
                 ShowLeaderboard();
+                _animLoading.gameObject.SetActive(false);
             });
         }
         //_user.email = "";
@@ -131,7 +137,9 @@ public class FacebookDialog : Dialog
 
     void OnPlayfabFacebookAuthFailed(PlayFabError error)
     {
-        Debug.Log("PlayFab Facebook Auth Failed ");
+        ShowBtnLogin(true);
+        _animLoading.gameObject.SetActive(false);
+        _leaderBoard.transform.localScale = Vector3.zero;
     }
     #endregion
 
