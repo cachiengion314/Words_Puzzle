@@ -82,6 +82,7 @@ public class DictionaryDialog : Dialog
             listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
             listWordPassed.Sort();
             listWordPassed.RemoveAt(0);
+            listWordPassed = listWordPassed.Distinct().ToList();
             foreach(string word in listWordPassed)
             {
                 char[] charWord = word.ToCharArray();
