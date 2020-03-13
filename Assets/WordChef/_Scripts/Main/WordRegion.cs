@@ -189,8 +189,10 @@ public class WordRegion : MonoBehaviour
     public void CheckAnswer(string checkWord)
     {
         LineWord line = lines.Find(x => x.answer == checkWord);
+        //string meaning="";
         if (line != null)
         {
+
             if (!line.isShown)
             {
                 textPreview.SetAnswerColor();
@@ -202,6 +204,7 @@ public class WordRegion : MonoBehaviour
                 if (lineIndex > 6) { lineIndex = 6; }
 
                 Sound.instance.Play(Sound.Others.Match);
+                
             }
             else
             {

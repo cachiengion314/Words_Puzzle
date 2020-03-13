@@ -14,6 +14,8 @@ public class MainController : BaseController {
 
     public static MainController instance;
 
+    private string wordLevelSave;
+
     protected override void Awake()
     {
         base.Awake();
@@ -27,6 +29,9 @@ public class MainController : BaseController {
         world = GameState.currentWorld;
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
+        //world = 4;
+        //subWorld = 4;
+        //level = 4;
         Debug.Log(world + ", " + subWorld + ", " + level);
         //save level pass;
         FacebookController.instance.user.unlockedLevel = level.ToString();
@@ -56,6 +61,19 @@ public class MainController : BaseController {
     {
         if (isGameComplete) return;
         isGameComplete = true;
+        
+        //Save Passed Word
+        if (!CPlayerPrefs.HasKey("WordLevelSave"))
+        {
+            CPlayerPrefs.SetString("WordLevelSave", gameLevel.answers);
+        }
+        else
+        {
+            wordLevelSave = CPlayerPrefs.GetString("WordLevelSave");
+            wordLevelSave += gameLevel.answers;
+            CPlayerPrefs.SetString("WordLevelSave", wordLevelSave);
+        }
+        // 
 
         Timer.Schedule(this, 1f, () =>
         {

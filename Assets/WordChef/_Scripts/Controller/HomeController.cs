@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class HomeController : BaseController
 {
@@ -9,6 +10,7 @@ public class HomeController : BaseController
     {
         base.Start();
         CUtils.CloseBannerAd();
+        //if(!CPlayerPrefs.HasKey("TheNextDay"))
     }
 
     public void OnClick(int index)

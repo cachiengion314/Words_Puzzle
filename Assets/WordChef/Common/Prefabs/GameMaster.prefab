@@ -201,7 +201,7 @@ RectTransform:
   - {fileID: 22427566}
   - {fileID: 22469868}
   m_Father: {fileID: 499218}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -315,6 +315,7 @@ Transform:
   - {fileID: 494744}
   - {fileID: 423180}
   - {fileID: 4120072707556424}
+  - {fileID: 1718994100031891164}
   - {fileID: 430276}
   - {fileID: 22414322}
   m_Father: {fileID: 0}
@@ -1560,7 +1561,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 499218}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11425640
 MonoBehaviour:
@@ -1743,3 +1744,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454da52cece2a9e43ab2f5b30018d0cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &896854556505144295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718994100031891164}
+  - component: {fileID: 2974365051531797831}
+  m_Layer: 0
+  m_Name: DictionaryController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1718994100031891164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896854556505144295}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 499218}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2974365051531797831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896854556505144295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffb090a551cecaa49b05ee86a813c027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  includeRelated: 0
+  useCanonical: 0
+  includeTags: 0
+  limit: 10
+  buttonWord: {fileID: 0}
+  groupWord: {fileID: 0}
+  listGroupWord: {fileID: 0}
+  content: {fileID: 0}

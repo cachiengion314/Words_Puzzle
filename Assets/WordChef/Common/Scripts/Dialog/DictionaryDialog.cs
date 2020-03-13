@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Linq;
+using TMPro;
+using System.IO;
 
 
 public class DictionaryDialog : Dialog
@@ -15,95 +17,86 @@ public class DictionaryDialog : Dialog
     public bool useCanonical;
     public bool includeTags;
     public string limit;
-    public Text textWordName;
-    public Text textMean;
+
     public GameObject buttonWord;
     public GameObject groupWord;
+    public GameObject listGroupWord;
     public Transform content;
-    public static Dictionary<string, List<WordData>> wordsDict = new Dictionary<string, List<WordData>>();
+    public static DictionaryDialog instance;
+    public Text numWordPassedText;
+
+
 
 
     //string wordValid;
+    //List<WordData> listMeanWord = new List<WordData>();
     string meaning;
     string sourceDictionaries;
     string keyApi;
     string url;
-    List<WordData> listMeanWord = new List<WordData>();
     WordData wordData;
-    
-    
-    private int passWorld, passSubWorld, passLevel;
-    private GameLevel gameLevel;
+    Dictionary<string, string> wordDiction =new Dictionary<string, string>();
+    Dictionary<string, List<string>> groupWordDiction=new Dictionary<string, List<string>>();
+    Dictionary<string, List<string>> dataGroupWordDiction= new Dictionary<string, List<string>>();
+    char[] keys;
+    List<string> defaultValue = new List<string>();
     List<string> listWordPassed;
-    string wordPassed;
-    
+    GameObject homecontroller;
+    //static readonly string SAVE_FOLDER = Application.dataPath + "/saves/";
+    //Dictionary dict;
 
-    protected void Start()
+    [HideInInspector]
+    public static string wordPassed;
+
+
+
+    protected override void Awake()
+    {
+        instance = this;
+        homecontroller = GameObject.FindGameObjectWithTag("HomeController");
+    }
+
+    protected override void Start()
     {
         base.Start();
-        //TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
-        //{
-                    GetWordPassed();
+        keys = "ABCDFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        foreach (char key in keys)
+        {
+            groupWordDiction.Add(key.ToString(), defaultValue);
+        }
+        GetWordPassed();
+        if (listWordPassed != null)
+            CloneListGroupWord();
+        numWordPassedText.text = "You have collected " + listWordPassed.Count + "/100000 words";
 
-        //})
-        if(listWordPassed!=null)
-            CloneGroupWord();
+
     }
 
 
 
     public void GetWordPassed()
     {
-        passWorld = Prefs.unlockedWorld - 1 < 0 ? 0: Prefs.unlockedWorld;
-        passSubWorld = Prefs.unlockedSubWorld-1 < 0? 0 : Prefs.unlockedSubWorld;
-        passLevel = Prefs.unlockedLevel-1;
-
-
-        //Debug.Log(CPlayerPrefs.GetInt(PrefKeys.CURRENT_LEVEL, 1));
-        Debug.Log(passWorld.ToString() + passSubWorld.ToString() + passLevel.ToString());
-       
-        Debug.Log(GameState.unlockedWorld.ToString() + GameState.unlockedWorld.ToString() + GameState.unlockedLevel.ToString());
-
-        if (passWorld == 0 && passSubWorld == 0&& passLevel <0)
+        wordPassed = CPlayerPrefs.GetString("WordLevelSave");
+        Debug.Log(wordPassed);
+        if (wordPassed != null)
         {
-            wordPassed = null;
-        }
-        else 
-        {
-            for(int i=passWorld; i>=0; i--)
+            listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
+            listWordPassed.Sort();
+            listWordPassed.RemoveAt(0);
+            foreach(string word in listWordPassed)
             {
-                for (int j = passSubWorld; j>=0; j--)
-                {
+                char[] charWord = word.ToCharArray();
+                wordDiction.Add(word, char.ToUpper(charWord[0]).ToString());
+            }
 
-                    for (int k = passLevel; k >=0; k--)
-                    {
-                        gameLevel = Utils.Load(i, j, k);
-                        wordPassed += gameLevel.answers;
-                    }
-                    passLevel += 7;
-                }
-                passSubWorld += 7;
+             dataGroupWordDiction= wordDiction.GroupBy(r => r.Value).ToDictionary(t =>t.Key, t => t.Select(r => r.Key).ToList());
+
+            foreach (var item in dataGroupWordDiction)
+            {
+                //Debug.Log(item.Key);
+                groupWordDiction[item.Key] = item.Value;
             }
         }
-        //if (passLevel >=0)
-        //{
-            //for(int i=0; i<=passWorld; i++)
-            //{
-            //    for(int j=0; j<= passSubWorld; j++)
-            //    {
-
-            //        for (int k = 0; k <= passLevel; k++)
-            //        {
-            //            gameLevel = Utils.Load(i, j, k);
-            //            wordPassed += gameLevel.answers;
-            //        }
-
-            //    }
-            //}
-        //}
-        //Debug.Log(wordPassed);
-        if (wordPassed!=null)
-            listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
     }
 
     public void GetDataFromApi(string word)
@@ -118,101 +111,64 @@ public class DictionaryDialog : Dialog
             + "&useCanonical=" + useCanonical
             + "&includeTags=" + includeTags
             + "&api_key=" + keyApi;
-
+        
         var client = new WebClient();
         var text = client.DownloadString(url);
-        JArray arrayJson = JArray.Parse(text);
-        for (int i = 0; i < arrayJson.Count; i++)
+        if (text != null)
         {
-            wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
+            JArray arrayJson = JArray.Parse(text);
+            for (int i = 0; i < arrayJson.Count; i++)
+            {
+                wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
 
-            //listMeanWord.Add(wordData);
+                //listMeanWord.Add(wordData);
 
-            meaning += "(" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+                meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+            }
         }
-
-        //if(!wordsDict.ContainsKey(word))
-        //    wordsDict.Add(word, listMeanWord);
+        else
+        {
+            meaning = "Can't get data, please check your wifi";
+        }
+        //return meaning;
         Debug.Log(word);
+        Debug.Log(meaning);
         MeanDialog.wordName = word;
         MeanDialog.wordMean = meaning.ToString();
-        Debug.Log(MeanDialog.wordName);
-        Debug.Log(MeanDialog.wordMean);
-
+        //Dictionary.instance.SaveWord(word, meaning.ToString());
+       
     }
 
-    public void ShowWordData()
+
+    public void CloneListGroupWord()
     {
-        //GetDataFromApi();
-        //foreach (KeyValuePair<string, List<WordData>> word in wordsDict)
-        //{
-        //    textWordName.text = word.Key;
-        //    foreach (WordData wordMean in word.Value)
-        //    {
-        //        textMean.text += "(" + wordMean.partOfSpeech + ") " + wordMean.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
-        //    }
-        //}
-        
-    }
-
-    public void CloneGroupWord()
-    {
-        int numGroupWord;
-        int numWord = listWordPassed!=null?listWordPassed.Count:0;
-        if ( listWordPassed.Count < 3)
-        {
-            numGroupWord = 1;
-        }
-        else
-        {
-            if ( listWordPassed.Count % 3 == 0)
-            {
-                numGroupWord = (int)( listWordPassed.Count / 3);
-            }
-            else
-            {
-                numGroupWord= (int)( listWordPassed.Count / 3+1);
-            }
-        }
-        //Debug.Log("numGroupWord: " + numGroupWord);
-        for (int i=0; i<numGroupWord; i++)
-        {
-            GameObject groupWordClone;
-            groupWordClone = GameObject.Instantiate(groupWord,content.transform);
-            CloneButtonWord(groupWordClone, ref listWordPassed);
-
-
-        }
-    }
-
-    public void CloneButtonWord(GameObject groupWord, ref List<string> listWordPassed)
-    {
+        GameObject listGroupWordClone;
         GameObject buttonWordClone;
-        if (listWordPassed.Count >= 3)
+
+        foreach ( KeyValuePair<string, List<string>> item in  groupWordDiction)
         {
-            for(int j=0; j<3; j++)
+            listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
+            listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key;
+            if(item.Value.Count>0)
+                listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count+" wds";
+            foreach(var word in item.Value)
             {
-                buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-                buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-                listWordPassed.RemoveAt(0);
-                //Debug.Log("listWordPassed.Count: " + listWordPassed.Count);
-                if (listWordPassed.Count <2)
-                {
-                    CloneButtonWord(groupWord, ref listWordPassed);
-                    break;
-                }
+                //Debug.Log(item.Key + ": " + word);
+                buttonWordClone = GameObject.Instantiate(buttonWord, listGroupWordClone.GetComponent<ListGroupWord>().groupWord);
+                buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
             }
         }
-        else
-        {
-            for (int j = 0; j < listWordPassed.Count-1; j++)
-            {
-                buttonWordClone = GameObject.Instantiate(buttonWord, groupWord.transform);
-                buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = listWordPassed[0];
-                listWordPassed.RemoveAt(0);
-            }
-        }
+   
     }
 
+    public void OnPlayClick()
+    {
+        homecontroller.GetComponent<HomeController>().OnClick(0);
+        gameObject.GetComponent<Dialog>().Close();
+
+    }
 }
+
+
+
 

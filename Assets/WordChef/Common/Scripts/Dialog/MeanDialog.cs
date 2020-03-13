@@ -12,8 +12,9 @@ public class MeanDialog : Dialog
     public GameObject wordMeantext;
     //public static GameObject instance;
 
-    private void Start()
+    public void Start()
     {
+        base.Start();
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>{
         showMean();
 
