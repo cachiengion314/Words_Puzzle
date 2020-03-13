@@ -17,6 +17,7 @@ public class FacebookDialog : Dialog
     [SerializeField] private RankingController _rankingPfb;
     [SerializeField] private Transform _rootRanking;
     [SerializeField] private GameObject _leaderBoard;
+    [SerializeField] private GameObject _mainUI;
 
     void Start()
     {
@@ -90,7 +91,8 @@ public class FacebookDialog : Dialog
                     GetPlayerProfile = true,
                     GetUserAccountInfo = true,
                     GetTitleData = true,
-                    GetPlayerStatistics = true
+                    GetPlayerStatistics = true,
+                    GetUserVirtualCurrency = true
                 }
             }, OnPlayfabFacebookAuthComplete, OnPlayfabFacebookAuthFailed);
         }
@@ -103,14 +105,10 @@ public class FacebookDialog : Dialog
     void OnPlayfabFacebookAuthComplete(PlayFab.ClientModels.LoginResult result)
     {
         FacebookController.instance.result = result;
-
         if (result.NewlyCreated)
         {
-            FacebookController.instance.user.id = result.PlayFabId;
-            FacebookController.instance.user.name = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName;
             FacebookController.instance.SaveDataGame((userResult) =>
             {
-                FacebookController.instance.user.name = result.InfoResultPayload.PlayerProfile.DisplayName;
                 ShowTextNameUser();
                 ShowBtnLogin(false);
                 ShowLeaderboard();
@@ -156,23 +154,27 @@ public class FacebookDialog : Dialog
 
     private void ShowLeaderboard()
     {
-        TweenControl.GetInstance().ScaleFromZero(_leaderBoard,0.3f,()=> {
-            _rootRanking.gameObject.SetActive(true);
-            for (int i = 0; i < _rootRanking.childCount; i++)
+        _mainUI.transform.localScale = Vector3.zero;
+        _rootRanking.gameObject.SetActive(true);
+        for (int i = 0; i < _rootRanking.childCount; i++)
+        {
+            Destroy(_rootRanking.GetChild(i).gameObject);
+        }
+        _notifyLogin.gameObject.SetActive(false);
+        FacebookController.instance.GetLeaderboard("DailyRanking", (result) =>
+        {
+            foreach (var player in result.Leaderboard)
             {
-                Destroy(_rootRanking.GetChild(i).gameObject);
+                var ranking = Instantiate(_rankingPfb, _rootRanking);
+                ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
             }
-            _notifyLogin.gameObject.SetActive(false);
-            FacebookController.instance.GetLeaderboard("DailyRanking", (result) =>
-            {
-                foreach (var player in result.Leaderboard)
-                {
-                    var ranking = Instantiate(_rankingPfb, _rootRanking);
-                    ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
-                }
-                var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
+            var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
+            vertical.enabled = false;
+            TweenControl.GetInstance().ScaleFromZero(_leaderBoard, 0.3f, () => {
+                vertical.enabled = true;
             });
         });
+        
     }
 
     private void ShowTextNameUser()
@@ -195,6 +197,7 @@ public class FacebookDialog : Dialog
         }
         else
         {
+            _mainUI.transform.localScale = Vector3.one;
             _rootRanking.gameObject.SetActive(false);
             _notifyLogin.gameObject.SetActive(true);
             ClearUser();

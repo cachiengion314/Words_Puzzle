@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingDialog : PauseDialog
 {   
@@ -14,6 +15,11 @@ public class SettingDialog : PauseDialog
     GameObject gameMaster;
     Sound soundController;
     Music musicController;
+
+    [SerializeField] private GameObject _btnLogout;
+    [SerializeField] private Text _textNameUser;
+    [SerializeField] private GameObject _panelExit;
+
     protected override void Start()
     {
         base.Start();
@@ -23,6 +29,7 @@ public class SettingDialog : PauseDialog
             soundController = gameMaster.transform.Find("SoundController").GetComponent<Sound>();
             musicController = gameMaster.transform.Find("MusicController").GetComponent<Music>();
         }
+        CheckLogin();
     }
     private void Update()
     {
@@ -58,6 +65,40 @@ public class SettingDialog : PauseDialog
         {
             bool _status = musicController.IsEnabled();
             musicController.SetEnabled(!_status, true);
+        }
+    }
+
+    public void OnClickLogout()
+    {
+        FacebookController.instance.Logout();
+    }
+
+    public void OnClickExitGame()
+    {
+        TweenControl.GetInstance().ScaleFromZero(_panelExit,0.3f);
+    }
+
+    public void OnExitClick()
+    {
+        Application.Quit();
+    }
+
+    public void OnNoExitClick()
+    {
+        TweenControl.GetInstance().ScaleFromOne(_panelExit, 0.3f);
+    }
+
+    private void CheckLogin()
+    {
+        if (PlayFab.PlayFabClientAPI.IsClientLoggedIn())
+        {
+            _textNameUser.text = FacebookController.instance.user.name;
+            _btnLogout.SetActive(true);
+        }
+        else
+        {
+            _textNameUser.text = "";
+            _btnLogout.SetActive(false);
         }
     }
 }
