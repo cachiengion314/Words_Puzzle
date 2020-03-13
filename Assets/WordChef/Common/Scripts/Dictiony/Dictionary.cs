@@ -14,6 +14,7 @@ public class Dictionary: MonoBehaviour
 {
     public static Dictionary instance;
     public static string SAVE_FOLDER;
+    public static Dictionary<string, string> dictWordSaved;
     void Awake()
     {
         if (instance == null)
@@ -23,27 +24,69 @@ public class Dictionary: MonoBehaviour
         {
             Directory.CreateDirectory(SAVE_FOLDER);
         }
+       
     }
+    private void Start()
+    {
+        dictWordSaved = new Dictionary<string, string>();
+        if (dictWordSaved != null)
+            load();
+    }
+    //void Update()
+    //{
+    //    if (dictWordSaved != null)
+    //        load();
+    //}
 
     public void SaveWord(string _name, string _mean)
     {
-        Debug.Log("save: " + _name);
-        Debug.Log("save: " + _mean);
-        //List<string> listJson = new List<string>();
-        WordSave word = new WordSave
+        if (!dictWordSaved.ContainsKey(_name))
         {
-            name = _name,
-            mean = _mean
-        };
-        string json = JsonConvert.SerializeObject(word) + "|";
-        if (!File.Exists(SAVE_FOLDER + "saveword.txt"))
-            File.WriteAllText (SAVE_FOLDER+ "saveword.txt", json);
-        else
-        {
-            File.AppendAllText(SAVE_FOLDER + "saveword.txt", json);
+            WordSave word = new WordSave
+            {
+                name = _name,
+                mean = _mean
+            };
+            string json = JsonConvert.SerializeObject(word) + "|";
+            if (!File.Exists(SAVE_FOLDER + "saveword.txt"))
+                File.WriteAllText(SAVE_FOLDER + "saveword.txt", json);
+            else
+            {
+                File.AppendAllText(SAVE_FOLDER + "saveword.txt", json);
+            }
         }
+        load();
+      
 
     }
+    public void load()
+    {
+        Debug.Log("loading words..");
+        if(File.Exists(SAVE_FOLDER + "saveword.txt"))
+        {
+            string text = File.ReadAllText(SAVE_FOLDER + "saveword.txt");
+            List<string> listWordSaved = text.Split('|').OfType<string>().ToList<string>();
+            listWordSaved.RemoveAt(listWordSaved.Count-1);
+            WordSave wordSave;
+            foreach (string word in listWordSaved)
+            {
+                wordSave = JsonConvert.DeserializeObject<WordSave>(word);
+                if (!CheckWExistInDictWordSaved(wordSave.name))
+                {
+                    dictWordSaved.Add(wordSave.name, wordSave.mean);
+                }
+                
+            }
+        }
+            
+    }
+    public bool CheckWExistInDictWordSaved(string word)
+    {
+        if (dictWordSaved.ContainsKey(word))
+            return true;
+        return false;
+    }
+
 }
 
 

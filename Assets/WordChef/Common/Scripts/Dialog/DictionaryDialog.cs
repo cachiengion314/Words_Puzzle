@@ -69,7 +69,6 @@ public class DictionaryDialog : Dialog
             CloneListGroupWord();
         numWordPassedText.text = "You have collected " + listWordPassed.Count + "/100000 words";
 
-
     }
 
 
@@ -131,11 +130,11 @@ public class DictionaryDialog : Dialog
             meaning = "Can't get data, please check your wifi";
         }
         //return meaning;
-        Debug.Log(word);
-        Debug.Log(meaning);
+        //Debug.Log(word);
+        //Debug.Log(meaning);
         MeanDialog.wordName = word;
         MeanDialog.wordMean = meaning.ToString();
-        //Dictionary.instance.SaveWord(word, meaning.ToString());
+        Dictionary.instance.SaveWord(word, meaning.ToString());
        
     }
 
