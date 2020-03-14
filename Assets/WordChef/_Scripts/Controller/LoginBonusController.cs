@@ -10,35 +10,121 @@ public class LoginBonusController : MonoBehaviour
     [SerializeField] private GameObject _objSpin;
     [SerializeField] private int _numGift = 6;
     [SerializeField] private int _angleStart = 0;
+    [SerializeField] private ItemManager _itemManager;
+    [SerializeField] private GameObject _panelCollect;
+    [Header("Data Spin")]
+    [SerializeField] private List<DataItem> _dataItems;
+
+    private int _currAngle;
+
     void Awake()
     {
         if (instance == null)
             instance = this;
         _root.transform.localScale = Vector3.zero;
+        _panelCollect.transform.localScale = Vector3.zero;
+        SetupSpin();
+    }
+
+    void Start()
+    {
         CheckToday();
+    }
+
+    private void SetupSpin()
+    {
+        for (int i = 0; i < _itemManager.items.Count; i++)
+        {
+            var item = _itemManager.items[i];
+            item.txtValue.text = _dataItems[i].value.ToString();
+            item.image.sprite = _dataItems[i].sprite;
+            item.image.SetNativeSize();
+        }
     }
 
     private void CheckToday()
     {
-        var date = DateTime.Parse(CPlayerPrefs.GetString("Daily", DateTime.Today.ToString()));
-        if (DateTime.Compare(DateTime.Today,date) > 0)
+        var firstPlay = CPlayerPrefs.GetBool("FIRST", true);
+        var oldDate = DateTime.FromBinary(CPlayerPrefs.GetLong("Daily", DateTime.Now.Date.ToBinary()));
+        var currDate = DateTime.Now.Date;
+        var showBonus = (DateTime.Compare(currDate, oldDate) > 0) ? true : false;
+        BlockScreen.instance.Block(true);
+        if (showBonus || firstPlay)
         {
-            TweenControl.GetInstance().ScaleFromZero(_root,0.3f,null);
+            TweenControl.GetInstance().DelayCall(transform, 2f, () =>
+            {
+                BlockScreen.instance.Block(false);
+                TweenControl.GetInstance().ScaleFromZero(_root, 0.3f, null);
+            });
+        }
+        else
+        {
+            BlockScreen.instance.Block(false);
         }
     }
 
-    public void Spin()
+    public void OnSpinClick()
     {
-        CPlayerPrefs.SetString("Daily", DateTime.Today.ToString());
-        var angle = Angle();
-        TweenControl.GetInstance().LocalRotate(_objSpin.transform,new Vector3(0,0, -angle),5f,()=> { 
-        
-        },EaseType.OutQuad);
+        CPlayerPrefs.SetLong("Daily", DateTime.Now.Date.ToBinary());
+        Spin();
+    }
+
+    public void OnSpinAgainClick()
+    {
+        _panelCollect.transform.localScale = Vector3.zero;
+        Spin();
+    }
+
+    public void OnCollectClick()
+    {
+        _panelCollect.transform.localScale = Vector3.zero;
+        _root.transform.localScale = Vector3.zero;
+        var itemValue = _dataItems[_currAngle].value;
+        switch (_dataItems[_currAngle].itemType)
+        {
+            case ItemType.HINT:
+                CurrencyController.SetHintFree(itemValue + CurrencyController.GetHintFree());
+                break;
+            case ItemType.HINT_RANDOM:
+
+                break;
+            case ItemType.CURRENCY_BALANCE:
+                CurrencyController.CreditBalance(itemValue);
+                break;
+        }
+    }
+
+    private void Spin(Action callback = null)
+    {
+        CPlayerPrefs.SetBool("FIRST", false);
+        var itemRandom = UnityEngine.Random.Range(0, _numGift);
+        _currAngle = itemRandom;
+        Debug.Log("Item: " + _currAngle);
+        var angle = Angle() - (360f / _numGift) * itemRandom;
+        TweenControl.GetInstance().LocalRotate(_objSpin.transform, new Vector3(0, 0, -angle), 5f, () =>
+        {
+            TweenControl.GetInstance().ScaleFromZero(_panelCollect, 0.3f, () => { callback?.Invoke(); });
+        }, EaseType.OutQuad);
     }
 
     private float Angle()
     {
-        var angle = _angleStart + 360f / _numGift + 360f * 5f;
+        var angle = _angleStart + 360f * 5f;
         return angle;
-    } 
+    }
+}
+
+[Serializable]
+public struct DataItem
+{
+    public ItemType itemType;
+    public int value;
+    public Sprite sprite;
+}
+
+public enum ItemType
+{
+    HINT,
+    HINT_RANDOM,
+    CURRENCY_BALANCE
 }
