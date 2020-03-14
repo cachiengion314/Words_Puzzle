@@ -47,6 +47,8 @@ public class ObjectiveDialog : Dialog
     {
         tab.SetActive(status);
         tabBtn.transform.Find("On").gameObject.SetActive(status);
+        tabBtn.transform.Find("IconOn").gameObject.SetActive(status);
+        tabBtn.transform.Find("IconOff").gameObject.SetActive(!status);
         if(status)
             tabBtn.transform.Find("Text").GetComponent<Text>().color = new Vector4(1f, 1f, 1f, 1f);
         else

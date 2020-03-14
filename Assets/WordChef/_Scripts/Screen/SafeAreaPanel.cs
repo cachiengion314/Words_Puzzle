@@ -24,7 +24,6 @@ public class SafeAreaPanel : MonoBehaviour
 
     private void RefreshSafe(Rect safeArea)
     {
-        Debug.Log("Safe Area");
         Vector2 anchorMin = safeArea.position;
         Vector2 anchorMax = safeArea.position + safeArea.size;
 
