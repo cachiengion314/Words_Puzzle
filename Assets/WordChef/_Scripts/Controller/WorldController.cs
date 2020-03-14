@@ -25,10 +25,10 @@ public class WorldController : BaseController {
         if (screenAspect < (9f / 16f)) title.SetActive(false);
     }
 
-    private void Update()
-    {
-        //UpdateUI();
-    }
+    //private void Update()
+    //{
+    //    //UpdateUI();
+    //}
 
     //private void UpdateUI()
     //{
