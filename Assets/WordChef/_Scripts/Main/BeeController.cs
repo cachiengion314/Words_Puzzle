@@ -13,7 +13,8 @@ public class BeeController : MonoBehaviour
 
     void Start()
     {
-        UpdateAmountBee();
+        //UpdateAmountBee();
+        OnBeeButtonClick();
     }
 
     private void UpdateAmountBee()
@@ -30,10 +31,10 @@ public class BeeController : MonoBehaviour
             WordRegion.instance.BeeClick();
             UpdateAmountBee();
         }
-        else
-        {
-            DialogController.instance.ShowDialog(DialogType.Bee);
-        }
+        //else
+        //{
+        //    DialogController.instance.ShowDialog(DialogType.Bee);
+        //}
     }
 
     #region TEST BEE

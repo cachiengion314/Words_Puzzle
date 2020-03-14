@@ -11,6 +11,7 @@ public class Const
     public const int REWARD_CHAPTER_CLEAR = 30;
     public const int REWARD_ADS_LEVEL_CLEAR = 40;
     public const int REWARD_ADS_CHAPTER_CLEAR = 70;
+    public const int SPIN_AGAIN = 100;
 
     public const int NUM_SUBWORLD = 5;
 }

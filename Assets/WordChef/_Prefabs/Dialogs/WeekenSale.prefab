@@ -773,6 +773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224940297469762908}
   - component: {fileID: 95021290985911902}
+  - component: {fileID: 3765547131541985933}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -828,6 +829,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3765547131541985933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254605066774342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfba311734369d449de4b741efb4afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaDetect: {fileID: 0}
+  _rectTransform: {fileID: 0}
 --- !u!1 &1257561666521922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2101,6 +2116,8 @@ GameObject:
   - component: {fileID: 114229388287058196}
   - component: {fileID: 114990810823479764}
   - component: {fileID: 2468564878015566677}
+  - component: {fileID: -7703446226406980944}
+  - component: {fileID: 1255247041892491452}
   m_Layer: 5
   m_Name: WeekenSale
   m_TagString: Untagged
@@ -2137,7 +2154,7 @@ Canvas:
   m_GameObject: {fileID: 1879323980883156}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2227,6 +2244,42 @@ MonoBehaviour:
   - {fileID: 5627695859927707915}
   - {fileID: 6733942595200280913}
   - {fileID: 7828503665255450841}
+--- !u!222 &-7703446226406980944
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879323980883156}
+  m_CullTransparentMesh: 0
+--- !u!114 &1255247041892491452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879323980883156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1891475402119328
 GameObject:
   m_ObjectHideFlags: 0

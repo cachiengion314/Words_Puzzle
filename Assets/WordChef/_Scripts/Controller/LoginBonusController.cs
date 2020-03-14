@@ -11,7 +11,7 @@ public class LoginBonusController : MonoBehaviour
     [SerializeField] private int _numGift = 6;
     [SerializeField] private int _angleStart = 0;
     [SerializeField] private ItemManager _itemManager;
-    [SerializeField] private GameObject _panelCollect;
+    [SerializeField] private PanelCollectItem _panelCollect;
     [Header("Data Spin")]
     [SerializeField] private List<DataItem> _dataItems;
 
@@ -71,8 +71,17 @@ public class LoginBonusController : MonoBehaviour
 
     public void OnSpinAgainClick()
     {
-        _panelCollect.transform.localScale = Vector3.zero;
-        Spin();
+        var balance = CurrencyController.GetBalance();
+        if (balance >= Const.SPIN_AGAIN)
+        {
+            CurrencyController.DebitBalance(Const.SPIN_AGAIN);
+            _panelCollect.transform.localScale = Vector3.zero;
+            Spin();
+        }
+        else
+        {
+            DialogController.instance.ShowDialog(DialogType.Shop);
+        }
     }
 
     public void OnCollectClick()
@@ -103,7 +112,9 @@ public class LoginBonusController : MonoBehaviour
         var angle = Angle() - (360f / _numGift) * itemRandom;
         TweenControl.GetInstance().LocalRotate(_objSpin.transform, new Vector3(0, 0, -angle), 5f, () =>
         {
-            TweenControl.GetInstance().ScaleFromZero(_panelCollect, 0.3f, () => { callback?.Invoke(); });
+            var currItem = _dataItems[_currAngle];
+            _panelCollect.ShowItemCollect(currItem.spriteDone, currItem.value);
+            TweenControl.GetInstance().ScaleFromZero(_panelCollect.gameObject, 0.3f, () => { callback?.Invoke(); });
         }, EaseType.OutQuad);
     }
 
@@ -120,6 +131,7 @@ public struct DataItem
     public ItemType itemType;
     public int value;
     public Sprite sprite;
+    public Sprite spriteDone;
 }
 
 public enum ItemType
