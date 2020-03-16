@@ -233,12 +233,12 @@ public class ShopDialog : Dialog
         {
             if (shopItemObject[i].activeInHierarchy)
             {
-                StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f));
+                StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
                 count++;
             }
         }
 
-        StartCoroutine(DelayPlayAnimation(btnMore, count * 0.1f));
+        StartCoroutine(DelayPlayAnimation(btnMore, count * 0.1f + 0.5f));
     }
 
     IEnumerator DelayPlayAnimation(GameObject item, float time)
