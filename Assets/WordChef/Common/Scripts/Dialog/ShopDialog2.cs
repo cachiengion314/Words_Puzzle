@@ -6,6 +6,9 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Utilities.Components;
 
 public class ShopDialog2 : Dialog
 {
@@ -17,7 +20,10 @@ public class ShopDialog2 : Dialog
     public TextMeshProUGUI[] numHintTexts;
     public Text[] priceTexts, saleTexts;
     public Image[] hotImages;
-
+    
+    
+    public GameObject contentItemShop;
+    public GameObject[] shopItemObject;
     protected override void Start()
     {
         base.Start();
@@ -123,4 +129,34 @@ public class ShopDialog2 : Dialog
         Purchaser.instance.onItemPurchased -= OnItemPurchased;
     }
 #endif
+    
+    void GetShopItemInContent()
+    {
+        int count = 0;
+        shopItemObject = new GameObject[contentItemShop.transform.childCount];
+        for (int i = 0; i < contentItemShop.transform.childCount; i++)
+        {
+            shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
+            shopItemObject[i].transform.localScale = Vector3.zero;
+        }
+
+        for (int i = 0; i < shopItemObject.Length; i++)
+        {
+            if (shopItemObject[i].activeInHierarchy)
+            {
+                StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f));
+                count++;
+            }
+        }
+    }
+
+    IEnumerator DelayPlayAnimation(GameObject item, float time)
+    {
+        yield return new WaitForSeconds(time);
+        item.GetComponent<DOTweenAnimation>().DORestart();
+        yield return new WaitForSeconds(item.GetComponent<DOTweenAnimation>().duration);
+        item.GetComponent<SimpleTMPButton>().enabled = true;
+    }
 }
+
+

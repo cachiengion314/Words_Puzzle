@@ -27,8 +27,8 @@ public class ShopDialog : Dialog
     private float currentTimeVipPack;
     private float[] maxTimeVipPacks;
 
-    public GameObject[] shopItemObject;
     public GameObject contentItemShop;
+    public GameObject[] shopItemObject;
 
     protected override void Start()
     {
