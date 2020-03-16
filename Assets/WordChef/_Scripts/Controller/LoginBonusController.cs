@@ -108,7 +108,6 @@ public class LoginBonusController : MonoBehaviour
         CPlayerPrefs.SetBool("FIRST", false);
         var itemRandom = UnityEngine.Random.Range(0, _numGift);
         _currAngle = itemRandom;
-        Debug.Log("Item: " + _currAngle);
         var angle = Angle() - (360f / _numGift) * itemRandom;
         TweenControl.GetInstance().LocalRotate(_objSpin.transform, new Vector3(0, 0, -angle), 5f, () =>
         {

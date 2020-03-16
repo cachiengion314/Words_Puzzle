@@ -155,7 +155,10 @@ public class FacebookDialog : Dialog
     private void ShowLeaderboard()
     {
         _mainUI.transform.localScale = Vector3.zero;
+        _leaderBoard.SetActive(true);
         _rootRanking.gameObject.SetActive(true);
+        var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
+        vertical.enabled = false;
         for (int i = 0; i < _rootRanking.childCount; i++)
         {
             Destroy(_rootRanking.GetChild(i).gameObject);
@@ -168,8 +171,6 @@ public class FacebookDialog : Dialog
                 var ranking = Instantiate(_rankingPfb, _rootRanking);
                 ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
             }
-            var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
-            vertical.enabled = false;
             TweenControl.GetInstance().ScaleFromZero(_leaderBoard, 0.3f, () => {
                 vertical.enabled = true;
             });

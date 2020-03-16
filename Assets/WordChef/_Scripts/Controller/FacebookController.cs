@@ -71,13 +71,13 @@ public class FacebookController : MonoBehaviour
     }
     public void GetLeaderboard(string statisticName, Action<GetLeaderboardResult> callback = null)
     {
-        PlayFabClientAPI.GetFriendLeaderboard(new GetFriendLeaderboardRequest
+        PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest
         {
-            Version = 0,
-            IncludeFacebookFriends = true,
             StatisticName = statisticName,
             MaxResultsCount = 10
-        }, (resultLeaderboard) => { callback?.Invoke(resultLeaderboard); }, null);
+        }, (resultLeaderboard) => callback(resultLeaderboard), (result)=> {
+            Debug.Log("Get Leaderboard Error !!");
+        });
     }
 
     #region Update PlayFab Client API
