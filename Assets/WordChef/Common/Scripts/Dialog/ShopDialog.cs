@@ -6,6 +6,8 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using System;
+using System.Collections;
+using Utilities.Components;
 
 public class ShopDialog : Dialog
 {
@@ -24,6 +26,9 @@ public class ShopDialog : Dialog
 
     private float currentTimeVipPack;
     private float[] maxTimeVipPacks;
+
+    public GameObject[] shopItemObject;
+    public GameObject contentItemShop;
 
     protected override void Start()
     {
@@ -102,18 +107,19 @@ public class ShopDialog : Dialog
             }
         }
 #endif
+        GetShopItemInContent();
     }
 
     private void Update()
     {
-        if(scroll.verticalNormalizedPosition >= 0.9f && scroll.content.sizeDelta.y > scrollRT.sizeDelta.y)
+        /*if(scroll.verticalNormalizedPosition >= 0.9f && scroll.content.sizeDelta.y > scrollRT.sizeDelta.y)
         {
             btnMore.SetActive(true);
         }
         else
         {
             btnMore.SetActive(false);
-        }
+        }*/
 
         currentTimeVipPack += Time.deltaTime;
         for (int i = 0; i < numRubyTexts.Length; i++)
@@ -193,6 +199,53 @@ public class ShopDialog : Dialog
 
     public void More()
     {
-        scroll.DOVerticalNormalizedPos(0f, 1f);
+        //scroll.DOVerticalNormalizedPos(0f, 1f);
+        int count = 0;
+        btnMore.gameObject.SetActive(false);
+
+        foreach (GameObject item in shopItemObject)
+        {
+            item.GetComponent<SimpleTMPButton>().enabled = false;
+            item.transform.localScale = Vector3.zero;
+            item.SetActive(true);
+        }
+
+        for (int i = 0; i < shopItemObject.Length; i++)
+        {
+            StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f));
+            count++;
+        }
+        scroll.GetComponent<ScrollRect>().enabled = true;
+    }
+
+    void GetShopItemInContent()
+    {
+        int count = 0;
+        shopItemObject = new GameObject[contentItemShop.transform.childCount];
+        btnMore.transform.localScale = Vector3.zero;
+        for (int i = 0; i < contentItemShop.transform.childCount; i++)
+        {
+            shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
+            shopItemObject[i].transform.localScale = Vector3.zero;
+        }
+
+        for (int i = 0; i < shopItemObject.Length; i++)
+        {
+            if (shopItemObject[i].activeInHierarchy)
+            {
+                StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f));
+                count++;
+            }
+        }
+
+        StartCoroutine(DelayPlayAnimation(btnMore, count * 0.1f));
+    }
+
+    IEnumerator DelayPlayAnimation(GameObject item, float time)
+    {
+        yield return new WaitForSeconds(time);
+        item.GetComponent<DOTweenAnimation>().DORestart();
+        yield return new WaitForSeconds(item.GetComponent<DOTweenAnimation>().duration);
+        item.GetComponent<SimpleTMPButton>().enabled = true;
     }
 }
