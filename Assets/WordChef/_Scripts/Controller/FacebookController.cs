@@ -22,9 +22,9 @@ public class FacebookController : MonoBehaviour
 
     void Awake()
     {
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        if (instance == null)
-            instance = this;
         GetUserData();
     }
 

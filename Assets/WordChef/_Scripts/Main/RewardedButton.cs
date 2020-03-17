@@ -58,11 +58,6 @@ public class RewardedButton : MonoBehaviour
     {
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.PlayButton();
-        //Test
-        content.SetActive(false);
-        ShowTimerText(ConfigController.Config.rewardedVideoPeriod);
-        onRewarded?.Invoke();
-        //==
     }
 
     private void ShowTimerText(int time)
@@ -77,9 +72,9 @@ public class RewardedButton : MonoBehaviour
 
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
     {
+        onRewarded?.Invoke();
         content.SetActive(false);
         ShowTimerText(ConfigController.Config.rewardedVideoPeriod);
-        onRewarded?.Invoke();
     }
 
     private void OnCountDownComplete()

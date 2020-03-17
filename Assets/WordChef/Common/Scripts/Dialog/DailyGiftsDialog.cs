@@ -37,7 +37,7 @@ public class DailyGiftsDialog : Dialog
 
     private void InitProgress()
     {
-        _timeTarget = DateTime.Now.TimeOfDay.TotalSeconds + (_valueTimeGift * 3600);
+        _timeTarget = _valueTimeGift * 3600;
         _rewardedButton.gameObject.SetActive(false);
         _rewardedButton.onRewarded += OnRewarded;
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
@@ -56,8 +56,6 @@ public class DailyGiftsDialog : Dialog
         else
             _sumTime = CPlayerPrefs.GetDouble(DAY_KEY);
         UpdateTimeValue();
-        TimeSpan timeSpan = TimeSpan.FromSeconds(_timeValue);
-        _timeCountdown.text = timeSpan.ToString();
     }
 
     void OnRewarded()
@@ -84,6 +82,9 @@ public class DailyGiftsDialog : Dialog
 
     private void RestartCountdown()
     {
+        CurrencyController.CreditBalance(ConfigController.Config.rewardedVideoAmount);
+        var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
+        _timeTarget = valueTarget;
         CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
         InitTimeCountDown();
         _isReward = false;
@@ -97,7 +98,13 @@ public class DailyGiftsDialog : Dialog
         if (!_isReward)
             StartCoroutine(CountDownTime());
         else
+        {
+            _timeValue = 0;
             _rewardedButton.gameObject.SetActive(true);
+            _rewardedButton.content.SetActive(true);
+        }
+        TimeSpan timeSpan = TimeSpan.FromSeconds(_timeValue);
+        _timeCountdown.text = timeSpan.ToString();
     }
 
     private IEnumerator CountDownTime()
@@ -111,6 +118,7 @@ public class DailyGiftsDialog : Dialog
                 _isReward = true;
                 CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
                 _rewardedButton.gameObject.SetActive(true);
+                _rewardedButton.content.SetActive(true);
             }
             yield return new WaitForSeconds(1);
             if (_timeValue > 0)
@@ -125,4 +133,19 @@ public class DailyGiftsDialog : Dialog
         if (_timeValue <= 0)
             _timeValue = 0;
     }
+
+    //TEST
+    public void OnTestReward()
+    {
+        _timeValue = 0;
+        TimeSpan timeSpan = TimeSpan.FromSeconds(_timeValue);
+        _timeCountdown.text = timeSpan.ToString();
+        if (_timeCountdown.text == "00:00:00")
+        {
+            _isReward = true;
+            CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
+            _rewardedButton.gameObject.SetActive(true);
+        }
+    }
+    //==
 }

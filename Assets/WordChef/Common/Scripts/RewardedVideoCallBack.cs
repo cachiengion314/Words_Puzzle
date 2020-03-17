@@ -21,11 +21,11 @@ public class RewardedVideoCallBack : MonoBehaviour {
     private const string ACTION_NAME = "rewarded_video";
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
     {
-        var dialog = (RewardedVideoDialog)DialogController.instance.GetDialog(DialogType.RewardedVideo);
-        dialog.SetAmount(ConfigController.Config.rewardedVideoAmount);
-        DialogController.instance.ShowDialog(dialog);
+        //var dialog = (RewardedVideoDialog)DialogController.instance.GetDialog(DialogType.RewardedVideo);
+        //dialog.SetAmount(ConfigController.Config.rewardedVideoAmount);
+        //DialogController.instance.ShowDialog(dialog,DialogShow.STACK);
 
-        CUtils.SetActionTime(ACTION_NAME);
+        //CUtils.SetActionTime(ACTION_NAME);
     }
 
     private void OnDestroy()
