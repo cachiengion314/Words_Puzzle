@@ -204,7 +204,7 @@ public class WordRegion : MonoBehaviour
                 if (lineIndex > 6) { lineIndex = 6; }
 
                 Sound.instance.Play(Sound.Others.Match);
-                
+
             }
             else
             {
@@ -256,7 +256,7 @@ public class WordRegion : MonoBehaviour
                 count += 1;
             }
         }
-        
+
         Sound.instance.PlayButton();
     }
 
@@ -264,7 +264,8 @@ public class WordRegion : MonoBehaviour
     public void HintClick()
     {
         int ballance = CurrencyController.GetBalance();
-        if (ballance >= Const.HINT_COST)
+        var hintFree = CurrencyController.GetHintFree();
+        if (ballance >= Const.HINT_COST || hintFree > 0)
         {
             LineWord line = null;
             if (hintLineIndex + 1 >= lines.Count) hintLineIndex = -1;
@@ -281,7 +282,10 @@ public class WordRegion : MonoBehaviour
             if (line != null)
             {
                 line.ShowHint();
-                CurrencyController.DebitBalance(Const.HINT_COST);
+                if (hintFree > 0)
+                    CurrencyController.DebitHintFree(hintFree);
+                else
+                    CurrencyController.DebitBalance(Const.HINT_COST);
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
@@ -297,7 +301,8 @@ public class WordRegion : MonoBehaviour
     public void HintRandomClick()
     {
         int ballance = CurrencyController.GetBalance();
-        if (ballance >= Const.HINT_COST)
+        //var hintFree = CurrencyController.GetHintFree();
+        if (ballance >= Const.HINT_RANDOM_COST /*|| hintFree > 0*/)
         {
             LineWord line = null;
             for (int i = 0; i < lines.Count; i++)
@@ -308,7 +313,10 @@ public class WordRegion : MonoBehaviour
                     if (line != null)
                     {
                         line.ShowHintRandom();
-                        CurrencyController.DebitBalance(Const.HINT_COST);
+                        //if (hintFree > 0)
+                        //    CurrencyController.DebitHintFree(hintFree);
+                        //else
+                        CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
                         CheckGameComplete();
 
                         Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);

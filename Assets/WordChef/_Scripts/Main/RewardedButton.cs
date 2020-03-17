@@ -1,10 +1,12 @@
 ﻿using GoogleMobileAds.Api;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RewardedButton : MonoBehaviour
 {
+    public Action onRewarded;
     public GameObject content;
     public GameObject adAvailableTextHolder;
     public TimerText timerText;
@@ -41,6 +43,10 @@ public class RewardedButton : MonoBehaviour
         {
             AdmobController.instance.rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
         }
+        else
+        {
+            Debug.Log("Video reward null");
+        }
     }
 
     private void IUpdate()
@@ -66,6 +72,7 @@ public class RewardedButton : MonoBehaviour
 
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
     {
+        onRewarded?.Invoke();
         content.SetActive(false);
         ShowTimerText(ConfigController.Config.rewardedVideoPeriod);
     }

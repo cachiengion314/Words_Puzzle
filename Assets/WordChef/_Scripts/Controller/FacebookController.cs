@@ -22,9 +22,9 @@ public class FacebookController : MonoBehaviour
 
     void Awake()
     {
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        if (instance == null)
-            instance = this;
         GetUserData();
     }
 
@@ -71,13 +71,13 @@ public class FacebookController : MonoBehaviour
     }
     public void GetLeaderboard(string statisticName, Action<GetLeaderboardResult> callback = null)
     {
-        PlayFabClientAPI.GetFriendLeaderboard(new GetFriendLeaderboardRequest
+        PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest
         {
-            Version = 0,
-            IncludeFacebookFriends = true,
             StatisticName = statisticName,
             MaxResultsCount = 10
-        }, (resultLeaderboard) => { callback?.Invoke(resultLeaderboard); }, null);
+        }, (resultLeaderboard) => callback(resultLeaderboard), (result)=> {
+            Debug.Log("Get Leaderboard Error !!");
+        });
     }
 
     #region Update PlayFab Client API

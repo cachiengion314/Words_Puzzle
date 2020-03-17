@@ -15,8 +15,9 @@ public class MeanDialog : Dialog
     public void Start()
     {
         base.Start();
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>{
-        showMean();
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            showMean();
 
         });
     }

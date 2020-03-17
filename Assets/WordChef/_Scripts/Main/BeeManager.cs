@@ -16,8 +16,9 @@ public class BeeManager : MonoBehaviour
     }
     void Awake()
     {
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        instance = this;
     }
 
     public void Load(int amount)

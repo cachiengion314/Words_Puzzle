@@ -70,21 +70,25 @@ public class SettingDialog : PauseDialog
 
     public void OnClickLogout()
     {
+        Sound.instance.PlayButton();
         FacebookController.instance.Logout();
     }
 
     public void OnClickExitGame()
     {
+        Sound.instance.PlayButton();
         TweenControl.GetInstance().ScaleFromZero(_panelExit,0.3f);
     }
 
     public void OnExitClick()
     {
+        Sound.instance.PlayButton();
         Application.Quit();
     }
 
     public void OnNoExitClick()
     {
+        Sound.instance.PlayButton();
         TweenControl.GetInstance().ScaleFromOne(_panelExit, 0.3f);
     }
 
