@@ -102,9 +102,8 @@ public class DailyGiftsDialog : Dialog
             _timeValue = 0;
             _rewardedButton.gameObject.SetActive(true);
             _rewardedButton.content.SetActive(true);
+            _timeCountdown.transform.localScale = Vector3.zero;
         }
-        TimeSpan timeSpan = TimeSpan.FromSeconds(_timeValue);
-        _timeCountdown.text = timeSpan.ToString();
     }
 
     private IEnumerator CountDownTime()
@@ -115,6 +114,7 @@ public class DailyGiftsDialog : Dialog
             _timeCountdown.text = timeSpan.ToString();
             if (_timeCountdown.text == "00:00:00")
             {
+                _timeCountdown.transform.localScale = Vector3.zero;
                 _isReward = true;
                 CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
                 _rewardedButton.gameObject.SetActive(true);
@@ -142,6 +142,7 @@ public class DailyGiftsDialog : Dialog
         _timeCountdown.text = timeSpan.ToString();
         if (_timeCountdown.text == "00:00:00")
         {
+            _timeCountdown.transform.localScale = Vector3.zero;
             _isReward = true;
             CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
             _rewardedButton.gameObject.SetActive(true);
