@@ -78,6 +78,7 @@ public class LineWord : MonoBehaviour
 
     public void ShowAnswer()
     {
+        Prefs.countSpell = GameState.countSpell + 1;
         isShown = true;
         foreach (var cell in cells)
         {

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Compliment : MonoBehaviour {
+public class Compliment : MonoBehaviour
+{
     public Animator anim;
     public SpriteRenderer sRenderer;
     public Sprite[] sprites;
@@ -11,6 +12,24 @@ public class Compliment : MonoBehaviour {
         if (!IsAvailable2Show()) return;
 
         sRenderer.sprite = sprites[type];
+        switch (type)
+        {
+            case 0:
+                Prefs.countGood += 1;
+                break;
+            case 1:
+                Prefs.countGreat += 1;
+                break;
+            case 2:
+                Prefs.countAmazing += 1;
+                break;
+            case 3:
+                Prefs.countAwesome += 1;
+                break;
+            case 4:
+                Prefs.countExcellent += 1;
+                break;
+        }
         anim.SetTrigger("show");
     }
 

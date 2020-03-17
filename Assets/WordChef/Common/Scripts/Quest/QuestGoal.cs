@@ -8,13 +8,11 @@ public class QuestGoal
     public GoalType goalType;
     public int reward;
     public int requiredAmount;
-    int currentAmount;
-    
-    
-    bool isReached()
-    {        
-       
-        return (currentAmount >= requiredAmount);
+    int _currentAmountSpell;
+
+    public bool isReached()
+    {
+        return (_currentAmountSpell >= requiredAmount);
     }
 
     void CountSpellingGoal()
@@ -22,23 +20,25 @@ public class QuestGoal
         if (!CPlayerPrefs.HasKey("Spelling_goal"))
         {
             CPlayerPrefs.SetInt("Spelling_goal", 0);
-            currentAmount = 0;
+            _currentAmountSpell = 0;
 
-        } else
-        {
-            currentAmount = CPlayerPrefs.GetInt("Spelling_goal");
-            currentAmount++;
-            CPlayerPrefs.SetInt("Spelling_goal", currentAmount);   
         }
-    } 
+        else
+        {
+            _currentAmountSpell = CPlayerPrefs.GetInt("Spelling_goal");
+            _currentAmountSpell++;
+            CPlayerPrefs.SetInt("Spelling_goal", _currentAmountSpell);
+        }
+    }
 
-        
+
 }
 public enum GoalType
 {
     Spelling,
     LevelClear,
-    Combos
+    Combos,
+    ChappterClear
 }
 public enum ComboType
 {

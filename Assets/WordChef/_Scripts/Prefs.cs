@@ -46,6 +46,117 @@ public static class Prefs {
         set { CPlayerPrefs.SetInt("unlocked_level", value); GameState.unlockedLevel = value; }
     }
 
+    #region Objective Task
+
+    public static int countSpell
+    {
+        get
+        {
+            if (GameState.countSpell == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Spelling_goal");
+                GameState.countSpell = value;
+            }
+            return GameState.countSpell;
+        }
+        set { CPlayerPrefs.SetInt("Spelling_goal", value); GameState.countSpell = value; }
+    }
+    public static int countLevel
+    {
+        get
+        {
+            if (GameState.countLevel == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Level_Amount");
+                GameState.countLevel = value;
+            }
+            return GameState.countLevel;
+        }
+        set { CPlayerPrefs.SetInt("Level_Amount", value); GameState.countLevel = value; }
+    }
+
+    public static int countChapter
+    {
+        get
+        {
+            if (GameState.countChapter == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Chapter_Amount");
+                GameState.countChapter = value;
+            }
+            return GameState.countChapter;
+        }
+        set { CPlayerPrefs.SetInt("Chapter_Amount", value); GameState.countChapter = value; }
+    }
+
+    public static int countGood
+    {
+        get
+        {
+            if (GameState.goodCount == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Good_Amount");
+                GameState.goodCount = value;
+            }
+            return GameState.goodCount;
+        }
+        set { CPlayerPrefs.SetInt("Good_Amount", value); GameState.goodCount = value; }
+    }
+    public static int countGreat
+    {
+        get
+        {
+            if (GameState.greatCount == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Great_Amount");
+                GameState.greatCount = value;
+            }
+            return GameState.greatCount;
+        }
+        set { CPlayerPrefs.SetInt("Great_Amount", value); GameState.greatCount = value; }
+    }
+    public static int countAmazing
+    {
+        get
+        {
+            if (GameState.amazingCount == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Amazing_Amount");
+                GameState.amazingCount = value;
+            }
+            return GameState.amazingCount;
+        }
+        set { CPlayerPrefs.SetInt("Amazing_Amount", value); GameState.amazingCount = value; }
+    }
+    public static int countAwesome
+    {
+        get
+        {
+            if (GameState.awesomeCount == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Awesome_Amount");
+                GameState.awesomeCount = value;
+            }
+            return GameState.awesomeCount;
+        }
+        set { CPlayerPrefs.SetInt("Awesome_Amount", value); GameState.awesomeCount = value; }
+    }
+    public static int countExcellent
+    {
+        get
+        {
+            if (GameState.excelentCount == -1)
+            {
+                int value = CPlayerPrefs.GetInt("Excellent_Amount");
+                GameState.excelentCount = value;
+            }
+            return GameState.excelentCount;
+        }
+        set { CPlayerPrefs.SetInt("Excellent_Amount", value); GameState.excelentCount = value; }
+    }
+
+    #endregion
+
     public static List<int> GetPanWordIndexes(int world, int subWorld, int level)
     {
         string data = PlayerPrefs.GetString("pan_word_indexes_v2_" + world + "_" + subWorld + "_" + level);
