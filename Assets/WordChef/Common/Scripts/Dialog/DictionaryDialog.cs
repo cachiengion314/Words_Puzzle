@@ -9,6 +9,7 @@ using System.Net;
 using System.Linq;
 using TMPro;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 
 public class DictionaryDialog : Dialog
@@ -24,6 +25,9 @@ public class DictionaryDialog : Dialog
     public Transform content;
     public static DictionaryDialog instance;
     public Text numWordPassedText;
+
+    public GameObject background;
+    public GameObject playButton;
 
 
 
@@ -54,6 +58,16 @@ public class DictionaryDialog : Dialog
     {
         instance = this;
         homecontroller = GameObject.FindGameObjectWithTag("HomeController");
+        if (SceneManager.GetActiveScene().name.Contains("Home"))
+        {
+            background.SetActive(true);
+            playButton.SetActive(true);
+        }
+        else
+        {
+            background.SetActive(false);
+            playButton.SetActive(false);
+        }
     }
 
     protected override void Start()
@@ -148,9 +162,18 @@ public class DictionaryDialog : Dialog
         foreach ( KeyValuePair<string, List<string>> item in  groupWordDiction)
         {
             listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
-            listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key;
-            if(item.Value.Count>0)
-                listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count+" wds";
+            listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key + ".";
+            if (item.Value.Count > 0)
+            {
+                if (item.Value.Count == 1)
+                {
+                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count+" word";
+                }
+                else
+                {
+                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count+" words";
+                }
+            }
             foreach(var word in item.Value)
             {
                 //Debug.Log(item.Key + ": " + word);
