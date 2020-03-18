@@ -13,13 +13,15 @@ using System.IO;
 public class Dictionary: MonoBehaviour
 {
     public static Dictionary instance;
-    public static string SAVE_FOLDER;
-    public static Dictionary<string, string> dictWordSaved;
+    public string SAVE_FOLDER;
+    public Dictionary<string, string> dictWordSaved;
     void Awake()
     {
         if (instance == null)
             instance = this;
-        SAVE_FOLDER = Application.dataPath + "/Saves/";
+
+        SAVE_FOLDER = Application.persistentDataPath + "/Saves/";
+        Debug.Log(Application.persistentDataPath);
         if (!Directory.Exists(SAVE_FOLDER))
         {
             Directory.CreateDirectory(SAVE_FOLDER);

@@ -31,7 +31,7 @@ public class SettingDialog : PauseDialog
         }
         CheckLogin();
     }
-    private void Update()
+    /*private void Update()
     {
         if (soundController.IsMuted())
             soundButton.transform.Find("On").gameObject.SetActive(false);
@@ -43,7 +43,7 @@ public class SettingDialog : PauseDialog
             musicButton.transform.Find("On").gameObject.SetActive(false);
         else
             musicButton.transform.Find("On").gameObject.SetActive(true);
-    }
+    }*/
 
     public override void OnHowToPlayClick()
     {
@@ -57,6 +57,16 @@ public class SettingDialog : PauseDialog
         {
             bool _status = soundController.IsEnabled();
             soundController.SetEnabled(!_status);
+            if (_status)
+            {
+                soundButton.transform.Find("On").gameObject.SetActive(false);
+                soundButton.transform.Find("Off").gameObject.SetActive(true);
+            }
+            else
+            {
+                soundButton.transform.Find("Off").gameObject.SetActive(false);
+                soundButton.transform.Find("On").gameObject.SetActive(true);
+            }
         }
     }
     public void OnMusicClick()
@@ -65,6 +75,17 @@ public class SettingDialog : PauseDialog
         {
             bool _status = musicController.IsEnabled();
             musicController.SetEnabled(!_status, true);
+            
+            if (_status)
+            {
+                musicButton.transform.Find("On").gameObject.SetActive(false);
+                musicButton.transform.Find("Off").gameObject.SetActive(true);
+            }
+            else
+            {
+                musicButton.transform.Find("Off").gameObject.SetActive(false);
+                musicButton.transform.Find("On").gameObject.SetActive(true);
+            }
         }
     }
 

@@ -24,6 +24,10 @@ public class ShopDialog2 : Dialog
     
     public GameObject contentItemShop;
     public GameObject[] shopItemObject;
+
+
+    public GameObject shadowPanelHowToPlay;
+    public GameObject panelHowToPlay;
     protected override void Start()
     {
         base.Start();
@@ -156,6 +160,18 @@ public class ShopDialog2 : Dialog
         item.GetComponent<DOTweenAnimation>().DORestart();
         yield return new WaitForSeconds(item.GetComponent<DOTweenAnimation>().duration);
         item.GetComponent<SimpleTMPButton>().enabled = true;
+    }
+
+    public void OnClickHowToPlayButton()
+    {
+        shadowPanelHowToPlay.SetActive(true);
+        TweenControl.GetInstance().ScaleFromZero(panelHowToPlay,0.3f);
+    }
+
+    public void OnClickCloseHowToPlayPanelButton()
+    {
+        shadowPanelHowToPlay.SetActive(false);
+        TweenControl.GetInstance().ScaleFromOne(panelHowToPlay,0.3f);
     }
 }
 
