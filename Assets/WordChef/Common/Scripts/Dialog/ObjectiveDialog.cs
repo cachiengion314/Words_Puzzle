@@ -15,7 +15,7 @@ public class ObjectiveDialog : Dialog
     GameObject achieveBtn;
 
     GameObject homecontroller;
-    
+
     protected override void Start()
     {
         base.Start();
@@ -35,11 +35,12 @@ public class ObjectiveDialog : Dialog
         SetTabActive(dailyTask, dailyBtn, false);
         SetTabActive(achievement, achieveBtn, true);
     }
-    
+
     public void OnAcceptClick()
     {
         gameObject.GetComponent<Dialog>().Close();
-        homecontroller.GetComponent<HomeController>().OnClick(0);
+        if (homecontroller != null)
+            homecontroller.GetComponent<HomeController>().OnClick(0);
     }
 
 
@@ -49,9 +50,9 @@ public class ObjectiveDialog : Dialog
         tabBtn.transform.Find("On").gameObject.SetActive(status);
         tabBtn.transform.Find("IconOn").gameObject.SetActive(status);
         tabBtn.transform.Find("IconOff").gameObject.SetActive(!status);
-        if(status)
+        if (status)
             tabBtn.transform.Find("Text").GetComponent<Text>().color = new Vector4(1f, 1f, 1f, 1f);
         else
-            tabBtn.transform.Find("Text").GetComponent<Text>().color = new Vector4(0,0,0,1f);
+            tabBtn.transform.Find("Text").GetComponent<Text>().color = new Vector4(0, 0, 0, 1f);
     }
 }
