@@ -54,12 +54,12 @@ public static class Prefs {
         {
             if (GameState.countSpell == -1)
             {
-                int value = CPlayerPrefs.GetInt("Spelling_goal");
+                int value = CPlayerPrefs.GetInt(Const.SPELLING);
                 GameState.countSpell = value;
             }
             return GameState.countSpell;
         }
-        set { CPlayerPrefs.SetInt("Spelling_goal", value); GameState.countSpell = value; }
+        set { CPlayerPrefs.SetInt(Const.SPELLING, value); GameState.countSpell = value; }
     }
     public static int countLevel
     {
@@ -67,12 +67,12 @@ public static class Prefs {
         {
             if (GameState.countLevel == -1)
             {
-                int value = CPlayerPrefs.GetInt("Level_Amount");
+                int value = CPlayerPrefs.GetInt(Const.LEVEL_CLEAR);
                 GameState.countLevel = value;
             }
             return GameState.countLevel;
         }
-        set { CPlayerPrefs.SetInt("Level_Amount", value); GameState.countLevel = value; }
+        set { CPlayerPrefs.SetInt(Const.LEVEL_CLEAR, value); GameState.countLevel = value; }
     }
 
     public static int countChapter
@@ -81,12 +81,12 @@ public static class Prefs {
         {
             if (GameState.countChapter == -1)
             {
-                int value = CPlayerPrefs.GetInt("Chapter_Amount");
+                int value = CPlayerPrefs.GetInt(Const.CHAPTER_CLEAR);
                 GameState.countChapter = value;
             }
             return GameState.countChapter;
         }
-        set { CPlayerPrefs.SetInt("Chapter_Amount", value); GameState.countChapter = value; }
+        set { CPlayerPrefs.SetInt(Const.CHAPTER_CLEAR, value); GameState.countChapter = value; }
     }
 
     public static int countGood
@@ -95,12 +95,12 @@ public static class Prefs {
         {
             if (GameState.goodCount == -1)
             {
-                int value = CPlayerPrefs.GetInt("Good_Amount");
+                int value = CPlayerPrefs.GetInt(Const.GOOD_COMBO);
                 GameState.goodCount = value;
             }
             return GameState.goodCount;
         }
-        set { CPlayerPrefs.SetInt("Good_Amount", value); GameState.goodCount = value; }
+        set { CPlayerPrefs.SetInt(Const.GOOD_COMBO, value); GameState.goodCount = value; }
     }
     public static int countGreat
     {
@@ -108,12 +108,12 @@ public static class Prefs {
         {
             if (GameState.greatCount == -1)
             {
-                int value = CPlayerPrefs.GetInt("Great_Amount");
+                int value = CPlayerPrefs.GetInt(Const.GREAT_COMBO);
                 GameState.greatCount = value;
             }
             return GameState.greatCount;
         }
-        set { CPlayerPrefs.SetInt("Great_Amount", value); GameState.greatCount = value; }
+        set { CPlayerPrefs.SetInt(Const.GREAT_COMBO, value); GameState.greatCount = value; }
     }
     public static int countAmazing
     {
@@ -121,12 +121,12 @@ public static class Prefs {
         {
             if (GameState.amazingCount == -1)
             {
-                int value = CPlayerPrefs.GetInt("Amazing_Amount");
+                int value = CPlayerPrefs.GetInt(Const.AMAZING_COMBO);
                 GameState.amazingCount = value;
             }
             return GameState.amazingCount;
         }
-        set { CPlayerPrefs.SetInt("Amazing_Amount", value); GameState.amazingCount = value; }
+        set { CPlayerPrefs.SetInt(Const.AMAZING_COMBO, value); GameState.amazingCount = value; }
     }
     public static int countAwesome
     {
@@ -134,12 +134,12 @@ public static class Prefs {
         {
             if (GameState.awesomeCount == -1)
             {
-                int value = CPlayerPrefs.GetInt("Awesome_Amount");
+                int value = CPlayerPrefs.GetInt(Const.AWESOME_COMBO);
                 GameState.awesomeCount = value;
             }
             return GameState.awesomeCount;
         }
-        set { CPlayerPrefs.SetInt("Awesome_Amount", value); GameState.awesomeCount = value; }
+        set { CPlayerPrefs.SetInt(Const.AWESOME_COMBO, value); GameState.awesomeCount = value; }
     }
     public static int countExcellent
     {
@@ -147,14 +147,123 @@ public static class Prefs {
         {
             if (GameState.excelentCount == -1)
             {
-                int value = CPlayerPrefs.GetInt("Excellent_Amount");
+                int value = CPlayerPrefs.GetInt(Const.EXCELLENT_COMBO);
                 GameState.excelentCount = value;
             }
             return GameState.excelentCount;
         }
-        set { CPlayerPrefs.SetInt("Excellent_Amount", value); GameState.excelentCount = value; }
+        set { CPlayerPrefs.SetInt(Const.EXCELLENT_COMBO, value); GameState.excelentCount = value; }
     }
 
+    #endregion
+
+    #region DailyTask
+    public static int countSpellDaily
+    {
+        get
+        {
+            if (GameState.countSpellDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.SPELLING_DAILY);
+                GameState.countSpellDaily = value;
+            }
+            return GameState.countSpellDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.SPELLING_DAILY, value); GameState.countSpellDaily = value; }
+    }
+    public static int countLevelDaily
+    {
+        get
+        {
+            if (GameState.countLevelDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.LEVEL_CLEAR_DAILY);
+                GameState.countLevelDaily = value;
+            }
+            return GameState.countLevelDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.LEVEL_CLEAR_DAILY, value); GameState.countLevelDaily = value; }
+    }
+
+    public static int countChapterDaily
+    {
+        get
+        {
+            if (GameState.countChapterDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.CHAPTER_CLEAR_DAILY);
+                GameState.countChapterDaily = value;
+            }
+            return GameState.countChapterDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.CHAPTER_CLEAR_DAILY, value); GameState.countChapterDaily = value; }
+    }
+
+    public static int countGoodDaily
+    {
+        get
+        {
+            if (GameState.goodCountDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.GOOD_COMBO_DAILY);
+                GameState.goodCountDaily = value;
+            }
+            return GameState.goodCountDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.GOOD_COMBO_DAILY, value); GameState.goodCountDaily = value; }
+    }
+    public static int countGreatDaily
+    {
+        get
+        {
+            if (GameState.greatCountDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.GREAT_COMBO_DAILY);
+                GameState.greatCountDaily = value;
+            }
+            return GameState.greatCountDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.GREAT_COMBO_DAILY, value); GameState.greatCountDaily = value; }
+    }
+    public static int countAmazingDaily
+    {
+        get
+        {
+            if (GameState.amazingCountDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.AMAZING_COMBO_DAILY);
+                GameState.amazingCountDaily = value;
+            }
+            return GameState.amazingCountDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.AMAZING_COMBO_DAILY, value); GameState.amazingCountDaily = value; }
+    }
+    public static int countAwesomeDaily
+    {
+        get
+        {
+            if (GameState.awesomeCountDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.AWESOME_COMBO_DAILY);
+                GameState.awesomeCountDaily = value;
+            }
+            return GameState.awesomeCountDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.AWESOME_COMBO_DAILY, value); GameState.awesomeCountDaily = value; }
+    }
+    public static int countExcellentDaily
+    {
+        get
+        {
+            if (GameState.excelentCountDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.EXCELLENT_COMBO_DAILY);
+                GameState.excelentCountDaily = value;
+            }
+            return GameState.excelentCountDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.EXCELLENT_COMBO_DAILY, value); GameState.excelentCountDaily = value; }
+    }
     #endregion
 
     public static List<int> GetPanWordIndexes(int world, int subWorld, int level)

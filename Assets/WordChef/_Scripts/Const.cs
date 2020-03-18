@@ -14,4 +14,22 @@ public class Const
     public const int SPIN_AGAIN = 100;
 
     public const int NUM_SUBWORLD = 5;
+
+    public const string SPELLING = "Spelling_goal";
+    public const string LEVEL_CLEAR = "Level_Amount";
+    public const string CHAPTER_CLEAR = "Chapter_Amount";
+    public const string GOOD_COMBO = "Good_Amount";
+    public const string GREAT_COMBO = "Great_Amount";
+    public const string AMAZING_COMBO = "Amazing_Amount";
+    public const string AWESOME_COMBO = "Awesome_Amount";
+    public const string EXCELLENT_COMBO = "Excellent_Amount";
+
+    public const string SPELLING_DAILY = "Spelling_goal_DAILY";
+    public const string LEVEL_CLEAR_DAILY = "Level_Amount_DAILY";
+    public const string CHAPTER_CLEAR_DAILY = "Chapter_Amount_DAILY";
+    public const string GOOD_COMBO_DAILY = "Good_Amount_DAILY";
+    public const string GREAT_COMBO_DAILY = "Great_Amount_DAILY";
+    public const string AMAZING_COMBO_DAILY = "Amazing_Amount_DAILY";
+    public const string AWESOME_COMBO_DAILY = "Awesome_Amount_DAILY";
+    public const string EXCELLENT_COMBO_DAILY = "Excellent_Amount_DAILY";
 }

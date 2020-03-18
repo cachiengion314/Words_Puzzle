@@ -11,66 +11,82 @@ public class QuestController : MonoBehaviour
     GameObject dailyTaskContent;
     [SerializeField]
     GameObject achievementContent;
+    [SerializeField] private float _timeRefresh = 12;
+    [SerializeField] private TextMeshProUGUI _textRealtime;
+    private List<Quest> _oldQuest;
+    private Stack<Quest> curDailyquests;
+    private DateTime nextDay;
+    private double valueTime;
 
-    Queue<Quest> curDailyquests;
-    Queue<Quest> hideQuests;
-    DateTime nextDay;
-    DateTime nowDay;
-    bool isUpdateDailyQuest;
-    bool once;
-    bool isClick;
-
-
-    private void Start()
+    void Awake()
     {
-        once = true;
-        isUpdateDailyQuest = false;
-        curDailyquests = new Queue<Quest>();
-        hideQuests = new Queue<Quest>();
-        foreach(Transform child in dailyTaskContent.transform)
+        curDailyquests = new Stack<Quest>(dailyTaskContent.transform.childCount);
+        for (int i = 0; i < dailyTaskContent.transform.childCount; i++)
         {
-            child.gameObject.SetActive(false);
-            Quest quest = child.gameObject.GetComponent<Quest>();
-            curDailyquests.Enqueue(quest);
+            var qs = dailyTaskContent.transform.GetChild(i).gameObject.GetComponent<Quest>();
+            qs.Run();
+            qs.gameObject.SetActive(false);
+            curDailyquests.Push(qs);
         }
-
-
-        //Debug.Log(nextDay);
+        for (int i = 0; i < achievementContent.transform.childCount; i++)
+        {
+            var quest = achievementContent.transform.GetChild(i).gameObject.GetComponent<Quest>();
+            quest.Run();
+        }
         UpdateNextDay();
         Debug.Log(nextDay);
+    }
+
+    void Start()
+    {
         UpdateDailyQuest();
     }
-    private void Update()
-    {
-        //UpdateDailyQuest();
-        //Debug.Log("hideQuests " + hideQuests.Count);
-        //Debug.Log("curDailyquests" + curDailyquests.Count);
 
+    private IEnumerator CountDownTimeRefresh()
+    {
+        while (DateTime.Compare(DateTime.Now, nextDay) < 0)
+        {
+            var result = nextDay - DateTime.Now;
+            valueTime = (int)(result.TotalSeconds);
+            _textRealtime.text = TimeSpan.FromSeconds(valueTime).ToString();
+            yield return new WaitForSeconds(1);
+            if (valueTime <= 0)
+                UpdateDailyQuest();
+        }
     }
+
     void DailyActive()
     {
-        once = false; 
-        for (int i = 0; i < 3; i++)
+        _oldQuest = new List<Quest>();
+        for (int i = 0; i < dailyTaskContent.transform.childCount; i++)
         {
-            Quest questActived = curDailyquests.Dequeue();
-            hideQuests.Enqueue(questActived);
-            questActived.gameObject.SetActive(true);
+            var quest = curDailyquests.Pop();
+            quest.gameObject.SetActive(true);
+            quest.Run();
+            _oldQuest.Add(quest);
+        }
+    }
 
+    private void ShuffleTask()
+    {
+        for (int i = 0; i < curDailyquests.Count; i++)
+        {
+            var quest = curDailyquests.Pop();
+            quest.Refresh();
+            quest.gameObject.SetActive(false);
+            _oldQuest.Add(quest);
         }
     }
     void UpdateDailyQuest()
     {
-        //UpdateNextDay();
-        if (DateTime.Compare(DateTime.Now, nextDay) > 0)
+        if (DateTime.Compare(DateTime.Now, nextDay) >= 0)
         {
-            Debug.Log("jsdjsajdasd");
-            once = true;
-            isUpdateDailyQuest = true;
-            foreach (Quest quest in hideQuests)
+            ShuffleTask();
+            foreach (var qs in _oldQuest)
             {
-                quest.gameObject.SetActive(false);
-                Quest newQuest = hideQuests.Dequeue();
-                curDailyquests.Enqueue(newQuest);
+                qs.Refresh();
+                qs.gameObject.SetActive(false);
+                curDailyquests.Push(qs);
             }
             DailyActive();
             UpdateNextDay();
@@ -78,24 +94,17 @@ public class QuestController : MonoBehaviour
         else
         {
             DailyActive();
-            UpdateNextDay();
-            isUpdateDailyQuest = false;
         }
-
+        StartCoroutine(CountDownTimeRefresh());
     }
 
     void UpdateNextDay()
     {
-        if (once)
+        var timeRefresh = DateTime.Now.Date + TimeSpan.FromSeconds(_timeRefresh * 3600);
+        nextDay = DateTime.FromBinary(timeRefresh.Ticks);
+        if (DateTime.Compare(DateTime.Now, nextDay) > 0)
         {
-            Debug.Log("nextDay is default");
-            nextDay = DateTime.Today.AddDays(1);
-            once = false;
-        }
-        else if (isUpdateDailyQuest)
-        {
-            Debug.Log("Update day complete");
-            nextDay = DateTime.Today.AddDays(1);
+            nextDay = DateTime.Today.AddDays(1) + TimeSpan.FromSeconds(_timeRefresh * 3600);
         }
     }
 

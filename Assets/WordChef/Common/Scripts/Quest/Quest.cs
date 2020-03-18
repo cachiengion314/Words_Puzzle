@@ -6,14 +6,12 @@ using UnityEngine.UI;
 using Utilities.Components;
 
 [System.Serializable]
-public class Quest :MonoBehaviour
+public class Quest : MonoBehaviour
 {
-    //public string title;
-    //public int reward;
-    //public int numGoal; 
+    public TaskType taskType;
+    [Space]
     public QuestGoal goal;
     public ComboType combo;
-
     [SerializeField]
     GameObject titleText;
     [SerializeField]
@@ -22,13 +20,35 @@ public class Quest :MonoBehaviour
     [SerializeField] private Slider _fillProgress;
     [SerializeField] private Button _btnGo;
     [SerializeField] private Button _btnReward;
-    [SerializeField] private Image _iconCompleta;
+    [SerializeField] private Image _iconComplete;
 
-    bool iscomplete;
-    void OnEnable()
+    public void Run()
     {
-        _iconCompleta.gameObject.SetActive(false);
-        ShowQuest();
+        _iconComplete.gameObject.SetActive(false);
+        switch (taskType)
+        {
+            case TaskType.DAILY:
+                ShowQuestDaily();
+                break;
+            case TaskType.ACHIEVEMENT:
+                ShowQuestAchie();
+                break;
+        }
+    }
+
+    public void Refresh()
+    {
+        ClearTaskDailyByKey();
+        ClearTask("Completed" + gameObject.name);
+        ShowQuestDaily();
+    }
+
+    private void ResetupAchie()
+    {
+        goal.requiredAmount += goal.amountResetup;
+        ClearTaskAchievementByKey();
+        ClearTask("Completed" + gameObject.name);
+        ShowQuestAchie();
     }
 
     void Update()
@@ -36,7 +56,6 @@ public class Quest :MonoBehaviour
         if (_fillProgress.value >= goal.requiredAmount)
         {
             _fillProgress.value = _fillProgress.maxValue;
-            iscomplete = goal.isReached();
             ShowReward(true);
         }
     }
@@ -45,15 +64,236 @@ public class Quest :MonoBehaviour
     {
         _btnReward.gameObject.SetActive(show);
         _btnGo.gameObject.SetActive(!show);
-        var iscompleted = CPlayerPrefs.GetBool("Completed" + gameObject.name + transform.GetSiblingIndex(), false);
-        if(iscompleted)
+        var iscompleted = CPlayerPrefs.GetBool("Completed" + gameObject.name, false);
+        if (iscompleted)
         {
             _btnReward.gameObject.SetActive(false);
             _btnGo.gameObject.SetActive(false);
-            _iconCompleta.gameObject.SetActive(true);
+            _iconComplete.gameObject.SetActive(true);
             _fillProgress.value = _fillProgress.maxValue;
         }
     }
+
+
+    public void OnReward()
+    {
+        CurrencyController.CreditBalance(goal.reward);
+        _btnReward.gameObject.SetActive(false);
+        _iconComplete.gameObject.SetActive(true);
+        CPlayerPrefs.SetBool("Completed" + gameObject.name, true);
+        switch (taskType)
+        {
+            case TaskType.DAILY:
+                ClearTaskDailyByKey();
+                break;
+            case TaskType.ACHIEVEMENT:
+                ResetupAchie();
+                break;
+        }
+    }
+
+    void ShowQuestDaily()
+    {
+        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("+" + goal.requiredAmount);
+        _fillProgress.maxValue = goal.requiredAmount;
+        switch (goal.goalType)
+        {
+            case GoalType.Spelling:
+                titleText.GetComponent<TextMeshProUGUI>().text = "Spell " + goal.requiredAmount + " Word" + ((goal.requiredAmount == 1) ? "" : "s");
+                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                _fillProgress.value = Prefs.countSpellDaily;
+                break;
+            case GoalType.LevelClear:
+                titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s");
+                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                _fillProgress.value = Prefs.countLevelDaily;
+                break;
+            case GoalType.ChappterClear:
+                titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " Chapter" + ((goal.requiredAmount == 1) ? "" : "s");
+                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                _fillProgress.value = Prefs.countChapterDaily;
+                break;
+            case GoalType.Combos:
+                if (combo == ComboType.amazing)
+                {
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " AMAZING combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                    _fillProgress.value = Prefs.countAmazingDaily;
+                }
+                else if (combo == ComboType.awesome)
+                {
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " AWESOME combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                    _fillProgress.value = Prefs.countAwesomeDaily;
+                }
+                else if (combo == ComboType.excelent)
+                {
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " EXCELENT combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                    _fillProgress.value = Prefs.countExcellentDaily;
+                }
+                else if (combo == ComboType.good)
+                {
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GOOD combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                    _fillProgress.value = Prefs.countGoodDaily;
+                }
+                else if (combo == ComboType.great)
+                {
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GREAT combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                    _fillProgress.value = Prefs.countGreatDaily;
+                }
+                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                break;
+        }
+        if (_fillProgress.value < _fillProgress.maxValue)
+            ShowReward(false);
+    }
+
+    void ShowQuestAchie()
+    {
+        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("+" + goal.requiredAmount);
+        _fillProgress.maxValue = goal.requiredAmount;
+        if (_fillProgress.value < _fillProgress.maxValue)
+        {
+            switch (goal.goalType)
+            {
+                case GoalType.Spelling:
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Spell " + goal.requiredAmount + " Word" + ((goal.requiredAmount == 1) ? "" : "s");
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    _fillProgress.value = Prefs.countSpell;
+                    break;
+                case GoalType.LevelClear:
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s");
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    _fillProgress.value = Prefs.countLevel;
+                    break;
+                case GoalType.ChappterClear:
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " Chapter" + ((goal.requiredAmount == 1) ? "" : "s");
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    _fillProgress.value = Prefs.countChapter;
+                    break;
+                case GoalType.Combos:
+                    if (combo == ComboType.amazing)
+                    {
+                        titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " AMAZING combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                        _fillProgress.value = Prefs.countAmazing;
+                    }
+                    else if (combo == ComboType.awesome)
+                    {
+                        titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " AWESOME combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                        _fillProgress.value = Prefs.countAwesome;
+                    }
+                    else if (combo == ComboType.excelent)
+                    {
+                        titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " EXCELENT combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                        _fillProgress.value = Prefs.countExcellent;
+                    }
+                    else if (combo == ComboType.good)
+                    {
+                        titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GOOD combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                        _fillProgress.value = Prefs.countGood;
+                    }
+                    else if (combo == ComboType.great)
+                    {
+                        titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GREAT combo" + ((goal.requiredAmount == 1) ? "" : "s");
+                        _fillProgress.value = Prefs.countGreat;
+                    }
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    break;
+            }
+            ShowReward(false);
+        }
+    }
+
+    private void ClearTaskDailyByKey()
+    {
+        switch (goal.goalType)
+        {
+            case GoalType.Spelling:
+                GameState.countSpellDaily = -1;
+                ClearTask(Const.SPELLING_DAILY);
+                break;
+            case GoalType.LevelClear:
+                GameState.countLevelDaily = -1;
+                ClearTask(Const.LEVEL_CLEAR_DAILY);
+                break;
+            case GoalType.ChappterClear:
+                GameState.countChapterDaily = -1;
+                ClearTask(Const.CHAPTER_CLEAR_DAILY);
+                break;
+            case GoalType.Combos:
+                if (combo == ComboType.amazing)
+                {
+                    GameState.amazingCountDaily = -1;
+                    ClearTask(Const.AMAZING_COMBO_DAILY);
+                }
+                else if (combo == ComboType.awesome)
+                {
+                    GameState.awesomeCountDaily = -1;
+                    ClearTask(Const.AWESOME_COMBO_DAILY);
+                }
+                else if (combo == ComboType.excelent)
+                {
+                    GameState.excelentCountDaily = -1;
+                    ClearTask(Const.EXCELLENT_COMBO_DAILY);
+                }
+                else if (combo == ComboType.good)
+                {
+                    GameState.goodCountDaily = -1;
+                    ClearTask(Const.GOOD_COMBO_DAILY);
+                }
+                else if (combo == ComboType.great)
+                {
+                    GameState.greatCountDaily = -1;
+                    ClearTask(Const.GREAT_COMBO_DAILY);
+                }
+                break;
+        }
+    }
+
+    private void ClearTaskAchievementByKey()
+    {
+        switch (goal.goalType)
+        {
+            case GoalType.Spelling:
+                GameState.countSpell = -1;
+                ClearTask(Const.SPELLING);
+                break;
+            case GoalType.LevelClear:
+                GameState.countLevel = -1;
+                ClearTask(Const.LEVEL_CLEAR);
+                break;
+            case GoalType.ChappterClear:
+                GameState.countChapter = -1;
+                ClearTask(Const.CHAPTER_CLEAR);
+                break;
+            case GoalType.Combos:
+                if (combo == ComboType.amazing)
+                {
+                    GameState.amazingCount = -1;
+                    ClearTask(Const.AMAZING_COMBO);
+                }
+                else if (combo == ComboType.awesome)
+                {
+                    GameState.awesomeCount = -1;
+                    ClearTask(Const.AWESOME_COMBO);
+                }
+                else if (combo == ComboType.excelent)
+                {
+                    GameState.excelentCount = -1;
+                    ClearTask(Const.EXCELLENT_COMBO);
+                }
+                else if (combo == ComboType.good)
+                {
+                    GameState.goodCount = -1;
+                    ClearTask(Const.GOOD_COMBO);
+                }
+                else if (combo == ComboType.great)
+                {
+                    GameState.greatCount = -1;
+                    ClearTask(Const.GREAT_COMBO);
+                }
+                break;
+        }
+    }
+
     /// <summary>
     /// Clear Task by key name
     /// </summary>
@@ -68,119 +308,15 @@ public class Quest :MonoBehaviour
     /// </summary>
     private void ClearTask()
     {
-        CPlayerPrefs.DeleteKey("Spelling_goal");
-        CPlayerPrefs.DeleteKey("Level_Amount");
-        CPlayerPrefs.DeleteKey("Chapter_Amount");
-        CPlayerPrefs.DeleteKey("Good_Amount");
-        CPlayerPrefs.DeleteKey("Great_Amount");
-        CPlayerPrefs.DeleteKey("Amazing_Amount");
-        CPlayerPrefs.DeleteKey("Awesome_Amount");
-        CPlayerPrefs.DeleteKey("Excellent_Amount");
+        CPlayerPrefs.DeleteKey(Const.SPELLING);
+        CPlayerPrefs.DeleteKey(Const.LEVEL_CLEAR);
+        CPlayerPrefs.DeleteKey(Const.CHAPTER_CLEAR);
+        CPlayerPrefs.DeleteKey(Const.GOOD_COMBO);
+        CPlayerPrefs.DeleteKey(Const.GREAT_COMBO);
+        CPlayerPrefs.DeleteKey(Const.AMAZING_COMBO);
+        CPlayerPrefs.DeleteKey(Const.AWESOME_COMBO);
+        CPlayerPrefs.DeleteKey(Const.EXCELLENT_COMBO);
     }
-
-    public void OnReward()
-    {
-        CurrencyController.CreditBalance(goal.reward);
-        _btnReward.gameObject.SetActive(false);
-        _iconCompleta.gameObject.SetActive(true);
-        CPlayerPrefs.SetBool("Completed" + gameObject.name + transform.GetSiblingIndex(), true);
-        ClearTaskByKey();
-    }
-
-    void ShowQuest()
-    {
-        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("+" + goal.requiredAmount);
-        _fillProgress.maxValue = goal.requiredAmount;
-        switch (goal.goalType)
-        {
-            case GoalType.Spelling:
-                titleText.GetComponent<TextMeshProUGUI>().text = "Spell " + goal.requiredAmount + " Words";
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
-                _fillProgress.value = Prefs.countSpell;
-                break;
-            case GoalType.LevelClear:
-                titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " levels";
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
-                _fillProgress.value = Prefs.countLevel;
-                break;
-            case GoalType.ChappterClear:
-                titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " levels";
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
-                _fillProgress.value = Prefs.countChapter;
-                break;
-            case GoalType.Combos:
-                if (combo == ComboType.amazing)
-                {
-                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " AMAZING combos";
-                    _fillProgress.value = Prefs.countAmazing;
-                }
-                else if (combo == ComboType.awesome)
-                {
-                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " AWESOME combos";
-                    _fillProgress.value = Prefs.countAwesome;
-                }
-                else if (combo == ComboType.excelent)
-                {
-                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " EXCELENT combos";
-                    _fillProgress.value = Prefs.countExcellent;
-                }
-                else if (combo == ComboType.good)
-                {
-                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GOOD combos";
-                    _fillProgress.value = Prefs.countGood;
-                }
-                else if (combo == ComboType.great)
-                {
-                    titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GREAT combos";
-                    _fillProgress.value = Prefs.countGreat;
-                }
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
-                break;      
-        }
-        if(_fillProgress.value < _fillProgress.maxValue)
-        {
-            ShowReward(false);
-        }
-    }
-
-    private void ClearTaskByKey()
-    {
-        switch (goal.goalType)
-        {
-            case GoalType.Spelling:
-                ClearTask("Spelling_goal");
-                break;
-            case GoalType.LevelClear:
-                ClearTask("Level_Amount");
-                break;
-            case GoalType.ChappterClear:
-                ClearTask("Chapter_Amount");
-                break;
-            case GoalType.Combos:
-                if (combo == ComboType.amazing)
-                {
-                    ClearTask("Amazing_Amount");
-                }
-                else if (combo == ComboType.awesome)
-                {
-                    ClearTask("Awesome_Amount");
-                }
-                else if (combo == ComboType.excelent)
-                {
-                    ClearTask("Excellent_Amount");
-                }
-                else if (combo == ComboType.good)
-                {
-                    ClearTask("Good_Amount");
-                }
-                else if (combo == ComboType.great)
-                {
-                    ClearTask("Great_Amount");
-                }
-                break;
-        }
-    }
-
 }
 
 

@@ -1007,8 +1007,8 @@ RectTransform:
   m_Father: {fileID: 3465232461370079680}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1166,17 +1166,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aadb9e83c437d240aa5ecd957b43ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskType: 0
   goal:
     goalType: 1
     reward: 20
     requiredAmount: 5
+    amountResetup: 0
   combo: 4
   titleText: {fileID: 1403689336900030593}
   rewardText: {fileID: 494308527692164670}
   _fillProgress: {fileID: 2134863287746155972}
   _btnGo: {fileID: 2293220576285684374}
   _btnReward: {fileID: 6004455225931602376}
-  _iconCompleta: {fileID: 3622222604426194928}
+  _iconComplete: {fileID: 3622222604426194928}
 --- !u!1 &5313381255551546856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,8 +1668,8 @@ RectTransform:
   m_Father: {fileID: 3465232461370079680}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
