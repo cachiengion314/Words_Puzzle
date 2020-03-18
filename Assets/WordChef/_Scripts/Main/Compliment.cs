@@ -16,18 +16,23 @@ public class Compliment : MonoBehaviour
         {
             case 0:
                 Prefs.countGood += 1;
+                Prefs.countGoodDaily += 1;
                 break;
             case 1:
                 Prefs.countGreat += 1;
+                Prefs.countGreatDaily += 1;
                 break;
             case 2:
                 Prefs.countAmazing += 1;
+                Prefs.countAmazingDaily += 1;
                 break;
             case 3:
                 Prefs.countAwesome += 1;
+                Prefs.countAwesomeDaily += 1;
                 break;
             case 4:
                 Prefs.countExcellent += 1;
+                Prefs.countExcellentDaily += 1;
                 break;
         }
         anim.SetTrigger("show");

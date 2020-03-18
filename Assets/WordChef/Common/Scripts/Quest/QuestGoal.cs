@@ -8,6 +8,7 @@ public class QuestGoal
     public GoalType goalType;
     public int reward;
     public int requiredAmount;
+    public int amountResetup;
     int _currentAmountSpell;
 
     public bool isReached()
@@ -47,4 +48,9 @@ public enum ComboType
     excelent,
     good,
     great
+}
+public enum TaskType
+{
+    DAILY,
+    ACHIEVEMENT
 }

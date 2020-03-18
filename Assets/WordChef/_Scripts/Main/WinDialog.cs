@@ -82,6 +82,7 @@ public class WinDialog : Dialog {
         if (level == numLevels - 1)
         {
             Prefs.countChapter += 1;
+            Prefs.countChapterDaily += 1;
             GameState.currentSubWorld = (subWorld + 1) % Const.NUM_SUBWORLD;
             if (subWorld == Const.NUM_SUBWORLD - 1)
             {
@@ -145,6 +146,7 @@ public class WinDialog : Dialog {
         Close();
         Sound.instance.PlayButton();
         Prefs.countLevel += 1; 
+        Prefs.countLevelDaily += 1;
         CUtils.LoadScene(level == numLevels - 1 ? 1 : 3, true);
         FacebookController.instance.user.levelProgress = new string[] { "0" };
         FacebookController.instance.SaveDataGame();
