@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 
-public class TextPreview : MonoBehaviour {
+public class TextPreview : MonoBehaviour
+{
     public GameObject content;
     public RectTransform backgroundRT;
     public string word;
@@ -17,6 +18,10 @@ public class TextPreview : MonoBehaviour {
     public Color wrongColor;
     public Color existColor;
     public Color defaultColor;
+
+    [Space]
+    public bool useFX;
+    [SerializeField] private Image _fxWrong;
 
     public static TextPreview instance;
 
@@ -47,6 +52,26 @@ public class TextPreview : MonoBehaviour {
         }
     }
 
+    private void ShowFxWrong()
+    {
+        if (_fxWrong != null)
+        {
+            _fxWrong.gameObject.SetActive(true);
+            BlockScreen.instance.Block(true);
+            TweenControl.GetInstance().MoveRectX((transform as RectTransform), -50f, 0.1f, () =>
+            {
+                TweenControl.GetInstance().MoveRectX((transform as RectTransform), 50f, 0.2f, () =>
+                {
+                    TweenControl.GetInstance().MoveRectX((transform as RectTransform), 0, 0.1f, () =>
+                    {
+                        ClearText();
+                        BlockScreen.instance.Block(false);
+                    });
+                });
+            });
+        }
+    }
+
     public void SetIndexes(List<int> indexes)
     {
         StringBuilder sb = new StringBuilder();
@@ -60,7 +85,7 @@ public class TextPreview : MonoBehaviour {
         }
         else
         {
-            for(int i = indexes.Count - 1; i >= 0; i--)
+            for (int i = indexes.Count - 1; i >= 0; i--)
             {
                 int letterIndex = indexes[i];
                 sb.Append(word[letterIndex]);
@@ -117,6 +142,7 @@ public class TextPreview : MonoBehaviour {
     public void SetWrongColor()
     {
         backgroundRT.GetComponent<Image>().color = wrongColor;
+        ShowFxWrong();
     }
 
     public void SetDefaultColor()

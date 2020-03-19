@@ -69,7 +69,7 @@ public class LineDrawer : MonoBehaviour
 
             if (Vector3.Distance(letterPosition, mousePoint) < RADIUS)
             {
-
+                pan.ScaleWord(letterPosition);
                 if (currentIndexes.Count >= 2 && currentIndexes[currentIndexes.Count - 2] == nearest)
                 {
                     currentIndexes.RemoveAt(currentIndexes.Count - 1);
@@ -94,7 +94,7 @@ public class LineDrawer : MonoBehaviour
             lineParticle.SetActive(false);
 
             WordRegion.instance.CheckAnswer(textPreview.GetText());
-
+            pan.ResetScaleWord();
         }
 
         if (points.Count >= 2 && isDragging)

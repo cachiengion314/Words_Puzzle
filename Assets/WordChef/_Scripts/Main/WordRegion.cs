@@ -21,6 +21,14 @@ public class WordRegion : MonoBehaviour
     private RectTransform rt;
     public static WordRegion instance;
 
+    public List<LineWord> Lines
+    {
+        get
+        {
+            return lines;
+        }
+    }
+
     private void Awake()
     {
         instance = this;
@@ -35,7 +43,7 @@ public class WordRegion : MonoBehaviour
         validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
         numWords = wordList.Count;
 
-        numCol = numWords <= 7 ? 1 :
+        numCol = numWords <= 4 ? 1 :
                      numWords <= 12 ? 2 : 3;
 
         numRow = (int)Mathf.Ceil(numWords / (float)numCol);
@@ -120,6 +128,23 @@ public class WordRegion : MonoBehaviour
             lines.Add(line);
             lineIndex++;
         }
+
+        CheckGiftAds();
+    }
+
+    private void CheckGiftAds()
+    {
+        var isGiftAds = false;
+        var lineAds = lines.FindAll(line => line.cells.Count > 3);
+
+        foreach (var line in lineAds)
+        {
+            isGiftAds = line.cells.Any(cell => cell.giftAds.activeInHierarchy);
+            if (isGiftAds)
+                break;
+        }
+        if (!isGiftAds && lineAds.Count > 0)
+            lineAds[Random.Range(0, lineAds.Count)].ShowAdsUnlockCell();
     }
 
     private void GetCellShowHint(LineWord line)
@@ -130,6 +155,7 @@ public class WordRegion : MonoBehaviour
             cell.bg.color = new Color(1, 1, 1, 0.5f);
             if (line.usedBee && !cell.isShown)
                 cell.iconCoin.transform.localScale = Vector3.one;
+
         }
     }
 
@@ -168,8 +194,8 @@ public class WordRegion : MonoBehaviour
             int count = lines.Count;
             for (int i = 0; i < count; i++)
             {
-                //float x = rt.rect.width / 2 - lines[i].lineWidth / 2;
-                float x = startFirstColX;
+                float x = rt.rect.width / 2 - lines[i].lineWidth / 2;
+                //float x = startFirstColX;
                 float y;
                 //if (hasLongLine)
                 //{
@@ -201,13 +227,14 @@ public class WordRegion : MonoBehaviour
 
                 compliment.Show(lineIndex);
                 lineIndex++;
-                if (lineIndex > 6) { lineIndex = 6; }
+                if (lineIndex > compliment.sprites.Length - 1) { lineIndex = compliment.sprites.Length - 1; }
 
                 Sound.instance.Play(Sound.Others.Match);
 
             }
             else
             {
+                line.ShowFxAnswerDuplicate();
                 textPreview.SetExistColor();
             }
         }
@@ -220,8 +247,8 @@ public class WordRegion : MonoBehaviour
             textPreview.SetWrongColor();
             lineIndex = 0;
         }
-
-        textPreview.ClearText();
+        if (!textPreview.useFX)
+            textPreview.ClearText();
     }
 
     private void CheckGameComplete()

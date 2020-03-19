@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LineWord : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class LineWord : MonoBehaviour
     public bool isShown, RTL;
 
     public bool usedBee;
+
+    [Space]
+
+    [SerializeField] private Image _fxAnswerDuplicate;
 
     public void Build(bool RTL)
     {
@@ -76,6 +81,19 @@ public class LineWord : MonoBehaviour
         }
     }
 
+    public void ShowFxAnswerDuplicate()
+    {
+        if (_fxAnswerDuplicate != null)
+        {
+            _fxAnswerDuplicate.gameObject.SetActive(true);
+            TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject,Vector3.one * 1.1f,0.3f,()=> {
+                TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject, Vector3.one, 0.3f, () => {
+                    _fxAnswerDuplicate.gameObject.SetActive(false);
+                });
+            });
+        }
+    }
+
     public void ShowAnswer()
     {
         Prefs.countSpell += 1;
@@ -117,6 +135,17 @@ public class LineWord : MonoBehaviour
         foreach (var cell in cells)
         {
             cell.bg.color = new Color(1, 1, 1, 1);
+        }
+    }
+
+    public void ShowAdsUnlockCell()
+    {
+        var isCellAds = cells.Any(cell => cell.giftAds.gameObject.activeInHierarchy);
+        var cellNotShow = cells.FindAll(cell => !cell.isShown);
+        if (cells.Count > 2 && !isCellAds && cellNotShow.Count > 3)
+        {
+            var cellAds = Random.Range(0, cellNotShow.Count);
+            cells[cellAds].ShowBtnADS();
         }
     }
 

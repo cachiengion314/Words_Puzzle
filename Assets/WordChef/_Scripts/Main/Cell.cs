@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Cell : MonoBehaviour
 {
     public TextMeshProUGUI letterText;
     public Image bg;
+    public GameObject giftAds;
     public Image iconCoin;
     public string letter;
     public bool isShown;
@@ -68,5 +70,16 @@ public class Cell : MonoBehaviour
         letterText.text = letter;
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);
+    }
+
+    public void ShowBtnADS()
+    {
+        giftAds.transform.localScale = Vector3.one;
+    }
+
+    public void OpenGiftAds()
+    {
+        ShowHint();
+        giftAds.transform.localScale = Vector3.zero;
     }
 }
