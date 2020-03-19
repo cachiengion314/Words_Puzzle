@@ -25,12 +25,7 @@ public class DictionaryDialog : Dialog
     public Transform content;
     public static DictionaryDialog instance;
     public Text numWordPassedText;
-
-    public GameObject background;
-    public GameObject playButton;
-
-
-
+    
 
     //string wordValid;
     //List<WordData> listMeanWord = new List<WordData>();
@@ -46,6 +41,10 @@ public class DictionaryDialog : Dialog
     List<string> defaultValue = new List<string>();
     List<string> listWordPassed;
     GameObject homecontroller;
+
+    public MeanDialog meanDialog;
+
+    public GameObject shadowPanel;
     //static readonly string SAVE_FOLDER = Application.dataPath + "/saves/";
     //Dictionary dict;
 
@@ -58,16 +57,6 @@ public class DictionaryDialog : Dialog
     {
         instance = this;
         homecontroller = GameObject.FindGameObjectWithTag("HomeController");
-        if (SceneManager.GetActiveScene().name.Contains("Home"))
-        {
-            background.SetActive(true);
-            playButton.SetActive(true);
-        }
-        else
-        {
-            background.SetActive(false);
-            playButton.SetActive(false);
-        }
     }
 
     protected override void Start()
@@ -147,10 +136,10 @@ public class DictionaryDialog : Dialog
         //return meaning;
         //Debug.Log(word);
         //Debug.Log(meaning);
-        MeanDialog.wordName = word;
-        MeanDialog.wordMean = meaning.ToString();
+        //MeanDialog.wordName = word;
+        //MeanDialog.wordMean = meaning.ToString();
+        SetTextMeanDialog(word, meaning);
         Dictionary.instance.SaveWord(word, meaning.ToString());
-       
     }
 
 
@@ -189,6 +178,26 @@ public class DictionaryDialog : Dialog
         homecontroller.GetComponent<HomeController>().OnClick(0);
         gameObject.GetComponent<Dialog>().Close();
 
+    }
+
+    public void ShowMeanDialog()
+    {
+        shadowPanel.SetActive(true);
+        SetTextMeanDialog("Loading...", "Internet connection required...");
+        TweenControl.GetInstance().ScaleFromZero(meanDialog.gameObject, 0.3f);
+    }
+
+    public void HideMeanDialog()
+    {
+        shadowPanel.SetActive(false);
+        TweenControl.GetInstance().ScaleFromOne(meanDialog.gameObject, 0.3f);
+    }
+
+    public void SetTextMeanDialog(string name, string wordMean)
+    {
+        meanDialog.wordName = name;
+        meanDialog.wordMean = wordMean;
+        meanDialog.showMean();
     }
 }
 

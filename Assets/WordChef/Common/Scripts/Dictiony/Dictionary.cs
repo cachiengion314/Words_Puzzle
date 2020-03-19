@@ -58,8 +58,6 @@ public class Dictionary: MonoBehaviour
             }
         }
         load();
-      
-
     }
     public void load()
     {

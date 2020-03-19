@@ -8,39 +8,34 @@ public class ButtonWord : MyButton
    public DialogType dialogType;
    public DialogShow dialogShow;
 
-   private bool isClick;
+   private string text;
    public void GetData()
-    {
-        string text = transform.GetChild(0).GetComponent<Text>().text.ToString();
-
+   {
+        text = transform.GetChild(0).GetComponent<Text>().text.ToString();
         if (!Dictionary.instance.CheckWExistInDictWordSaved(text))
         {
             Debug.Log("getDataApi");
-            DictionaryDialog.instance.GetDataFromApi(text);
+            Invoke("WaitTimeGetData", 0.6f);
         }
         else
         {
             Debug.Log("word had in device");
-            MeanDialog.wordName = text;
-            MeanDialog.wordMean = Dictionary.instance.dictWordSaved[text];
-
+            DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
+            //MeanDialog.wordName = text;
+            //MeanDialog.wordMean = Dictionary.instance.dictWordSaved[text];
         }
-        
-    }
+   }
 
      public override void OnButtonClick()
     {
-        if (!isClick)
-        {
-            isClick = true;
-            GetData();
-       
-            TweenControl.GetInstance().DelayCall(transform, 0.2f, () =>
-            {
-                base.OnButtonClick();
-                DialogController.instance.ShowDialog(dialogType, dialogShow);
-                isClick = false;
-            }); 
-        }
+        DictionaryDialog.instance.ShowMeanDialog();
+        GetData();
+        base.OnButtonClick();
+        //DialogController.instance.ShowDialog(dialogType, dialogShow);
     }
+
+     void WaitTimeGetData()
+     {
+         DictionaryDialog.instance.GetDataFromApi(text);
+     }
 }

@@ -27,7 +27,8 @@ public enum DialogType
 	Mail,
 	DailyGifts,
 	WeekenSale,
-	MeanDialog
+	MeanDialog,
+	MeanInGameDialog
 };
 
 public enum DialogShow
