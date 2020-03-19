@@ -4,11 +4,13 @@ using UnityEngine;
 using System.Linq;
 using System.Text;
 using PlayFab;
+using UnityEngine.UI;
 
 public class WordRegion : MonoBehaviour
 {
     public TextPreview textPreview;
     public Compliment compliment;
+    public Button btnVideoAds;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -134,6 +136,7 @@ public class WordRegion : MonoBehaviour
 
     private void CheckGiftAds()
     {
+        btnVideoAds.interactable = false;
         var isGiftAds = false;
         var lineAds = lines.FindAll(line => line.cells.Count > 3);
 
@@ -144,7 +147,10 @@ public class WordRegion : MonoBehaviour
                 break;
         }
         if (!isGiftAds && lineAds.Count > 0)
+        {
+            btnVideoAds.interactable = true;
             lineAds[Random.Range(0, lineAds.Count)].ShowAdsUnlockCell();
+        }
     }
 
     private void GetCellShowHint(LineWord line)
