@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using System.Text;
+using System;
 
 public class Pan : MonoBehaviour
 {
@@ -67,7 +68,7 @@ public class Pan : MonoBehaviour
             Text letter = Instantiate(MonoUtils.instance.letter);
             letter.transform.SetParent(centerPoint);
             letter.transform.localScale = Vector3.one;
-            letter.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(-10, 10)));
+            letter.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
             letter.text = gameLevel.word[i].ToString().ToUpper();
             letter.fontSize = ConfigController.Config.fontSizeInDiskMainScene;
             letterTexts.Add(letter);
@@ -130,18 +131,31 @@ public class Pan : MonoBehaviour
         foreach(var text in letterTexts)
         {
             iTween.MoveTo(text.gameObject, iTween.Hash("position", letterLocalPositions[indexes.IndexOf(i)], "time", 0.15f, "isLocal", true));
-            text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(-10, 10)));
+            text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
             i++;
         }
         Sound.instance.PlayButton();
     }
 
-    //public void ScaleWord( int index)
-    //{
-    //        Debug.Log(letterTexts.Count);
-    //        TweenControl.GetInstance().Scale(letterTexts[index].gameObject,Vector3.one*1.2f, 0.5f,()=> { 
-            
-    //        });
-       
-    //}
+    public void ScaleWord(Vector3 letterPos,Action callback = null)
+    {
+        TweenControl.GetInstance().KillTweener(textPreview.transform);
+        textPreview.transform.localPosition = new Vector3(0, textPreview.transform.localPosition.y,0);
+        var letterTarget = letterTexts.Single(let => Vector3.Distance(letterPos, let.transform.position) < 1);
+        TweenControl.GetInstance().Scale(letterTarget.gameObject, Vector3.one * 1.2f, 0.3f, () =>
+        {
+            callback?.Invoke();
+        });
+    }
+
+    public void ResetScaleWord(Action callback = null)
+    {
+        foreach (var word in letterTexts)
+        {
+            TweenControl.GetInstance().Scale(word.gameObject, Vector3.one, 0.3f, () =>
+            {
+                callback?.Invoke();
+            });
+        }
+    }
 }
