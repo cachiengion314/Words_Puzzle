@@ -230,17 +230,20 @@ public class WordRegion : MonoBehaviour
                 if (lineIndex > compliment.sprites.Length - 1) { lineIndex = compliment.sprites.Length - 1; }
 
                 Sound.instance.Play(Sound.Others.Match);
-
             }
             else
             {
                 line.ShowFxAnswerDuplicate();
                 textPreview.SetExistColor();
             }
+            if (textPreview.useFX)
+                textPreview.ClearText();
         }
         else if (validWords.Contains(checkWord.ToLower()))
         {
             ExtraWord.instance.ProcessWorld(checkWord);
+            if (textPreview.useFX)
+                textPreview.ClearText();
         }
         else
         {
