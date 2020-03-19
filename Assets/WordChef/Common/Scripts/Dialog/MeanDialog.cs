@@ -6,8 +6,8 @@ using TMPro;
 
 public class MeanDialog : Dialog
 {
-    public static string wordName;
-    public static string wordMean;
+    public string wordName;
+    public string wordMean;
     public GameObject wordNameText;
     public GameObject wordMeantext;
     //public static GameObject instance;
@@ -15,11 +15,7 @@ public class MeanDialog : Dialog
     public void Start()
     {
         base.Start();
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
-        {
-            showMean();
-
-        });
+        showMean();
     }
     public void showMean()
     {
