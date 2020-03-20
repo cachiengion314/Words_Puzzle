@@ -14,11 +14,6 @@ using UnityEngine.SceneManagement;
 
 public class DictionaryDialog : Dialog
 {
-    public bool includeRelated;
-    public bool useCanonical;
-    public bool includeTags;
-    public string limit;
-
     public GameObject buttonWord;
     public GameObject groupWord;
     public GameObject listGroupWord;
@@ -29,11 +24,7 @@ public class DictionaryDialog : Dialog
 
     //string wordValid;
     //List<WordData> listMeanWord = new List<WordData>();
-    string meaning;
-    string sourceDictionaries;
-    string keyApi;
-    string url;
-    WordData wordData;
+    
     Dictionary<string, string> wordDiction =new Dictionary<string, string>();
     Dictionary<string, List<string>> groupWordDiction=new Dictionary<string, List<string>>();
     Dictionary<string, List<string>> dataGroupWordDiction= new Dictionary<string, List<string>>();
@@ -74,8 +65,6 @@ public class DictionaryDialog : Dialog
 
     }
 
-
-
     public void GetWordPassed()
     {
         wordPassed = CPlayerPrefs.GetString("WordLevelSave");
@@ -102,45 +91,7 @@ public class DictionaryDialog : Dialog
         }
     }
 
-    public void GetDataFromApi(string word)
-    {
-        meaning = "";
-        sourceDictionaries = "wiktionary";
-        keyApi = "l7bgsd9titsbw82vtpzparyfrmt9yg2hibbeihv5uex8e5maa";
-        url = "https://api.wordnik.com/v4/word.json/" + word
-            + "/definitions?limit=" + limit
-            + "&includeRelated=" + includeRelated
-            + "&sourceDictionaries=" + sourceDictionaries
-            + "&useCanonical=" + useCanonical
-            + "&includeTags=" + includeTags
-            + "&api_key=" + keyApi;
-        
-        var client = new WebClient();
-        var text = client.DownloadString(url);
-        if (text != null)
-        {
-            JArray arrayJson = JArray.Parse(text);
-            for (int i = 0; i < arrayJson.Count; i++)
-            {
-                wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
-
-                //listMeanWord.Add(wordData);
-
-                meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
-            }
-        }
-        else
-        {
-            meaning = "Can't get data, please check your wifi";
-        }
-        //return meaning;
-        //Debug.Log(word);
-        //Debug.Log(meaning);
-        //MeanDialog.wordName = word;
-        //MeanDialog.wordMean = meaning.ToString();
-        SetTextMeanDialog(word, meaning);
-        Dictionary.instance.SaveWord(word, meaning.ToString());
-    }
+   
 
 
     public void CloneListGroupWord()

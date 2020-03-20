@@ -13,8 +13,18 @@ using System.IO;
 public class Dictionary: MonoBehaviour
 {
     public static Dictionary instance;
-    public string SAVE_FOLDER;
+    private string SAVE_FOLDER;
     public Dictionary<string, string> dictWordSaved;
+    
+    public bool includeRelated;
+    public bool useCanonical;
+    public bool includeTags;
+    public string limit;
+    
+    string sourceDictionaries = "wiktionary";
+    string keyApi = "l7bgsd9titsbw82vtpzparyfrmt9yg2hibbeihv5uex8e5maa";
+    string url;
+    WordData wordData;
     void Awake()
     {
         if (instance == null)
@@ -79,6 +89,46 @@ public class Dictionary: MonoBehaviour
             }
         }
             
+    }
+    
+    public void GetDataFromApi(string word)
+    {
+        string meaning = "";
+        //sourceDictionaries = "wiktionary";
+        //keyApi = "l7bgsd9titsbw82vtpzparyfrmt9yg2hibbeihv5uex8e5maa";
+        url = "https://api.wordnik.com/v4/word.json/" + word
+                                                      + "/definitions?limit=" + limit
+                                                      + "&includeRelated=" + includeRelated
+                                                      + "&sourceDictionaries=" + sourceDictionaries
+                                                      + "&useCanonical=" + useCanonical
+                                                      + "&includeTags=" + includeTags
+                                                      + "&api_key=" + keyApi;
+        
+        var client = new WebClient();
+        var text = client.DownloadString(url);
+        if (text != null || text != "")
+        {
+            JArray arrayJson = JArray.Parse(text);
+            for (int i = 0; i < arrayJson.Count; i++)
+            {
+                wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
+
+                //listMeanWord.Add(wordData);
+
+                meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+            }
+        }
+        else
+        {
+            meaning = "Can't get data, please check your wifi";
+        }
+        
+        //return meaning;
+        //Debug.Log(word);
+        //Debug.Log(meaning);
+        //MeanDialog.wordName = word;
+        //MeanDialog.wordMean = meaning.ToString();
+        SaveWord(word, meaning.ToString());
     }
     public bool CheckWExistInDictWordSaved(string word)
     {

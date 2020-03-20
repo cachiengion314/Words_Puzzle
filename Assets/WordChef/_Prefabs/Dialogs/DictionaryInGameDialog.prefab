@@ -448,8 +448,10 @@ MonoBehaviour:
   contentRectTransform: {fileID: 7141557095632784416}
   itemPrefab: {fileID: 2289041146482946359, guid: dc0318f8b557d6b4481366af203bd759,
     type: 3}
+  wordNameText: {fileID: 3691473089089430919}
   arrowLeftObject: {fileID: 8041770061856013032}
   arrowRightObject: {fileID: 8927527286470991709}
+  listWordInLevel: []
 --- !u!1 &877413377160116939
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +515,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loading...
+  m_text: '
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d7ddf40b41871b543977d673ede6543b, type: 2}
   m_sharedMaterial: {fileID: -2219638667320333274, guid: d7ddf40b41871b543977d673ede6543b,
@@ -583,9 +587,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 3691473089089430919}
-    characterCount: 10
+    characterCount: 1
     spriteCount: 0
-    spaceCount: 0
+    spaceCount: 1
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -1048,6 +1052,8 @@ MonoBehaviour:
   listItemPos: []
   selectItemID: 0
   previousID: 0
+  anchoredPosContentPrevious: 0
+  distanceSnapOffset: 100
   panigationPrefab: {fileID: 1739048771638343548, guid: fc35e245905a59e47b47270bbf6c3f8f,
     type: 3}
   parentPanigationRect: {fileID: 4366722872319200056}
