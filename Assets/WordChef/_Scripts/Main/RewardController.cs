@@ -28,12 +28,14 @@ public class RewardController : MonoBehaviour
     private void OnCompleteRewardVideo()
     {
         _rewardedButton.gameObject.SetActive(false);
-        _boardClaim.Setup(_amountStars);
+        _boardClaim.Setup(_amountStars,()=> {
+
+        });
     }
 
     public void OnShowAdsVideo()
     {
-        if(_showAgain)
+        if (_showAgain.isOn)
         {
             OnWatchClick();
         }
@@ -46,12 +48,22 @@ public class RewardController : MonoBehaviour
 
     public void OnWatchClick()
     {
+        TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);
         _rewardedButton.OnClick();
     }
 
     public void DontShowAgain()
     {
         CPlayerPrefs.SetBool("DONT_SHOW", _showAgain.isOn);
+    }
+
+    public void OnClose(GameObject obj)
+    {
+        Sound.instance.PlayButton();
+        TweenControl.GetInstance().ScaleFromOne(obj, 0.3f, () =>
+        {
+
+        });
     }
 }
 

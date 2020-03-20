@@ -5,35 +5,43 @@ using UnityEngine;
 
 public class FreeStarsDialogConfirm : MonoBehaviour
 {
+    private int _currAmount;
     private int _amount;
     [SerializeField] private TextMeshProUGUI _textAmount;
+    [SerializeField] private RewardController _rewardController;
 
     public void Setup(int amount, System.Action callback = null)
     {
         _amount = amount;
+        _currAmount = 0;
         _textAmount.text = "x " + _amount;
-        TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f,()=> {
+        TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f, () =>
+        {
             callback?.Invoke();
         });
     }
 
     public void OnClaimClick()
     {
+        Sound.instance.PlayButton();
         BlockScreen.instance.Block(true);
-        TweenControl.GetInstance().Scale(gameObject, Vector3.zero, 0.3f, () =>
+        TweenControl.GetInstance().ScaleFromOne(gameObject, 0.3f, () =>
         {
             //Animate
-            CurrencyController.CreditBalance(_amount);
+            StartCoroutine(CurrencyBalanceUpFx());
             BlockScreen.instance.Block(false);
+            _rewardController.gameObject.SetActive(true);
             //==
         });
     }
 
-    public void Close()
+    private IEnumerator CurrencyBalanceUpFx()
     {
-        TweenControl.GetInstance().Scale(gameObject, Vector3.zero, 0.3f, () =>
+        while (_currAmount < _amount)
         {
-
-        });
+            CurrencyController.CreditBalance(1);
+            yield return new WaitForSeconds(0.002f);
+            _currAmount += 1;
+        }
     }
 }
