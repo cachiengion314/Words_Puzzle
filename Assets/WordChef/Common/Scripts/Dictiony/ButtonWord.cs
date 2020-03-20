@@ -12,6 +12,9 @@ public class ButtonWord : MyButton
    public void GetData()
    {
         text = transform.GetChild(0).GetComponent<Text>().text.ToString();
+        DictionaryDialog.instance.SetTextMeanDialog(text, "Loading...");
+        DictionaryDialog.instance.ShowMeanDialog();
+
         if (!Dictionary.instance.CheckWExistInDictWordSaved(text))
         {
             Debug.Log("getDataApi");
@@ -28,7 +31,6 @@ public class ButtonWord : MyButton
 
      public override void OnButtonClick()
     {
-        DictionaryDialog.instance.ShowMeanDialog();
         GetData();
         base.OnButtonClick();
         //DialogController.instance.ShowDialog(dialogType, dialogShow);
@@ -37,6 +39,6 @@ public class ButtonWord : MyButton
      void WaitTimeGetData()
      {
          Dictionary.instance.GetDataFromApi(text);
-         DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
+         //DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
      }
 }

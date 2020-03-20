@@ -14,7 +14,7 @@ public class MeanDialog : Dialog
 
     public void Start()
     {
-        base.Start();
+        //base.Start();
         showMean();
     }
     public void showMean()
