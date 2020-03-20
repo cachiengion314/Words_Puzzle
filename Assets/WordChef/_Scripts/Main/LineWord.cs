@@ -138,17 +138,6 @@ public class LineWord : MonoBehaviour
         }
     }
 
-    public void ShowAdsUnlockCell()
-    {
-        var isCellAds = cells.Any(cell => cell.giftAds.gameObject.activeInHierarchy);
-        var cellNotShow = cells.FindAll(cell => !cell.isShown);
-        if (cells.Count > 2 && !isCellAds && cellNotShow.Count > 3)
-        {
-            var cellAds = Random.Range(0, cellNotShow.Count);
-            cells[cellAds].ShowBtnADS();
-        }
-    }
-
     public void ShowHint()
     {
         if (!RTL)

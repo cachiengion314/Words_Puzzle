@@ -72,14 +72,4 @@ public class Cell : MonoBehaviour
         bg.gameObject.SetActive(true);
     }
 
-    public void ShowBtnADS()
-    {
-        giftAds.transform.localScale = Vector3.one;
-    }
-
-    public void OpenGiftAds()
-    {
-        ShowHint();
-        giftAds.transform.localScale = Vector3.zero;
-    }
 }

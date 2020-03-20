@@ -35,6 +35,7 @@ public class WorldItem : MonoBehaviour {
         for (int i = 0; i < numLevels; i++)
         {
             LevelItem levelButton = Instantiate(levelItemPrefab);
+            levelButton.numlevels = numLevels;
             levelButton.world = world;
             levelButton.subWorld = subWorld;
             levelButton.level = i;

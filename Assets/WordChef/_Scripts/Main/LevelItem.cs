@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LevelItem : MonoBehaviour {
     public Text levelText;
-    public int world, subWorld, level;
+    public int world, subWorld, level, numlevels;
     //public Transform centerPoint;
     public Image background;
 
@@ -20,7 +20,7 @@ public class LevelItem : MonoBehaviour {
 
     public void Start()
     {
-        levelText.text = "Level " + (level + 1);
+        levelText.text = "Level " + ((level + numlevels * (subWorld + 5 * world)) + 1);
         GetComponent<Button>().onClick.AddListener(OnButtonClick);
 
         gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + subWorld + "/Level_" + level);

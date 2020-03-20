@@ -32,7 +32,7 @@ public class MainController : BaseController {
         //world = 4;
         //subWorld = 4;
         //level = 4;
-        Debug.Log(world + ", " + subWorld + ", " + level);
+        //Debug.Log(world + ", " + subWorld + ", " + level);
         //save level pass;
         FacebookController.instance.user.unlockedLevel = level.ToString();
         FacebookController.instance.user.unlockedWorld = world.ToString();
@@ -52,7 +52,8 @@ public class MainController : BaseController {
         }
 
         //GameState.currentSubWorldName
-        levelNameText.text = "LEVEL " + (level + 1);
+        var numlevels = Utils.GetNumLevels(world, subWorld);
+        levelNameText.text = "LEVEL " + ((level + numlevels * (subWorld + 5 * world)) + 1);
 
         FacebookController.instance.SaveDataGame();
     }

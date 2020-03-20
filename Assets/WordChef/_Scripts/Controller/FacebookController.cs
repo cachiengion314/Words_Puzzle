@@ -95,6 +95,7 @@ public class FacebookController : MonoBehaviour
 
     private void UpdateStaticsUser()
     {
+        int numLevels = Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld));
         var request = new UpdatePlayerStatisticsRequest();
         var staticUpdate = new List<StatisticUpdate>();
         foreach (var item in _keysStatic)
@@ -102,7 +103,7 @@ public class FacebookController : MonoBehaviour
             staticUpdate.Add(new StatisticUpdate
             {
                 StatisticName = item,
-                Value = Int32.Parse(user.unlockedLevel)
+                Value = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + 5 * Int32.Parse(user.unlockedWorld)) + 1
             });
         }
         PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest

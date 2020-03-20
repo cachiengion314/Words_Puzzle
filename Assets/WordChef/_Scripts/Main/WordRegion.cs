@@ -130,27 +130,6 @@ public class WordRegion : MonoBehaviour
             lines.Add(line);
             lineIndex++;
         }
-
-        CheckGiftAds();
-    }
-
-    private void CheckGiftAds()
-    {
-        btnVideoAds.interactable = false;
-        var isGiftAds = false;
-        var lineAds = lines.FindAll(line => line.cells.Count > 3);
-
-        foreach (var line in lineAds)
-        {
-            isGiftAds = line.cells.Any(cell => cell.giftAds.activeInHierarchy);
-            if (isGiftAds)
-                break;
-        }
-        if (!isGiftAds && lineAds.Count > 0)
-        {
-            btnVideoAds.interactable = true;
-            lineAds[Random.Range(0, lineAds.Count)].ShowAdsUnlockCell();
-        }
     }
 
     private void GetCellShowHint(LineWord line)
@@ -224,7 +203,6 @@ public class WordRegion : MonoBehaviour
         //string meaning="";
         if (line != null)
         {
-
             if (!line.isShown)
             {
                 textPreview.SetAnswerColor();
