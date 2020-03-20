@@ -21,6 +21,9 @@ public class WordRegion : MonoBehaviour
     private bool hasLongLine;
 
     private RectTransform rt;
+
+    public List<string> listWordInLevel;
+    public List<string> listWordCorrect;
     public static WordRegion instance;
 
     public List<LineWord> Lines
@@ -125,9 +128,16 @@ public class WordRegion : MonoBehaviour
             line.transform.localPosition = Vector3.zero;
             line.usedBee = CPlayerPrefs.GetBool(line.name);
             if (!line.isShown)
+            {
                 GetCellShowHint(line);
+            }
+            else
+            {
+                listWordCorrect.Add(word.ToLower());
+            }
 
             lines.Add(line);
+            listWordInLevel.Add(word.ToLower());
             lineIndex++;
         }
     }
@@ -214,6 +224,7 @@ public class WordRegion : MonoBehaviour
                 if (lineIndex > compliment.sprites.Length - 1) { lineIndex = compliment.sprites.Length - 1; }
 
                 Sound.instance.Play(Sound.Others.Match);
+                listWordCorrect.Add(checkWord.ToLower());
             }
             else
             {

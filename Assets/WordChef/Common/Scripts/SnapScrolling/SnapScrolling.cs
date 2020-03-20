@@ -20,6 +20,11 @@ public class SnapScrolling : MonoBehaviour
     public int previousID;
     bool isScrolling;
 
+    public float anchoredPosContentPrevious;
+    private bool isSnapRight;
+    private float distance;
+    public float distanceSnapOffset;
+
 
     [Header("Panigation")] 
     public GameObject panigationPrefab;
@@ -27,6 +32,7 @@ public class SnapScrolling : MonoBehaviour
     public List<GameObject> listPanigationObject;
     public float panigationOffset;
     private float panigationSize;
+    
 
     private void Start()
     {
@@ -105,10 +111,29 @@ public class SnapScrolling : MonoBehaviour
         if (listItem.Count <= 0) return;
         if (isScrolling)
         {
+            if (anchoredPosContentPrevious != contentRectTransform.anchoredPosition.x)
+            {
+                if (anchoredPosContentPrevious < contentRectTransform.anchoredPosition.x)
+                {
+                    isSnapRight = true;
+                }
+                else
+                {
+                    isSnapRight = false;
+                }
+                anchoredPosContentPrevious = contentRectTransform.anchoredPosition.x;
+            }
             float nearesPos = float.MaxValue;
             for (int i = 0; i < listItem.Count; i++)
             {
-                float distance = Mathf.Abs(contentRectTransform.anchoredPosition.x - listItemPos[i].x);
+                if (isSnapRight)
+                {
+                    distance = Mathf.Abs(contentRectTransform.anchoredPosition.x - listItemPos[i].x + distanceSnapOffset);
+                }
+                else
+                {
+                    distance = Mathf.Abs(contentRectTransform.anchoredPosition.x - listItemPos[i].x - distanceSnapOffset);
+                }
                 if (distance < nearesPos)
                 {
                     nearesPos = distance;
