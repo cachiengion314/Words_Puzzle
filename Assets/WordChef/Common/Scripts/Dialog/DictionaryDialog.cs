@@ -134,7 +134,6 @@ public class DictionaryDialog : Dialog
     public void ShowMeanDialog()
     {
         shadowPanel.SetActive(true);
-        SetTextMeanDialog("Loading...", "Internet connection required...");
         TweenControl.GetInstance().ScaleFromZero(meanDialog.gameObject, 0.3f);
     }
 
@@ -149,6 +148,11 @@ public class DictionaryDialog : Dialog
         meanDialog.wordName = name;
         meanDialog.wordMean = wordMean;
         meanDialog.showMean();
+    }
+
+    public void SetWordMeanText(string text)
+    {
+        meanDialog.wordMean = text;
     }
 }
 

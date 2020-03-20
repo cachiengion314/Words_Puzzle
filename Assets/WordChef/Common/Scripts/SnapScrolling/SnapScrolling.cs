@@ -34,7 +34,7 @@ public class SnapScrolling : MonoBehaviour
     private float panigationSize;
     
 
-    private void Start()
+    private void Awake()
     {
         panigationSize = panigationPrefab.GetComponent<RectTransform>().sizeDelta.x;
     }

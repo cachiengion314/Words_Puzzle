@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json;
@@ -44,12 +46,6 @@ public class Dictionary: MonoBehaviour
         if (dictWordSaved != null)
             load();
     }
-    //void Update()
-    //{
-    //    if (dictWordSaved != null)
-    //        load();
-    //}
-
     public void SaveWord(string _name, string _mean)
     {
         if (!dictWordSaved.ContainsKey(_name))
@@ -85,7 +81,6 @@ public class Dictionary: MonoBehaviour
                 {
                     dictWordSaved.Add(wordSave.name, wordSave.mean);
                 }
-                
             }
         }
             
@@ -94,42 +89,50 @@ public class Dictionary: MonoBehaviour
     public void GetDataFromApi(string word)
     {
         string meaning = "";
-        //sourceDictionaries = "wiktionary";
-        //keyApi = "l7bgsd9titsbw82vtpzparyfrmt9yg2hibbeihv5uex8e5maa";
-        url = "https://api.wordnik.com/v4/word.json/" + word
-                                                      + "/definitions?limit=" + limit
-                                                      + "&includeRelated=" + includeRelated
-                                                      + "&sourceDictionaries=" + sourceDictionaries
-                                                      + "&useCanonical=" + useCanonical
-                                                      + "&includeTags=" + includeTags
-                                                      + "&api_key=" + keyApi;
+        url = "https://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=" + limit + "&includeRelated=" + includeRelated + "&sourceDictionaries=" + sourceDictionaries + "&useCanonical=" + useCanonical + "&includeTags=" + includeTags + "&api_key=" + keyApi;
         
         var client = new WebClient();
-        var text = client.DownloadString(url);
-        if (text != null || text != "")
+        client.DownloadStringCompleted += (sender, args) =>
         {
-            JArray arrayJson = JArray.Parse(text);
-            for (int i = 0; i < arrayJson.Count; i++)
+            if (args.Error == null)
             {
-                wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
+                var text = args.Result;
+                JArray arrayJson = JArray.Parse(text);
+                for (int i = 0; i < arrayJson.Count; i++)
+                {
+                    wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
+                    meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+                }
+                
+                SaveWord(word, meaning.ToString());
 
-                //listMeanWord.Add(wordData);
+                if (DictionaryDialog.instance != null)
+                {
+                    DictionaryDialog.instance.SetTextMeanDialog(word, meaning);
+                }
 
-                meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+                if (DictionaryInGameDialog.instance != null)
+                {
+                    DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
+                }
             }
-        }
-        else
-        {
-            meaning = "Can't get data, please check your wifi";
-        }
-        
-        //return meaning;
-        //Debug.Log(word);
-        //Debug.Log(meaning);
-        //MeanDialog.wordName = word;
-        //MeanDialog.wordMean = meaning.ToString();
-        SaveWord(word, meaning.ToString());
+            else
+            {
+                if (DictionaryDialog.instance != null)
+                {
+                    DictionaryDialog.instance.SetTextMeanDialog(word, "There was an error. Please try again later");
+                }
+                
+                if (DictionaryInGameDialog.instance != null)
+                {
+                    DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, "There was an error. Please try again later");
+                }
+            }
+        };
+        client.DownloadStringAsync(new Uri(url));
     }
+    
+
     public bool CheckWExistInDictWordSaved(string word)
     {
         if (dictWordSaved.ContainsKey(word))

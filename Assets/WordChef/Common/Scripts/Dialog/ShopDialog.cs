@@ -203,17 +203,19 @@ public class ShopDialog : Dialog
         int count = 0;
         btnMore.gameObject.SetActive(false);
 
-        foreach (GameObject item in shopItemObject)
-        {
-            item.GetComponent<SimpleTMPButton>().enabled = false;
-            item.transform.localScale = Vector3.zero;
-            item.SetActive(true);
-        }
-
         for (int i = 0; i < shopItemObject.Length; i++)
         {
-            StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f));
-            count++;
+            if (i > 1)
+            {
+                shopItemObject[i].GetComponent<SimpleTMPButton>().enabled = false;
+                shopItemObject[i].transform.localScale = Vector3.zero;
+                if (shopItemObject[i] != btnMore)
+                {
+                    shopItemObject[i].SetActive(true);
+                    StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f));
+                    count++;
+                }
+            }
         }
         scroll.GetComponent<ScrollRect>().enabled = true;
     }
@@ -222,23 +224,20 @@ public class ShopDialog : Dialog
     {
         int count = 0;
         shopItemObject = new GameObject[contentItemShop.transform.childCount];
-        btnMore.transform.localScale = Vector3.zero;
+        //btnMore.transform.localScale = Vector3.zero;
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
         {
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
-            shopItemObject[i].transform.localScale = Vector3.zero;
-        }
-
-        for (int i = 0; i < shopItemObject.Length; i++)
-        {
-            if (shopItemObject[i].activeInHierarchy)
+            if (i > 1)
             {
-                StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
-                count++;
+                shopItemObject[i].transform.localScale = Vector3.zero;
+                if (shopItemObject[i].activeInHierarchy)
+                {
+                    StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
+                    count++;
+                } 
             }
         }
-
-        StartCoroutine(DelayPlayAnimation(btnMore, count * 0.1f + 0.5f));
     }
 
     IEnumerator DelayPlayAnimation(GameObject item, float time)

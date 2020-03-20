@@ -10,6 +10,8 @@ using UnityEngine.UI;
 
 public class DictionaryInGameDialog : Dialog
 {
+    public static DictionaryInGameDialog instance;
+
     public SnapScrolling snapScrolling;
     public ScrollRect scrollRect;
     [Header("Content")] public RectTransform contentRectTransform;
@@ -27,7 +29,12 @@ public class DictionaryInGameDialog : Dialog
     WordData wordData;
     
     public List<string> listWordInLevel;
+    public Dictionary<string, MeanItemDictionary> listMeanItemObject = new Dictionary<string, MeanItemDictionary>();
     
+    protected override void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         base.Start();
@@ -84,8 +91,7 @@ public class DictionaryInGameDialog : Dialog
     {
         if (WordRegion.instance.listWordCorrect.Count > 0)
         {
-            wordNameText.text = "Loading...";
-            Invoke("InstantiateMeanItem", 1f);
+            InstantiateMeanItem();
         }
         else
         {
@@ -94,70 +100,49 @@ public class DictionaryInGameDialog : Dialog
     }
     void InstantiateMeanItem()
     {
-        /*for (int i = 0; i < WordRegion.instance.listWordInLevel.Count; i++)
-        {
-            if (Dictionary.instance.CheckWExistInDictWordSaved(WordRegion.instance.listWordInLevel[i]))
-            {
-                GameObject item = Instantiate(itemPrefab, contentRectTransform);
-                MeanItemDictionary meanItemDictionary = item.GetComponent<MeanItemDictionary>();
-                meanItemDictionary.SetParentNestedScrollRect(scrollRect);
-                meanItemDictionary.SetMeanText( Dictionary.instance.dictWordSaved[WordRegion.instance.listWordInLevel[i]]);
-
-                listWordInLevel.Add(WordRegion.instance.listWordInLevel[i]);
-                snapScrolling.AddItemToList(item);
-            }
-            else
-            {
-                for (int j = 0; j < WordRegion.instance.listWordCorrect.Count; j++)
-                {
-                    if (WordRegion.instance.listWordInLevel[i].Contains(WordRegion.instance.listWordCorrect[j]))
-                    {
-                        Dictionary.instance.GetDataFromApi(WordRegion.instance.listWordInLevel[i]);
-                        if (Dictionary.instance.CheckWExistInDictWordSaved(WordRegion.instance.listWordInLevel[i]))
-                        {
-                            GameObject item = Instantiate(itemPrefab, contentRectTransform);
-                            MeanItemDictionary meanItemDictionary = item.GetComponent<MeanItemDictionary>();
-                            meanItemDictionary.SetParentNestedScrollRect(scrollRect);
-                            meanItemDictionary.SetMeanText(Dictionary.instance.dictWordSaved[WordRegion.instance.listWordInLevel[i]]);
-                        
-                            listWordInLevel.Add(WordRegion.instance.listWordInLevel[i]);
-                            snapScrolling.AddItemToList(item);
-                        }
-                    }
-                }
-            }
-        }*/
-
-        if (WordRegion.instance.listWordCorrect.Count > 0)
+        for (int i = 0; i < WordRegion.instance.listWordInLevel.Count; i++)
         {
             for (int j = 0; j < WordRegion.instance.listWordCorrect.Count; j++)
             {
                 string word = WordRegion.instance.listWordCorrect[j];
-                if (!Dictionary.instance.CheckWExistInDictWordSaved(word))
-                {
-                    Dictionary.instance.GetDataFromApi(word);
-                    if (Dictionary.instance.CheckWExistInDictWordSaved(word))
-                    {
-                        GameObject item = Instantiate(itemPrefab, contentRectTransform);
-                        MeanItemDictionary meanItemDictionary = item.GetComponent<MeanItemDictionary>();
-                        meanItemDictionary.SetParentNestedScrollRect(scrollRect);
-                        meanItemDictionary.SetMeanText(Dictionary.instance.dictWordSaved[word]);
-                        
-                        listWordInLevel.Add(word);
-                        snapScrolling.AddItemToList(item);
-                    }
-                }
-                else
+                if (WordRegion.instance.listWordInLevel[i] == word)
                 {
                     GameObject item = Instantiate(itemPrefab, contentRectTransform);
                     MeanItemDictionary meanItemDictionary = item.GetComponent<MeanItemDictionary>();
                     meanItemDictionary.SetParentNestedScrollRect(scrollRect);
-                    meanItemDictionary.SetMeanText( Dictionary.instance.dictWordSaved[word]);
-
+                    
+                    listMeanItemObject.Add(word, meanItemDictionary);
                     listWordInLevel.Add(word);
                     snapScrolling.AddItemToList(item);
+                    
+                    if (!Dictionary.instance.CheckWExistInDictWordSaved(word))
+                    {
+                        Dictionary.instance.GetDataFromApi(word);
+                        meanItemDictionary.SetMeanText("Loading...");
+                    }
+                    else
+                    {
+                        meanItemDictionary.SetMeanText(Dictionary.instance.dictWordSaved[word]);
+                    }
                 }
             }
+        }
+    }
+
+    public void SetDataForMeanItemGetAPI(string word, string meanText)
+    {
+        listMeanItemObject[word].SetMeanText(meanText);
+    }
+
+    public void ArrowPageButton(bool isNext)
+    {
+        if (isNext)
+        {
+            snapScrolling.selectItemID++;
+        }
+        else
+        {
+            snapScrolling.selectItemID--;
         }
     }
 }
