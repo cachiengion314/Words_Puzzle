@@ -138,17 +138,20 @@ public class LineWord : MonoBehaviour
         }
     }
 
-    public void ShowHint()
+    public void ShowHint(System.Action callback = null)
     {
+        var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
         if (!RTL)
         {
-            for (int i = 0; i < cells.Count; i++)
+            for (int i = 0; i < cellNotShow.Count; i++)
             {
-                var cell = cells[i];
-                if (!cell.isShown)
+                var cell = cellNotShow[i];
+                if (!cell.isShown && !cell.isAds)
                 {
                     cell.ShowHint();
-                    if (i == cells.Count - 1)
+                    callback?.Invoke();
+                    var showDone = cells.All(cel => cel.isShown);
+                    if (showDone)
                     {
                         isShown = true;
                         ShowDoneAllCell();
@@ -159,10 +162,11 @@ public class LineWord : MonoBehaviour
         }
         else
         {
-            for (int i = cells.Count - 1; i >= 0; i--)
+            for (int i = cellNotShow.Count - 1; i >= 0; i--)
             {
-                var cell = cells[i];
-                if (!cell.isShown)
+                var cell = cellNotShow[i];
+                var showDone = cells.All(cel => cel.isShown);
+                if (showDone)
                 {
                     cell.ShowHint();
                     if (i == 0)
@@ -176,12 +180,15 @@ public class LineWord : MonoBehaviour
         }
     }
 
-    public void ShowHintRandom()
+    public void ShowHintRandom(System.Action callback = null)
     {
-        var cellNotShow = cells.FindAll(cell => !cell.isShown);
+        var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
         var cellRandom = GetRandomCell(cellNotShow);
         if (cellRandom != null)
+        {
             cellRandom.ShowHint();
+            callback?.Invoke();
+        }
         var showDone = cells.All(cell => cell.isShown);
         if (showDone)
         {
@@ -191,11 +198,11 @@ public class LineWord : MonoBehaviour
 
     }
 
-    public void ShowCellUseBee()
+    public void ShowCellUseBee(System.Action callback = null)
     {
         if (!CPlayerPrefs.GetBool(gameObject.name))
         {
-            var cellNotShow = cells.FindAll(cell => !cell.isShown);
+            var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
             for (int i = 0; i < cellNotShow.Count; i++)
             {
                 var cell = cellNotShow[i];

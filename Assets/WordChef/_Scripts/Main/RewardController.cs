@@ -16,7 +16,6 @@ public class RewardController : MonoBehaviour
     void Start()
     {
         _boardClaim.transform.localScale = Vector3.zero;
-        _rewardedButton.onRewarded += OnCompleteRewardVideo;
         CheckShowAgain();
     }
 
@@ -28,7 +27,8 @@ public class RewardController : MonoBehaviour
     private void OnCompleteRewardVideo()
     {
         _rewardedButton.gameObject.SetActive(false);
-        _boardClaim.Setup(_amountStars,()=> {
+        _boardClaim.Setup(_amountStars, () =>
+        {
 
         });
     }
@@ -42,13 +42,17 @@ public class RewardController : MonoBehaviour
         else
         {
             Sound.instance.PlayButton();
-            TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch,0.3f);
+            TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch, 0.3f);
         }
     }
 
     public void OnWatchClick()
     {
-        TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);
+        if (_rewardedButton.onRewarded != null)
+            _rewardedButton.onRewarded = null;
+        _rewardedButton.onRewarded += OnCompleteRewardVideo;
+        if (_boardFreeWatch.transform.localScale == Vector3.one)
+            TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);
         _rewardedButton.OnClick();
     }
 
@@ -64,6 +68,11 @@ public class RewardController : MonoBehaviour
         {
 
         });
+    }
+
+    private void OnDisable()
+    {
+        _rewardedButton.onRewarded -= OnCompleteRewardVideo;
     }
 }
 

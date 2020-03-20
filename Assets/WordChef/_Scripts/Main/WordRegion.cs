@@ -5,16 +5,19 @@ using System.Linq;
 using System.Text;
 using PlayFab;
 using UnityEngine.UI;
+using TMPro;
 
 public class WordRegion : MonoBehaviour
 {
+    public TextMeshProUGUI _textLevel;
     public TextPreview textPreview;
     public Compliment compliment;
-    public Button btnVideoAds;
+    public ButtonVideoHintFree btnAdsHintFree;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
 
+    private int _countShowAdsHintFree;
     private GameLevel gameLevel;
     private int numWords, numCol, numRow;
     private float cellSize, startFirstColX = 0f;
@@ -242,6 +245,20 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            var isAdsHintFree = CPlayerPrefs.GetBool(_textLevel.text + "ADS_HINT_FREE", false);
+            _countShowAdsHintFree += 1;
+            if (_countShowAdsHintFree > 2 && !isAdsHintFree)
+            {
+                var lineNotShown = lines.FindAll(l => !l.isShown);
+                var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
+                var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
+                var cellRandom = lineRandom.cells[Random.Range(0, cellNotShown.Count)];
+                cellRandom.isAds = true;
+                btnAdsHintFree.transform.position = cellRandom.transform.position;
+                btnAdsHintFree.SetActionClick(cellRandom);
+                btnAdsHintFree.gameObject.SetActive(true);
+                CPlayerPrefs.SetBool(_textLevel.text + "ADS_HINT_FREE", true);
+            }
             textPreview.SetWrongColor();
             lineIndex = 0;
         }
@@ -306,11 +323,12 @@ public class WordRegion : MonoBehaviour
 
             if (line != null)
             {
-                line.ShowHint();
-                if (hintFree > 0)
-                    CurrencyController.DebitHintFree(hintFree);
-                else
-                    CurrencyController.DebitBalance(Const.HINT_COST);
+                line.ShowHint(() => {
+                    if (hintFree > 0)
+                        CurrencyController.DebitHintFree(hintFree);
+                    else
+                        CurrencyController.DebitBalance(Const.HINT_COST);
+                });
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
@@ -337,11 +355,12 @@ public class WordRegion : MonoBehaviour
                     line = lines[i];
                     if (line != null)
                     {
-                        line.ShowHintRandom();
-                        //if (hintFree > 0)
-                        //    CurrencyController.DebitHintFree(hintFree);
-                        //else
-                        CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
+                        line.ShowHintRandom(() => {
+                            //if (hintFree > 0)
+                            //    CurrencyController.DebitHintFree(hintFree);
+                            //else
+                            CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
+                        });
                         CheckGameComplete();
 
                         Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);

@@ -14,6 +14,7 @@ public class Cell : MonoBehaviour
     public string letter;
     public bool isShown;
     public bool isBee;
+    public bool isAds;
 
     private Vector3 originLetterScale;
 
@@ -67,6 +68,8 @@ public class Cell : MonoBehaviour
 
     public void ShowText()
     {
+        if (isAds)
+            WordRegion.instance.btnAdsHintFree.gameObject.SetActive(false);
         letterText.text = letter;
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);
