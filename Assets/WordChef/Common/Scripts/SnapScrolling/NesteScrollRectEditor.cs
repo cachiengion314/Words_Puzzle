@@ -1,5 +1,5 @@
 using UnityEditor;
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(NestedScrollRect))]
 [CanEditMultipleObjects]
 public class NestedScrollRectEditor : Editor
@@ -9,3 +9,4 @@ public class NestedScrollRectEditor : Editor
         base.OnInspectorGUI();
     }
 }
+#endif

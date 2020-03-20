@@ -110,9 +110,10 @@ public class DailyGiftsDialog : Dialog
     {
         while (!_isReward)
         {
+            _timeCountdown.transform.localScale = Vector3.one;
             TimeSpan timeSpan = TimeSpan.FromSeconds(_timeValue);
             _timeCountdown.text = timeSpan.ToString();
-            if (_timeCountdown.text == "00:00:00")
+            if (_timeCountdown.text == "00:00:00" || _timeCountdown.text == "")
             {
                 _timeCountdown.transform.localScale = Vector3.zero;
                 _isReward = true;

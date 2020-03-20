@@ -101,10 +101,20 @@ public class QuestController : MonoBehaviour
     void UpdateNextDay()
     {
         var timeRefresh = DateTime.Now.Date + TimeSpan.FromSeconds(_timeRefresh * 3600);
-        nextDay = DateTime.FromBinary(timeRefresh.Ticks);
+        if (CPlayerPrefs.HasKey("DAY_REFRESH"))
+        {
+            var time = CPlayerPrefs.GetLong("DAY_REFRESH");
+            nextDay = DateTime.FromBinary(time);
+        }
+        else
+        {
+            nextDay = DateTime.FromBinary(timeRefresh.Ticks);
+            CPlayerPrefs.SetLong("DAY_REFRESH", timeRefresh.Ticks);
+        }
         if (DateTime.Compare(DateTime.Now, nextDay) > 0)
         {
             nextDay = DateTime.Today.AddDays(1) + TimeSpan.FromSeconds(_timeRefresh * 3600);
+            CPlayerPrefs.SetLong("DAY_REFRESH", nextDay.Ticks);
         }
     }
 
