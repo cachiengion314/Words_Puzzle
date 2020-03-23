@@ -459,6 +459,34 @@ MonoBehaviour:
     txtHot: best
     txtSale: 20% OFF
     limitTime: -1
+  beeIapItems:
+  - productID: bee.item1
+    productType: 0
+    price: 1.99
+    removeAds: 0
+    value: 1
+    txtValue: x1
+    txtHot: 
+    txtSale: 
+    limitTime: -1
+  - productID: bee.item2
+    productType: 0
+    price: 4.99
+    removeAds: 0
+    value: 2
+    txtValue: x2
+    txtHot: hot
+    txtSale: 
+    limitTime: -1
+  - productID: bee.item3
+    productType: 0
+    price: 7.99
+    removeAds: 0
+    value: 5
+    txtValue: x5
+    txtHot: hot
+    txtSale: 
+    limitTime: -1
 --- !u!1 &140880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,7 +1816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb090a551cecaa49b05ee86a813c027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SAVE_FOLDER: 
   includeRelated: 0
   useCanonical: 0
   includeTags: 0

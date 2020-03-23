@@ -57,6 +57,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
     public IAPItem[] iapItems;
     public IAPItem[] hintIapItems;
+    public IAPItem[] beeIapItems;
 
     // Apple App Store-specific product identifier for the subscription product.
     private static string kProductNameAppleSubscription = "com.unity3d.subscription.new";
@@ -149,6 +150,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
     public void BuyHintProduct(int index)
     {
         BuyProductID(hintIapItems[index].productID);
+    }
+
+    public void BuyBeeProduct(int index)
+    {
+        BuyProductID(beeIapItems[index].productID);
     }
 
     public void BuyConsumable()
