@@ -20,17 +20,18 @@ public class DictionaryDialog : Dialog
     public Transform content;
     public static DictionaryDialog instance;
     public Text numWordPassedText;
-    
+
 
     //string wordValid;
     //List<WordData> listMeanWord = new List<WordData>();
-    
-    Dictionary<string, string> wordDiction =new Dictionary<string, string>();
-    Dictionary<string, List<string>> groupWordDiction=new Dictionary<string, List<string>>();
-    Dictionary<string, List<string>> dataGroupWordDiction= new Dictionary<string, List<string>>();
+
+    Dictionary<string, string> wordDiction = new Dictionary<string, string>();
+    Dictionary<string, List<string>> groupWordDiction = new Dictionary<string, List<string>>();
+    Dictionary<string, List<string>> dataGroupWordDiction = new Dictionary<string, List<string>>();
     char[] keys;
     List<string> defaultValue = new List<string>();
     List<string> listWordPassed;
+    [HideInInspector] public List<ListGroupWord> groupWords = new List<ListGroupWord>();
     GameObject homecontroller;
 
     public MeanDialog meanDialog;
@@ -75,13 +76,13 @@ public class DictionaryDialog : Dialog
             listWordPassed.Sort();
             listWordPassed.RemoveAt(0);
             listWordPassed = listWordPassed.Distinct().ToList();
-            foreach(string word in listWordPassed)
+            foreach (string word in listWordPassed)
             {
                 char[] charWord = word.ToCharArray();
                 wordDiction.Add(word, char.ToUpper(charWord[0]).ToString());
             }
 
-             dataGroupWordDiction= wordDiction.GroupBy(r => r.Value).ToDictionary(t =>t.Key, t => t.Select(r => r.Key).ToList());
+            dataGroupWordDiction = wordDiction.GroupBy(r => r.Value).ToDictionary(t => t.Key, t => t.Select(r => r.Key).ToList());
 
             foreach (var item in dataGroupWordDiction)
             {
@@ -91,7 +92,7 @@ public class DictionaryDialog : Dialog
         }
     }
 
-   
+
 
 
     public void CloneListGroupWord()
@@ -99,29 +100,29 @@ public class DictionaryDialog : Dialog
         GameObject listGroupWordClone;
         GameObject buttonWordClone;
 
-        foreach ( KeyValuePair<string, List<string>> item in  groupWordDiction)
+        foreach (KeyValuePair<string, List<string>> item in groupWordDiction)
         {
             listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
+            groupWords.Add(listGroupWordClone.GetComponent<ListGroupWord>());
             listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key + ".";
             if (item.Value.Count > 0)
             {
                 if (item.Value.Count == 1)
                 {
-                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count+" word";
+                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count + " word";
                 }
                 else
                 {
-                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count+" words";
+                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count + " words";
                 }
             }
-            foreach(var word in item.Value)
+            foreach (var word in item.Value)
             {
                 //Debug.Log(item.Key + ": " + word);
                 buttonWordClone = GameObject.Instantiate(buttonWord, listGroupWordClone.GetComponent<ListGroupWord>().groupWord);
                 buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
             }
         }
-   
     }
 
     public void OnPlayClick()
