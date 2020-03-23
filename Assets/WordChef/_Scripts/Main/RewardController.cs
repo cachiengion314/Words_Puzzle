@@ -24,7 +24,8 @@ public class RewardController : MonoBehaviour
 
     private void OnDisable()
     {
-        MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
+        if (MainController.instance != null)
+            MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
     }
 
     private void CheckShowAgain()
@@ -62,7 +63,8 @@ public class RewardController : MonoBehaviour
     {
         if (_boardFreeWatch.transform.localScale == Vector3.one)
             TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);
-        TweenControl.GetInstance().DelayCall(transform,0.1f,()=> {
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
             AdmobController.instance.ShowRewardBasedVideo();
             Sound.instance.PlayButton();
         });

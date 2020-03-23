@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class GameLevel : ScriptableObject
+public class GameLevel
 {
     public string word;
     public string answers;

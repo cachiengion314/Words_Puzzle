@@ -37,7 +37,8 @@ namespace Superpow
 
         public static GameLevel Load(int world, int subWorld, int level)
         {
-            return Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + subWorld + "/Level_" + level);
+            var gameData = Resources.Load<GameData>("GameData");
+            return /*Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + subWorld + "/Level_" + level);*/gameData.words[world].subWords[subWorld].gameLevels[level];
         }
     }
 }

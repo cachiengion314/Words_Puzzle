@@ -34,7 +34,8 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnDisable()
     {
-        MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
+        if (MainController.instance != null)
+            MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
     }
 
     public void OnClickOpen()

@@ -16,8 +16,8 @@ public class JsonBuilder : MonoBehaviour
         {
             LevelData data = new LevelData();
             data.letters = lv.letters;
-            data.answers = lv.validWords;
-            data.validWords = lv.answers;
+            data.answers = lv.answers;
+            data.validWords = lv.validWords;
             gameLevels.Add(data);
         }
     }

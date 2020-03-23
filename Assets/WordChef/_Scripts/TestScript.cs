@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TestScript : MonoBehaviour {
-
-    private void Start()
-    {
-        
-    }
+    public GameData gameData;
 
     private void Test_1()
     {
@@ -20,7 +16,8 @@ public class TestScript : MonoBehaviour {
                 int num = Superpow.Utils.GetNumLevels(world, sub);
                 for (int level = 0; level < num; level++)
                 {
-                    var gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + sub + "/Level_" + level);
+                    //var gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + sub + "/Level_" + level);
+                    var gameLevel = gameData.words[world].subWords[sub].gameLevels[level];
                     result += gameLevel.word + "\n";
                 }
             }
@@ -37,8 +34,8 @@ public class TestScript : MonoBehaviour {
                 int num = Superpow.Utils.GetNumLevels(world, sub);
                 for (int level = 0; level < num; level++)
                 {
-                    var gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + sub + "/Level_" + level);
-
+                    //var gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + sub + "/Level_" + level);
+                    var gameLevel = gameData.words[world].subWords[sub].gameLevels[level];
                     var answers = CUtils.BuildListFromString<string>(gameLevel.answers);
                     if (gameLevel.word.Contains("a") && gameLevel.word.Contains("m") && answers[0].Length == 2)
                     {

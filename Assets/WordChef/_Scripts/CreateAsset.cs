@@ -11,17 +11,29 @@ public class CreateAsset : MonoBehaviour
     public int numEnd;
     public int numStart;
     public int numWord;
+    public int numSubWord;
     public string path = "Assets/Resources/DataLevel/SubWorld_";
 
     public void JsonBuilder()
     {
+        _gameData.words = new List<Word>();
+        Word word = new Word();
+        word.subWords = new List<SubWord>();
+        for (int j = 0; j < numSubWord; j++)
+        {
+            SubWord subWord = new SubWord();
+            word.subWords.Add(subWord);
+        }
         _jsonBuilder.GetGameLevels();
+        for (int i = 0; i < numWord; i++)
+        {
+            _gameData.words.Add(word);
+        }
     }
 
     public void CreateNewScriptAbleObj()
     {
-        _gameData.gameLevels = new List<LevelsData>();
-        for (int i = numStart; i < _jsonBuilder.gameLevels.Count; i++)
+        for (int i = numStart; i < numWord; i++)
         {
             InitAsset(i);
         }
@@ -31,8 +43,8 @@ public class CreateAsset : MonoBehaviour
     {
 #if UNITY_EDITOR
         //ScriptableObject asset = ScriptableObject.CreateInstance<GameLevel>();
-        LevelsData data = /*asset as */new LevelsData();
-        JsonBuilder(data, index);
+        //GameLevel data = /*asset as *GameLevel();
+        JsonBuilder(/*data, */index);
         //CreateAssets(asset, index);
 #endif
     }
@@ -52,12 +64,26 @@ public class CreateAsset : MonoBehaviour
 #endif
     }
 
-    private void JsonBuilder(LevelsData data, int index)
+    private void JsonBuilder(/*GameLevel data, */int index)
     {
-        data.word = _jsonBuilder.gameLevels[index].letters;
-        data.answers = _jsonBuilder.gameLevels[index].answers;
-        data.validWords = _jsonBuilder.gameLevels[index].validWords;
-        _gameData.gameLevels.Add(data);
+        for (int i = 0; i < _gameData.words[index].subWords.Count; i++)
+        {
+            int indexSubword = i;
+            var subWord = _gameData.words[index].subWords[indexSubword];
+            subWord.gameLevels = new List<GameLevel>();
+            for (int j = 0; j < 7; j++)
+            {
+                int indexLevel = j + 7 * indexSubword;
+                if (indexLevel < _jsonBuilder.gameLevels.Count)
+                {
+                    var data = new GameLevel();
+                    data.word = _jsonBuilder.gameLevels[indexLevel].letters;
+                    data.answers = _jsonBuilder.gameLevels[indexLevel].answers;
+                    data.validWords = _jsonBuilder.gameLevels[indexLevel].validWords;
+                    subWord.gameLevels.Add(data);
+                }
+            }
+        }
     }
 
 }

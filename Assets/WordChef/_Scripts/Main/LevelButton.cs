@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour {
+    public GameData gameData;
+    [Space]
     public Text levelText;
     public int world, subWorld, level;
     public Transform centerPoint;
@@ -25,7 +27,8 @@ public class LevelButton : MonoBehaviour {
         levelText.text = (level + 1).ToString();
         GetComponent<Button>().onClick.AddListener(OnButtonClick);
 
-        gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + subWorld + "/Level_" + level);
+        //gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + subWorld + "/Level_" + level);
+        gameLevel = gameData.words[world].subWords[subWorld].gameLevels[level];
 
         if (gameLevel != null)
         {
