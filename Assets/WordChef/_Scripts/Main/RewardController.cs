@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMobileAds.Api;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,15 +9,22 @@ using UnityEngine.UI;
 public class RewardController : MonoBehaviour
 {
     private bool _dontShowAgain;
-    [SerializeField] private RewardedButton _rewardedButton;
+    //[SerializeField] private RewardedButton _rewardedButton;
     [SerializeField] private FreeStarsDialogConfirm _boardClaim;
     [SerializeField] private GameObject _boardFreeWatch;
     [SerializeField] private Toggle _showAgain;
     [SerializeField] private int _amountStars;
+    [SerializeField] private RewardVideoController _rewardVideoPfb;
+
     void Start()
     {
         _boardClaim.transform.localScale = Vector3.zero;
         CheckShowAgain();
+    }
+
+    private void OnDisable()
+    {
+        MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
     }
 
     private void CheckShowAgain()
@@ -24,17 +32,12 @@ public class RewardController : MonoBehaviour
         _showAgain.isOn = CPlayerPrefs.GetBool("DONT_SHOW", false);
     }
 
-    private void OnCompleteRewardVideo()
-    {
-        _rewardedButton.gameObject.SetActive(false);
-        _boardClaim.Setup(_amountStars, () =>
-        {
-
-        });
-    }
-
     public void OnShowAdsVideo()
     {
+        if (MainController.instance.rewardVideoController != null)
+            Destroy(MainController.instance.rewardVideoController.gameObject);
+        MainController.instance.rewardVideoController = Instantiate(_rewardVideoPfb);
+        MainController.instance.rewardVideoController.onRewardedCallback += OnCompleteVideo;
         if (_showAgain.isOn)
         {
             OnWatchClick();
@@ -46,14 +49,23 @@ public class RewardController : MonoBehaviour
         }
     }
 
+    private void OnCompleteVideo()
+    {
+        Destroy(MainController.instance.rewardVideoController.gameObject);
+        _boardClaim.Setup(_amountStars, () =>
+        {
+
+        });
+    }
+
     public void OnWatchClick()
     {
-        if (_rewardedButton.onRewarded != null)
-            _rewardedButton.onRewarded = null;
-        _rewardedButton.onRewarded += OnCompleteRewardVideo;
         if (_boardFreeWatch.transform.localScale == Vector3.one)
             TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);
-        _rewardedButton.OnClick();
+        TweenControl.GetInstance().DelayCall(transform,0.1f,()=> {
+            AdmobController.instance.ShowRewardBasedVideo();
+            Sound.instance.PlayButton();
+        });
     }
 
     public void DontShowAgain()
@@ -68,11 +80,6 @@ public class RewardController : MonoBehaviour
         {
 
         });
-    }
-
-    private void OnDisable()
-    {
-        _rewardedButton.onRewarded -= OnCompleteRewardVideo;
     }
 }
 

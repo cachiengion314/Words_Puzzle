@@ -12,7 +12,9 @@ public class WordRegion : MonoBehaviour
     public TextMeshProUGUI _textLevel;
     public TextPreview textPreview;
     public Compliment compliment;
-    public ButtonVideoHintFree btnAdsHintFree;
+    public ButtonVideoHintFree btnAdsHintFreePfb;
+    private ButtonVideoHintFree _bntHintADS;
+    public Transform parentAdsHint;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -41,6 +43,8 @@ public class WordRegion : MonoBehaviour
     {
         instance = this;
         rt = GetComponent<RectTransform>();
+        if (_bntHintADS != null)
+            Destroy(_bntHintADS.gameObject);
     }
 
     public void Load(GameLevel gameLevel)
@@ -254,9 +258,10 @@ public class WordRegion : MonoBehaviour
                 var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
                 var cellRandom = lineRandom.cells[Random.Range(0, cellNotShown.Count)];
                 cellRandom.isAds = true;
-                btnAdsHintFree.transform.position = cellRandom.transform.position;
-                btnAdsHintFree.SetActionClick(cellRandom);
-                btnAdsHintFree.gameObject.SetActive(true);
+                _bntHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
+                _bntHintADS.transform.position = cellRandom.transform.position;
+                _bntHintADS.Cell = cellRandom;
+                _bntHintADS.gameObject.SetActive(true);
                 CPlayerPrefs.SetBool(_textLevel.text + "ADS_HINT_FREE", true);
             }
             textPreview.SetWrongColor();

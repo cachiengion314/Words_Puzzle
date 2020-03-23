@@ -69,7 +69,7 @@ public class Cell : MonoBehaviour
     public void ShowText()
     {
         if (isAds)
-            WordRegion.instance.btnAdsHintFree.gameObject.SetActive(false);
+            WordRegion.instance.btnAdsHintFreePfb.gameObject.SetActive(false);
         letterText.text = letter;
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);

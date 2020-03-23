@@ -14,6 +14,8 @@ public class MainController : BaseController {
 
     public static MainController instance;
 
+    [HideInInspector] public RewardVideoController rewardVideoController;
+
     private string wordLevelSave;
 
     protected override void Awake()
