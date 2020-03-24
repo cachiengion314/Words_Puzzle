@@ -96,7 +96,9 @@ public class WordRegion : MonoBehaviour
         if (cellSize > 130f) cellSize = 130f;
 
         string[] levelProgress = GetLevelProgress();
+        string[] answerProgress = GetAnswerProgress();
         bool useProgress = false;
+        bool useAnsProgress = false;
 
         if (levelProgress.Length != 0)
         {
@@ -104,16 +106,23 @@ public class WordRegion : MonoBehaviour
             if (!useProgress) ClearLevelProgress();
         }
 
-        SetupLine(wordList, useProgress, levelProgress);
+        if (answerProgress.Length != 0)
+        {
+            useAnsProgress = CheckAnswerProgress(answerProgress, wordList, numWords);
+            if (!useAnsProgress) ClearAnswerProgress();
+        }
+
+        SetupLine(wordList, useProgress, levelProgress, answerProgress);
 
         SetLinesPosition();
 
         FacebookController.instance.user.levelProgress = levelProgress;
+        FacebookController.instance.user.answerProgress = answerProgress;
         FacebookController.instance.SaveDataGame();
         CheckGameComplete();
     }
 
-    private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress)
+    private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress, string[] answerProgress)
     {
         int lineIndex = 0;
         var countAnswer = wordList.Count < 5 ? wordList.Count : wordList.Count - 2;
@@ -123,7 +132,7 @@ public class WordRegion : MonoBehaviour
             var word = wordList[i];
             var words = wordList.FindAll(wd => wd.Length == word.Length);
             LineWord line = Instantiate(MonoUtils.instance.lineWord);
-            line.answer = /*word.ToUpper()*/"";
+            //line.answer = word.ToUpper();
             line.numLetters = word.Length;
             line.answers = words;
             line.cellSize = cellSize;
@@ -133,7 +142,7 @@ public class WordRegion : MonoBehaviour
 
             if (useProgress)
             {
-                line.SetProgress(levelProgress[lineIndex]);
+                line.SetProgress(levelProgress[lineIndex], answerProgress[lineIndex]);
             }
 
             line.transform.SetParent(transform);
@@ -279,7 +288,7 @@ public class WordRegion : MonoBehaviour
             var indexAnswer = Random.Range(0, lineRandom.answers.Count);
             lineRandom.SetDataLetter(lineRandom.answers[indexAnswer]);
             var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
-            var cellRandom = lineRandom.cells[Random.Range(0, cellNotShown.Count)];
+            var cellRandom = cellNotShown[Random.Range(0, cellNotShown.Count)];
             cellRandom.isAds = true;
             _bntHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
             _bntHintADS.transform.position = cellRandom.transform.position;
@@ -420,6 +429,7 @@ public class WordRegion : MonoBehaviour
         if (!Prefs.IsLastLevel()) return;
 
         List<string> results = new List<string>();
+        List<string> resultAnswers = new List<string>();
         foreach (var line in lines)
         {
             StringBuilder sb = new StringBuilder();
@@ -428,10 +438,13 @@ public class WordRegion : MonoBehaviour
                 sb.Append(cell.isShown ? "1" : "0");
             }
             results.Add(sb.ToString());
+            resultAnswers.Add(line.answer);
         }
 
         Prefs.levelProgress = results.ToArray();
+        Prefs.answersProgress = resultAnswers.ToArray();
         FacebookController.instance.user.levelProgress = Prefs.levelProgress;
+        FacebookController.instance.user.answerProgress = Prefs.answersProgress;
     }
 
     public string[] GetLevelProgress()
@@ -440,10 +453,22 @@ public class WordRegion : MonoBehaviour
         return Prefs.levelProgress;
     }
 
+    public string[] GetAnswerProgress()
+    {
+        if (!Prefs.IsLastLevel()) return new string[0]; //nếu đã chơi thì biết đáp án rồi nên ko lưu
+        return Prefs.answersProgress;
+    }
+
     public void ClearLevelProgress()
     {
         if (!Prefs.IsLastLevel()) return;
         CPlayerPrefs.DeleteKey("level_progress");
+    }
+
+    public void ClearAnswerProgress()
+    {
+        if (!Prefs.IsLastLevel()) return;
+        CPlayerPrefs.DeleteKey("answer_progress");
     }
 
     public bool CheckLevelProgress(string[] levelProgress, List<string> wordList)
@@ -453,6 +478,17 @@ public class WordRegion : MonoBehaviour
         for (int i = 0; i < wordList.Count; i++)
         {
             if (levelProgress[i].Length != wordList[i].Length) return false;
+        }
+        return true;
+    }
+
+    public bool CheckAnswerProgress(string[] answerProgress, List<string> wordList, int numWord)
+    {
+        if (answerProgress.Length != numWord) return false;
+
+        for (int i = 0; i < numWord; i++)
+        {
+            if (answerProgress[i].Length != wordList[i].Length) return false;
         }
         return true;
     }
@@ -471,12 +507,14 @@ public class WordRegion : MonoBehaviour
     private void UpdateBoard()
     {
         string[] progress = GetLevelProgress();
+        string[] progressAnswer = GetAnswerProgress();
         if (progress.Length == 0) return;
+        if (progressAnswer.Length == 0) return;
 
         int i = 0;
         foreach (var line in lines)
         {
-            line.SetProgress(progress[i]);
+            line.SetProgress(progress[i], progressAnswer[i]);
             i++;
         }
     }

@@ -149,6 +149,7 @@ public class WinDialog : Dialog {
         Prefs.countLevelDaily += 1;
         CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         FacebookController.instance.user.levelProgress = new string[] { "0" };
+        FacebookController.instance.user.answerProgress = new string[] { "0" };
         FacebookController.instance.SaveDataGame();
     }
 

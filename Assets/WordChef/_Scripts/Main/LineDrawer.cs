@@ -88,13 +88,16 @@ public class LineDrawer : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            isDragging = false;
-            currentIndexes.Clear();
-            lineRenderer.positionCount = 0;
-            lineParticle.SetActive(false);
+            if (textPreview.GetText() != "")
+            {
+                isDragging = false;
+                currentIndexes.Clear();
+                lineRenderer.positionCount = 0;
+                lineParticle.SetActive(false);
 
-            WordRegion.instance.CheckAnswer(textPreview.GetText());
-            pan.ResetScaleWord();
+                WordRegion.instance.CheckAnswer(textPreview.GetText());
+                pan.ResetScaleWord();
+            }
         }
 
         if (points.Count >= 2 && isDragging)

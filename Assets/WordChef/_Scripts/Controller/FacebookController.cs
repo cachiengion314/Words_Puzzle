@@ -36,6 +36,8 @@ public class FacebookController : MonoBehaviour
 
     public void SaveDataGame(Action<UpdateUserDataResult> callback = null)
     {
+        if (!Prefs.IsLastLevel())
+            return;
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
             user.id = result.PlayFabId;
@@ -125,6 +127,8 @@ public class FacebookController : MonoBehaviour
     {
         if (user.levelProgress.Length == 0)
             user.levelProgress = new string[] { "0" };
+        if (user.answerProgress.Length == 0)
+            user.answerProgress = new string[] { "0" };
         var jsonData = JsonConvert.SerializeObject(user);
         CPlayerPrefs.SetString("user", jsonData);
         return jsonData;
@@ -140,6 +144,7 @@ public class FacebookController : MonoBehaviour
         userDefault.unlockedLevel = "0";
         userDefault.unlockedWorld = "0";
         userDefault.levelProgress = new string[] { "0" };
+        userDefault.answerProgress = new string[] { "0" };
         return userDefault;
     }
     private void GetFriendList()
@@ -185,6 +190,7 @@ public class FacebookController : MonoBehaviour
         us.unlockedLevel = jsonData.unlockedLevel;
         us.unlockedWorld = jsonData.unlockedWorld;
         us.levelProgress = jsonData.levelProgress;
+        us.answerProgress = jsonData.answerProgress;
         user = us;
     }
     private void SetValueUser()
@@ -193,6 +199,7 @@ public class FacebookController : MonoBehaviour
         Prefs.unlockedWorld = Int32.Parse(user.unlockedWorld);
         Prefs.unlockedSubWorld = Int32.Parse(user.unlockedSubWorld);
         Prefs.levelProgress = user.levelProgress;
+        Prefs.answersProgress = user.answerProgress;
     }
 }
 
@@ -207,4 +214,5 @@ public struct User
     public string unlockedSubWorld;
     public string unlockedLevel;
     public string[] levelProgress;
+    public string[] answerProgress;
 }

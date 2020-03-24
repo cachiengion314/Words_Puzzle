@@ -280,9 +280,9 @@ public static class Prefs {
 
     public static bool IsLastLevel()
     {
-        return  GameState.currentWorld == unlockedWorld &&
-                GameState.currentSubWorld == unlockedSubWorld && 
-                GameState.currentLevel == unlockedLevel;
+        return  GameState.currentWorld >= unlockedWorld &&
+                GameState.currentSubWorld >= unlockedSubWorld && 
+                GameState.currentLevel >= unlockedLevel;
     }
 
     public static void SetExtraWords(int world, int subWorld, int level, string[] extraWords)
@@ -317,6 +317,12 @@ public static class Prefs {
     {
         get { return CryptoPlayerPrefsX.GetStringArray("level_progress"); }
         set { CryptoPlayerPrefsX.SetStringArray("level_progress", value); }
+    }
+
+    public static string[] answersProgress
+    {
+        get { return CryptoPlayerPrefsX.GetStringArray("answer_progress"); }
+        set { CryptoPlayerPrefsX.SetStringArray("answer_progress", value); }
     }
 
     public static bool isNoti1Enabled

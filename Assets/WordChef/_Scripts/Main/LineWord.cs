@@ -23,9 +23,12 @@ public class LineWord : MonoBehaviour
 
     [SerializeField] private Image _fxAnswerDuplicate;
 
+    private string answerrandom;
+
     public void Build(bool RTL)
     {
         this.RTL = RTL;
+        answerrandom = answers[Random.Range(0, answers.Count)];
         //numLetters = answer.Length;
         float cellGap = cellSize * Const.CELL_GAP_COEF_X;
 
@@ -33,7 +36,7 @@ public class LineWord : MonoBehaviour
         {
             int index = i;
             Cell cell = Instantiate(MonoUtils.instance.cell);
-            cell.letter = /*answer[i].ToString()*/"";
+            cell.letter = answer.Length > 0 ? answer[i].ToString() : "";
             //cell.letterText.transform.localScale = Vector3.one * (cellSize / 80f);
             float a = (cellSize / 135f);
             cell.letterText.fontSize = (int)(ConfigController.Config.fontSizeInCellMainScene * a);
@@ -66,6 +69,7 @@ public class LineWord : MonoBehaviour
     public void SetDataLetter(string word)
     {
         answer = word;
+        CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
         var lines = WordRegion.instance.Lines;
         foreach (var line in lines)
         {
@@ -79,12 +83,15 @@ public class LineWord : MonoBehaviour
         }
     }
 
-    public void SetProgress(string progress)
+    public void SetProgress(string progress, string progressAnswer)
     {
+        answer = progressAnswer.Length > 0 ? progressAnswer : "";
         isShown = true;
         int i = 0;
         foreach (var cell in cells)
         {
+            if (answer.Length == cells.Count)
+                cell.letter = answer[i].ToString();
             if (progress[i] == '1')
             {
                 cell.isShown = true;
@@ -159,7 +166,13 @@ public class LineWord : MonoBehaviour
 
     public void ShowHint(System.Action callback = null)
     {
+        if (answer == "")
+        {
+            answer = answers[Random.Range(0, answers.Count)];
+            UpdateAnswers();
+        }
         var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
+        var indexAnswer = answer.Length - cellNotShow.Count;
         if (!RTL)
         {
             for (int i = 0; i < cellNotShow.Count; i++)
@@ -167,6 +180,7 @@ public class LineWord : MonoBehaviour
                 var cell = cellNotShow[i];
                 if (!cell.isShown && !cell.isAds)
                 {
+                    cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
                     callback?.Invoke();
                     var showDone = cells.All(cel => cel.isShown);
@@ -184,16 +198,18 @@ public class LineWord : MonoBehaviour
             for (int i = cellNotShow.Count - 1; i >= 0; i--)
             {
                 var cell = cellNotShow[i];
-                var showDone = cells.All(cel => cel.isShown);
-                if (showDone)
+                if (!cell.isShown && !cell.isAds)
                 {
+                    cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
-                    if (i == 0)
+                    callback?.Invoke();
+                    var showDone = cells.All(cel => cel.isShown);
+                    if (showDone)
                     {
                         isShown = true;
                         ShowDoneAllCell();
+                        return;
                     }
-                    return;
                 }
             }
         }
@@ -201,6 +217,11 @@ public class LineWord : MonoBehaviour
 
     public void ShowHintRandom(System.Action callback = null)
     {
+        if (answer == "")
+        {
+            answer = answers[Random.Range(0, answers.Count)];
+            UpdateAnswers();
+        }
         var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
         var cellRandom = GetRandomCell(cellNotShow);
         if (cellRandom != null)
@@ -221,12 +242,19 @@ public class LineWord : MonoBehaviour
     {
         if (!CPlayerPrefs.GetBool(gameObject.name))
         {
+            if (answer == "")
+            {
+                answer = answers[Random.Range(0, answers.Count)];
+                UpdateAnswers();
+            }
             var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
+            var indexAnswer = answer.Length - cellNotShow.Count;
             for (int i = 0; i < cellNotShow.Count; i++)
             {
                 var cell = cellNotShow[i];
                 if (i == 0)
                 {
+                    cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowTextBee();
                 }
                 else
@@ -245,9 +273,20 @@ public class LineWord : MonoBehaviour
         }
     }
 
+
+    private void UpdateAnswers()
+    {
+        foreach (var line in WordRegion.instance.Lines)
+        {
+            if (line != this)
+                line.answers.Remove(answer);
+        }
+    }
     private Cell GetRandomCell(List<Cell> cells)
     {
+        var indexAnswer = answer.Length - cells.Count;
         var index = Random.Range(0, cells.Count - 1);
+        cells[index].letter = answer[index + indexAnswer].ToString();
         return cells[index];
     }
 }
