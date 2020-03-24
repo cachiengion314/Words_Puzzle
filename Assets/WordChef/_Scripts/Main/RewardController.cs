@@ -24,7 +24,7 @@ public class RewardController : MonoBehaviour
 
     private void OnDisable()
     {
-        if (MainController.instance != null && MainController.instance.rewardVideoController.onRewardedCallback != null)
+        if (MainController.instance != null && MainController.instance.rewardVideoController != null)
             MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
     }
 

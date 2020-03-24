@@ -53,7 +53,8 @@ public class WordRegion : MonoBehaviour
 
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
         validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
-        numWords = wordList.Count;
+
+        numWords = wordList.Count < 5 ? wordList.Count : wordList.Count - 2;
 
         numCol = numWords <= 4 ? 1 :
                      numWords <= 12 ? 2 : 3;
@@ -115,11 +116,16 @@ public class WordRegion : MonoBehaviour
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress)
     {
         int lineIndex = 0;
-
-        foreach (var word in wordList)
+        var countAnswer = wordList.Count < 5 ? wordList.Count : wordList.Count - 2;
+        //foreach (var word in wordList)
+        for (int i = 0; i < countAnswer; i++)
         {
+            var word = wordList[i];
+            var words = wordList.FindAll(wd => wd.Length == word.Length);
             LineWord line = Instantiate(MonoUtils.instance.lineWord);
-            line.answer = word.ToUpper();
+            line.answer = /*word.ToUpper()*/"";
+            line.numLetters = word.Length;
+            line.answers = words;
             line.cellSize = cellSize;
             line.SetLineWidth();
             line.Build(ConfigController.Config.isWordRightToLeft);
@@ -216,32 +222,76 @@ public class WordRegion : MonoBehaviour
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
-        LineWord line = lines.Find(x => x.answer == checkWord);
+        //LineWord line = lines.Find(x => x.answer == checkWord);
+        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown);
         //string meaning="";
         if (line != null)
         {
-            if (!line.isShown)
-            {
-                textPreview.SetAnswerColor();
-                line.ShowAnswer();
-                CheckGameComplete();
+            //if (!line.isShown)
+            //{
+            line.SetDataLetter(checkWord);
+            textPreview.SetAnswerColor();
+            line.ShowAnswer();
+            CheckGameComplete();
 
-                compliment.Show(lineIndex);
-                lineIndex++;
-                if (lineIndex > compliment.sprites.Length - 1) { lineIndex = compliment.sprites.Length - 1; }
+            compliment.Show(lineIndex);
+            lineIndex++;
+            if (lineIndex > compliment.sprites.Length - 1) { lineIndex = compliment.sprites.Length - 1; }
 
-                Sound.instance.Play(Sound.Others.Match);
-                listWordCorrect.Add(checkWord.ToLower());
-            }
-            else
-            {
-                line.ShowFxAnswerDuplicate();
-                textPreview.SetExistColor();
-            }
+            Sound.instance.Play(Sound.Others.Match);
+            listWordCorrect.Add(checkWord.ToLower());
+            //}
+            //else
+            //{
+            //    line.ShowFxAnswerDuplicate();
+            //    textPreview.SetExistColor();
+            //}
             if (textPreview.useFX)
                 textPreview.ClearText();
         }
-        else if (validWords.Contains(checkWord.ToLower()))
+        else
+        {
+            LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown);
+            if (lineExist != null && lineExist.answer == checkWord)
+            {
+                lineExist.ShowFxAnswerDuplicate();
+                textPreview.SetExistColor();
+                if (textPreview.useFX)
+                    textPreview.ClearText();
+            }
+            else
+            {
+                CheckExtraWordAndWrong(checkWord);
+            }
+        }
+        if (!textPreview.useFX)
+            textPreview.ClearText();
+    }
+
+    private void SetupCellAds()
+    {
+        var isAdsHintFree = CPlayerPrefs.GetBool(_textLevel.text + "ADS_HINT_FREE", false);
+        _countShowAdsHintFree += 1;
+        if (_countShowAdsHintFree > 2 && !isAdsHintFree)
+        {
+            var lineNotShown = lines.FindAll(l => !l.isShown);
+            var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
+            var indexAnswer = Random.Range(0, lineRandom.answers.Count);
+            lineRandom.SetDataLetter(lineRandom.answers[indexAnswer]);
+            var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
+            var cellRandom = lineRandom.cells[Random.Range(0, cellNotShown.Count)];
+            cellRandom.isAds = true;
+            _bntHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
+            _bntHintADS.transform.position = cellRandom.transform.position;
+            _bntHintADS.Cell = cellRandom;
+            _bntHintADS.gameObject.SetActive(true);
+            CPlayerPrefs.SetBool(_textLevel.text + "ADS_HINT_FREE", true);
+        }
+    }
+    private void CheckExtraWordAndWrong(string checkWord)
+    {
+        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
+        if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
             ExtraWord.instance.ProcessWorld(checkWord);
             if (textPreview.useFX)
@@ -249,28 +299,11 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            var isAdsHintFree = CPlayerPrefs.GetBool(_textLevel.text + "ADS_HINT_FREE", false);
-            _countShowAdsHintFree += 1;
-            if (_countShowAdsHintFree > 2 && !isAdsHintFree)
-            {
-                var lineNotShown = lines.FindAll(l => !l.isShown);
-                var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
-                var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
-                var cellRandom = lineRandom.cells[Random.Range(0, cellNotShown.Count)];
-                cellRandom.isAds = true;
-                _bntHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
-                _bntHintADS.transform.position = cellRandom.transform.position;
-                _bntHintADS.Cell = cellRandom;
-                _bntHintADS.gameObject.SetActive(true);
-                CPlayerPrefs.SetBool(_textLevel.text + "ADS_HINT_FREE", true);
-            }
+            SetupCellAds();
             textPreview.SetWrongColor();
             lineIndex = 0;
         }
-        if (!textPreview.useFX)
-            textPreview.ClearText();
     }
-
     private void CheckGameComplete()
     {
         SaveLevelProgress();
@@ -328,7 +361,8 @@ public class WordRegion : MonoBehaviour
 
             if (line != null)
             {
-                line.ShowHint(() => {
+                line.ShowHint(() =>
+                {
                     if (hintFree > 0)
                         CurrencyController.DebitHintFree(hintFree);
                     else
@@ -360,7 +394,8 @@ public class WordRegion : MonoBehaviour
                     line = lines[i];
                     if (line != null)
                     {
-                        line.ShowHintRandom(() => {
+                        line.ShowHintRandom(() =>
+                        {
                             //if (hintFree > 0)
                             //    CurrencyController.DebitHintFree(hintFree);
                             //else

@@ -8,6 +8,7 @@ public class LineWord : MonoBehaviour
 {
 
     public string answer;
+    public List<string> answers;
     public float cellSize;
     public List<Cell> cells = new List<Cell>();
     public int numLetters;
@@ -25,14 +26,14 @@ public class LineWord : MonoBehaviour
     public void Build(bool RTL)
     {
         this.RTL = RTL;
-        numLetters = answer.Length;
+        //numLetters = answer.Length;
         float cellGap = cellSize * Const.CELL_GAP_COEF_X;
 
         for (int i = 0; i < numLetters; i++)
         {
             int index = i;
             Cell cell = Instantiate(MonoUtils.instance.cell);
-            cell.letter = answer[i].ToString();
+            cell.letter = /*answer[i].ToString()*/"";
             //cell.letterText.transform.localScale = Vector3.one * (cellSize / 80f);
             float a = (cellSize / 135f);
             cell.letterText.fontSize = (int)(ConfigController.Config.fontSizeInCellMainScene * a);
@@ -56,10 +57,26 @@ public class LineWord : MonoBehaviour
 
     public void SetLineWidth()
     {
-        int numLetters = answer.Length;
+        //int numLetters = answer.Length;
         var rt = GetComponent<RectTransform>();
         lineWidth = numLetters * cellSize + (numLetters - 1) * cellSize * Const.CELL_GAP_COEF_X;
         rt.sizeDelta = new Vector2(lineWidth, cellSize);
+    }
+
+    public void SetDataLetter(string word)
+    {
+        answer = word;
+        var lines = WordRegion.instance.Lines;
+        foreach (var line in lines)
+        {
+            if (line != this)
+                line.answers.Remove(word);
+        }
+        for (int i = 0; i < cells.Count; i++)
+        {
+            int index = i;
+            cells[index].letter = word[index].ToString();
+        }
     }
 
     public void SetProgress(string progress)
@@ -86,8 +103,10 @@ public class LineWord : MonoBehaviour
         if (_fxAnswerDuplicate != null)
         {
             _fxAnswerDuplicate.gameObject.SetActive(true);
-            TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject,Vector3.one * 1.1f,0.3f,()=> {
-                TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject, Vector3.one, 0.3f, () => {
+            TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject, Vector3.one * 1.1f, 0.3f, () =>
+            {
+                TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject, Vector3.one, 0.3f, () =>
+                {
                     _fxAnswerDuplicate.gameObject.SetActive(false);
                 });
             });
