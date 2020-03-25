@@ -11,6 +11,8 @@ public class LevelItem : MonoBehaviour {
     public int world, subWorld, level, numlevels;
     //public Transform centerPoint;
     public Image background;
+    public Color colorTextLock;
+    public Color colorTextUnlock;
 
     public Sprite solvedSprite, currentSprite, lockedSprite;
     public GameObject solvedBtn, currentBtn, lockedBtn;
@@ -44,6 +46,7 @@ public class LevelItem : MonoBehaviour {
             solvedBtn.SetActive(true);
             currentBtn.SetActive(false);
             lockedBtn.SetActive(false);
+            levelText.color = colorTextUnlock;
         }
         else if (world == unlockedWorld && subWorld == unlockedSubWorld && level == unlockedLevel)
         {
@@ -51,6 +54,7 @@ public class LevelItem : MonoBehaviour {
             solvedBtn.SetActive(false);
             currentBtn.SetActive(true);
             lockedBtn.SetActive(false);
+            levelText.color = colorTextUnlock;
         }
         else
         {
@@ -59,6 +63,7 @@ public class LevelItem : MonoBehaviour {
             solvedBtn.SetActive(false);
             currentBtn.SetActive(false);
             lockedBtn.SetActive(true);
+            levelText.color = colorTextLock;
         }
     }
 

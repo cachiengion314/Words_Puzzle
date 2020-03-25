@@ -6,18 +6,24 @@ using DG.Tweening;
 
 public class WorldItem : MonoBehaviour {
     public MaskableGraphic itemNumber, itemNumberBack;
-    public Image play, star;
+    public Image play, star, bg;
     public Button button;
+    public Sprite spriteBgLock;
+    public Sprite spriteBgUnlock;
     public Sprite playIng;
     public Sprite playUnactive;
+    public Sprite playClear;
     public Text itemName, processText, subWorldName;
     public LevelItem levelItemPrefab;
     public RectTransform levelGrid;
-
+    public Color colorTextLock;
+    public Color colorTextUnLock;
     public int world, subWorld;
     int unlockedWorld, unlockedSubWorld, unlockedLevel;
 
     public ScrollRect scroll;
+
+    [HideInInspector] public WorldController worldController;
 
     private void Start()
     {
@@ -46,38 +52,53 @@ public class WorldItem : MonoBehaviour {
 
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
         {
-           // button.interactable = false;
-            play.sprite = playUnactive;
-
-            processText.text = "0" + "/" + numLevels;
-            star.gameObject.SetActive(false);
-
+            // button.interactable = false;
+            SetStateWord(playUnactive, spriteBgLock, colorTextLock, "0" + "/" + numLevels);
+            itemNumberBack.gameObject.SetActive(false);
+            //star.gameObject.SetActive(false);
             levelGrid.gameObject.SetActive(false);
         }
         else if (world == unlockedWorld && subWorld == unlockedSubWorld)
         {
-            play.sprite = playIng;
-            processText.text = unlockedLevel + "/" + numLevels;
-            star.gameObject.SetActive(true);
-
+            SetStateWord(playIng, spriteBgUnlock, colorTextUnLock, unlockedLevel + "/" + numLevels);
+            //star.gameObject.SetActive(true);
             levelGrid.gameObject.SetActive(false);
             //levelGrid.gameObject.SetActive(true);
             scroll.DOVerticalNormalizedPos(1f - ((float)transform.GetSiblingIndex() / (float)transform.parent.childCount), 0f);
         }
         else
         {
-            processText.text = numLevels + "/" + numLevels;
-            star.gameObject.SetActive(true);
-
+            SetStateWord(playClear, spriteBgUnlock, colorTextUnLock, "Clear");
+            //star.gameObject.SetActive(true);
             levelGrid.gameObject.SetActive(false);
         }
 
         button.onClick.AddListener(OnButtonClick);
     }
 
+    private void SetStateWord(Sprite spritePlay, Sprite spriteBG, Color color, string processContent = "")
+    {
+        play.sprite = spritePlay;
+        bg.sprite = spriteBG;
+        bg.SetNativeSize();
+        play.SetNativeSize();
+
+        processText.text = processContent;
+        subWorldName.color = color;
+    }
+
     private void SetColorAlpha(MaskableGraphic graphic, float alpha)
     {
         graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, alpha);
+    }
+
+    private void CloseAllChapter()
+    {
+        foreach (var word in worldController.worldItems)
+        {
+            if (word != this)
+                word.levelGrid.gameObject.SetActive(false);
+        }
     }
 
     private void OnButtonClick()
@@ -88,6 +109,7 @@ public class WorldItem : MonoBehaviour {
             
         }
         else {
+            CloseAllChapter();
             GameState.currentSubWorldName = subWorldName.text;
 
             levelGrid.gameObject.SetActive(!levelGrid.gameObject.activeSelf);

@@ -436,15 +436,21 @@ MonoBehaviour:
   itemNumberBack: {fileID: 114366766523765376}
   play: {fileID: 114875328566837442}
   star: {fileID: 8913490921028245711}
+  bg: {fileID: 1580656501452914909}
   button: {fileID: 7422644793917114223}
-  playIng: {fileID: 21300000, guid: eb3cd27e016592345bff7a7cdae88038, type: 3}
-  playUnactive: {fileID: 21300000, guid: e3c935fd43a9f83409018531b47ed759, type: 3}
+  spriteBgLock: {fileID: 21300000, guid: 1f49bcdc9ab4a2143a73578c95710f52, type: 3}
+  spriteBgUnlock: {fileID: 21300000, guid: 25a2943d4f294b345a20900eaa799363, type: 3}
+  playIng: {fileID: 21300000, guid: e3c935fd43a9f83409018531b47ed759, type: 3}
+  playUnactive: {fileID: 21300000, guid: 7c78ba087c25b6048989b2ae4803a21d, type: 3}
+  playClear: {fileID: 21300000, guid: de1054a4f137a25439525e17ee91fd0c, type: 3}
   itemName: {fileID: 114140419413783600}
   processText: {fileID: 114755251168547390}
   subWorldName: {fileID: 114140419413783600}
   levelItemPrefab: {fileID: 215251986697426529, guid: 4aaf19de78b0b6441b3e63b8b42287b2,
     type: 3}
   levelGrid: {fileID: 7388479353173753980}
+  colorTextLock: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
+  colorTextUnLock: {r: 0.32941177, g: 0.11764707, b: 0.04705883, a: 1}
   world: 0
   subWorld: 0
   scroll: {fileID: 0}
@@ -691,7 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
