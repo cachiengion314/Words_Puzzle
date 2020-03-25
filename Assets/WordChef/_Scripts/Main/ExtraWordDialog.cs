@@ -50,7 +50,7 @@ public class ExtraWordDialog : Dialog
         {
             GameObject gameObj = Instantiate(MonoUtils.instance.rubyFly);
             gameObj.transform.position = waypoints[0];
-            gameObj.transform.localScale = 0.5f * Vector3.one;
+            gameObj.transform.localScale = Vector3.one * 0.85f;
 
             iTween.MoveTo(gameObj, iTween.Hash("path", waypoints, "speed", 30, "oncomplete", "OnMoveComplete"));
             iTween.ScaleTo(gameObj, iTween.Hash("scale", 0.7f * Vector3.one, "time", 0.3f));

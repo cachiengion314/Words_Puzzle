@@ -69,7 +69,12 @@ public class Cell : MonoBehaviour
     public void ShowText()
     {
         if (isAds)
-            WordRegion.instance.btnAdsHintFreePfb.gameObject.SetActive(false);
+        {
+            if (WordRegion.instance.BtnADS != null)
+                Destroy(WordRegion.instance.BtnADS.gameObject);
+            if (MainController.instance != null && MainController.instance.rewardVideoController != null)
+                Destroy(MainController.instance.rewardVideoController.gameObject);
+        }
         letterText.text = letter;
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);

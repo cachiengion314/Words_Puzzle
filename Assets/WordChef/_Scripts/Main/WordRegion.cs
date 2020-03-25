@@ -18,6 +18,7 @@ public class WordRegion : MonoBehaviour
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
+    private int _extraWord;
 
     private int _countShowAdsHintFree;
     private GameLevel gameLevel;
@@ -30,6 +31,14 @@ public class WordRegion : MonoBehaviour
     public List<string> listWordInLevel;
     public List<string> listWordCorrect;
     public static WordRegion instance;
+
+    public ButtonVideoHintFree BtnADS
+    {
+        get
+        {
+            return _bntHintADS;
+        }
+    }
 
     public List<LineWord> Lines
     {
@@ -47,16 +56,43 @@ public class WordRegion : MonoBehaviour
             Destroy(_bntHintADS.gameObject);
     }
 
+    private List<string> GetExtraWord(List<string> words)
+    {
+        var wordLengthEqual = new List<string>();
+        foreach (var word in words)
+        {
+            var wordEqual = words.FindAll(w => w.Length == word.Length);
+            if (wordEqual.Count > 2)
+            {
+                foreach (var wEqual in wordEqual)
+                {
+                    if (!wordLengthEqual.Contains(wEqual))
+                        wordLengthEqual.Add(wEqual);
+                }
+            }
+        }
+        for (int i = 0; i < _extraWord; i++)
+        {
+            if (wordLengthEqual.Count > 0)
+            {
+                var random = wordLengthEqual[Random.Range(0, wordLengthEqual.Count)];
+                words.Remove(random);
+                words.Add(random);
+            }
+        }
+        return words;
+    }
+
     public void Load(GameLevel gameLevel)
     {
         this.gameLevel = gameLevel;
-
+        _extraWord = gameLevel.numExtra;
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
-        validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
+        //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
+        wordList = wordList.Count <= 4 ? wordList : GetExtraWord(wordList);
+        numWords = wordList.Count <= 4 ? wordList.Count : wordList.Count - _extraWord;
 
-        numWords = wordList.Count < 5 ? wordList.Count : wordList.Count - 2;
-
-        numCol = numWords <= 4 ? 1 :
+        numCol = numWords <= 5 ? 1 :
                      numWords <= 12 ? 2 : 3;
 
         numRow = (int)Mathf.Ceil(numWords / (float)numCol);
@@ -125,9 +161,9 @@ public class WordRegion : MonoBehaviour
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress, string[] answerProgress)
     {
         int lineIndex = 0;
-        var countAnswer = wordList.Count < 5 ? wordList.Count : wordList.Count - 2;
+        //var countAnswer = wordList.Count < 5 ? wordList.Count : wordList.Count - _extraWord;
         //foreach (var word in wordList)
-        for (int i = 0; i < countAnswer; i++)
+        for (int i = 0; i < numWords; i++)
         {
             var word = wordList[i];
             var words = wordList.FindAll(wd => wd.Length == word.Length);
@@ -184,6 +220,7 @@ public class WordRegion : MonoBehaviour
 
     private void SetLinesPosition()
     {
+        lines = lines.OrderBy(li => li.cells.Count).ToList();
         if (numCol >= 2)
         {
             float[] startX = new float[numCol];
