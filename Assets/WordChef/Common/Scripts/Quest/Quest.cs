@@ -12,6 +12,8 @@ public class Quest : MonoBehaviour
     [Space]
     public QuestGoal goal;
     public ComboType combo;
+    [SerializeField] 
+    private Sprite _spriteTask;
     [SerializeField]
     GameObject titleText;
     [SerializeField]
@@ -21,9 +23,12 @@ public class Quest : MonoBehaviour
     [SerializeField] private Button _btnGo;
     [SerializeField] private Button _btnReward;
     [SerializeField] private Image _iconComplete;
+    [SerializeField] private Image _iconTask;
 
     public void Run()
     {
+        _iconTask.sprite = _spriteTask;
+        _iconTask.SetNativeSize();
         _iconComplete.gameObject.SetActive(false);
         switch (taskType)
         {
