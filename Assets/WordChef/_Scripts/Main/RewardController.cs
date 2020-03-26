@@ -16,8 +16,11 @@ public class RewardController : MonoBehaviour
     [SerializeField] private int _amountStars;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
 
+    public GameObject overLay;
+
     void Start()
     {
+        overLay.SetActive(false);
         _boardClaim.transform.localScale = Vector3.zero;
         CheckShowAgain();
     }
@@ -45,6 +48,7 @@ public class RewardController : MonoBehaviour
         }
         else
         {
+            overLay.SetActive(true);
             Sound.instance.PlayButton();
             TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch, 0.3f);
         }
@@ -53,6 +57,7 @@ public class RewardController : MonoBehaviour
     private void OnCompleteVideo()
     {
         Destroy(MainController.instance.rewardVideoController.gameObject);
+        overLay.SetActive(true);
         _boardClaim.Setup(_amountStars, () =>
         {
 
@@ -77,6 +82,7 @@ public class RewardController : MonoBehaviour
 
     public void OnClose(GameObject obj)
     {
+        overLay.SetActive(false);
         Sound.instance.PlayButton();
         TweenControl.GetInstance().ScaleFromOne(obj, 0.3f, () =>
         {

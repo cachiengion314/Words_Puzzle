@@ -23,6 +23,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
 
     public void OnClaimClick()
     {
+        _rewardController.overLay.SetActive(false);
         Sound.instance.PlayButton();
         BlockScreen.instance.Block(true);
         TweenControl.GetInstance().ScaleFromOne(gameObject, 0.3f, () =>
