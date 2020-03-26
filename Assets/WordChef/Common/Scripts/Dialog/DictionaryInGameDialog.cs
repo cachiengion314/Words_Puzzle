@@ -21,16 +21,16 @@ public class DictionaryInGameDialog : Dialog
 
     public GameObject arrowLeftObject;
     public GameObject arrowRightObject;
-    
+
     string meaning;
     string sourceDictionaries;
     string keyApi;
     string url;
     WordData wordData;
-    
+
     public List<string> listWordInLevel;
     public Dictionary<string, MeanItemDictionary> listMeanItemObject = new Dictionary<string, MeanItemDictionary>();
-    
+
     protected override void Awake()
     {
         instance = this;
@@ -50,7 +50,7 @@ public class DictionaryInGameDialog : Dialog
 
     void SetArrowObject()
     {
-        if(snapScrolling == null) return;
+        if (snapScrolling == null) return;
         if (snapScrolling.listItem.Count <= 1)
         {
             arrowLeftObject.SetActive(false);
@@ -100,33 +100,34 @@ public class DictionaryInGameDialog : Dialog
     }
     void InstantiateMeanItem()
     {
-        for (int i = 0; i < WordRegion.instance.listWordInLevel.Count; i++)
+        //for (int i = 0; i < WordRegion.instance.listWordInLevel.Count; i++)
+        //{
+        for (int j = 0; j < WordRegion.instance.listWordCorrect.Count; j++)
         {
-            for (int j = 0; j < WordRegion.instance.listWordCorrect.Count; j++)
+            string word = WordRegion.instance.listWordCorrect[j];
+            if (WordRegion.instance.listWordInLevel.Contains(word))
             {
-                string word = WordRegion.instance.listWordCorrect[j];
-                if (WordRegion.instance.listWordInLevel[i] == word)
-                {
-                    GameObject item = Instantiate(itemPrefab, contentRectTransform);
-                    MeanItemDictionary meanItemDictionary = item.GetComponent<MeanItemDictionary>();
-                    meanItemDictionary.SetParentNestedScrollRect(scrollRect);
-                    
+                GameObject item = Instantiate(itemPrefab, contentRectTransform);
+                MeanItemDictionary meanItemDictionary = item.GetComponent<MeanItemDictionary>();
+                meanItemDictionary.SetParentNestedScrollRect(scrollRect);
+
+                if (!listMeanItemObject.ContainsKey(word))
                     listMeanItemObject.Add(word, meanItemDictionary);
-                    listWordInLevel.Add(word);
-                    snapScrolling.AddItemToList(item);
-                    
-                    if (!Dictionary.instance.CheckWExistInDictWordSaved(word))
-                    {
-                        Dictionary.instance.GetDataFromApi(word);
-                        meanItemDictionary.SetMeanText("Loading...");
-                    }
-                    else
-                    {
-                        meanItemDictionary.SetMeanText(Dictionary.instance.dictWordSaved[word]);
-                    }
+                listWordInLevel.Add(word);
+                snapScrolling.AddItemToList(item);
+
+                if (!Dictionary.instance.CheckWExistInDictWordSaved(word))
+                {
+                    Dictionary.instance.GetDataFromApi(word);
+                    meanItemDictionary.SetMeanText("Loading...");
+                }
+                else
+                {
+                    meanItemDictionary.SetMeanText(Dictionary.instance.dictWordSaved[word]);
                 }
             }
         }
+        //}
     }
 
     public void SetDataForMeanItemGetAPI(string word, string meanText)
@@ -144,5 +145,18 @@ public class DictionaryInGameDialog : Dialog
         {
             snapScrolling.selectItemID--;
         }
+    }
+
+    public void ShowMeanWordByID(int ID)
+    {
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            snapScrolling.selectItemID = ID;
+        });
+    }
+
+    void OnDestroy()
+    {
+        TweenControl.GetInstance().KillDelayCall(transform);
     }
 }

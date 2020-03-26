@@ -14,13 +14,13 @@ public class LineWord : MonoBehaviour
     public int numLetters;
     public float lineWidth;
 
-    //[HideInInspector]
+    public int selectID;
     public bool isShown, RTL;
 
     public bool usedBee;
 
     [Space]
-
+    [SerializeField] private Button _btnMeanWord;
     [SerializeField] private Image _fxAnswerDuplicate;
 
     private string answerrandom;
@@ -103,6 +103,9 @@ public class LineWord : MonoBehaviour
             }
             i++;
         }
+        if (isShown)
+            WordRegion.instance.listWordCorrect.Add(answer.ToLower());
+        ShowBtnMeanByWord();
     }
 
     public void ShowFxAnswerDuplicate()
@@ -129,7 +132,7 @@ public class LineWord : MonoBehaviour
         {
             cell.isShown = true;
         }
-
+        ShowBtnMeanByWord();
         StartCoroutine(IEShowAnswer());
     }
 
@@ -154,6 +157,21 @@ public class LineWord : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
+    }
+
+    public void OnClickLine()
+    {
+        DialogController.instance.onDialogsOpened = () =>
+        {
+            DictionaryInGameDialog.instance.ShowMeanWordByID(selectID);
+        };
+        DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.REPLACE_CURRENT);
+        Sound.instance.PlayButton();
+    }
+
+    private void ShowBtnMeanByWord()
+    {
+        _btnMeanWord.gameObject.SetActive(isShown);
     }
 
     private void ShowDoneAllCell()

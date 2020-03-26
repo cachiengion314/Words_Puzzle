@@ -13,8 +13,9 @@ public class WordRegion : MonoBehaviour
     public TextPreview textPreview;
     public Compliment compliment;
     public ButtonVideoHintFree btnAdsHintFreePfb;
-    private ButtonVideoHintFree _bntHintADS;
+    private ButtonVideoHintFree _btnHintADS;
     public Transform parentAdsHint;
+    public Button btnDictionary;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -36,7 +37,7 @@ public class WordRegion : MonoBehaviour
     {
         get
         {
-            return _bntHintADS;
+            return _btnHintADS;
         }
     }
 
@@ -52,8 +53,8 @@ public class WordRegion : MonoBehaviour
     {
         instance = this;
         rt = GetComponent<RectTransform>();
-        if (_bntHintADS != null)
-            Destroy(_bntHintADS.gameObject);
+        if (_btnHintADS != null)
+            Destroy(_btnHintADS.gameObject);
     }
 
     private List<string> GetExtraWord(List<string> words)
@@ -91,6 +92,10 @@ public class WordRegion : MonoBehaviour
         //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
         wordList = wordList.Count <= 4 ? wordList : GetExtraWord(wordList);
         numWords = wordList.Count <= 4 ? wordList.Count : wordList.Count - _extraWord;
+        foreach (var word in wordList)
+        {
+            listWordInLevel.Add(word.ToLower());
+        }
 
         numCol = numWords <= 5 ? 1 :
                      numWords <= 12 ? 2 : 3;
@@ -161,6 +166,7 @@ public class WordRegion : MonoBehaviour
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress, string[] answerProgress)
     {
         int lineIndex = 0;
+        int countID = 0;
         //var countAnswer = wordList.Count < 5 ? wordList.Count : wordList.Count - _extraWord;
         //foreach (var word in wordList)
         for (int i = 0; i < numWords; i++)
@@ -191,13 +197,14 @@ public class WordRegion : MonoBehaviour
             }
             else
             {
-                listWordCorrect.Add(word.ToLower());
+                line.selectID = countID;
+                countID++;
             }
-
             lines.Add(line);
-            listWordInLevel.Add(word.ToLower());
             lineIndex++;
         }
+        var checkShowDicBtn = lines.Any(li => li.isShown);
+        btnDictionary.gameObject.SetActive(checkShowDicBtn);
     }
 
     private void GetCellShowHint(LineWord line)
@@ -268,7 +275,7 @@ public class WordRegion : MonoBehaviour
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
-        //LineWord line = lines.Find(x => x.answer == checkWord);
+        var lineIsShown = lines.FindAll(li => li.isShown);
         LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown);
         //string meaning="";
         if (line != null)
@@ -277,6 +284,7 @@ public class WordRegion : MonoBehaviour
             //{
             line.SetDataLetter(checkWord);
             textPreview.SetAnswerColor();
+            line.selectID = lineIsShown.Count;
             line.ShowAnswer();
             CheckGameComplete();
 
@@ -294,6 +302,8 @@ public class WordRegion : MonoBehaviour
             //}
             if (textPreview.useFX)
                 textPreview.ClearText();
+            if (!btnDictionary.gameObject.activeInHierarchy)
+                btnDictionary.gameObject.SetActive(true);
         }
         else
         {
@@ -327,10 +337,10 @@ public class WordRegion : MonoBehaviour
             var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
             var cellRandom = cellNotShown[Random.Range(0, cellNotShown.Count)];
             cellRandom.isAds = true;
-            _bntHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
-            _bntHintADS.transform.position = cellRandom.transform.position;
-            _bntHintADS.Cell = cellRandom;
-            _bntHintADS.gameObject.SetActive(true);
+            _btnHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
+            _btnHintADS.transform.position = cellRandom.transform.position;
+            _btnHintADS.Cell = cellRandom;
+            _btnHintADS.gameObject.SetActive(true);
             CPlayerPrefs.SetBool(_textLevel.text + "ADS_HINT_FREE", true);
         }
     }
