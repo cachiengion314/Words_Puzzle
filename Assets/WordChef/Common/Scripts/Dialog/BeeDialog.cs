@@ -163,10 +163,16 @@ public class BeeDialog : Dialog
         item.GetComponent<SimpleTMPButton>().enabled = true;
     }
 
-    public void OnClickHowToPlayButton()
+    public void OnClickHowToPlayButton(int selectID)
     {
-        shadowPanelHowToPlay.SetActive(true);
-        TweenControl.GetInstance().ScaleFromZero(panelHowToPlay, 0.3f);
+        //shadowPanelHowToPlay.SetActive(true);
+        //TweenControl.GetInstance().ScaleFromZero(panelHowToPlay, 0.3f);
+        DialogController.instance.onDialogsOpened = () =>
+        {
+            HowToPlayDialog.instance.ShowMeanWordByID(selectID);
+        };
+        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
+        Sound.instance.PlayButton();
     }
 
     public void OnClickCloseHowToPlayPanelButton()

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class ExtraWordDialog : Dialog
     public ExtraProgress extraProgress;
     public GameObject claimButton;
     public Text progressText;
+    public TextMeshProUGUI wordText;
 
     private int numWords, claimQuantity;
 
@@ -21,10 +23,20 @@ public class ExtraWordDialog : Dialog
         UpdateUI();
     }
 
+    public void OnClickHTPL(int selectID)
+    {
+        DialogController.instance.onDialogsOpened = () =>
+        {
+            HowToPlayDialog.instance.ShowMeanWordByID(selectID);
+        };
+        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
+        Sound.instance.PlayButton();
+    }
+
     public void Claim()
     {
         claimQuantity = (int)extraProgress.target / 5 * 2;
-        
+
         extraProgress.current -= (int)extraProgress.target;
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
@@ -62,5 +74,10 @@ public class ExtraWordDialog : Dialog
     {
         claimButton.SetActive(extraProgress.current >= extraProgress.target);
         progressText.text = extraProgress.current + "/" + extraProgress.target;
+        wordText.text = "";
+        foreach (var word in ExtraWord.instance.extraWords)
+        {
+            wordText.text += "  " + word.ToUpper();
+        }
     }
 }

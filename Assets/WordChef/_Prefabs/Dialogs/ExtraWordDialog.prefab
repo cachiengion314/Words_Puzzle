@@ -719,6 +719,7 @@ MonoBehaviour:
   extraProgress: {fileID: 114632643636647926}
   claimButton: {fileID: 1445211913300922}
   progressText: {fileID: 114305054117453252}
+  wordText: {fileID: 290876819215777720}
 --- !u!1 &1408323342214512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1612,7 +1613,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6092682199854002151}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114494705831966960}
+        m_MethodName: OnClickHTPL
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1783124407324755819
 GameObject:
   m_ObjectHideFlags: 0
