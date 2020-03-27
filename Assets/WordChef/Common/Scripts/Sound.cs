@@ -5,15 +5,23 @@ using System;
 public class Sound : MonoBehaviour
 {
     public AudioSource audioSource, loopAudioSource;
-    public enum Button { Default };
-    public enum Others { Match, Win };
+    public enum Button { Default, Hint, MultipleHint, Shuffe, Beehive };
+    public enum Others { Match, Win, PopupOpen, PopupClose, WordInvalid, WordAlready };
+    public enum Collects { CoinCollect, CoinKeep, LevelClose, LevelOpen, LevelShow };
+    public enum Scenes { CurtainClose, CurtainOpen, HomeButton, LevelClear, ChapterClear};
 
     //[HideInInspector]
     public AudioClip[] buttonClips;
     //[HideInInspector]
     public AudioClip[] otherClips;
+    public AudioClip[] collectClips;
+    public AudioClip[] sceneClips;
 
     public static Sound instance;
+
+    [Header("SOUND FX NEW")]
+    public AudioClip[] complimentSounds;
+    public AudioClip[] lettersTouch;
 
     private void Awake()
     {
@@ -58,6 +66,20 @@ public class Sound : MonoBehaviour
     {
         int index = (int)type;
         audioSource.PlayOneShot(buttonClips[index]);
+    }
+
+    public void Play(Collects type, float volume = 1)
+    {
+        int index = (int)type;
+        audioSource.volume = volume;
+        audioSource.PlayOneShot(collectClips[index]);
+    }
+
+    public void Play(Scenes type, float volume = 1)
+    {
+        int index = (int)type;
+        audioSource.volume = volume;
+        audioSource.PlayOneShot(sceneClips[index]);
     }
 
     public void Play(Others type, float volume = 1)

@@ -87,7 +87,7 @@ public class BeeDialog : Dialog
     public void OnBuyProduct(int index)
     {
 #if IAP && UNITY_PURCHASING
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         Purchaser.instance.BuyBeeProduct(index);
 #else
         Debug.LogError("Please enable, import and install Unity IAP to use this function");
@@ -168,7 +168,7 @@ public class BeeDialog : Dialog
         //shadowPanelHowToPlay.SetActive(true);
         //TweenControl.GetInstance().ScaleFromZero(panelHowToPlay, 0.3f);
         DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         HowToPlayDialog.instance.ShowMeanWordByID(selectID);
     }
 

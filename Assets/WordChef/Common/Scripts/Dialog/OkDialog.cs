@@ -6,9 +6,9 @@ public class OkDialog : Dialog {
     public Action onOkClick;
     public virtual void OnOkClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         if (onOkClick != null) onOkClick();
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         Close();
     }
 }

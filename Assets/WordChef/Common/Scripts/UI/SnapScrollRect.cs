@@ -119,13 +119,13 @@ public class SnapScrollRect : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
     public void NextPage()
     {
         MoveToPage(index + 1);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
     public void PreviousPage()
     {
         MoveToPage(index - 1);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupClose);
     }
 
     public void MoveToPage(int pageIndex)

@@ -33,7 +33,7 @@ public class UpDownNumber : MonoBehaviour {
     }
 
     public void OnNumberChanged(int value) {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         if (max == 0) return;
         if (hasLimit)
         {

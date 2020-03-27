@@ -41,7 +41,7 @@ public class ButtonVideoHintFree : MonoBehaviour
     public void OnClickOpen()
     {
         AdmobController.instance.ShowRewardBasedVideo();
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
     private void OnCompleteVideo()

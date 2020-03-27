@@ -16,7 +16,7 @@ public class RewardedVideoDialog : Dialog {
     public void Claim()
     {
         Close();
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
 	public override void Close ()

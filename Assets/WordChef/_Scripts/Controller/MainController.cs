@@ -81,7 +81,6 @@ public class MainController : BaseController {
         Timer.Schedule(this, 1f, () =>
         {
             DialogController.instance.ShowDialog(DialogType.Win);
-            Sound.instance.Play(Sound.Others.Win);
         });
     }
 
@@ -101,6 +100,6 @@ public class MainController : BaseController {
     public void OpenChapterScene()
     {
         CUtils.LoadScene(1, false);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 }

@@ -30,7 +30,7 @@ public class HomeController : BaseController
                 CUtils.LikeFacebookPage(ConfigController.Config.facebookPageID);
                 break;
         }
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
 }

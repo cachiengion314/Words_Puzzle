@@ -11,7 +11,6 @@ public class PauseDialog : Dialog {
 
     public void OnContinueClick()
     {
-        Sound.instance.PlayButton();
         Close();
     }
 
@@ -23,37 +22,34 @@ public class PauseDialog : Dialog {
     public void OnMenuClick()
     {
         CUtils.LoadScene(1, true);
-        Sound.instance.PlayButton();
         Close();
     }
 
     public void OnSettingsClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.Settings);
     }
 
     public void OnHomeClick()
     {
         CUtils.LoadScene(0, false);
-        Sound.instance.PlayButton();
         Close();
     }
 
     public void OnShareClick()
     {
-        Sound.instance.PlayButton();
         Close();
     }
     public void OnSettingClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.Settings, DialogShow.STACK);
     }
 
     public virtual void OnHowToPlayClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.HowtoPlay);
     }
 }

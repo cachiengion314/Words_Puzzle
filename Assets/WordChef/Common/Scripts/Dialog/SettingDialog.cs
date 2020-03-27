@@ -47,7 +47,7 @@ public class SettingDialog : PauseDialog
 
     public override void OnHowToPlayClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
     }
 
@@ -91,25 +91,25 @@ public class SettingDialog : PauseDialog
 
     public void OnClickLogout()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupClose);
         FacebookController.instance.Logout();
     }
 
     public void OnClickExitGame()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().ScaleFromZero(_panelExit,0.3f);
     }
 
     public void OnExitClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupClose);
         Application.Quit();
     }
 
     public void OnNoExitClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupClose);
         TweenControl.GetInstance().ScaleFromOne(_panelExit, 0.3f);
     }
 

@@ -20,6 +20,7 @@ public class SceneAnimate : MonoBehaviour
 
     public void SceneClose(Action callback)
     {
+        Sound.instance.Play(Sound.Scenes.CurtainClose);
         animatorScene.gameObject.SetActive(true);
         animatorScene.SetBool(_closeScene, true);
         ScreenFader.instance.DelayCall(1.8f, () =>
@@ -30,6 +31,7 @@ public class SceneAnimate : MonoBehaviour
 
     public void SceneOpen(Action callback = null)
     {
+        Sound.instance.Play(Sound.Scenes.CurtainOpen);
         animatorScene.gameObject.SetActive(true);
         animatorScene.SetBool(_closeScene, false);
         ScreenFader.instance.DelayCall(1f, () =>

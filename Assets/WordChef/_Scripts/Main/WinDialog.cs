@@ -111,11 +111,13 @@ public class WinDialog : Dialog {
             var tweener = FadeImage.DOFade(1f, 1f);
             tweener.onComplete += () =>
             {
+                Sound.instance.Play(Sound.Scenes.ChapterClear);
                 StartCoroutine(IEShowEggOpen());
             };
         }
         else
         {
+            Sound.instance.Play(Sound.Scenes.LevelClear);
             txtRewardByAds.text = "X" + Const.REWARD_ADS_LEVEL_CLEAR + "";
             txtReward.text = "X" + Const.REWARD_CHAPTER_CLEAR + "";
 
@@ -144,7 +146,7 @@ public class WinDialog : Dialog {
     public void NextClick()
     {
         Close();
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Collects.LevelClose);
         Prefs.countLevel += 1; 
         Prefs.countLevelDaily += 1;
         CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
@@ -156,7 +158,7 @@ public class WinDialog : Dialog {
     
     public void RewardClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         if (level == numLevels - 1)
         {
             CurrencyController.CreditBalance(Const.REWARD_ADS_CHAPTER_CLEAR);
@@ -172,6 +174,6 @@ public class WinDialog : Dialog {
 
     public void LeaderboardClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 }

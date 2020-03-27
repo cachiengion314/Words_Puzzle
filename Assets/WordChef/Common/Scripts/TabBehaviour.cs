@@ -25,7 +25,7 @@ public class TabBehaviour : MonoBehaviour
 
     public void TabChanged(int index)
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         currentTab = index;
         for (int i = 0; i < tabButtons.Length; i++)
         {

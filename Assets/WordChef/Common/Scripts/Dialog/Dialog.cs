@@ -59,6 +59,7 @@ public class Dialog : MonoBehaviour
 
     public virtual void Close()
     {
+        Sound.instance.Play(Sound.Others.PopupClose);
         if (isShowing == false) return;
         isShowing = false;
         if (anim != null && IsIdle() && hidingAnimation != null)
@@ -104,6 +105,6 @@ public class Dialog : MonoBehaviour
 
     public void PlayButton()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 }

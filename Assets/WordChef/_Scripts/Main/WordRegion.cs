@@ -303,7 +303,7 @@ public class WordRegion : MonoBehaviour
             lineIndex++;
             if (lineIndex > compliment.sprites.Length - 1) { lineIndex = compliment.sprites.Length - 1; }
 
-            Sound.instance.Play(Sound.Others.Match);
+            Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
             listWordCorrect.Add(checkWord.ToLower());
             //}
             //else
@@ -321,6 +321,7 @@ public class WordRegion : MonoBehaviour
             LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown);
             if (lineExist != null && lineExist.answer == checkWord)
             {
+                Sound.instance.Play(Sound.Others.WordAlready);
                 lineExist.ShowFxAnswerDuplicate();
                 textPreview.SetExistColor();
                 if (textPreview.useFX)
@@ -366,6 +367,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            Sound.instance.Play(Sound.Others.WordInvalid);
             SetupCellAds();
             textPreview.SetWrongColor();
             lineIndex = 0;
@@ -384,6 +386,8 @@ public class WordRegion : MonoBehaviour
                 compliment.ShowRandom();
             }
         }
+        else
+            Sound.instance.Play(Sound.Collects.LevelShow);
         FacebookController.instance.SaveDataGame();
     }
 
@@ -404,7 +408,7 @@ public class WordRegion : MonoBehaviour
             }
         }
 
-        Sound.instance.PlayButton();
+        Sound.instance.PlayButton(Sound.Button.Beehive);
     }
 
     int hintLineIndex = -1;
@@ -439,12 +443,13 @@ public class WordRegion : MonoBehaviour
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
             }
+            Sound.instance.PlayButton(Sound.Button.Hint);
         }
         else
         {
+            Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.Shop2);
         }
-        Sound.instance.PlayButton();
     }
 
     public void HintRandomClick()
@@ -479,7 +484,7 @@ public class WordRegion : MonoBehaviour
         {
             DialogController.instance.ShowDialog(DialogType.Shop2);
         }
-        Sound.instance.PlayButton();
+        Sound.instance.PlayButton(Sound.Button.MultipleHint);
     }
 
     public void SaveLevelProgress()

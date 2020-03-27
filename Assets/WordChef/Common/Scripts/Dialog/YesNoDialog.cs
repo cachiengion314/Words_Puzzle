@@ -8,14 +8,14 @@ public class YesNoDialog : Dialog{
     public virtual void OnYesClick()
     {
         if (onYesClick != null) onYesClick();
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         Close();
     }
 
     public virtual void OnNoClick()
     {
         if (onNoClick != null) onNoClick();
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupClose);
         Close();
     }
 }

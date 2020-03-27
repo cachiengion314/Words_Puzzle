@@ -86,7 +86,7 @@ public class ShopDialog2 : Dialog
     public void OnBuyProduct(int index)
 	{
 #if IAP && UNITY_PURCHASING
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         Purchaser.instance.BuyHintProduct(index);
 #else
         Debug.LogError("Please enable, import and install Unity IAP to use this function");

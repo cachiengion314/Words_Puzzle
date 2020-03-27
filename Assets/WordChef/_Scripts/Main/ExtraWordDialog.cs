@@ -26,7 +26,7 @@ public class ExtraWordDialog : Dialog
     public void OnClickHTPL(int selectID)
     {
         DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         HowToPlayDialog.instance.ShowMeanWordByID(selectID);
     }
 

@@ -8,7 +8,7 @@ public class OpenChapter : MonoBehaviour
   public void OnChapterClick()
     {
         CUtils.LoadScene(1, false);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         Debug.Log("DSDSDSDSD");
     }
 }

@@ -16,6 +16,6 @@ public class MyButton : MonoBehaviour {
     
     public virtual void OnButtonClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }    	
 }

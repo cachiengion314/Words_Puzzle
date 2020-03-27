@@ -18,6 +18,7 @@ public class Pan : MonoBehaviour
     private List<int> indexes = new List<int>();
 
     private int world, subWorld, level;
+    private int soundIndex = 0;
 
     public Transform centerPoint;
     public TextPreview textPreview;
@@ -165,7 +166,7 @@ public class Pan : MonoBehaviour
             //text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
             i++;
         }
-        Sound.instance.PlayButton();
+        Sound.instance.PlayButton(Sound.Button.Shuffe);
     }
 
     public void ScaleWord(Vector3 letterPos, Action callback = null)
@@ -173,14 +174,21 @@ public class Pan : MonoBehaviour
         TweenControl.GetInstance().KillTweener(textPreview.transform);
         textPreview.transform.localPosition = new Vector3(0, textPreview.transform.localPosition.y, 0);
         var letterTarget = letterTexts.Single(let => Vector3.Distance(letterPos, let.transform.position) < 1);
-        TweenControl.GetInstance().Scale(letterTarget.gameObject, Vector3.one * 1.2f, 0.3f, () =>
+        if (letterTarget.transform.localScale == Vector3.one)
         {
-            callback?.Invoke();
-        });
+            Sound.instance.Play(Sound.instance.lettersTouch[soundIndex]);
+            soundIndex++;
+            if (soundIndex > Sound.instance.lettersTouch.Length - 1) { soundIndex = Sound.instance.lettersTouch.Length - 1; }
+            TweenControl.GetInstance().Scale(letterTarget.gameObject, Vector3.one * 1.2f, 0.3f, () =>
+            {
+                callback?.Invoke();
+            });
+        }
     }
 
     public void ResetScaleWord(Action callback = null)
     {
+        soundIndex = 0;
         foreach (var word in letterTexts)
         {
             TweenControl.GetInstance().Scale(word.gameObject, Vector3.one, 0.3f, () =>

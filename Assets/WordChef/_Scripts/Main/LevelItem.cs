@@ -119,7 +119,7 @@ public class LevelItem : MonoBehaviour {
         GameState.currentLevel = level;
 
         CUtils.LoadScene(3, false);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
 
         // Set the music
         Music.instance.Play(CUtils.GetRandom(Music.Type.Main_0, Music.Type.Main_1, Music.Type.Main_2));

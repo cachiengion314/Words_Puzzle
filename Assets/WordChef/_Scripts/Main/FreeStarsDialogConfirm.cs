@@ -15,6 +15,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
         _amount = amount;
         _currAmount = 0;
         _textAmount.text = "x " + _amount;
+        Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f, () =>
         {
             callback?.Invoke();
@@ -24,7 +25,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     public void OnClaimClick()
     {
         _rewardController.overLay.SetActive(false);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupClose);
         BlockScreen.instance.Block(true);
         TweenControl.GetInstance().ScaleFromOne(gameObject, 0.3f, () =>
         {
@@ -40,6 +41,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     {
         while (_currAmount < _amount)
         {
+            Sound.instance.Play(Sound.Collects.CoinCollect);
             CurrencyController.CreditBalance(1);
             yield return new WaitForSeconds(0.002f);
             _currAmount += 1;

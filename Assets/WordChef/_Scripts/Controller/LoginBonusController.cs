@@ -12,6 +12,7 @@ public class LoginBonusController : MonoBehaviour
     [SerializeField] private int _angleStart = 0;
     [SerializeField] private ItemManager _itemManager;
     [SerializeField] private PanelCollectItem _panelCollect;
+    [SerializeField] private AudioClip _fxSpin;
     [Header("Data Spin")]
     [SerializeField] private List<DataItem> _dataItems;
 
@@ -109,7 +110,8 @@ public class LoginBonusController : MonoBehaviour
         var itemRandom = UnityEngine.Random.Range(0, _numGift);
         _currAngle = itemRandom;
         var angle = Angle() - (360f / _numGift) * itemRandom;
-        TweenControl.GetInstance().LocalRotate(_objSpin.transform, new Vector3(0, 0, -angle), 5f, () =>
+        Sound.instance.Play(_fxSpin);
+        TweenControl.GetInstance().LocalRotate(_objSpin.transform, new Vector3(0, 0, -angle), _fxSpin.length, () =>
         {
             var currItem = _dataItems[_currAngle];
             _panelCollect.ShowItemCollect(currItem.spriteDone, currItem.value);

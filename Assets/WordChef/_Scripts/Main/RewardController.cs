@@ -49,7 +49,7 @@ public class RewardController : MonoBehaviour
         else
         {
             overLay.SetActive(true);
-            Sound.instance.PlayButton();
+            Sound.instance.Play(Sound.Others.PopupOpen);
             TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch, 0.3f);
         }
     }
@@ -71,7 +71,7 @@ public class RewardController : MonoBehaviour
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             AdmobController.instance.ShowRewardBasedVideo();
-            Sound.instance.PlayButton();
+            Sound.instance.Play(Sound.Others.PopupOpen);
         });
     }
 
@@ -83,7 +83,7 @@ public class RewardController : MonoBehaviour
     public void OnClose(GameObject obj)
     {
         overLay.SetActive(false);
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupClose);
         TweenControl.GetInstance().ScaleFromOne(obj, 0.3f, () =>
         {
 

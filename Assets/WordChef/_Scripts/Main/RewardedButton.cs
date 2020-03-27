@@ -57,7 +57,7 @@ public class RewardedButton : MonoBehaviour
     public void OnClick()
     {
         AdmobController.instance.ShowRewardBasedVideo();
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
     private void ShowTimerText(int time)

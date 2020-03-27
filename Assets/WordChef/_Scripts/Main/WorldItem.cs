@@ -118,7 +118,7 @@ public class WorldItem : MonoBehaviour {
             {
                 if (scroll.verticalNormalizedPosition <= 0.05f) scroll.DOVerticalNormalizedPos(0f, 0.5f);
             }
-            Sound.instance.PlayButton();
+            Sound.instance.Play(Sound.Others.PopupOpen);
         }
     }
 }

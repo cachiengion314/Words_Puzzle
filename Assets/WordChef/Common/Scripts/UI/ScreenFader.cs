@@ -71,6 +71,7 @@ public class ScreenFader : MonoBehaviour
 
         if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
         {
+            Sound.instance.Play(Sound.Collects.LevelShow);
             FadeIn(null);
         }
 
