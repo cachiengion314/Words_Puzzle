@@ -82,7 +82,7 @@ public class DailyGiftsDialog : Dialog
 
     private void RestartCountdown()
     {
-        CurrencyController.CreditBalance(ConfigController.Config.rewardedVideoAmount);
+        StartCoroutine(ShowEffectCollect(ConfigController.Config.rewardedVideoAmount * 10));
         var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
         _timeTarget = valueTarget;
         CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
@@ -90,6 +90,27 @@ public class DailyGiftsDialog : Dialog
         _isReward = false;
         CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
         CheckTimeReward();
+    }
+
+    private IEnumerator ShowEffectCollect(int value)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        for (int i = 0; i < value; i++)
+        {
+            if (i < 5)
+            {
+                var star = Instantiate(MonoUtils.instance.rubyFly, MonoUtils.instance.textFlyTransform);
+                star.transform.position = Vector3.zero;
+                tweenControl.Move(star.transform, GameObject.FindGameObjectWithTag("RubyBalance").transform.position, 0.5f, () =>
+                {
+                    CurrencyController.CreditBalance(value / 4);
+                    Sound.instance.Play(Sound.Collects.CoinCollect);
+                    Destroy(star);
+                }, EaseType.InBack);
+            }
+            yield return new WaitForSeconds(0.02f);
+        }
+
     }
 
     private void CheckTimeReward()
