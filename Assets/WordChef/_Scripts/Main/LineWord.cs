@@ -161,12 +161,9 @@ public class LineWord : MonoBehaviour
 
     public void OnClickLine()
     {
-        DialogController.instance.onDialogsOpened = () =>
-        {
-            DictionaryInGameDialog.instance.ShowMeanWordByID(selectID);
-        };
         DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.REPLACE_CURRENT);
         Sound.instance.PlayButton();
+        DictionaryInGameDialog.instance.ShowMeanWordByID(selectID);
     }
 
     private void ShowBtnMeanByWord()

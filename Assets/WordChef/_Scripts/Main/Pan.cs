@@ -11,7 +11,7 @@ public class Pan : MonoBehaviour
     private int numLetters;
     private string word, panWord;
     private GameLevel gameLevel;
-    private const float RADIUS = 260;
+    private const float RADIUS = 250;
     private List<Vector3> letterPositions = new List<Vector3>();
     private List<Vector3> letterLocalPositions = new List<Vector3>();
     private List<Text> letterTexts = new List<Text>();
@@ -63,7 +63,7 @@ public class Pan : MonoBehaviour
 
         LineDrawer.instance.letterPositions = letterPositions;
 
-        for(int i = 0; i < numLetters; i++)
+        for (int i = 0; i < numLetters; i++)
         {
             Text letter = Instantiate(MonoUtils.instance.letter);
             letter.transform.SetParent(centerPoint);
@@ -124,23 +124,54 @@ public class Pan : MonoBehaviour
 
     public void Shuffle()
     {
+        var tweenControl = TweenControl.GetInstance();
         GetShuffeWord();
         Prefs.SetPanWordIndexes(world, subWorld, level, indexes.ToArray());
 
         int i = 0;
-        foreach(var text in letterTexts)
+        BlockScreen.instance.Block(true);
+        tweenControl.LocalRotate(centerPoint, new Vector3(0, 0, 360), 0.3f/*);tweenControl.ScaleFromOne(centerPoint.gameObject, 0.3f*/, () =>
         {
-            iTween.MoveTo(text.gameObject, iTween.Hash("position", letterLocalPositions[indexes.IndexOf(i)], "time", 0.15f, "isLocal", true));
-            text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
+            tweenControl.DelayCall(transform, 0.15f, () =>
+            {
+                tweenControl.LocalRotate(centerPoint, new Vector3(0, 0, centerPoint.localRotation.z + 360), 0.3f/*);tweenControl.ScaleFromZero(centerPoint.gameObject, 0.3f*/, () =>
+                {
+                    BlockScreen.instance.Block(false);
+                });
+            });
+        }, EaseType.InQuad);
+        foreach (var text in letterTexts)
+        {
+            text.transform.localPosition = letterLocalPositions[indexes.IndexOf(i)];
+            var oldPos = text.transform.localPosition;
+            //iTween.MoveTo(text.gameObject, iTween.Hash("position", letterLocalPositions[indexes.IndexOf(i)], "time", 0.15f, "isLocal", true));
+            tweenControl.LocalRotate(text.transform, new Vector3(0, 0, 360 * 2 + 360 / letterTexts.Count * i), 0.3f, () =>
+            {
+                tweenControl.LocalRotate(text.transform, new Vector3(0, 0, (text.transform.localPosition.z + 360f * 2)), 0.3f, () =>
+                {
+                    text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
+                });
+            });
+            tweenControl.MoveLocal(text.transform, /*oldPos / 3.5f*/Vector3.zero, 0.3f, () =>
+                 {
+                     tweenControl.PauseTweener(text.transform);
+                     tweenControl.DelayCall(transform, 0.15f, () =>
+                     {
+                         tweenControl.PlayTweener(text.transform);
+                         tweenControl.MoveLocal(text.transform, oldPos, 0.3f);
+                     });
+                 });
+
+            //text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
             i++;
         }
         Sound.instance.PlayButton();
     }
 
-    public void ScaleWord(Vector3 letterPos,Action callback = null)
+    public void ScaleWord(Vector3 letterPos, Action callback = null)
     {
         TweenControl.GetInstance().KillTweener(textPreview.transform);
-        textPreview.transform.localPosition = new Vector3(0, textPreview.transform.localPosition.y,0);
+        textPreview.transform.localPosition = new Vector3(0, textPreview.transform.localPosition.y, 0);
         var letterTarget = letterTexts.Single(let => Vector3.Distance(letterPos, let.transform.position) < 1);
         TweenControl.GetInstance().Scale(letterTarget.gameObject, Vector3.one * 1.2f, 0.3f, () =>
         {

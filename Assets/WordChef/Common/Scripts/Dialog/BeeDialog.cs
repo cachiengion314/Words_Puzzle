@@ -12,7 +12,7 @@ using Utilities.Components;
 
 public class BeeDialog : Dialog
 {
-    
+
     public Sprite hotSprite;
     public Sprite bestSprite;
     public Sprite candySprite;
@@ -167,12 +167,9 @@ public class BeeDialog : Dialog
     {
         //shadowPanelHowToPlay.SetActive(true);
         //TweenControl.GetInstance().ScaleFromZero(panelHowToPlay, 0.3f);
-        DialogController.instance.onDialogsOpened = () =>
-        {
-            HowToPlayDialog.instance.ShowMeanWordByID(selectID);
-        };
         DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
         Sound.instance.PlayButton();
+        HowToPlayDialog.instance.ShowMeanWordByID(selectID);
     }
 
     public void OnClickCloseHowToPlayPanelButton()

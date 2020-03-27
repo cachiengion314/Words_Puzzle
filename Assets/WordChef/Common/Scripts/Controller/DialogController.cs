@@ -117,8 +117,7 @@ public class DialogController : MonoBehaviour
 
 		current.Show();
 
-		if (onDialogsOpened != null)
-			onDialogsOpened();
+		onDialogsOpened?.Invoke();
 	}
 
 	public Dialog GetDialog(DialogType type)

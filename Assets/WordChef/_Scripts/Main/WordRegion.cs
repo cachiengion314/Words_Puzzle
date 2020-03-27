@@ -157,6 +157,8 @@ public class WordRegion : MonoBehaviour
 
         SetLinesPosition();
 
+        ReloadAnswers();
+
         FacebookController.instance.user.levelProgress = levelProgress;
         FacebookController.instance.user.answerProgress = answerProgress;
         FacebookController.instance.SaveDataGame();
@@ -223,6 +225,15 @@ public class WordRegion : MonoBehaviour
     {
         var isUse = lines.Any(line => line.usedBee);
         return isUse;
+    }
+
+    private void ReloadAnswers()
+    {
+        foreach (var line in lines)
+        {
+            if (line.answer != "")
+                line.SetDataLetter(line.answer);
+        }
     }
 
     private void SetLinesPosition()
