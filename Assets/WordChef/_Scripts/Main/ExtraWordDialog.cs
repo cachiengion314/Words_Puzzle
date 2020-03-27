@@ -51,19 +51,24 @@ public class ExtraWordDialog : Dialog
 
     private IEnumerator ClaimEffect()
     {
+        var tweenControl = TweenControl.GetInstance();
         Transform rubyBalance = GameObject.FindWithTag("RubyBalance").transform;
         var middlePoint = CUtils.GetMiddlePoint(claimTr.position, rubyBalance.position, -0.4f);
         Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
 
         for (int i = 0; i < claimQuantity; i++)
         {
-            GameObject gameObj = Instantiate(MonoUtils.instance.rubyFly);
-            gameObj.transform.position = waypoints[0];
-            gameObj.transform.localScale = Vector3.one * 0.85f;
+            GameObject gameObj = Instantiate(MonoUtils.instance.rubyFly, MonoUtils.instance.textFlyTransform);
+            gameObj.transform.position = /*waypoints[0]*/Vector3.zero;
+            gameObj.transform.localScale = Vector3.one;
 
-            iTween.MoveTo(gameObj, iTween.Hash("path", waypoints, "speed", 30, "oncomplete", "OnMoveComplete"));
-            iTween.ScaleTo(gameObj, iTween.Hash("scale", 0.7f * Vector3.one, "time", 0.3f));
-            yield return new WaitForSeconds(0.1f);
+            tweenControl.Move(gameObj.transform, rubyBalance.position, 0.5f, () =>
+            {
+                CurrencyController.CreditBalance(claimQuantity / 4);
+                Sound.instance.Play(Sound.Collects.CoinCollect);
+                Destroy(gameObj);
+            }, EaseType.InBack);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 

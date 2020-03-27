@@ -8,6 +8,7 @@ public class LoginBonusController : MonoBehaviour
     public static LoginBonusController instance;
     [SerializeField] private GameObject _root;
     [SerializeField] private GameObject _objSpin;
+    [SerializeField] private CurrencyBallance _currencyBallance;
     [SerializeField] private int _numGift = 6;
     [SerializeField] private int _angleStart = 0;
     [SerializeField] private ItemManager _itemManager;
@@ -87,9 +88,10 @@ public class LoginBonusController : MonoBehaviour
 
     public void OnCollectClick()
     {
+        Sound.instance.Play(Sound.Collects.CoinKeep);
+        var itemValue = _dataItems[_currAngle].value;
         _panelCollect.transform.localScale = Vector3.zero;
         _root.transform.localScale = Vector3.zero;
-        var itemValue = _dataItems[_currAngle].value;
         switch (_dataItems[_currAngle].itemType)
         {
             case ItemType.HINT:
@@ -99,7 +101,7 @@ public class LoginBonusController : MonoBehaviour
 
                 break;
             case ItemType.CURRENCY_BALANCE:
-                CurrencyController.CreditBalance(itemValue);
+                StartCoroutine(ShowEffectCollect(itemValue));
                 break;
         }
     }
@@ -123,6 +125,27 @@ public class LoginBonusController : MonoBehaviour
     {
         var angle = _angleStart + 360f * 5f;
         return angle;
+    }
+
+    private IEnumerator ShowEffectCollect(int value)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        for (int i = 0; i < value; i++)
+        {
+            if (i < 5)
+            {
+                var star = Instantiate(MonoUtils.instance.rubyFly, MonoUtils.instance.textFlyTransform);
+                star.transform.position = Vector3.zero;
+                tweenControl.Move(star.transform, _currencyBallance.transform.position, 0.5f, () =>
+                {
+                    CurrencyController.CreditBalance(value/4);
+                    Sound.instance.Play(Sound.Collects.CoinCollect);
+                    Destroy(star);
+                }, EaseType.InBack);
+            }
+            yield return new WaitForSeconds(0.02f);
+        }
+        
     }
 }
 

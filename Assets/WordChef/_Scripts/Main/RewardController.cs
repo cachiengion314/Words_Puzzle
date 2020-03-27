@@ -66,6 +66,7 @@ public class RewardController : MonoBehaviour
 
     public void OnWatchClick()
     {
+        overLay.SetActive(false);
         if (_boardFreeWatch.transform.localScale == Vector3.one)
             TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>

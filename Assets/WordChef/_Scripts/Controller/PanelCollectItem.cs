@@ -10,6 +10,15 @@ public class PanelCollectItem : MonoBehaviour
     [SerializeField] private Image _imageItem;
     [SerializeField] private TextMeshProUGUI _textItem;
     [SerializeField] private TextMeshProUGUI _textPrice;
+
+    public Image ImageItem
+    {
+        get
+        {
+            return _imageItem;
+        }
+    }
+
     public void ShowItemCollect(Sprite sprite, int value)
     {
         _textPrice.text = _priceAgain.ToString();
