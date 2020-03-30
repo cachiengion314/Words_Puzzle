@@ -8,6 +8,7 @@ public class LoginBonusController : MonoBehaviour
     public static LoginBonusController instance;
     [SerializeField] private GameObject _root;
     [SerializeField] private GameObject _objSpin;
+    [SerializeField] private GameObject _imageHighlight;
     [SerializeField] private CurrencyBallance _currencyBallance;
     [SerializeField] private int _numGift = 6;
     [SerializeField] private int _angleStart = 0;
@@ -35,6 +36,7 @@ public class LoginBonusController : MonoBehaviour
 
     private void SetupSpin()
     {
+        _imageHighlight.SetActive(false);
         for (int i = 0; i < _itemManager.items.Count; i++)
         {
             var item = _itemManager.items[i];
@@ -115,6 +117,7 @@ public class LoginBonusController : MonoBehaviour
         Sound.instance.Play(_fxSpin);
         TweenControl.GetInstance().LocalRotate(_objSpin.transform, new Vector3(0, 0, -angle), _fxSpin.length, () =>
         {
+            _imageHighlight.SetActive(true);
             var currItem = _dataItems[_currAngle];
             _panelCollect.ShowItemCollect(currItem.spriteDone, currItem.value);
             TweenControl.GetInstance().ScaleFromZero(_panelCollect.gameObject, 0.3f, () => { callback?.Invoke(); });
