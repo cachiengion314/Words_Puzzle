@@ -6,6 +6,16 @@ public class HomeController : BaseController
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
 
+    private void Awake()
+    {
+        if (!CPlayerPrefs.HasKey("INSTALLED"))
+        {
+            CPlayerPrefs.DeleteAll();
+            CPlayerPrefs.Save();
+            CPlayerPrefs.SetBool("INSTALLED", true);
+        }
+    }
+
     protected override void Start()
     {
         base.Start();

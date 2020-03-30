@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class CurrencyController
 {
-	public const string CURRENCY = "ruby";
-	public const int DEFAULT_CURRENCY = 200;
+    public const string CURRENCY = "ruby";
+    public const int DEFAULT_CURRENCY = 200;
     public static Action onBalanceChanged;
     public static Action<int> onBallanceIncreased;
 
@@ -13,10 +15,25 @@ public class CurrencyController
     public static Action onHintFreeChanged;
     public static Action<int> onHintFreeIncreased;
 
+    public static void UpdateBalanceAndHintFree()
+    {
+        GetUserInventoryRequest requestInventory = new GetUserInventoryRequest();
+        PlayFabClientAPI.GetUserInventory(requestInventory, (resultInventory) =>
+        {
+            SetHintFree(resultInventory.VirtualCurrency["HF"]);
+            SetBalance(resultInventory.VirtualCurrency["CB"]);
+            onHintFreeChanged?.Invoke();
+            onBalanceChanged?.Invoke();
+        }, null);
+    }
+
     #region CURRENCY BALANCE
     public static int GetBalance()
     {
-        return CPlayerPrefs.GetInt(PrefKeys.CURRENCY, DEFAULT_CURRENCY);
+        int numCurrency = DEFAULT_CURRENCY;
+        if (CPlayerPrefs.HasKey(PrefKeys.CURRENCY))
+            numCurrency = CPlayerPrefs.GetInt(PrefKeys.CURRENCY);
+        return numCurrency;
     }
 
     public static void SetBalance(int value)
@@ -28,9 +45,25 @@ public class CurrencyController
     public static void CreditBalance(int value)
     {
         int current = GetBalance();
-        SetBalance(current + value);
-        if (onBalanceChanged != null ) onBalanceChanged();
-        if (onBallanceIncreased != null) onBallanceIncreased(value);
+
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "CB";
+            request.Amount = value;
+            PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
+            {
+                SetBalance(current + value);
+                if (onBalanceChanged != null) onBalanceChanged();
+                if (onBallanceIncreased != null) onBallanceIncreased(value);
+            }, null);
+        }
+        else
+        {
+            SetBalance(current + value);
+            if (onBalanceChanged != null) onBalanceChanged();
+            if (onBallanceIncreased != null) onBallanceIncreased(value);
+        }
     }
 
     public static bool DebitBalance(int value)
@@ -41,8 +74,22 @@ public class CurrencyController
             return false;
         }
 
-        SetBalance(current - value);
-        if (onBalanceChanged != null) onBalanceChanged();
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            SubtractUserVirtualCurrencyRequest request = new SubtractUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "CB";
+            request.Amount = value;
+            PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
+            {
+                SetBalance(current - value);
+                if (onBalanceChanged != null) onBalanceChanged();
+            }, null);
+        }
+        else
+        {
+            SetBalance(current - value);
+            if (onBalanceChanged != null) onBalanceChanged();
+        }
         return true;
     }
     #endregion
@@ -50,7 +97,10 @@ public class CurrencyController
     #region HINT
     public static int GetHintFree()
     {
-        return CPlayerPrefs.GetInt(PrefKeys.HINT_FREE, DEFAULT_HINT_FREE);
+        int numHint = DEFAULT_HINT_FREE;
+        if (CPlayerPrefs.HasKey(PrefKeys.HINT_FREE))
+            numHint = CPlayerPrefs.GetInt(PrefKeys.HINT_FREE);
+        return numHint;
     }
 
     public static void SetHintFree(int value)
@@ -61,10 +111,25 @@ public class CurrencyController
 
     public static void CreditHintFree(int value)
     {
-        int current = GetBalance();
-        SetHintFree(current + value);
-        if (onBalanceChanged != null) onHintFreeChanged();
-        if (onBallanceIncreased != null) onHintFreeIncreased(value);
+        int current = GetHintFree();
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "HF";
+            request.Amount = value;
+            PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
+            {
+                SetHintFree(current + value);
+                if (onBalanceChanged != null) onHintFreeChanged();
+                if (onBallanceIncreased != null) onHintFreeIncreased(value);
+            }, null);
+        }
+        else
+        {
+            SetHintFree(current + value);
+            if (onBalanceChanged != null) onHintFreeChanged();
+            if (onBallanceIncreased != null) onHintFreeIncreased(value);
+        }
     }
 
     public static bool DebitHintFree(int value)
@@ -75,8 +140,23 @@ public class CurrencyController
             return false;
         }
 
-        SetHintFree(current - value);
-        if (onBalanceChanged != null) onHintFreeChanged();
+
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            SubtractUserVirtualCurrencyRequest request = new SubtractUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "HF";
+            request.Amount = value;
+            PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
+            {
+                SetHintFree(current - value);
+                if (onBalanceChanged != null) onHintFreeChanged();
+            }, null);
+        }
+        else
+        {
+            SetHintFree(current - value);
+            if (onBalanceChanged != null) onHintFreeChanged();
+        }
         return true;
     }
     #endregion

@@ -157,7 +157,7 @@ public class WordRegion : MonoBehaviour
 
         SetLinesPosition();
 
-        ReloadAnswers();
+        //ReloadAnswers();
 
         FacebookController.instance.user.levelProgress = levelProgress;
         FacebookController.instance.user.answerProgress = answerProgress;
@@ -176,7 +176,10 @@ public class WordRegion : MonoBehaviour
             var word = wordList[i];
             var words = wordList.FindAll(wd => wd.Length == word.Length);
             LineWord line = Instantiate(MonoUtils.instance.lineWord);
-            //line.answer = word.ToUpper();
+            if (CPlayerPrefs.HasKey(line.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel))
+                line.answer = CPlayerPrefs.GetString(line.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel);
+            else
+                line.answer = "";
             line.numLetters = word.Length;
             line.answers = words;
             line.cellSize = cellSize;
@@ -227,14 +230,14 @@ public class WordRegion : MonoBehaviour
         return isUse;
     }
 
-    private void ReloadAnswers()
-    {
-        foreach (var line in lines)
-        {
-            if (line.answer != "")
-                line.SetDataLetter(line.answer);
-        }
-    }
+    //private void ReloadAnswers()
+    //{
+    //    foreach (var line in lines)
+    //    {
+    //        if (line.answer != "")
+    //            line.SetDataLetter(line.answer);
+    //    }
+    //}
 
     private void SetLinesPosition()
     {
@@ -435,7 +438,7 @@ public class WordRegion : MonoBehaviour
                 line.ShowHint(() =>
                 {
                     if (hintFree > 0)
-                        CurrencyController.DebitHintFree(hintFree);
+                        CurrencyController.DebitHintFree(1);
                     else
                         CurrencyController.DebitBalance(Const.HINT_COST);
                 });

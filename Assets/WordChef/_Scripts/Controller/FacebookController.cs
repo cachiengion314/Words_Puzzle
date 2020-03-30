@@ -27,7 +27,13 @@ public class FacebookController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         GetUserData();
     }
-
+    void Update()
+    {
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            CurrencyController.UpdateBalanceAndHintFree();
+        }
+    }
     public void Logout()
     {
         PlayFabClientAPI.ForgetAllCredentials();

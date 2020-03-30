@@ -85,6 +85,7 @@ public class FacebookDialog : Dialog
             {
                 TitleId = PlayFabSettings.TitleId,
                 CreateAccount = true,
+                //FacebookInstantGamesSignature = result.AccessToken.UserId,
                 AccessToken = result.AccessToken.TokenString,
                 InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
                 {
@@ -113,6 +114,7 @@ public class FacebookDialog : Dialog
                 ShowBtnLogin(false);
                 ShowLeaderboard();
                 _animLoading.gameObject.SetActive(false);
+                
             });
         }
         else
@@ -123,6 +125,7 @@ public class FacebookDialog : Dialog
                 ShowBtnLogin(false);
                 ShowLeaderboard();
                 _animLoading.gameObject.SetActive(false);
+
             });
         }
         //_user.email = "";
@@ -171,11 +174,12 @@ public class FacebookDialog : Dialog
                 var ranking = Instantiate(_rankingPfb, _rootRanking);
                 ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
             }
-            TweenControl.GetInstance().ScaleFromZero(_leaderBoard, 0.3f, () => {
+            TweenControl.GetInstance().ScaleFromZero(_leaderBoard, 0.3f, () =>
+            {
                 vertical.enabled = true;
             });
         });
-        
+
     }
 
     private void ShowTextNameUser()
