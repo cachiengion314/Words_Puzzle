@@ -10,7 +10,7 @@ using System.Linq;
 using TMPro;
 using System.IO;
 using UnityEngine.SceneManagement;
-
+using System;
 
 public class DictionaryDialog : Dialog
 {
@@ -49,21 +49,20 @@ public class DictionaryDialog : Dialog
     {
         instance = this;
         homecontroller = GameObject.FindGameObjectWithTag("HomeController");
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-        keys = "ABCDFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        keys = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char)i).ToArray();
         foreach (char key in keys)
         {
             groupWordDiction.Add(key.ToString(), defaultValue);
         }
         GetWordPassed();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
         if (listWordPassed != null)
             CloneListGroupWord();
         numWordPassedText.text = "You have collected " + listWordPassed.Count + "/100000 words";
-
     }
 
     public void GetWordPassed()
@@ -86,7 +85,7 @@ public class DictionaryDialog : Dialog
 
             foreach (var item in dataGroupWordDiction)
             {
-                //Debug.Log(item.Key);
+                Debug.Log(item.Key);
                 groupWordDiction[item.Key] = item.Value;
             }
         }
@@ -100,7 +99,7 @@ public class DictionaryDialog : Dialog
         GameObject listGroupWordClone;
         GameObject buttonWordClone;
 
-        foreach (KeyValuePair<string, List<string>> item in groupWordDiction)
+        foreach (var item in groupWordDiction)
         {
             listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
             groupWords.Add(listGroupWordClone.GetComponent<ListGroupWord>());
