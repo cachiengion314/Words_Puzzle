@@ -24,18 +24,18 @@ public class LoginBonusController : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-        _root.transform.localScale = Vector3.zero;
-        _panelCollect.transform.localScale = Vector3.zero;
-        SetupSpin();
     }
 
     void Start()
     {
+        SetupSpin();
         CheckToday();
     }
 
     private void SetupSpin()
     {
+        _root.transform.localScale = Vector3.zero;
+        _panelCollect.transform.localScale = Vector3.zero;
         _imageHighlight.SetActive(false);
         for (int i = 0; i < _itemManager.items.Count; i++)
         {

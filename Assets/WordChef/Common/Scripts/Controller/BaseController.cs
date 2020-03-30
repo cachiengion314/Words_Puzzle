@@ -9,6 +9,12 @@ public class BaseController : MonoBehaviour {
 
     protected virtual void Awake()
     {
+        if (!CPlayerPrefs.HasKey("INSTALLED"))
+        {
+            CPlayerPrefs.DeleteAll();
+            CPlayerPrefs.Save();
+            CPlayerPrefs.SetBool("INSTALLED", true);
+        }
         if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
             Instantiate(donotDestroyOnLoad);
         
