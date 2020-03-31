@@ -389,8 +389,6 @@ public class WordRegion : MonoBehaviour
                 compliment.ShowRandom();
             }
         }
-        else
-            Sound.instance.Play(Sound.Collects.LevelShow);
         FacebookController.instance.SaveDataGame();
     }
 

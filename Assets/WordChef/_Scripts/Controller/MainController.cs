@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Superpow;
 using TMPro;
+using System;
 
-public class MainController : BaseController {
+public class MainController : BaseController
+{
+    public Action onLoadDataComplete;
+
     public TextMeshProUGUI levelNameText;
     public Animator animatorScene;
 
@@ -23,6 +27,7 @@ public class MainController : BaseController {
     {
         base.Awake();
         instance = this;
+        onLoadDataComplete = PlayAnimScene;
     }
 
     protected override void Start()
@@ -42,9 +47,11 @@ public class MainController : BaseController {
         FacebookController.instance.user.unlockedSubWorld = subWorld.ToString();
 
         gameLevel = Utils.Load(world, subWorld, level);
+        if (Pan.instance != null)
+            Pan.instance.centerPoint.localScale = Vector3.one;
         Pan.instance.Load(gameLevel);
         WordRegion.instance.Load(gameLevel);
-        BeeManager.instance.Load(CPlayerPrefs.GetInt("amount_bee",0));
+        BeeManager.instance.Load(CPlayerPrefs.GetInt("amount_bee", 0));
 
         if (world == 0 && subWorld == 0 && level == 0)
         {
@@ -53,19 +60,19 @@ public class MainController : BaseController {
                 //DialogController.instance.ShowDialog(DialogType.HowtoPlay);
             });
         }
-
         //GameState.currentSubWorldName
         var numlevels = Utils.GetNumLevels(world, subWorld);
         levelNameText.text = "LEVEL " + ((level + numlevels * (subWorld + 5 * world)) + 1);
 
         FacebookController.instance.SaveDataGame();
+        onLoadDataComplete?.Invoke();
     }
 
     public void OnComplete()
     {
         if (isGameComplete) return;
         isGameComplete = true;
-        
+
         //Save Passed Word
         if (!CPlayerPrefs.HasKey("WordLevelSave"))
         {
@@ -90,6 +97,7 @@ public class MainController : BaseController {
         return world + "-" + subWorld + "-" + level;
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !DialogController.instance.IsDialogShowing())
@@ -97,6 +105,7 @@ public class MainController : BaseController {
             DialogController.instance.ShowDialog(DialogType.Pause);
         }
     }
+#endif
 
     public void OpenChapterScene()
     {
@@ -106,8 +115,24 @@ public class MainController : BaseController {
 
     public void PlayAnimScene()
     {
-        Sound.instance.Play(Sound.Collects.LevelShow);
-        animatorScene.enabled = true;
-        animatorScene.SetBool("PlayAnimScene",true);
+        if (ScreenFader.instance.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
+        {
+            Sound.instance.Play(Sound.Collects.LevelShow);
+            animatorScene.enabled = true;
+            animatorScene.SetBool("PlayAnimScene", true);
+            ScreenFader.instance.DelayCall(0.55f, () =>
+            {
+                ScreenFader.instance.FadeIn(null);
+            });
+        }
+        else
+        {
+            SceneAnimate.Instance.SceneOpen(() =>
+            {
+                Sound.instance.Play(Sound.Collects.LevelShow);
+                animatorScene.enabled = true;
+                animatorScene.SetBool("PlayAnimScene", true);
+            });
+        }
     }
 }

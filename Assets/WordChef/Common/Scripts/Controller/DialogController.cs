@@ -28,7 +28,8 @@ public enum DialogType
 	DailyGifts,
 	WeekenSale,
 	MeanDialog,
-	MeanInGameDialog
+	MeanInGameDialog,
+	LimitedSaleDialog
 };
 
 public enum DialogShow

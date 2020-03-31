@@ -4612,8 +4612,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -10.45, y: 25}
-  m_SizeDelta: {x: 139.41, y: 34.5}
+  m_AnchoredPosition: {x: -9.82, y: 27.7}
+  m_SizeDelta: {x: 153.63, y: 36.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &798404556
 MonoBehaviour:
@@ -6573,7 +6573,7 @@ GameObject:
   - component: {fileID: 1184432398}
   - component: {fileID: 1184432397}
   m_Layer: 5
-  m_Name: WeekenSale
+  m_Name: SaleOff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6609,11 +6609,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1184432395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19e881b731da5ec4b9e91b902dfafe8c, type: 3}
+  m_Script: {fileID: 11500000, guid: b1ec06d677312cb4aa23a1227e097681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogType: 21
-  dialogShow: 1
+  _textTime: {fileID: 798404556}
 --- !u!114 &1184432398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6656,7 +6655,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1184432399}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1184432397}
+        m_MethodName: OnSaleOffClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   mPivotForFX: 6
   mEnabledFX: 1
   mImg: {fileID: 1184432399}
@@ -12156,6 +12166,8 @@ MonoBehaviour:
       AccountInfo:
         AndroidDeviceInfo:
           AndroidDeviceId: 
+        AppleAccountInfo:
+          AppleSubjectId: 
         CustomIdInfo:
           CustomId: 
         FacebookInfo:
@@ -12176,6 +12188,8 @@ MonoBehaviour:
         KongregateInfo:
           KongregateId: 
           KongregateName: 
+        NintendoSwitchAccountInfo:
+          NintendoSwitchAccountSubjectId: 
         NintendoSwitchDeviceIdInfo:
           NintendoSwitchDeviceId: 
         OpenIdInfo: []

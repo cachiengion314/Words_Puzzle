@@ -99,7 +99,7 @@ public class ShopDialog2 : Dialog
         // A consumable product has been purchased by this user.
         if (item.productType == ProductType.Consumable)
         {
-            CurrencyController.CreditBalance(item.value);
+            CurrencyController.CreditHintFree(item.value);
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.hintIapItems[index].removeAds)
             {
