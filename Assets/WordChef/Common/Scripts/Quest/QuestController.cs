@@ -19,7 +19,7 @@ public class QuestController : MonoBehaviour
     private double valueTime;
     private int indexData;
 
-    void Start()
+    void OnEnable()
     {
         if (!CPlayerPrefs.HasKey("DAILY_DATA"))
             CPlayerPrefs.SetInt("DAILY_DATA", UnityEngine.Random.Range(0, _dailyTaskDatas.Count));
@@ -28,14 +28,19 @@ public class QuestController : MonoBehaviour
         {
             var qs = _dailyTaskDatas[indexData].quests[i];
             qs.Run();
-            qs.gameObject.SetActive(false);
+            qs.gameObject.SetActive(true);
         }
         for (int i = 0; i < achievementContent.transform.childCount; i++)
         {
             var quest = achievementContent.transform.GetChild(i).gameObject.GetComponent<Quest>();
             quest.Run();
+            quest.gameObject.SetActive(true);
         }
         UpdateNextDay();
+    }
+
+    void Start()
+    {
         UpdateDailyQuest();
     }
 
@@ -54,24 +59,17 @@ public class QuestController : MonoBehaviour
 
     void DailyActive()
     {
-        for (int i = 0; i < _dailyTaskDatas.Count; i++)
+        for (int i = 0; i < dailyTaskContent.transform.childCount; i++)
         {
-            if (i == indexData)
-            {
-                foreach (var ques in _dailyTaskDatas[indexData].quests)
-                {
-                    ques.gameObject.SetActive(true);
-                    ques.Run();
-                }
-            }
-            else
-            {
-                foreach (var ques in _dailyTaskDatas[i].quests)
-                {
-                    ques.Refresh();
-                    ques.gameObject.SetActive(false);
-                }
-            }
+            var quest = dailyTaskContent.transform.GetChild(i).GetComponent<Quest>();
+            quest.Refresh();
+            quest.gameObject.SetActive(false);
+        }
+
+        foreach (var ques in _dailyTaskDatas[indexData].quests)
+        {
+            ques.gameObject.SetActive(true);
+            ques.Run();
         }
     }
 
@@ -107,7 +105,7 @@ public class QuestController : MonoBehaviour
             nextDay = DateTime.Today.AddDays(1) + TimeSpan.FromSeconds(_timeRefresh * 3600);
             CPlayerPrefs.SetLong("DAY_REFRESH", nextDay.Ticks);
             CPlayerPrefs.SetInt("DAILY_DATA", UnityEngine.Random.Range(0, _dailyTaskDatas.Count));
-            indexData = CPlayerPrefs.GetInt("DAILY_DATA");
+            indexData = CPlayerPrefs.GetInt("DAILY_DATA", 0);
         }
     }
 
