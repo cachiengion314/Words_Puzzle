@@ -19,11 +19,11 @@ public class QuestController : MonoBehaviour
     private double valueTime;
     private int indexData;
 
-    void OnEnable()
+    void Start()
     {
         if (!CPlayerPrefs.HasKey("DAILY_DATA"))
             CPlayerPrefs.SetInt("DAILY_DATA", UnityEngine.Random.Range(0, _dailyTaskDatas.Count));
-        indexData = CPlayerPrefs.GetInt("DAILY_DATA");
+        indexData = CPlayerPrefs.GetInt("DAILY_DATA", 0);
         for (int i = 0; i < _dailyTaskDatas[indexData].quests.Count; i++)
         {
             var qs = _dailyTaskDatas[indexData].quests[i];
@@ -36,10 +36,6 @@ public class QuestController : MonoBehaviour
             quest.Run();
         }
         UpdateNextDay();
-    }
-
-    void Start()
-    {
         UpdateDailyQuest();
     }
 
