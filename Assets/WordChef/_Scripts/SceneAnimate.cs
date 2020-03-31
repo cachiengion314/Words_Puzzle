@@ -34,7 +34,7 @@ public class SceneAnimate : MonoBehaviour
         Sound.instance.Play(Sound.Scenes.CurtainOpen);
         animatorScene.gameObject.SetActive(true);
         animatorScene.SetBool(_closeScene, false);
-        ScreenFader.instance.DelayCall(1f, () =>
+        ScreenFader.instance.DelayCall(0.3f, () =>
         {
             callback?.Invoke();
         });

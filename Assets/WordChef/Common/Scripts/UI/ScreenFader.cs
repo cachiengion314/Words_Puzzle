@@ -71,13 +71,17 @@ public class ScreenFader : MonoBehaviour
 
         if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
         {
-            Sound.instance.Play(Sound.Collects.LevelShow);
+            if (scene.name == Const.SCENE_MAIN)
+                MainController.instance.PlayAnimScene();
             FadeIn(null);
         }
 
         if (SceneAnimate.Instance.animatorScene.GetCurrentAnimatorStateInfo(0).IsName("SceneLoading"))
         {
-            SceneAnimate.Instance.SceneOpen();
+            SceneAnimate.Instance.SceneOpen(()=> {
+                if (scene.name == Const.SCENE_MAIN)
+                    MainController.instance.PlayAnimScene();
+            });
         }
     }
 }

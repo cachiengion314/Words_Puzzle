@@ -7,6 +7,7 @@ using TMPro;
 
 public class MainController : BaseController {
     public TextMeshProUGUI levelNameText;
+    public Animator animatorScene;
 
     private int world, subWorld, level;
     private bool isGameComplete;
@@ -101,5 +102,12 @@ public class MainController : BaseController {
     {
         CUtils.LoadScene(1, false);
         Sound.instance.Play(Sound.Others.PopupOpen);
+    }
+
+    public void PlayAnimScene()
+    {
+        Sound.instance.Play(Sound.Collects.LevelShow);
+        animatorScene.enabled = true;
+        animatorScene.SetBool("PlayAnimScene",true);
     }
 }

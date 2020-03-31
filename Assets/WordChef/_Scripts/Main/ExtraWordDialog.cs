@@ -11,6 +11,7 @@ public class ExtraWordDialog : Dialog
     public GameObject claimButton;
     public Text progressText;
     public TextMeshProUGUI wordText;
+    public TextMeshProUGUI claimQuantityText;
 
     private int numWords, claimQuantity;
 
@@ -19,6 +20,7 @@ public class ExtraWordDialog : Dialog
         base.Start();
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
+        claimQuantity = (int)extraProgress.target / 5 * 40;
 
         UpdateUI();
     }
@@ -32,8 +34,6 @@ public class ExtraWordDialog : Dialog
 
     public void Claim()
     {
-        claimQuantity = (int)extraProgress.target / 5 * 2;
-
         extraProgress.current -= (int)extraProgress.target;
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
@@ -45,35 +45,27 @@ public class ExtraWordDialog : Dialog
         {
             Prefs.extraTarget = 10;
             extraProgress.target = 10;
+            claimQuantity = (int)extraProgress.target / 5 * 40;
             UpdateUI();
         }
     }
 
     private IEnumerator ClaimEffect()
     {
-        var tweenControl = TweenControl.GetInstance();
         Transform rubyBalance = GameObject.FindWithTag("RubyBalance").transform;
-        var middlePoint = CUtils.GetMiddlePoint(claimTr.position, rubyBalance.position, -0.4f);
-        Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
-
+        //var middlePoint = CUtils.GetMiddlePoint(claimTr.position, rubyBalance.position, -0.4f);
+        //Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
         for (int i = 0; i < claimQuantity; i++)
         {
-            GameObject gameObj = Instantiate(MonoUtils.instance.rubyFly, MonoUtils.instance.textFlyTransform);
-            gameObj.transform.position = /*waypoints[0]*/Vector3.zero;
-            gameObj.transform.localScale = Vector3.one;
-
-            tweenControl.Move(gameObj.transform, rubyBalance.position, 0.5f, () =>
-            {
-                CurrencyController.CreditBalance(claimQuantity / 4);
-                Sound.instance.Play(Sound.Collects.CoinCollect);
-                Destroy(gameObj);
-            }, EaseType.InBack);
-            yield return new WaitForSeconds(0.2f);
+            if(i < 5)
+                MonoUtils.instance.ShowEffect(claimQuantity / 5, rubyBalance);
+            yield return new WaitForSeconds(0.02f);
         }
     }
 
     private void UpdateUI()
     {
+        claimQuantityText.text = claimQuantity.ToString();
         claimButton.SetActive(extraProgress.current >= extraProgress.target);
         progressText.text = extraProgress.current + "/" + extraProgress.target;
         wordText.text = "";

@@ -7,6 +7,7 @@ using System;
 
 public class QuestController : MonoBehaviour
 {
+    [SerializeField] private List<DailyTaskData> _dailyTaskDatas;
     [SerializeField]
     GameObject dailyTaskContent;
     [SerializeField]
@@ -14,19 +15,19 @@ public class QuestController : MonoBehaviour
     [SerializeField] private float _timeRefresh = 12;
     [SerializeField] private TextMeshProUGUI _textRealtime;
     private List<Quest> _oldQuest;
-    private Stack<Quest> curDailyquests;
     private DateTime nextDay;
     private double valueTime;
-
+    private int indexData;
     void Awake()
     {
-        curDailyquests = new Stack<Quest>(dailyTaskContent.transform.childCount);
-        for (int i = 0; i < dailyTaskContent.transform.childCount; i++)
+        if (!CPlayerPrefs.HasKey("DAILY_DATA"))
+            CPlayerPrefs.SetInt("DAILY_DATA", UnityEngine.Random.Range(0, _dailyTaskDatas.Count));
+        indexData = CPlayerPrefs.GetInt("DAILY_DATA");
+        for (int i = 0; i < _dailyTaskDatas[indexData].quests.Count; i++)
         {
-            var qs = dailyTaskContent.transform.GetChild(i).gameObject.GetComponent<Quest>();
+            var qs = _dailyTaskDatas[indexData].quests[i];
             qs.Run();
             qs.gameObject.SetActive(false);
-            curDailyquests.Push(qs);
         }
         for (int i = 0; i < achievementContent.transform.childCount; i++)
         {
@@ -34,7 +35,6 @@ public class QuestController : MonoBehaviour
             quest.Run();
         }
         UpdateNextDay();
-        Debug.Log(nextDay);
     }
 
     void Start()
@@ -57,39 +57,33 @@ public class QuestController : MonoBehaviour
 
     void DailyActive()
     {
-        _oldQuest = new List<Quest>();
-        for (int i = 0; i < dailyTaskContent.transform.childCount; i++)
+        for (int i = 0; i < _dailyTaskDatas.Count; i++)
         {
-            var quest = curDailyquests.Pop();
-            quest.gameObject.SetActive(true);
-            quest.Run();
-            _oldQuest.Add(quest);
+            if (i == indexData)
+            {
+                foreach (var ques in _dailyTaskDatas[indexData].quests)
+                {
+                    ques.gameObject.SetActive(true);
+                    ques.Run();
+                }
+            }
+            else
+            {
+                foreach (var ques in _dailyTaskDatas[i].quests)
+                {
+                    ques.Refresh();
+                    ques.gameObject.SetActive(false);
+                }
+            }
         }
     }
 
-    private void ShuffleTask()
-    {
-        for (int i = 0; i < curDailyquests.Count; i++)
-        {
-            var quest = curDailyquests.Pop();
-            quest.Refresh();
-            quest.gameObject.SetActive(false);
-            _oldQuest.Add(quest);
-        }
-    }
     void UpdateDailyQuest()
     {
         if (DateTime.Compare(DateTime.Now, nextDay) >= 0)
         {
-            ShuffleTask();
-            foreach (var qs in _oldQuest)
-            {
-                qs.Refresh();
-                qs.gameObject.SetActive(false);
-                curDailyquests.Push(qs);
-            }
-            DailyActive();
             UpdateNextDay();
+            DailyActive();
         }
         else
         {
@@ -115,8 +109,16 @@ public class QuestController : MonoBehaviour
         {
             nextDay = DateTime.Today.AddDays(1) + TimeSpan.FromSeconds(_timeRefresh * 3600);
             CPlayerPrefs.SetLong("DAY_REFRESH", nextDay.Ticks);
+            CPlayerPrefs.SetInt("DAILY_DATA", UnityEngine.Random.Range(0, _dailyTaskDatas.Count));
+            indexData = CPlayerPrefs.GetInt("DAILY_DATA");
         }
     }
 
 
+}
+
+[Serializable]
+public class DailyTaskData
+{
+    public List<Quest> quests;
 }

@@ -110,6 +110,7 @@ public class LoginBonusController : MonoBehaviour
 
     private void Spin(Action callback = null)
     {
+        _imageHighlight.SetActive(false);
         CPlayerPrefs.SetBool("FIRST", false);
         var itemRandom = UnityEngine.Random.Range(0, _numGift);
         _currAngle = itemRandom;
@@ -132,19 +133,11 @@ public class LoginBonusController : MonoBehaviour
 
     private IEnumerator ShowEffectCollect(int value)
     {
-        var tweenControl = TweenControl.GetInstance();
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
             {
-                var star = Instantiate(MonoUtils.instance.rubyFly, MonoUtils.instance.textFlyTransform);
-                star.transform.position = Vector3.zero;
-                tweenControl.Move(star.transform, _currencyBallance.transform.position, 0.5f, () =>
-                {
-                    CurrencyController.CreditBalance(value/4);
-                    Sound.instance.Play(Sound.Collects.CoinCollect);
-                    Destroy(star);
-                }, EaseType.InBack);
+                MonoUtils.instance.ShowEffect(value/5, _currencyBallance.transform);
             }
             yield return new WaitForSeconds(0.02f);
         }
