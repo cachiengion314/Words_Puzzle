@@ -290,7 +290,7 @@ public class WordRegion : MonoBehaviour
     public void CheckAnswer(string checkWord)
     {
         var lineIsShown = lines.FindAll(li => li.isShown);
-        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown);
+        LineWord line = lines.Find(x => (x.answers.Contains(checkWord) && !x.isShown && x.answer == "") || (x.answer == checkWord && !x.isShown));
         //string meaning="";
         if (line != null)
         {

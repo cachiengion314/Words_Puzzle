@@ -117,7 +117,6 @@ public class MainController : BaseController
     {
         if (ScreenFader.instance.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
         {
-            Sound.instance.Play(Sound.Collects.LevelShow);
             animatorScene.enabled = true;
             animatorScene.SetBool("PlayAnimScene", true);
             ScreenFader.instance.DelayCall(0.55f, () =>
@@ -129,10 +128,15 @@ public class MainController : BaseController
         {
             SceneAnimate.Instance.SceneOpen(() =>
             {
-                Sound.instance.Play(Sound.Collects.LevelShow);
                 animatorScene.enabled = true;
                 animatorScene.SetBool("PlayAnimScene", true);
             });
         }
+    }
+
+    public void PlayAnimSceneDone()
+    {
+        animatorScene.enabled = true;
+        animatorScene.SetBool("PlayAnimScene", true);
     }
 }

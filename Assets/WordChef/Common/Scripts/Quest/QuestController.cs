@@ -18,7 +18,8 @@ public class QuestController : MonoBehaviour
     private DateTime nextDay;
     private double valueTime;
     private int indexData;
-    void Awake()
+
+    void OnEnable()
     {
         if (!CPlayerPrefs.HasKey("DAILY_DATA"))
             CPlayerPrefs.SetInt("DAILY_DATA", UnityEngine.Random.Range(0, _dailyTaskDatas.Count));
