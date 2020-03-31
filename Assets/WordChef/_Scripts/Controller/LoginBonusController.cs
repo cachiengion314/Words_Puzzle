@@ -24,11 +24,11 @@ public class LoginBonusController : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        SetupSpin();
     }
 
     void Start()
     {
-        SetupSpin();
         CheckToday();
     }
 
