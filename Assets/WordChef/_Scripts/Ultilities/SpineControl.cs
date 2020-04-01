@@ -50,7 +50,7 @@ public class SpineControl : MonoBehaviour
     {
         try
         {
-            var stage = new Spine.AnimationState(thisSkeletonControl.skeletonDataAsset.GetAnimationStateData());
+            var stage = thisSkeletonControl.AnimationState/*new Spine.AnimationState(thisSkeletonControl.skeletonDataAsset.GetAnimationStateData())*/;
 
             //thisSkeletonControl.AnimationState = stage;
 

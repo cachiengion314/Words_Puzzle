@@ -33,7 +33,7 @@ public class Dictionary: MonoBehaviour
             instance = this;
 
         SAVE_FOLDER = Application.persistentDataPath + "/Saves/";
-        Debug.Log(Application.persistentDataPath);
+        //Debug.Log(Application.persistentDataPath);
         if (!Directory.Exists(SAVE_FOLDER))
         {
             Directory.CreateDirectory(SAVE_FOLDER);
@@ -67,7 +67,7 @@ public class Dictionary: MonoBehaviour
     }
     public void load()
     {
-        Debug.Log("loading words..");
+        //Debug.Log("loading words..");
         if(File.Exists(SAVE_FOLDER + "saveword.txt"))
         {
             string text = File.ReadAllText(SAVE_FOLDER + "saveword.txt");

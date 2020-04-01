@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using System;
 
-public class WinDialog : Dialog {
+public class WinDialog : Dialog
+{
     private int numLevels;
     private bool isLastLevel;
     private int subWorld, level;
@@ -34,6 +36,16 @@ public class WinDialog : Dialog {
     private TextMeshProUGUI txtReward;
     [SerializeField]
     private TextMeshProUGUI txtRewardByAds;
+    [Space]
+    [SerializeField] private SpineControl _animLevelClear;
+    [SerializeField] private SpineControl _animEggLevelClear;
+    [SerializeField] private SpineControl _animEggChapterClear;
+    [SerializeField] private string levelClearIdleAnim = "idle";
+    [SerializeField] private string showLevelClearAnim = "animation";
+    [SerializeField] private string eggLevelAnim = "Level Clear";
+    [SerializeField] private string eggChapterAnim = "Chapter Clear";
+    [SerializeField] private string eggLevelIdleAnim = "idle Level Clear";
+    [SerializeField] private string eggChapterIdleAnim = "idle Chapter Clear";
 
     protected override void Start()
     {
@@ -50,29 +62,58 @@ public class WinDialog : Dialog {
 
         isLastLevel = Prefs.IsLastLevel();
 
+        _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
+        {
+            //_animLevelClear.SetAnimation(levelClearIdleAnim, true);
+        });
+        
         if (isLastLevel)
         {
-            for (int i = 0; i < numLevels; i++)
+            _animEggLevelClear.onEventAction = ShowStarsEffect;
+            _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
             {
-                var starGroup = GameObject.Instantiate(StartGroup, StarsGrid);
-                starGroup.SetActive(true);
-                if (i <= level)
-                {
-                    var startOn = starGroup.transform.GetChild(0);
-                    startOn.gameObject.SetActive(true);
-                    if (i == level)
-                    {
-                        startOn.DOScale(0f, 0.8f).From().SetDelay(0.2f).SetEase(Ease.OutElastic);
-                        StartCoroutine(IEShowButtonLevelClear());
-                    }
-                }
-            }
+                _animEggLevelClear.SetAnimation(eggLevelIdleAnim, true);
+
+            });
         }
         else
         {
-            EggBig.SetActive(false);
-            RewardButton.SetActive(false);
-            GroupButton.SetActive(true);
+            _animEggChapterClear.onEventAction = ShowStarsEffect;
+            _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
+            {
+                _animEggLevelClear.SetAnimation(eggChapterIdleAnim, true);
+            });
+        }
+    }
+
+    private void ShowStarsEffect(Spine.Event eventData)
+    {
+        if (eventData.Data.Name == "EGG_CHAP" || eventData.Data.Name == "EGG_LEVEL")
+        {
+            if (isLastLevel)
+            {
+                for (int i = 0; i < numLevels; i++)
+                {
+                    var starGroup = GameObject.Instantiate(StartGroup, StarsGrid);
+                    starGroup.SetActive(true);
+                    if (i <= level)
+                    {
+                        var startOn = starGroup.transform.GetChild(0);
+                        startOn.gameObject.SetActive(true);
+                        if (i == level)
+                        {
+                            startOn.DOScale(0f, 0.8f).From().SetDelay(0.2f).SetEase(Ease.OutElastic);
+                            StartCoroutine(IEShowButtonLevelClear());
+                        }
+                    }
+                }
+            }
+            else
+            {
+                EggBig.SetActive(false);
+                RewardButton.SetActive(false);
+                GroupButton.SetActive(true);
+            }
         }
     }
 
@@ -126,7 +167,8 @@ public class WinDialog : Dialog {
         };
     }
 
-    private IEnumerator IEShowEggOpen() {
+    private IEnumerator IEShowEggOpen()
+    {
         CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
 
         TitleLevelClear.SetActive(false);
@@ -138,7 +180,6 @@ public class WinDialog : Dialog {
         {
             FadeImage.gameObject.SetActive(false);
         };
-
         yield return new WaitForSeconds(1.5f);
         GroupButton.SetActive(true);
     }
@@ -147,7 +188,7 @@ public class WinDialog : Dialog {
     {
         Close();
         Sound.instance.Play(Sound.Collects.LevelClose);
-        Prefs.countLevel += 1; 
+        Prefs.countLevel += 1;
         Prefs.countLevelDaily += 1;
         CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         FacebookController.instance.user.levelProgress = new string[] { "0" };
@@ -155,7 +196,7 @@ public class WinDialog : Dialog {
         FacebookController.instance.SaveDataGame();
     }
 
-    
+
     public void RewardClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
