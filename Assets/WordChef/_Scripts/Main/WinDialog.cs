@@ -37,6 +37,7 @@ public class WinDialog : Dialog
     [SerializeField]
     private TextMeshProUGUI txtRewardByAds;
     [Space]
+    [SerializeField] private SpineControl _animChapterClear;
     [SerializeField] private SpineControl _animLevelClear;
     [SerializeField] private SpineControl _animEggLevelClear;
     [SerializeField] private SpineControl _animEggChapterClear;
@@ -61,14 +62,12 @@ public class WinDialog : Dialog
         level = GameState.currentLevel;
 
         isLastLevel = Prefs.IsLastLevel();
-
-        _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
-        {
-            //_animLevelClear.SetAnimation(levelClearIdleAnim, true);
-        });
-        
         if (isLastLevel)
         {
+            _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
+            {
+                //_animLevelClear.SetAnimation(levelClearIdleAnim, true);
+            });
             _animEggLevelClear.onEventAction = ShowStarsEffect;
             _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
             {
@@ -78,6 +77,7 @@ public class WinDialog : Dialog
         }
         else
         {
+            _animChapterClear.gameObject.SetActive(false);
             _animEggChapterClear.onEventAction = ShowStarsEffect;
             _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
             {
@@ -169,6 +169,11 @@ public class WinDialog : Dialog
 
     private IEnumerator IEShowEggOpen()
     {
+        _animChapterClear.gameObject.SetActive(true);
+        _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
+        {
+            _animChapterClear.SetAnimation(levelClearIdleAnim, true);
+        });
         CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
 
         TitleLevelClear.SetActive(false);
