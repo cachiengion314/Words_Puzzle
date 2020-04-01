@@ -7,9 +7,14 @@ public class RewardedVideoDialog : Dialog {
     public Text amountText;
     public Text messageText;
 
-	public void SetAmount(int amount)
+    private void Start()
     {
-        amountText.text = amount.ToString();
+        SetAmount(40);
+    }
+
+    public void SetAmount(int amount)
+    {
+        amountText.text = "x " + amount.ToString();
         messageText.text = "Congratulation! You got " + amount + " free rubies.";
     }
 
@@ -19,9 +24,15 @@ public class RewardedVideoDialog : Dialog {
         Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
-	public override void Close ()
+    public void OnConfirmClick()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        MonoUtils.instance.ShowEffect(int.Parse(amountText.text.Replace("x ","")));
+    }
+
+    public override void Close ()
 	{
 		base.Close ();
-		CurrencyController.CreditBalance(int.Parse(amountText.text));
+		CurrencyController.CreditBalance(int.Parse(amountText.text.Replace("x ", "")));
 	}
 }

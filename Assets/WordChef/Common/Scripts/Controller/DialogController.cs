@@ -18,7 +18,7 @@ public enum DialogType
     ExtraWord,
     Win,
     RewardedVideo,
-    RateGame,
+	RateGame,
     Shop2,
 	Objective,
 	Dictionary,
@@ -29,7 +29,8 @@ public enum DialogType
 	WeekenSale,
 	MeanDialog,
 	MeanInGameDialog,
-	LimitedSaleDialog
+	LimitedSaleDialog,
+	FreeStars
 };
 
 public enum DialogShow

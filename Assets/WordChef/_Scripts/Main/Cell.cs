@@ -72,8 +72,6 @@ public class Cell : MonoBehaviour
         {
             if (WordRegion.instance.BtnADS != null)
                 Destroy(WordRegion.instance.BtnADS.gameObject);
-            if (MainController.instance != null && MainController.instance.rewardVideoController != null)
-                Destroy(MainController.instance.rewardVideoController.gameObject);
         }
         letterText.text = letter;
         bg.color = new Color(1, 1, 1, 1);

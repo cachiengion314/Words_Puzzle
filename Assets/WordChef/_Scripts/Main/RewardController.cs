@@ -15,6 +15,7 @@ public class RewardController : MonoBehaviour
     [SerializeField] private Toggle _showAgain;
     [SerializeField] private int _amountStars;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
+    private RewardVideoController _rewardVideoControl;
 
     public GameObject overLay;
 
@@ -25,10 +26,10 @@ public class RewardController : MonoBehaviour
         CheckShowAgain();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        if (MainController.instance != null && MainController.instance.rewardVideoController != null)
-            MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
+        if (_rewardVideoControl != null)
+            _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
     }
 
     private void CheckShowAgain()
@@ -38,10 +39,10 @@ public class RewardController : MonoBehaviour
 
     public void OnShowAdsVideo()
     {
-        if (MainController.instance.rewardVideoController != null)
-            Destroy(MainController.instance.rewardVideoController.gameObject);
-        MainController.instance.rewardVideoController = Instantiate(_rewardVideoPfb);
-        MainController.instance.rewardVideoController.onRewardedCallback += OnCompleteVideo;
+        _rewardVideoControl = FindObjectOfType<RewardVideoController>();
+        if (_rewardVideoControl == null)
+            _rewardVideoControl = Instantiate(_rewardVideoPfb);
+        _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
         if (_showAgain.isOn)
         {
             OnWatchClick();
@@ -56,7 +57,7 @@ public class RewardController : MonoBehaviour
 
     private void OnCompleteVideo()
     {
-        Destroy(MainController.instance.rewardVideoController.gameObject);
+        _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
         overLay.SetActive(true);
         _boardClaim.Setup(_amountStars, () =>
         {

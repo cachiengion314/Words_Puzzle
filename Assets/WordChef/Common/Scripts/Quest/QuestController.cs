@@ -62,7 +62,6 @@ public class QuestController : MonoBehaviour
         for (int i = 0; i < dailyTaskContent.transform.childCount; i++)
         {
             var quest = dailyTaskContent.transform.GetChild(i).GetComponent<Quest>();
-            quest.Refresh();
             quest.gameObject.SetActive(false);
         }
 

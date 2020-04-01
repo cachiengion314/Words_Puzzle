@@ -7,6 +7,7 @@ using UnityEngine;
 public class RewardVideoController : MonoBehaviour
 {
     public Action onRewardedCallback;
+    public Action<bool> onUpdateBtnAdsCallback;
     public GameObject content;
     public GameObject adAvailableTextHolder;
     public TimerText timerText;
@@ -56,6 +57,7 @@ public class RewardVideoController : MonoBehaviour
     private void IUpdate()
     {
         content.SetActive(IsAvailableToShow());
+        onUpdateBtnAdsCallback?.Invoke(IsAvailableToShow());
     }
 
     private void ShowTimerText(int time)

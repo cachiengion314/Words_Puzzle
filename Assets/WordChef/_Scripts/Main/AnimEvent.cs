@@ -8,13 +8,28 @@ public class AnimEvent : MonoBehaviour
     {
         if (Pan.instance != null)
         {
-            Pan.instance.centerPoint.localScale = Vector3.zero;
             Sound.instance.Play(Sound.Collects.LevelShow);
+            ScaleLetters();
         }
     }
 
     public void LevelClearCallback()
     {
 
+    }
+
+    private void ScaleLetters()
+    {
+        if (Pan.instance != null && Pan.instance.LetterTexts.Count > 0)
+        {
+            for (int i = 0; i < Pan.instance.LetterTexts.Count; i++)
+            {
+                var letter = Pan.instance.LetterTexts[i];
+                //letter.transform.localScale = Vector3.zero;
+                TweenControl.GetInstance().Scale(letter.gameObject,Vector3.one * 1.1f, 0.3f,()=> {
+                    TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one, 0.2f, null,EaseType.InQuad);
+                });
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@ public class SceneAnimate : MonoBehaviour
 
     public void SceneClose(Action callback)
     {
+        animatorScene.ResetTrigger(_closeScene);
         Sound.instance.Play(Sound.Scenes.CurtainClose);
         animatorScene.gameObject.SetActive(true);
         animatorScene.SetBool(_closeScene, true);
@@ -34,7 +35,7 @@ public class SceneAnimate : MonoBehaviour
         Sound.instance.Play(Sound.Scenes.CurtainOpen);
         animatorScene.gameObject.SetActive(true);
         animatorScene.SetBool(_closeScene, false);
-        ScreenFader.instance.DelayCall(0.2f, () =>
+        ScreenFader.instance.DelayCall(0.3f, () =>
         {
             callback?.Invoke();
         });

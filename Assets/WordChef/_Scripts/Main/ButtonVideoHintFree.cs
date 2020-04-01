@@ -10,7 +10,7 @@ public class ButtonVideoHintFree : MonoBehaviour
     public Button _btnAds;
     private Cell _cell;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
-    //[SerializeField] private RewardController _rewardController;
+    private RewardVideoController _rewardController;
 
     public Cell Cell
     {
@@ -24,31 +24,32 @@ public class ButtonVideoHintFree : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        if (MainController.instance.rewardVideoController != null)
-            Destroy(MainController.instance.rewardVideoController.gameObject);
-        MainController.instance.rewardVideoController = Instantiate(_rewardVideoPfb);
-        MainController.instance.rewardVideoController.onRewardedCallback += OnCompleteVideo;
+        _rewardController = FindObjectOfType<RewardVideoController>();
+        if (_rewardController == null)
+            _rewardController = Instantiate(_rewardVideoPfb);
+        _rewardController.onRewardedCallback -= OnCompleteVideo;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         if (MainController.instance != null)
-            MainController.instance.rewardVideoController.onRewardedCallback -= OnCompleteVideo;
+            _rewardController.onRewardedCallback -= OnCompleteVideo;
     }
 
     public void OnClickOpen()
     {
+        _rewardController.onRewardedCallback += OnCompleteVideo;
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
     private void OnCompleteVideo()
     {
+        _rewardController.onRewardedCallback -= OnCompleteVideo;
         gameObject.SetActive(false);
         _cell.ShowHint();
-        Destroy(MainController.instance.rewardVideoController.gameObject);
         //_rewardController.gameObject.SetActive(true);
     }
 }

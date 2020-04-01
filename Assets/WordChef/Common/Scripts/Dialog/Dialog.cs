@@ -13,6 +13,7 @@ public class Dialog : MonoBehaviour
     public Action onDialogCompleteClosed;
     public Action<Dialog> onButtonCloseClicked;
     public DialogType dialogType;
+    public bool showDialogReward = false;
     public bool enableAd = true;
     public bool enableEscape = true;
 
@@ -71,7 +72,6 @@ public class Dialog : MonoBehaviour
         {
             DoClose();
         }
-
         onDialogClosed(this);
     }
 
@@ -79,6 +79,11 @@ public class Dialog : MonoBehaviour
     {
         Destroy(gameObject);
         if (onDialogCompleteClosed != null) onDialogCompleteClosed();
+        if (showDialogReward)
+        {
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            DialogController.instance.ShowDialog(DialogType.FreeStars, DialogShow.REPLACE_CURRENT);
+        }
     }
 
     public void Hide()

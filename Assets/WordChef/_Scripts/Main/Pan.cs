@@ -25,6 +25,14 @@ public class Pan : MonoBehaviour
 
     public static Pan instance;
 
+    public List<Text> LetterTexts
+    {
+        get
+        {
+            return letterTexts;
+        }
+    }
+
     private void Awake()
     {
         instance = this;
@@ -96,6 +104,7 @@ public class Pan : MonoBehaviour
             for (int i = 0; i < numLetters; i++)
             {
                 letterTexts[i].transform.localPosition = letterLocalPositions[indexes.IndexOf(i)];
+                letterTexts[i].transform.localScale = Vector3.zero;
             }
         });
     }

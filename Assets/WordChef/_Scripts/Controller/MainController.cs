@@ -47,8 +47,6 @@ public class MainController : BaseController
         FacebookController.instance.user.unlockedSubWorld = subWorld.ToString();
 
         gameLevel = Utils.Load(world, subWorld, level);
-        if (Pan.instance != null)
-            Pan.instance.centerPoint.localScale = Vector3.one;
         Pan.instance.Load(gameLevel);
         WordRegion.instance.Load(gameLevel);
         BeeManager.instance.Load(CPlayerPrefs.GetInt("amount_bee", 0));
@@ -119,7 +117,7 @@ public class MainController : BaseController
         {
             animatorScene.enabled = true;
             animatorScene.SetBool("PlayAnimScene", true);
-            ScreenFader.instance.DelayCall(0.55f, () =>
+            ScreenFader.instance.DelayCall(0.5f, () =>
             {
                 ScreenFader.instance.FadeIn(null);
             });
