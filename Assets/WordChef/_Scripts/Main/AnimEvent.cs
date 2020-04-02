@@ -13,6 +13,11 @@ public class AnimEvent : MonoBehaviour
         }
     }
 
+    public void SceneLoaded()
+    {
+        SceneAnimate.Instance.animatorScene.gameObject.SetActive(false);
+    }
+
     public void LevelClearCallback()
     {
 

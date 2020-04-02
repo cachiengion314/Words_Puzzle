@@ -22,6 +22,8 @@ public class WinDialog : Dialog
     private GameObject StartGroup;
     [SerializeField]
     private GameObject EggBig;
+    [SerializeField]
+    private GameObject light;
 
     [SerializeField]
     private Image FadeImage;
@@ -62,57 +64,75 @@ public class WinDialog : Dialog
         level = GameState.currentLevel;
 
         isLastLevel = Prefs.IsLastLevel();
+        txtReward.transform.localScale = Vector3.zero;
+        light.SetActive(false);
+
         if (isLastLevel)
         {
-            _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
+            if (level == numLevels - 1)
             {
-                //_animLevelClear.SetAnimation(levelClearIdleAnim, true);
-            });
-            _animEggLevelClear.onEventAction = ShowStarsEffect;
-            _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
-            {
-                _animEggLevelClear.SetAnimation(eggLevelIdleAnim, true);
+                ShowChapterClear(true);
+                _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
+                {
+                    _animChapterClear.SetAnimation(levelClearIdleAnim, true);
+                });
+                _animEggChapterClear.onEventAction = ShowStarsEffect;
+                _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
+                {
+                    _animEggChapterClear.SetAnimation(eggChapterIdleAnim, true);
 
-            });
+                });
+            }
+            else
+            {
+                CPlayerPrefs.SetBool("Received", false);
+                ShowChapterClear(false);
+                _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
+                {
+                    //_animLevelClear.SetAnimation(levelClearIdleAnim, true);
+                });
+                _animEggLevelClear.onEventAction = ShowStarsEffect;
+                _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
+                {
+                    _animEggLevelClear.SetAnimation(eggLevelIdleAnim, true);
+
+                });
+            }
         }
         else
         {
-            _animChapterClear.gameObject.SetActive(false);
-            _animEggChapterClear.onEventAction = ShowStarsEffect;
-            _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
-            {
-                _animEggLevelClear.SetAnimation(eggChapterIdleAnim, true);
-            });
+            EggBig.SetActive(false);
+            RewardButton.SetActive(false);
+            GroupButton.SetActive(true);
         }
+    }
+
+    private void ShowChapterClear(bool show)
+    {
+        EggLevelClear.gameObject.SetActive(!show);
+        _animLevelClear.gameObject.SetActive(!show);
+        EggChapterClear.gameObject.SetActive(show);
+        _animChapterClear.gameObject.SetActive(show);
     }
 
     private void ShowStarsEffect(Spine.Event eventData)
     {
         if (eventData.Data.Name == "EGG_CHAP" || eventData.Data.Name == "EGG_LEVEL")
         {
-            if (isLastLevel)
+            for (int i = 0; i < numLevels; i++)
             {
-                for (int i = 0; i < numLevels; i++)
+                var starGroup = GameObject.Instantiate(StartGroup, StarsGrid);
+                starGroup.SetActive(true);
+                if (i <= level)
                 {
-                    var starGroup = GameObject.Instantiate(StartGroup, StarsGrid);
-                    starGroup.SetActive(true);
-                    if (i <= level)
+                    var startOn = starGroup.transform.GetChild(0);
+                    startOn.gameObject.SetActive(true);
+                    if (i == level)
                     {
-                        var startOn = starGroup.transform.GetChild(0);
-                        startOn.gameObject.SetActive(true);
-                        if (i == level)
-                        {
-                            startOn.DOScale(0f, 0.8f).From().SetDelay(0.2f).SetEase(Ease.OutElastic);
-                            StartCoroutine(IEShowButtonLevelClear());
-                        }
+                        startOn.DOScale(0f, 0.8f).From().SetDelay(0.2f).SetEase(Ease.OutElastic);
+                        StartCoroutine(IEShowButtonLevelClear());
                     }
                 }
-            }
-            else
-            {
-                EggBig.SetActive(false);
-                RewardButton.SetActive(false);
-                GroupButton.SetActive(true);
             }
         }
     }
@@ -169,23 +189,24 @@ public class WinDialog : Dialog
 
     private IEnumerator IEShowEggOpen()
     {
-        _animChapterClear.gameObject.SetActive(true);
-        _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
+        var creditBalance = CPlayerPrefs.GetBool("Received", false);
+        if (!creditBalance)
         {
-            _animChapterClear.SetAnimation(levelClearIdleAnim, true);
-        });
-        CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
-
-        TitleLevelClear.SetActive(false);
+            CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
+            CPlayerPrefs.SetBool("Received", true);
+        }
+        //TitleLevelClear.SetActive(false);
         EggLevelClear.SetActive(false);
         EggChapterClear.SetActive(true);
 
+        light.SetActive(true);
         var tweener = FadeImage.DOFade(0f, 1f);
         tweener.onComplete += () =>
         {
+            txtReward.transform.localScale = Vector3.one;
             FadeImage.gameObject.SetActive(false);
         };
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         GroupButton.SetActive(true);
     }
 
