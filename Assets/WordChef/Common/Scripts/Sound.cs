@@ -73,7 +73,7 @@ public class Sound : MonoBehaviour
         int index = (int)type;
         audioSource.volume = volume;
         audioSource.PlayOneShot(collectClips[index]);
-        TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () => {
+        TweenControl.GetInstance().DelayCall(transform, collectClips[index].length, () => {
             onComplete?.Invoke();
         });
     }
@@ -93,7 +93,7 @@ public class Sound : MonoBehaviour
         int index = (int)type;
         audioSource.volume = volume;
         audioSource.PlayOneShot(otherClips[index]);
-        TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () => {
+        TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () => {
             onComplete?.Invoke();
         });
     }
@@ -103,7 +103,7 @@ public class Sound : MonoBehaviour
         int index = (int)type;
         loopAudioSource.volume = volume;
         loopAudioSource.PlayOneShot(otherClips[index]);
-        TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () => {
+        TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () => {
             onComplete?.Invoke();
         });
     }
