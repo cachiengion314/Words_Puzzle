@@ -68,32 +68,44 @@ public class Sound : MonoBehaviour
         audioSource.PlayOneShot(buttonClips[index]);
     }
 
-    public void Play(Collects type, float volume = 1)
+    public void Play(Collects type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
         audioSource.volume = volume;
         audioSource.PlayOneShot(collectClips[index]);
+        TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () => {
+            onComplete?.Invoke();
+        });
     }
 
-    public void Play(Scenes type, float volume = 1)
+    public void Play(Scenes type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
         audioSource.volume = volume;
         audioSource.PlayOneShot(sceneClips[index]);
+        TweenControl.GetInstance().DelayCall(transform,sceneClips[index].length,()=> {
+            onComplete?.Invoke();
+        });
     }
 
-    public void Play(Others type, float volume = 1)
+    public void Play(Others type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
         audioSource.volume = volume;
         audioSource.PlayOneShot(otherClips[index]);
+        TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () => {
+            onComplete?.Invoke();
+        });
     }
 
-    public void PlayLooping(Others type, float volume = 1)
+    public void PlayLooping(Others type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
         loopAudioSource.volume = volume;
         loopAudioSource.PlayOneShot(otherClips[index]);
+        TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () => {
+            onComplete?.Invoke();
+        });
     }
 
     public void StopLooping()

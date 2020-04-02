@@ -386,11 +386,13 @@ public class WordRegion : MonoBehaviour
             MainController.instance.IsLevelClear = true;
             ClearLevelProgress();
             //MainController.instance.OnComplete();
-            if (lines.Count >= 6)
-            {
-                compliment.ShowRandom();
-            }
-            MainController.instance.animatorScene.SetBool("LevelComplete", true);
+            //if (lines.Count >= 6)
+            //{
+            //    compliment.ShowRandom();
+            //}
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>{
+                MainController.instance.animatorScene.SetBool("LevelComplete", true);
+            });
         }
         FacebookController.instance.SaveDataGame();
     }

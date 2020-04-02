@@ -72,6 +72,7 @@ public class WinDialog : Dialog
             if (level == numLevels - 1)
             {
                 ShowChapterClear(true);
+                Sound.instance.Play(Sound.Scenes.ChapterClear);
                 _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
                     _animChapterClear.SetAnimation(levelClearIdleAnim, true);
@@ -87,6 +88,7 @@ public class WinDialog : Dialog
             {
                 CPlayerPrefs.SetBool("Received", false);
                 ShowChapterClear(false);
+                Sound.instance.Play(Sound.Scenes.LevelClear);
                 _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
                     //_animLevelClear.SetAnimation(levelClearIdleAnim, true);
@@ -172,13 +174,11 @@ public class WinDialog : Dialog
             var tweener = FadeImage.DOFade(1f, 1f);
             tweener.onComplete += () =>
             {
-                Sound.instance.Play(Sound.Scenes.ChapterClear);
                 StartCoroutine(IEShowEggOpen());
             };
         }
         else
         {
-            Sound.instance.Play(Sound.Scenes.LevelClear);
             txtRewardByAds.text = "X" + Const.REWARD_ADS_LEVEL_CLEAR + "";
             txtReward.text = "X" + Const.REWARD_CHAPTER_CLEAR + "";
 
