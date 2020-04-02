@@ -172,7 +172,7 @@ public class FacebookDialog : Dialog
             foreach (var player in result.Leaderboard)
             {
                 var ranking = Instantiate(_rankingPfb, _rootRanking);
-                ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue);
+                ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue, player.Profile.AvatarUrl);
             }
             TweenControl.GetInstance().ScaleFromZero(_leaderBoard, 0.3f, () =>
             {

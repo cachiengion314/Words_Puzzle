@@ -81,9 +81,15 @@ public class FacebookController : MonoBehaviour
     {
         PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest
         {
+            ProfileConstraints = new PlayerProfileViewConstraints
+            {
+                ShowAvatarUrl = true,
+                ShowDisplayName = true,
+            },
             StatisticName = statisticName,
             MaxResultsCount = 10
-        }, (resultLeaderboard) => callback(resultLeaderboard), (result)=> {
+        }, (resultLeaderboard) => callback(resultLeaderboard), (result) =>
+        {
             Debug.Log("Get Leaderboard Error !!");
         });
     }
@@ -91,14 +97,24 @@ public class FacebookController : MonoBehaviour
     #region Update PlayFab Client API
     private void UpdateTitleDisplayName()
     {
+        FB.API("/me/picture?redirect=false", HttpMethod.GET, ProfilePhotoCallback);
         PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
         {
             DisplayName = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName,
         }, null, null);
-        PlayFabClientAPI.UpdateAvatarUrl(new UpdateAvatarUrlRequest
-        {
+    }
 
-        }, null, null);
+    private void ProfilePhotoCallback(IGraphResult result)
+    {
+        if (String.IsNullOrEmpty(result.Error) && !result.Cancelled)
+        {
+            IDictionary data = result.ResultDictionary["data"] as IDictionary;
+            string photoURL = data["url"] as String;
+            PlayFabClientAPI.UpdateAvatarUrl(new UpdateAvatarUrlRequest
+            {
+                ImageUrl = photoURL
+            }, null, null);
+        }
     }
 
     private void UpdateStaticsUser()
