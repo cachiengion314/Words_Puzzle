@@ -37,74 +37,75 @@ public class LineDrawer : MonoBehaviour
 
     private void Update()
     {
-    
-
-        if (DialogController.instance.IsDialogShowing() || MainController.instance.IsLevelClear) return;
-        //if (SocialRegion.instance.isShowing) return;
-
-        if (Input.GetMouseButtonDown(0))
+        if (!MainController.instance.IsLevelClear)
         {
-            textPreview.ClearText();
-        }
+            if (DialogController.instance.IsDialogShowing()) return;
+            //if (SocialRegion.instance.isShowing) return;
 
-        if (Input.GetMouseButton(0))
-        {
-            isDragging = true;
-            //textPreview.SetActive(true);
-
-            mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePoint.z = 90;
-
-            //Line Particle
-            if (currentIndexes.Count != 0)
+            if (Input.GetMouseButtonDown(0))
             {
-                lineParticle.SetActive(true);
-                lineParticle.transform.position = new Vector3(mousePoint.x, mousePoint.y, lineParticle.transform.position.z);
+                textPreview.ClearText();
             }
-            //
 
-            int nearest = GetNearestPosition(mousePoint, letterPositions);
-         
-            Vector3 letterPosition = letterPositions[nearest];
-
-            if (Vector3.Distance(letterPosition, mousePoint) < RADIUS)
+            if (Input.GetMouseButton(0))
             {
-                pan.ScaleWord(letterPosition);
-                if (currentIndexes.Count >= 2 && currentIndexes[currentIndexes.Count - 2] == nearest)
+                isDragging = true;
+                //textPreview.SetActive(true);
+
+                mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePoint.z = 90;
+
+                //Line Particle
+                if (currentIndexes.Count != 0)
                 {
-                    currentIndexes.RemoveAt(currentIndexes.Count - 1);
-                    textPreview.SetIndexes(currentIndexes);
+                    lineParticle.SetActive(true);
+                    lineParticle.transform.position = new Vector3(mousePoint.x, mousePoint.y, lineParticle.transform.position.z);
                 }
-                else if (!currentIndexes.Contains(nearest))
+                //
+
+                int nearest = GetNearestPosition(mousePoint, letterPositions);
+
+                Vector3 letterPosition = letterPositions[nearest];
+
+                if (Vector3.Distance(letterPosition, mousePoint) < RADIUS)
                 {
-                    currentIndexes.Add(nearest);
-                    textPreview.SetIndexes(currentIndexes);
+                    pan.ScaleWord(letterPosition);
+                    if (currentIndexes.Count >= 2 && currentIndexes[currentIndexes.Count - 2] == nearest)
+                    {
+                        currentIndexes.RemoveAt(currentIndexes.Count - 1);
+                        textPreview.SetIndexes(currentIndexes);
+                    }
+                    else if (!currentIndexes.Contains(nearest))
+                    {
+                        currentIndexes.Add(nearest);
+                        textPreview.SetIndexes(currentIndexes);
+                    }
+                    //if(currentIndexes!=null)
+                    //    pan.SendMessageUpwards("ScaleWord", currentIndexes[nearest]);
+
                 }
-                //if(currentIndexes!=null)
-                //    pan.SendMessageUpwards("ScaleWord", currentIndexes[nearest]);
-
+                BuildPoints();
             }
-            BuildPoints();
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            if (textPreview.GetText() != "")
+            else if (Input.GetMouseButtonUp(0))
             {
-                isDragging = false;
-                currentIndexes.Clear();
-                lineRenderer.positionCount = 0;
-                lineParticle.SetActive(false);
+                if (textPreview.GetText() != "")
+                {
+                    isDragging = false;
+                    currentIndexes.Clear();
+                    lineRenderer.positionCount = 0;
+                    lineParticle.SetActive(false);
 
-                WordRegion.instance.CheckAnswer(textPreview.GetText());
-                pan.ResetScaleWord();
+                    WordRegion.instance.CheckAnswer(textPreview.GetText());
+                    pan.ResetScaleWord();
+                }
             }
-        }
 
-        if (points.Count >= 2 && isDragging)
-        {
-            positions = iTween.GetSmoothPoints(points.ToArray(), 8);
-            lineRenderer.positionCount = positions.Count;
-            lineRenderer.SetPositions(positions.ToArray());
+            if (points.Count >= 2 && isDragging)
+            {
+                positions = iTween.GetSmoothPoints(points.ToArray(), 8);
+                lineRenderer.positionCount = positions.Count;
+                lineRenderer.SetPositions(positions.ToArray());
+            }
         }
     }
 
