@@ -20,7 +20,26 @@ public class AnimEvent : MonoBehaviour
 
     public void LevelClearCallback()
     {
+        StartCoroutine(HidenLetters());
+    }
 
+    public void LevelClearAnimComplete()
+    {
+        MainController.instance.OnComplete();
+    }
+
+    private IEnumerator HidenLetters()
+    {
+        if (Pan.instance != null && Pan.instance.LetterTexts.Count > 0)
+        {
+            for (int i = 0; i < Pan.instance.LetterTexts.Count; i++)
+            {
+                var letter = Pan.instance.LetterTexts[i];
+                //letter.transform.localScale = Vector3.zero;
+                    TweenControl.GetInstance().ScaleFromOne(letter.gameObject, 0.2f, null, EaseType.InQuad);
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
     }
 
     private void ScaleLetters()

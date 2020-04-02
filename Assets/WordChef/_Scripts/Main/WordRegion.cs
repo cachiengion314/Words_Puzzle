@@ -382,12 +382,15 @@ public class WordRegion : MonoBehaviour
         var isNotShown = lines.Find(x => !x.isShown);
         if (isNotShown == null)
         {
+            BlockScreen.instance.Block(true);
+            MainController.instance.IsLevelClear = true;
             ClearLevelProgress();
-            MainController.instance.OnComplete();
+            //MainController.instance.OnComplete();
             if (lines.Count >= 6)
             {
                 compliment.ShowRandom();
             }
+            MainController.instance.animatorScene.SetBool("LevelComplete", true);
         }
         FacebookController.instance.SaveDataGame();
     }

@@ -39,7 +39,7 @@ public class LineDrawer : MonoBehaviour
     {
     
 
-        if (DialogController.instance.IsDialogShowing()) return;
+        if (DialogController.instance.IsDialogShowing() || MainController.instance.IsLevelClear) return;
         //if (SocialRegion.instance.isShowing) return;
 
         if (Input.GetMouseButtonDown(0))

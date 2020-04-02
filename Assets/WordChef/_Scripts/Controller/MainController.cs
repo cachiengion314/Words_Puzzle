@@ -14,7 +14,8 @@ public class MainController : BaseController
     public Animator animatorScene;
 
     private int world, subWorld, level;
-    private bool isGameComplete;
+    private bool _isGameComplete;
+    private bool _isLevelClear;
     private GameLevel gameLevel;
 
     public static MainController instance;
@@ -22,6 +23,18 @@ public class MainController : BaseController
     [HideInInspector] public RewardVideoController rewardVideoController;
 
     private string wordLevelSave;
+
+    public bool IsLevelClear
+    {
+        get
+        {
+            return _isLevelClear;
+        }
+        set
+        {
+            _isLevelClear = value;
+        }
+    }
 
     protected override void Awake()
     {
@@ -68,8 +81,8 @@ public class MainController : BaseController
 
     public void OnComplete()
     {
-        if (isGameComplete) return;
-        isGameComplete = true;
+        if (_isGameComplete) return;
+        _isGameComplete = true;
 
         //Save Passed Word
         if (!CPlayerPrefs.HasKey("WordLevelSave"))
