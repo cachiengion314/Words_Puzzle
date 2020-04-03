@@ -16,7 +16,7 @@ public class DictionaryDialog : Dialog
 {
     public GameObject buttonWord;
     public GameObject groupWord;
-    public GameObject listGroupWord;
+    public ListGroupWord listGroupWord;
     public Transform content;
     public static DictionaryDialog instance;
     public Text numWordPassedText;
@@ -52,7 +52,7 @@ public class DictionaryDialog : Dialog
         keys = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char)i).ToArray();
         foreach (char key in keys)
         {
-            groupWordDiction.Add(key.ToString(), defaultValue);
+            groupWordDiction.Add(key.ToString().ToUpper(), defaultValue);
         }
         GetWordPassed();
     }
@@ -71,22 +71,24 @@ public class DictionaryDialog : Dialog
         Debug.Log(wordPassed);
         if (wordPassed != null)
         {
-            listWordPassed = wordPassed.Split('|').OfType<string>().ToList<string>();
+            listWordPassed = wordPassed.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             listWordPassed.Sort();
-            listWordPassed.RemoveAt(0);
             listWordPassed = listWordPassed.Distinct().ToList();
-            foreach (string word in listWordPassed)
+            if (listWordPassed.Count > 0)
             {
-                char[] charWord = word.ToCharArray();
-                wordDiction.Add(word, char.ToUpper(charWord[0]).ToString());
-            }
+                foreach (string word in listWordPassed)
+                {
+                    char[] charWord = word.ToCharArray();
+                    wordDiction.Add(word, charWord[0].ToString().ToUpper());
+                }
 
-            dataGroupWordDiction = wordDiction.GroupBy(r => r.Value).ToDictionary(t => t.Key, t => t.Select(r => r.Key).ToList());
+                dataGroupWordDiction = wordDiction.GroupBy(r => r.Value).ToDictionary(t => t.Key, t => t.Select(r => r.Key).ToList());
 
-            foreach (var item in dataGroupWordDiction)
-            {
-                Debug.Log(item.Key);
-                groupWordDiction[item.Key] = item.Value;
+                foreach (var item in dataGroupWordDiction)
+                {
+                    //Debug.Log(item.Key);
+                    groupWordDiction[item.Key] = item.Value;
+                }
             }
         }
     }
@@ -96,29 +98,29 @@ public class DictionaryDialog : Dialog
 
     public void CloneListGroupWord()
     {
-        GameObject listGroupWordClone;
+        ListGroupWord listGroupWordClone;
         GameObject buttonWordClone;
-
+        groupWordDiction.Distinct();
         foreach (var item in groupWordDiction)
         {
-            listGroupWordClone = GameObject.Instantiate(listGroupWord, content.transform);
-            groupWords.Add(listGroupWordClone.GetComponent<ListGroupWord>());
-            listGroupWordClone.transform.Find("Button").Find("FirstLetter").GetComponent<TextMeshProUGUI>().text = item.Key + ".";
+            listGroupWordClone = Instantiate(listGroupWord, content.transform);
+            groupWords.Add(listGroupWordClone/*.GetComponent<ListGroupWord>()*/);
+            listGroupWordClone.firstButtonText.text = item.Key + ".";
             if (item.Value.Count > 0)
             {
                 if (item.Value.Count == 1)
                 {
-                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count + " word";
+                    listGroupWordClone.numberWordText.text = item.Value.Count + " word";
                 }
                 else
                 {
-                    listGroupWordClone.transform.Find("Button").Find("NumWord").GetComponent<TextMeshProUGUI>().text = item.Value.Count + " words";
+                    listGroupWordClone.numberWordText.text = item.Value.Count + " words";
                 }
             }
             foreach (var word in item.Value)
             {
                 //Debug.Log(item.Key + ": " + word);
-                buttonWordClone = GameObject.Instantiate(buttonWord, listGroupWordClone.GetComponent<ListGroupWord>().groupWord);
+                buttonWordClone = Instantiate(buttonWord, listGroupWordClone.groupWord);
                 buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
             }
         }

@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ListGroupWord : MonoBehaviour
 {
     public Transform groupWord;
+    public TextMeshProUGUI firstButtonText;
+    public TextMeshProUGUI numberWordText;
     [HideInInspector] public bool statusGroupWord = false;
 
     private void Start()
