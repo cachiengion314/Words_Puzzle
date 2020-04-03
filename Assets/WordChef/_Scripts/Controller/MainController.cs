@@ -130,14 +130,12 @@ public class MainController : BaseController
         {
             animatorScene.enabled = true;
             animatorScene.SetBool("PlayAnimScene", true);
-            ScreenFader.instance.DelayCall(0.5f, () =>
-            {
-                ScreenFader.instance.FadeIn(null);
-            });
+            ScreenFader.instance.FadeIn(null);
         }
         else
         {
-            SceneAnimate.Instance.SceneOpen(() =>
+            SceneAnimate.Instance.SceneOpen();
+            ScreenFader.instance.DelayCall(1f, () =>
             {
                 animatorScene.enabled = true;
                 animatorScene.SetBool("PlayAnimScene", true);

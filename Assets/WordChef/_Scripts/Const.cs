@@ -33,7 +33,7 @@ public class Const
     public const string AWESOME_COMBO_DAILY = "Awesome_Amount_DAILY";
     public const string EXCELLENT_COMBO_DAILY = "Excellent_Amount_DAILY";
 
-    public const string SCENE_Home = "Home";
+    public const string SCENE_HOME = "Home";
     public const string SCENE_MAIN = "Main";
     public const string SCENE_CHAPTER = "SelectWorld";
 }

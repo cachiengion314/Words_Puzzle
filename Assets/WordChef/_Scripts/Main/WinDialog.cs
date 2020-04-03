@@ -91,7 +91,7 @@ public class WinDialog : Dialog
                 Sound.instance.Play(Sound.Scenes.LevelClear);
                 _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
-                    //_animLevelClear.SetAnimation(levelClearIdleAnim, true);
+                    _animLevelClear.SetAnimation(levelClearIdleAnim, true);
                 });
                 _animEggLevelClear.onEventAction = ShowStarsEffect;
                 _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>

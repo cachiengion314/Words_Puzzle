@@ -1,11 +1,22 @@
 ﻿using UnityEngine;
 using System;
+using DG.Tweening;
 
 public class HomeController : BaseController
 {
+    public static HomeController instance;
+
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
+    public Animator animatorTitle;
+    [SerializeField] private IconController _iconController;
+    [SerializeField] private DOTweenAnimation _dotweenAnimation;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        instance = this;
+    }
 
     protected override void Start()
     {
@@ -34,4 +45,19 @@ public class HomeController : BaseController
         Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
+    public void PlayAnimTitle()
+    {
+        animatorTitle.enabled = true;
+        animatorTitle.SetBool("Play", true);
+        TweenControl.GetInstance().DelayCall(transform,0.4f, ()=> {
+            _dotweenAnimation.DOPlayAllById("0");
+            _iconController.AnimIcon();
+        });
+    }
+
+    public void StopAnimtitle()
+    {
+        animatorTitle.enabled = false;
+        animatorTitle.SetBool("Play", false);
+    }
 }

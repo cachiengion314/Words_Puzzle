@@ -13,12 +13,12 @@ public class IconController : MonoBehaviour
         for (int i = 0; i < _buttons.Count; i++)
             _buttons[i].transform.localScale = Vector3.zero;
     }
-    void Start()
-    {
-        AnimIcon();
-    }
+    //void Start()
+    //{
+    //    AnimIcon();
+    //}
 
-    private void AnimIcon()
+    public void AnimIcon()
     {
         Sound.instance.Play(Sound.Scenes.HomeButton);
         TweenControl.GetInstance().DelayCall(transform, _timeDelay, () =>
@@ -32,17 +32,17 @@ public class IconController : MonoBehaviour
         for (int i = 0; i < _buttons.Count; i++)
         {
             var btn = _buttons[i];
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
             TweenControl.GetInstance().ScaleFromZero(btn, 0.3f, null, EaseType.InOutBack);
-            TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -50, _timeMove, () =>
+            TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -55, _timeMove, () =>
             {
-                TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -93, _timeMove, () =>
+                TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -100, 0.2f, () =>
                 {
-                    TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -73, _timeMove, () =>
+                    TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -73, 0.2f, () =>
                     {
-                        TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -87, _timeMove, () =>
+                        TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -87, 0.15f, () =>
                         {
-                            TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -85f, _timeMove, null, EaseType.Linear);
+                            TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -85f, 0.15f, null, EaseType.Linear);
                         });
                     });
                 });

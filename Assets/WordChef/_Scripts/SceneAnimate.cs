@@ -20,7 +20,6 @@ public class SceneAnimate : MonoBehaviour
 
     public void SceneClose(Action callback)
     {
-        animatorScene.StopPlayback();
         Sound.instance.Play(Sound.Scenes.CurtainClose);
         animatorScene.gameObject.SetActive(true);
         animatorScene.SetBool(_closeScene, true);
