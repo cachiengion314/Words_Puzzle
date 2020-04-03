@@ -100,7 +100,7 @@ public class BeeDialog : Dialog
         // A consumable product has been purchased by this user.
         if (item.productType == ProductType.Consumable)
         {
-            CurrencyController.CreditBalance(item.value);
+            BeeManager.instance.SetAmountBee(item.value);
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.beeIapItems[index].removeAds)
             {

@@ -10,7 +10,10 @@ public class AnimEvent : MonoBehaviour
         if (MainController.instance != null)
         {
             Sound.instance.Play(Sound.Collects.LevelShow);
-            ScaleLetters();
+            TweenControl.GetInstance().DelayCall(transform, 0.2f, () =>
+            {
+                ScaleLetters();
+            });
         }
     }
 
@@ -57,7 +60,7 @@ public class AnimEvent : MonoBehaviour
             {
                 var letter = Pan.instance.LetterTexts[i];
                 letter.transform.localScale = Vector3.zero;
-                TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.1f, 0.4f, () =>
+                TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.1f, 0.3f, () =>
                 {
                     TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one, 0.2f, null, EaseType.InQuad);
                 });
