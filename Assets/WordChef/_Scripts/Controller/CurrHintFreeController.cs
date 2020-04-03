@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CurrHintFreeController : MonoBehaviour
@@ -12,7 +13,8 @@ public class CurrHintFreeController : MonoBehaviour
 
     private void UpdatehintFree()
     {
-        gameObject.SetText(CurrencyController.GetHintFree().ToString());
+        if (gameObject.GetComponent<TextMeshProUGUI>() != null)
+            gameObject.SetText(CurrencyController.GetHintFree().ToString());
     }
     private void OnHintFreChanged()
     {

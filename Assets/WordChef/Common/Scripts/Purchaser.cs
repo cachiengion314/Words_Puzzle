@@ -130,6 +130,14 @@ public class Purchaser : MonoBehaviour, IStoreListener
             builder.AddProduct(item.productID, item.productType);
         }
 
+        foreach (var item in beeIapItems)
+        {
+#if UNITY_STANDALONE_OSX
+            item.productID += ".mac";
+#endif
+            builder.AddProduct(item.productID, item.productType);
+        }
+
         // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
         // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
         UnityPurchasing.Initialize(this, builder);
@@ -305,6 +313,20 @@ public class Purchaser : MonoBehaviour, IStoreListener
                 if (onItemPurchased != null)
                 {
                     onItemPurchased(item, Array.IndexOf(hintIapItems, item));
+                    break;
+                }
+            }
+        }
+
+        foreach (var i in beeIapItems)
+        {
+            if (String.Equals(args.purchasedProduct.definition.id, i.productID, StringComparison.Ordinal))
+            {
+                Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
+                item = i;
+                if (onItemPurchased != null)
+                {
+                    onItemPurchased(item, Array.IndexOf(beeIapItems, item));
                     break;
                 }
             }
