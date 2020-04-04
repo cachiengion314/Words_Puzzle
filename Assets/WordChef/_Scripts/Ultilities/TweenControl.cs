@@ -418,6 +418,12 @@ public class TweenControl : MonoBehaviour
         AddTweener(image.gameObject.transform, tweener);
     }
 
+    public void FadeAnfa(CanvasGroup canvasGr, float endColor, float duration, TweenCallback onComplete = null, Ease easeType = Ease.Linear, float delay = 0)
+    {
+        var tweener = canvasGr.DOFade(endColor, duration).SetEase(easeType).OnComplete(onComplete).OnKill(() => OnKillFuntion(canvasGr.transform)).SetDelay(delay);
+        AddTweener(canvasGr.gameObject.transform, tweener);
+    }
+
     //public void FadeAnfaSkeleton(SkeletonGraphic skeleton, float endColor, float duration, TweenCallback onComplete = null, Ease easeType = Ease.Linear, float delay = 0)
     //{
     //    var tweener = skeleton.DOFade(endColor, duration).SetEase(easeType).OnComplete(onComplete).OnKill(() => OnKillFuntion(skeleton.transform)).SetDelay(delay);

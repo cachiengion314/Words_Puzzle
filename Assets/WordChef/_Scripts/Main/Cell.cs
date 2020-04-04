@@ -32,13 +32,18 @@ public class Cell : MonoBehaviour
         Vector3[] waypoint = { beginPosition, middlePoint, transform.position };
 
         ShowText();
+        //letterText.transform.localScale = Vector3.one * 1.1f;
+        var canvasGroup = letterText.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0.5f;
         //letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
         //    letterText.transform.localPosition.y + (transform as RectTransform).sizeDelta.y / 2);
         //letterText.transform.localScale = TextPreview.instance.textGrid.transform.localScale;
         //letterText.transform.SetParent(MonoUtils.instance.textFlyTransform);
         //iTween.MoveTo(letterText.gameObject, iTween.Hash("path", waypoint, "time", 0.2f, "oncomplete", "OnMoveToComplete", "oncompletetarget", gameObject));
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.2f));
-        TweenControl.GetInstance().MoveRect(letterText.transform as RectTransform, transform.position, 0.2f, OnMoveToComplete);
+        TweenControl.GetInstance().FadeAnfa(canvasGroup,1,0.3f);
+        //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
+        TweenControl.GetInstance().MoveRect(letterText.transform as RectTransform, Vector3.zero, 0.3f, OnMoveToComplete);
     }
 
     private void SetBgLetter(Sprite sprite)
