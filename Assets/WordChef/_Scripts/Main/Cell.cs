@@ -12,6 +12,7 @@ public class Cell : MonoBehaviour
     public GameObject giftAds;
     public Image iconCoin;
     public GameObject fxExplode;
+    public GameObject Mask;
     public string letter;
     public bool isShown;
     public bool isBee;
@@ -25,6 +26,7 @@ public class Cell : MonoBehaviour
     public void Animate()
     {
         SetBgLetter(_spriteLetter);
+        bg.transform.SetParent(Mask.transform);
         iconCoin.transform.localScale = Vector3.zero;
         Vector3 beginPosition = TextPreview.instance.transform.position;
         originLetterScale = letterText.transform.localScale;
@@ -33,7 +35,7 @@ public class Cell : MonoBehaviour
 
         ShowText();
         //letterText.transform.localScale = Vector3.one * 1.1f;
-        var canvasGroup = letterText.GetComponent<CanvasGroup>();
+        var canvasGroup = bg.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0.5f;
         //letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
         //    letterText.transform.localPosition.y + (transform as RectTransform).sizeDelta.y / 2);
@@ -41,9 +43,10 @@ public class Cell : MonoBehaviour
         //letterText.transform.SetParent(MonoUtils.instance.textFlyTransform);
         //iTween.MoveTo(letterText.gameObject, iTween.Hash("path", waypoint, "time", 0.2f, "oncomplete", "OnMoveToComplete", "oncompletetarget", gameObject));
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.2f));
-        TweenControl.GetInstance().FadeAnfa(canvasGroup,1,0.3f);
+        TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.1f, () => {
+            TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -86, 0), 0.3f, OnMoveToComplete);
+        });
         //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
-        TweenControl.GetInstance().MoveRect(letterText.transform as RectTransform, Vector3.zero, 0.3f, OnMoveToComplete);
     }
 
     private void SetBgLetter(Sprite sprite)
@@ -54,9 +57,11 @@ public class Cell : MonoBehaviour
 
     private void OnMoveToComplete()
     {
-        letterText.transform.SetParent(transform);
+        //letterText.transform.SetParent(transform);
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale * 1.3f, "time", 0.15f, "oncomplete", "OnScaleUpComplete", "oncompletetarget", gameObject));
         SetBgLetter(_spriteLetterDone);
+        bg.transform.SetParent(transform);
+        bg.transform.localPosition = Vector3.zero;
         fxExplode.gameObject.SetActive(true);
         TweenControl.GetInstance().DelayCall(transform, 0.15f, OnScaleUpComplete);
     }
