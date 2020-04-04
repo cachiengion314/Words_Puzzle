@@ -46,7 +46,10 @@ public class AnimEvent : MonoBehaviour
             {
                 var letter = Pan.instance.LetterTexts[i];
                 //letter.transform.localScale = Vector3.zero;
-                TweenControl.GetInstance().ScaleFromOne(letter.gameObject, 0.2f, null, EaseType.InQuad);
+                TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.1f, 0.3f, () =>
+                {
+                    TweenControl.GetInstance().ScaleFromOne(letter.gameObject, 0.2f, null, EaseType.InQuad);
+                });
                 yield return new WaitForSeconds(0.2f);
             }
         }

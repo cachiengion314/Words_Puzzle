@@ -9,6 +9,14 @@ using TMPro;
 
 public class WordRegion : MonoBehaviour
 {
+    [SerializeField] private GameObject _hintFree;
+    [SerializeField] private GameObject _hintPrice;
+
+    [SerializeField] private Sprite _spriteExcellent;
+    [SerializeField] private Sprite _spriteNormal;
+    public Image boardHighlight;
+    public Image board;
+    [Space]
     public TextMeshProUGUI _textLevel;
     public TextPreview textPreview;
     public Compliment compliment;
@@ -55,6 +63,7 @@ public class WordRegion : MonoBehaviour
         rt = GetComponent<RectTransform>();
         if (_btnHintADS != null)
             Destroy(_btnHintADS.gameObject);
+        boardHighlight.gameObject.SetActive(false);
     }
 
     private List<string> GetExtraWord(List<string> words)
@@ -157,7 +166,7 @@ public class WordRegion : MonoBehaviour
 
         SetLinesPosition();
 
-        //ReloadAnswers();
+        SetupNumhintFree();
 
         FacebookController.instance.user.levelProgress = levelProgress;
         FacebookController.instance.user.answerProgress = answerProgress;
@@ -230,14 +239,18 @@ public class WordRegion : MonoBehaviour
         return isUse;
     }
 
-    //private void ReloadAnswers()
-    //{
-    //    foreach (var line in lines)
-    //    {
-    //        if (line.answer != "")
-    //            line.SetDataLetter(line.answer);
-    //    }
-    //}
+    private void SetupNumhintFree()
+    {
+        var hintFree = CurrencyController.GetHintFree();
+        if (hintFree > 0)
+        {
+            ShowPriceHint(false);
+        }
+        else
+        {
+            ShowPriceHint(true);
+        }
+    }
 
     private void SetLinesPosition()
     {
@@ -302,9 +315,15 @@ public class WordRegion : MonoBehaviour
             line.ShowAnswer();
             CheckGameComplete();
 
+            boardHighlight.gameObject.SetActive(true);
             compliment.Show(lineIndex);
             lineIndex++;
-            if (lineIndex > compliment.sprites.Length - 1) { lineIndex = compliment.sprites.Length - 1; }
+            if (lineIndex > compliment.sprites.Length - 1)
+            {
+                lineIndex = compliment.sprites.Length - 1;
+                board.sprite = _spriteExcellent;
+                board.SetNativeSize();
+            }
 
             Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
             listWordCorrect.Add(checkWord.ToLower());
@@ -370,6 +389,9 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            boardHighlight.gameObject.SetActive(false);
+            board.sprite = _spriteNormal;
+            board.SetNativeSize();
             Sound.instance.Play(Sound.Others.WordInvalid);
             SetupCellAds();
             textPreview.SetWrongColor();
@@ -390,7 +412,8 @@ public class WordRegion : MonoBehaviour
             //{
             //    compliment.ShowRandom();
             //}
-            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>{
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
                 MainController.instance.animatorScene.SetBool("LevelComplete", true);
             });
         }
@@ -441,9 +464,14 @@ public class WordRegion : MonoBehaviour
                 line.ShowHint(() =>
                 {
                     if (hintFree > 0)
+                    {
                         CurrencyController.DebitHintFree(1);
+                    }
                     else
+                    {
                         CurrencyController.DebitBalance(Const.HINT_COST);
+                    }
+                    SetupNumhintFree();
                 });
                 CheckGameComplete();
 
@@ -456,6 +484,12 @@ public class WordRegion : MonoBehaviour
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.Shop2);
         }
+    }
+
+    private void ShowPriceHint(bool show)
+    {
+        _hintFree.SetActive(!show);
+        _hintPrice.SetActive(show);
     }
 
     public void HintRandomClick()
