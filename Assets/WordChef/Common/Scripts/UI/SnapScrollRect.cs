@@ -21,7 +21,7 @@ public class SnapScrollRect : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
     public int speed = 10;
     float stepSize;
 
-    ScrollRect scroll;
+    public ScrollRect scroll;
     bool lerp;
     float target;
     [HideInInspector]
@@ -39,8 +39,6 @@ public class SnapScrollRect : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
 
     void Awake()
     {
-        scroll = gameObject.GetComponent<ScrollRect>();
-
         screens = scroll.content.childCount;
         if (screens != 0) InitPoints(screens);
 

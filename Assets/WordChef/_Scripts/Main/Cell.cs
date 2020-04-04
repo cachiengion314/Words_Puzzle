@@ -32,8 +32,8 @@ public class Cell : MonoBehaviour
         Vector3[] waypoint = { beginPosition, middlePoint, transform.position };
 
         ShowText();
-        letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
-            letterText.transform.localPosition.y + (transform as RectTransform).sizeDelta.y / 2);
+        //letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
+        //    letterText.transform.localPosition.y + (transform as RectTransform).sizeDelta.y / 2);
         //letterText.transform.localScale = TextPreview.instance.textGrid.transform.localScale;
         //letterText.transform.SetParent(MonoUtils.instance.textFlyTransform);
         //iTween.MoveTo(letterText.gameObject, iTween.Hash("path", waypoint, "time", 0.2f, "oncomplete", "OnMoveToComplete", "oncompletetarget", gameObject));
@@ -85,6 +85,7 @@ public class Cell : MonoBehaviour
 
     public void ShowText()
     {
+        letterText.transform.localPosition = Vector3.zero;
         if (isAds)
         {
             if (WordRegion.instance.BtnADS != null)

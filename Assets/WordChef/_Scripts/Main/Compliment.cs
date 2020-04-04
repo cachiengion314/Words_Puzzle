@@ -4,7 +4,6 @@ using System.Collections;
 public class Compliment : MonoBehaviour
 {
     public Animator anim;
-    public Animator animBG;
     public SpriteRenderer sRenderer;
     public SpriteRenderer sRendererBG;
     public Sprite[] sprites;

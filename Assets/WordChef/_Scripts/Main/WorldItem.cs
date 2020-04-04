@@ -101,7 +101,7 @@ public class WorldItem : MonoBehaviour {
         }
     }
 
-    private void OnButtonClick()
+    public void OnButtonClick()
     {
 
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
