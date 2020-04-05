@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LineWord : MonoBehaviour
 {
-
+    public float spacing = 20f;
     public string answer;
     public List<string> answers;
     public float cellSize;
@@ -30,7 +30,7 @@ public class LineWord : MonoBehaviour
         this.RTL = RTL;
         answerrandom = answers[Random.Range(0, answers.Count)];
         //numLetters = answer.Length;
-        float cellGap = cellSize * Const.CELL_GAP_COEF_X;
+        float cellGap = cellSize * Const.CELL_GAP_COEF_X + spacing;
 
         for (int i = 0; i < numLetters; i++)
         {
@@ -144,7 +144,7 @@ public class LineWord : MonoBehaviour
             {
                 cell.isShown = true;
                 cell.Animate();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.15f);
             }
         }
         else
@@ -154,7 +154,7 @@ public class LineWord : MonoBehaviour
                 var cell = cells[i];
                 cell.isShown = true;
                 cell.Animate();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.15f);
             }
         }
     }

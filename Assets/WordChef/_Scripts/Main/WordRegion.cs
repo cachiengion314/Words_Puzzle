@@ -315,7 +315,8 @@ public class WordRegion : MonoBehaviour
             line.ShowAnswer();
             CheckGameComplete();
 
-            boardHighlight.gameObject.SetActive(true);
+            if (lineIndex > 0)
+                boardHighlight.gameObject.SetActive(true);
             compliment.Show(lineIndex);
             lineIndex++;
             if (lineIndex > compliment.sprites.Length - 1)

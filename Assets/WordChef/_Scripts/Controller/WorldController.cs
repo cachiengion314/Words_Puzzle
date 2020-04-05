@@ -17,6 +17,7 @@ public class WorldController : BaseController
     [SerializeField] private ScrollRect _scroll;
 
     private Vector2 posTarget;
+    public int target;
 
     protected override void Awake()
     {
@@ -36,25 +37,40 @@ public class WorldController : BaseController
 
         //UpdateUI();
         //snapScroll.InitPoints(_root.childCount);
-        var target = GameState.currentSubWorld + GameState.currentWorld * 5;
-        TweenControl.GetInstance().DelayCall(transform, 1f, () =>
-        {
-            worldItems[target].OnButtonClick();
-            var distance = mainUI.transform.position - worldItems[target].transform.position;
-            //snapScroll.SetPage(target);
-            scrollContent.localPosition = new Vector3(scrollContent.localPosition.x, mainUI.localPosition.y - distance.y, 0);
-        });
+        target = Prefs.unlockedSubWorld + Prefs.unlockedWorld * 5;
+        SetPosScroll();
     }
-    //private void Update()
-    //{
-    //    UpdateUI();
-    //}
+    private void Update()
+    {
+        //UpdateUI();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SetPosScroll();
+        }
+    }
 
     //private void UpdateUI()
     //{
     //    scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x, mainUI.rect.width * scrollContent.childCount);
     //    contentLayoutGroup.spacing = mainUI.rect.width;
     //}
+
+    private void SetPosScroll()
+    {
+        if (target > 0)
+        {
+            TweenControl.GetInstance().DelayCall(transform, 1f, () =>
+            {
+                var spacing = 30;
+                var distance = mainUI.transform.localPosition - worldItems[target].transform.localPosition;
+                var sizeDeltaYItem = (worldItems[target].transform as RectTransform).sizeDelta.y;
+                var contentY = (distance.y - sizeDeltaYItem) / 2 + spacing;
+                //snapScroll.SetPage(target);
+                scrollContent.localPosition = new Vector3(scrollContent.localPosition.x, contentY, 0);
+                //worldItems[target].OnButtonClick();
+            });
+        }
+    }
 
     private void CreateWord()
     {

@@ -44,7 +44,7 @@ public class Cell : MonoBehaviour
         //iTween.MoveTo(letterText.gameObject, iTween.Hash("path", waypoint, "time", 0.2f, "oncomplete", "OnMoveToComplete", "oncompletetarget", gameObject));
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.2f));
         TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.1f, () => {
-            TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -86, 0), 0.3f, OnMoveToComplete);
+            TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -86, 0), 0.2f, OnMoveToComplete);
         });
         //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
     }
@@ -69,7 +69,7 @@ public class Cell : MonoBehaviour
     private void OnScaleUpComplete()
     {
         iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.15f));
-        fxExplode.gameObject.SetActive(false);
+        //fxExplode.gameObject.SetActive(false);
     }
 
     public void ShowHint()

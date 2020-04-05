@@ -91,8 +91,10 @@ public class LineDrawer : MonoBehaviour
                 currentIndexes.Clear();
                 lineRenderer.positionCount = 0;
                 lineParticle.SetActive(false);
-
-                WordRegion.instance.CheckAnswer(textPreview.GetText());
+                if (textPreview.GetText().Length > 1)
+                    WordRegion.instance.CheckAnswer(textPreview.GetText());
+                else
+                    WordRegion.instance.textPreview.ClearText();
                 pan.ResetScaleWord();
             }
         }
