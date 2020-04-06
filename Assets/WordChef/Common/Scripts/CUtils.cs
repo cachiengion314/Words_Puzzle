@@ -506,7 +506,7 @@ public class CUtils
         {
             SceneAnimate.Instance.SceneClose(() =>
             {
-                SceneManager.LoadScene(sceneIndex);
+                SceneManager.LoadSceneAsync(sceneIndex);
             });
         }
     }
