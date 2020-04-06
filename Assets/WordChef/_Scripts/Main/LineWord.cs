@@ -144,7 +144,7 @@ public class LineWord : MonoBehaviour
             {
                 cell.isShown = true;
                 cell.Animate();
-                yield return new WaitForSeconds(0.15f);
+                yield return new WaitForSeconds(0.125f);
             }
         }
         else
@@ -154,7 +154,7 @@ public class LineWord : MonoBehaviour
                 var cell = cells[i];
                 cell.isShown = true;
                 cell.Animate();
-                yield return new WaitForSeconds(0.15f);
+                yield return new WaitForSeconds(0.125f);
             }
         }
     }
