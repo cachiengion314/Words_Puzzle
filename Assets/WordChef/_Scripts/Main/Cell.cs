@@ -9,7 +9,6 @@ public class Cell : MonoBehaviour
 {
     public TextMeshProUGUI letterText;
     public Image bg;
-    public GameObject giftAds;
     public Image iconCoin;
     public GameObject fxExplode;
     public GameObject Mask;
