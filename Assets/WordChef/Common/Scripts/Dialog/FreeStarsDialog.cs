@@ -24,7 +24,7 @@ public class FreeStarsDialog : Dialog
 
     private void CheckBtnShowUpdate(bool IsAvailableToShow)
     {
-        _btnWatch.gameObject.SetActive(IsAvailableToShow);
+        //_btnWatch.gameObject.SetActive(IsAvailableToShow);
     }
 
     private void OnDestroy()
