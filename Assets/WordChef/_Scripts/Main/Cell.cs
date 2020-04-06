@@ -9,6 +9,7 @@ public class Cell : MonoBehaviour
 {
     public TextMeshProUGUI letterText;
     public Image bg;
+    public GameObject ImgPedestal;
     public Image iconCoin;
     public GameObject fxExplode;
     public GameObject Mask;
@@ -26,6 +27,7 @@ public class Cell : MonoBehaviour
     {
         SetBgLetter(_spriteLetter);
         bg.transform.SetParent(Mask.transform);
+        ImgPedestal.SetActive(true);
         iconCoin.transform.localScale = Vector3.zero;
         Vector3 beginPosition = TextPreview.instance.transform.position;
         originLetterScale = letterText.transform.localScale;
@@ -34,7 +36,7 @@ public class Cell : MonoBehaviour
 
         ShowText();
         //letterText.transform.localScale = Vector3.one * 1.1f;
-        bg.transform.localPosition = new Vector3(0,-58,0);
+        bg.transform.localPosition = new Vector3(0,-55,0);
         var canvasGroup = bg.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0.5f;
         //letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
@@ -43,8 +45,8 @@ public class Cell : MonoBehaviour
         //letterText.transform.SetParent(MonoUtils.instance.textFlyTransform);
         //iTween.MoveTo(letterText.gameObject, iTween.Hash("path", waypoint, "time", 0.2f, "oncomplete", "OnMoveToComplete", "oncompletetarget", gameObject));
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.2f));
-        TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.1f, () => {
-            TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -75f, 0), 0.2f, OnMoveToComplete);
+        TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.05f, () => {
+            TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -69f, 0), 0.1f, OnMoveToComplete);
         });
         //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
     }
@@ -57,6 +59,7 @@ public class Cell : MonoBehaviour
 
     private void OnMoveToComplete()
     {
+        ImgPedestal.SetActive(false);
         //letterText.transform.SetParent(transform);
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale * 1.3f, "time", 0.15f, "oncomplete", "OnScaleUpComplete", "oncompletetarget", gameObject));
         SetBgLetter(_spriteLetterDone);
