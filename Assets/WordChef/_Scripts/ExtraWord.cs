@@ -55,11 +55,11 @@ public class ExtraWord : MonoBehaviour {
             Vector3[] waypoint = { beginPoint.position, middlePoint, endPoint.position };
 
             flyText = Instantiate(MonoUtils.instance.letter);
-            flyText.text = word;
+            flyText.text = word[0].ToString();
             flyText.fontSize = 12;
             flyText.transform.position = beginPoint.position;
             flyText.transform.SetParent(MonoUtils.instance.textFlyTransform);
-            flyText.transform.localScale = TextPreview.instance.textGrid.transform.localScale;
+            flyText.transform.localScale = TextPreview.instance.textGrid.transform.localScale * 0.75f;
             iTween.MoveTo(flyText.gameObject, iTween.Hash("path", waypoint, "time", 0.3f, "oncomplete", "OnTextMoveToComplete", "oncompletetarget", gameObject));
 
             AddNewExtraWord(word);
