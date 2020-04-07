@@ -321,7 +321,7 @@ public class WordRegion : MonoBehaviour
             {
                 boardHighlight.gameObject.SetActive(true);
                 boardHighlight.color = new Color(1,1,1,0);
-                boardHighlight.GetComponentInChildren<ParticleSystem>().Play();
+                
             }
             compliment.Show(lineIndex);
             lineIndex++;
