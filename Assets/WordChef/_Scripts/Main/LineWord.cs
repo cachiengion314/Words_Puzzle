@@ -86,6 +86,8 @@ public class LineWord : MonoBehaviour
     public void SetProgress(string progress, string progressAnswer)
     {
         answer = progressAnswer;
+        if (answer != "")
+            SetDataLetter(answer);
         isShown = true;
         int i = 0;
         foreach (var cell in cells)

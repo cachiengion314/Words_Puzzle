@@ -6,8 +6,31 @@ public class Compliment : MonoBehaviour
     public Animator anim;
     public SpriteRenderer sRenderer;
     public SpriteRenderer sRendererBG;
+    public Transform rootParticle;
     public Sprite[] sprites;
     public Sprite[] spritesBg;
+    public ParticleSystem[] particleSystems;
+    public ParticleSystem fxLevelClear;
+    public ParticleSystem fxHidenLetter;
+
+    ParticleSystem _particle;
+
+    public void PlayParticle()
+    {
+        if (_particle != null)
+        {
+            _particle.gameObject.SetActive(true);
+            _particle.Play();
+        }
+    }
+
+    public void Hidenarticle()
+    {
+        if (_particle != null)
+        {
+            _particle.gameObject.SetActive(false);
+        }
+    }
 
     public void Show(int type)
     {
@@ -15,6 +38,10 @@ public class Compliment : MonoBehaviour
 
         sRenderer.sprite = sprites[type];
         sRendererBG.sprite = spritesBg[type];
+        if (_particle != null)
+            Destroy(_particle.gameObject);
+        _particle = Instantiate(particleSystems[type], rootParticle);
+        _particle.gameObject.SetActive(false);
         switch (type)
         {
             case 0:

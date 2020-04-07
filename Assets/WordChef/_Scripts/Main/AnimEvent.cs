@@ -38,6 +38,16 @@ public class AnimEvent : MonoBehaviour
         MainController.instance.OnComplete();
     }
 
+    public void PlayParticleCompliment()
+    {
+        WordRegion.instance.compliment.PlayParticle();
+    }
+
+    public void HidenParticleCompliment()
+    {
+        WordRegion.instance.compliment.Hidenarticle();
+    }
+
     private IEnumerator HidenLetters()
     {
         if (Pan.instance != null && Pan.instance.LetterTexts.Count > 0)
@@ -48,7 +58,9 @@ public class AnimEvent : MonoBehaviour
                 //letter.transform.localScale = Vector3.zero;
                 TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.1f, 0.3f, () =>
                 {
-                    TweenControl.GetInstance().ScaleFromOne(letter.gameObject, 0.2f, null, EaseType.InQuad);
+                    TweenControl.GetInstance().ScaleFromOne(letter.gameObject, 0.2f, ()=> {
+                        var fxEffect = Instantiate(WordRegion.instance.compliment.fxHidenLetter, letter.transform);
+                    }, EaseType.InQuad);
                 });
                 yield return new WaitForSeconds(0.2f);
             }

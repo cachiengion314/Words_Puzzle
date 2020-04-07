@@ -1,0 +1,218 @@
+{
+"skeleton": {
+	"hash": "vigyEw5qYf7iR9PgeylbtpG8Sgc",
+	"spine": "3.8.87",
+	"x": -84.5,
+	"y": -84.5,
+	"width": 169,
+	"height": 169,
+	"images": "./Button/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{
+		"name": "Layer 1073",
+		"parent": "root",
+		"rotation": 10.32,
+		"x": -3.28,
+		"y": 6.55,
+		"scaleX": 0.888,
+		"scaleY": 0.888
+	},
+	{ "name": "bone", "parent": "root", "x": -142.08, "y": -167.45 }
+],
+"slots": [
+	{ "name": "to", "bone": "root", "attachment": "to" },
+	{ "name": "Layer 1073", "bone": "Layer 1073", "attachment": "Layer 1073" },
+	{ "name": "Layer 1071", "bone": "root", "attachment": "Layer 1071" },
+	{ "name": "Tên lửa", "bone": "root", "attachment": "Tên lửa" },
+	{ "name": "Gợi ý", "bone": "root", "attachment": "Gợi ý" },
+	{ "name": "hii", "bone": "root", "attachment": "hii" },
+	{ "name": "hi", "bone": "bone", "attachment": "hi" },
+	{ "name": "Đổi lại", "bone": "root", "attachment": "Đổi lại" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Gợi ý": {
+				"Gợi ý": { "x": -3.26, "y": 5.69, "width": 91, "height": 94 }
+			},
+			"Layer 1071": {
+				"Layer 1071": { "x": -4.13, "y": 5.15, "scaleX": 1.0022, "scaleY": 1.0022, "width": 115, "height": 115 }
+			},
+			"Layer 1073": {
+				"Layer 1073": { "x": -4.71, "y": 6.65, "width": 122, "height": 123 }
+			},
+			"Tên lửa": {
+				"Tên lửa": { "x": -3.92, "y": 6.96, "width": 77, "height": 92 }
+			},
+			"hi": {
+				"hi": { "x": 33.8, "y": 224.93, "width": 452, "height": 449 }
+			},
+			"hii": {
+				"hii": {
+					"type": "clipping",
+					"end": "hii",
+					"vertexCount": 32,
+					"vertices": [ -53.75, 32.05, -46.25, 42.15, -37.65, 50.01, -27.28, 55.67, -16.22, 59.91, -2.59, 61.42, 11.34, 59.32, 22.76, 54.61, 31.86, 48.67, 38.42, 41.6, 44.03, 35.83, 49.14, 26.83, 52.21, 19.22, 53.61, 9.9, 53.26, -0.21, 50.81, -9.63, 47.37, -20.07, 40.68, -30.37, 31.46, -39.8, 20.62, -46.49, 9.52, -51.01, -2.26, -52.26, -15.11, -51.34, -27.38, -47.15, -35.79, -42.82, -43.21, -36.7, -49.65, -30.24, -53.93, -22.06, -58.73, -12.09, -60.6, -0.68, -60.56, 10.96, -58.09, 21.25 ],
+					"color": "46ffb7ff"
+				}
+			},
+			"to": {
+				"to": { "width": 169, "height": 169 }
+			},
+			"Đổi lại": {
+				"Đổi lại": { "x": -4.55, "y": 2.96, "width": 101, "height": 93 }
+			}
+		}
+	}
+],
+"animations": {
+	"Doi lai": {
+		"slots": {
+			"Gợi ý": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"Layer 1073": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.3333, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"Tên lửa": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"hi": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"Layer 1073": {
+				"rotate": [
+					{ "angle": 71.56 },
+					{ "time": 0.6667, "angle": -48.44 },
+					{ "time": 1.3333, "angle": -168.44 },
+					{ "time": 2, "angle": 71.56 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "time": 3.6667 }
+				]
+			}
+		}
+	},
+	"Goi y": {
+		"slots": {
+			"Gợi ý": {
+				"color": [
+					{ "color": "ffffffff" }
+				]
+			},
+			"Layer 1073": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.3333, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"Tên lửa": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"hi": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.6667, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"Đổi lại": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "angle": -40.98 }
+				]
+			},
+			"Layer 1073": {
+				"rotate": [
+					{ "angle": 71.56 },
+					{ "time": 0.6667, "angle": -48.44 },
+					{ "time": 1.3333, "angle": -168.44 },
+					{ "time": 2, "angle": 71.56 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "time": 3.6667 }
+				]
+			}
+		}
+	},
+	"Ten lua": {
+		"slots": {
+			"Gợi ý": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"Layer 1073": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.3333, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"hi": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.6667, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"Đổi lại": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "angle": -40.98 }
+				]
+			},
+			"Layer 1073": {
+				"rotate": [
+					{ "angle": 71.56 },
+					{ "time": 0.6667, "angle": -48.44 },
+					{ "time": 1.3333, "angle": -168.44 },
+					{ "time": 2, "angle": 71.56 }
+				]
+			},
+			"root": {
+				"scale": [
+					{ "time": 3.6667 }
+				]
+			}
+		}
+	}
+}
+}

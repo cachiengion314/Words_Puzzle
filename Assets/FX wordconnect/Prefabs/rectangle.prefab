@@ -4928,7 +4928,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.8
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5097,7 +5097,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 18
+      scalar: 14.6
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -6185,7 +6185,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
         key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0.22745098}
+        key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -6200,8 +6200,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 7325
-        atime2: 35273
+        atime1: 7132
+        atime2: 65535
         atime3: 65535
         atime4: 0
         atime5: 0
@@ -6209,7 +6209,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 4
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6241,14 +6241,14 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
     frameOverTime:
       serializedVersion: 2
-      minMaxState: 1
-      scalar: 0.9999
+      minMaxState: 0
+      scalar: 0
       minScalar: 0.9999
       maxCurve:
         serializedVersion: 2
@@ -6352,8 +6352,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 1
-    tilesY: 1
+    tilesX: 2
+    tilesY: 2
     animationType: 0
     rowIndex: 0
     cycles: 1
@@ -9588,8 +9588,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5230566417d44d1489c1641bd32ed57b, type: 2}
-  - {fileID: 2100000, guid: 5230566417d44d1489c1641bd32ed57b, type: 2}
+  - {fileID: 2100000, guid: 8c11cc8d1dad1034fb167768f0ba8a83, type: 2}
+  - {fileID: 2100000, guid: 8c11cc8d1dad1034fb167768f0ba8a83, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9613,7 +9613,7 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 5
+  m_MaxParticleSize: 10
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2

@@ -192,13 +192,13 @@ public class WordRegion : MonoBehaviour
             line.numLetters = word.Length;
             line.answers = words;
             line.cellSize = cellSize;
+            line.Build(ConfigController.Config.isWordRightToLeft);
 
             if (useProgress)
             {
                 line.SetProgress(levelProgress[lineIndex], answerProgress[lineIndex]);
             }
 
-            line.Build(ConfigController.Config.isWordRightToLeft);
             line.SetLineWidth();
             line.name = line.name + lineIndex + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
 
@@ -318,7 +318,11 @@ public class WordRegion : MonoBehaviour
             CheckGameComplete();
 
             if (lineIndex > 0)
+            {
                 boardHighlight.gameObject.SetActive(true);
+                boardHighlight.color = new Color(1,1,1,0);
+                boardHighlight.GetComponentInChildren<ParticleSystem>().Play();
+            }
             compliment.Show(lineIndex);
             lineIndex++;
             if (lineIndex > compliment.sprites.Length - 1)
@@ -326,6 +330,7 @@ public class WordRegion : MonoBehaviour
                 lineIndex = compliment.sprites.Length - 1;
                 board.sprite = _spriteExcellent;
                 board.SetNativeSize();
+                boardHighlight.color = new Color(1,1,1,1);
             }
 
             Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
@@ -439,7 +444,6 @@ public class WordRegion : MonoBehaviour
                 count += 1;
             }
         }
-        SaveLevelProgress();
         Sound.instance.PlayButton(Sound.Button.Beehive);
     }
 
@@ -476,7 +480,6 @@ public class WordRegion : MonoBehaviour
                     }
                     SetupNumhintFree();
                 });
-                SaveLevelProgress();
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
@@ -517,7 +520,6 @@ public class WordRegion : MonoBehaviour
                             //else
                             CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
                         });
-                        SaveLevelProgress();
                         CheckGameComplete();
 
                         Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);

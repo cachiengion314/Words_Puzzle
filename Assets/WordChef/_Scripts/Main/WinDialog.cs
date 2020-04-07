@@ -50,6 +50,8 @@ public class WinDialog : Dialog
     [SerializeField] private string eggLevelIdleAnim = "idle Level Clear";
     [SerializeField] private string eggChapterIdleAnim = "idle Chapter Clear";
 
+    private GameObject _fxEffect;
+
     protected override void Start()
     {
         base.Start();
@@ -121,6 +123,7 @@ public class WinDialog : Dialog
     {
         if (eventData.Data.Name == "EGG_CHAP" || eventData.Data.Name == "EGG_LEVEL")
         {
+            _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, WordRegion.instance.compliment.rootParticle);
             for (int i = 0; i < numLevels; i++)
             {
                 var starGroup = GameObject.Instantiate(StartGroup, StarsGrid);
@@ -212,6 +215,8 @@ public class WinDialog : Dialog
 
     public void NextClick()
     {
+        if(_fxEffect != null)
+        Destroy(_fxEffect);
         Close();
         Sound.instance.Play(Sound.Collects.LevelClose);
         Prefs.countLevel += 1;
