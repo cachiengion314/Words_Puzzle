@@ -185,21 +185,22 @@ public class WordRegion : MonoBehaviour
             var word = wordList[i];
             var words = wordList.FindAll(wd => wd.Length == word.Length);
             LineWord line = Instantiate(MonoUtils.instance.lineWord);
-            if (CPlayerPrefs.HasKey(line.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel))
-                line.answer = CPlayerPrefs.GetString(line.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel);
-            else
-                line.answer = "";
+            //if (CPlayerPrefs.HasKey(line.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel))
+            //    line.answer = CPlayerPrefs.GetString(line.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel);
+            //else
+            //    line.answer = "";
             line.numLetters = word.Length;
             line.answers = words;
             line.cellSize = cellSize;
-            line.SetLineWidth();
-            line.Build(ConfigController.Config.isWordRightToLeft);
-            line.name = line.name + lineIndex + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
 
             if (useProgress)
             {
                 line.SetProgress(levelProgress[lineIndex], answerProgress[lineIndex]);
             }
+
+            line.Build(ConfigController.Config.isWordRightToLeft);
+            line.SetLineWidth();
+            line.name = line.name + lineIndex + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
 
             line.transform.SetParent(transform);
             line.transform.localScale = Vector3.one;
@@ -313,6 +314,7 @@ public class WordRegion : MonoBehaviour
             textPreview.SetAnswerColor();
             line.selectID = lineIsShown.Count;
             line.ShowAnswer();
+            SaveLevelProgress();
             CheckGameComplete();
 
             if (lineIndex > 0)
@@ -401,10 +403,10 @@ public class WordRegion : MonoBehaviour
     }
     private void CheckGameComplete()
     {
-        SaveLevelProgress();
         var isNotShown = lines.Find(x => !x.isShown);
         if (isNotShown == null)
         {
+            SaveLevelProgress();
             BlockScreen.instance.Block(true);
             MainController.instance.IsLevelClear = true;
             ClearLevelProgress();
@@ -437,7 +439,7 @@ public class WordRegion : MonoBehaviour
                 count += 1;
             }
         }
-
+        SaveLevelProgress();
         Sound.instance.PlayButton(Sound.Button.Beehive);
     }
 
@@ -474,6 +476,7 @@ public class WordRegion : MonoBehaviour
                     }
                     SetupNumhintFree();
                 });
+                SaveLevelProgress();
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
@@ -514,6 +517,7 @@ public class WordRegion : MonoBehaviour
                             //else
                             CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
                         });
+                        SaveLevelProgress();
                         CheckGameComplete();
 
                         Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);

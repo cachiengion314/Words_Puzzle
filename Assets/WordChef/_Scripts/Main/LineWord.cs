@@ -62,7 +62,7 @@ public class LineWord : MonoBehaviour
     {
         //int numLetters = answer.Length;
         var rt = GetComponent<RectTransform>();
-        lineWidth = numLetters * cellSize + (numLetters - 1) * cellSize * Const.CELL_GAP_COEF_X;
+        lineWidth = numLetters * cellSize + (numLetters - 1) * cellSize * Const.CELL_GAP_COEF_X + spacing;
         rt.sizeDelta = new Vector2(lineWidth, cellSize);
     }
 
@@ -85,7 +85,7 @@ public class LineWord : MonoBehaviour
 
     public void SetProgress(string progress, string progressAnswer)
     {
-        answer = progressAnswer.Length > 0 ? progressAnswer : "";
+        answer = progressAnswer;
         isShown = true;
         int i = 0;
         foreach (var cell in cells)
@@ -144,7 +144,7 @@ public class LineWord : MonoBehaviour
             {
                 cell.isShown = true;
                 cell.Animate();
-                yield return new WaitForSeconds(0.125f);
+                yield return new WaitForSeconds(0.1f);
             }
         }
         else
@@ -154,7 +154,7 @@ public class LineWord : MonoBehaviour
                 var cell = cells[i];
                 cell.isShown = true;
                 cell.Animate();
-                yield return new WaitForSeconds(0.125f);
+                yield return new WaitForSeconds(0.1f);
             }
         }
     }

@@ -8,6 +8,7 @@ using System;
 public class Cell : MonoBehaviour
 {
     public TextMeshProUGUI letterText;
+    public Text letterTextNor;
     public Image bg;
     public GameObject ImgPedestal;
     public Image iconCoin;
@@ -36,7 +37,7 @@ public class Cell : MonoBehaviour
 
         ShowText();
         //letterText.transform.localScale = Vector3.one * 1.1f;
-        bg.transform.localPosition = new Vector3(0,-55,0);
+        bg.transform.localPosition = new Vector3(0, -55, 0);
         var canvasGroup = bg.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0.5f;
         //letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
@@ -45,7 +46,8 @@ public class Cell : MonoBehaviour
         //letterText.transform.SetParent(MonoUtils.instance.textFlyTransform);
         //iTween.MoveTo(letterText.gameObject, iTween.Hash("path", waypoint, "time", 0.2f, "oncomplete", "OnMoveToComplete", "oncompletetarget", gameObject));
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.2f));
-        TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.05f, () => {
+        TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.05f, () =>
+        {
             TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -69f, 0), 0.1f, OnMoveToComplete);
         });
         //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
@@ -54,7 +56,7 @@ public class Cell : MonoBehaviour
     private void SetBgLetter(Sprite sprite)
     {
         bg.sprite = sprite;
-        bg.SetNativeSize();
+        //bg.SetNativeSize();
     }
 
     private void OnMoveToComplete()
@@ -73,6 +75,7 @@ public class Cell : MonoBehaviour
     {
         iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.15f));
         //fxExplode.gameObject.SetActive(false);
+        CalculateTextRaitoScale();
     }
 
     public void ShowHint()
@@ -105,8 +108,22 @@ public class Cell : MonoBehaviour
                 Destroy(WordRegion.instance.BtnADS.gameObject);
         }
         letterText.text = letter;
+        if (letterTextNor != null)
+        {
+            letterTextNor.text = letter;
+            CalculateTextRaitoScale();
+        }
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);
     }
 
+    private void CalculateTextRaitoScale()
+    {
+        var widthBg = bg.sprite.rect.width;
+        var heightBg = bg.sprite.rect.height;
+        var valueX = letterTextNor.rectTransform.rect.width;
+        var valueY = letterTextNor.rectTransform.rect.height;
+        var ratioScale = new Vector3(valueX / widthBg, valueY / heightBg, 0);
+        letterTextNor.rectTransform.localScale = ratioScale;
+    }
 }

@@ -43,9 +43,9 @@ public class ButtonVideoHintFree : MonoBehaviour
         _rewardController.onRewardedCallback += OnCompleteVideo;
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
-//#if UNITY_EDITOR
-//        OnCompleteVideo();
-//#endif
+#if UNITY_EDITOR
+        OnCompleteVideo();
+#endif
     }
 
     private void OnCompleteVideo()
