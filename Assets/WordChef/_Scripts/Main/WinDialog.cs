@@ -102,6 +102,7 @@ public class WinDialog : Dialog
                 ShowChapterClear(false);
                 Sound.instance.Play(Sound.Scenes.LevelClear);
                 ShowEffectTitle(0.5f);
+                TweenControl.GetInstance().MoveRectY(TitleLevelClear.transform as RectTransform, -151f, 2f);
                 _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
                     _animLevelClear.SetAnimation(levelClearIdleAnim, true);
@@ -132,7 +133,10 @@ public class WinDialog : Dialog
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
             var button = GroupButton.transform.GetChild(i).gameObject;
-            TweenControl.GetInstance().ScaleFromZero(button, 0.5f, null, EaseType.InQuad);
+            button.transform.localScale = Vector3.zero;
+            TweenControl.GetInstance().Scale(button, Vector3.one * 1.2f, 0.3f,()=> {
+                TweenControl.GetInstance().Scale(button, Vector3.one, 0.3f,null,EaseType.InQuad);
+            });
         }
     }
 

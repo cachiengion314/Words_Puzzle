@@ -12,7 +12,12 @@ public class Compliment : MonoBehaviour
     public ParticleSystem[] particleSystems;
     public ParticleSystem fxLevelClear;
     public ParticleSystem fxHidenLetter;
+    [Space]
+    [SerializeField] private bool _useSpine;
+    [SerializeField] private SpineControl _animCompliment;
+    [SerializeField] private string[] nameAnim;
 
+    int idAnim;
     ParticleSystem _particle;
 
     public void PlayParticle()
@@ -35,13 +40,21 @@ public class Compliment : MonoBehaviour
     public void Show(int type)
     {
         if (!IsAvailable2Show()) return;
-
-        sRenderer.sprite = sprites[type];
-        sRendererBG.sprite = spritesBg[type];
         if (_particle != null)
             Destroy(_particle.gameObject);
         _particle = Instantiate(particleSystems[type], rootParticle);
-        _particle.gameObject.SetActive(false);
+        if (_useSpine)
+        {
+            _animCompliment.gameObject.SetActive(true);
+            _animCompliment.SetAnimation(nameAnim[type], false);
+            PlayParticle();
+        }
+        else
+        {
+            sRenderer.sprite = sprites[type];
+            sRendererBG.sprite = spritesBg[type];
+            _particle.gameObject.SetActive(false);
+        }
         switch (type)
         {
             case 0:
@@ -65,7 +78,8 @@ public class Compliment : MonoBehaviour
                 Prefs.countExcellentDaily += 1;
                 break;
         }
-        anim.SetTrigger("show");
+        if (!_useSpine)
+            anim.SetTrigger("show");
     }
 
     public void ShowRandom()
