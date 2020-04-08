@@ -75,6 +75,7 @@ public class WinDialog : Dialog
             {
                 ShowChapterClear(true);
                 Sound.instance.Play(Sound.Scenes.ChapterClear);
+                ShowEffectTitle(1.4f);
                 _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
                     _animChapterClear.SetAnimation(levelClearIdleAnim, true);
@@ -91,6 +92,7 @@ public class WinDialog : Dialog
                 CPlayerPrefs.SetBool("Received", false);
                 ShowChapterClear(false);
                 Sound.instance.Play(Sound.Scenes.LevelClear);
+                ShowEffectTitle(0.5f);
                 _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
                     _animLevelClear.SetAnimation(levelClearIdleAnim, true);
@@ -111,6 +113,13 @@ public class WinDialog : Dialog
         }
     }
 
+    private void ShowEffectTitle(float timeDelayShow)
+    {
+        TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () => {
+            _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
+        });
+    }
+
     private void ShowChapterClear(bool show)
     {
         EggLevelClear.gameObject.SetActive(!show);
@@ -123,7 +132,6 @@ public class WinDialog : Dialog
     {
         if (eventData.Data.Name == "EGG_CHAP" || eventData.Data.Name == "EGG_LEVEL")
         {
-            _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, WordRegion.instance.compliment.rootParticle);
             for (int i = 0; i < numLevels; i++)
             {
                 var starGroup = GameObject.Instantiate(StartGroup, StarsGrid);
