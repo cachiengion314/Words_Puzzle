@@ -68,6 +68,7 @@ public class WinDialog : Dialog
         isLastLevel = Prefs.IsLastLevel();
         txtReward.transform.localScale = Vector3.zero;
         light.SetActive(false);
+        GroupButton.SetActive(false);
 
         if (isLastLevel)
         {
@@ -81,10 +82,14 @@ public class WinDialog : Dialog
                     _animChapterClear.SetAnimation(levelClearIdleAnim, true);
                 });
                 _animEggChapterClear.onEventAction = ShowStarsEffect;
-                _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
+                TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
                 {
-                    _animEggChapterClear.SetAnimation(eggChapterIdleAnim, true);
+                    _animEggChapterClear.gameObject.SetActive(true);
+                    _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
+                    {
+                        _animEggChapterClear.SetAnimation(eggChapterIdleAnim, true);
 
+                    });
                 });
             }
             else
@@ -98,10 +103,14 @@ public class WinDialog : Dialog
                     _animLevelClear.SetAnimation(levelClearIdleAnim, true);
                 });
                 _animEggLevelClear.onEventAction = ShowStarsEffect;
-                _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
+                TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
                 {
-                    _animEggLevelClear.SetAnimation(eggLevelIdleAnim, true);
+                    _animEggLevelClear.gameObject.SetActive(true);
+                    _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
+                    {
+                        _animEggLevelClear.SetAnimation(eggLevelIdleAnim, true);
 
+                    });
                 });
             }
         }
@@ -109,13 +118,24 @@ public class WinDialog : Dialog
         {
             EggBig.SetActive(false);
             RewardButton.SetActive(false);
-            GroupButton.SetActive(true);
+            ShowPanelButton(true);
+        }
+    }
+
+    private void ShowPanelButton(bool show)
+    {
+        GroupButton.SetActive(show);
+        for (int i = 0; i < GroupButton.transform.childCount; i++)
+        {
+            var button = GroupButton.transform.GetChild(i).gameObject;
+            TweenControl.GetInstance().ScaleFromZero(button,0.3f,null,EaseType.InBack);
         }
     }
 
     private void ShowEffectTitle(float timeDelayShow)
     {
-        TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () => {
+        TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () =>
+        {
             _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
         });
     }
@@ -145,10 +165,16 @@ public class WinDialog : Dialog
                         startOn.DOScale(0f, 0.8f).From().SetDelay(0.2f).SetEase(Ease.OutElastic);
                         StartCoroutine(IEShowButtonLevelClear());
                     }
+                    else
+                    {
+                        StartCoroutine(IEShowButtonLevelClear());
+                    }
                 }
             }
         }
     }
+
+
 
     private void CheckUnlock()
     {
@@ -194,7 +220,7 @@ public class WinDialog : Dialog
             txtReward.text = "X" + Const.REWARD_CHAPTER_CLEAR + "";
 
             yield return new WaitForSeconds(1f);
-            GroupButton.SetActive(true);
+            ShowPanelButton(true);
         };
     }
 
@@ -218,13 +244,13 @@ public class WinDialog : Dialog
             FadeImage.gameObject.SetActive(false);
         };
         yield return new WaitForSeconds(0.5f);
-        GroupButton.SetActive(true);
+        ShowPanelButton(true);
     }
 
     public void NextClick()
     {
-        if(_fxEffect != null)
-        Destroy(_fxEffect);
+        if (_fxEffect != null)
+            Destroy(_fxEffect);
         Close();
         Sound.instance.Play(Sound.Collects.LevelClose);
         Prefs.countLevel += 1;
