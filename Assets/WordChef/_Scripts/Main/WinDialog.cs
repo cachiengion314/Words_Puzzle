@@ -148,7 +148,7 @@ public class WinDialog : Dialog
                 star.transform.GetChild(0).gameObject.SetActive(true);
             _stars.Add(star);
         }
-        StarsGrid.gameObject.SetActive(false);
+        //StarsGrid.gameObject.SetActive(false);
     }
 
     private void ShowEffectTitle(float timeDelayShow)
