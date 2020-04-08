@@ -19,6 +19,8 @@ public class WinDialog : Dialog
     [SerializeField]
     private Transform StarsGrid;
     [SerializeField]
+    private Transform[] _starsGrid;
+    [SerializeField]
     private GameObject StartGroup;
     [SerializeField]
     private GameObject EggBig;
@@ -51,6 +53,7 @@ public class WinDialog : Dialog
     [SerializeField] private string eggChapterIdleAnim = "idle Chapter Clear";
 
     private GameObject _fxEffect;
+    private List<GameObject> _stars;
 
     protected override void Start()
     {
@@ -69,6 +72,7 @@ public class WinDialog : Dialog
         txtReward.transform.localScale = Vector3.zero;
         light.SetActive(false);
         GroupButton.SetActive(false);
+        SetupStars();
 
         if (isLastLevel)
         {
@@ -128,8 +132,23 @@ public class WinDialog : Dialog
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
             var button = GroupButton.transform.GetChild(i).gameObject;
-            TweenControl.GetInstance().ScaleFromZero(button,0.5f,null,EaseType.InQuad);
+            TweenControl.GetInstance().ScaleFromZero(button, 0.5f, null, EaseType.InQuad);
         }
+    }
+
+    private void SetupStars()
+    {
+        _stars = new List<GameObject>();
+        for (int i = 0; i < numLevels; i++)
+        {
+            var star = GameObject.Instantiate(StartGroup, _starsGrid[i]);
+            star.transform.localPosition = Vector3.zero;
+            star.SetActive(true);
+            if (i < level)
+                star.transform.GetChild(0).gameObject.SetActive(true);
+            _stars.Add(star);
+        }
+        StarsGrid.gameObject.SetActive(false);
     }
 
     private void ShowEffectTitle(float timeDelayShow)
@@ -152,13 +171,13 @@ public class WinDialog : Dialog
     {
         if (eventData.Data.Name == "EGG_CHAP" || eventData.Data.Name == "EGG_LEVEL")
         {
+            StarsGrid.gameObject.SetActive(true);
             for (int i = 0; i < numLevels; i++)
             {
-                var starGroup = GameObject.Instantiate(StartGroup, StarsGrid);
-                starGroup.SetActive(true);
+                var currStar = _stars[i];
                 if (i <= level)
                 {
-                    var startOn = starGroup.transform.GetChild(0);
+                    var startOn = currStar.transform.GetChild(0);
                     startOn.gameObject.SetActive(true);
                     if (i == level)
                     {
