@@ -128,7 +128,7 @@ public class WinDialog : Dialog
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
             var button = GroupButton.transform.GetChild(i).gameObject;
-            TweenControl.GetInstance().ScaleFromZero(button,0.3f,null,EaseType.InBack);
+            TweenControl.GetInstance().ScaleFromZero(button,0.5f,null,EaseType.InQuad);
         }
     }
 
