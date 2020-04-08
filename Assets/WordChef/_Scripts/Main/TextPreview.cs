@@ -47,7 +47,7 @@ public class TextPreview : MonoBehaviour
         }
         else
         {
-            canvasGroup.alpha = timeFade / 0.5f;
+            canvasGroup.alpha = /*timeFade / 0.5f*/0;
             timeFade -= Time.deltaTime;
         }
     }
