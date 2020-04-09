@@ -977,6 +977,41 @@ MonoBehaviour:
   optionalRotationMode: 0
   optionalScrambleMode: 0
   optionalString: 
+--- !u!1 &770404521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 770404522}
+  m_Layer: 5
+  m_Name: MainUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &770404522
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770404521}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 943886118}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 737}
+  m_SizeDelta: {x: 950, y: 1474}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &826939044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,7 +1046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 738.1108}
+  m_AnchoredPosition: {x: 0, y: 737.29987}
   m_SizeDelta: {x: 950, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &826939046
@@ -1595,6 +1630,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 826939045}
+  - {fileID: 770404522}
   m_Father: {fileID: 1787027641}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2594,7 +2630,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.4000244, y: 51.224976}
+  m_AnchoredPosition: {x: -4.4000244, y: 51.225098}
   m_SizeDelta: {x: -110.6, y: -206.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787027642
@@ -2723,7 +2759,7 @@ MonoBehaviour:
   donotDestroyOnLoad: {fileID: 113708, guid: bfbb5352b36db73418bff6eeac290ae6, type: 3}
   sceneName: SelectWorld
   music: 1
-  mainUI: {fileID: 943886118}
+  mainUI: {fileID: 770404522}
   scrollContent: {fileID: 826939045}
   title: {fileID: 2018842382}
   worldItems: []
@@ -2732,6 +2768,7 @@ MonoBehaviour:
     type: 3}
   _root: {fileID: 826939045}
   _scroll: {fileID: 1787027642}
+  target: 0
 --- !u!114 &1833317277
 MonoBehaviour:
   m_ObjectHideFlags: 0

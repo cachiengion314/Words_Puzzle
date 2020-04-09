@@ -59,15 +59,23 @@ public class WorldController : BaseController
     {
         if (target > 0)
         {
-            TweenControl.GetInstance().DelayCall(transform, 5f, () =>
+            TweenControl.GetInstance().DelayCall(transform, 1f, () =>
             {
                 var spacing = 30;
-                var distance = mainUI.transform.localPosition - worldItems[target].transform.position;
+                //var distance = mainUI.transform.localPosition - worldItems[target].transform.position;
                 var sizeDeltaYItem = (worldItems[target].transform as RectTransform).sizeDelta.y;
-                var contentY = (distance.y - sizeDeltaYItem) / 2 - sizeDeltaYItem / 2 + spacing;
+                //var contentY = (distance.y - sizeDeltaYItem) / 2 - sizeDeltaYItem / 2 + spacing;
                 //snapScroll.SetPage(target);
-                scrollContent.localPosition = new Vector3(scrollContent.localPosition.x, contentY, 0);
+                var contentY = mainUI.anchoredPosition.y + sizeDeltaYItem * target;
+                scrollContent.anchoredPosition = new Vector3(scrollContent.anchoredPosition.x, contentY, 0);
                 worldItems[target].OnButtonClick();
+            });
+        }
+        else
+        {
+            TweenControl.GetInstance().DelayCall(transform, 1f, () =>
+            {
+                worldItems[0].OnButtonClick();
             });
         }
     }
