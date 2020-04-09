@@ -245,7 +245,7 @@ public class WinDialog : Dialog
             txtRewardByAds.text = "x" + Const.REWARD_ADS_CHAPTER_CLEAR;
             txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
             FadeImage.gameObject.SetActive(true);
             var tweener = FadeImage.DOFade(1f, 1f);
             tweener.onComplete += () =>
@@ -259,7 +259,7 @@ public class WinDialog : Dialog
             txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
             //_starReward.SetActive(true);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
             ShowPanelButton(true);
         };
     }
