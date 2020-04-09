@@ -148,9 +148,9 @@ public class WinDialog : Dialog
             else
             {
                 var posTarget = _btnBee.transform.localPosition.x / 2;
-                TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget + 50, 0.5f, () =>
+                TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget + 20, 0.5f, () =>
                 {
-                    TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, _btnBee.transform.localPosition.x, 0.3f,null,EaseType.InBack);
+                    TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f);
                 });
             }
         }
@@ -246,19 +246,18 @@ public class WinDialog : Dialog
             txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
 
             yield return new WaitForSeconds(0.1f);
-            FadeImage.gameObject.SetActive(true);
-            var tweener = FadeImage.DOFade(1f, 1f);
-            tweener.onComplete += () =>
-            {
-                StartCoroutine(IEShowEggOpen());
-            };
+            //FadeImage.gameObject.SetActive(true);
+            //var tweener = FadeImage.DOFade(1f, 1f);
+            //tweener.onComplete += () =>
+            //{
+            StartCoroutine(IEShowEggOpen());
+            //};
         }
         else
         {
             txtRewardByAds.text = "x" + Const.REWARD_ADS_LEVEL_CLEAR + "";
             txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
             //_starReward.SetActive(true);
-
             yield return new WaitForSeconds(0.1f);
             ShowPanelButton(true);
         };
@@ -277,14 +276,14 @@ public class WinDialog : Dialog
         EggChapterClear.SetActive(true);
 
         light.SetActive(true);
-        var tweener = FadeImage.DOFade(0f, 1f);
-        tweener.onComplete += () =>
-        {
+        //var tweener = FadeImage.DOFade(0f, 1f);
+        //tweener.onComplete += () =>
+        //{
             txtReward.transform.localScale = Vector3.one;
             _starReward.SetActive(true);
             FadeImage.gameObject.SetActive(false);
-        };
-        yield return new WaitForSeconds(0.5f);
+        //};
+        yield return new WaitForSeconds(0.01f);
         ShowPanelButton(true);
     }
 

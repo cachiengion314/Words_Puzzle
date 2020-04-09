@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Spine;
+using System;
 
 public class Compliment : MonoBehaviour
 {
@@ -45,13 +47,10 @@ public class Compliment : MonoBehaviour
         _particle = Instantiate(particleSystems[type], rootParticle);
         if (_useSpine)
         {
+            _animCompliment.onEventAction = OnShowEffect;
             _animCompliment.gameObject.SetActive(true);
             _animCompliment.SetAnimation(nameAnim[type], false);
             var duration = _animCompliment.ske.SkeletonDataAsset.GetAnimationStateData().SkeletonData.Animations.Items[type].Duration;
-            TweenControl.GetInstance().DelayCall(transform, duration / 2.5f, () =>
-              {
-                  PlayParticle();
-              });
         }
         else
         {
@@ -84,6 +83,14 @@ public class Compliment : MonoBehaviour
         }
         if (!_useSpine)
             anim.SetTrigger("show");
+    }
+
+    private void OnShowEffect(Spine.Event e)
+    {
+        if (e.Data.Name == "EF")
+        {
+            PlayParticle();
+        }
     }
 
     public void ShowRandom()
