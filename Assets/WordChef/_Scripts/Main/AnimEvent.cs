@@ -56,7 +56,7 @@ public class AnimEvent : MonoBehaviour
             {
                 var letter = Pan.instance.LetterTexts[i];
                 //letter.transform.localScale = Vector3.zero;
-                TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.1f, 0.3f, () =>
+                TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.2f, 0.3f, () =>
                 {
                     TweenControl.GetInstance().ScaleFromOne(letter.gameObject, 0.2f, ()=> {
                         var fxEffect = Instantiate(WordRegion.instance.compliment.fxHidenLetter, letter.transform);
