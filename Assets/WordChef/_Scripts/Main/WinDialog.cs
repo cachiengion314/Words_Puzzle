@@ -201,7 +201,6 @@ public class WinDialog : Dialog
                     startOn.gameObject.SetActive(true);
                     if (i == level)
                     {
-                        light.SetActive(true);
                         startOn.DOScale(0f, 0.8f).From().SetDelay(0.2f).SetEase(Ease.OutElastic);
                         StartCoroutine(IEShowButtonLevelClear());
                     }
@@ -245,6 +244,8 @@ public class WinDialog : Dialog
         {
             txtRewardByAds.text = "x" + Const.REWARD_ADS_CHAPTER_CLEAR;
             txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
+
+            light.SetActive(true);
 
             yield return new WaitForSeconds(0);
             //FadeImage.gameObject.SetActive(true);
