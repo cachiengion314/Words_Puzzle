@@ -47,7 +47,11 @@ public class Compliment : MonoBehaviour
         {
             _animCompliment.gameObject.SetActive(true);
             _animCompliment.SetAnimation(nameAnim[type], false);
-            PlayParticle();
+            var duration = _animCompliment.ske.SkeletonDataAsset.GetAnimationStateData().SkeletonData.Animations.Items[type].Duration;
+            TweenControl.GetInstance().DelayCall(transform, duration / 2.5f, () =>
+              {
+                  PlayParticle();
+              });
         }
         else
         {

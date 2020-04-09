@@ -40,6 +40,10 @@ public class WinDialog : Dialog
     private TextMeshProUGUI txtReward;
     [SerializeField]
     private TextMeshProUGUI txtRewardByAds;
+    [SerializeField]
+    private GameObject _btnBee;
+    [SerializeField]
+    private GameObject _starReward;
     [Space]
     [SerializeField] private SpineControl _animChapterClear;
     [SerializeField] private SpineControl _animLevelClear;
@@ -133,10 +137,22 @@ public class WinDialog : Dialog
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
             var button = GroupButton.transform.GetChild(i).gameObject;
-            button.transform.localScale = Vector3.zero;
-            TweenControl.GetInstance().Scale(button, Vector3.one * 1.2f, 0.3f,()=> {
-                TweenControl.GetInstance().Scale(button, Vector3.one, 0.3f,null,EaseType.InQuad);
-            });
+            if (button != _btnBee)
+            {
+                button.transform.localScale = Vector3.zero;
+                TweenControl.GetInstance().Scale(button, Vector3.one * 1.2f, 0.3f, () =>
+                {
+                    TweenControl.GetInstance().Scale(button, Vector3.one, 0.3f, null, EaseType.InQuad);
+                });
+            }
+            else
+            {
+                var posTarget = _btnBee.transform.localPosition.x / 2;
+                TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget + 50, 0.5f, () =>
+                {
+                    TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, _btnBee.transform.localPosition.x, 0.3f,null,EaseType.InBack);
+                });
+            }
         }
     }
 
@@ -226,8 +242,8 @@ public class WinDialog : Dialog
         GameState.currentLevel = (level + 1) % numLevels;
         if (level == numLevels - 1)
         {
-            txtRewardByAds.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;
-            txtReward.text = "X" + Const.REWARD_CHAPTER_CLEAR + "";
+            txtRewardByAds.text = "x" + Const.REWARD_ADS_CHAPTER_CLEAR;
+            txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
 
             yield return new WaitForSeconds(1f);
             FadeImage.gameObject.SetActive(true);
@@ -239,8 +255,9 @@ public class WinDialog : Dialog
         }
         else
         {
-            txtRewardByAds.text = "X" + Const.REWARD_ADS_LEVEL_CLEAR + "";
-            txtReward.text = "X" + Const.REWARD_CHAPTER_CLEAR + "";
+            txtRewardByAds.text = "x" + Const.REWARD_ADS_LEVEL_CLEAR + "";
+            txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
+            //_starReward.SetActive(true);
 
             yield return new WaitForSeconds(1f);
             ShowPanelButton(true);
@@ -264,6 +281,7 @@ public class WinDialog : Dialog
         tweener.onComplete += () =>
         {
             txtReward.transform.localScale = Vector3.one;
+            _starReward.SetActive(true);
             FadeImage.gameObject.SetActive(false);
         };
         yield return new WaitForSeconds(0.5f);

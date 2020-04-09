@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "NnW/GSSmU8s0XAEuNmyq8cpWcjk",
+	"hash": "+Ofw6puPsfk7FYLb2/Epzam5Q6M",
 	"spine": "3.8.87",
 	"x": -84.5,
 	"y": -84.5,
@@ -20,13 +20,15 @@
 		"scaleX": 0.888,
 		"scaleY": 0.888
 	},
-	{ "name": "bone", "parent": "root", "x": -142.08, "y": -167.45 }
+	{ "name": "bone", "parent": "root", "x": -142.08, "y": -167.45 },
+	{ "name": "To", "parent": "root" },
+	{ "name": "ong", "parent": "To" }
 ],
 "slots": [
-	{ "name": "to", "bone": "root", "attachment": "to" },
+	{ "name": "to", "bone": "To", "attachment": "to" },
 	{ "name": "Layer 1073", "bone": "Layer 1073", "attachment": "Layer 1073" },
 	{ "name": "Layer 1071", "bone": "root", "attachment": "Layer 1071" },
-	{ "name": "Ong", "bone": "root", "attachment": "Ong" },
+	{ "name": "Ong", "bone": "ong", "attachment": "Ong" },
 	{ "name": "Tên lửa", "bone": "root", "attachment": "Tên lửa" },
 	{ "name": "Gợi ý", "bone": "root", "attachment": "Gợi ý" },
 	{ "name": "hii", "bone": "root", "attachment": "hii" },
@@ -283,6 +285,28 @@
 			"root": {
 				"scale": [
 					{ "time": 3.6667 }
+				]
+			},
+			"To": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 1 },
+					{ "time": 1.1, "angle": -7.34 },
+					{ "time": 1.2, "angle": 8.1 },
+					{ "time": 1.3, "angle": -7.34 },
+					{ "time": 1.4, "angle": 8.1 },
+					{ "time": 1.5 }
+				]
+			},
+			"ong": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 3 },
+					{ "time": 3.1, "angle": -7.34 },
+					{ "time": 3.2, "angle": 8.1 },
+					{ "time": 3.3, "angle": -7.34 },
+					{ "time": 3.4, "angle": 8.1 },
+					{ "time": 3.5 }
 				]
 			}
 		}

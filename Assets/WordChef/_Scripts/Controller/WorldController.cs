@@ -67,7 +67,7 @@ public class WorldController : BaseController
                 var contentY = (distance.y - sizeDeltaYItem) / 2 + spacing;
                 //snapScroll.SetPage(target);
                 scrollContent.localPosition = new Vector3(scrollContent.localPosition.x, contentY, 0);
-                //worldItems[target].OnButtonClick();
+                worldItems[target].OnButtonClick();
             });
         }
     }
