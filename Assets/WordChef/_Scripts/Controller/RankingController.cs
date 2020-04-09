@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class RankingController : MonoBehaviour
 {
     [SerializeField] private Image _iconPlayer;
-    [SerializeField] private Image _avatarPlayer;
+    [SerializeField] private Photo _avatarPlayer;
     [SerializeField] private TextMeshProUGUI _playerName;
     [SerializeField] private TextMeshProUGUI _playerValue;
 
@@ -22,7 +22,6 @@ public class RankingController : MonoBehaviour
 
         _playerName.text = name;
         _playerValue.text = value.ToString();
-
         StartCoroutine(ShowAvatar(urlAvatar));
     }
 
@@ -30,6 +29,7 @@ public class RankingController : MonoBehaviour
     {
         WWW www = new WWW(urlAvatar);
         yield return www;
-        _avatarPlayer.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+        _avatarPlayer.photo.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+        _avatarPlayer.photo.color = Color.white;
     }
 }
