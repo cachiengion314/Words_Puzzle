@@ -9,6 +9,8 @@ public class ExtraWord : MonoBehaviour {
     public GameObject existMessage;
     public Transform beginPoint, endPoint;
     public GameObject lightEffect, lightOpenEffect, btnExtra;
+    public ParticleSystem effectLight;
+    public ParticleSystem effectLightLoop;
 
     private int world, subWorld, level;
     private CanvasGroup existMessageCG;
@@ -103,14 +105,17 @@ public class ExtraWord : MonoBehaviour {
     {
         UpdateUI();
 
-        if (!lightOpenEffect.activeSelf)
-        {
-            lightEffect.SetActive(true);
-            //iTween.RotateAdd(lightEffect, iTween.Hash("z", -60, "time", 0.4f, "oncomplete", "OnLightRotateComplete", "oncompletetarget", gameObject));
-            lightEffect.GetComponentInChildren<ParticleSystem>().Play();
-        }
+        effectLight.gameObject.SetActive(true);
+        effectLight.Play();
+        TweenControl.GetInstance().DelayCall(transform, 2, OnLightRotateComplete);
 
-        TweenControl.GetInstance().Shake(btnExtra,0.3f,Vector3.one * 10f, 20, ShakeType.ShakeTypeRotate,180,false,true,OnLightRotateComplete);
+        //if (!lightOpenEffect.activeSelf)
+        //{
+        //    lightEffect.SetActive(true);
+        //    iTween.RotateAdd(lightEffect, iTween.Hash("z", -60, "time", 0.4f, "oncomplete", "OnLightRotateComplete", "oncompletetarget", gameObject));
+        //}
+
+        TweenControl.GetInstance().Shake(btnExtra,0.3f,Vector3.one * 10f, 20, ShakeType.ShakeTypeRotate,180,false,true);
         
         flyText.CrossFadeAlpha(0, 0.3f, true);
         Destroy(flyText.gameObject, 0.3f);
@@ -118,7 +123,8 @@ public class ExtraWord : MonoBehaviour {
 
     private void OnLightRotateComplete()
     {
-        lightEffect.SetActive(false);
+        //lightEffect.SetActive(false);
+        effectLight.gameObject.SetActive(false);
     }
 
     public void OnClaimed()

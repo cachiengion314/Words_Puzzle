@@ -74,4 +74,10 @@ public class ExtraWordDialog : Dialog
             wordText.text += "  " + word.ToUpper();
         }
     }
+
+    public override void Close()
+    {
+        base.Close();
+        ExtraWord.instance.effectLightLoop.gameObject.SetActive(true);
+    }
 }
