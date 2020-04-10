@@ -1,12 +1,12 @@
 {
 "skeleton": {
-	"hash": "tVWRn2rHo9wbyFU2kIeGhD49eKw",
+	"hash": "y+QZuAxqWDLAI2s7KMXwiQGVFdc",
 	"spine": "3.8.87",
 	"x": 145.15,
 	"y": 198.4,
 	"width": 391,
 	"height": 393.18,
-	"images": "./Button home/",
+	"images": "",
 	"audio": ""
 },
 "bones": [
@@ -15,7 +15,8 @@
 	{ "name": "Trong", "parent": "bone2", "rotation": 7.11, "x": -187.24, "y": -127.69 },
 	{ "name": "Trongg", "parent": "bone2", "x": 344.59, "y": 402.41 },
 	{ "name": "Ngoai", "parent": "bone2", "x": 365.68, "y": 406.24 },
-	{ "name": "bone", "parent": "bone2", "x": 299.76, "y": 481.16 }
+	{ "name": "bone", "parent": "bone2", "x": 299.76, "y": 481.16 },
+	{ "name": "bone3", "parent": "bone2", "x": 338.38, "y": 417.64 }
 ],
 "slots": [
 	{ "name": "Layer 70", "bone": "bone2", "attachment": "Layer 70" },
@@ -24,6 +25,7 @@
 	{ "name": "ngoai", "bone": "bone", "attachment": "ngoai" },
 	{ "name": "Layer 1077", "bone": "bone2", "attachment": "Layer 1077" },
 	{ "name": "trongg", "bone": "Trongg", "attachment": "trongg" },
+	{ "name": "Layer 1225", "bone": "bone3", "attachment": "Layer 1225" },
 	{ "name": "trong", "bone": "Trong", "attachment": "trong" },
 	{ "name": "Layer 1179", "bone": "bone2", "attachment": "Layer 1179" }
 ],
@@ -39,6 +41,9 @@
 			},
 			"Layer 1179": {
 				"Layer 1179": { "x": 341.04, "y": 423.19, "width": 319, "height": 336 }
+			},
+			"Layer 1225": {
+				"Layer 1225": { "x": 13.44, "y": 2.52, "width": 162, "height": 180 }
 			},
 			"Layer 70": {
 				"Layer 70": { "x": 340.65, "y": 394.9, "width": 391, "height": 393 }
@@ -76,7 +81,7 @@
 			"Trong": {
 				"rotate": [
 					{ "angle": -5.15, "curve": 0.25, "c3": 0.75 },
-					{ "time": 2, "angle": -45.89 }
+					{ "time": 2, "angle": -51.2 }
 				],
 				"translate": [
 					{ "x": 89.59, "y": 76.58 }
@@ -94,15 +99,25 @@
 			"bone2": {
 				"translate": [
 					{ "y": -78.06, "curve": 0.25, "c3": 0.75 },
-					{ "time": 1.3333, "curve": 0.25, "c3": 0.75 },
-					{ "time": 2.6667, "y": -78.06, "curve": 0.25, "c3": 0.75 },
-					{ "time": 4, "curve": 0.25, "c3": 0.75 },
-					{ "time": 5.3333, "y": -78.06 }
+					{ "time": 2.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 4.6667, "y": -78.06 }
 				]
 			},
 			"root": {
 				"translate": [
 					{}
+				]
+			},
+			"bone3": {
+				"rotate": [
+					{ "time": 3.6333 },
+					{ "time": 3.7333, "angle": 4.37 },
+					{ "time": 3.8333, "angle": -7.14 },
+					{ "time": 3.9333, "angle": 10.67 },
+					{ "time": 4.0333, "angle": -17.59 },
+					{ "time": 4.1333, "angle": 10.67 },
+					{ "time": 4.2333, "angle": -17.59 },
+					{ "time": 4.3333 }
 				]
 			}
 		}

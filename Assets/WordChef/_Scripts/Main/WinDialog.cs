@@ -44,6 +44,8 @@ public class WinDialog : Dialog
     private GameObject _btnBee;
     [SerializeField]
     private GameObject _starReward;
+    [SerializeField]
+    private RewardVideoController _rewardVideoPfb;
     [Space]
     [SerializeField] private SpineControl _animChapterClear;
     [SerializeField] private SpineControl _animLevelClear;
@@ -279,9 +281,9 @@ public class WinDialog : Dialog
         //var tweener = FadeImage.DOFade(0f, 1f);
         //tweener.onComplete += () =>
         //{
-            txtReward.transform.localScale = Vector3.one;
-            _starReward.SetActive(true);
-            FadeImage.gameObject.SetActive(false);
+        txtReward.transform.localScale = Vector3.one;
+        _starReward.SetActive(true);
+        FadeImage.gameObject.SetActive(false);
         //};
         yield return new WaitForSeconds(0.01f);
         ShowPanelButton(true);
@@ -304,7 +306,20 @@ public class WinDialog : Dialog
 
     public void RewardClick()
     {
-        Sound.instance.Play(Sound.Others.PopupOpen);
+        var rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
+        if (rewardControl == null)
+            rewardControl = Instantiate(_rewardVideoPfb, transform);
+        rewardControl.onRewardedCallback += OnCompleteReward;
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            AdmobController.instance.ShowRewardBasedVideo();
+        });
+        //CUtils.ShowInterstitialAd();
+    }
+
+    void OnCompleteReward()
+    {
         if (level == numLevels - 1)
         {
             CurrencyController.CreditBalance(Const.REWARD_ADS_CHAPTER_CLEAR);
@@ -314,8 +329,6 @@ public class WinDialog : Dialog
             CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
         }
         RewardButton.SetActive(false);
-
-        CUtils.ShowInterstitialAd();
     }
 
     public void LeaderboardClick()

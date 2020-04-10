@@ -10,7 +10,6 @@ public class ExtraWord : MonoBehaviour {
     public Transform beginPoint, endPoint;
     public GameObject lightEffect, lightOpenEffect, btnExtra;
     public ParticleSystem effectLight;
-    public ParticleSystem effectLightLoop;
 
     private int world, subWorld, level;
     private CanvasGroup existMessageCG;

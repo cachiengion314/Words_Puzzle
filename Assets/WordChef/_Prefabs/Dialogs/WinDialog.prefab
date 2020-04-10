@@ -620,6 +620,7 @@ MonoBehaviour:
   showDialogReward: 0
   enableAd: 0
   enableEscape: 0
+  scaleDialog: 0
   RewardButton: {fileID: 1608760710364542}
   GroupButton: {fileID: 7293887609151271138}
   StarsGrid: {fileID: 767253520718207094}
@@ -642,14 +643,15 @@ MonoBehaviour:
   txtRewardByAds: {fileID: 6365790868848274066}
   _btnBee: {fileID: 1355139204389393994}
   _starReward: {fileID: 6204311507630076583}
+  _rewardVideoPfb: {fileID: 0}
   _animChapterClear: {fileID: 2043913987074434246}
   _animLevelClear: {fileID: 5902382483710414448}
   _animEggLevelClear: {fileID: 5648783610630664852}
   _animEggChapterClear: {fileID: 1671522893550753985}
   levelClearIdleAnim: Loop
   showLevelClearAnim: animation
-  eggLevelAnim: Level Clear
-  eggChapterAnim: Chapter Clear
+  eggLevelAnim: Level Clear2
+  eggChapterAnim: Chapter Clear2
   eggLevelIdleAnim: Loop
   eggChapterIdleAnim: Loop
 --- !u!222 &-7243958512498468609
@@ -1350,7 +1352,7 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: Loop
+  startingAnimation: Loop2
   startingLoop: 0
   timeScale: 1
   freeze: 0
@@ -1405,7 +1407,7 @@ RectTransform:
   m_GameObject: {fileID: 712802918876430494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children:
   - {fileID: 5146657249810724749}
   - {fileID: 3395492802466262494}
@@ -1419,7 +1421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16.41, y: 0}
+  m_AnchoredPosition: {x: 25.829994, y: -278.19}
   m_SizeDelta: {x: 371, y: 533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3302233587379777511
@@ -1617,7 +1619,7 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: 
+  startingAnimation: Loop2
   startingLoop: 0
   timeScale: 1
   freeze: 0
@@ -1958,7 +1960,7 @@ RectTransform:
   m_GameObject: {fileID: 1480534635692189724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 3146359629384353516}
   - {fileID: 1639026369873344585}
@@ -1972,7 +1974,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 20.730001, y: -27.34}
+  m_AnchoredPosition: {x: -13.329999, y: 0}
   m_SizeDelta: {x: 371, y: 533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6377353081217430354
@@ -2546,13 +2548,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 44e189580d3da384f8daa04bd88f8899, type: 2}
+  m_Material: {fileID: 2100000, guid: 2004e89cc603a5943805b2817e86da4e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: be9ed7c6e119c69438cddbf44e650a52, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: a821a0b8704101743ac5b2485bb77100, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -4329,7 +4331,7 @@ RectTransform:
   m_GameObject: {fileID: 3973066806568425336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4579534801359709619}
   - {fileID: 3371636198805104990}
@@ -4726,7 +4728,7 @@ RectTransform:
   m_GameObject: {fileID: 4562720541249633472}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 796872976847945917}
   - {fileID: 6032440706135257351}
