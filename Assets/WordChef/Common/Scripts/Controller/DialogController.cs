@@ -39,7 +39,8 @@ public enum DialogShow
     REPLACE_CURRENT,
     STACK,
     SHOW_PREVIOUS,
-    OVER_CURRENT
+    OVER_CURRENT,
+    STACK_DONT_HIDEN,
 };
 
 public class DialogController : MonoBehaviour
@@ -68,7 +69,7 @@ public class DialogController : MonoBehaviour
 	public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT)
 	{
 		Dialog dialog = GetDialog(type);
-		ShowDialog(dialog, option);
+        ShowDialog(dialog, option);
 	}
 
 	public void ShowYesNoDialog(string title, string content, Action onYesListener, Action onNoListenter, DialogShow option = DialogShow.REPLACE_CURRENT)
@@ -107,7 +108,7 @@ public class DialogController : MonoBehaviour
 			{
 				current.Hide();
 			}
-		}
+        }
 
 		current = dialog;
 		if (option != DialogShow.SHOW_PREVIOUS)

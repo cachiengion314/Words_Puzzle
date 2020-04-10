@@ -16,6 +16,7 @@ public class Dialog : MonoBehaviour
     public bool showDialogReward = false;
     public bool enableAd = true;
     public bool enableEscape = true;
+    public bool scaleDialog = false;
 
     private AnimatorStateInfo info;
     private bool isShowing;
@@ -45,7 +46,19 @@ public class Dialog : MonoBehaviour
         isShowing = true;
         if (anim != null && IsIdle())
         {
-            anim.SetTrigger("show");
+            if (scaleDialog)
+            {
+                anim.enabled = false;
+                anim.transform.localScale = Vector3.zero;
+                TweenControl.GetInstance().ScaleFromZero(anim.gameObject, 0.5f, () =>
+                {
+
+                });
+            }
+            else
+            {
+                anim.SetTrigger("show");
+            }
             onDialogOpened(this);
         }
 
@@ -65,8 +78,19 @@ public class Dialog : MonoBehaviour
         isShowing = false;
         if (anim != null && IsIdle() && hidingAnimation != null)
         {
-            anim.SetTrigger("hide");
-            Timer.Schedule(this, hidingAnimation.length, DoClose);
+            if(scaleDialog)
+            {
+                TweenControl.GetInstance().Scale(gameObject, Vector3.one * 1.2f, 0.3f, () => {
+                    TweenControl.GetInstance().Scale(gameObject, Vector3.zero, 0.5f, () => {
+                        DoClose();
+                    });
+                });
+            }
+            else
+            {
+                anim.SetTrigger("hide");
+                Timer.Schedule(this, hidingAnimation.length, DoClose);
+            }
         }
         else
         {

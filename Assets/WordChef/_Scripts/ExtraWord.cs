@@ -8,7 +8,7 @@ public class ExtraWord : MonoBehaviour {
     public List<string> extraWords = new List<string>();
     public GameObject existMessage;
     public Transform beginPoint, endPoint;
-    public GameObject lightEffect, lightOpenEffect;
+    public GameObject lightEffect, lightOpenEffect, btnExtra;
 
     private int world, subWorld, level;
     private CanvasGroup existMessageCG;
@@ -106,9 +106,12 @@ public class ExtraWord : MonoBehaviour {
         if (!lightOpenEffect.activeSelf)
         {
             lightEffect.SetActive(true);
-            iTween.RotateAdd(lightEffect, iTween.Hash("z", -60, "time", 0.4f, "oncomplete", "OnLightRotateComplete", "oncompletetarget", gameObject));
+            //iTween.RotateAdd(lightEffect, iTween.Hash("z", -60, "time", 0.4f, "oncomplete", "OnLightRotateComplete", "oncompletetarget", gameObject));
+            lightEffect.GetComponentInChildren<ParticleSystem>().Play();
         }
 
+        TweenControl.GetInstance().Shake(btnExtra,0.3f,Vector3.one * 10f, 20, ShakeType.ShakeTypeRotate,180,false,true,OnLightRotateComplete);
+        
         flyText.CrossFadeAlpha(0, 0.3f, true);
         Destroy(flyText.gameObject, 0.3f);
     }
