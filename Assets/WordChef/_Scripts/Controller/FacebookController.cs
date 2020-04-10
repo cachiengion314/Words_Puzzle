@@ -42,7 +42,7 @@ public class FacebookController : MonoBehaviour
 
     public void SaveDataGame(Action<UpdateUserDataResult> callback = null)
     {
-        if (!Prefs.IsLastLevel())
+        if (!Prefs.IsSaveLevelProgress())
             return;
         if (PlayFabClientAPI.IsClientLoggedIn())
         {

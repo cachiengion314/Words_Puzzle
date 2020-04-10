@@ -74,7 +74,7 @@ public class WinDialog : Dialog
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
 
-        isLastLevel = Prefs.IsLastLevel();
+        isLastLevel = Prefs.IsSaveLevelProgress();
         txtReward.transform.localScale = Vector3.zero;
         light.SetActive(false);
         GroupButton.SetActive(false);

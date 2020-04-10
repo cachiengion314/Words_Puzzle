@@ -50,6 +50,8 @@ public class MainController : BaseController
         world = GameState.currentWorld;
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
+        var numlevels = Utils.GetNumLevels(world, subWorld);
+        var currlevel = (level + numlevels * (subWorld + 5 * world));
         //world = 4;
         //subWorld = 4;
         //level = 4;
@@ -61,7 +63,7 @@ public class MainController : BaseController
 
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
-        WordRegion.instance.Load(gameLevel);
+        WordRegion.instance.Load(gameLevel, currlevel);
         BeeManager.instance.Load(CPlayerPrefs.GetInt("amount_bee", 0));
 
         if (world == 0 && subWorld == 0 && level == 0)
@@ -72,8 +74,8 @@ public class MainController : BaseController
             });
         }
         //GameState.currentSubWorldName
-        var numlevels = Utils.GetNumLevels(world, subWorld);
-        levelNameText.text = "LEVEL " + ((level + numlevels * (subWorld + 5 * world)) + 1);
+        
+        levelNameText.text = "LEVEL " + (currlevel + 1);
 
         FacebookController.instance.SaveDataGame();
         onLoadDataComplete?.Invoke();

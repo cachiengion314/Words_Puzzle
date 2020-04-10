@@ -32,9 +32,9 @@ public class ButtonVideoHintFree : MonoBehaviour
         _rewardController.onRewardedCallback -= OnCompleteVideo;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        if (MainController.instance != null)
+        if (_rewardController != null)
             _rewardController.onRewardedCallback -= OnCompleteVideo;
     }
 
@@ -54,5 +54,6 @@ public class ButtonVideoHintFree : MonoBehaviour
         gameObject.SetActive(false);
         _cell.ShowHint();
         //_rewardController.gameObject.SetActive(true);
+        CPlayerPrefs.SetBool(WordRegion.instance._textLevel.text + "ADS_HINT_FREE", true);
     }
 }

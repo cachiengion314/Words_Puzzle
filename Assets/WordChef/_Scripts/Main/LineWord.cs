@@ -81,6 +81,7 @@ public class LineWord : MonoBehaviour
             int index = i;
             cells[index].letter = word[index].ToString();
         }
+        WordRegion.instance.SaveLevelProgress();
     }
 
     public void SetProgress(string progress, string progressAnswer)

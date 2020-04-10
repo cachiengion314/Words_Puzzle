@@ -264,7 +264,7 @@ public class CryptoPlayerPrefsX
 	public static bool SetStringArray (String key, String[] stringArray)
 	{
 		if (stringArray.Length == 0) {
-			Debug.LogError ("The string array cannot have 0 entries when setting " + key);
+			//Debug.LogError ("The string array cannot have 0 entries when setting " + key);
 			return false;
 		}
 		var bytes = new byte[stringArray.Length + 1];

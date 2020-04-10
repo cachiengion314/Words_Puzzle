@@ -280,8 +280,15 @@ public static class Prefs {
 
     public static bool IsLastLevel()
     {
-        return  GameState.currentWorld >= unlockedWorld &&
-                GameState.currentSubWorld >= unlockedSubWorld && 
+        return  GameState.currentWorld > unlockedWorld &&
+                GameState.currentSubWorld > unlockedSubWorld && 
+                GameState.currentLevel > unlockedLevel;
+    }
+
+    public static bool IsSaveLevelProgress()
+    {
+        return GameState.currentWorld >= unlockedWorld &&
+                GameState.currentSubWorld >= unlockedSubWorld &&
                 GameState.currentLevel >= unlockedLevel;
     }
 
