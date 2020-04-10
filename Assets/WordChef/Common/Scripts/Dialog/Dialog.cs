@@ -78,12 +78,11 @@ public class Dialog : MonoBehaviour
         isShowing = false;
         if (anim != null && IsIdle() && hidingAnimation != null)
         {
-            if(scaleDialog)
+            if (scaleDialog)
             {
-                TweenControl.GetInstance().Scale(gameObject, Vector3.one * 1.2f, 0.3f, () => {
-                    TweenControl.GetInstance().Scale(gameObject, Vector3.zero, 0.5f, () => {
-                        DoClose();
-                    });
+                TweenControl.GetInstance().ScaleFromOne(anim.gameObject, 0.3f, () =>
+                {
+                    DoClose();
                 });
             }
             else
