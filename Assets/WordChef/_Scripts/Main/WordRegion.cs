@@ -208,6 +208,7 @@ public class WordRegion : MonoBehaviour
             line.transform.localScale = Vector3.one;
             line.transform.localPosition = Vector3.zero;
             line.usedBee = CPlayerPrefs.GetBool(line.name);
+            line.isAds = CPlayerPrefs.GetBool(line.name, false);
             if (!line.isShown)
             {
                 GetCellShowHint(line);
@@ -312,18 +313,14 @@ public class WordRegion : MonoBehaviour
             var valueX = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_X");
             var valueY = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_Y");
             var valueZ = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_Z");
-            var cellNotShown = new List<Cell>();
+            var line = lines.Single(l => l.isAds);
 
             if (_btnHintADS == null)
-                _btnHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
+                _btnHintADS = Instantiate(btnAdsHintFreePfb, line.transform);
             _btnHintADS.transform.localPosition = new Vector3(valueX, valueY, valueZ);
             _btnHintADS.gameObject.SetActive(true);
 
-            foreach (var line in lines)
-            {
-                cellNotShown = line.cells.FindAll(cell => !cell.isShown);
-            }
-            var cellTarget = CheckCellTarget(cellNotShown);
+            var cellTarget = CheckCellTarget(line.cells);
             _btnHintADS.Cell = cellTarget;
         }
         else
@@ -337,16 +334,11 @@ public class WordRegion : MonoBehaviour
     {
         foreach (var cell in cells)
         {
-            if (Vector3.Distance(cell.transform.position, _btnHintADS.transform.position) < 1f)
+            if (cell.isAds)
             {
-                foreach (var line in lines)
-                {
-                    if (line.cells.Contains(cell))
-                    {
-                        line.SetDataLetter(CPlayerPrefs.GetString("LINE_ANSWER"));
-                        break;
-                    }
-                }
+                var line = lines.Single(l => l.isAds);
+                if (line != null)
+                    line.SetDataLetter(CPlayerPrefs.GetString("LINE_ANSWER"));
                 return cell;
             }
         }
@@ -423,30 +415,39 @@ public class WordRegion : MonoBehaviour
     {
         var isAdsHintFree = CPlayerPrefs.GetBool(keyLevel + "ADS_HINT_FREE", false);
         _countShowAdsHintFree += 1;
-        if (_countShowAdsHintFree > 2 && !isAdsHintFree)
+        if (_countShowAdsHintFree > 2 && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy))
         {
-            var lineNotShown = lines.FindAll(l => !l.isShown);
-            var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
-            var indexAnswer = Random.Range(0, lineRandom.answers.Count);
-            var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
-            var cellRandom = cellNotShown[Random.Range(0, cellNotShown.Count)];
-            cellRandom.isAds = true;
-            if (_btnHintADS == null)
-                _btnHintADS = Instantiate(btnAdsHintFreePfb, parentAdsHint);
             if (CPlayerPrefs.HasKey(keyLevel + "POS_ADS_BUTTON_X"))
             {
+                var line = lines.Single(l => l.isAds);
+                if (_btnHintADS == null)
+                    _btnHintADS = Instantiate(btnAdsHintFreePfb, line.transform);
                 var valueX = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_X");
                 var valueY = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_Y");
                 var valueZ = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_Z");
                 _btnHintADS.transform.localPosition = new Vector3(valueX, valueY, valueZ);
-                _btnHintADS.gameObject.SetActive(true);
-                var cellTarget = CheckCellTarget(cellNotShown);
+
+                var cellTarget = CheckCellTarget(line.cells);
                 _btnHintADS.Cell = cellTarget;
             }
             else
             {
+                var lineNotShown = lines.FindAll(l => !l.isShown);
+                var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
+                var indexAnswer = Random.Range(0, lineRandom.answers.Count);
+                var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
+                var cellRandom = cellNotShown[Random.Range(0, cellNotShown.Count)];
+
+                lineRandom.isAds = true;
+                cellRandom.isAds = true;
+                CPlayerPrefs.SetBool(cellRandom.name, cellRandom.isAds);
+                CPlayerPrefs.SetBool(lineRandom.name, lineRandom.isAds);
+
+                if (_btnHintADS == null)
+                    _btnHintADS = Instantiate(btnAdsHintFreePfb, lineRandom.transform);
                 CPlayerPrefs.SetString("LINE_ANSWER", lineRandom.answers[indexAnswer]);
                 lineRandom.SetDataLetter(lineRandom.answers[indexAnswer]);
+                SaveLevelProgress();
                 _btnHintADS.transform.position = cellRandom.transform.position;
                 CPlayerPrefs.SetFloat(keyLevel + "POS_ADS_BUTTON_X", _btnHintADS.transform.localPosition.x);
                 CPlayerPrefs.SetFloat(keyLevel + "POS_ADS_BUTTON_Y", _btnHintADS.transform.localPosition.y);
@@ -478,8 +479,8 @@ public class WordRegion : MonoBehaviour
     }
     private void CheckGameComplete()
     {
-        var isNotShown = lines.Find(x => !x.isShown);
-        if (isNotShown == null)
+        var isComplete = lines.All(x => x.isShown);
+        if (isComplete)
         {
             SaveLevelProgress();
             BlockScreen.instance.Block(true);
@@ -508,6 +509,7 @@ public class WordRegion : MonoBehaviour
             {
                 line.ShowCellUseBee();
                 BeeManager.instance.SetAmountBee(-1);
+                SaveLevelProgress();
                 CheckGameComplete();
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                 count += 1;
@@ -549,6 +551,7 @@ public class WordRegion : MonoBehaviour
                     }
                     SetupNumhintFree();
                 });
+                SaveLevelProgress();
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
@@ -589,6 +592,7 @@ public class WordRegion : MonoBehaviour
                             //else
                             CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
                         });
+                        SaveLevelProgress();
                         CheckGameComplete();
 
                         Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
@@ -628,13 +632,15 @@ public class WordRegion : MonoBehaviour
 
     public string[] GetLevelProgress()
     {
-        if (Prefs.IsLastLevel()) return new string[0]; //nếu đã chơi thì biết đáp án rồi nên ko lưu
+        if (Prefs.IsLastLevel())
+            return new string[0]; //nếu đã chơi thì biết đáp án rồi nên ko lưu
         return Prefs.levelProgress;
     }
 
     public string[] GetAnswerProgress()
     {
-        if (Prefs.IsLastLevel()) return new string[0]; //nếu đã chơi thì biết đáp án rồi nên ko lưu
+        if (Prefs.IsLastLevel())
+            return new string[0]; //nếu đã chơi thì biết đáp án rồi nên ko lưu
         return Prefs.answersProgress;
     }
 
@@ -678,7 +684,8 @@ public class WordRegion : MonoBehaviour
         {
             Timer.Schedule(this, 0.5f, () =>
             {
-                UpdateBoard();
+                //UpdateBoard();
+
             });
         }
     }

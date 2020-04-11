@@ -651,8 +651,8 @@ MonoBehaviour:
   _animEggChapterClear: {fileID: 1671522893550753985}
   levelClearIdleAnim: Loop
   showLevelClearAnim: animation
-  eggLevelAnim: Level Clear2
-  eggChapterAnim: Chapter Clear2
+  eggLevelAnim: Level Clear
+  eggChapterAnim: Chapter Clear
   eggLevelIdleAnim: Loop
   eggChapterIdleAnim: Loop
 --- !u!222 &-7243958512498468609
@@ -1353,7 +1353,7 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: Loop2
+  startingAnimation: Level Clear
   startingLoop: 0
   timeScale: 1
   freeze: 0
@@ -1408,7 +1408,7 @@ RectTransform:
   m_GameObject: {fileID: 712802918876430494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children:
   - {fileID: 5146657249810724749}
   - {fileID: 3395492802466262494}
@@ -1422,7 +1422,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16.41, y: 0}
+  m_AnchoredPosition: {x: 25.829994, y: -278.19}
   m_SizeDelta: {x: 371, y: 533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3302233587379777511
@@ -1620,7 +1620,7 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: Loop2
+  startingAnimation: Chapter Clear
   startingLoop: 0
   timeScale: 1
   freeze: 0
@@ -1961,7 +1961,7 @@ RectTransform:
   m_GameObject: {fileID: 1480534635692189724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 3146359629384353516}
   - {fileID: 1639026369873344585}
@@ -1975,7 +1975,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -13.329999, y: 0}
+  m_AnchoredPosition: {x: 20.73, y: -247.81999}
   m_SizeDelta: {x: 371, y: 533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6377353081217430354
@@ -4719,7 +4719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5167777559144469037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5059,10 +5059,10 @@ RectTransform:
   m_Father: {fileID: 796872976847945917}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -95}
-  m_SizeDelta: {x: 153.28, y: 92.01}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1603362363418376626
 CanvasRenderer:

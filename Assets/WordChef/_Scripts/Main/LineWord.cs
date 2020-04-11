@@ -18,6 +18,7 @@ public class LineWord : MonoBehaviour
     public bool isShown, RTL;
 
     public bool usedBee;
+    public bool isAds;
 
     [Space]
     [SerializeField] private Button _btnMeanWord;
@@ -54,6 +55,7 @@ public class LineWord : MonoBehaviour
             cellTransform.localPosition = new Vector3(x, y);
             cell.name = cell.name + index + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
             cell.isBee = CPlayerPrefs.GetBool(cell.name);
+            cell.isAds = CPlayerPrefs.GetBool(cell.name, false);
             cells.Add(cell);
         }
     }
@@ -81,7 +83,6 @@ public class LineWord : MonoBehaviour
             int index = i;
             cells[index].letter = word[index].ToString();
         }
-        WordRegion.instance.SaveLevelProgress();
     }
 
     public void SetProgress(string progress, string progressAnswer)
@@ -172,6 +173,8 @@ public class LineWord : MonoBehaviour
     private void ShowBtnMeanByWord()
     {
         _btnMeanWord.gameObject.SetActive(isShown);
+        if (isShown)
+            _btnMeanWord.transform.SetAsLastSibling();
     }
 
     private void ShowDoneAllCell()

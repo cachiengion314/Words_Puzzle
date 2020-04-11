@@ -115,8 +115,6 @@ public class Cell : MonoBehaviour
         }
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);
-        CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
-        WordRegion.instance.SaveLevelProgress();
     }
 
     private void CalculateTextRaitoScale()
