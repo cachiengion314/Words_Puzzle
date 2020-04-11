@@ -135,6 +135,11 @@ public class WinDialog : Dialog
 
     private void ShowPanelButton(bool show)
     {
+        //WordRegion.instance.listWordCorrect = new List<string>();
+        //foreach (var line in WordRegion.instance.Lines)
+        //{
+        //    WordRegion.instance.listWordCorrect.Add(line.answer);
+        //}
         GroupButton.SetActive(show);
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
@@ -150,7 +155,7 @@ public class WinDialog : Dialog
             else
             {
                 var posTarget = _btnBee.transform.localPosition.x / 2;
-                TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget + 20, 0.5f, () =>
+                TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget + 50, 0.5f, () =>
                 {
                     TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f);
                 });
@@ -236,11 +241,6 @@ public class WinDialog : Dialog
             Prefs.unlockedWorld = GameState.currentWorld;
             Prefs.unlockedSubWorld = GameState.currentSubWorld;
             Prefs.unlockedLevel = GameState.currentLevel;
-
-            FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
-            FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
-            FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
-            FacebookController.instance.SaveDataGame();
         }
     }
 
@@ -305,6 +305,10 @@ public class WinDialog : Dialog
         FacebookController.instance.user.levelProgress = new string[] { "0" };
         FacebookController.instance.user.answerProgress = new string[] { "0" };
         FacebookController.instance.newLevel = true;
+
+        FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
+        FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
+        FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
         FacebookController.instance.SaveDataGame();
         CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
     }
