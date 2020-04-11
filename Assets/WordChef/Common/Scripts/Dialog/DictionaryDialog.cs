@@ -11,6 +11,7 @@ using TMPro;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System;
+using PlayFab;
 
 public class DictionaryDialog : Dialog
 {
@@ -68,6 +69,8 @@ public class DictionaryDialog : Dialog
     public void GetWordPassed()
     {
         wordPassed = CPlayerPrefs.GetString("WordLevelSave");
+        if (PlayFabClientAPI.IsClientLoggedIn())
+            wordPassed = FacebookController.instance.user.wordPassed;
         Debug.Log(wordPassed);
         if (wordPassed != null)
         {

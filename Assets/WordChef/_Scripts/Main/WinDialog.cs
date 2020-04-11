@@ -224,8 +224,8 @@ public class WinDialog : Dialog
         {
             Prefs.countChapter += 1;
             Prefs.countChapterDaily += 1;
-            GameState.currentSubWorld = (subWorld + 1) % Const.NUM_SUBWORLD;
-            if (subWorld == Const.NUM_SUBWORLD - 1)
+            GameState.currentSubWorld = (subWorld + 1) % MainController.instance.gameData.words.Count;
+            if (subWorld == MainController.instance.gameData.words.Count - 1)
             {
                 GameState.currentWorld++;
             }
@@ -236,6 +236,11 @@ public class WinDialog : Dialog
             Prefs.unlockedWorld = GameState.currentWorld;
             Prefs.unlockedSubWorld = GameState.currentSubWorld;
             Prefs.unlockedLevel = GameState.currentLevel;
+
+            FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
+            FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
+            FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+            FacebookController.instance.SaveDataGame();
         }
     }
 
@@ -297,10 +302,11 @@ public class WinDialog : Dialog
         Sound.instance.Play(Sound.Collects.LevelClose);
         Prefs.countLevel += 1;
         Prefs.countLevelDaily += 1;
-        CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         FacebookController.instance.user.levelProgress = new string[] { "0" };
         FacebookController.instance.user.answerProgress = new string[] { "0" };
+        FacebookController.instance.newLevel = true;
         FacebookController.instance.SaveDataGame();
+        CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
     }
 
 
@@ -314,6 +320,9 @@ public class WinDialog : Dialog
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
             AdmobController.instance.ShowRewardBasedVideo();
+#if UNITY_EDITOR
+            OnCompleteReward();
+#endif
         });
         //CUtils.ShowInterstitialAd();
     }
@@ -328,7 +337,8 @@ public class WinDialog : Dialog
         {
             CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
         }
-        RewardButton.SetActive(false);
+        RewardButton.GetComponent<Button>().interactable = false;
+        NextClick();
     }
 
     public void LeaderboardClick()

@@ -12,6 +12,7 @@ using UnityEngine.Events;
 public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
+    [HideInInspector] public bool newLevel = false;
 
     public PlayFab.ClientModels.LoginResult result;
     public User user;
@@ -195,6 +196,10 @@ public class FacebookController : MonoBehaviour
                 {
                     ParserJsonData(data.Value.Value);
                 }
+                if (data.Key.ToString() == "DICTIONARY")
+                {
+                    user.wordPassed = data.Value.Value;
+                }
             }
             SetValueUser();
             callback?.Invoke();
@@ -231,6 +236,7 @@ public struct User
     public string id;
     public string name;
     public string email;
+    public string wordPassed;
 
     public string unlockedWorld;
     public string unlockedSubWorld;

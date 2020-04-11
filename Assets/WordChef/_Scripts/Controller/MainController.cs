@@ -5,11 +5,13 @@ using UnityEngine.UI;
 using Superpow;
 using TMPro;
 using System;
+using PlayFab;
 
 public class MainController : BaseController
 {
     public Action onLoadDataComplete;
 
+    public GameData gameData;
     public TextMeshProUGUI levelNameText;
     public Animator animatorScene;
 
@@ -57,10 +59,7 @@ public class MainController : BaseController
         //level = 4;
         //Debug.Log(world + ", " + subWorld + ", " + level);
         //save level pass;
-        FacebookController.instance.user.unlockedLevel = level.ToString();
-        FacebookController.instance.user.unlockedWorld = world.ToString();
-        FacebookController.instance.user.unlockedSubWorld = subWorld.ToString();
-
+        
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
         WordRegion.instance.Load(gameLevel, currlevel);
@@ -76,8 +75,7 @@ public class MainController : BaseController
         //GameState.currentSubWorldName
         
         levelNameText.text = "LEVEL " + (currlevel + 1);
-
-        FacebookController.instance.SaveDataGame();
+        
         onLoadDataComplete?.Invoke();
     }
 
@@ -97,8 +95,14 @@ public class MainController : BaseController
             wordLevelSave += gameLevel.answers;
             CPlayerPrefs.SetString("WordLevelSave", wordLevelSave);
         }
-        // 
 
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            var dicData = new Dictionary<string, string>();
+            dicData.Add("DICTIONARY", wordLevelSave);
+            FacebookController.instance.UpdateUserData(dicData);
+        }
+        // 
         Timer.Schedule(this, 1f, () =>
         {
             DialogController.instance.ShowDialog(DialogType.Win);

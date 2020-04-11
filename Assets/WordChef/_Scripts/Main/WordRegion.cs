@@ -169,7 +169,7 @@ public class WordRegion : MonoBehaviour
         SetupNumhintFree();
 
         CheckAdsIsShow();
-
+        FacebookController.instance.newLevel = false;
         //FacebookController.instance.user.levelProgress = levelProgress;
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
@@ -632,14 +632,14 @@ public class WordRegion : MonoBehaviour
 
     public string[] GetLevelProgress()
     {
-        if (Prefs.IsLastLevel())
+        if (Prefs.IsLastLevel() || FacebookController.instance.newLevel)
             return new string[0]; //nếu đã chơi thì biết đáp án rồi nên ko lưu
         return Prefs.levelProgress;
     }
 
     public string[] GetAnswerProgress()
     {
-        if (Prefs.IsLastLevel())
+        if (Prefs.IsLastLevel() || FacebookController.instance.newLevel)
             return new string[0]; //nếu đã chơi thì biết đáp án rồi nên ko lưu
         return Prefs.answersProgress;
     }

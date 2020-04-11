@@ -55,9 +55,9 @@ public class ButtonVideoHintFree : MonoBehaviour
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             Cell.ShowHint();
+            WordRegion.instance.SaveLevelProgress();
         });
         //_rewardController.gameObject.SetActive(true);
         CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
-        WordRegion.instance.SaveLevelProgress();
     }
 }
