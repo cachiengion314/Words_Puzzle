@@ -11,6 +11,8 @@ public class RankingController : MonoBehaviour
     [SerializeField] private Photo _avatarPlayer;
     [SerializeField] private TextMeshProUGUI _playerName;
     [SerializeField] private TextMeshProUGUI _playerValue;
+    [Space]
+    [SerializeField] private Sprite spriteDefault;
 
     public void UpdateRankingPlayer(string name, int value, string urlAvatar, Sprite sprite = null)
     {
@@ -22,6 +24,7 @@ public class RankingController : MonoBehaviour
 
         _playerName.text = name;
         _playerValue.text = value.ToString();
+        _avatarPlayer.photo.sprite = spriteDefault;
         StartCoroutine(ShowAvatar(urlAvatar));
     }
 

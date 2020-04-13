@@ -218,6 +218,10 @@ public class WinDialog : Dialog
                 }
             }
         }
+        else if(eventData.Data.Name == "LIGHT_OPEN")
+        {
+            light.SetActive(true);
+        }
     }
 
 
@@ -251,8 +255,6 @@ public class WinDialog : Dialog
         {
             txtRewardByAds.text = "x" + Const.REWARD_ADS_CHAPTER_CLEAR;
             txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
-
-            light.SetActive(true);
 
             yield return new WaitForSeconds(0);
             //FadeImage.gameObject.SetActive(true);

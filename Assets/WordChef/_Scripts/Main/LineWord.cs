@@ -55,7 +55,7 @@ public class LineWord : MonoBehaviour
             cellTransform.localPosition = new Vector3(x, y);
             cell.name = cell.name + index + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
             cell.isBee = CPlayerPrefs.GetBool(cell.name);
-            cell.isAds = CPlayerPrefs.GetBool(cell.name, false);
+            cell.isAds = CPlayerPrefs.GetBool(cell.name + "_ADS", false);
             cells.Add(cell);
         }
     }
@@ -129,6 +129,13 @@ public class LineWord : MonoBehaviour
 
     public void ShowAnswer()
     {
+        if (isAds)
+        {
+            CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
+            WordRegion.instance.BtnADS.gameObject.SetActive(false);
+            isAds = false;
+            CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
+        }
         Prefs.countSpell += 1;
         Prefs.countSpellDaily += 1;
         isShown = true;
@@ -201,7 +208,7 @@ public class LineWord : MonoBehaviour
                 var cell = cellNotShow[i];
                 if (!cell.isShown && !cell.isAds)
                 {
-                    cell.letter = answer[i + indexAnswer].ToString();
+                    //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
                     callback?.Invoke();
                     var showDone = cells.All(cel => cel.isShown);
@@ -221,7 +228,7 @@ public class LineWord : MonoBehaviour
                 var cell = cellNotShow[i];
                 if (!cell.isShown && !cell.isAds)
                 {
-                    cell.letter = answer[i + indexAnswer].ToString();
+                    //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
                     callback?.Invoke();
                     var showDone = cells.All(cel => cel.isShown);

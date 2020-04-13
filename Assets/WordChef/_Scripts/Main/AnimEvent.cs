@@ -17,6 +17,14 @@ public class AnimEvent : MonoBehaviour
         }
     }
 
+    public void SceneAnimComplete()
+    {
+        if (MainController.instance != null)
+        {
+            MainController.instance.beeController.OnBeeButtonClick();
+        }
+    }
+
     public void SceneLoaded()
     {
         SceneAnimate.Instance.animatorScene.gameObject.SetActive(false);
@@ -55,10 +63,14 @@ public class AnimEvent : MonoBehaviour
             for (int i = 0; i < Pan.instance.LetterTexts.Count; i++)
             {
                 var letter = Pan.instance.LetterTexts[i];
+                var canvasGroup = letter.GetComponent<CanvasGroup>();
+                canvasGroup.alpha = 1;
                 //letter.transform.localScale = Vector3.zero;
                 TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.2f, 0.3f, () =>
                 {
-                    TweenControl.GetInstance().ScaleFromOne(letter.gameObject, 0.2f, ()=> {
+                    TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.5f);
+                    TweenControl.GetInstance().Scale(letter.gameObject, Vector3.zero, 0.5f, () =>
+                    {
                         var fxEffect = Instantiate(WordRegion.instance.compliment.fxHidenLetter, letter.transform);
                     }, EaseType.InQuad);
                 });
@@ -75,6 +87,9 @@ public class AnimEvent : MonoBehaviour
             {
                 var letter = Pan.instance.LetterTexts[i];
                 letter.transform.localScale = Vector3.zero;
+                var canvasGroup = letter.GetComponent<CanvasGroup>();
+                canvasGroup.alpha = 0;
+                TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.3f);
                 TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.1f, 0.3f, () =>
                 {
                     TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one, 0.2f, null, EaseType.InQuad);

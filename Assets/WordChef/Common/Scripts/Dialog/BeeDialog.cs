@@ -15,8 +15,6 @@ public class BeeDialog : Dialog
 
     public Sprite hotSprite;
     public Sprite bestSprite;
-    public Sprite candySprite;
-    public Sprite adsSprite;
 
     public TextMeshProUGUI[] numHintTexts;
     public Text[] priceTexts, saleTexts;
@@ -27,8 +25,7 @@ public class BeeDialog : Dialog
     public GameObject[] shopItemObject;
 
 
-    public GameObject shadowPanelHowToPlay;
-    public GameObject panelHowToPlay;
+    //public GameObject shadowPanelHowToPlay;
     protected override void Start()
     {
         base.Start();
@@ -174,8 +171,8 @@ public class BeeDialog : Dialog
 
     public void OnClickCloseHowToPlayPanelButton()
     {
-        shadowPanelHowToPlay.SetActive(false);
-        TweenControl.GetInstance().ScaleFromOne(panelHowToPlay, 0.3f);
+        //shadowPanelHowToPlay.SetActive(false);
+        //TweenControl.GetInstance().ScaleFromOne(panelHowToPlay, 0.3f);
     }
 
 }

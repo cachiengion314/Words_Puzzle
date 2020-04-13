@@ -21,6 +21,7 @@ public class DictionaryInGameDialog : Dialog
 
     public GameObject arrowLeftObject;
     public GameObject arrowRightObject;
+    public GameObject noInternet;
 
     string meaning;
     string sourceDictionaries;
@@ -38,6 +39,7 @@ public class DictionaryInGameDialog : Dialog
     void Start()
     {
         base.Start();
+        noInternet.SetActive(false);
         snapScrolling.Init(itemPrefab.GetComponent<RectTransform>().sizeDelta.x);
         CheckHaveWords();
     }
@@ -118,8 +120,18 @@ public class DictionaryInGameDialog : Dialog
 
                 if (!Dictionary.instance.CheckWExistInDictWordSaved(word))
                 {
-                    Dictionary.instance.GetDataFromApi(word);
-                    meanItemDictionary.SetMeanText("Loading...");
+                    CUtils.CheckConnection(this, (result) =>
+                    {
+                        if (result == 0)
+                        {
+                            Dictionary.instance.GetDataFromApi(word);
+                            meanItemDictionary.SetMeanText("Loading...");
+                        }
+                        else
+                        {
+                            noInternet.SetActive(true);
+                        }
+                    });
                 }
                 else
                 {

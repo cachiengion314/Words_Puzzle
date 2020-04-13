@@ -180,6 +180,7 @@ public class Pan : MonoBehaviour
 
     public void ScaleWord(Vector3 letterPos, Action callback = null)
     {
+        BlockScreen.instance.Block(false);
         TweenControl.GetInstance().KillTweener(textPreview.transform);
         textPreview.transform.localPosition = new Vector3(0, textPreview.transform.localPosition.y, 0);
         var letterTarget = letterTexts.Single(let => Vector3.Distance(letterPos, let.transform.position) < 1);

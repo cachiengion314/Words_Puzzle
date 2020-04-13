@@ -14,6 +14,7 @@ public class MainController : BaseController
     public GameData gameData;
     public TextMeshProUGUI levelNameText;
     public Animator animatorScene;
+    public BeeController beeController;
 
     private int world, subWorld, level;
     private bool _isGameComplete;
@@ -21,8 +22,8 @@ public class MainController : BaseController
     private GameLevel gameLevel;
 
     public static MainController instance;
-
-    [HideInInspector] public RewardVideoController rewardVideoController;
+    
+    [HideInInspector] public bool isBeePlay;
 
     private string wordLevelSave;
 
@@ -42,6 +43,7 @@ public class MainController : BaseController
     {
         base.Awake();
         instance = this;
+        isBeePlay = false;
         onLoadDataComplete = PlayAnimScene;
     }
 

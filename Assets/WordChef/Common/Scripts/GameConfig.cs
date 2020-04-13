@@ -4,6 +4,7 @@ using System;
 [System.Serializable]
 public class GameConfig
 {
+    public GameParameters gameParameters;
     public Admob admob;
 
     [Header("")]
@@ -35,4 +36,10 @@ public class Admob
     [Header("RewardedVideo")]
     public string androidRewarded;
     public string iosRewarded;
+}
+
+[System.Serializable]
+public class GameParameters
+{
+    public int rewardedBeeAmount = 2;
 }

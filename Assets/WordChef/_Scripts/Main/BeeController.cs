@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class BeeController : MonoBehaviour
     void Start()
     {
         //UpdateAmountBee();
-        OnBeeButtonClick();
+        //OnBeeButtonClick();
     }
 
     private void UpdateAmountBee()
@@ -24,17 +25,21 @@ public class BeeController : MonoBehaviour
 
     public void OnBeeButtonClick()
     {
-        if (BeeManager.instance.CurrBee > 3)
+        var canUseBee = WordRegion.instance.Lines.Any(line => line.cells.Count > 3);
+        var isUsed = WordRegion.instance.Lines.Any(line => line.usedBee);
+        if (BeeManager.instance.CurrBee > 0 && canUseBee && !isUsed)
         {
+            MainController.instance.isBeePlay = true;
             if (WordRegion.instance.IsUseBee())
                 return;
             WordRegion.instance.BeeClick();
             UpdateAmountBee();
         }
-        //else
-        //{
-        //    DialogController.instance.ShowDialog(DialogType.Bee);
-        //}
+        else
+        {
+            MainController.instance.isBeePlay = false;
+            //DialogController.instance.ShowDialog(DialogType.Bee);
+        }
     }
 
     #region TEST BEE

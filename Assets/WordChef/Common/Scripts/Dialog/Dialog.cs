@@ -50,6 +50,12 @@ public class Dialog : MonoBehaviour
             {
                 anim.enabled = false;
                 anim.transform.localScale = Vector3.zero;
+                if (anim.GetComponent<CanvasGroup>() != null)
+                {
+                    var canvasGroup = anim.GetComponent<CanvasGroup>();
+                    canvasGroup.alpha = 0;
+                    TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.5f);
+                }
                 TweenControl.GetInstance().ScaleFromZero(anim.gameObject, 0.5f, () =>
                 {
 
@@ -80,6 +86,12 @@ public class Dialog : MonoBehaviour
         {
             if (scaleDialog)
             {
+                if (anim.GetComponent<CanvasGroup>() != null)
+                {
+                    var canvasGroup = anim.GetComponent<CanvasGroup>();
+                    if (canvasGroup.alpha == 1)
+                        TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.5f);
+                }
                 TweenControl.GetInstance().ScaleFromOne(anim.gameObject, 0.3f, () =>
                 {
                     DoClose();

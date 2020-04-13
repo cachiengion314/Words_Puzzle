@@ -208,7 +208,7 @@ public class WordRegion : MonoBehaviour
             line.transform.localScale = Vector3.one;
             line.transform.localPosition = Vector3.zero;
             line.usedBee = CPlayerPrefs.GetBool(line.name);
-            line.isAds = CPlayerPrefs.GetBool(line.name, false);
+            line.isAds = CPlayerPrefs.GetBool(line.name + "_ADS", false);
             if (!line.isShown)
             {
                 GetCellShowHint(line);
@@ -313,7 +313,7 @@ public class WordRegion : MonoBehaviour
             var valueX = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_X");
             var valueY = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_Y");
             var valueZ = CPlayerPrefs.GetFloat(keyLevel + "POS_ADS_BUTTON_Z");
-            var line = lines.Single(l => l.isAds);
+            var line = lines.Single(l => l.isAds && !l.usedBee);
 
             if (_btnHintADS == null)
                 _btnHintADS = Instantiate(btnAdsHintFreePfb, line.transform);
@@ -321,7 +321,9 @@ public class WordRegion : MonoBehaviour
             _btnHintADS.gameObject.SetActive(true);
 
             var cellTarget = CheckCellTarget(line.cells);
+            var ratioScale = (cellTarget.transform as RectTransform).sizeDelta / _btnHintADS.GetComponentInChildren<Image>().rectTransform.sizeDelta;
             _btnHintADS.Cell = cellTarget;
+            _btnHintADS.transform.localScale = ratioScale;
         }
         else
         {
@@ -369,6 +371,7 @@ public class WordRegion : MonoBehaviour
 
             }
             compliment.Show(lineIndex);
+            Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
             lineIndex++;
             if (lineIndex > compliment.sprites.Length - 1)
             {
@@ -377,8 +380,7 @@ public class WordRegion : MonoBehaviour
                 board.SetNativeSize();
                 boardHighlight.color = new Color(1, 1, 1, 1);
             }
-
-            Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
+            
             listWordCorrect.Add(checkWord.ToLower());
             //}
             //else
@@ -428,20 +430,22 @@ public class WordRegion : MonoBehaviour
                 _btnHintADS.transform.localPosition = new Vector3(valueX, valueY, valueZ);
 
                 var cellTarget = CheckCellTarget(line.cells);
+                var ratioScale = (cellTarget.transform as RectTransform).sizeDelta / _btnHintADS.GetComponentInChildren<Image>().rectTransform.sizeDelta;
                 _btnHintADS.Cell = cellTarget;
+                _btnHintADS.transform.localScale = ratioScale;
             }
             else
             {
-                var lineNotShown = lines.FindAll(l => !l.isShown);
+                var lineNotShown = lines.FindAll(l => !l.isShown && !l.usedBee);
                 var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
                 var indexAnswer = Random.Range(0, lineRandom.answers.Count);
-                var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown);
+                var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown && !cell.isAds);
                 var cellRandom = cellNotShown[Random.Range(0, cellNotShown.Count)];
 
                 lineRandom.isAds = true;
                 cellRandom.isAds = true;
-                CPlayerPrefs.SetBool(cellRandom.name, cellRandom.isAds);
-                CPlayerPrefs.SetBool(lineRandom.name, lineRandom.isAds);
+                CPlayerPrefs.SetBool(cellRandom.name + "_ADS", cellRandom.isAds);
+                CPlayerPrefs.SetBool(lineRandom.name + "_ADS", lineRandom.isAds);
 
                 if (_btnHintADS == null)
                     _btnHintADS = Instantiate(btnAdsHintFreePfb, lineRandom.transform);
@@ -453,6 +457,8 @@ public class WordRegion : MonoBehaviour
                 CPlayerPrefs.SetFloat(keyLevel + "POS_ADS_BUTTON_Y", _btnHintADS.transform.localPosition.y);
                 CPlayerPrefs.SetFloat(keyLevel + "POS_ADS_BUTTON_Z", _btnHintADS.transform.localPosition.z);
                 _btnHintADS.Cell = cellRandom;
+                var ratioScale = (cellRandom.transform as RectTransform).sizeDelta / _btnHintADS.GetComponentInChildren<Image>().rectTransform.sizeDelta;
+                _btnHintADS.transform.localScale = ratioScale;
             }
             _btnHintADS.gameObject.SetActive(true);
         }
@@ -515,6 +521,7 @@ public class WordRegion : MonoBehaviour
                 count += 1;
             }
         }
+        MainController.instance.isBeePlay = false;
         Sound.instance.PlayButton(Sound.Button.Beehive);
     }
 

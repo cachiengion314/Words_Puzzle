@@ -6,7 +6,7 @@ public class FixIssues : MonoBehaviour {
 
 	private void Start()
 	{
-		FixIssue011();
+		//FixIssue011();
 	}
 
 	private void FixIssue011()

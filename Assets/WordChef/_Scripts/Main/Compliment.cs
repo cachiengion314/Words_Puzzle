@@ -26,6 +26,8 @@ public class Compliment : MonoBehaviour
     {
         if (_particle != null)
         {
+            if (_particle.GetComponent<Canvas>() != null)
+                _particle.GetComponent<Canvas>().overrideSorting = true;
             _particle.gameObject.SetActive(true);
             _particle.Play();
         }
@@ -45,12 +47,13 @@ public class Compliment : MonoBehaviour
         if (_particle != null)
             Destroy(_particle.gameObject);
         _particle = Instantiate(particleSystems[type], rootParticle);
+        _particle.gameObject.SetActive(false);
         if (_useSpine)
         {
             _animCompliment.onEventAction = OnShowEffect;
             _animCompliment.gameObject.SetActive(true);
             _animCompliment.SetAnimation(nameAnim[type], false);
-            var duration = _animCompliment.ske.SkeletonDataAsset.GetAnimationStateData().SkeletonData.Animations.Items[type].Duration;
+            //var duration = _animCompliment.ske.SkeletonDataAsset.GetAnimationStateData().SkeletonData.Animations.Items[type].Duration;
         }
         else
         {

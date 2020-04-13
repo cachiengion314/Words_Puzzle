@@ -29,7 +29,12 @@ public class Cell : MonoBehaviour
         SetBgLetter(_spriteLetter);
         bg.transform.SetParent(Mask.transform);
         ImgPedestal.SetActive(true);
-        iconCoin.transform.localScale = Vector3.zero;
+        if (iconCoin.transform.localScale == Vector3.one)
+        {
+            iconCoin.transform.localScale = Vector3.zero;
+            CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
+            Sound.instance.Play(Sound.Collects.CoinCollect);
+        }
         Vector3 beginPosition = TextPreview.instance.transform.position;
         originLetterScale = letterText.transform.localScale;
         Vector3 middlePoint = CUtils.GetMiddlePoint(beginPosition, transform.position, -0.3f);
@@ -102,11 +107,6 @@ public class Cell : MonoBehaviour
     public void ShowText()
     {
         letterText.transform.localPosition = Vector3.zero;
-        if (isAds)
-        {
-            if (WordRegion.instance.BtnADS != null)
-                WordRegion.instance.BtnADS.gameObject.SetActive(false);
-        }
         letterText.text = letter;
         if (letterTextNor != null)
         {
