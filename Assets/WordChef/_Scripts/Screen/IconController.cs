@@ -8,15 +8,12 @@ public class IconController : MonoBehaviour
     [SerializeField] private float _timeDelay;
     [SerializeField] private float _timeMove = 0.2f;
 
-    void Awake()
+    void Start()
     {
+        //AnimIcon();
         for (int i = 0; i < _buttons.Count; i++)
             _buttons[i].transform.localScale = Vector3.zero;
     }
-    //void Start()
-    //{
-    //    AnimIcon();
-    //}
 
     public void AnimIcon()
     {

@@ -18,8 +18,4 @@ public class JobWorker : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
-    {
-
-    }
 }

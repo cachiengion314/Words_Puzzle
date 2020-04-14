@@ -197,7 +197,7 @@ public class LineWord : MonoBehaviour
         if (answer == "")
         {
             answer = answers[Random.Range(0, answers.Count)];
-            UpdateAnswers();
+            SetDataLetter(answer);
         }
         var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
         var indexAnswer = answer.Length - cellNotShow.Count;
@@ -248,7 +248,7 @@ public class LineWord : MonoBehaviour
         if (answer == "")
         {
             answer = answers[Random.Range(0, answers.Count)];
-            UpdateAnswers();
+            SetDataLetter(answer);
         }
         var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
         var cellRandom = GetRandomCell(cellNotShow);
@@ -273,7 +273,7 @@ public class LineWord : MonoBehaviour
             if (answer == "")
             {
                 answer = answers[Random.Range(0, answers.Count)];
-                UpdateAnswers();
+                SetDataLetter(answer);
             }
             var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
             var indexAnswer = answer.Length - cellNotShow.Count;
@@ -282,7 +282,7 @@ public class LineWord : MonoBehaviour
                 var cell = cellNotShow[i];
                 if (i == 0)
                 {
-                    cell.letter = answer[i + indexAnswer].ToString();
+                    //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowTextBee();
                 }
                 else
@@ -314,7 +314,7 @@ public class LineWord : MonoBehaviour
     {
         var indexAnswer = answer.Length - cells.Count;
         var index = Random.Range(0, cells.Count - 1);
-        cells[index].letter = answer[index + indexAnswer].ToString();
+        //cells[index].letter = answer[index + indexAnswer].ToString();
         return cells[index];
     }
 }

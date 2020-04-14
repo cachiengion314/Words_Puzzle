@@ -12,12 +12,11 @@ public class BaseController : MonoBehaviour {
         if (!CPlayerPrefs.HasKey("INSTALLED"))
         {
             CPlayerPrefs.DeleteAll();
-            CPlayerPrefs.Save();
             CPlayerPrefs.SetBool("INSTALLED", true);
+            CPlayerPrefs.Save();
         }
-        if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
-            Instantiate(donotDestroyOnLoad);
-        
+        //if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
+        //    Instantiate(donotDestroyOnLoad);
         iTween.dimensionMode = CommonConst.ITWEEN_MODE;
         CPlayerPrefs.useRijndael(CommonConst.ENCRYPTION_PREFS);
 
@@ -36,7 +35,7 @@ public class BaseController : MonoBehaviour {
         StartCoroutine(SavePrefs());
 #endif
         Music.instance.Play(music);
-
+        
         //CUtils.ShowBannerAd();
     }
 
