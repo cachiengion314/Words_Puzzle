@@ -46,7 +46,7 @@ public class SpineControl : MonoBehaviour
         }
     }
     private RectTransform _rect;
-    public void Awake()
+    public void Start()
     {
         try
         {

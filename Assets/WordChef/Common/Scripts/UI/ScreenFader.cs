@@ -74,14 +74,10 @@ public class ScreenFader : MonoBehaviour
             if (scene.name != Const.SCENE_MAIN)
                 FadeIn(null);
         }
-        else if (SceneAnimate.Instance.animatorScene.GetCurrentAnimatorStateInfo(0).IsName("SceneLoading"))
+        else if (SceneAnimate.Instance.animatorScene.gameObject.activeInHierarchy
+            && SceneAnimate.Instance.animatorScene.GetCurrentAnimatorStateInfo(0).IsName("SceneLoading"))
         {
             SceneAnimate.Instance.SceneOpen();
-        }
-        else
-        {
-            if (scene.name == Const.SCENE_HOME)
-                HomeController.instance.PlayAnimTitle();
         }
     }
 }

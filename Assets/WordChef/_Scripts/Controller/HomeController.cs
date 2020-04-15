@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using DG.Tweening;
+using System.Collections;
 
 public class HomeController : BaseController
 {
@@ -47,17 +48,29 @@ public class HomeController : BaseController
 
     public void PlayAnimTitle()
     {
+        Debug.Log("Play Animation Man Home");
         animatorTitle.enabled = true;
         animatorTitle.SetBool("Play", true);
-        TweenControl.GetInstance().DelayCall(transform,0.4f, ()=> {
-            _dotweenAnimation.DOPlayAllById("0");
-            _iconController.AnimIcon();
-        });
+        StartCoroutine(PlayAnimButton());
+    }
+
+    private IEnumerator PlayAnimButton()
+    {
+        yield return new WaitForSeconds(0.4f);
+        _dotweenAnimation.DOPlayAllById("0");
+        _iconController.AnimIcon();
     }
 
     public void StopAnimtitle()
     {
         animatorTitle.enabled = false;
         animatorTitle.SetBool("Play", false);
+    }
+
+    public override void OnApplicationPause(bool pause)
+    {
+        base.OnApplicationPause(pause);
+        if (!pause)
+            PlayAnimTitle();
     }
 }

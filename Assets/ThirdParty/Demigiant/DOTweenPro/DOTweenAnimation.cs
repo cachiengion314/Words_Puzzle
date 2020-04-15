@@ -446,6 +446,7 @@ namespace DG.Tweening
         public void DOPlayAllById(string id)
         {
             DOTween.Play(id);
+            Debug.Log("DOPlay Id: " + id);
         }
 
         public void DOPauseAllById(string id)

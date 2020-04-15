@@ -61,6 +61,12 @@ public class WinDialog : Dialog
     private GameObject _fxEffect;
     private List<GameObject> _stars;
 
+    private void Awake()
+    {
+        _animEggChapterClear.onEventAction = ShowStarsEffect;
+        _animEggLevelClear.onEventAction = ShowStarsEffect;
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -75,7 +81,7 @@ public class WinDialog : Dialog
         level = GameState.currentLevel;
 
         isLastLevel = Prefs.IsSaveLevelProgress();
-        txtReward.transform.localScale = Vector3.zero;
+        txtReward.gameObject.SetActive(false);
         light.SetActive(false);
         GroupButton.SetActive(false);
         SetupStars();
@@ -91,7 +97,6 @@ public class WinDialog : Dialog
                 {
                     _animChapterClear.SetAnimation(levelClearIdleAnim, true);
                 });
-                _animEggChapterClear.onEventAction = ShowStarsEffect;
                 TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
                 {
                     _animEggChapterClear.gameObject.SetActive(true);
@@ -113,7 +118,7 @@ public class WinDialog : Dialog
                 {
                     _animLevelClear.SetAnimation(levelClearIdleAnim, true);
                 });
-                _animEggLevelClear.onEventAction = ShowStarsEffect;
+                
                 TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
                 {
                     _animEggLevelClear.gameObject.SetActive(true);
@@ -288,7 +293,7 @@ public class WinDialog : Dialog
         //var tweener = FadeImage.DOFade(0f, 1f);
         //tweener.onComplete += () =>
         //{
-        txtReward.transform.localScale = Vector3.one;
+        txtReward.gameObject.SetActive(true);
         _starReward.SetActive(true);
         FadeImage.gameObject.SetActive(false);
         //};

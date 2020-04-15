@@ -8,7 +8,7 @@ public class Sound : MonoBehaviour
     public enum Button { Default, Hint, MultipleHint, Shuffe, Beehive };
     public enum Others { Match, Win, PopupOpen, PopupClose, WordInvalid, WordAlready };
     public enum Collects { CoinCollect, CoinKeep, LevelClose, LevelOpen, LevelShow };
-    public enum Scenes { CurtainClose, CurtainOpen, HomeButton, LevelClear, ChapterClear};
+    public enum Scenes { CurtainClose, CurtainOpen, HomeButton, LevelClear, ChapterClear };
 
     //[HideInInspector]
     public AudioClip[] buttonClips;
@@ -25,7 +25,8 @@ public class Sound : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
     }
 
     private void Start()
@@ -73,7 +74,8 @@ public class Sound : MonoBehaviour
         int index = (int)type;
         audioSource.volume = volume;
         audioSource.PlayOneShot(collectClips[index]);
-        TweenControl.GetInstance().DelayCall(transform, collectClips[index].length, () => {
+        TweenControl.GetInstance().DelayCall(transform, collectClips[index].length, () =>
+        {
             onComplete?.Invoke();
         });
     }
@@ -81,9 +83,11 @@ public class Sound : MonoBehaviour
     public void Play(Scenes type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
+        Debug.Log("sceneClips[index]: " + sceneClips[index]);
         audioSource.volume = volume;
         audioSource.PlayOneShot(sceneClips[index]);
-        TweenControl.GetInstance().DelayCall(transform,sceneClips[index].length,()=> {
+        TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () =>
+        {
             onComplete?.Invoke();
         });
     }
@@ -93,7 +97,8 @@ public class Sound : MonoBehaviour
         int index = (int)type;
         audioSource.volume = volume;
         audioSource.PlayOneShot(otherClips[index]);
-        TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () => {
+        TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () =>
+        {
             onComplete?.Invoke();
         });
     }
@@ -103,7 +108,8 @@ public class Sound : MonoBehaviour
         int index = (int)type;
         loopAudioSource.volume = volume;
         loopAudioSource.PlayOneShot(otherClips[index]);
-        TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () => {
+        TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () =>
+        {
             onComplete?.Invoke();
         });
     }

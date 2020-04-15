@@ -15,8 +15,8 @@ public class BaseController : MonoBehaviour {
             CPlayerPrefs.SetBool("INSTALLED", true);
             CPlayerPrefs.Save();
         }
-        //if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
-        //    Instantiate(donotDestroyOnLoad);
+        if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
+            Instantiate(donotDestroyOnLoad);
         iTween.dimensionMode = CommonConst.ITWEEN_MODE;
         CPlayerPrefs.useRijndael(CommonConst.ENCRYPTION_PREFS);
 
@@ -41,7 +41,7 @@ public class BaseController : MonoBehaviour {
 
     public virtual void OnApplicationPause(bool pause)
     {
-        Debug.Log("On Application Pause");
+        Debug.Log("On Application Pause: "  + pause);
         CPlayerPrefs.Save();
         //if (pause == false)
         //{

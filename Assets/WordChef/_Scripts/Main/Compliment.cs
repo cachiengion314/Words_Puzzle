@@ -22,14 +22,22 @@ public class Compliment : MonoBehaviour
     int idAnim;
     ParticleSystem _particle;
 
+    private void Awake()
+    {
+        if (_animCompliment != null)
+            _animCompliment.onEventAction = OnShowEffect;
+    }
+
     public void PlayParticle()
     {
         if (_particle != null)
         {
             if (_particle.GetComponent<Canvas>() != null)
                 _particle.GetComponent<Canvas>().overrideSorting = true;
+            Debug.Log("overrideSorting: " + _particle.GetComponent<Canvas>().overrideSorting);
             _particle.gameObject.SetActive(true);
             _particle.Play();
+            Debug.Log("IsRunning: " + _particle.isPlaying);
         }
     }
 
@@ -43,20 +51,19 @@ public class Compliment : MonoBehaviour
 
     public void Show(int type)
     {
-        if (!IsAvailable2Show()) return;
         if (_particle != null)
             Destroy(_particle.gameObject);
         _particle = Instantiate(particleSystems[type], rootParticle);
         _particle.gameObject.SetActive(false);
+        Debug.Log("_particle: " + _particle.name);
         if (_useSpine)
         {
-            _animCompliment.onEventAction = OnShowEffect;
             _animCompliment.gameObject.SetActive(true);
             _animCompliment.SetAnimation(nameAnim[type], false);
-            //var duration = _animCompliment.ske.SkeletonDataAsset.GetAnimationStateData().SkeletonData.Animations.Items[type].Duration;
         }
         else
         {
+            if (!IsAvailable2Show()) return;
             sRenderer.sprite = sprites[type];
             sRendererBG.sprite = spritesBg[type];
             _particle.gameObject.SetActive(false);
@@ -92,7 +99,12 @@ public class Compliment : MonoBehaviour
     {
         if (e.Data.Name == "EF")
         {
+            Debug.Log("Play Event Spine GGAAE");
             PlayParticle();
+        }
+        else
+        {
+            Debug.LogError("Name Event null !");
         }
     }
 

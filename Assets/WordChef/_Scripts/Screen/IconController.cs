@@ -18,18 +18,15 @@ public class IconController : MonoBehaviour
     public void AnimIcon()
     {
         Sound.instance.Play(Sound.Scenes.HomeButton);
-        TweenControl.GetInstance().DelayCall(transform, _timeDelay, () =>
-        {
-            StartCoroutine(ShowIcon());
-        });
+        StartCoroutine(ShowIcon());
     }
 
     private IEnumerator ShowIcon()
     {
+        yield return new WaitForSeconds(_timeDelay);
         for (int i = 0; i < _buttons.Count; i++)
         {
             var btn = _buttons[i];
-            yield return new WaitForSeconds(0.05f);
             TweenControl.GetInstance().ScaleFromZero(btn, 0.3f, null, EaseType.InOutBack);
             TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -55, _timeMove, () =>
             {
@@ -40,10 +37,12 @@ public class IconController : MonoBehaviour
                         TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -87, 0.15f, () =>
                         {
                             TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -85f, 0.15f, null, EaseType.Linear);
+                            Debug.Log("btn Done" + btn.name);
                         });
                     });
                 });
             });
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }

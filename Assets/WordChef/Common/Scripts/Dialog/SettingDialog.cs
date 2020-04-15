@@ -23,11 +23,13 @@ public class SettingDialog : PauseDialog
     protected override void Start()
     {
         base.Start();
-        gameMaster = GameObject.FindGameObjectWithTag("GameMaster");
-        if (gameMaster)
+        //gameMaster = GameObject.FindGameObjectWithTag("GameMaster");
+        if (Sound.instance != null && Music.instance != null)
         {
-            soundController = gameMaster.transform.Find("SoundController").GetComponent<Sound>();
-            musicController = gameMaster.transform.Find("MusicController").GetComponent<Music>();
+            soundController = Sound.instance;
+            musicController = Music.instance;
+            ShowButtonSound(soundController.IsEnabled());
+            ShowButtonMusic(musicController.IsEnabled());
         }
         CheckLogin();
     }
@@ -45,6 +47,34 @@ public class SettingDialog : PauseDialog
             musicButton.transform.Find("On").gameObject.SetActive(true);
     }*/
 
+    private void ShowButtonMusic(bool status)
+    {
+        if (!status)
+        {
+            musicButton.transform.Find("On").gameObject.SetActive(false);
+            musicButton.transform.Find("Off").gameObject.SetActive(true);
+        }
+        else
+        {
+            musicButton.transform.Find("Off").gameObject.SetActive(false);
+            musicButton.transform.Find("On").gameObject.SetActive(true);
+        }
+    }
+
+    private void ShowButtonSound(bool status)
+    {
+        if (!status)
+        {
+            soundButton.transform.Find("On").gameObject.SetActive(false);
+            soundButton.transform.Find("Off").gameObject.SetActive(true);
+        }
+        else
+        {
+            soundButton.transform.Find("Off").gameObject.SetActive(false);
+            soundButton.transform.Find("On").gameObject.SetActive(true);
+        }
+    }
+
     public override void OnHowToPlayClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
@@ -57,16 +87,7 @@ public class SettingDialog : PauseDialog
         {
             bool _status = soundController.IsEnabled();
             soundController.SetEnabled(!_status);
-            if (_status)
-            {
-                soundButton.transform.Find("On").gameObject.SetActive(false);
-                soundButton.transform.Find("Off").gameObject.SetActive(true);
-            }
-            else
-            {
-                soundButton.transform.Find("Off").gameObject.SetActive(false);
-                soundButton.transform.Find("On").gameObject.SetActive(true);
-            }
+            ShowButtonSound(soundController.IsEnabled());
         }
     }
     public void OnMusicClick()
@@ -75,17 +96,7 @@ public class SettingDialog : PauseDialog
         {
             bool _status = musicController.IsEnabled();
             musicController.SetEnabled(!_status, true);
-            
-            if (_status)
-            {
-                musicButton.transform.Find("On").gameObject.SetActive(false);
-                musicButton.transform.Find("Off").gameObject.SetActive(true);
-            }
-            else
-            {
-                musicButton.transform.Find("Off").gameObject.SetActive(false);
-                musicButton.transform.Find("On").gameObject.SetActive(true);
-            }
+            ShowButtonMusic(musicController.IsEnabled());
         }
     }
 
