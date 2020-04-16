@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using static CUtils;
 
 public class CurrencyBallance : MonoBehaviour {
     private void Start()
@@ -11,7 +12,8 @@ public class CurrencyBallance : MonoBehaviour {
 
     private void UpdateBalance()
     {
-        gameObject.SetText(CurrencyController.GetBalance().ToString());
+        var currency = AbbrevationUtility.AbbreviateNumber(CurrencyController.GetBalance());
+        gameObject.SetText(currency);
     }
 
     private void OnBalanceChanged()

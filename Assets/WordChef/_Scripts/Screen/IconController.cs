@@ -8,15 +8,10 @@ public class IconController : MonoBehaviour
     [SerializeField] private float _timeDelay;
     [SerializeField] private float _timeMove = 0.2f;
 
-    void Start()
-    {
-        //AnimIcon();
-        for (int i = 0; i < _buttons.Count; i++)
-            _buttons[i].transform.localScale = Vector3.zero;
-    }
-
     public void AnimIcon()
     {
+        for (int i = 0; i < _buttons.Count; i++)
+            _buttons[i].transform.localScale = Vector3.zero;
         Sound.instance.Play(Sound.Scenes.HomeButton);
         StartCoroutine(ShowIcon());
     }
@@ -37,7 +32,6 @@ public class IconController : MonoBehaviour
                         TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -87, 0.15f, () =>
                         {
                             TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -85f, 0.15f, null, EaseType.Linear);
-                            Debug.Log("btn Done" + btn.name);
                         });
                     });
                 });

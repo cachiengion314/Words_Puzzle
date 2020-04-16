@@ -7,7 +7,7 @@ public class OpenChapter : MonoBehaviour
     // Start is called before the first frame update
   public void OnChapterClick()
     {
-        CUtils.LoadScene(1, false);
+        CUtils.LoadScene(Const.SCENE_CHAPTER, false);
         Sound.instance.Play(Sound.Others.PopupOpen);
         Debug.Log("DSDSDSDSD");
     }

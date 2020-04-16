@@ -14,7 +14,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     {
         _amount = amount;
         _currAmount = 0;
-        _textAmount.text = "x " + _amount;
+        _textAmount.text = "X" + _amount;
         Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f, () =>
         {

@@ -14,7 +14,7 @@ public class RewardedVideoDialog : Dialog {
 
     public void SetAmount(int amount)
     {
-        amountText.text = "x " + amount.ToString();
+        amountText.text = "X" + amount.ToString();
         messageText.text = "Congratulation! You got " + amount + " free rubies.";
     }
 

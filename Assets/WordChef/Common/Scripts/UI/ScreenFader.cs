@@ -47,6 +47,24 @@ public class ScreenFader : MonoBehaviour
         });
     }
 
+    public void GotoSceneNoFade(int sceneIndex)
+    {
+        SceneManager.LoadSceneAsync(sceneIndex);
+    }
+
+    public void GotoScene(string sceneName)
+    {
+        FadeOut(() =>
+        {
+            SceneManager.LoadSceneAsync(sceneName);
+        });
+    }
+
+    public void GotoSceneNoFade(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+    }
+
     public void DelayCall(float timeDelay, Action onComplete)
     {
         Timer.Schedule(this, timeDelay, () =>

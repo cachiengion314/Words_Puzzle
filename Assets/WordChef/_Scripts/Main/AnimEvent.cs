@@ -32,8 +32,8 @@ public class AnimEvent : MonoBehaviour
 
     public void OnShowSceneCallback()
     {
-        if (HomeController.instance != null)
-            HomeController.instance.PlayAnimTitle();
+        //if (HomeController.instance != null)
+        //    HomeController.instance.PlayAnimTitle();
     }
 
     public void LevelClearCallback()

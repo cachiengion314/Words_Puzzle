@@ -21,7 +21,7 @@ public class PauseDialog : Dialog {
 
     public void OnMenuClick()
     {
-        CUtils.LoadScene(1, true);
+        CUtils.LoadScene(Const.SCENE_CHAPTER, true);
         Close();
     }
 
@@ -33,7 +33,7 @@ public class PauseDialog : Dialog {
 
     public void OnHomeClick()
     {
-        CUtils.LoadScene(0, false);
+        CUtils.LoadScene(Const.SCENE_HOME, false);
         Close();
     }
 

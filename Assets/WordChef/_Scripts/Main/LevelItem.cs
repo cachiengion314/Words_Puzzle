@@ -118,7 +118,7 @@ public class LevelItem : MonoBehaviour {
         GameState.currentSubWorld = subWorld;
         GameState.currentLevel = level;
 
-        CUtils.LoadScene(3, false);
+        CUtils.LoadScene(Const.SCENE_MAIN, false);
         Sound.instance.Play(Sound.Others.PopupOpen);
 
         // Set the music

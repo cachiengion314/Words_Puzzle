@@ -128,7 +128,7 @@ public class MainController : BaseController
 
     public void OpenChapterScene()
     {
-        CUtils.LoadScene(1, false);
+        CUtils.LoadScene(Const.SCENE_CHAPTER, false);
         Sound.instance.Play(Sound.Others.PopupOpen);
     }
 

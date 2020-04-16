@@ -13,6 +13,7 @@ using System.Reflection;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using System.Linq;
 
 public class CUtils
 {
@@ -506,7 +507,23 @@ public class CUtils
         {
             SceneAnimate.Instance.SceneClose(() =>
             {
-                SceneManager.LoadSceneAsync(sceneIndex);
+                ScreenFader.instance.GotoSceneNoFade(sceneIndex);
+            });
+        }
+    }
+
+    public static void LoadScene(string sceneName, bool useScreenFader = false)
+    {
+        BlockScreen.instance.Block(true);
+        if (useScreenFader)
+        {
+            ScreenFader.instance.GotoScene(sceneName);
+        }
+        else
+        {
+            SceneAnimate.Instance.SceneClose(() =>
+            {
+                ScreenFader.instance.GotoSceneNoFade(sceneName);
             });
         }
     }
@@ -828,5 +845,30 @@ public class CUtils
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPaused = true;
 #endif
+    }
+
+
+    public static class AbbrevationUtility
+    {
+        private static readonly SortedDictionary<int, string> abbrevations = new SortedDictionary<int, string>
+     {
+         {1000,"K"},
+         {1000000, "M" },
+         {1000000000, "B" }
+     };
+
+        public static string AbbreviateNumber(float number)
+        {
+            for (int i = abbrevations.Count - 1; i >= 0; i--)
+            {
+                KeyValuePair<int, string> pair = abbrevations.ElementAt(i);
+                if (Mathf.Abs(number) >= pair.Key)
+                {
+                    int roundedNumber = Mathf.FloorToInt(number / pair.Key);
+                    return roundedNumber.ToString() + pair.Value;
+                }
+            }
+            return number.ToString();
+        }
     }
 }

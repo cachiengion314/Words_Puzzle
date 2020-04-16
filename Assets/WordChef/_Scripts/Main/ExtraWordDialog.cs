@@ -18,9 +18,10 @@ public class ExtraWordDialog : Dialog
     protected override void Start()
     {
         base.Start();
+        Prefs.extraTarget = 2;
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
-        claimQuantity = (int)extraProgress.target / 5 * 40;
+        claimQuantity = (int)extraProgress.target / 2 * 40;
 
         UpdateUI();
     }
@@ -41,11 +42,11 @@ public class ExtraWordDialog : Dialog
         StartCoroutine(ClaimEffect());
         ExtraWord.instance.OnClaimed();
 
-        if (Prefs.extraTarget == 5 && Prefs.totalExtraAdded > 10)
+        if (Prefs.extraTarget == 2 && Prefs.totalExtraAdded > 2)
         {
-            Prefs.extraTarget = 10;
-            extraProgress.target = 10;
-            claimQuantity = (int)extraProgress.target / 5 * 40;
+            Prefs.extraTarget = 4;
+            extraProgress.target = 4;
+            claimQuantity = (int)extraProgress.target / 2 * 40;
             UpdateUI();
         }
     }
@@ -57,8 +58,8 @@ public class ExtraWordDialog : Dialog
         //Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
         for (int i = 0; i < claimQuantity; i++)
         {
-            if(i < 5)
-                MonoUtils.instance.ShowEffect(claimQuantity / 5, rubyBalance);
+            if(i < 2)
+                MonoUtils.instance.ShowEffect(claimQuantity / 2, rubyBalance);
             yield return new WaitForSeconds(0.02f);
         }
     }
