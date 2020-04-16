@@ -13,6 +13,7 @@ public class SceneAnimate : MonoBehaviour
     public Animator animatorScene;
     public GameObject _loadingScreen;
     public Slider _progressLoading;
+    public GameObject btnTest;
 
     private bool isShowBtnTest;
 
@@ -65,8 +66,8 @@ public class SceneAnimate : MonoBehaviour
             if (asyncOp.progress >= 0.9f)
             {
                 _progressLoading.value = _progressLoading.maxValue;
-                _loadingScreen.gameObject.SetActive(false);
                 asyncOp.allowSceneActivation = true;
+                _loadingScreen.gameObject.SetActive(false);
             }
             yield return null;
         }
@@ -88,11 +89,11 @@ public class SceneAnimate : MonoBehaviour
     public void ShowHidenBtn(RectTransform rectTransform)
     {
         var tweenControl = TweenControl.GetInstance();
-        if (!isShowBtnTest)
-            tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x * 2, 0.3f);
-        else
-            tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x / 2, 0.3f);
         isShowBtnTest = !isShowBtnTest;
+        if (isShowBtnTest)
+            tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x / 2, 0.3f);
+        else
+            tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x * 2, 0.3f);
     }
     //===
 }

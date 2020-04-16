@@ -61,6 +61,7 @@ public class HomeController : BaseController
 
     public void PlayAnimTitle()
     {
+        SceneAnimate.Instance.btnTest.SetActive(true);
         Debug.Log("Play Animation Man Home");
         //animatorTitle.enabled = true;
         //animatorTitle.SetBool("Play", true);
