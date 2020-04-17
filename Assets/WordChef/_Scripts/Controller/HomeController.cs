@@ -73,7 +73,7 @@ public class HomeController : BaseController
     private IEnumerator PlayAnimButton()
     {
         var tweenControl = TweenControl.GetInstance();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(1f);
         _spineAnimEgg.gameObject.SetActive(true);
         _spineAnimEgg.SetAnimation(_showAnim, false, () => {
             _spineAnimEgg.SetAnimation(_loopAnim, true);

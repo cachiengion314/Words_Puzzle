@@ -80,7 +80,7 @@ public class Cell : MonoBehaviour
     {
         iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.15f));
         //fxExplode.gameObject.SetActive(false);
-        CalculateTextRaitoScale();
+        CalculateTextRaitoScale(letterTextNor.rectTransform);
     }
 
     public void ShowHint()
@@ -111,19 +111,24 @@ public class Cell : MonoBehaviour
         if (letterTextNor != null)
         {
             letterTextNor.text = letter;
-            CalculateTextRaitoScale();
+            CalculateTextRaitoScale(letterTextNor.rectTransform);
         }
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);
     }
 
-    private void CalculateTextRaitoScale()
+    public void CalculateTextRaitoScale(RectTransform rectObj)
     {
         var widthBg = bg.sprite.rect.width;
         var heightBg = bg.sprite.rect.height;
-        var valueX = letterTextNor.rectTransform.rect.width;
-        var valueY = letterTextNor.rectTransform.rect.height;
-        var ratioScale = new Vector3(valueX / widthBg, valueY / heightBg, 0);
-        letterTextNor.rectTransform.localScale = ratioScale;
+        var valueX = rectObj.rect.width;
+        var valueY = rectObj.rect.height;
+
+        var resultX = valueX / widthBg;
+        var resultY = valueY / heightBg;
+        var result = resultX < resultY ? valueX : valueY;
+
+        var ratioScale = new Vector3(resultX, resultY, 1);
+        rectObj.localScale = ratioScale;
     }
 }

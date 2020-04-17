@@ -89,12 +89,12 @@ public class MainController : BaseController
         //Save Passed Word
         if (!CPlayerPrefs.HasKey("WordLevelSave"))
         {
-            CPlayerPrefs.SetString("WordLevelSave", gameLevel.answers + "|");
+            CPlayerPrefs.SetString("WordLevelSave", gameLevel.answers);
         }
         else
         {
             wordLevelSave = CPlayerPrefs.GetString("WordLevelSave");
-            wordLevelSave += gameLevel.answers;
+            wordLevelSave += "|" + gameLevel.answers;
             CPlayerPrefs.SetString("WordLevelSave", wordLevelSave);
         }
 

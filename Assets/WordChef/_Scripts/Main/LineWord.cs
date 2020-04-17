@@ -75,7 +75,7 @@ public class LineWord : MonoBehaviour
         {
             foreach (var line in lines)
             {
-                if (line != this)
+                if (!line.answers.Contains(answer) && line.cells.Count == answer.Length)
                     line.answers.Add(answer);
             }
         }

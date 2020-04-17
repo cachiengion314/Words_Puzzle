@@ -107,7 +107,7 @@ public class WordRegion : MonoBehaviour
         }
 
         numCol = numWords <= 5 ? 1 :
-                     numWords <= 12 ? 2 : 3;
+                     numWords <= 8 ? 2 : 3;
 
         numRow = (int)Mathf.Ceil(numWords / (float)numCol);
 
@@ -133,8 +133,8 @@ public class WordRegion : MonoBehaviour
         else
         {
             float coef = (maxCellInWidth + (maxCellInWidth - numCol) * Const.CELL_GAP_COEF_X + (numCol - 1) * Const.COL_GAP_COEF);
-            cellSize = rt.rect.height / (numRow + (numRow - 1) * Const.CELL_GAP_COEF_Y + 0f);
-            float maxSize = rt.rect.width / (maxCellInWidth + (maxCellInWidth - 1) * Const.CELL_GAP_COEF_X);
+            cellSize = boardHighlight.rectTransform.rect.height / (numRow + (numRow - 1) * Const.CELL_GAP_COEF_Y + 0f);
+            float maxSize = boardHighlight.rectTransform.rect.width / (maxCellInWidth + (maxCellInWidth - 1) * Const.CELL_GAP_COEF_X);
 
             if (maxSize < cellSize)
             {
@@ -231,8 +231,10 @@ public class WordRegion : MonoBehaviour
         {
             cell.bg.color = new Color(1, 1, 1, 0.5f);
             if (line.usedBee && !cell.isShown && cell != line.cells[0])
+            {
                 cell.iconCoin.transform.localScale = Vector3.one;
-
+                //cell.CalculateTextRaitoScale(cell.iconCoin.rectTransform);
+            }
         }
     }
 
@@ -285,7 +287,8 @@ public class WordRegion : MonoBehaviour
             int count = lines.Count;
             for (int i = 0; i < count; i++)
             {
-                float x = rt.rect.width / 2 - lines[i].lineWidth / 2;
+                //float x = rt.rect.width / 2 - lines[i].lineWidth / 2;
+                float x = boardHighlight.rectTransform.rect.width / 2 - lines[i].lineWidth / 2;
                 //float x = startFirstColX;
                 float y;
                 //if (hasLongLine)
@@ -296,7 +299,7 @@ public class WordRegion : MonoBehaviour
                 //else
                 //{
                 float gapY = cellSize + cellSize * Const.CELL_GAP_COEF_Y;
-                y = gapY * (count - 1 - i) + (rt.rect.height - gapY * count + cellSize * Const.CELL_GAP_COEF_Y) / 2f;
+                y = gapY * (count - 1 - i) + (boardHighlight.rectTransform.rect.height - gapY * count + cellSize * Const.CELL_GAP_COEF_Y) / 2f;
                 //}
                 lines[i].transform.localPosition = new Vector2(x, y);
             }
@@ -350,7 +353,7 @@ public class WordRegion : MonoBehaviour
     public void CheckAnswer(string checkWord)
     {
         var lineIsShown = lines.FindAll(li => li.isShown);
-        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && (!x.isShown && x.answer == "" || (CheckAnswerFill(x, checkWord) && !x.isShown)));
+        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown && (x.answer == "" || CheckAnswerFill(x, checkWord)));
         //string meaning="";
         if (line != null)
         {
@@ -365,8 +368,8 @@ public class WordRegion : MonoBehaviour
 
             if (lineIndex > 0)
             {
-                boardHighlight.gameObject.SetActive(true);
-                boardHighlight.color = new Color(1, 1, 1, 0);
+                //boardHighlight.gameObject.SetActive(true);
+                //boardHighlight.color = new Color(1, 1, 1, 0);
 
             }
             compliment.Show(lineIndex);
@@ -375,9 +378,9 @@ public class WordRegion : MonoBehaviour
             if (lineIndex > compliment.sprites.Length - 1)
             {
                 lineIndex = compliment.sprites.Length - 1;
-                board.sprite = _spriteExcellent;
-                board.SetNativeSize();
-                boardHighlight.color = new Color(1, 1, 1, 1);
+                //board.sprite = _spriteExcellent;
+                //board.SetNativeSize();
+                //boardHighlight.color = new Color(1, 1, 1, 1);
             }
 
             listWordCorrect.Add(checkWord.ToLower());
@@ -495,7 +498,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            boardHighlight.gameObject.SetActive(false);
+            //boardHighlight.gameObject.SetActive(false);
             board.sprite = _spriteNormal;
             board.SetNativeSize();
             Sound.instance.Play(Sound.Others.WordInvalid);
@@ -532,7 +535,7 @@ public class WordRegion : MonoBehaviour
         var lineNotShow = lines.FindAll(x => !x.isShown);
         foreach (var line in lineNotShow)
         {
-            if (count < 5 && line.cells.Count > 3)
+            if (count < lines.Count / 2 && count < 5)
             {
                 line.ShowCellUseBee();
                 BeeManager.instance.SetAmountBee(-1);
