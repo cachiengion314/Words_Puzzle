@@ -34,10 +34,8 @@ public class Compliment : MonoBehaviour
         {
             if (_particle.GetComponent<Canvas>() != null)
                 _particle.GetComponent<Canvas>().overrideSorting = true;
-            Debug.Log("overrideSorting: " + _particle.GetComponent<Canvas>().overrideSorting);
             _particle.gameObject.SetActive(true);
             _particle.Play();
-            Debug.Log("IsRunning: " + _particle.isPlaying);
         }
     }
 
@@ -55,7 +53,6 @@ public class Compliment : MonoBehaviour
             Destroy(_particle.gameObject);
         _particle = Instantiate(particleSystems[type], rootParticle);
         _particle.gameObject.SetActive(false);
-        Debug.Log("_particle: " + _particle.name);
         if (_useSpine)
         {
             _animCompliment.gameObject.SetActive(true);
@@ -99,12 +96,7 @@ public class Compliment : MonoBehaviour
     {
         if (e.Data.Name == "EF")
         {
-            Debug.Log("Play Event Spine GGAAE");
             PlayParticle();
-        }
-        else
-        {
-            Debug.LogError("Name Event null !");
         }
     }
 

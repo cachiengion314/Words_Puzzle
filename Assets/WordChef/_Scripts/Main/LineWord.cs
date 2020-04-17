@@ -64,15 +64,23 @@ public class LineWord : MonoBehaviour
     {
         //int numLetters = answer.Length;
         var rt = GetComponent<RectTransform>();
-        lineWidth = numLetters * cellSize + (numLetters - 1) * cellSize * Const.CELL_GAP_COEF_X + spacing;
+        lineWidth = numLetters * cellSize + (numLetters - 1) * cellSize * Const.CELL_GAP_COEF_X + spacing * (numLetters - 1);
         rt.sizeDelta = new Vector2(lineWidth, cellSize);
     }
 
     public void SetDataLetter(string word)
     {
+        var lines = WordRegion.instance.Lines;
+        if (answer != "")
+        {
+            foreach (var line in lines)
+            {
+                if (line != this)
+                    line.answers.Add(answer);
+            }
+        }
         answer = word;
         CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
-        var lines = WordRegion.instance.Lines;
         foreach (var line in lines)
         {
             if (line != this)

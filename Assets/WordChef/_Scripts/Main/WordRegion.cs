@@ -65,7 +65,7 @@ public class WordRegion : MonoBehaviour
         boardHighlight.gameObject.SetActive(false);
     }
 
-    private List<string> GetExtraWord(List<string> words)
+    private List<string> GetExtraWordRandom(List<string> words)
     {
         var wordLengthEqual = new List<string>();
         foreach (var word in words)
@@ -99,7 +99,7 @@ public class WordRegion : MonoBehaviour
         _extraWord = gameLevel.numExtra;
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
         //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
-        wordList = wordList.Count <= 4 ? wordList : GetExtraWord(wordList);
+        //wordList = wordList.Count <= 4 ? wordList : GetExtraWordRandom(wordList);
         numWords = wordList.Count <= 4 ? wordList.Count : wordList.Count - _extraWord;
         foreach (var word in wordList)
         {
@@ -229,9 +229,8 @@ public class WordRegion : MonoBehaviour
     {
         foreach (var cell in line.cells)
         {
-            //if (!cell.isBee)
             cell.bg.color = new Color(1, 1, 1, 0.5f);
-            if (line.usedBee && !cell.isShown)
+            if (line.usedBee && !cell.isShown && cell != line.cells[0])
                 cell.iconCoin.transform.localScale = Vector3.one;
 
         }
@@ -351,7 +350,7 @@ public class WordRegion : MonoBehaviour
     public void CheckAnswer(string checkWord)
     {
         var lineIsShown = lines.FindAll(li => li.isShown);
-        LineWord line = lines.Find(x => (x.answers.Contains(checkWord) && !x.isShown && x.answer == "") || (x.answer == checkWord && !x.isShown));
+        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && (!x.isShown && x.answer == "" || (CheckAnswerFill(x, checkWord) && !x.isShown)));
         //string meaning="";
         if (line != null)
         {
@@ -380,7 +379,7 @@ public class WordRegion : MonoBehaviour
                 board.SetNativeSize();
                 boardHighlight.color = new Color(1, 1, 1, 1);
             }
-            
+
             listWordCorrect.Add(checkWord.ToLower());
             //}
             //else
@@ -463,6 +462,28 @@ public class WordRegion : MonoBehaviour
             _btnHintADS.gameObject.SetActive(true);
         }
     }
+
+    private bool CheckAnswerFill(LineWord line, string wordFill)
+    {
+        var isRight = true;
+        if (line.cells.Count == wordFill.Length)
+        {
+            var cellsIsShown = line.cells.FindAll(cell => cell.isShown);
+            for (int i = 0; i < cellsIsShown.Count; i++)
+            {
+                var cell = line.cells[i];
+                if (cell.isShown && cell.letter != wordFill[i].ToString())
+                {
+                    isRight = false;
+                    break;
+                }
+            }
+        }
+        else
+            isRight = false;
+        return isRight;
+    }
+
     private void CheckExtraWordAndWrong(string checkWord)
     {
         var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
@@ -665,9 +686,9 @@ public class WordRegion : MonoBehaviour
 
     public bool CheckLevelProgress(string[] levelProgress, List<string> wordList)
     {
-        if (levelProgress.Length != wordList.Count) return false;
+        if (levelProgress.Length != numWords) return false;
 
-        for (int i = 0; i < wordList.Count; i++)
+        for (int i = 0; i < numWords; i++)
         {
             if (levelProgress[i].Length != wordList[i].Length) return false;
         }
