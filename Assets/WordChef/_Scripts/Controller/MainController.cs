@@ -87,16 +87,7 @@ public class MainController : BaseController
         _isGameComplete = true;
 
         //Save Passed Word
-        if (!CPlayerPrefs.HasKey("WordLevelSave"))
-        {
-            CPlayerPrefs.SetString("WordLevelSave", gameLevel.answers);
-        }
-        else
-        {
-            wordLevelSave = CPlayerPrefs.GetString("WordLevelSave");
-            wordLevelSave += "|" + gameLevel.answers;
-            CPlayerPrefs.SetString("WordLevelSave", wordLevelSave);
-        }
+        //SaveWordComplete(gameLevel.answers);
 
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
@@ -109,6 +100,20 @@ public class MainController : BaseController
         {
             DialogController.instance.ShowDialog(DialogType.Win);
         });
+    }
+
+    public void SaveWordComplete(string wordDone)
+    {
+        if (!CPlayerPrefs.HasKey("WordLevelSave"))
+        {
+            CPlayerPrefs.SetString("WordLevelSave", wordDone);
+        }
+        else
+        {
+            wordLevelSave = CPlayerPrefs.GetString("WordLevelSave");
+            wordLevelSave += "|" + wordDone;
+            CPlayerPrefs.SetString("WordLevelSave", wordLevelSave);
+        }
     }
 
     private string BuildLevelName()

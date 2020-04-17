@@ -126,9 +126,9 @@ public class Cell : MonoBehaviour
 
         var resultX = valueX / widthBg;
         var resultY = valueY / heightBg;
-        var result = resultX < resultY ? valueX : valueY;
+        var result = resultX < resultY ? resultX : resultY;
 
-        var ratioScale = new Vector3(resultX, resultY, 1);
+        var ratioScale = new Vector3(result, result, 1);
         rectObj.localScale = ratioScale;
     }
 }

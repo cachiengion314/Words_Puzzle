@@ -230,7 +230,7 @@ public class WordRegion : MonoBehaviour
         foreach (var cell in line.cells)
         {
             cell.bg.color = new Color(1, 1, 1, 0.5f);
-            if (line.usedBee && !cell.isShown && cell != line.cells[0])
+            if (line.usedBee && !cell.isShown && cell != line.cells[0] && Prefs.IsSaveLevelProgress())
             {
                 cell.iconCoin.transform.localScale = Vector3.one;
                 //cell.CalculateTextRaitoScale(cell.iconCoin.rectTransform);
@@ -382,7 +382,7 @@ public class WordRegion : MonoBehaviour
                 //board.SetNativeSize();
                 //boardHighlight.color = new Color(1, 1, 1, 1);
             }
-
+            MainController.instance.SaveWordComplete(checkWord);
             listWordCorrect.Add(checkWord.ToLower());
             //}
             //else

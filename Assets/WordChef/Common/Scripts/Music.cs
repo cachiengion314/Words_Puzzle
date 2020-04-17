@@ -37,8 +37,6 @@ public class Music : MonoBehaviour
 
     public void Play(Music.Type type)
     {
-        Debug.Log("audioSource: " + audioSource.name);
-        Debug.Log("type: " + type);
         if (type == Type.None) return;
         if (currentType != type || !audioSource.isPlaying)
         {
@@ -66,7 +64,6 @@ public class Music : MonoBehaviour
         audioSource.Stop();
         currentType = type;
         audioSource.clip = musicClips[(int)type];
-        Debug.Log("audioSource.clip: " + audioSource.clip);
         if (IsEnabled())
         {
             audioSource.Play();
