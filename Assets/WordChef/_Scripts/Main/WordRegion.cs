@@ -533,9 +533,10 @@ public class WordRegion : MonoBehaviour
         int count = 0;
 
         var lineNotShow = lines.FindAll(x => !x.isShown);
-        foreach (var line in lineNotShow)
+        for (int i = lineNotShow.Count - 1; i > 0; i--)
         {
-            if (count < lines.Count / 2 && count < 5)
+            var line = lineNotShow[i];
+            if (count < lines.Count / 2 && count < 4)
             {
                 line.ShowCellUseBee();
                 BeeManager.instance.SetAmountBee(-1);
