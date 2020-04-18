@@ -31,7 +31,7 @@ public class ExtraWord : MonoBehaviour
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
 
-        extraWords = Prefs.GetExtraWords(world, subWorld, level).ToList();
+        extraWords = Prefs.IsSaveLevelProgress() ? Prefs.GetExtraWords(world, subWorld, level).ToList() : new List<string>();
         existMessage.SetActive(false);
         existMessageCG = existMessage.GetComponent<CanvasGroup>();
 
@@ -40,7 +40,6 @@ public class ExtraWord : MonoBehaviour
 
     private void UpdateUI()
     {
-        Debug.Log("extraProgress: " +Prefs.extraProgress + " | extraTarget: " + Prefs.extraTarget);
         lightOpenEffect.SetActive(Prefs.extraProgress >= Prefs.extraTarget);
         if (Prefs.extraProgress >= Prefs.extraTarget)
             effectLightLoop.gameObject.SetActive(true);
@@ -86,9 +85,12 @@ public class ExtraWord : MonoBehaviour
     public void AddNewExtraWord(string word)
     {
         extraWords.Add(word);
-        Prefs.SetExtraWords(world, subWorld, level, extraWords.ToArray());
-        Prefs.extraProgress++;
-        Prefs.totalExtraAdded++;
+        if (Prefs.IsSaveLevelProgress())
+        {
+            Prefs.SetExtraWords(world, subWorld, level, extraWords.ToArray());
+            Prefs.extraProgress++;
+            Prefs.totalExtraAdded++;
+        }
     }
 
     private void OnMessageUpdate(float value)

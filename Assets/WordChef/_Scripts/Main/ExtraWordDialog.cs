@@ -12,18 +12,34 @@ public class ExtraWordDialog : Dialog
     public Text progressText;
     public TextMeshProUGUI wordText;
     public TextMeshProUGUI claimQuantityText;
+    public CanvasGroup panelNewLevel;
+    public CanvasGroup panelOldLevel;
 
     private int numWords, claimQuantity;
 
     protected override void Start()
     {
         base.Start();
-        Prefs.extraTarget = 2;
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
         claimQuantity = (int)extraProgress.target / 2 * 40;
 
         UpdateUI();
+        ShowPanelCurrLevel();
+    }
+
+    private void ShowPanelCurrLevel()
+    {
+        if (Prefs.IsSaveLevelProgress())
+        {
+            panelNewLevel.alpha = 1;
+            panelOldLevel.alpha = 0;
+        }
+        else
+        {
+            panelNewLevel.alpha = 0;
+            panelOldLevel.alpha = 1;
+        }
     }
 
     public void OnClickHTPL(int selectID)
@@ -58,7 +74,7 @@ public class ExtraWordDialog : Dialog
         //Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
         for (int i = 0; i < claimQuantity; i++)
         {
-            if(i < 2)
+            if (i < 2)
                 MonoUtils.instance.ShowEffect(claimQuantity / 2, rubyBalance);
             yield return new WaitForSeconds(0.02f);
         }
@@ -75,5 +91,11 @@ public class ExtraWordDialog : Dialog
         {
             wordText.text += "  " + word.ToUpper();
         }
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        ExtraWord.instance.OnClaimed();
     }
 }
