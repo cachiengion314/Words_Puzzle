@@ -377,16 +377,9 @@ public class WordRegion : MonoBehaviour
                 //boardHighlight.color = new Color(1, 1, 1, 0);
 
             }
-            compliment.Show(lineIndex);
-            Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
-            lineIndex++;
-            if (lineIndex > compliment.sprites.Length - 1)
-            {
-                lineIndex = compliment.sprites.Length - 1;
-                //board.sprite = _spriteExcellent;
-                //board.SetNativeSize();
-                //boardHighlight.color = new Color(1, 1, 1, 1);
-            }
+
+            ShowComplimentFX();
+
             MainController.instance.SaveWordComplete(checkWord);
             listWordCorrect.Add(checkWord.ToLower());
             //}
@@ -418,6 +411,20 @@ public class WordRegion : MonoBehaviour
         }
         if (!textPreview.useFX)
             textPreview.ClearText();
+    }
+
+    private void ShowComplimentFX()
+    {
+        compliment.Show(lineIndex);
+        Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
+        lineIndex++;
+        if (lineIndex > compliment.sprites.Length - 1)
+        {
+            lineIndex = compliment.sprites.Length - 1;
+            //board.sprite = _spriteExcellent;
+            //board.SetNativeSize();
+            //boardHighlight.color = new Color(1, 1, 1, 1);
+        }
     }
 
     private void SetupCellAds()
@@ -495,6 +502,7 @@ public class WordRegion : MonoBehaviour
         var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
+            ShowComplimentFX();
             ExtraWord.instance.ProcessWorld(checkWord);
             if (textPreview.useFX)
                 textPreview.ClearText();
