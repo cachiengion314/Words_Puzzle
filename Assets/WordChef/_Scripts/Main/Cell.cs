@@ -121,14 +121,14 @@ public class Cell : MonoBehaviour
     {
         var widthBg = bg.sprite.rect.width;
         var heightBg = bg.sprite.rect.height;
-        var valueX = rectObj.rect.width;
-        var valueY = rectObj.rect.height;
+        var valueX = bg.rectTransform.rect.width;
+        var valueY = bg.rectTransform.rect.height;
 
         var resultX = valueX / widthBg;
         var resultY = valueY / heightBg;
         var result = resultX < resultY ? resultX : resultY;
 
-        var ratioScale = new Vector3(result, result, 1);
+        var ratioScale = new Vector3(result, result, result);
         rectObj.localScale = ratioScale;
     }
 }

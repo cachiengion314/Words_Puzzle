@@ -83,7 +83,6 @@ public class Sound : MonoBehaviour
     public void Play(Scenes type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
-        Debug.Log("sceneClips[index]: " + sceneClips[index]);
         audioSource.volume = volume;
         audioSource.PlayOneShot(sceneClips[index]);
         TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () =>

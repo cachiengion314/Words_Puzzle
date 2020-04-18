@@ -113,7 +113,7 @@ public class WinDialog : Dialog
                 ShowChapterClear(false);
                 Sound.instance.Play(Sound.Scenes.LevelClear);
                 ShowEffectTitle(0.5f);
-                TweenControl.GetInstance().MoveRectY(TitleLevelClear.transform as RectTransform, -151f, 2f);
+                //TweenControl.GetInstance().MoveRectY(TitleLevelClear.transform as RectTransform, -151f, 2f);
                 _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
                     _animLevelClear.SetAnimation(levelClearIdleAnim, true);
