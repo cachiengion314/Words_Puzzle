@@ -66,6 +66,7 @@ public class ExtraWordDialog : Dialog
 
     private void UpdateUI()
     {
+        ExtraWord.instance.effectLightLoop.gameObject.SetActive(false);
         claimQuantityText.text = claimQuantity.ToString();
         claimButton.SetActive(extraProgress.current >= extraProgress.target);
         progressText.text = extraProgress.current + "/" + extraProgress.target;

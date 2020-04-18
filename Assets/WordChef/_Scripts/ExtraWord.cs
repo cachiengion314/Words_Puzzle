@@ -4,18 +4,20 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class ExtraWord : MonoBehaviour {
+public class ExtraWord : MonoBehaviour
+{
     public List<string> extraWords = new List<string>();
     public GameObject existMessage;
     public Transform beginPoint, endPoint;
     public GameObject lightEffect, lightOpenEffect, btnExtra;
     public ParticleSystem effectLight;
+    public ParticleSystem effectLightLoop;
 
     private int world, subWorld, level;
     private CanvasGroup existMessageCG;
     private bool isMessageShowing;
     private Text flyText;
-    
+
     public static ExtraWord instance;
 
     private void Awake()
@@ -38,7 +40,12 @@ public class ExtraWord : MonoBehaviour {
 
     private void UpdateUI()
     {
+        Debug.Log("extraProgress: " +Prefs.extraProgress + " | extraTarget: " + Prefs.extraTarget);
         lightOpenEffect.SetActive(Prefs.extraProgress >= Prefs.extraTarget);
+        if (Prefs.extraProgress >= Prefs.extraTarget)
+            effectLightLoop.gameObject.SetActive(true);
+        else
+            effectLightLoop.gameObject.SetActive(false);
     }
 
     public void ProcessWorld(string word)
@@ -52,6 +59,7 @@ public class ExtraWord : MonoBehaviour {
         }
         else
         {
+            var tweenControl = TweenControl.GetInstance();
             var middlePoint = CUtils.GetMiddlePoint(beginPoint.position, endPoint.position, 0.4f);
             Vector3[] waypoint = { beginPoint.position, middlePoint, endPoint.position };
 
@@ -61,8 +69,9 @@ public class ExtraWord : MonoBehaviour {
             flyText.transform.position = beginPoint.position;
             flyText.transform.SetParent(MonoUtils.instance.textFlyTransform);
             flyText.transform.localScale = TextPreview.instance.textGrid.transform.localScale * 0.75f;
-            iTween.MoveTo(flyText.gameObject, iTween.Hash("path", waypoint, "time", 0.3f, "oncomplete", "OnTextMoveToComplete", "oncompletetarget", gameObject));
-
+            //iTween.MoveTo(flyText.gameObject, iTween.Hash("path", waypoint, "time", 0.3f, "oncomplete", "OnTextMoveToComplete", "oncompletetarget", gameObject));
+            tweenControl.JumpRect(flyText.transform as RectTransform, btnExtra.transform.localPosition, 100f, 1, 0.3f, false, OnTextMoveToComplete);
+            tweenControl.Scale(flyText.gameObject, Vector3.zero, 0.3f);
             AddNewExtraWord(word);
         }
     }
@@ -89,7 +98,7 @@ public class ExtraWord : MonoBehaviour {
 
     private void OnMessageShowComplete()
     {
-        Timer.Schedule(this, 0.5f, ()=>
+        Timer.Schedule(this, 0.5f, () =>
         {
             iTween.ValueTo(gameObject, iTween.Hash("from", 1, "to", 0, "time", 0.3f, "OnUpdate", "OnMessageUpdate", "oncomplete", "OnMessageHideComplete"));
         });
@@ -114,8 +123,8 @@ public class ExtraWord : MonoBehaviour {
         //    iTween.RotateAdd(lightEffect, iTween.Hash("z", -60, "time", 0.4f, "oncomplete", "OnLightRotateComplete", "oncompletetarget", gameObject));
         //}
 
-        TweenControl.GetInstance().Shake(btnExtra,0.3f,Vector3.one * 10f, 20, ShakeType.ShakeTypeRotate,180,false,true);
-        
+        TweenControl.GetInstance().Shake(btnExtra, 0.3f, Vector3.one * 10f, 20, ShakeType.ShakeTypeRotate, 180, false, true);
+
         flyText.CrossFadeAlpha(0, 0.3f, true);
         Destroy(flyText.gameObject, 0.3f);
     }
@@ -124,6 +133,7 @@ public class ExtraWord : MonoBehaviour {
     {
         //lightEffect.SetActive(false);
         effectLight.gameObject.SetActive(false);
+        UpdateUI();
     }
 
     public void OnClaimed()

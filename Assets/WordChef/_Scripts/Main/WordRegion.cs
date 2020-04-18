@@ -107,7 +107,7 @@ public class WordRegion : MonoBehaviour
         }
 
         numCol = numWords <= 5 ? 1 :
-                     numWords <= 8 ? 2 : 3;
+                     numWords <= 12 ? 2 : 3;
 
         numRow = (int)Mathf.Ceil(numWords / (float)numCol);
 
