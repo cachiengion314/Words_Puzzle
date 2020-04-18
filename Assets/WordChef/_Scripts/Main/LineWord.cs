@@ -53,7 +53,7 @@ public class LineWord : MonoBehaviour
             float y = cellSize / 2;
 
             cellTransform.localPosition = new Vector3(x, y);
-            cell.name = cell.name + index + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
+            cell.name = gameObject.name + "_" + cell.name + index /*+ "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1)*/;
             cell.isBee = CPlayerPrefs.GetBool(cell.name);
             cell.isAds = CPlayerPrefs.GetBool(cell.name + "_ADS", false);
             cells.Add(cell);
@@ -219,12 +219,7 @@ public class LineWord : MonoBehaviour
                     //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
                     callback?.Invoke();
-                    var showDone = cells.All(cel => cel.isShown);
-                    if (showDone)
-                    {
-                        isShown = true;
-                        ShowDoneAllCell();
-                    }
+                    CheckLineDone();
                     return;
                 }
             }
@@ -239,15 +234,20 @@ public class LineWord : MonoBehaviour
                     //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
                     callback?.Invoke();
-                    var showDone = cells.All(cel => cel.isShown);
-                    if (showDone)
-                    {
-                        isShown = true;
-                        ShowDoneAllCell();
-                        return;
-                    }
+                    CheckLineDone();
+                    return;
                 }
             }
+        }
+    }
+
+    public void CheckLineDone()
+    {
+        var showDone = cells.All(cel => cel.isShown);
+        if (showDone)
+        {
+            isShown = true;
+            ShowDoneAllCell();
         }
     }
 
@@ -259,11 +259,14 @@ public class LineWord : MonoBehaviour
             SetDataLetter(answer);
         }
         var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
-        var cellRandom = GetRandomCell(cellNotShow);
-        if (cellRandom != null)
+        if (cellNotShow != null && cellNotShow.Count > 0)
         {
-            cellRandom.ShowHint();
-            callback?.Invoke();
+            var cellRandom = GetRandomCell(cellNotShow);
+            if (cellRandom != null)
+            {
+                cellRandom.ShowHint();
+                callback?.Invoke();
+            }
         }
         var showDone = cells.All(cell => cell.isShown);
         if (showDone)

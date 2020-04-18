@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,7 +56,10 @@ public class ButtonVideoHintFree : MonoBehaviour
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             Cell.ShowHint();
+            var line = WordRegion.instance.Lines.Single(li => li.cells.Contains(Cell));
+            line.CheckLineDone();
             WordRegion.instance.SaveLevelProgress();
+            WordRegion.instance.CheckGameComplete();
         });
         //_rewardController.gameObject.SetActive(true);
         CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);

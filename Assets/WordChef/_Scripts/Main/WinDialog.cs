@@ -86,55 +86,72 @@ public class WinDialog : Dialog
         GroupButton.SetActive(false);
         SetupStars();
 
+        ShowTitleAnim();
         if (isLastLevel)
         {
-            if (level == numLevels - 1)
-            {
-                ShowChapterClear(true);
-                Sound.instance.Play(Sound.Scenes.ChapterClear);
-                ShowEffectTitle(1.4f);
-                _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
-                {
-                    _animChapterClear.SetAnimation(levelClearIdleAnim, true);
-                });
-                TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
-                {
-                    _animEggChapterClear.gameObject.SetActive(true);
-                    _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
-                    {
-                        _animEggChapterClear.SetAnimation(eggChapterIdleAnim, true);
-
-                    });
-                });
-            }
-            else
-            {
-                CPlayerPrefs.SetBool("Received", false);
-                ShowChapterClear(false);
-                Sound.instance.Play(Sound.Scenes.LevelClear);
-                ShowEffectTitle(0.5f);
-                //TweenControl.GetInstance().MoveRectY(TitleLevelClear.transform as RectTransform, -151f, 2f);
-                _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
-                {
-                    _animLevelClear.SetAnimation(levelClearIdleAnim, true);
-                });
-                
-                TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
-                {
-                    _animEggLevelClear.gameObject.SetActive(true);
-                    _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
-                    {
-                        _animEggLevelClear.SetAnimation(eggLevelIdleAnim, true);
-
-                    });
-                });
-            }
+            ShowEggAnim();
         }
         else
         {
             EggBig.SetActive(false);
             RewardButton.SetActive(false);
             ShowPanelButton(true);
+        }
+    }
+
+    private void ShowTitleAnim()
+    {
+        if (level == numLevels - 1)
+        {
+            ShowTitleChapterClear(true);
+            Sound.instance.Play(Sound.Scenes.ChapterClear);
+            ShowEffectTitle(1.4f);
+            _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
+            {
+                _animChapterClear.SetAnimation(levelClearIdleAnim, true);
+            });
+        }
+        else
+        {
+            CPlayerPrefs.SetBool("Received", false);
+            ShowTitleChapterClear(false);
+            Sound.instance.Play(Sound.Scenes.LevelClear);
+            ShowEffectTitle(0.5f);
+            //TweenControl.GetInstance().MoveRectY(TitleLevelClear.transform as RectTransform, -151f, 2f);
+            _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
+            {
+                _animLevelClear.SetAnimation(levelClearIdleAnim, true);
+            });
+        }
+    }
+
+    private void ShowEggAnim()
+    {
+        if (level == numLevels - 1)
+        {
+            ShowEggChapterClear(true);
+            TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
+            {
+                _animEggChapterClear.gameObject.SetActive(true);
+                _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
+                {
+                    _animEggChapterClear.SetAnimation(eggChapterIdleAnim, true);
+
+                });
+            });
+        }
+        else
+        {
+            ShowEggChapterClear(false);
+            TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
+            {
+                _animEggLevelClear.gameObject.SetActive(true);
+                _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
+                {
+                    _animEggLevelClear.SetAnimation(eggLevelIdleAnim, true);
+
+                });
+            });
         }
     }
 
@@ -191,11 +208,15 @@ public class WinDialog : Dialog
         });
     }
 
-    private void ShowChapterClear(bool show)
+    private void ShowEggChapterClear(bool show)
     {
         EggLevelClear.gameObject.SetActive(!show);
-        _animLevelClear.gameObject.SetActive(!show);
         EggChapterClear.gameObject.SetActive(show);
+    }
+
+    private void ShowTitleChapterClear(bool show)
+    {
+        _animLevelClear.gameObject.SetActive(!show);
         _animChapterClear.gameObject.SetActive(show);
     }
 
@@ -223,7 +244,7 @@ public class WinDialog : Dialog
                 }
             }
         }
-        else if(eventData.Data.Name == "LIGHT_OPEN")
+        else if (eventData.Data.Name == "LIGHT_OPEN")
         {
             light.SetActive(true);
         }
@@ -250,6 +271,9 @@ public class WinDialog : Dialog
             Prefs.unlockedWorld = GameState.currentWorld;
             Prefs.unlockedSubWorld = GameState.currentSubWorld;
             Prefs.unlockedLevel = GameState.currentLevel;
+
+            FacebookController.instance.user.levelProgress = new string[] { "0" };
+            FacebookController.instance.user.answerProgress = new string[] { "0" };
         }
     }
 
@@ -309,10 +333,10 @@ public class WinDialog : Dialog
         Sound.instance.Play(Sound.Collects.LevelClose);
         Prefs.countLevel += 1;
         Prefs.countLevelDaily += 1;
-        FacebookController.instance.user.levelProgress = new string[] { "0" };
-        FacebookController.instance.user.answerProgress = new string[] { "0" };
-        FacebookController.instance.newLevel = true;
-
+        if (Prefs.IsLastLevel())
+        {
+            FacebookController.instance.newLevel = true;
+        }
         FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
         FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
         FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
