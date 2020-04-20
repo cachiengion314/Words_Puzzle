@@ -53,7 +53,7 @@ public class ExtraWord : MonoBehaviour
 
     private void UpdateUI()
     {
-        lightOpenEffect.SetActive(Prefs.extraProgress >= Prefs.extraTarget);
+        if (lightOpenEffect != null) lightOpenEffect.SetActive(Prefs.extraProgress >= Prefs.extraTarget);
         if (Prefs.extraProgress >= Prefs.extraTarget)
             effectLightLoop.gameObject.SetActive(true);
         else
