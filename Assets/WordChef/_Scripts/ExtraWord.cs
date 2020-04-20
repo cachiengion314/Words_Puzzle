@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public class ExtraWord : MonoBehaviour
 {
@@ -23,6 +24,18 @@ public class ExtraWord : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        DialogController.instance.onDialogsOpened += OnDialogOpened;
+        DialogController.instance.onDialogsClosed += OnDialogClosed;
+    }
+
+    private void OnDialogClosed()
+    {
+        effectLightLoop.gameObject.SetActive(false);
+    }
+
+    private void OnDialogOpened()
+    {
+        UpdateUI();
     }
 
     private void Start()
