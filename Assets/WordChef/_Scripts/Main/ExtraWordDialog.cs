@@ -22,7 +22,7 @@ public class ExtraWordDialog : Dialog
         base.Start();
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
-        claimQuantity = (int)extraProgress.target / 2 * 40;
+        claimQuantity = (int)extraProgress.target / 2 * 20;
 
         UpdateUI();
         ShowPanelCurrLevel();
@@ -62,7 +62,7 @@ public class ExtraWordDialog : Dialog
         {
             Prefs.extraTarget = 4;
             extraProgress.target = 4;
-            claimQuantity = (int)extraProgress.target / 2 * 40;
+            claimQuantity = (int)extraProgress.target / 2 * 20;
             UpdateUI();
         }
     }
