@@ -183,7 +183,7 @@ public class WinDialog : Dialog
                         _starReward.SetActive(true);
                         _starReward.transform.localScale = Vector3.zero;
                         tweenControl.ScaleFromZero(_starReward.gameObject, 1);
-                        tweenControl.MoveRectY(_starReward.transform as RectTransform, 0, 0.6f,()=> {
+                        tweenControl.MoveRectY(_starReward.transform as RectTransform, -20, 0.6f,()=> {
                             tweenControl.MoveRectY(_starReward.transform as RectTransform, -95, 0.4f);
                         });
                     });
