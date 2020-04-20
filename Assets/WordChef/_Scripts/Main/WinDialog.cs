@@ -81,7 +81,6 @@ public class WinDialog : Dialog
         level = GameState.currentLevel;
 
         isLastLevel = Prefs.IsSaveLevelProgress();
-        txtReward.gameObject.SetActive(false);
         light.SetActive(false);
         GroupButton.SetActive(false);
         SetupStars();
@@ -162,6 +161,7 @@ public class WinDialog : Dialog
         //{
         //    WordRegion.instance.listWordCorrect.Add(line.answer);
         //}
+        var tweenControl = TweenControl.GetInstance();
         GroupButton.SetActive(show);
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
@@ -169,17 +169,24 @@ public class WinDialog : Dialog
             if (button != _btnBee)
             {
                 button.transform.localScale = Vector3.zero;
-                TweenControl.GetInstance().Scale(button, Vector3.one * 1.2f, 0.3f, () =>
+                tweenControl.Scale(button, Vector3.one * 1.2f, 0.3f, () =>
                 {
-                    TweenControl.GetInstance().Scale(button, Vector3.one, 0.3f, null, EaseType.InQuad);
+                    tweenControl.Scale(button, Vector3.one, 0.3f, null, EaseType.InQuad);
                 });
             }
             else
             {
                 var posTarget = _btnBee.transform.localPosition.x / 2;
-                TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget + 50, 0.5f, () =>
+                tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget + 50, 0.5f, () =>
                 {
-                    TweenControl.GetInstance().MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f);
+                    tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f,()=> {
+                        _starReward.SetActive(true);
+                        _starReward.transform.localScale = Vector3.zero;
+                        tweenControl.ScaleFromZero(_starReward.gameObject, 1);
+                        tweenControl.MoveRectY(_starReward.transform as RectTransform, 0, 0.6f,()=> {
+                            tweenControl.MoveRectY(_starReward.transform as RectTransform, -95, 0.4f);
+                        });
+                    });
                 });
             }
         }
@@ -317,8 +324,7 @@ public class WinDialog : Dialog
         //var tweener = FadeImage.DOFade(0f, 1f);
         //tweener.onComplete += () =>
         //{
-        txtReward.gameObject.SetActive(true);
-        _starReward.SetActive(true);
+        
         FadeImage.gameObject.SetActive(false);
         //};
         yield return new WaitForSeconds(0.01f);
