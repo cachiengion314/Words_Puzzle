@@ -102,24 +102,30 @@ public class WinDialog : Dialog
     {
         if (level == numLevels - 1)
         {
-            ShowTitleChapterClear(true);
-            Sound.instance.Play(Sound.Scenes.ChapterClear);
-            ShowEffectTitle(1.4f);
-            _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
-            {
-                _animChapterClear.SetAnimation(levelClearIdleAnim, true);
+            TweenControl.GetInstance().DelayCall(transform,0.1f,()=> {
+                ShowTitleChapterClear(true);
+                Sound.instance.Play(Sound.Scenes.ChapterClear);
+                ShowEffectTitle(1.4f);
+                _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
+                {
+                    _animChapterClear.SetAnimation(levelClearIdleAnim, true);
+                });
             });
+            
         }
         else
         {
             CPlayerPrefs.SetBool("Received", false);
-            ShowTitleChapterClear(false);
-            Sound.instance.Play(Sound.Scenes.LevelClear);
-            ShowEffectTitle(0.5f);
+            
             //TweenControl.GetInstance().MoveRectY(TitleLevelClear.transform as RectTransform, -151f, 2f);
-            _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
+            TweenControl.GetInstance().DelayCall(transform, 0.1f, () => {
+                ShowTitleChapterClear(false);
+                Sound.instance.Play(Sound.Scenes.LevelClear);
+                ShowEffectTitle(0.5f);
+                _animLevelClear.SetAnimation(showLevelClearAnim, false, () =>
             {
                 _animLevelClear.SetAnimation(levelClearIdleAnim, true);
+            });
             });
         }
     }
@@ -182,7 +188,9 @@ public class WinDialog : Dialog
                     tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f,()=> {
                         _starReward.SetActive(true);
                         _starReward.transform.localScale = Vector3.zero;
-                        tweenControl.ScaleFromZero(_starReward.gameObject, 1);
+                        var cvGR = _starReward.GetComponent<CanvasGroup>();
+                        tweenControl.FadeAnfa(cvGR, 1, 1.2f);
+                        tweenControl.ScaleFromZero(_starReward.gameObject, 1.5f);
                         tweenControl.MoveRectY(_starReward.transform as RectTransform, -20, 0.6f,()=> {
                             tweenControl.MoveRectY(_starReward.transform as RectTransform, -95, 0.4f);
                         });
