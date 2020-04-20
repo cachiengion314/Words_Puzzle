@@ -81,7 +81,7 @@ public class SceneAnimate : MonoBehaviour
     //TEST
     public void OnAddStarAndBeeTest(int numBee)
     {
-        CurrencyController.CreditBalance(9999999);
+        CurrencyController.CreditBalance(1000);
         CurrencyController.CreditHintFree(3);
         BeeManager.instance.SetAmountBee(numBee);
     }
