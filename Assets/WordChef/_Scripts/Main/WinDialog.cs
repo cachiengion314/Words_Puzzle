@@ -313,7 +313,7 @@ public class WinDialog : Dialog
             txtRewardByAds.text = "x" + Const.REWARD_ADS_LEVEL_CLEAR + "";
             txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
             //_starReward.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0);
             ShowPanelButton(true);
         };
     }
@@ -335,7 +335,7 @@ public class WinDialog : Dialog
         
         FadeImage.gameObject.SetActive(false);
         //};
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0);
         ShowPanelButton(true);
     }
 
