@@ -78,9 +78,9 @@ public class FacebookController : MonoBehaviour
             SetValueUser();
         }
     }
-    public void GetLeaderboard(string statisticName, Action<GetFriendLeaderboardAroundPlayerResult> callback = null)
+    public void GetLeaderboard(string statisticName, Action<GetLeaderboardResult> callback = null)
     {
-        PlayFabClientAPI.GetFriendLeaderboardAroundPlayer(new GetFriendLeaderboardAroundPlayerRequest
+        PlayFabClientAPI.GetFriendLeaderboard(new GetFriendLeaderboardRequest
         {
             ProfileConstraints = new PlayerProfileViewConstraints
             {
@@ -175,10 +175,11 @@ public class FacebookController : MonoBehaviour
     {
         PlayFabClientAPI.GetFriendsList(new GetFriendsListRequest
         {
-            IncludeFacebookFriends = true
+            ProfileConstraints = new PlayerProfileViewConstraints { ShowCreated = true },
+            IncludeFacebookFriends = true,
         }, (resultFr) =>
         {
-            Debug.Log(resultFr.Friends.Count);
+            Debug.Log("Friend: " + resultFr.Friends.Count);
             //Debug.Log(resultFr.Friends[0].TitleDisplayName);
         }, null);
     }
