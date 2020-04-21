@@ -1,11 +1,13 @@
 ﻿using PlayFab;
 using PlayFab.ClientModels;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BeeManager : MonoBehaviour
 {
+    public Action onBeeChanged;
     private int _currBee;
     public static BeeManager instance;
 
@@ -20,7 +22,8 @@ public class BeeManager : MonoBehaviour
                     CPlayerPrefs.SetInt("amount_bee", resultInventory.VirtualCurrency["BE"]);
                 }, null);
             }
-            return CPlayerPrefs.GetInt("amount_bee", 0);
+            _currBee = CPlayerPrefs.GetInt("amount_bee", 0);
+            return _currBee;
         }
     }
     void Awake()
@@ -41,6 +44,7 @@ public class BeeManager : MonoBehaviour
         if (_currBee <= 0)
             _currBee = 0;
         CPlayerPrefs.SetInt("amount_bee", _currBee);
+        onBeeChanged?.Invoke();
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
             AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
