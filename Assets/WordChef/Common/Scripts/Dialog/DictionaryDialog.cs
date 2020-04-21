@@ -70,7 +70,7 @@ public class DictionaryDialog : Dialog
     {
         wordPassed = CPlayerPrefs.GetString("WordLevelSave");
         if (PlayFabClientAPI.IsClientLoggedIn())
-            wordPassed = FacebookController.instance.user.wordPassed;
+            wordPassed = FacebookController.instance.user.wordPassed != null ? FacebookController.instance.user.wordPassed : "";
         Debug.Log(wordPassed);
         if (wordPassed != null)
         {

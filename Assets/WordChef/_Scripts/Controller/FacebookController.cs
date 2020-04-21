@@ -78,9 +78,9 @@ public class FacebookController : MonoBehaviour
             SetValueUser();
         }
     }
-    public void GetLeaderboard(string statisticName, Action<GetLeaderboardResult> callback = null)
+    public void GetLeaderboard(string statisticName, Action<GetFriendLeaderboardAroundPlayerResult> callback = null)
     {
-        PlayFabClientAPI.GetLeaderboard(new GetLeaderboardRequest
+        PlayFabClientAPI.GetFriendLeaderboardAroundPlayer(new GetFriendLeaderboardAroundPlayerRequest
         {
             ProfileConstraints = new PlayerProfileViewConstraints
             {
@@ -163,6 +163,7 @@ public class FacebookController : MonoBehaviour
         userDefault.id = "";
         userDefault.name = "";
         userDefault.email = "";
+        userDefault.wordPassed = "";
         userDefault.unlockedSubWorld = "0";
         userDefault.unlockedLevel = "0";
         userDefault.unlockedWorld = "0";
@@ -196,10 +197,6 @@ public class FacebookController : MonoBehaviour
                 {
                     ParserJsonData(data.Value.Value);
                 }
-                if (data.Key.ToString() == "DICTIONARY")
-                {
-                    user.wordPassed = data.Value.Value;
-                }
             }
             SetValueUser();
             callback?.Invoke();
@@ -213,6 +210,7 @@ public class FacebookController : MonoBehaviour
         us.id = jsonData.id;
         us.name = jsonData.name;
         us.email = jsonData.email;
+        us.wordPassed = jsonData.wordPassed;
         us.unlockedSubWorld = jsonData.unlockedSubWorld;
         us.unlockedLevel = jsonData.unlockedLevel;
         us.unlockedWorld = jsonData.unlockedWorld;

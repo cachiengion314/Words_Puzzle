@@ -502,6 +502,7 @@ public class WordRegion : MonoBehaviour
         var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
+            MainController.instance.SaveWordComplete(checkWord);
             ShowComplimentFX();
             ExtraWord.instance.ProcessWorld(checkWord);
             if (textPreview.useFX)

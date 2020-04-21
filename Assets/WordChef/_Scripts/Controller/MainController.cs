@@ -6,6 +6,7 @@ using Superpow;
 using TMPro;
 using System;
 using PlayFab;
+using System.Linq;
 
 public class MainController : BaseController
 {
@@ -22,10 +23,11 @@ public class MainController : BaseController
     private GameLevel gameLevel;
 
     public static MainController instance;
-    
+
     [HideInInspector] public bool isBeePlay;
 
     private string wordLevelSave;
+    private string _wordPassed;
 
     public bool IsLevelClear
     {
@@ -61,7 +63,7 @@ public class MainController : BaseController
         //level = 4;
         //Debug.Log(world + ", " + subWorld + ", " + level);
         //save level pass;
-        
+
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
         WordRegion.instance.Load(gameLevel, currlevel);
@@ -75,9 +77,9 @@ public class MainController : BaseController
             });
         }
         //GameState.currentSubWorldName
-        
+
         levelNameText.text = "LEVEL " + (currlevel + 1);
-        
+
         onLoadDataComplete?.Invoke();
     }
 
@@ -91,9 +93,8 @@ public class MainController : BaseController
 
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
-            var dicData = new Dictionary<string, string>();
-            dicData.Add("DICTIONARY", wordLevelSave);
-            FacebookController.instance.UpdateUserData(dicData);
+            FacebookController.instance.user.wordPassed = _wordPassed;
+            FacebookController.instance.SaveDataGame();
         }
         // 
         Timer.Schedule(this, 1f, () =>
@@ -113,7 +114,23 @@ public class MainController : BaseController
             wordLevelSave = CPlayerPrefs.GetString("WordLevelSave");
             wordLevelSave += "|" + wordDone;
             CPlayerPrefs.SetString("WordLevelSave", wordLevelSave);
+            _wordPassed = WordSaveDistinct();
+            if (_wordPassed.Length > 0 && _wordPassed[_wordPassed.Length - 1].ToString() == "|")
+                _wordPassed.Remove(_wordPassed.Length - 1);
         }
+    }
+
+    private string WordSaveDistinct()
+    {
+        var valieSplit = wordLevelSave.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        var stringDistinct = valieSplit.Distinct().ToList();
+        var result = "";
+        for (int i = 0; i < stringDistinct.Count; i++)
+        {
+            var word = stringDistinct[i];
+            result += word + "|";
+        }
+        return result;
     }
 
     private string BuildLevelName()
