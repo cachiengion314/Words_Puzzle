@@ -30,7 +30,8 @@ public class ExtraWord : MonoBehaviour
 
     private void OnDialogClosed()
     {
-        effectLightLoop.gameObject.SetActive(false);
+        if (effectLightLoop != null)
+            effectLightLoop.gameObject.SetActive(false);
     }
 
     private void OnDialogOpened()
