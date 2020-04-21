@@ -151,6 +151,7 @@ public class LineWord : MonoBehaviour
         {
             cell.isShown = true;
         }
+        WordRegion.instance.listWordCorrect.Add(answer.ToLower());
         ShowBtnMeanByWord();
         StartCoroutine(IEShowAnswer());
     }
@@ -194,6 +195,8 @@ public class LineWord : MonoBehaviour
 
     private void ShowDoneAllCell()
     {
+        if (answer != "")
+            WordRegion.instance.listWordCorrect.Add(answer.ToLower());
         foreach (var cell in cells)
         {
             cell.bg.color = new Color(1, 1, 1, 1);

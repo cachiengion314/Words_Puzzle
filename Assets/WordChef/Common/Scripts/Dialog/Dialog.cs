@@ -42,7 +42,8 @@ public class Dialog : MonoBehaviour
 
     public virtual void Show()
     {
-        gameObject.SetActive(true);
+        if (gameObject != null)
+            gameObject.SetActive(true);
         isShowing = true;
         if (anim != null && IsIdle())
         {
@@ -90,7 +91,7 @@ public class Dialog : MonoBehaviour
                 {
                     var canvasGroup = anim.GetComponent<CanvasGroup>();
                     if (canvasGroup.alpha == 1)
-                        TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.5f);
+                        TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.3f);
                 }
                 TweenControl.GetInstance().ScaleFromOne(anim.gameObject, 0.3f, () =>
                 {

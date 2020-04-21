@@ -38,7 +38,7 @@ public class ButtonWord : MyButton
 
      void WaitTimeGetData()
      {
-         Dictionary.instance.GetDataFromApi(text);
+         Dictionary.instance.GetDataFromApi(text.ToLower());
          //DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
      }
 }

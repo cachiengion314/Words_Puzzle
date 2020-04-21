@@ -102,7 +102,8 @@ public class WinDialog : Dialog
     {
         if (level == numLevels - 1)
         {
-            TweenControl.GetInstance().DelayCall(transform,0.1f,()=> {
+            TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+            {
                 ShowTitleChapterClear(true);
                 Sound.instance.Play(Sound.Scenes.ChapterClear);
                 ShowEffectTitle(1.4f);
@@ -111,14 +112,15 @@ public class WinDialog : Dialog
                     _animChapterClear.SetAnimation(levelClearIdleAnim, true);
                 });
             });
-            
+
         }
         else
         {
             CPlayerPrefs.SetBool("Received", false);
-            
+
             //TweenControl.GetInstance().MoveRectY(TitleLevelClear.transform as RectTransform, -151f, 2f);
-            TweenControl.GetInstance().DelayCall(transform, 0.1f, () => {
+            TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+            {
                 ShowTitleChapterClear(false);
                 Sound.instance.Play(Sound.Scenes.LevelClear);
                 ShowEffectTitle(0.5f);
@@ -185,13 +187,15 @@ public class WinDialog : Dialog
                 var posTarget = _btnBee.transform.localPosition.x / 2;
                 tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget + 50, 0.5f, () =>
                 {
-                    tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f,()=> {
+                    tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f, () =>
+                    {
                         _starReward.SetActive(true);
                         _starReward.transform.localScale = Vector3.zero;
                         var cvGR = _starReward.GetComponent<CanvasGroup>();
                         tweenControl.FadeAnfa(cvGR, 1, 1.2f);
                         tweenControl.ScaleFromZero(_starReward.gameObject, 1.5f);
-                        tweenControl.MoveRectY(_starReward.transform as RectTransform, -20, 0.6f,()=> {
+                        tweenControl.MoveRectY(_starReward.transform as RectTransform, -20, 0.6f, () =>
+                        {
                             tweenControl.MoveRectY(_starReward.transform as RectTransform, -95, 0.4f);
                         });
                     });
@@ -332,7 +336,7 @@ public class WinDialog : Dialog
         //var tweener = FadeImage.DOFade(0f, 1f);
         //tweener.onComplete += () =>
         //{
-        
+
         FadeImage.gameObject.SetActive(false);
         //};
         yield return new WaitForSeconds(0);
@@ -343,7 +347,7 @@ public class WinDialog : Dialog
     {
         if (_fxEffect != null)
             Destroy(_fxEffect);
-        
+        gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         Prefs.countLevel += 1;
         Prefs.countLevelDaily += 1;
         if (Prefs.IsLastLevel())
@@ -354,9 +358,10 @@ public class WinDialog : Dialog
         FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
         FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
         FacebookController.instance.SaveDataGame();
-        TweenControl.GetInstance().DelayCall(transform, 0.5f, () => {
+        //Close();
+        Sound.instance.Play(Sound.Collects.LevelClose, 1, () =>
+        {
             Close();
-            Sound.instance.Play(Sound.Collects.LevelClose);
             CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         });
     }

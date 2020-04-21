@@ -381,7 +381,7 @@ public class WordRegion : MonoBehaviour
             ShowComplimentFX();
 
             MainController.instance.SaveWordComplete(checkWord);
-            listWordCorrect.Add(checkWord.ToLower());
+            //listWordCorrect.Add(checkWord.ToLower());
             //}
             //else
             //{
@@ -606,7 +606,7 @@ public class WordRegion : MonoBehaviour
         else
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.Shop2);
+            DialogController.instance.ShowDialog(DialogType.Shop2, DialogShow.REPLACE_CURRENT);
         }
     }
 

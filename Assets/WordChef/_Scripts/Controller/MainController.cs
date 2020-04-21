@@ -91,11 +91,11 @@ public class MainController : BaseController
         //Save Passed Word
         //SaveWordComplete(gameLevel.answers);
 
-        if (PlayFabClientAPI.IsClientLoggedIn())
-        {
+        //if (PlayFabClientAPI.IsClientLoggedIn())
+        //{
             FacebookController.instance.user.wordPassed = _wordPassed;
             FacebookController.instance.SaveDataGame();
-        }
+        //}
         // 
         Timer.Schedule(this, 1f, () =>
         {
