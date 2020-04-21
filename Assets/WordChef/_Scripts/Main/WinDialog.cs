@@ -343,8 +343,7 @@ public class WinDialog : Dialog
     {
         if (_fxEffect != null)
             Destroy(_fxEffect);
-        Close();
-        Sound.instance.Play(Sound.Collects.LevelClose);
+        
         Prefs.countLevel += 1;
         Prefs.countLevelDaily += 1;
         if (Prefs.IsLastLevel())
@@ -355,7 +354,11 @@ public class WinDialog : Dialog
         FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
         FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
         FacebookController.instance.SaveDataGame();
-        CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
+        TweenControl.GetInstance().DelayCall(transform, 0.5f, () => {
+            Close();
+            Sound.instance.Play(Sound.Collects.LevelClose);
+            CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
+        });
     }
 
 
