@@ -108,6 +108,7 @@ public class ShopDialog : Dialog
         }
 #endif
         GetShopItemInContent();
+        //More();
     }
 
     private void Update()
@@ -212,7 +213,7 @@ public class ShopDialog : Dialog
                 if (shopItemObject[i] != btnMore)
                 {
                     shopItemObject[i].SetActive(true);
-                    StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f));
+                    StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
                     count++;
                 }
             }
@@ -223,6 +224,7 @@ public class ShopDialog : Dialog
     void GetShopItemInContent()
     {
         int count = 0;
+        btnMore.gameObject.SetActive(false);
         shopItemObject = new GameObject[contentItemShop.transform.childCount];
         //btnMore.transform.localScale = Vector3.zero;
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
