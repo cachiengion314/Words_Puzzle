@@ -30,21 +30,34 @@ public class FreeStarsDialogConfirm : MonoBehaviour
         TweenControl.GetInstance().ScaleFromOne(gameObject, 0.3f, () =>
         {
             //Animate
-            StartCoroutine(CurrencyBalanceUpFx());
+            //StartCoroutine(CurrencyBalanceUpFx());
+            StartCoroutine(ShowEffectCollect(_amount/5));
             BlockScreen.instance.Block(false);
             _rewardController.gameObject.SetActive(true);
             //==
         });
     }
 
-    private IEnumerator CurrencyBalanceUpFx()
+    //private IEnumerator CurrencyBalanceUpFx()
+    //{
+    //    while (_currAmount < _amount)
+    //    {
+    //        Sound.instance.Play(Sound.Collects.CoinCollect);
+    //        CurrencyController.CreditBalance(1);
+    //        yield return new WaitForSeconds(0.002f);
+    //        _currAmount += 1;
+    //    }
+    //}
+    private IEnumerator ShowEffectCollect(int value)
     {
-        while (_currAmount < _amount)
+        for (int i = 0; i < value; i++)
         {
-            Sound.instance.Play(Sound.Collects.CoinCollect);
-            CurrencyController.CreditBalance(1);
-            yield return new WaitForSeconds(0.002f);
-            _currAmount += 1;
+            if (i < 5)
+            {
+                MonoUtils.instance.ShowEffect(value / 5);
+            }
+            yield return new WaitForSeconds(0.02f);
         }
+
     }
 }

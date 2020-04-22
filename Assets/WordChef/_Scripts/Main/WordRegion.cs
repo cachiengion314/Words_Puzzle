@@ -413,7 +413,7 @@ public class WordRegion : MonoBehaviour
             textPreview.ClearText();
     }
 
-    private void ShowComplimentFX()
+    public void ShowComplimentFX()
     {
         compliment.Show(lineIndex);
         Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
@@ -503,7 +503,6 @@ public class WordRegion : MonoBehaviour
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
             MainController.instance.SaveWordComplete(checkWord);
-            ShowComplimentFX();
             ExtraWord.instance.ProcessWorld(checkWord);
             if (textPreview.useFX)
                 textPreview.ClearText();

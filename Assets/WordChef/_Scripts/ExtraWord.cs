@@ -74,6 +74,7 @@ public class ExtraWord : MonoBehaviour
         }
         else
         {
+            WordRegion.instance.ShowComplimentFX();
             var tweenControl = TweenControl.GetInstance();
             var middlePoint = CUtils.GetMiddlePoint(beginPoint.position, endPoint.position, 0.4f);
             Vector3[] waypoint = { beginPoint.position, middlePoint, endPoint.position };

@@ -17,10 +17,10 @@ public class MonoUtils : MonoBehaviour {
         instance = this;
     }
 
-    public void ShowEffect(int value,Transform currBalance = null)
+    public void ShowEffect(int value,Transform currBalance = null, Transform root = null)
     {
         var tweenControl = TweenControl.GetInstance();
-        var star = Instantiate(rubyFly, textFlyTransform);
+        var star = Instantiate(rubyFly, root == null ? textFlyTransform : root);
         star.transform.position = Vector3.zero;
         star.transform.localScale = Vector3.one;
         tweenControl.Move(star.transform, (currBalance != null ? currBalance : GameObject.FindWithTag("RubyBalance").transform).position, 0.5f, () =>
