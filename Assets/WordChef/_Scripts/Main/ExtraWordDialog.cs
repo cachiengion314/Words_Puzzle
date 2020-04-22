@@ -41,7 +41,6 @@ public class ExtraWordDialog : Dialog
 
         UpdateUI();
         ShowPanelCurrLevel();
-        ExtraWord.instance.effectLightLoop.gameObject.SetActive(false);
     }
 
     void OnCompleteVideo()
@@ -132,7 +131,6 @@ public class ExtraWordDialog : Dialog
 
     private void UpdateUI()
     {
-        ExtraWord.instance.effectLightLoop.gameObject.SetActive(false);
         claimQuantityText.text = claimQuantity.ToString();
         claimButton.SetActive(extraProgress.current >= extraProgress.target);
         rewardButton.SetActive(extraProgress.current >= extraProgress.target);

@@ -30,13 +30,13 @@ public class ExtraWord : MonoBehaviour
 
     private void OnDialogClosed()
     {
-        if (effectLightLoop != null)
-            effectLightLoop.gameObject.SetActive(false);
+        UpdateUI();
     }
 
     private void OnDialogOpened()
     {
-        UpdateUI();
+        if (effectLightLoop != null)
+            effectLightLoop.gameObject.SetActive(false);
     }
 
     private void Start()
