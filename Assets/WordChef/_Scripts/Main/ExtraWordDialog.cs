@@ -164,7 +164,7 @@ public class ExtraWordDialog : Dialog
 
     void OnClickBonusWord(string word)
     {
-        DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.STACK_DONT_HIDEN);
+        DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.STACK);
         Sound.instance.Play(Sound.Others.PopupOpen);
         DictionaryInGameDialog.instance.GetIndexByWord(word);
     }
@@ -172,6 +172,5 @@ public class ExtraWordDialog : Dialog
     public override void Close()
     {
         base.Close();
-        ExtraWord.instance.OnClaimed();
     }
 }

@@ -17,6 +17,7 @@ public class Dialog : MonoBehaviour
     public bool enableAd = true;
     public bool enableEscape = true;
     public bool scaleDialog = false;
+    public bool resestAnim = true;
 
     private AnimatorStateInfo info;
     private bool isShowing;
@@ -37,6 +38,30 @@ public class Dialog : MonoBehaviour
         if (enableEscape && Input.GetKeyDown(KeyCode.Escape))
         {
             Close();
+        }
+    }
+
+    public virtual void ShowNoAnim()
+    {
+        if (gameObject != null)
+            gameObject.SetActive(true);
+        isShowing = true;
+
+        if (scaleDialog)
+        {
+            anim.transform.localScale = Vector3.one;
+            var canvasGroup = anim.GetComponent<CanvasGroup>();
+            if (canvasGroup != null)
+                canvasGroup.alpha = 0;
+        }
+        onDialogOpened(this);
+
+        if (enableAd)
+        {
+            Timer.Schedule(this, 0.3f, () =>
+            {
+                CUtils.ShowInterstitialAd();
+            });
         }
     }
 
@@ -124,6 +149,7 @@ public class Dialog : MonoBehaviour
 
     public void Hide()
     {
+        resestAnim = false;
         gameObject.SetActive(false);
         isShowing = false;
     }
@@ -141,6 +167,8 @@ public class Dialog : MonoBehaviour
 
     public virtual void OnDialogCompleteClosed()
     {
+        if (ExtraWord.instance != null && DialogController.instance.current == null)
+            ExtraWord.instance.OnClaimed();
         onDialogCompleteClosed -= OnDialogCompleteClosed;
     }
 

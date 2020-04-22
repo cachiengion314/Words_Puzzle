@@ -18,19 +18,19 @@ public enum DialogType
     ExtraWord,
     Win,
     RewardedVideo,
-	RateGame,
+    RateGame,
     Shop2,
-	Objective,
-	Dictionary,
-	Bee,
-	Facebook,
-	Mail,
-	DailyGifts,
-	WeekenSale,
-	MeanDialog,
-	MeanInGameDialog,
-	LimitedSaleDialog,
-	FreeStars
+    Objective,
+    Dictionary,
+    Bee,
+    Facebook,
+    Mail,
+    DailyGifts,
+    WeekenSale,
+    MeanDialog,
+    MeanInGameDialog,
+    LimitedSaleDialog,
+    FreeStars
 };
 
 public enum DialogShow
@@ -45,96 +45,98 @@ public enum DialogShow
 
 public class DialogController : MonoBehaviour
 {
-	public static DialogController instance;
+    public static DialogController instance;
 
     [HideInInspector]
-	public Dialog current;
+    public Dialog current;
     //[HideInInspector]
     public Dialog[] baseDialogs;
 
-	public Action onDialogsOpened;
-	public Action onDialogsClosed;
-	public Stack<Dialog> dialogs = new Stack<Dialog>();
+    public Action onDialogsOpened;
+    public Action onDialogsClosed;
+    public Stack<Dialog> dialogs = new Stack<Dialog>();
 
-	public void Awake()
-	{
+    public void Awake()
+    {
         instance = this;
     }
 
-	public void ShowDialog(int type)
-	{
-		ShowDialog((DialogType)type, DialogShow.DONT_SHOW_IF_OTHERS_SHOWING); 
-	}
+    public void ShowDialog(int type)
+    {
+        ShowDialog((DialogType)type, DialogShow.DONT_SHOW_IF_OTHERS_SHOWING);
+    }
 
-	public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT)
-	{
-		Dialog dialog = GetDialog(type);
+    public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT)
+    {
+        Dialog dialog = GetDialog(type);
         ShowDialog(dialog, option);
-	}
+    }
 
-	public void ShowYesNoDialog(string title, string content, Action onYesListener, Action onNoListenter, DialogShow option = DialogShow.REPLACE_CURRENT)
-	{
-		var dialog = (YesNoDialog)GetDialog(DialogType.YesNo);
+    public void ShowYesNoDialog(string title, string content, Action onYesListener, Action onNoListenter, DialogShow option = DialogShow.REPLACE_CURRENT)
+    {
+        var dialog = (YesNoDialog)GetDialog(DialogType.YesNo);
         if (dialog.title != null) dialog.title.SetText(title);
         if (dialog.message != null) dialog.message.SetText(content);
-		dialog.onYesClick = onYesListener;
+        dialog.onYesClick = onYesListener;
         dialog.onNoClick = onNoListenter;
-		ShowDialog(dialog, option);
-	}
+        ShowDialog(dialog, option);
+    }
 
-	public void ShowOkDialog(string title, string content, Action onOkListener, DialogShow option = DialogShow.REPLACE_CURRENT)
-	{
-		var dialog = (OkDialog)GetDialog(DialogType.Ok);
+    public void ShowOkDialog(string title, string content, Action onOkListener, DialogShow option = DialogShow.REPLACE_CURRENT)
+    {
+        var dialog = (OkDialog)GetDialog(DialogType.Ok);
         if (dialog.title != null) dialog.title.SetText(title);
-		if (dialog.message != null) dialog.message.SetText(content);
-		dialog.onOkClick = onOkListener;
-		ShowDialog(dialog, option);
-	}
+        if (dialog.message != null) dialog.message.SetText(content);
+        dialog.onOkClick = onOkListener;
+        ShowDialog(dialog, option);
+    }
 
-	public void ShowDialog(Dialog dialog, DialogShow option = DialogShow.REPLACE_CURRENT)
-	{
-		if (current != null)
-		{
-			if (option == DialogShow.DONT_SHOW_IF_OTHERS_SHOWING)
-			{
-				Destroy(dialog.gameObject);
-				return;
-			} 
+    public void ShowDialog(Dialog dialog, DialogShow option = DialogShow.REPLACE_CURRENT)
+    {
+        if (current != null)
+        {
+            if (option == DialogShow.DONT_SHOW_IF_OTHERS_SHOWING)
+            {
+                Destroy(dialog.gameObject);
+                return;
+            }
             else if (option == DialogShow.REPLACE_CURRENT)
-			{
+            {
                 current.Close();
-			} 
+            }
             else if (option == DialogShow.STACK)
-			{
-				current.Hide();
-			}
+            {
+                current.Hide();
+            }
         }
 
-		current = dialog;
-		if (option != DialogShow.SHOW_PREVIOUS)
-		{
-			current.onDialogOpened += OnOneDialogOpened;
-			current.onDialogClosed += OnOneDialogClosed;
-			dialogs.Push(current);
-		}
+        current = dialog;
+        if (option != DialogShow.SHOW_PREVIOUS)
+        {
+            current.onDialogOpened += OnOneDialogOpened;
+            current.onDialogClosed += OnOneDialogClosed;
+            dialogs.Push(current);
+        }
 
-		current.Show();
+        if (current.resestAnim)
+            current.Show();
+        else
+            current.ShowNoAnim();
+        onDialogsOpened?.Invoke();
+    }
 
-		onDialogsOpened?.Invoke();
-	}
-
-	public Dialog GetDialog(DialogType type)
-	{
+    public Dialog GetDialog(DialogType type)
+    {
         Dialog dialog = baseDialogs[(int)type];
-		dialog.dialogType = type;
-		return (Dialog)Instantiate(dialog, transform.position, transform.rotation);
-	}
+        dialog.dialogType = type;
+        return (Dialog)Instantiate(dialog, transform.position, transform.rotation);
+    }
 
-	public void CloseCurrentDialog()
-	{
-		if (current != null)
-			current.Close();
-	}
+    public void CloseCurrentDialog()
+    {
+        if (current != null)
+            current.Close();
+    }
 
     public void CloseDialog(DialogType type)
     {
@@ -145,10 +147,10 @@ public class DialogController : MonoBehaviour
         }
     }
 
-	public bool IsDialogShowing()
-	{
-		return current != null;
-	}
+    public bool IsDialogShowing()
+    {
+        return current != null;
+    }
 
     public bool IsDialogShowing(DialogType type)
     {
@@ -156,13 +158,13 @@ public class DialogController : MonoBehaviour
         return current.dialogType == type;
     }
 
-	private void OnOneDialogOpened(Dialog dialog)
-	{
+    private void OnOneDialogOpened(Dialog dialog)
+    {
 
-	}
+    }
 
-	private void OnOneDialogClosed(Dialog dialog)
-	{
+    private void OnOneDialogClosed(Dialog dialog)
+    {
         if (current == dialog)
         {
             current = null;
@@ -175,6 +177,6 @@ public class DialogController : MonoBehaviour
                 ShowDialog(dialogs.Peek(), DialogShow.SHOW_PREVIOUS);
             }
         }
-	}
+    }
 
 }

@@ -25,18 +25,16 @@ public class ExtraWord : MonoBehaviour
     {
         instance = this;
         DialogController.instance.onDialogsOpened += OnDialogOpened;
-        DialogController.instance.onDialogsClosed += OnDialogClosed;
-    }
-
-    private void OnDialogClosed()
-    {
-        UpdateUI();
     }
 
     private void OnDialogOpened()
     {
-        if (effectLightLoop != null)
+        if (effectLightLoop != null && DialogController.instance.current != null)
+        {
+            TweenControl.GetInstance().KillDelayCall(effectLight.transform);
+            effectLight.gameObject.SetActive(false);
             effectLightLoop.gameObject.SetActive(false);
+        }
     }
 
     private void Start()
@@ -143,7 +141,7 @@ public class ExtraWord : MonoBehaviour
 
         effectLight.gameObject.SetActive(true);
         effectLight.Play();
-        TweenControl.GetInstance().DelayCall(transform, 2, OnLightRotateComplete);
+        TweenControl.GetInstance().DelayCall(effectLight.transform, 2, OnLightRotateComplete);
 
         //if (!lightOpenEffect.activeSelf)
         //{
