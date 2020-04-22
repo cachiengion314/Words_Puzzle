@@ -11,7 +11,7 @@ public class ExtraWordDialog : Dialog
     public ExtraProgress extraProgress;
     public GameObject claimButton;
     public GameObject rewardButton;
-    public Text progressText;
+    public TextMeshProUGUI progressText;
     //public TextMeshProUGUI wordText;
     public TextMeshProUGUI claimQuantityText;
     public CanvasGroup panelNewLevel;
@@ -41,6 +41,7 @@ public class ExtraWordDialog : Dialog
 
         UpdateUI();
         ShowPanelCurrLevel();
+        ExtraWord.instance.effectLightLoop.gameObject.SetActive(false);
     }
 
     void OnCompleteVideo()
@@ -48,6 +49,7 @@ public class ExtraWordDialog : Dialog
         _rewardController.onRewardedCallback -= OnCompleteVideo;
         StartCoroutine(ShowEffectCollect(reward / 5));
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
+        Claim();
         TweenControl.GetInstance().DelayCall(transform, 2.5f, () => {
             gameObject.GetComponent<GraphicRaycaster>().enabled = true;
         });
@@ -103,7 +105,7 @@ public class ExtraWordDialog : Dialog
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
 
-        StartCoroutine(ClaimEffect());
+        StartCoroutine(ShowEffectCollect(claimQuantity / 5));
         ExtraWord.instance.OnClaimed();
 
         if (Prefs.extraTarget == 2 && Prefs.totalExtraAdded > 2)
@@ -115,18 +117,18 @@ public class ExtraWordDialog : Dialog
         }
     }
 
-    private IEnumerator ClaimEffect()
-    {
-        Transform rubyBalance = GameObject.FindWithTag("RubyBalance").transform;
-        //var middlePoint = CUtils.GetMiddlePoint(claimTr.position, rubyBalance.position, -0.4f);
-        //Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
-        for (int i = 0; i < claimQuantity; i++)
-        {
-            if (i < 5)
-                MonoUtils.instance.ShowEffect(claimQuantity / 5, rubyBalance);
-            yield return new WaitForSeconds(0.02f);
-        }
-    }
+    //private IEnumerator ClaimEffect()
+    //{
+    //    Transform rubyBalance = GameObject.FindWithTag("RubyBalance").transform;
+    //    //var middlePoint = CUtils.GetMiddlePoint(claimTr.position, rubyBalance.position, -0.4f);
+    //    //Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
+    //    for (int i = 0; i < claimQuantity; i++)
+    //    {
+    //        if (i < 5)
+    //            MonoUtils.instance.ShowEffect(claimQuantity / 5, rubyBalance);
+    //        yield return new WaitForSeconds(0.02f);
+    //    }
+    //}
 
     private void UpdateUI()
     {
@@ -136,6 +138,12 @@ public class ExtraWordDialog : Dialog
         rewardButton.SetActive(extraProgress.current >= extraProgress.target);
         progressText.text = extraProgress.current + "/" + extraProgress.target;
         //wordText.text = "";
+        ClearContentScroll();
+        ShowBonusWord();
+    }
+
+    private void ShowBonusWord()
+    {
         foreach (var word in ExtraWord.instance.extraWords)
         {
             //wordText.text += "  " + word.ToUpper();
@@ -144,6 +152,15 @@ public class ExtraWordDialog : Dialog
             wordItem.text = word.ToUpper();
             buttonWord.onClick.RemoveAllListeners();
             buttonWord.onClick.AddListener(() => OnClickBonusWord(wordItem.text));
+        }
+    }
+
+    private void ClearContentScroll()
+    {
+        for (int i = 0; i < _contentScroll.childCount; i++)
+        {
+            var child = _contentScroll.GetChild(i).gameObject;
+            Destroy(child);
         }
     }
 
