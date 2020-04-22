@@ -167,6 +167,22 @@ public class DictionaryInGameDialog : Dialog
         });
     }
 
+    public void GetIndexByWord(string word)
+    {
+        for (int i = 0; i < WordRegion.instance.listWordCorrect.Count; i++)
+        {
+            int index = i;
+            if (word.ToLower() == WordRegion.instance.listWordCorrect[index])
+            {
+                TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+                {
+                    snapScrolling.selectItemID = index;
+                });
+                break;
+            }
+        }
+    }
+
     void OnDestroy()
     {
         TweenControl.GetInstance().KillDelayCall(transform);

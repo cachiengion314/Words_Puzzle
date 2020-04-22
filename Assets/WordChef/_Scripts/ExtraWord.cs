@@ -44,8 +44,15 @@ public class ExtraWord : MonoBehaviour
         world = GameState.currentWorld;
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
-
-        extraWords = Prefs.IsSaveLevelProgress() ? Prefs.GetExtraWords(world, subWorld, level).ToList() : new List<string>();
+        var isCollect = CPlayerPrefs.GetBool("COLLECTED", false);
+        extraWords = (Prefs.IsSaveLevelProgress() && !isCollect) ? Prefs.GetExtraWords(world, subWorld, level).ToList() : new List<string>();
+        if(extraWords.Count > 0)
+        {
+            foreach (var word in extraWords)
+            {
+                WordRegion.instance.listWordCorrect.Add(word.ToLower());
+            }
+        }
         existMessage.SetActive(false);
         existMessageCG = existMessage.GetComponent<CanvasGroup>();
 
@@ -74,6 +81,8 @@ public class ExtraWord : MonoBehaviour
         }
         else
         {
+            MainController.instance.SaveWordComplete(word);
+            WordRegion.instance.listWordCorrect.Add(word.ToLower());
             WordRegion.instance.ShowComplimentFX();
             var tweenControl = TweenControl.GetInstance();
             var middlePoint = CUtils.GetMiddlePoint(beginPoint.position, endPoint.position, 0.4f);

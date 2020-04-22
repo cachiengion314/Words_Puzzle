@@ -12,10 +12,12 @@ public class ExtraWordDialog : Dialog
     public GameObject claimButton;
     public GameObject rewardButton;
     public Text progressText;
-    public TextMeshProUGUI wordText;
+    //public TextMeshProUGUI wordText;
     public TextMeshProUGUI claimQuantityText;
     public CanvasGroup panelNewLevel;
     public CanvasGroup panelOldLevel;
+    [SerializeField] private TextMeshProUGUI _bonusWordPfb;
+    [SerializeField] private Transform _contentScroll;
     [Space]
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     [SerializeField] private int reward = 40;
@@ -57,7 +59,7 @@ public class ExtraWordDialog : Dialog
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(value / 5, _currBanlancePos);
+                MonoUtils.instance.ShowEffect(value, _currBanlancePos);
             }
             yield return new WaitForSeconds(0.02f);
         }
@@ -96,6 +98,7 @@ public class ExtraWordDialog : Dialog
 
     public void Claim()
     {
+        CPlayerPrefs.SetBool("COLLECTED", true);
         extraProgress.current -= (int)extraProgress.target;
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
@@ -132,11 +135,23 @@ public class ExtraWordDialog : Dialog
         claimButton.SetActive(extraProgress.current >= extraProgress.target);
         rewardButton.SetActive(extraProgress.current >= extraProgress.target);
         progressText.text = extraProgress.current + "/" + extraProgress.target;
-        wordText.text = "";
+        //wordText.text = "";
         foreach (var word in ExtraWord.instance.extraWords)
         {
-            wordText.text += "  " + word.ToUpper();
+            //wordText.text += "  " + word.ToUpper();
+            var wordItem = Instantiate(_bonusWordPfb, _contentScroll);
+            var buttonWord = wordItem.GetComponent<Button>();
+            wordItem.text = word.ToUpper();
+            buttonWord.onClick.RemoveAllListeners();
+            buttonWord.onClick.AddListener(() => OnClickBonusWord(wordItem.text));
         }
+    }
+
+    void OnClickBonusWord(string word)
+    {
+        DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.STACK_DONT_HIDEN);
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        DictionaryInGameDialog.instance.GetIndexByWord(word);
     }
 
     public override void Close()
