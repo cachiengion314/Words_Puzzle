@@ -86,11 +86,15 @@ public class ExtraWordDialog : Dialog
         {
             panelNewLevel.alpha = 1;
             panelOldLevel.alpha = 0;
+            panelNewLevel.blocksRaycasts = true;
+            panelOldLevel.blocksRaycasts = false;
         }
         else
         {
             panelNewLevel.alpha = 0;
             panelOldLevel.alpha = 1;
+            panelOldLevel.blocksRaycasts = true;
+            panelNewLevel.blocksRaycasts = false;
         }
     }
 
