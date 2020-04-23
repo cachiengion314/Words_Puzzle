@@ -153,13 +153,15 @@ public class WordRegion : MonoBehaviour
         if (levelProgress.Length != 0)
         {
             useProgress = CheckLevelProgress(levelProgress, wordList);
-            if (!useProgress) ClearLevelProgress();
+            /*if (!useProgress)*/
+            ClearLevelProgress();
         }
 
         if (answerProgress.Length != 0)
         {
             useAnsProgress = CheckAnswerProgress(answerProgress, wordList, numWords);
-            if (!useAnsProgress) ClearAnswerProgress();
+            /*if (!useAnsProgress) */
+            ClearAnswerProgress();
         }
 
         SetupLine(wordList, useProgress, levelProgress, answerProgress);
@@ -560,18 +562,19 @@ public class WordRegion : MonoBehaviour
         Sound.instance.PlayButton(Sound.Button.Beehive);
     }
 
-    int hintLineIndex = /*CPlayerPrefs.GetInt("HINT_LINE_INDEX", -1)*/-1;
+    int hintLineIndex = -1;
     public void HintClick()
     {
         int ballance = CurrencyController.GetBalance();
         var hintFree = CurrencyController.GetHintFree();
         if (ballance >= Const.HINT_COST || hintFree > 0)
         {
+            hintLineIndex = CPlayerPrefs.HasKey("HINT_LINE_INDEX") ? CPlayerPrefs.GetInt("HINT_LINE_INDEX") : -1;
             LineWord line = null;
             if (hintLineIndex + 1 >= lines.Count)
             {
                 hintLineIndex = -1;
-                //CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
+                CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
             }
             for (int i = hintLineIndex + 1; i < lines.Count; i++)
             {
@@ -579,13 +582,13 @@ public class WordRegion : MonoBehaviour
                 {
                     line = lines[i];
                     hintLineIndex = i;
-                    //CPlayerPrefs.SetInt("HINT_LINE_INDEX", hintLineIndex);
                     break;
                 }
             }
 
             if (line != null)
             {
+                CPlayerPrefs.SetInt("HINT_LINE_INDEX", hintLineIndex);
                 line.ShowHint(() =>
                 {
                     if (hintFree > 0)
@@ -695,13 +698,13 @@ public class WordRegion : MonoBehaviour
 
     public void ClearLevelProgress()
     {
-        if (!Prefs.IsLastLevel()) return;
+        if (!Prefs.IsSaveLevelProgress()) return;
         CPlayerPrefs.DeleteKey("level_progress");
     }
 
     public void ClearAnswerProgress()
     {
-        if (!Prefs.IsLastLevel()) return;
+        if (!Prefs.IsSaveLevelProgress()) return;
         CPlayerPrefs.DeleteKey("answer_progress");
     }
 

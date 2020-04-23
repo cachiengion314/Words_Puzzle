@@ -87,14 +87,14 @@ public class MainController : BaseController
     {
         if (_isGameComplete) return;
         _isGameComplete = true;
-
+        CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
         //Save Passed Word
         //SaveWordComplete(gameLevel.answers);
 
         //if (PlayFabClientAPI.IsClientLoggedIn())
         //{
-            FacebookController.instance.user.wordPassed = _wordPassed;
-            FacebookController.instance.SaveDataGame();
+        FacebookController.instance.user.wordPassed = _wordPassed;
+        FacebookController.instance.SaveDataGame();
         //}
         // 
         Timer.Schedule(this, 1f, () =>
