@@ -29,7 +29,9 @@ public class RewardController : MonoBehaviour
     private void OnDestroy()
     {
         if (_rewardVideoControl != null)
+        {
             _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
+        }
     }
 
     private void CheckShowAgain()
@@ -45,6 +47,7 @@ public class RewardController : MonoBehaviour
         if (_rewardVideoControl == null)
             _rewardVideoControl = Instantiate(_rewardVideoPfb);
         _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
+        _rewardVideoControl.onUpdateBtnAdsCallback += UpdateBtnAds;
         if (_showAgain.isOn)
         {
             OnWatchClick();
@@ -54,6 +57,15 @@ public class RewardController : MonoBehaviour
             overLay.SetActive(true);
             Sound.instance.Play(Sound.Others.PopupOpen);
             TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch, 0.3f);
+        }
+    }
+
+    private void UpdateBtnAds(bool IsAvailable)
+    {
+        if(!IsAvailable)
+        {
+            if (ExtraWord.instance != null && _boardFreeWatch.transform.localScale == Vector3.zero)
+                ExtraWord.instance.OnClaimed();
         }
     }
 
