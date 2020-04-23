@@ -170,7 +170,8 @@ public class AdmobController : MonoBehaviour
         }
         else
         {
-            MonoBehaviour.print("Reward based video ad is not ready yet");
+            //MonoBehaviour.print("Reward based video ad is not ready yet");
+            Toast.instance.ShowMessage("Reward based video ad is not ready yet");
         }
     }
 

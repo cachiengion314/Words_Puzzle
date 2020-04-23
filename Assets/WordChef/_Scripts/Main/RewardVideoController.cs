@@ -38,7 +38,7 @@ public class RewardVideoController : MonoBehaviour
 
         InvokeRepeating("IUpdate", 1, 1);
 #else
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 #endif
     }
 
@@ -74,7 +74,7 @@ public class RewardVideoController : MonoBehaviour
     {
         CancelInvoke("IUpdate");
         content.SetActive(false);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         ShowTimerText(ConfigController.instance.config.rewardedVideoPeriod);
         onRewardedCallback?.Invoke();
     }

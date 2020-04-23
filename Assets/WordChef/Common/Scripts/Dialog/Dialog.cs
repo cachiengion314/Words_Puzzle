@@ -154,6 +154,12 @@ public class Dialog : MonoBehaviour
         isShowing = false;
     }
 
+    public void DontHiden()
+    {
+        resestAnim = false;
+        isShowing = false;
+    }
+
     public bool IsIdle()
     {
         info = anim.GetCurrentAnimatorStateInfo(0);

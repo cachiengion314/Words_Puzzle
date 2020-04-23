@@ -108,6 +108,10 @@ public class DialogController : MonoBehaviour
             {
                 current.Hide();
             }
+            else if (option == DialogShow.STACK_DONT_HIDEN)
+            {
+                current.DontHiden();
+            }
         }
 
         current = dialog;

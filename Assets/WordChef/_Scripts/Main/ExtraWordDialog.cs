@@ -48,9 +48,9 @@ public class ExtraWordDialog : Dialog
         _rewardController.onRewardedCallback -= OnCompleteVideo;
         StartCoroutine(ShowEffectCollect(reward / 5));
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
-        Claim();
-        TweenControl.GetInstance().DelayCall(transform, 2.5f, () => {
-            gameObject.GetComponent<GraphicRaycaster>().enabled = true;
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            Claim();
         });
     }
 
@@ -63,6 +63,8 @@ public class ExtraWordDialog : Dialog
                 MonoUtils.instance.ShowEffect(value, _currBanlancePos);
             }
             yield return new WaitForSeconds(0.02f);
+            if (i == 5)
+                gameObject.GetComponent<GraphicRaycaster>().enabled = true;
         }
     }
 
@@ -92,7 +94,7 @@ public class ExtraWordDialog : Dialog
 
     public void OnClickHTPL(int selectID)
     {
-        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
+        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK_DONT_HIDEN);
         Sound.instance.Play(Sound.Others.PopupOpen);
         HowToPlayDialog.instance.ShowMeanWordByID(selectID);
     }
@@ -164,7 +166,7 @@ public class ExtraWordDialog : Dialog
 
     void OnClickBonusWord(string word)
     {
-        DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.STACK);
+        DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.STACK_DONT_HIDEN);
         Sound.instance.Play(Sound.Others.PopupOpen);
         DictionaryInGameDialog.instance.GetIndexByWord(word);
     }
