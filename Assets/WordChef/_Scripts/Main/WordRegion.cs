@@ -560,7 +560,7 @@ public class WordRegion : MonoBehaviour
         Sound.instance.PlayButton(Sound.Button.Beehive);
     }
 
-    int hintLineIndex = -1;
+    int hintLineIndex = /*CPlayerPrefs.GetInt("HINT_LINE_INDEX", -1)*/-1;
     public void HintClick()
     {
         int ballance = CurrencyController.GetBalance();
@@ -568,13 +568,18 @@ public class WordRegion : MonoBehaviour
         if (ballance >= Const.HINT_COST || hintFree > 0)
         {
             LineWord line = null;
-            if (hintLineIndex + 1 >= lines.Count) hintLineIndex = -1;
+            if (hintLineIndex + 1 >= lines.Count)
+            {
+                hintLineIndex = -1;
+                //CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
+            }
             for (int i = hintLineIndex + 1; i < lines.Count; i++)
             {
                 if (!lines[i].isShown)
                 {
                     line = lines[i];
                     hintLineIndex = i;
+                    //CPlayerPrefs.SetInt("HINT_LINE_INDEX", hintLineIndex);
                     break;
                 }
             }

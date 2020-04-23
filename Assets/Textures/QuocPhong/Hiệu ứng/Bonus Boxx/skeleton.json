@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "hWOylLsV67sH7hDVn02OoKmnCcs",
+	"hash": "9ScqZ0CCP+w2OQ+Sh/hvINyk6/8",
 	"spine": "3.8.94",
 	"x": 26.98,
 	"y": -265.3,
@@ -24,7 +24,8 @@
 	{ "name": "Video copy 4", "bone": "root", "attachment": "Video copy 4" },
 	{ "name": "keo", "bone": "keo", "attachment": "keo" },
 	{ "name": "sang vde", "bone": "root", "attachment": "sang vde" },
-	{ "name": "sang vd", "bone": "Sang vd", "attachment": "sang vd" }
+	{ "name": "sang vd", "bone": "Sang vd", "attachment": "sang vd" },
+	{ "name": "x20", "bone": "root", "attachment": "x20" }
 ],
 "skins": [
 	{
@@ -57,6 +58,9 @@
 			"vd": {
 				"vd": { "x": 170.48, "y": -215.3, "width": 287, "height": 100 }
 			},
+			"x20": {
+				"x20": { "x": 248.29, "y": -211.88, "width": 78, "height": 31 }
+			},
 			"x40": {
 				"x40": { "x": 249.65, "y": -212.6, "width": 80, "height": 31 }
 			}
@@ -72,6 +76,11 @@
 					{ "time": 1.4667, "color": "ffffffff" },
 					{ "time": 1.7, "color": "ffffff81" },
 					{ "time": 1.9333, "color": "ffffffff" }
+				]
+			},
+			"x20": {
+				"color": [
+					{ "color": "ffffff00" }
 				]
 			}
 		},
@@ -127,6 +136,11 @@
 					{ "color": "ffffff00" }
 				]
 			},
+			"x20": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
 			"x40": {
 				"color": [
 					{ "color": "ffffff00" }
@@ -167,10 +181,17 @@
 		}
 	},
 	"anim rong": {
+		"slots": {
+			"x20": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
 		"bones": {
 			"root": {
 				"scale": [
-					{ "x": 0 }
+					{ "x": 0, "y": 1.045 }
 				]
 			},
 			"sangsao2": {
@@ -189,6 +210,59 @@
 				]
 			},
 			"Sang vd": {
+				"scale": [
+					{ "x": 0 }
+				]
+			}
+		}
+	},
+	"x20": {
+		"slots": {
+			"Video copy 4": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.4667, "color": "ffffffff" },
+					{ "time": 1.7, "color": "ffffff81" },
+					{ "time": 1.9333, "color": "ffffffff" }
+				]
+			},
+			"x20": {
+				"color": [
+					{ "color": "ffffffff" }
+				]
+			},
+			"x40": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"Sang vd": {
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1, "curve": 0.25, "c3": 0.75 },
+					{ "time": 3, "x": 437.55 }
+				]
+			},
+			"keo": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 2.1 },
+					{ "time": 2.2, "angle": 16 },
+					{ "time": 2.3, "angle": -4.67 },
+					{ "time": 2.4, "angle": 16 },
+					{ "time": 2.5, "angle": -4.67 },
+					{ "time": 2.6, "curve": "stepped" },
+					{ "time": 3.6667 }
+				]
+			},
+			"sangsao2": {
+				"scale": [
+					{ "x": 0 }
+				]
+			},
+			"sangsao": {
 				"scale": [
 					{ "x": 0 }
 				]
