@@ -39,6 +39,8 @@ public class RewardController : MonoBehaviour
 
     public void OnShowAdsVideo()
     {
+        if (ExtraWord.instance != null)
+            ExtraWord.instance.effectLightLoop.gameObject.SetActive(false);
         _rewardVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardVideoControl == null)
             _rewardVideoControl = Instantiate(_rewardVideoPfb);
@@ -84,6 +86,8 @@ public class RewardController : MonoBehaviour
 
     public void OnClose(GameObject obj)
     {
+        if (ExtraWord.instance != null)
+            ExtraWord.instance.OnClaimed();
         overLay.SetActive(false);
         Sound.instance.Play(Sound.Others.PopupClose);
         TweenControl.GetInstance().ScaleFromOne(obj, 0.3f, () =>

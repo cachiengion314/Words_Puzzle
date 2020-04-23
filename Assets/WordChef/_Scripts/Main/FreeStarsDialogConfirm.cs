@@ -31,7 +31,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
         {
             //Animate
             //StartCoroutine(CurrencyBalanceUpFx());
-            StartCoroutine(ShowEffectCollect(_amount/5));
+            StartCoroutine(ShowEffectCollect(_amount));
             BlockScreen.instance.Block(false);
             _rewardController.gameObject.SetActive(true);
             //==
@@ -50,11 +50,12 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     //}
     private IEnumerator ShowEffectCollect(int value)
     {
+        var result = value / 5;
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(value / 5);
+                MonoUtils.instance.ShowEffect(result);
             }
             yield return new WaitForSeconds(0.02f);
         }

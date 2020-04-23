@@ -20,7 +20,8 @@ public class ExtraWordDialog : Dialog
     [SerializeField] private Transform _contentScroll;
     [Space]
     [SerializeField] private RewardVideoController _rewardVideoPfb;
-    [SerializeField] private int reward = 40;
+    [SerializeField] private int _reward = 40;
+    [SerializeField] private int _amountWordTarget = 2;
     [SerializeField] private Transform _currBanlancePos;
 
     private RewardVideoController _rewardController;
@@ -37,7 +38,7 @@ public class ExtraWordDialog : Dialog
 
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
-        claimQuantity = (int)extraProgress.target / 2 * 20;
+        claimQuantity = (int)extraProgress.target / _amountWordTarget * 20;
 
         UpdateUI();
         ShowPanelCurrLevel();
@@ -46,7 +47,7 @@ public class ExtraWordDialog : Dialog
     void OnCompleteVideo()
     {
         _rewardController.onRewardedCallback -= OnCompleteVideo;
-        StartCoroutine(ShowEffectCollect(reward));
+        StartCoroutine(ShowEffectCollect(_reward));
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -110,11 +111,11 @@ public class ExtraWordDialog : Dialog
         StartCoroutine(ShowEffectCollect(claimQuantity));
         ExtraWord.instance.OnClaimed();
 
-        if (Prefs.extraTarget == 2 && Prefs.totalExtraAdded > 2)
+        if (Prefs.extraTarget == _amountWordTarget && Prefs.totalExtraAdded > _amountWordTarget)
         {
-            Prefs.extraTarget = 4;
-            extraProgress.target = 4;
-            claimQuantity = (int)extraProgress.target / 2 * 20;
+            Prefs.extraTarget = _amountWordTarget;
+            extraProgress.target = _amountWordTarget;
+            claimQuantity = (int)extraProgress.target / _amountWordTarget * 20;
             UpdateUI();
         }
     }
@@ -128,11 +129,11 @@ public class ExtraWordDialog : Dialog
 
         ExtraWord.instance.OnClaimed();
 
-        if (Prefs.extraTarget == 2 && Prefs.totalExtraAdded > 2)
+        if (Prefs.extraTarget == _amountWordTarget && Prefs.totalExtraAdded > _amountWordTarget)
         {
-            Prefs.extraTarget = 4;
-            extraProgress.target = 4;
-            claimQuantity = (int)extraProgress.target / 2 * 20;
+            Prefs.extraTarget = _amountWordTarget;
+            extraProgress.target = _amountWordTarget;
+            claimQuantity = (int)extraProgress.target / _amountWordTarget * 20;
             UpdateUI();
         }
     }

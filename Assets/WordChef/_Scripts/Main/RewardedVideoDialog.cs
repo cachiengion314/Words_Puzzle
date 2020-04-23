@@ -28,22 +28,23 @@ public class RewardedVideoDialog : Dialog
     public void OnConfirmClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        StartCoroutine(ShowEffectCollect(int.Parse(amountText.text.Replace("x ", ""))/5));
+        StartCoroutine(ShowEffectCollect(int.Parse(amountText.text.Replace("X", ""))));
     }
 
     public override void Close()
     {
         base.Close();
-        CurrencyController.CreditBalance(int.Parse(amountText.text.Replace("x ", "")));
+        CurrencyController.CreditBalance(int.Parse(amountText.text.Replace("X", "")));
     }
 
     private IEnumerator ShowEffectCollect(int value)
     {
+        var result = value / 5;
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(value);
+                MonoUtils.instance.ShowEffect(result);
             }
             yield return new WaitForSeconds(0.02f);
         }

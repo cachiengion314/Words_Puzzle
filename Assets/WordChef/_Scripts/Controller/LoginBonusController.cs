@@ -6,6 +6,7 @@ using UnityEngine;
 public class LoginBonusController : MonoBehaviour
 {
     public static LoginBonusController instance;
+    [SerializeField] private bool _hidenSpin;
     [SerializeField] private GameObject _root;
     [SerializeField] private GameObject _objSpin;
     [SerializeField] private GameObject _imageHighlight;
@@ -58,7 +59,8 @@ public class LoginBonusController : MonoBehaviour
             TweenControl.GetInstance().DelayCall(transform, 2f, () =>
             {
                 BlockScreen.instance.Block(false);
-                TweenControl.GetInstance().ScaleFromZero(_root, 0.3f, null);
+                if (!_hidenSpin)
+                    TweenControl.GetInstance().ScaleFromZero(_root, 0.3f, null);
             });
         }
         else
@@ -137,11 +139,11 @@ public class LoginBonusController : MonoBehaviour
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(value/5, _currencyBallance.transform);
+                MonoUtils.instance.ShowEffect(value / 5, _currencyBallance.transform);
             }
             yield return new WaitForSeconds(0.02f);
         }
-        
+
     }
 }
 

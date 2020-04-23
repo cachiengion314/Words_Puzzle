@@ -40,17 +40,27 @@ public class FreeStarsDialog : Dialog
     {
         _rewardControl.onRewardedCallback += OnCompleteVideo;
         AdmobController.instance.ShowRewardBasedVideo();
+        Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
+#if UNITY_EDITOR
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            OnCompleteVideo();
+        });
+#endif
     }
 
     private void OnCompleteVideo()
     {
-        _panelWatch.SetActive(false);
         _rewardControl.onRewardedCallback -= OnCompleteVideo;
         _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        Sound.instance.Play(Sound.Others.PopupOpen);
-        _panelConfirm.gameObject.SetActive(true);
-        _panelConfirm.Show();
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            _panelWatch.SetActive(false);
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            _panelConfirm.gameObject.SetActive(true);
+            _panelConfirm.Show();
+        });
     }
 
 }
