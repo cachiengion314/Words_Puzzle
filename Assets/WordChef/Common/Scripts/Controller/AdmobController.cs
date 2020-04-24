@@ -171,7 +171,18 @@ public class AdmobController : MonoBehaviour
         else
         {
             //MonoBehaviour.print("Reward based video ad is not ready yet");
-            Toast.instance.ShowMessage("Reward based video ad is not ready yet");
+           
+            CUtils.CheckConnection(this, (result) =>
+            {
+                if (result == 0)
+                {
+                    Toast.instance.ShowMessage("Reward based video ad is not ready yet");
+                }
+                else
+                {
+                    Toast.instance.ShowMessage("Internet connection failed !");
+                }
+            });
         }
     }
 

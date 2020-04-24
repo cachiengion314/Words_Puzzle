@@ -41,13 +41,10 @@ public class RewardController : MonoBehaviour
 
     public void OnShowAdsVideo()
     {
-        if (ExtraWord.instance != null)
-            ExtraWord.instance.effectLightLoop.gameObject.SetActive(false);
         _rewardVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardVideoControl == null)
             _rewardVideoControl = Instantiate(_rewardVideoPfb);
         _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
-        _rewardVideoControl.onUpdateBtnAdsCallback += UpdateBtnAds;
         if (_showAgain.isOn)
         {
             OnWatchClick();
@@ -60,14 +57,6 @@ public class RewardController : MonoBehaviour
         }
     }
 
-    private void UpdateBtnAds(bool IsAvailable)
-    {
-        if(!IsAvailable)
-        {
-            if (ExtraWord.instance != null && _boardFreeWatch.transform.localScale == Vector3.zero)
-                ExtraWord.instance.OnClaimed();
-        }
-    }
 
     private void OnCompleteVideo()
     {

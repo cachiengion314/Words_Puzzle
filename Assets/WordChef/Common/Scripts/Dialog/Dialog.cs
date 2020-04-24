@@ -173,8 +173,8 @@ public class Dialog : MonoBehaviour
 
     public virtual void OnDialogCompleteClosed()
     {
-        if (ExtraWord.instance != null && DialogController.instance.current == null)
-            ExtraWord.instance.OnClaimed();
+        //if (ExtraWord.instance != null && DialogController.instance.current == null)
+        //    ExtraWord.instance.OnClaimed();
         onDialogCompleteClosed -= OnDialogCompleteClosed;
     }
 

@@ -24,18 +24,18 @@ public class ExtraWord : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        DialogController.instance.onDialogsOpened += OnDialogOpened;
+        //DialogController.instance.onDialogsOpened += OnDialogOpened;
     }
 
-    private void OnDialogOpened()
-    {
-        if (effectLightLoop != null && DialogController.instance.current != null)
-        {
-            TweenControl.GetInstance().KillDelayCall(effectLight.transform);
-            effectLight.gameObject.SetActive(false);
-            effectLightLoop.gameObject.SetActive(false);
-        }
-    }
+    //private void OnDialogOpened()
+    //{
+    //    if (effectLightLoop != null && DialogController.instance.current != null)
+    //    {
+    //        TweenControl.GetInstance().KillDelayCall(effectLight.transform);
+    //        effectLight.gameObject.SetActive(false);
+    //        effectLightLoop.gameObject.SetActive(false);
+    //    }
+    //}
 
     private void Start()
     {
