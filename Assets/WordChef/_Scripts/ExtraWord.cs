@@ -59,13 +59,14 @@ public class ExtraWord : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (lightOpenEffect != null) lightOpenEffect.SetActive(Prefs.extraProgress >= Prefs.extraTarget);
-        if (effectLightLoop == null)
-            return;
-        if (Prefs.extraProgress >= Prefs.extraTarget)
-            effectLightLoop.gameObject.SetActive(true);
-        else
-            effectLightLoop.gameObject.SetActive(false);
+        if (effectLightLoop != null && DialogController.instance.current == null)
+        {
+            if (lightOpenEffect != null) lightOpenEffect.SetActive(Prefs.extraProgress >= Prefs.extraTarget);
+            if (Prefs.extraProgress >= Prefs.extraTarget)
+                effectLightLoop.gameObject.SetActive(true);
+            else
+                effectLightLoop.gameObject.SetActive(false);
+        }
     }
 
     public void ProcessWorld(string word)

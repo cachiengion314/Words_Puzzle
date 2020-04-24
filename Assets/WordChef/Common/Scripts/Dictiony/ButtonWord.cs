@@ -12,18 +12,16 @@ public class ButtonWord : MyButton
    public void GetData()
    {
         text = transform.GetChild(0).GetComponent<Text>().text.ToString();
-        DictionaryDialog.instance.SetTextMeanDialog(text, "Loading...");
         DictionaryDialog.instance.ShowMeanDialog();
 
         if (!Dictionary.instance.CheckWExistInDictWordSaved(text))
         {
-            Debug.Log("getDataApi");
             Invoke("WaitTimeGetData", 0.6f);
         }
         else
         {
-            Debug.Log("word had in device");
             DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
+            DictionaryDialog.instance.noInternet.SetActive(false);
             //MeanDialog.wordName = text;
             //MeanDialog.wordMean = Dictionary.instance.dictWordSaved[text];
         }
@@ -38,7 +36,20 @@ public class ButtonWord : MyButton
 
      void WaitTimeGetData()
      {
-         Dictionary.instance.GetDataFromApi(text.ToLower());
+        CUtils.CheckConnection(this, (result) =>
+        {
+            if (result == 0)
+            {
+                DictionaryDialog.instance.SetTextMeanDialog(text, "Loading...");
+                Dictionary.instance.GetDataFromApi(text.ToLower());
+                DictionaryDialog.instance.noInternet.SetActive(false);
+            }
+            else
+            {
+                DictionaryDialog.instance.noInternet.SetActive(true);
+            }
+        });
+        
          //DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
      }
 }

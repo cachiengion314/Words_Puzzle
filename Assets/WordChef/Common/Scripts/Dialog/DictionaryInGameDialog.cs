@@ -35,7 +35,14 @@ public class DictionaryInGameDialog : Dialog
     protected override void Awake()
     {
         instance = this;
+        snapScrolling.onScroll = OnScrollItem;
     }
+
+    void OnScrollItem()
+    {
+        ShowNointernet(WordRegion.instance.listWordCorrect[snapScrolling.selectItemID]);
+    }
+
     void Start()
     {
         base.Start();
@@ -136,6 +143,7 @@ public class DictionaryInGameDialog : Dialog
                 else
                 {
                     meanItemDictionary.SetMeanText(Dictionary.instance.dictWordSaved[word]);
+                    noInternet.SetActive(false);
                 }
             }
         }
@@ -157,6 +165,7 @@ public class DictionaryInGameDialog : Dialog
         {
             snapScrolling.selectItemID--;
         }
+        ShowNointernet(WordRegion.instance.listWordCorrect[snapScrolling.selectItemID]);
     }
 
     public void ShowMeanWordByID(int ID)
@@ -177,9 +186,32 @@ public class DictionaryInGameDialog : Dialog
                 TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
                 {
                     snapScrolling.selectItemID = index;
+                    ShowNointernet(word);
                 });
                 break;
             }
+        }
+    }
+
+    private void ShowNointernet(string word)
+    {
+        if (!Dictionary.instance.CheckWExistInDictWordSaved(word))
+        {
+            CUtils.CheckConnection(this, (result) =>
+            {
+                if (result == 0)
+                {
+                    noInternet.SetActive(false);
+                }
+                else
+                {
+                    noInternet.SetActive(true);
+                }
+            });
+        }
+        else
+        {
+            noInternet.SetActive(false);
         }
     }
 

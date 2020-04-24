@@ -17,6 +17,7 @@ public class DictionaryDialog : Dialog
 {
     public GameObject buttonWord;
     public GameObject groupWord;
+    public GameObject noInternet;
     public ListGroupWord listGroupWord;
     public Transform content;
     public static DictionaryDialog instance;

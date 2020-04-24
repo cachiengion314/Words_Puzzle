@@ -98,6 +98,7 @@ public class RewardController : MonoBehaviour
 
     public void OnClose(GameObject obj)
     {
+        _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
         if (ExtraWord.instance != null)
             ExtraWord.instance.OnClaimed();
         overLay.SetActive(false);

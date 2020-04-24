@@ -8,8 +8,6 @@ public class FreeStarsDialog : Dialog
 {
     [SerializeField] private Button _btnWatch;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
-    [SerializeField] private RewardedVideoDialog _panelConfirm;
-    [SerializeField] private GameObject _panelWatch;
     private RewardVideoController _rewardControl;
 
     private void OnEnable()
@@ -19,7 +17,6 @@ public class FreeStarsDialog : Dialog
             _rewardControl = Instantiate(_rewardVideoPfb);
         _rewardControl.onRewardedCallback -= OnCompleteVideo;
         _rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
-        _panelConfirm.gameObject.SetActive(false);
     }
 
     private void CheckBtnShowUpdate(bool IsAvailableToShow)
@@ -42,6 +39,7 @@ public class FreeStarsDialog : Dialog
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
+        gameObject.SetActive(false);
 #if UNITY_EDITOR
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -56,10 +54,8 @@ public class FreeStarsDialog : Dialog
         _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            _panelWatch.SetActive(false);
             Sound.instance.Play(Sound.Others.PopupOpen);
-            _panelConfirm.gameObject.SetActive(true);
-            _panelConfirm.Show();
+            DialogController.instance.ShowDialog(DialogType.RewardedVideo, DialogShow.REPLACE_CURRENT);
         });
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SnapScrolling : MonoBehaviour
 {
+    public Action onScroll;
     [Header("Content")] public RectTransform contentRectTransform;
     [Header("ScrollRect")] public ScrollRect scrollRect;
     [Range(0, 500)] public int itemOffset;
@@ -156,6 +157,8 @@ public class SnapScrolling : MonoBehaviour
             ChangeSpritePanigation();
             previousID = selectItemID;
         }
+
+        onScroll?.Invoke();
 
         if (isScrolling) return;
         contentVector.x = Mathf.SmoothStep(contentRectTransform.anchoredPosition.x, listItemPos[selectItemID].x, snapSpeed * Time.deltaTime);

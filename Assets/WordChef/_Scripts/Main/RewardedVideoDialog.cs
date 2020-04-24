@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RewardedVideoDialog : Dialog
 {
-    public Text amountText;
+    [SerializeField] private int _amount = 20;
+    public TextMeshProUGUI amountText;
     public Text messageText;
 
     private void Start()
     {
-        SetAmount(20);
+        SetAmount(_amount);
     }
 
     public void SetAmount(int amount)
@@ -28,14 +30,17 @@ public class RewardedVideoDialog : Dialog
     public void OnConfirmClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        StartCoroutine(ShowEffectCollect(int.Parse(amountText.text.Replace("X", ""))));
+        StartCoroutine(ShowEffectCollect(_amount));
+        TweenControl.GetInstance().DelayCall(transform, 0.2f,()=> {
+            Close();
+        });
     }
 
-    public override void Close()
-    {
-        base.Close();
-        CurrencyController.CreditBalance(int.Parse(amountText.text.Replace("X", "")));
-    }
+    //public override void Close()
+    //{
+    //    base.Close();
+    //    CurrencyController.CreditBalance(_amount);
+    //}
 
     private IEnumerator ShowEffectCollect(int value)
     {
