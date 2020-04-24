@@ -6,6 +6,7 @@ using System.Text;
 using PlayFab;
 using UnityEngine.UI;
 using TMPro;
+using Superpow;
 
 public class WordRegion : MonoBehaviour
 {
@@ -153,16 +154,15 @@ public class WordRegion : MonoBehaviour
         if (levelProgress.Length != 0)
         {
             useProgress = CheckLevelProgress(levelProgress, wordList);
-            /*if (!useProgress)*/
-            ClearLevelProgress();
+            if (!useProgress) ClearLevelProgress();
         }
 
         if (answerProgress.Length != 0)
         {
             useAnsProgress = CheckAnswerProgress(answerProgress, wordList, numWords);
-            /*if (!useAnsProgress) */
-            ClearAnswerProgress();
+            if (!useProgress) ClearAnswerProgress();
         }
+
 
         SetupLine(wordList, useProgress, levelProgress, answerProgress);
 
@@ -175,7 +175,7 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.levelProgress = levelProgress;
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
-        CheckGameComplete();
+        //CheckGameComplete();
     }
 
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress, string[] answerProgress)

@@ -348,16 +348,21 @@ public class WinDialog : Dialog
         if (_fxEffect != null)
             Destroy(_fxEffect);
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
-        Prefs.countLevel += 1;
-        Prefs.countLevelDaily += 1;
+        
         if (Prefs.IsLastLevel())
         {
             FacebookController.instance.newLevel = true;
         }
-        FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
-        FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
-        FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
-        FacebookController.instance.SaveDataGame();
+        if (Prefs.IsSaveLevelProgress())
+        {
+            Prefs.countLevel += 1;
+            Prefs.countLevelDaily += 1;
+
+            FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
+            FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
+            FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+            FacebookController.instance.SaveDataGame();
+        }
         //Close();
         Sound.instance.Play(Sound.Collects.LevelClose, 1, () =>
         {
@@ -401,5 +406,38 @@ public class WinDialog : Dialog
     public void LeaderboardClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
+    }
+
+    private void QuitGameWhenComplete()
+    {
+        if (level == numLevels - 1)
+        {
+            var creditBalance = CPlayerPrefs.GetBool("Received", false);
+            if (!creditBalance)
+            {
+                CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
+                CPlayerPrefs.SetBool("Received", true);
+            }
+        }
+
+        if (Prefs.IsLastLevel())
+        {
+            FacebookController.instance.newLevel = true;
+        }
+        if (Prefs.IsSaveLevelProgress())
+        {
+            Prefs.countLevel += 1;
+            Prefs.countLevelDaily += 1;
+
+            FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
+            FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
+            FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+            FacebookController.instance.SaveDataGame();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        QuitGameWhenComplete();
     }
 }

@@ -57,7 +57,7 @@ public class MainController : BaseController
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
         var numlevels = Utils.GetNumLevels(world, subWorld);
-        var currlevel = (level + numlevels * (subWorld + 5 * world));
+        var currlevel = (level + numlevels * (subWorld + gameData.words.Count * world));
         //world = 4;
         //subWorld = 4;
         //level = 4;
