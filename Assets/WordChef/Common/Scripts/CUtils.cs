@@ -852,7 +852,6 @@ public class CUtils
     {
         private static readonly SortedDictionary<int, string> abbrevations = new SortedDictionary<int, string>
      {
-         {1000,"K"},
          {1000000, "M" },
          {1000000000, "B" }
      };
@@ -864,7 +863,7 @@ public class CUtils
                 KeyValuePair<int, string> pair = abbrevations.ElementAt(i);
                 if (Mathf.Abs(number) >= pair.Key)
                 {
-                    int roundedNumber = Mathf.FloorToInt(number / pair.Key);
+                    float roundedNumber = Mathf.Floor(number / pair.Key);
                     return roundedNumber.ToString() + pair.Value;
                 }
             }

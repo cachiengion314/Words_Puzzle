@@ -72,6 +72,7 @@ public class WinDialog : Dialog
         base.Start();
         ShowStars();
         CheckUnlock();
+        QuitGameWhenComplete();
     }
 
     private void ShowStars()
@@ -410,15 +411,15 @@ public class WinDialog : Dialog
 
     private void QuitGameWhenComplete()
     {
-        if (level == numLevels - 1)
-        {
-            var creditBalance = CPlayerPrefs.GetBool("Received", false);
-            if (!creditBalance)
-            {
-                CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
-                CPlayerPrefs.SetBool("Received", true);
-            }
-        }
+        //if (level == numLevels - 1)
+        //{
+        //    var creditBalance = CPlayerPrefs.GetBool("Received", false);
+        //    if (!creditBalance)
+        //    {
+        //        CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
+        //        CPlayerPrefs.SetBool("Received", true);
+        //    }
+        //}
 
         if (Prefs.IsLastLevel())
         {
@@ -436,8 +437,8 @@ public class WinDialog : Dialog
         }
     }
 
-    private void OnDestroy()
-    {
-        QuitGameWhenComplete();
-    }
+    //private void OnApplicationQuit()
+    //{
+    //    QuitGameWhenComplete();
+    //}
 }
