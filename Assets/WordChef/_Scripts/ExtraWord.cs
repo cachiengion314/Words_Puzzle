@@ -42,8 +42,7 @@ public class ExtraWord : MonoBehaviour
         world = GameState.currentWorld;
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
-        var isCollect = CPlayerPrefs.GetBool("COLLECTED", false);
-        extraWords = (Prefs.IsSaveLevelProgress() && !isCollect) ? Prefs.GetExtraWords(world, subWorld, level).ToList() : new List<string>();
+        extraWords = (Prefs.IsSaveLevelProgress()) ? Prefs.GetExtraWords(world, subWorld, level).ToList() : new List<string>();
         if(extraWords.Count > 0)
         {
             foreach (var word in extraWords)

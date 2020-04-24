@@ -107,7 +107,6 @@ public class ExtraWordDialog : Dialog
 
     public void Claim()
     {
-        CPlayerPrefs.SetBool("COLLECTED", true);
         extraProgress.current -= (int)extraProgress.target;
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
@@ -126,7 +125,6 @@ public class ExtraWordDialog : Dialog
 
     private void Collect()
     {
-        CPlayerPrefs.SetBool("COLLECTED", true);
         extraProgress.current -= (int)extraProgress.target;
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
