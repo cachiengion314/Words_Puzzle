@@ -177,6 +177,7 @@ public class AdmobController : MonoBehaviour
                 if (result == 0)
                 {
                     Toast.instance.ShowMessage("Reward based video ad is not ready yet");
+                    RequestRewardBasedVideo();
                 }
                 else
                 {

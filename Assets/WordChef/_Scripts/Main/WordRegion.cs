@@ -567,62 +567,70 @@ public class WordRegion : MonoBehaviour
         Sound.instance.PlayButton(Sound.Button.Beehive);
     }
 
-    int hintLineIndex = -1;
+    int hintLineIndex = 0;
+    int cellIndex = 0;
     public void HintClick()
     {
         int ballance = CurrencyController.GetBalance();
         var hintFree = CurrencyController.GetHintFree();
         if (ballance >= Const.HINT_COST || hintFree > 0)
         {
-            hintLineIndex = CPlayerPrefs.HasKey("HINT_LINE_INDEX") ? CPlayerPrefs.GetInt("HINT_LINE_INDEX") : -1;
-            LineWord line = null;
-            if (hintLineIndex + 1 >= lines.Count)
-            {
-                hintLineIndex = -1;
-                CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
-            }
-            for (int i = hintLineIndex + 1; i < lines.Count; i++)
-            {
-                if (!lines[i].isShown)
-                {
-                    line = lines[i];
-                    hintLineIndex = i;
-                    break;
-                }
-            }
-
-            if (line != null)
-            {
-                CPlayerPrefs.SetInt("HINT_LINE_INDEX", hintLineIndex);
-                line.ShowHint(() =>
-                {
-                    if (line.isAds)
-                    {
-                        line.isAds = false;
-                        CPlayerPrefs.SetBool(gameObject.name + "_ADS", line.isAds);
-                    }
-                    if (hintFree > 0)
-                    {
-                        CurrencyController.DebitHintFree(1);
-                        Sound.instance.PlayButton(Sound.Button.Hint);
-                    }
-                    else
-                    {
-                        CurrencyController.DebitBalance(Const.HINT_COST);
-                        Sound.instance.PlayButton(Sound.Button.Hint);
-                    }
-                    SetupNumhintFree();
-                });
-                SaveLevelProgress();
-                CheckGameComplete();
-
-                Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
-            }
+            //hintLineIndex = CPlayerPrefs.HasKey("HINT_LINE_INDEX") ? CPlayerPrefs.GetInt("HINT_LINE_INDEX") : -1;
+            ShowHintLine(hintFree);
         }
         else
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.Shop2, DialogShow.REPLACE_CURRENT);
+        }
+    }
+
+    private void ShowHintLine(int hintFree)
+    {
+        LineWord line = null;
+        for (int i = hintLineIndex; i < lines.Count; i++)
+        {
+            hintLineIndex = i;
+            if (cellIndex < lines[i].cells.Count && !lines[i].cells[cellIndex].isShown && !lines[i].isShown)
+            {
+                line = lines[i];
+                break;
+            }
+            else if (hintLineIndex >= lines.Count - 1)
+            {
+                cellIndex += 1;
+                hintLineIndex = 0;
+                //CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
+                ShowHintLine(hintFree);
+            }
+        }
+
+        if (line != null)
+        {
+            //CPlayerPrefs.SetInt("HINT_LINE_INDEX", hintLineIndex);
+            line.ShowHint(() =>
+            {
+                if (line.isAds)
+                {
+                    line.isAds = false;
+                    CPlayerPrefs.SetBool(gameObject.name + "_ADS", line.isAds);
+                }
+                if (hintFree > 0)
+                {
+                    CurrencyController.DebitHintFree(1);
+                    Sound.instance.PlayButton(Sound.Button.Hint);
+                }
+                else
+                {
+                    CurrencyController.DebitBalance(Const.HINT_COST);
+                    Sound.instance.PlayButton(Sound.Button.Hint);
+                }
+                SetupNumhintFree();
+            });
+            SaveLevelProgress();
+            CheckGameComplete();
+
+            Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
         }
     }
 
