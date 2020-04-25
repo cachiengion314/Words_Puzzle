@@ -72,7 +72,7 @@ public class WinDialog : Dialog
         base.Start();
         ShowStars();
         CheckUnlock();
-        QuitGameWhenComplete();
+        SaveProgressComplete();
     }
 
     private void ShowStars()
@@ -325,12 +325,6 @@ public class WinDialog : Dialog
 
     private IEnumerator IEShowEggOpen()
     {
-        var creditBalance = CPlayerPrefs.GetBool("Received", false);
-        if (!creditBalance)
-        {
-            CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
-            CPlayerPrefs.SetBool("Received", true);
-        }
         //TitleLevelClear.SetActive(false);
         EggLevelClear.SetActive(false);
         EggChapterClear.SetActive(true);
@@ -346,6 +340,7 @@ public class WinDialog : Dialog
 
     public void NextClick()
     {
+        RewardChapter();
         if (_fxEffect != null)
             Destroy(_fxEffect);
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
@@ -409,18 +404,8 @@ public class WinDialog : Dialog
         Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
-    private void QuitGameWhenComplete()
+    private void SaveProgressComplete()
     {
-        //if (level == numLevels - 1)
-        //{
-        //    var creditBalance = CPlayerPrefs.GetBool("Received", false);
-        //    if (!creditBalance)
-        //    {
-        //        CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
-        //        CPlayerPrefs.SetBool("Received", true);
-        //    }
-        //}
-
         if (Prefs.IsLastLevel())
         {
             FacebookController.instance.newLevel = true;
@@ -437,8 +422,24 @@ public class WinDialog : Dialog
         }
     }
 
-    //private void OnApplicationQuit()
-    //{
-    //    QuitGameWhenComplete();
-    //}
+    private void RewardChapter()
+    {
+        if (level == numLevels - 1)
+        {
+            var creditBalance = CPlayerPrefs.GetBool("Received", false);
+            if (!creditBalance)
+            {
+                CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
+                CPlayerPrefs.SetBool("Received", true);
+            }
+        }
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if(pause)
+        {
+            RewardChapter();
+        }
+    }
 }
