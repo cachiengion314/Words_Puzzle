@@ -67,7 +67,7 @@ public class Toast : MonoBehaviour
     {
         SetEnabled(false);
         isShowing = false;
-        ShowOldestToast();
+        //ShowOldestToast();
     }
 
     private void ShowOldestToast()
