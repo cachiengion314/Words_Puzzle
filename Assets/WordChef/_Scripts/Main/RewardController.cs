@@ -44,7 +44,6 @@ public class RewardController : MonoBehaviour
         _rewardVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardVideoControl == null)
             _rewardVideoControl = Instantiate(_rewardVideoPfb);
-        _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
         if (_showAgain.isOn)
         {
             OnWatchClick();
@@ -70,6 +69,7 @@ public class RewardController : MonoBehaviour
 
     public void OnWatchClick()
     {
+        _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
         overLay.SetActive(false);
         if (_boardFreeWatch.transform.localScale == Vector3.one)
             TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);

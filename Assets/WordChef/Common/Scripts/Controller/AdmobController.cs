@@ -180,7 +180,7 @@ public class AdmobController : MonoBehaviour
                 }
                 else
                 {
-                    Toast.instance.ShowMessage("Internet connection failed !");
+                    Toast.instance.ShowMessage("No Internet Connection");
                 }
             });
         }

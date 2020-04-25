@@ -85,16 +85,31 @@ public class Cell : MonoBehaviour
 
     public void ShowHint()
     {
+        if (isAds && WordRegion.instance.BtnADS != null)
+        {
+            WordRegion.instance.BtnADS.gameObject.SetActive(false);
+            CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
+            isAds = false;
+            CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
+        }
         isShown = true;
         originLetterScale = letterText.transform.localScale;
         ShowText();
         bg.color = new Color(1, 1, 1, 0.5f);
+        TweenControl.GetInstance().KillTweener(iconCoin.transform);
         iconCoin.transform.localScale = Vector3.zero;
         OnMoveToComplete();
     }
 
     public void ShowTextBee()
     {
+        if (isAds && WordRegion.instance.BtnADS != null)
+        {
+            WordRegion.instance.BtnADS.gameObject.SetActive(false);
+            CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
+            isAds = false;
+            CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
+        }
         isShown = true;
         isBee = true;
         CPlayerPrefs.SetBool(gameObject.name, isBee);

@@ -550,6 +550,11 @@ public class WordRegion : MonoBehaviour
             var line = lineNotShow[i];
             if (count < lines.Count / 2 && count < 4)
             {
+                if (line.isAds)
+                {
+                    line.isAds = false;
+                    CPlayerPrefs.SetBool(gameObject.name + "_ADS", line.isAds);
+                }
                 line.ShowCellUseBee();
                 BeeManager.instance.SetAmountBee(-1);
                 SaveLevelProgress();
@@ -591,6 +596,11 @@ public class WordRegion : MonoBehaviour
                 CPlayerPrefs.SetInt("HINT_LINE_INDEX", hintLineIndex);
                 line.ShowHint(() =>
                 {
+                    if (line.isAds)
+                    {
+                        line.isAds = false;
+                        CPlayerPrefs.SetBool(gameObject.name + "_ADS", line.isAds);
+                    }
                     if (hintFree > 0)
                     {
                         CurrencyController.DebitHintFree(1);
@@ -638,6 +648,11 @@ public class WordRegion : MonoBehaviour
                     {
                         line.ShowHintRandom(() =>
                         {
+                            if (line.isAds)
+                            {
+                                line.isAds = false;
+                                CPlayerPrefs.SetBool(line.gameObject.name + "_ADS", line.isAds);
+                            }
                             //if (hintFree > 0)
                             //    CurrencyController.DebitHintFree(hintFree);
                             //else

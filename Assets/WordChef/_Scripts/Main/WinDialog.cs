@@ -344,7 +344,7 @@ public class WinDialog : Dialog
         if (_fxEffect != null)
             Destroy(_fxEffect);
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
-        
+
         if (Prefs.IsLastLevel())
         {
             FacebookController.instance.newLevel = true;
@@ -390,6 +390,7 @@ public class WinDialog : Dialog
         if (level == numLevels - 1)
         {
             CurrencyController.CreditBalance(Const.REWARD_ADS_CHAPTER_CLEAR);
+            CPlayerPrefs.SetBool("Received", true);
         }
         else
         {
@@ -437,7 +438,7 @@ public class WinDialog : Dialog
 
     private void OnApplicationPause(bool pause)
     {
-        if(pause)
+        if (pause)
         {
             RewardChapter();
         }

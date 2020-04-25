@@ -143,6 +143,7 @@ public class LineWord : MonoBehaviour
             WordRegion.instance.BtnADS.gameObject.SetActive(false);
             isAds = false;
             CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
+            CPlayerPrefs.Save();
         }
         Prefs.countSpell += 1;
         Prefs.countSpellDaily += 1;
@@ -214,14 +215,14 @@ public class LineWord : MonoBehaviour
             answer = answers[Random.Range(0, answers.Count)];
             SetDataLetter(answer);
         }
-        var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
+        var cellNotShow = cells.FindAll(cell => !cell.isShown);
         var indexAnswer = answer.Length - cellNotShow.Count;
         if (!RTL)
         {
             for (int i = 0; i < cellNotShow.Count; i++)
             {
                 var cell = cellNotShow[i];
-                if (!cell.isShown && !cell.isAds)
+                if (!cell.isShown)
                 {
                     //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
@@ -236,7 +237,7 @@ public class LineWord : MonoBehaviour
             for (int i = cellNotShow.Count - 1; i >= 0; i--)
             {
                 var cell = cellNotShow[i];
-                if (!cell.isShown && !cell.isAds)
+                if (!cell.isShown)
                 {
                     //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
@@ -246,6 +247,7 @@ public class LineWord : MonoBehaviour
                 }
             }
         }
+        ClearAds();
     }
 
     public void CheckLineDone()
@@ -265,7 +267,7 @@ public class LineWord : MonoBehaviour
             answer = answers[Random.Range(0, answers.Count)];
             SetDataLetter(answer);
         }
-        var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
+        var cellNotShow = cells.FindAll(cell => !cell.isShown);
         if (cellNotShow != null && cellNotShow.Count > 0)
         {
             var cellRandom = GetRandomCell(cellNotShow);
@@ -281,7 +283,7 @@ public class LineWord : MonoBehaviour
             isShown = true;
             ShowDoneAllCell();
         }
-
+        ClearAds();
     }
 
     public void ShowCellUseBee(System.Action callback = null)
@@ -293,7 +295,7 @@ public class LineWord : MonoBehaviour
                 answer = answers[Random.Range(0, answers.Count)];
                 SetDataLetter(answer);
             }
-            var cellNotShow = cells.FindAll(cell => !cell.isShown && !cell.isAds);
+            var cellNotShow = cells.FindAll(cell => !cell.isShown);
             var indexAnswer = answer.Length - cellNotShow.Count;
             for (int i = 0; i < cellNotShow.Count; i++)
             {
@@ -316,9 +318,21 @@ public class LineWord : MonoBehaviour
             }
             usedBee = true;
             CPlayerPrefs.SetBool(gameObject.name, usedBee);
+            ClearAds();
         }
     }
 
+
+    private void ClearAds()
+    {
+        if (isAds)
+        {
+            CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
+            WordRegion.instance.BtnADS.gameObject.SetActive(false);
+            isAds = false;
+            CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
+        }
+    }
 
     private void UpdateAnswers()
     {

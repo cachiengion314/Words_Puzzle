@@ -851,10 +851,10 @@ public class CUtils
     public static class AbbrevationUtility
     {
         private static readonly SortedDictionary<int, string> abbrevations = new SortedDictionary<int, string>
-     {
-         {1000000, "M" },
-         {1000000000, "B" }
-     };
+         {
+             {1000000, "M" },
+             {1000000000, "B" }
+         };
 
         public static string AbbreviateNumber(double number)
         {
@@ -864,7 +864,8 @@ public class CUtils
                 if (Mathf.Abs((float)number) >= pair.Key)
                 {
                     double roundedNumber = number / pair.Key;
-                    var result = Math.Round(roundedNumber, 2);
+                    //var result = Math.Round(roundedNumber, 2);
+                    var result = string.Format("{0:0.00}", roundedNumber);
                     return result + pair.Value;
                 }
             }

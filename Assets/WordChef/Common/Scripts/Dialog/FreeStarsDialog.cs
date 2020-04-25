@@ -39,13 +39,22 @@ public class FreeStarsDialog : Dialog
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
-        gameObject.SetActive(false);
-#if UNITY_EDITOR
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            OnCompleteVideo();
-        });
+            CUtils.CheckConnection(this, (result) =>
+            {
+                if (result == 0)
+                {
+#if UNITY_EDITOR
+                    OnCompleteVideo();
 #endif
+                }
+                else
+                {
+                    Close();
+                }
+            });
+        });
     }
 
     private void OnCompleteVideo()
