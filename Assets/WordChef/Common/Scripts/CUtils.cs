@@ -856,15 +856,16 @@ public class CUtils
          {1000000000, "B" }
      };
 
-        public static string AbbreviateNumber(float number)
+        public static string AbbreviateNumber(double number)
         {
             for (int i = abbrevations.Count - 1; i >= 0; i--)
             {
                 KeyValuePair<int, string> pair = abbrevations.ElementAt(i);
-                if (Mathf.Abs(number) >= pair.Key)
+                if (Mathf.Abs((float)number) >= pair.Key)
                 {
-                    float roundedNumber = Mathf.Floor(number / pair.Key);
-                    return roundedNumber.ToString() + pair.Value;
+                    double roundedNumber = number / pair.Key;
+                    var result = Math.Round(roundedNumber, 2);
+                    return result + pair.Value;
                 }
             }
             return number.ToString();
