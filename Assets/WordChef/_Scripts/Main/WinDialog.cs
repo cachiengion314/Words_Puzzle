@@ -60,6 +60,7 @@ public class WinDialog : Dialog
 
     private GameObject _fxEffect;
     private List<GameObject> _stars;
+    private RewardVideoController _rewardControl;
 
     private void Awake()
     {
@@ -370,10 +371,10 @@ public class WinDialog : Dialog
 
     public void RewardClick()
     {
-        var rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
-        if (rewardControl == null)
-            rewardControl = Instantiate(_rewardVideoPfb, transform);
-        rewardControl.onRewardedCallback += OnCompleteReward;
+        _rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
+        if (_rewardControl == null)
+            _rewardControl = Instantiate(_rewardVideoPfb, transform);
+        _rewardControl.onRewardedCallback += OnCompleteReward;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
@@ -387,6 +388,7 @@ public class WinDialog : Dialog
 
     void OnCompleteReward()
     {
+        _rewardControl.onRewardedCallback -= OnCompleteReward;
         if (level == numLevels - 1)
         {
             CurrencyController.CreditBalance(Const.REWARD_ADS_CHAPTER_CLEAR);
@@ -397,7 +399,10 @@ public class WinDialog : Dialog
             CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
         }
         RewardButton.GetComponent<Button>().interactable = false;
-        NextClick();
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            NextClick();
+        });
     }
 
     public void LeaderboardClick()

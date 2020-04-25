@@ -87,7 +87,7 @@ public class MainController : BaseController
     {
         if (_isGameComplete) return;
         _isGameComplete = true;
-        CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
+        //CPlayerPrefs.DeleteKey("HINT_LINE_INDEX");
         //Save Passed Word
         //SaveWordComplete(gameLevel.answers);
 
