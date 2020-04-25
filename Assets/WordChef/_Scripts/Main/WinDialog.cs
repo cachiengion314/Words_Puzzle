@@ -401,7 +401,30 @@ public class WinDialog : Dialog
         RewardButton.GetComponent<Button>().interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            NextClick();
+            if (_fxEffect != null)
+                Destroy(_fxEffect);
+            gameObject.GetComponent<GraphicRaycaster>().enabled = false;
+
+            if (Prefs.IsLastLevel())
+            {
+                FacebookController.instance.newLevel = true;
+            }
+            if (Prefs.IsSaveLevelProgress())
+            {
+                Prefs.countLevel += 1;
+                Prefs.countLevelDaily += 1;
+
+                FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
+                FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
+                FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+                FacebookController.instance.SaveDataGame();
+            }
+            //Close();
+            Sound.instance.Play(Sound.Collects.LevelClose, 1, () =>
+            {
+                Close();
+                CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
+            });
         });
     }
 
