@@ -391,6 +391,7 @@ public class WinDialog : Dialog
     {
         _rewardControl.onRewardedCallback -= OnCompleteReward;
         RewardButton.GetComponent<Button>().interactable = false;
+        txtReward.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;
         if (level == numLevels - 1)
         {
             var value = Const.REWARD_ADS_CHAPTER_CLEAR - Const.REWARD_CHAPTER_CLEAR;
@@ -402,7 +403,7 @@ public class WinDialog : Dialog
             CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
             Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
         }
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>
         {
             NextClick();
         });

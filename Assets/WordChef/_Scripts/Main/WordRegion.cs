@@ -31,6 +31,7 @@ public class WordRegion : MonoBehaviour
     private int _extraWord;
 
     private int _countShowAdsHintFree;
+    private int _countShowAdsHintFreeOldLevel;
     private GameLevel gameLevel;
     private int numWords, numCol, numRow;
     private float cellSize, startFirstColX = 0f;
@@ -466,7 +467,7 @@ public class WordRegion : MonoBehaviour
                     _btnHintADS = Instantiate(btnAdsHintFreePfb, lineRandom.transform);
                 _btnHintADS.gameObject.SetActive(true);
                 CPlayerPrefs.SetString("LINE_ANSWER", lineRandom.answers[indexAnswer]);
-                lineRandom.SetDataLetter(lineRandom.answers[indexAnswer]);
+                //lineRandom.SetDataLetter(lineRandom.answers[indexAnswer]);
                 SaveLevelProgress();
                 _btnHintADS.transform.position = cellRandom.transform.position;
                 CPlayerPrefs.SetFloat(keyLevel + "POS_ADS_BUTTON_X", _btnHintADS.transform.localPosition.x);
@@ -475,6 +476,32 @@ public class WordRegion : MonoBehaviour
                 _btnHintADS.Cell = cellRandom;
                 CalculateRatioScaleBtnAds(cellRandom);
             }
+        }
+    }
+
+    private void ShowAdsInOldLevel()
+    {
+        var isAdsHintFree = lines.All(line => !line.isAds);
+        _countShowAdsHintFreeOldLevel += 1;
+        if (_countShowAdsHintFreeOldLevel > 2 && isAdsHintFree)
+        {
+            var lineNotShown = lines.FindAll(l => !l.isShown && !l.usedBee);
+            var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
+            var indexAnswer = Random.Range(0, lineRandom.answers.Count);
+            var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown && !cell.isAds);
+            var cellRandom = cellNotShown[Random.Range(0, cellNotShown.Count)];
+
+            lineRandom.isAds = true;
+            cellRandom.isAds = true;
+
+            if (_btnHintADS == null)
+                _btnHintADS = Instantiate(btnAdsHintFreePfb, lineRandom.transform);
+            _btnHintADS.gameObject.SetActive(true);
+            //lineRandom.SetDataLetter(lineRandom.answers[indexAnswer]);
+            SaveLevelProgress();
+            _btnHintADS.transform.position = cellRandom.transform.position;
+            _btnHintADS.Cell = cellRandom;
+            CalculateRatioScaleBtnAds(cellRandom);
         }
     }
 
@@ -514,7 +541,10 @@ public class WordRegion : MonoBehaviour
             board.sprite = _spriteNormal;
             board.SetNativeSize();
             Sound.instance.Play(Sound.Others.WordInvalid);
-            SetupCellAds();
+            if (Prefs.IsSaveLevelProgress())
+                SetupCellAds();
+            else
+                ShowAdsInOldLevel();
             textPreview.SetWrongColor();
             lineIndex = 0;
         }

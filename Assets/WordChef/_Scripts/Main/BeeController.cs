@@ -26,7 +26,7 @@ public class BeeController : MonoBehaviour
     public void OnBeeButtonClick()
     {
         var isUsed = WordRegion.instance.Lines.Any(line => line.usedBee);
-        if (BeeManager.instance.CurrBee > 0 && !isUsed)
+        if (BeeManager.instance.CurrBee > 0 && !isUsed && Prefs.IsSaveLevelProgress())
         {
             MainController.instance.isBeePlay = true;
             if (WordRegion.instance.IsUseBee())
