@@ -5,17 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class DialogOverlay : MonoBehaviour
 {
+    public static DialogOverlay instance;
     private Image overlay;
 
-    private void Awake()
+    public Image Overlay
     {
+        get
+        {
+            return overlay;
+        }
+    }
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
         overlay = GetComponent<Image>();
     }
 
-    private void Start()
+    void Start()
     {
         DialogController.instance.onDialogsOpened += OnDialogOpened;
         DialogController.instance.onDialogsClosed += OnDialogClosed;
+    }
+
+    public void ShowOverlay(bool show)
+    {
+        overlay.enabled = show;
     }
 
     private void OnEnable()

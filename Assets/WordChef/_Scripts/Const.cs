@@ -8,6 +8,7 @@ public class Const
     public const float COL_GAP_COEF = 0.6f;
     public const int HINT_COST = 100;
     public const int HINT_RANDOM_COST = 300;
+    public const int HINT_TARGET_COST = 200;
     public const int REWARD_CHAPTER_CLEAR = 25;
     public const int REWARD_ADS_LEVEL_CLEAR = 20;
     public const int REWARD_ADS_CHAPTER_CLEAR = 50;

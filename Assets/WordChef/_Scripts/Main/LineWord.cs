@@ -180,6 +180,52 @@ public class LineWord : MonoBehaviour
         }
     }
 
+    private void ShowCellTarget(bool active)
+    {
+        foreach (var cell in cells)
+        {
+            if (!cell.isShown)
+            {
+                //cell.GetComponent<GraphicRaycaster>().enabled = active;
+                cell.btnCellTarget.gameObject.SetActive(active);
+                cell.btnCellTarget.onClick.RemoveAllListeners();
+                cell.btnCellTarget.onClick.AddListener(() => WordRegion.instance.OnClickCellTarget(cell));
+            }
+            else
+            {
+                cell.imgHiden.gameObject.SetActive(true);
+                cell.imgHiden.transform.SetAsLastSibling();
+            }
+        }
+    }
+
+    public void HidenOverlayOfCell()
+    {
+        foreach (var cell in cells)
+        {
+            cell.imgHiden.gameObject.SetActive(false);
+            cell.btnCellTarget.gameObject.SetActive(false);
+        }
+    }
+
+
+    public void HighlightCellNotShown()
+    {
+        ShowCellTarget(true);
+    }
+
+    public void ShowHintCelltarget(Cell cellTarget)
+    {
+        if (answer == "")
+            SetDataLetter(answers[Random.Range(0, answers.Count)]);
+        cellTarget.ShowHint();
+        CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
+        Sound.instance.PlayButton(Sound.Button.Hint);
+        CheckLineDone();
+        WordRegion.instance.SaveLevelProgress();
+        WordRegion.instance.CheckGameComplete();
+    }
+
     public void OnClickLine()
     {
         DialogController.instance.ShowDialog(DialogType.MeanInGameDialog, DialogShow.REPLACE_CURRENT);

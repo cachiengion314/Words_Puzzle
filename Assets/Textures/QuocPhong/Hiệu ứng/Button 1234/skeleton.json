@@ -1,7 +1,7 @@
 {
 "skeleton": {
-	"hash": "+Ofw6puPsfk7FYLb2/Epzam5Q6M",
-	"spine": "3.8.87",
+	"hash": "GHu3Ul+g5hjFL6bUz7u1OXL4gpo",
+	"spine": "3.8.95",
 	"x": -84.5,
 	"y": -84.5,
 	"width": 169,
@@ -30,6 +30,7 @@
 	{ "name": "Layer 1071", "bone": "root", "attachment": "Layer 1071" },
 	{ "name": "Ong", "bone": "ong", "attachment": "Ong" },
 	{ "name": "Tên lửa", "bone": "root", "attachment": "Tên lửa" },
+	{ "name": "Selected", "bone": "root", "attachment": "Selected" },
 	{ "name": "Gợi ý", "bone": "root", "attachment": "Gợi ý" },
 	{ "name": "hii", "bone": "root", "attachment": "hii" },
 	{ "name": "hi", "bone": "bone", "attachment": "hi" },
@@ -51,6 +52,9 @@
 			"Ong": {
 				"Ong": { "x": -2.89, "y": 5.26, "width": 99, "height": 91 }
 			},
+			"Selected": {
+				"Selected": { "x": -5.37, "y": 6.33, "width": 99, "height": 96 }
+			},
 			"Tên lửa": {
 				"Tên lửa": { "x": -3.92, "y": 6.96, "width": 77, "height": 92 }
 			},
@@ -60,7 +64,7 @@
 			"hii": {
 				"hii": {
 					"type": "clipping",
-					"end": "hii",
+					"end": "Selected",
 					"vertexCount": 32,
 					"vertices": [ -53.75, 32.05, -46.25, 42.15, -37.65, 50.01, -27.28, 55.67, -16.22, 59.91, -2.59, 61.42, 11.34, 59.32, 22.76, 54.61, 31.86, 48.67, 38.42, 41.6, 44.03, 35.83, 49.14, 26.83, 52.21, 19.22, 53.61, 9.9, 53.26, -0.21, 50.81, -9.63, 47.37, -20.07, 40.68, -30.37, 31.46, -39.8, 20.62, -46.49, 9.52, -51.01, -2.26, -52.26, -15.11, -51.34, -27.38, -47.15, -35.79, -42.82, -43.21, -36.7, -49.65, -30.24, -53.93, -22.06, -58.73, -12.09, -60.6, -0.68, -60.56, 10.96, -58.09, 21.25 ],
 					"color": "46ffb7ff"
@@ -91,6 +95,11 @@
 				]
 			},
 			"Ong": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"Selected": {
 				"color": [
 					{ "color": "ffffff00" }
 				]
@@ -141,6 +150,11 @@
 					{ "color": "ffffff00" }
 				]
 			},
+			"Selected": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
 			"Tên lửa": {
 				"color": [
 					{ "color": "ffffff00" }
@@ -181,6 +195,70 @@
 			}
 		}
 	},
+	"Selected": {
+		"slots": {
+			"Gợi ý": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"Layer 1073": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.3333, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"Ong": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"Selected": {
+				"color": [
+					{ "color": "ffffffff" }
+				]
+			},
+			"Tên lửa": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"hi": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.6667, "color": "ffffffff" },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"Đổi lại": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "angle": -40.98 }
+				]
+			},
+			"Layer 1073": {
+				"rotate": [
+					{ "angle": 71.56 },
+					{ "time": 0.6667, "angle": -48.44 },
+					{ "time": 1.3333, "angle": -168.44 },
+					{ "time": 2, "angle": 71.56 }
+				]
+			},
+			"root": {
+				"scale": [
+					{ "time": 3.6667 }
+				]
+			}
+		}
+	},
 	"Ten lua": {
 		"slots": {
 			"Gợi ý": {
@@ -196,6 +274,11 @@
 				]
 			},
 			"Ong": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"Selected": {
 				"color": [
 					{ "color": "ffffff00" }
 				]
@@ -247,6 +330,11 @@
 					{ "color": "ffffffff", "curve": "stepped" },
 					{ "time": 1.3333, "color": "ffffffff" },
 					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"Selected": {
+				"color": [
+					{ "color": "ffffff00" }
 				]
 			},
 			"Tên lửa": {

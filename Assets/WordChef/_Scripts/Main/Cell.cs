@@ -12,6 +12,8 @@ public class Cell : MonoBehaviour
     public Image bg;
     public GameObject ImgPedestal;
     public Image iconCoin;
+    public Image imgHiden;
+    public Button btnCellTarget;
     public GameObject fxExplode;
     public GameObject Mask;
     public string letter;
@@ -96,6 +98,7 @@ public class Cell : MonoBehaviour
         originLetterScale = letterText.transform.localScale;
         ShowText();
         bg.color = new Color(1, 1, 1, 0.5f);
+        imgHiden.gameObject.SetActive(false);
         TweenControl.GetInstance().KillTweener(iconCoin.transform);
         iconCoin.transform.localScale = Vector3.zero;
         OnMoveToComplete();

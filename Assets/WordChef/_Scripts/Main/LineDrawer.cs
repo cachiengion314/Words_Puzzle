@@ -37,7 +37,7 @@ public class LineDrawer : MonoBehaviour
 
     private void Update()
     {
-        if (DialogController.instance.IsDialogShowing() || MainController.instance.IsLevelClear || MainController.instance.isBeePlay) return;
+        if (DialogController.instance.IsDialogShowing() || WordRegion.instance.isOpenOverlay || MainController.instance.IsLevelClear || MainController.instance.isBeePlay) return;
         //if (SocialRegion.instance.isShowing) return;
         if (Input.GetMouseButtonDown(0))
         {

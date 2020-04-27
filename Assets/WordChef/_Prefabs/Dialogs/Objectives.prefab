@@ -465,6 +465,7 @@ MonoBehaviour:
   enableAd: 0
   enableEscape: 0
   scaleDialog: 0
+  resestAnim: 1
   dailyTask: {fileID: 7862461768145623953}
   achievement: {fileID: 6269613013908705889}
   dailyBtn: {fileID: 819860005751317774}
@@ -2218,18 +2219,6 @@ MonoBehaviour:
     - {fileID: 5710461614488928501}
     - {fileID: 8542179014786402964}
     - {fileID: 3757225280187711347}
-  - quests:
-    - {fileID: 3757225280187711347}
-    - {fileID: 7366308689867631732}
-    - {fileID: 1179319434052997225}
-  - quests:
-    - {fileID: 5710461614488928501}
-    - {fileID: 7366308689867631732}
-    - {fileID: 1179319434052997225}
-  - quests:
-    - {fileID: 8542179014786402964}
-    - {fileID: 3757225280187711347}
-    - {fileID: 7366308689867631732}
   dailyTaskContent: {fileID: 3173839411126652050}
   achievementContent: {fileID: 3420866312855033674}
   _timeRefresh: 24
@@ -3011,6 +3000,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: quest (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5313206040500591432, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5316455340094712258, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_Sprite
@@ -3308,7 +3302,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.requiredAmount
-      value: 50
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -3856,7 +3850,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.reward
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -3866,7 +3860,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.requiredAmount
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -4379,7 +4373,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.reward
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -5389,7 +5383,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.reward
-      value: 25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -5399,7 +5393,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.requiredAmount
-      value: 2500
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -5907,7 +5901,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.reward
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -5917,7 +5911,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.requiredAmount
-      value: 550
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -6711,6 +6705,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: quest (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5313206040500591432, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5316455340094712258, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_Sprite
@@ -7003,7 +7002,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.reward
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -7013,7 +7012,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.requiredAmount
-      value: 450
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
@@ -8099,7 +8098,7 @@ PrefabInstance:
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: goal.requiredAmount
-      value: 550
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 470030700410733943, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}

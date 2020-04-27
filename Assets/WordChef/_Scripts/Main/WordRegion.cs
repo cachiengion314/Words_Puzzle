@@ -42,6 +42,7 @@ public class WordRegion : MonoBehaviour
     [HideInInspector] public string keyLevel;
     public List<string> listWordInLevel;
     public List<string> listWordCorrect;
+    [HideInInspector] public bool isOpenOverlay = false;
     public static WordRegion instance;
 
     public ButtonVideoHintFree BtnADS
@@ -568,6 +569,39 @@ public class WordRegion : MonoBehaviour
                 MainController.instance.animatorScene.SetBool("LevelComplete", true);
             });
         }
+    }
+
+    public void OnClickHintTarget()
+    {
+        isOpenOverlay = !isOpenOverlay;
+        DialogOverlay.instance.ShowOverlay(isOpenOverlay);
+        if(!isOpenOverlay)
+        {
+            foreach (var li in lines)
+            {
+                li.HidenOverlayOfCell();
+            }
+        }
+        else
+        {
+            foreach (var li in lines)
+            {
+                li.HighlightCellNotShown();
+            }
+        }
+    }
+
+    public void OnClickCellTarget(Cell cell)
+    {
+        isOpenOverlay = false;
+        DialogOverlay.instance.ShowOverlay(false);
+        var line = lines.Single(li => li.cells.Contains(cell));
+        foreach (var li in lines)
+        {
+            li.HidenOverlayOfCell();
+        }
+        line.ShowHintCelltarget(cell);
+
     }
 
     public void BeeClick()
