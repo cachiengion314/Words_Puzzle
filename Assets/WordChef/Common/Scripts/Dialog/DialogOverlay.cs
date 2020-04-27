@@ -29,8 +29,18 @@ public class DialogOverlay : MonoBehaviour
         DialogController.instance.onDialogsClosed += OnDialogClosed;
     }
 
+    public void OnClickScreen()
+    {
+        if (overlay.gameObject.activeInHierarchy)
+        {
+            gameObject.GetComponent<Button>().interactable = false;
+            WordRegion.instance.OnClickHintTarget();
+        }
+    }
+
     public void ShowOverlay(bool show)
     {
+        gameObject.GetComponent<Button>().interactable = true;
         overlay.enabled = show;
     }
 
@@ -45,7 +55,7 @@ public class DialogOverlay : MonoBehaviour
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-    { 
+    {
         overlay.enabled = false;
     }
 
