@@ -74,6 +74,10 @@ public class WinDialog : Dialog
         ShowStars();
         CheckUnlock();
         SaveProgressComplete();
+        _rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
+        if (_rewardControl == null)
+            _rewardControl = Instantiate(_rewardVideoPfb, transform);
+        _rewardControl.onRewardedCallback -= OnCompleteReward;
     }
 
     private void ShowStars()
@@ -371,9 +375,6 @@ public class WinDialog : Dialog
 
     public void RewardClick()
     {
-        _rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
-        if (_rewardControl == null)
-            _rewardControl = Instantiate(_rewardVideoPfb, transform);
         _rewardControl.onRewardedCallback += OnCompleteReward;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -389,42 +390,21 @@ public class WinDialog : Dialog
     void OnCompleteReward()
     {
         _rewardControl.onRewardedCallback -= OnCompleteReward;
+        RewardButton.GetComponent<Button>().interactable = false;
         if (level == numLevels - 1)
         {
-            CurrencyController.CreditBalance(Const.REWARD_ADS_CHAPTER_CLEAR);
+            var value = Const.REWARD_ADS_CHAPTER_CLEAR - Const.REWARD_CHAPTER_CLEAR;
+            CurrencyController.CreditBalance(value);
             CPlayerPrefs.SetBool("Received", true);
         }
         else
         {
             CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
+            Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
         }
-        RewardButton.GetComponent<Button>().interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            if (_fxEffect != null)
-                Destroy(_fxEffect);
-            gameObject.GetComponent<GraphicRaycaster>().enabled = false;
-
-            if (Prefs.IsLastLevel())
-            {
-                FacebookController.instance.newLevel = true;
-            }
-            if (Prefs.IsSaveLevelProgress())
-            {
-                Prefs.countLevel += 1;
-                Prefs.countLevelDaily += 1;
-
-                FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
-                FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
-                FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
-                FacebookController.instance.SaveDataGame();
-            }
-            //Close();
-            Sound.instance.Play(Sound.Collects.LevelClose, 1, () =>
-            {
-                Close();
-                CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
-            });
+            NextClick();
         });
     }
 
@@ -460,6 +440,7 @@ public class WinDialog : Dialog
             {
                 CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
                 CPlayerPrefs.SetBool("Received", true);
+                Debug.Log("CreditBalance Chapter Quit");
             }
         }
     }
@@ -467,8 +448,7 @@ public class WinDialog : Dialog
     private void OnApplicationPause(bool pause)
     {
         if (pause)
-        {
             RewardChapter();
-        }
     }
+
 }
