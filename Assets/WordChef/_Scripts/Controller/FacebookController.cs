@@ -164,6 +164,7 @@ public class FacebookController : MonoBehaviour
         userDefault.name = "";
         userDefault.email = "";
         userDefault.isChickenBank = false;
+        userDefault.maxBank = 0;
         userDefault.wordPassed = "";
         userDefault.unlockedSubWorld = "0";
         userDefault.unlockedLevel = "0";
@@ -213,6 +214,7 @@ public class FacebookController : MonoBehaviour
         us.name = jsonData.name;
         us.email = jsonData.email;
         us.isChickenBank = jsonData.isChickenBank;
+        us.maxBank = jsonData.maxBank;
         us.wordPassed = jsonData.wordPassed;
         us.unlockedSubWorld = jsonData.unlockedSubWorld;
         us.unlockedLevel = jsonData.unlockedLevel;
@@ -238,6 +240,7 @@ public struct User
     public string name;
     public string email;
     public bool isChickenBank;
+    public int maxBank;
     public string wordPassed;
 
     public string unlockedWorld;

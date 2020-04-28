@@ -581,6 +581,8 @@ public class WordRegion : MonoBehaviour
             DialogOverlay.instance.ShowOverlay(isOpenOverlay);
             if (!isOpenOverlay)
             {
+                if (BtnADS != null && !BtnADS.gameObject.activeInHierarchy && !CPlayerPrefs.GetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE"))
+                    BtnADS.gameObject.SetActive(true);
                 gameObject.GetComponent<Canvas>().overrideSorting = false;
                 foreach (var li in lines)
                 {
@@ -589,6 +591,8 @@ public class WordRegion : MonoBehaviour
             }
             else
             {
+                if (BtnADS != null && BtnADS.gameObject.activeInHierarchy)
+                    BtnADS.gameObject.SetActive(false);
                 gameObject.GetComponent<Canvas>().overrideSorting = true;
                 foreach (var li in lines)
                 {

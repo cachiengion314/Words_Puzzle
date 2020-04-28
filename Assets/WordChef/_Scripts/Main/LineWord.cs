@@ -224,6 +224,7 @@ public class LineWord : MonoBehaviour
         CheckLineDone();
         WordRegion.instance.SaveLevelProgress();
         WordRegion.instance.CheckGameComplete();
+        ClearAds();
     }
 
     public void OnClickLine()

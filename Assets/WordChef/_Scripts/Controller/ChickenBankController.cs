@@ -39,11 +39,14 @@ public class ChickenBankController : MonoBehaviour
     {
         get
         {
+            _maxstar = FacebookController.instance.user.maxBank;
             return _maxstar;
         }
         set
         {
             _maxstar = value;
+            FacebookController.instance.user.maxBank = _maxstar;
+            FacebookController.instance.SaveDataGame();
         }
     }
 
