@@ -216,18 +216,14 @@ public class LineWord : MonoBehaviour
 
     public void ShowHintCelltarget(Cell cellTarget)
     {
-        int ballance = CurrencyController.GetBalance();
-        if (ballance >= Const.HINT_TARGET_COST)
-        {
-            if (answer == "")
-                SetDataLetter(answers[Random.Range(0, answers.Count)]);
-            cellTarget.ShowHint();
-            CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
-            Sound.instance.PlayButton(Sound.Button.Hint);
-            CheckLineDone();
-            WordRegion.instance.SaveLevelProgress();
-            WordRegion.instance.CheckGameComplete();
-        }
+        if (answer == "")
+            SetDataLetter(answers[Random.Range(0, answers.Count)]);
+        cellTarget.ShowHint();
+        CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
+        Sound.instance.PlayButton(Sound.Button.Hint);
+        CheckLineDone();
+        WordRegion.instance.SaveLevelProgress();
+        WordRegion.instance.CheckGameComplete();
     }
 
     public void OnClickLine()

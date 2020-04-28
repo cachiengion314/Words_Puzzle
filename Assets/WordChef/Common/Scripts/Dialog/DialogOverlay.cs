@@ -61,6 +61,7 @@ public class DialogOverlay : MonoBehaviour
 
     private void OnDialogOpened()
     {
+        gameObject.GetComponent<Button>().interactable = false;
         overlay.enabled = true;
     }
 

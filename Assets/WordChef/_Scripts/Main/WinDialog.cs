@@ -441,7 +441,6 @@ public class WinDialog : Dialog
             {
                 CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
                 CPlayerPrefs.SetBool("Received", true);
-                Debug.Log("CreditBalance Chapter Quit");
             }
         }
     }

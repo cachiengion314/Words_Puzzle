@@ -419,6 +419,7 @@ public class WordRegion : MonoBehaviour
 
     public void ShowComplimentFX()
     {
+        gameObject.GetComponent<Canvas>().overrideSorting = false;
         compliment.Show(lineIndex);
         Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
         lineIndex++;
@@ -511,8 +512,8 @@ public class WordRegion : MonoBehaviour
         var isRight = true;
         if (line.cells.Count == wordFill.Length)
         {
-            var cellsIsShown = line.cells.FindAll(cell => cell.isShown);
-            for (int i = 0; i < cellsIsShown.Count; i++)
+            //var cellsIsShown = line.cells.FindAll(cell => cell.isShown);
+            for (int i = 0; i < line.cells.Count; i++)
             {
                 var cell = line.cells[i];
                 if (cell.isShown && cell.letter != wordFill[i].ToString())
@@ -573,21 +574,33 @@ public class WordRegion : MonoBehaviour
 
     public void OnClickHintTarget()
     {
-        isOpenOverlay = !isOpenOverlay;
-        DialogOverlay.instance.ShowOverlay(isOpenOverlay);
-        if(!isOpenOverlay)
+        int ballance = CurrencyController.GetBalance();
+        if (ballance >= Const.HINT_TARGET_COST)
         {
-            foreach (var li in lines)
+            isOpenOverlay = !isOpenOverlay;
+            DialogOverlay.instance.ShowOverlay(isOpenOverlay);
+            if (!isOpenOverlay)
             {
-                li.HidenOverlayOfCell();
+                gameObject.GetComponent<Canvas>().overrideSorting = false;
+                foreach (var li in lines)
+                {
+                    li.HidenOverlayOfCell();
+                }
+            }
+            else
+            {
+                gameObject.GetComponent<Canvas>().overrideSorting = true;
+                foreach (var li in lines)
+                {
+                    li.HighlightCellNotShown();
+                }
             }
         }
         else
         {
-            foreach (var li in lines)
-            {
-                li.HighlightCellNotShown();
-            }
+            gameObject.GetComponent<Canvas>().overrideSorting = false;
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            DialogController.instance.ShowDialog(DialogType.Shop2, DialogShow.REPLACE_CURRENT);
         }
     }
 
