@@ -29,6 +29,7 @@ public class ShopDialog : Dialog
 
     public GameObject contentItemShop;
     public GameObject[] shopItemObject;
+    public GameObject chickenBank;
 
     protected override void Start()
     {
@@ -71,6 +72,13 @@ public class ShopDialog : Dialog
                     numRubyTexts[i].transform.parent.gameObject.SetActive(true);
                 }
 
+                var resultValue = ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank ?
+                    ConfigController.instance.config.gameParameters.maxBank : ChickenBankController.instance.CurrStarChicken;
+                if (i == 8)
+                {
+                    Purchaser.instance.iapItems[i].value = resultValue;
+                    Purchaser.instance.iapItems[i].txtValue = resultValue.ToString();
+                }
                 numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
                 priceTexts[i].text = Purchaser.instance.iapItems[i].price + "$";
 
@@ -161,13 +169,9 @@ public class ShopDialog : Dialog
         // A consumable product has been purchased by this user.
         if (item.productType == ProductType.Consumable)
         {
-            if(item.productID == "word.chickenbank")
-            {
-                ChickenBankController.instance.IsChickenBank = true;
-                ChickenBankController.instance.MaxStar += item.value;
-            }
-            else
-                CurrencyController.CreditBalance(item.value);
+            CurrencyController.CreditBalance(item.value);
+            if (item.productID == "word.chickenbank")
+                ChickenBankController.instance.CollectBank(item.value);
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.iapItems[index].removeAds)
             {
@@ -232,12 +236,17 @@ public class ShopDialog : Dialog
 
     void GetShopItemInContent()
     {
+        var valueShow = (ConfigController.instance.config.gameParameters.maxBank * 10 / 100) + 720;
+        Debug.Log("valueShow: " + valueShow);
+        Debug.Log("CurrStarChicken: " + ChickenBankController.instance.CurrStarChicken);
         int count = 0;
         btnMore.gameObject.SetActive(false);
         shopItemObject = new GameObject[contentItemShop.transform.childCount];
         //btnMore.transform.localScale = Vector3.zero;
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
         {
+            if (ChickenBankController.instance.CurrStarChicken < valueShow)
+                chickenBank.SetActive(false);
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
             if (i > 1)
             {

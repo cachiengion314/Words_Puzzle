@@ -3,14 +3,13 @@ using PlayFab.ClientModels;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 
 public class ChickenBankController : MonoBehaviour
 {
     public static ChickenBankController instance;
     [SerializeField] private int _amount = 20;
 
-    private bool _chieckbank;
-    private int _maxstar;
     private int _currStarChicken;
 
     void Awake()
@@ -18,36 +17,6 @@ public class ChickenBankController : MonoBehaviour
         if (instance == null) instance = this;
         else if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-    }
-
-    public bool IsChickenBank
-    {
-        get
-        {
-            _chieckbank = FacebookController.instance.user.isChickenBank;
-            return _chieckbank;
-        }
-        set
-        {
-            _chieckbank = value;
-            FacebookController.instance.user.isChickenBank = _chieckbank;
-            FacebookController.instance.SaveDataGame();
-        }
-    }
-
-    public int MaxStar
-    {
-        get
-        {
-            _maxstar = FacebookController.instance.user.maxBank;
-            return _maxstar;
-        }
-        set
-        {
-            _maxstar = value;
-            FacebookController.instance.user.maxBank = _maxstar;
-            FacebookController.instance.SaveDataGame();
-        }
     }
 
     public int CurrStarChicken
@@ -61,25 +30,32 @@ public class ChickenBankController : MonoBehaviour
                     CPlayerPrefs.SetInt("chicken_star", resultInventory.VirtualCurrency["CK"]);
                 }, null);
             }
-            _currStarChicken = CPlayerPrefs.GetInt("chicken_star", 0);
+            _currStarChicken = CPlayerPrefs.GetInt("chicken_star", 720);
             return _currStarChicken;
+        }
+        set
+        {
+            _currStarChicken = value;
+            CPlayerPrefs.SetInt("chicken_star", _currStarChicken);
+            if (PlayFabClientAPI.IsClientLoggedIn())
+            {
+                AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
+                request.VirtualCurrency = "CK";
+                request.Amount = _currStarChicken;
+                PlayFabClientAPI.AddUserVirtualCurrency(request, null, null);
+            }
         }
     }
 
-    public void RewardStar()
+    public void AddtoBank()
     {
-        if (_currStarChicken >= _maxstar)
-            return;
-        CurrencyController.CreditBalance(_amount);
         Sound.instance.Play(Sound.Collects.CoinCollect);
-        _currStarChicken += _amount;
-        CPlayerPrefs.SetInt("chicken_star", _currStarChicken);
-        if (PlayFabClientAPI.IsClientLoggedIn())
-        {
-            AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
-            request.VirtualCurrency = "CK";
-            request.Amount = _currStarChicken;
-            PlayFabClientAPI.AddUserVirtualCurrency(request, null, null);
-        }
+        CurrStarChicken += _amount;
+    }
+
+    public void CollectBank(int value)
+    {
+        Sound.instance.Play(Sound.Collects.CoinCollect);
+        CurrStarChicken -= value;
     }
 }

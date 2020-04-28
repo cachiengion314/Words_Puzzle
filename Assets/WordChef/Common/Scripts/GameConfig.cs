@@ -42,4 +42,5 @@ public class Admob
 public class GameParameters
 {
     public int rewardedBeeAmount = 2;
+    public int maxBank = 2000;
 }
