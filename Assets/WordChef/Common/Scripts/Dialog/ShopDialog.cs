@@ -38,71 +38,74 @@ public class ShopDialog : Dialog
         CUtils.SetRunVipPack();
         long span = (long)DateTime.Now.Subtract(new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
         currentTimeVipPack = (float)(span - CUtils.GetTimeVipPackStarted());
-        
+
         Purchaser.instance.onItemPurchased += OnItemPurchased;
 
         maxTimeVipPacks = new float[numRubyTexts.Length];
         for (int i = 0; i < numRubyTexts.Length; i++)
         {
-            //vip pack la limitTime > 0
-            if (Purchaser.instance.iapItems[i].limitTime > 0)
+            if (numRubyTexts[i] != null)
             {
-                maxTimeVipPacks[i] = Purchaser.instance.iapItems[i].limitTime;
+                //vip pack la limitTime > 0
+                if (Purchaser.instance.iapItems[i].limitTime > 0)
+                {
+                    maxTimeVipPacks[i] = Purchaser.instance.iapItems[i].limitTime;
 
-                if (currentTimeVipPack > maxTimeVipPacks[i] || CUtils.IsBuyVipPack(i))
+                    if (currentTimeVipPack > maxTimeVipPacks[i] || CUtils.IsBuyVipPack(i))
+                    {
+                        numRubyTexts[i].transform.parent.gameObject.SetActive(false);
+                        continue;
+                    }
+                }
+
+                //remove ads roi thi an cac iap ads
+                if (Purchaser.instance.iapItems[i].removeAds
+                    && Purchaser.instance.iapItems[i].value <= 0
+                    && CUtils.IsAdsRemoved())
                 {
                     numRubyTexts[i].transform.parent.gameObject.SetActive(false);
                     continue;
                 }
-            }
-
-            //remove ads roi thi an cac iap ads
-            if (Purchaser.instance.iapItems[i].removeAds
-                && Purchaser.instance.iapItems[i].value <= 0
-                && CUtils.IsAdsRemoved())
-            {
-                numRubyTexts[i].transform.parent.gameObject.SetActive(false);
-                continue;
-            }
-            else
-            {
-                numRubyTexts[i].transform.parent.gameObject.SetActive(true);
-            }
-
-            numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
-            priceTexts[i].text = Purchaser.instance.iapItems[i].price + "$";
-
-            var txtSale = Purchaser.instance.iapItems[i].txtSale;
-            if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
-            else saleTexts[i].text = txtSale;
-
-            if (hotImages[i] != null)
-            {
-                if (Purchaser.instance.iapItems[i].txtHot.Equals("hot"))
-                {
-                    hotImages[i].sprite = hotSprite;
-                    hotImages[i].gameObject.SetActive(true);
-                }
-                else if (Purchaser.instance.iapItems[i].txtHot.Equals("best"))
-                {
-                    hotImages[i].sprite = bestSprite;
-                    hotImages[i].gameObject.SetActive(true);
-                }
                 else
                 {
-                    hotImages[i].gameObject.SetActive(false);
+                    numRubyTexts[i].transform.parent.gameObject.SetActive(true);
                 }
-            }
 
-            if (candyImages[i] != null)
-            {
-                if (Purchaser.instance.iapItems[i].txtValue.Equals("remove ads"))
+                numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
+                priceTexts[i].text = Purchaser.instance.iapItems[i].price + "$";
+
+                var txtSale = Purchaser.instance.iapItems[i].txtSale;
+                if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
+                else saleTexts[i].text = txtSale;
+
+                if (hotImages[i] != null)
                 {
-                    candyImages[i].sprite = adsSprite;
+                    if (Purchaser.instance.iapItems[i].txtHot.Equals("hot"))
+                    {
+                        hotImages[i].sprite = hotSprite;
+                        hotImages[i].gameObject.SetActive(true);
+                    }
+                    else if (Purchaser.instance.iapItems[i].txtHot.Equals("best"))
+                    {
+                        hotImages[i].sprite = bestSprite;
+                        hotImages[i].gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        hotImages[i].gameObject.SetActive(false);
+                    }
                 }
-                else
+
+                if (candyImages[i] != null)
                 {
-                    candyImages[i].sprite = candySprite;
+                    if (Purchaser.instance.iapItems[i].txtValue.Equals("remove ads"))
+                    {
+                        candyImages[i].sprite = adsSprite;
+                    }
+                    else
+                    {
+                        candyImages[i].sprite = candySprite;
+                    }
                 }
             }
         }
@@ -128,7 +131,7 @@ public class ShopDialog : Dialog
             //vip pack la limitTime > 0
             if (maxTimeVipPacks[i] > 0)
             {
-                int time = (int) (maxTimeVipPacks[i] - currentTimeVipPack);
+                int time = (int)(maxTimeVipPacks[i] - currentTimeVipPack);
                 int hours = time / 3600;
                 int mins = (time % 3600) / 60;
                 int secs = time % 60;
@@ -143,7 +146,7 @@ public class ShopDialog : Dialog
     }
 
     public void OnBuyProduct(int index)
-	{
+    {
 #if IAP && UNITY_PURCHASING
         Sound.instance.Play(Sound.Others.PopupOpen);
         Purchaser.instance.BuyProduct(index);
@@ -158,7 +161,13 @@ public class ShopDialog : Dialog
         // A consumable product has been purchased by this user.
         if (item.productType == ProductType.Consumable)
         {
-            CurrencyController.CreditBalance(item.value);
+            if(item.productID == "word.chickenbank")
+            {
+                ChickenBankController.instance.IsChickenBank = true;
+                ChickenBankController.instance.MaxStar += item.value;
+            }
+            else
+                CurrencyController.CreditBalance(item.value);
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.iapItems[index].removeAds)
             {
@@ -172,7 +181,7 @@ public class ShopDialog : Dialog
                     }
                 }
             }
-            if(maxTimeVipPacks[index] > 0)
+            if (maxTimeVipPacks[index] > 0)
             {
                 CUtils.SetBuyVipPack(index);
                 numRubyTexts[index].transform.parent.gameObject.SetActive(false);
@@ -237,7 +246,7 @@ public class ShopDialog : Dialog
                 {
                     StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
                     count++;
-                } 
+                }
             }
         }
     }

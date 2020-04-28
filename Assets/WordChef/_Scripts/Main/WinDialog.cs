@@ -229,6 +229,8 @@ public class WinDialog : Dialog
     {
         TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () =>
         {
+            if (ChickenBankController.instance.IsChickenBank)
+                ChickenBankController.instance.RewardStar();
             _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
         });
     }

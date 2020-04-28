@@ -31,12 +31,7 @@ public class Cell : MonoBehaviour
         SetBgLetter(_spriteLetter);
         bg.transform.SetParent(Mask.transform);
         ImgPedestal.SetActive(true);
-        if (iconCoin.transform.localScale == Vector3.one)
-        {
-            iconCoin.transform.localScale = Vector3.zero;
-            CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
-            Sound.instance.Play(Sound.Collects.CoinCollect);
-        }
+        CollectStar();
         Vector3 beginPosition = TextPreview.instance.transform.position;
         originLetterScale = letterText.transform.localScale;
         Vector3 middlePoint = CUtils.GetMiddlePoint(beginPosition, transform.position, -0.3f);
@@ -58,6 +53,16 @@ public class Cell : MonoBehaviour
             TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -69f, 0), 0.1f, OnMoveToComplete);
         });
         //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
+    }
+
+    private void CollectStar()
+    {
+        if (iconCoin.transform.localScale == Vector3.one)
+        {
+            iconCoin.transform.localScale = Vector3.zero;
+            CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
+            Sound.instance.Play(Sound.Collects.CoinCollect);
+        }
     }
 
     private void SetBgLetter(Sprite sprite)
@@ -96,6 +101,7 @@ public class Cell : MonoBehaviour
         }
         isShown = true;
         originLetterScale = letterText.transform.localScale;
+        CollectStar();
         ShowText();
         bg.color = new Color(1, 1, 1, 0.5f);
         imgHiden.gameObject.SetActive(false);
