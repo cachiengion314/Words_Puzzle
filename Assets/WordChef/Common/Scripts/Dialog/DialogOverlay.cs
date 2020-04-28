@@ -62,6 +62,11 @@ public class DialogOverlay : MonoBehaviour
     private void OnDialogOpened()
     {
         gameObject.GetComponent<Button>().interactable = false;
+        if (WordRegion.instance != null)
+        {
+            WordRegion.instance.GetComponent<Canvas>().overrideSorting = false;
+            WordRegion.instance.btnHintTarget.GetComponent<Canvas>().overrideSorting = false;
+        }
         overlay.enabled = true;
     }
 

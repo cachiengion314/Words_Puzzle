@@ -25,6 +25,7 @@ public class WordRegion : MonoBehaviour
     private ButtonVideoHintFree _btnHintADS;
     public Transform parentAdsHint;
     public Button btnDictionary;
+    public Button btnHintTarget;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
