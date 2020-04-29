@@ -58,7 +58,7 @@ public class ChickenBankController : MonoBehaviour
     {
         Sound.instance.Play(Sound.Collects.CoinCollect);
         if (CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank)
-            CurrencyController.CreditBalance(value);
+            CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.maxBank);
         else
             CurrencyController.CreditBalance((int)CurrStarChicken);
         FacebookController.instance.user.maxbank = /*CurrencyController.GetBalance() + */ConfigController.instance.config.gameParameters.maxBank;
