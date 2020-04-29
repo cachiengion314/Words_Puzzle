@@ -39,7 +39,7 @@ public class ChickenBankController : MonoBehaviour
 
     public void AddtoBank()
     {
-        if (Prefs.IsSaveLevelProgress())
+        if (Prefs.IsLastLevel())
             return;
         if (CurrStarChicken < ConfigController.instance.config.gameParameters.maxBank)
         {
