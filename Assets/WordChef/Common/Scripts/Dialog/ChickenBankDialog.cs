@@ -14,7 +14,7 @@ public class ChickenBankDialog : Dialog
     {
         base.Start();
         _textPrice.text = Purchaser.instance.iapItems[_indexItem].price + "$";
-        _textReward.text = "X" + Purchaser.instance.iapItems[_indexItem].value.ToString();
+        _textReward.text = "X" + ChickenBankController.instance.CurrStarChicken.ToString();
 #if IAP && UNITY_PURCHASING
         Purchaser.instance.onItemPurchased += OnItemPurchased;
 #endif
