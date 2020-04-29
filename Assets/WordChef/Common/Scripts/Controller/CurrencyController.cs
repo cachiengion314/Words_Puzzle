@@ -53,7 +53,7 @@ public class CurrencyController
             request.Amount = value;
             PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
             {
-                SetBalance(current + value);
+                SetBalance(result.Balance);
                 if (onBalanceChanged != null) onBalanceChanged();
                 if (onBallanceIncreased != null) onBallanceIncreased(value);
             }, null);
@@ -81,7 +81,7 @@ public class CurrencyController
             request.Amount = value;
             PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
             {
-                SetBalance(current - value);
+                SetBalance(result.Balance);
                 if (onBalanceChanged != null) onBalanceChanged();
             }, null);
         }
@@ -119,7 +119,7 @@ public class CurrencyController
             request.Amount = value;
             PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
             {
-                SetHintFree(current + value);
+                SetHintFree(result.Balance);
                 if (onBalanceChanged != null) onHintFreeChanged();
                 if (onBallanceIncreased != null) onHintFreeIncreased(value);
             }, null);
@@ -148,7 +148,7 @@ public class CurrencyController
             request.Amount = value;
             PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
             {
-                SetHintFree(current - value);
+                SetHintFree(result.Balance);
                 if (onBalanceChanged != null) onHintFreeChanged();
             }, null);
         }

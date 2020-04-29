@@ -44,7 +44,7 @@ public class BeeController : MonoBehaviour
     #region TEST BEE
     public void AddAmountBee()
     {
-        BeeManager.instance.SetAmountBee(_number);
+        BeeManager.instance.CreaditAmountBee(_number);
         UpdateAmountBee();
     }
     #endregion

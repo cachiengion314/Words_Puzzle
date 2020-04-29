@@ -38,7 +38,7 @@ public class BeeManager : MonoBehaviour
         _currBee = amount;
     }
 
-    public void SetAmountBee(int number)
+    public void CreaditAmountBee(int number)
     {
         _currBee += number;
         if (_currBee <= 0)
@@ -49,8 +49,24 @@ public class BeeManager : MonoBehaviour
         {
             AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
             request.VirtualCurrency = "BE";
-            request.Amount = _currBee;
+            request.Amount = number;
             PlayFabClientAPI.AddUserVirtualCurrency(request, null, null);
+        }
+    }
+
+    public void DebitAmountBee(int number)
+    {
+        _currBee -= number;
+        if (_currBee <= 0)
+            _currBee = 0;
+        CPlayerPrefs.SetInt("amount_bee", _currBee);
+        onBeeChanged?.Invoke();
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            SubtractUserVirtualCurrencyRequest request = new SubtractUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "BE";
+            request.Amount = number;
+            PlayFabClientAPI.SubtractUserVirtualCurrency(request, null, null);
         }
     }
 }

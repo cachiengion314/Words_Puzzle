@@ -638,7 +638,7 @@ public class WordRegion : MonoBehaviour
                     CPlayerPrefs.SetBool(gameObject.name + "_ADS", line.isAds);
                 }
                 line.ShowCellUseBee();
-                BeeManager.instance.SetAmountBee(-1);
+                BeeManager.instance.DebitAmountBee(1);
                 SaveLevelProgress();
                 CheckGameComplete();
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);

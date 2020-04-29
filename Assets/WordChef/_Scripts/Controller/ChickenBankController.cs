@@ -10,7 +10,7 @@ public class ChickenBankController : MonoBehaviour
     public static ChickenBankController instance;
     [SerializeField] private int _amount = 20;
 
-    private int _currStarChicken;
+    private double _currStarChicken;
 
     void Awake()
     {
@@ -19,43 +19,37 @@ public class ChickenBankController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public int CurrStarChicken
+    void Start()
+    {
+        _currStarChicken = CurrStarChicken;
+    }
+
+    public double CurrStarChicken
     {
         get
         {
-            if (PlayFabClientAPI.IsClientLoggedIn())
-            {
-                PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), (resultInventory) =>
-                {
-                    CPlayerPrefs.SetInt("chicken_star", resultInventory.VirtualCurrency["CK"]);
-                }, null);
-            }
-            _currStarChicken = CPlayerPrefs.GetInt("chicken_star", 720);
+            var result = FacebookController.instance.user.maxbank - CurrencyController.GetBalance();
+            _currStarChicken = FacebookController.instance.user.currBank + Mathf.Abs(ConfigController.instance.config.gameParameters.maxBank - Mathf.Abs((float)result));
             return _currStarChicken;
-        }
-        set
-        {
-            _currStarChicken = value;
-            CPlayerPrefs.SetInt("chicken_star", _currStarChicken);
-            if (PlayFabClientAPI.IsClientLoggedIn())
-            {
-                AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
-                request.VirtualCurrency = "CK";
-                request.Amount = _currStarChicken;
-                PlayFabClientAPI.AddUserVirtualCurrency(request, null, null);
-            }
         }
     }
 
     public void AddtoBank()
     {
-        Sound.instance.Play(Sound.Collects.CoinCollect);
-        CurrStarChicken += _amount;
+        if (CurrStarChicken < ConfigController.instance.config.gameParameters.maxBank)
+        {
+            Sound.instance.Play(Sound.Collects.CoinCollect);
+            FacebookController.instance.user.currBank += _amount;
+            FacebookController.instance.SaveDataGame();
+        }
     }
 
     public void CollectBank(int value)
     {
         Sound.instance.Play(Sound.Collects.CoinCollect);
-        CurrStarChicken -= value;
+        FacebookController.instance.user.maxbank = CurrencyController.GetBalance() + ConfigController.instance.config.gameParameters.maxBank;
+        FacebookController.instance.user.currBank = 0;
+        _currStarChicken = CurrStarChicken;
+        FacebookController.instance.SaveDataGame();
     }
 }

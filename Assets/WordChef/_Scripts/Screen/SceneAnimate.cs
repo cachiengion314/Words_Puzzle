@@ -83,7 +83,7 @@ public class SceneAnimate : MonoBehaviour
     {
         CurrencyController.CreditBalance(10000);
         CurrencyController.CreditHintFree(3);
-        BeeManager.instance.SetAmountBee(numBee);
+        BeeManager.instance.CreaditAmountBee(numBee);
     }
 
     public void ShowHidenBtn(RectTransform rectTransform)
