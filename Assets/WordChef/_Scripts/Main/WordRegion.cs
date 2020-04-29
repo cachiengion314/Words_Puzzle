@@ -746,7 +746,6 @@ public class WordRegion : MonoBehaviour
                             //if (hintFree > 0)
                             //    CurrencyController.DebitHintFree(hintFree);
                             //else
-                            CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
                             Sound.instance.audioSource.Stop();
                             Sound.instance.PlayButton(Sound.Button.MultipleHint);
                         });
@@ -757,6 +756,7 @@ public class WordRegion : MonoBehaviour
                     }
                 }
             }
+            CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
         }
         else
         {

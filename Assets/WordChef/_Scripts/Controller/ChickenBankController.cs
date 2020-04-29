@@ -12,6 +12,8 @@ public class ChickenBankController : MonoBehaviour
 
     [SerializeField] private double _currStarChicken;
 
+    [SerializeField] private double _remainChicken;
+
     void Awake()
     {
         if (instance == null) instance = this;
@@ -22,6 +24,7 @@ public class ChickenBankController : MonoBehaviour
     void Update()
     {
         _currStarChicken = CurrStarChicken;
+        _remainChicken = FacebookController.instance.user.remainBank;
     }
 
     public double CurrStarChicken
@@ -42,6 +45,11 @@ public class ChickenBankController : MonoBehaviour
             FacebookController.instance.user.currBank += _amount;
             FacebookController.instance.SaveDataGame();
         }
+        else
+        {
+            FacebookController.instance.user.remainBank += _amount;
+            FacebookController.instance.SaveDataGame();
+        }
     }
 
     public void CollectBank(int value)
@@ -52,7 +60,8 @@ public class ChickenBankController : MonoBehaviour
         else
             CurrencyController.CreditBalance((int)CurrStarChicken);
         FacebookController.instance.user.maxbank = /*CurrencyController.GetBalance() + */ConfigController.instance.config.gameParameters.maxBank;
-        FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.minBank;
+        FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.minBank + FacebookController.instance.user.remainBank;
+        FacebookController.instance.user.remainBank = 0;
         FacebookController.instance.SaveDataGame();
         if (HomeController.instance != null)
             HomeController.instance.ShowChickenBank();
