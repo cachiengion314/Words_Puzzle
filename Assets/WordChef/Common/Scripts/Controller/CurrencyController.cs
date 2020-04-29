@@ -74,8 +74,8 @@ public class CurrencyController
             return false;
         }
 
-        FacebookController.instance.user.maxbank -= value;
-        FacebookController.instance.SaveDataGame();
+        //FacebookController.instance.user.maxbank -= value;
+        //FacebookController.instance.SaveDataGame();
         if (PlayFabClientAPI.IsClientLoggedIn())
         {
             SubtractUserVirtualCurrencyRequest request = new SubtractUserVirtualCurrencyRequest();

@@ -72,10 +72,10 @@ public class ShopDialog : Dialog
                     numRubyTexts[i].transform.parent.gameObject.SetActive(true);
                 }
 
-                var currStar = CurrencyController.GetBalance();
-                var currValue = FacebookController.instance.user.maxbank - currStar;
-                var resultValue = currStar >= FacebookController.instance.user.maxbank ?
-                    ConfigController.instance.config.gameParameters.maxBank : currValue;
+                //var currStar = CurrencyController.GetBalance();
+                //var currValue = FacebookController.instance.user.maxbank - currStar;
+                var resultValue = ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank ?
+                    ConfigController.instance.config.gameParameters.maxBank : /*currValue*/ChickenBankController.instance.CurrStarChicken;
                 if (i == 8)
                 {
                     Purchaser.instance.iapItems[i].value = (int)resultValue;
@@ -239,7 +239,7 @@ public class ShopDialog : Dialog
 
     void GetShopItemInContent()
     {
-        var valueShow = (ConfigController.instance.config.gameParameters.maxBank * 10 / 100) + 720;
+        var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
         var currStarBank = ChickenBankController.instance.CurrStarChicken;
         int count = 0;
         btnMore.gameObject.SetActive(false);

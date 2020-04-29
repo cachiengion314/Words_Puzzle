@@ -43,4 +43,5 @@ public class GameParameters
 {
     public int rewardedBeeAmount = 2;
     public int maxBank = 2000;
+    public int minBank = 720;
 }

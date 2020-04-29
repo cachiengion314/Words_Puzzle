@@ -7,12 +7,14 @@ using UnityEngine.Purchasing;
 public class ChickenBankDialog : Dialog
 {
     [SerializeField] private TextMeshProUGUI _textPrice;
+    [SerializeField] private TextMeshProUGUI _textReward;
     [SerializeField] private int _indexItem = 8;
 
     protected override void Start()
     {
         base.Start();
         _textPrice.text = Purchaser.instance.iapItems[_indexItem].price + "$";
+        _textReward.text = "X" + Purchaser.instance.iapItems[_indexItem].value.ToString();
 #if IAP && UNITY_PURCHASING
         Purchaser.instance.onItemPurchased += OnItemPurchased;
 #endif

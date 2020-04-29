@@ -165,7 +165,7 @@ public class FacebookController : MonoBehaviour
         userDefault.email = "";
         userDefault.wordPassed = "";
         userDefault.maxbank = 2000;
-        userDefault.currBank = 0;
+        userDefault.currBank = 720;
         userDefault.unlockedSubWorld = "0";
         userDefault.unlockedLevel = "0";
         userDefault.unlockedWorld = "0";

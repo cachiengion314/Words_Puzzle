@@ -99,7 +99,7 @@ public class HomeController : BaseController
 
     public void ShowChickenBank()
     {
-        var valueShow = (ConfigController.instance.config.gameParameters.maxBank * 10 / 100) + 720;
+        var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
         var currStarBank = ChickenBankController.instance.CurrStarChicken;
         if (currStarBank < valueShow)
             btnChickenBank.gameObject.SetActive(false);

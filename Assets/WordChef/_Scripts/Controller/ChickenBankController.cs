@@ -28,8 +28,8 @@ public class ChickenBankController : MonoBehaviour
     {
         get
         {
-            var result = FacebookController.instance.user.maxbank - CurrencyController.GetBalance();
-            _currStarChicken = FacebookController.instance.user.currBank + Mathf.Abs(ConfigController.instance.config.gameParameters.maxBank - Mathf.Abs((float)result));
+            //var result = FacebookController.instance.user.maxbank - CurrencyController.GetBalance();
+            _currStarChicken = FacebookController.instance.user.currBank/* + Mathf.Abs(ConfigController.instance.config.gameParameters.maxBank - Mathf.Abs((float)result))*/;
             return _currStarChicken;
         }
     }
@@ -46,15 +46,15 @@ public class ChickenBankController : MonoBehaviour
 
     public void CollectBank(int value)
     {
-        if (HomeController.instance != null)
-            HomeController.instance.ShowChickenBank();
         Sound.instance.Play(Sound.Collects.CoinCollect);
         if (CurrStarChicken < ConfigController.instance.config.gameParameters.maxBank)
             CurrencyController.CreditBalance(value);
         else
             CurrencyController.CreditBalance((int)CurrStarChicken);
-        FacebookController.instance.user.maxbank = CurrencyController.GetBalance() + ConfigController.instance.config.gameParameters.maxBank;
-        FacebookController.instance.user.currBank = 0;
+        FacebookController.instance.user.maxbank = /*CurrencyController.GetBalance() + */ConfigController.instance.config.gameParameters.maxBank;
+        FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.minBank;
         FacebookController.instance.SaveDataGame();
+        if (HomeController.instance != null)
+            HomeController.instance.ShowChickenBank();
     }
 }
