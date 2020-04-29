@@ -32,7 +32,7 @@ public class ChickenBankController : MonoBehaviour
         get
         {
             //var result = FacebookController.instance.user.maxbank - CurrencyController.GetBalance();
-            _currStarChicken = FacebookController.instance.user.currBank/* + Mathf.Abs(ConfigController.instance.config.gameParameters.maxBank - Mathf.Abs((float)result))*/;
+            _currStarChicken = FacebookController.instance.user.currBank;/* + Mathf.Abs(ConfigController.instance.config.gameParameters.maxBank - Mathf.Abs((float)result));*/
             return _currStarChicken;
         }
     }
@@ -62,8 +62,17 @@ public class ChickenBankController : MonoBehaviour
         else
             CurrencyController.CreditBalance((int)CurrStarChicken);
         FacebookController.instance.user.maxbank = /*CurrencyController.GetBalance() + */ConfigController.instance.config.gameParameters.maxBank;
-        FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.minBank + FacebookController.instance.user.remainBank;
-        FacebookController.instance.user.remainBank = 0;
+        var nextCurrChicken = ConfigController.instance.config.gameParameters.minBank + FacebookController.instance.user.remainBank;
+        if (nextCurrChicken > ConfigController.instance.config.gameParameters.maxBank)
+        {
+            FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.maxBank;
+            FacebookController.instance.user.remainBank = nextCurrChicken - ConfigController.instance.config.gameParameters.maxBank;
+        }
+        else
+        {
+            FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.minBank + FacebookController.instance.user.remainBank;
+            FacebookController.instance.user.remainBank = 0;
+        }
         FacebookController.instance.SaveDataGame();
         if (HomeController.instance != null)
             HomeController.instance.ShowChickenBank();
