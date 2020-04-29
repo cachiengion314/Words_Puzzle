@@ -39,6 +39,8 @@ public class ChickenBankController : MonoBehaviour
 
     public void AddtoBank()
     {
+        if (Prefs.IsSaveLevelProgress())
+            return;
         if (CurrStarChicken < ConfigController.instance.config.gameParameters.maxBank)
         {
             Sound.instance.Play(Sound.Collects.CoinCollect);
