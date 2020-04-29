@@ -10,6 +10,7 @@ public class HomeController : BaseController
 
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
+    public Button btnChickenBank;
     public Animator animatorTitle;
     [SerializeField] private IconController _iconController;
     [SerializeField] private RectTransform _panelTopRect;
@@ -30,6 +31,7 @@ public class HomeController : BaseController
     {
         base.Start();
         CUtils.CloseBannerAd();
+        ShowChickenBank();
         PlayAnimTitle();
         //var firstLoad = CPlayerPrefs.GetBool("First_Load", false);
         //if (!firstLoad)
@@ -93,5 +95,15 @@ public class HomeController : BaseController
     {
         animatorTitle.enabled = false;
         animatorTitle.SetBool("Play", false);
+    }
+
+    public void ShowChickenBank()
+    {
+        var valueShow = (ConfigController.instance.config.gameParameters.maxBank * 10 / 100) + 720;
+        var currStarBank = ChickenBankController.instance.CurrStarChicken;
+        if (currStarBank < valueShow)
+            btnChickenBank.gameObject.SetActive(false);
+        else
+            btnChickenBank.gameObject.SetActive(true);
     }
 }

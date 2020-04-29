@@ -171,9 +171,10 @@ public class ShopDialog : Dialog
         // A consumable product has been purchased by this user.
         if (item.productType == ProductType.Consumable)
         {
-            CurrencyController.CreditBalance(item.value);
             if (item.productID == "word.chickenbank")
                 ChickenBankController.instance.CollectBank(item.value);
+            else
+                CurrencyController.CreditBalance(item.value);
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.iapItems[index].removeAds)
             {

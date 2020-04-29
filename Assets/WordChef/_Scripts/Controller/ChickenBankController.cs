@@ -10,7 +10,7 @@ public class ChickenBankController : MonoBehaviour
     public static ChickenBankController instance;
     [SerializeField] private int _amount = 20;
 
-    private double _currStarChicken;
+    [SerializeField] private double _currStarChicken;
 
     void Awake()
     {
@@ -19,7 +19,7 @@ public class ChickenBankController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    void Update()
     {
         _currStarChicken = CurrStarChicken;
     }
@@ -46,10 +46,15 @@ public class ChickenBankController : MonoBehaviour
 
     public void CollectBank(int value)
     {
+        if (HomeController.instance != null)
+            HomeController.instance.ShowChickenBank();
         Sound.instance.Play(Sound.Collects.CoinCollect);
+        if (CurrStarChicken < ConfigController.instance.config.gameParameters.maxBank)
+            CurrencyController.CreditBalance(value);
+        else
+            CurrencyController.CreditBalance((int)CurrStarChicken);
         FacebookController.instance.user.maxbank = CurrencyController.GetBalance() + ConfigController.instance.config.gameParameters.maxBank;
         FacebookController.instance.user.currBank = 0;
-        _currStarChicken = CurrStarChicken;
         FacebookController.instance.SaveDataGame();
     }
 }

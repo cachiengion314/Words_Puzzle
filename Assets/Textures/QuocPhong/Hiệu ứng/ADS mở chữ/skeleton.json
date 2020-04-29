@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "jjYnE0ZU5ehGbUtYwjtxTUEajb8",
+	"hash": "AObv+M8GG7vyjIDkRtsKnFvw728",
 	"spine": "3.8.95",
 	"x": -57.97,
 	"y": -56.33,
@@ -17,7 +17,8 @@
 	{ "name": "bone7", "parent": "root", "rotation": 180 },
 	{ "name": "bone4", "parent": "bone7", "x": 48.13, "y": 47.83 },
 	{ "name": "bone5", "parent": "bone7", "x": 48.13, "y": 47.83 },
-	{ "name": "bone6", "parent": "bone7", "x": 48.13, "y": 47.83 }
+	{ "name": "bone6", "parent": "bone7", "x": 48.13, "y": 47.83 },
+	{ "name": "icon vd", "parent": "root", "x": 23.91, "y": -23.54 }
 ],
 "slots": [
 	{ "name": "Video copy 2", "bone": "root", "attachment": "Video copy 2" },
@@ -26,7 +27,8 @@
 	{ "name": "Layer 1428", "bone": "bone", "attachment": "Layer 1428" },
 	{ "name": "Layer 1430", "bone": "bone4", "attachment": "Layer 1428" },
 	{ "name": "Layer 1429", "bone": "bone3", "attachment": "Layer 1428" },
-	{ "name": "Layer 1431", "bone": "bone6", "attachment": "Layer 1428" }
+	{ "name": "Layer 1431", "bone": "bone6", "attachment": "Layer 1428" },
+	{ "name": "icon vd", "bone": "icon vd", "attachment": "icon vd" }
 ],
 "skins": [
 	{
@@ -51,7 +53,10 @@
 				"Layer 1428": { "x": 0.27, "y": -0.44, "width": 14, "height": 13 }
 			},
 			"Video copy 2": {
-				"Video copy 2": { "width": 106, "height": 106 }
+				"Video copy 2": { "width": 106, "height": 108 }
+			},
+			"icon vd": {
+				"icon vd": { "x": -0.36, "y": 0.89, "width": 42, "height": 40 }
 			}
 		}
 	}
@@ -131,8 +136,8 @@
 				"scale": [
 					{ "x": 0.5, "y": 0.5, "curve": "stepped" },
 					{ "time": 0.1, "x": 0.5, "y": 0.5 },
-					{ "time": 0.7, "curve": "stepped" },
-					{ "time": 0.9667 },
+					{ "time": 0.7, "x": 0.8, "y": 0.8, "curve": "stepped" },
+					{ "time": 0.9667, "x": 0.8, "y": 0.8 },
 					{ "time": 1.5667, "x": 0.5, "y": 0.5 }
 				]
 			},
@@ -229,7 +234,7 @@
 				"scale": [
 					{ "x": 0.5, "y": 0.5, "curve": "stepped" },
 					{ "time": 0.1, "x": 0.5, "y": 0.5 },
-					{ "time": 0.7, "curve": "stepped" },
+					{ "time": 0.7, "x": 0.8, "y": 0.8 },
 					{ "time": 0.9667 },
 					{ "time": 1.5667, "x": 0.5, "y": 0.5 }
 				]
@@ -268,6 +273,17 @@
 			"bone7": {
 				"rotate": [
 					{ "time": 1, "angle": -0.1 }
+				]
+			},
+			"icon vd": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 1.7 },
+					{ "time": 1.8, "angle": 6.53 },
+					{ "time": 1.9, "angle": -5.53 },
+					{ "time": 2, "angle": 6.53 },
+					{ "time": 2.1, "angle": -5.53 },
+					{ "time": 2.2 }
 				]
 			}
 		}
