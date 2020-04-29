@@ -247,8 +247,11 @@ public class ShopDialog : Dialog
         //btnMore.transform.localScale = Vector3.zero;
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
         {
-            if (currStarBank < valueShow)
+            if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
+            {
                 chickenBank.SetActive(false);
+                CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
+            }
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
             if (i > 1)
             {

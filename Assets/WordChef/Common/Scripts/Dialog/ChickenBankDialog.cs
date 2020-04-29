@@ -39,6 +39,8 @@ public class ChickenBankDialog : Dialog
             if (item.productID == "word.chickenbank")
                 ChickenBankController.instance.CollectBank(item.value);
             Toast.instance.ShowMessage("Your purchase is successful");
+            _textReward.text = "X" + ChickenBankController.instance.CurrStarChicken.ToString();
+            Close();
         }
         // Or ... a non-consumable product has been purchased by this user.
         else if (item.productType == ProductType.NonConsumable)
