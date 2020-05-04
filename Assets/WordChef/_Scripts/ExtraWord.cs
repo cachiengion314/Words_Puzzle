@@ -79,6 +79,8 @@ public class ExtraWord : MonoBehaviour
         }
         else
         {
+            Prefs.countExtra += 1;
+            Prefs.countExtraDaily += 1;
             MainController.instance.SaveWordComplete(word);
             WordRegion.instance.listWordCorrect.Add(word.ToLower());
             WordRegion.instance.ShowComplimentFX();

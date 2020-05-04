@@ -8,14 +8,23 @@ public class TutorialController : MonoBehaviour
     public static TutorialController instance { get; private set; }
     [HideInInspector] public bool isShowTut;
     [HideInInspector] public bool isBlockSwipe;
-    public string contentPop;
-    public string _contentWordAgain;
-    public string _contentManipulation;
-    public string _contentHintFree;
+    public string contentNext;
+    public string contentWordAgain;
+    public string contentManipulation;
+    public string contentHintFree;
     [SerializeField] private GameObject _popText;
     [SerializeField] private TextMeshProUGUI _textTutorial;
 
+    private LineWord _lineTarget;
     private string _answerTarget;
+
+    public LineWord LineTarget
+    {
+        get
+        {
+            return _lineTarget;
+        }
+    }
 
     public string AnswerTarget
     {
@@ -30,17 +39,18 @@ public class TutorialController : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void ShowPopWordTut(string wordTarget, string contentPop)
+    public void ShowPopWordTut(string contentPop)
     {
-        _answerTarget = wordTarget;
         isShowTut = true;
         _popText.SetActive(true);
-        _textTutorial.text = contentPop;
         foreach (var line in WordRegion.instance.Lines)
         {
-            if(!line.isShown)
+            if (!line.isShown)
             {
+                _lineTarget = line;
+                _answerTarget = line.answers[0];
                 line.SetDataLetter(line.answers[0]);
+                _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
                 break;
             }
         }
@@ -48,15 +58,14 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopHintFreeTut()
     {
-        isBlockSwipe = true;
         isShowTut = true;
+        isBlockSwipe = true;
         _popText.SetActive(true);
-        _textTutorial.text = _contentHintFree;
+        _textTutorial.text = contentHintFree;
     }
 
     public void HidenPopTut()
     {
-        isShowTut = false;
         isBlockSwipe = false;
         _popText.SetActive(false);
         _textTutorial.text = "";

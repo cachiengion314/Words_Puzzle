@@ -221,7 +221,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
             // ... report the fact Purchasing has not succeeded initializing yet. Consider waiting longer or 
             // retrying initiailization.
             Debug.Log("BuyProductID FAIL. Not initialized.");
-            Toast.instance.ShowMessage("Check your internet connection and try again");
+            Toast.instance.ShowMessage("Check your internet connection\nand try again");
         }
     }
 

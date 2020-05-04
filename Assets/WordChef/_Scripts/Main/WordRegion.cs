@@ -362,13 +362,17 @@ public class WordRegion : MonoBehaviour
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
+        //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         var lineIsShown = lines.FindAll(li => li.isShown);
-        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown && (x.answer == "" || CheckAnswerFill(x, checkWord)));
+        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown/* && !TutorialController.instance.isShowTut*/ && (x.answer == "" || CheckAnswerFill(x, checkWord)));
+        //if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+        //    line = TutorialController.instance.LineTarget.answer == checkWord ? TutorialController.instance.LineTarget : null;
         //string meaning="";
         if (line != null)
         {
             //if (!line.isShown)
             //{
+
             line.SetDataLetter(checkWord);
             textPreview.SetAnswerColor();
             line.selectID = lineIsShown.Count;
@@ -400,7 +404,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown);
+            LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown /*&& !TutorialController.instance.isShowTut*/);
             if (lineExist != null && lineExist.answer == checkWord)
             {
                 Sound.instance.Play(Sound.Others.WordAlready);
@@ -413,6 +417,8 @@ public class WordRegion : MonoBehaviour
             {
                 CheckExtraWordAndWrong(checkWord);
             }
+            //if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+            //    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain);
         }
         if (!textPreview.useFX)
             textPreview.ClearText();
@@ -437,7 +443,7 @@ public class WordRegion : MonoBehaviour
     {
         var isAdsHintFree = CPlayerPrefs.GetBool(keyLevel + "ADS_HINT_FREE", false);
         _countShowAdsHintFree += 1;
-        if (_countShowAdsHintFree > 2 && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy))
+        if (_countShowAdsHintFree > 2 && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy) /*&& !TutorialController.instance.isShowTut*/)
         {
             if (CPlayerPrefs.HasKey(keyLevel + "POS_ADS_BUTTON_X"))
             {
@@ -531,7 +537,7 @@ public class WordRegion : MonoBehaviour
 
     private void CheckExtraWordAndWrong(string checkWord)
     {
-        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
+        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count /*&& !TutorialController.instance.isShowTut*/);
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
             ExtraWord.instance.ProcessWorld(checkWord);
@@ -540,6 +546,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            CPlayerPrefs.SetBool("LevelMisspelling", false);
             //boardHighlight.gameObject.SetActive(false);
             board.sprite = _spriteNormal;
             board.SetNativeSize();
@@ -556,8 +563,21 @@ public class WordRegion : MonoBehaviour
     public void CheckGameComplete()
     {
         var isComplete = lines.All(x => x.isShown);
+        var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
         if (isComplete)
         {
+            if(isLevelMisspelling)
+            {
+                Prefs.countBooster += 1;
+                Prefs.countBoosterDaily += 1;
+            }
+
+            if (TutorialController.instance.isShowTut)
+            {
+                //TutorialController.instance.HidenPopTut();
+                //TutorialController.instance.isShowTut = false;
+                //CPlayerPrefs.SetBool("TUTORIAL", true);
+            }
             SaveLevelProgress();
             BlockScreen.instance.Block(true);
             MainController.instance.IsLevelClear = true;
@@ -571,6 +591,14 @@ public class WordRegion : MonoBehaviour
             {
                 MainController.instance.animatorScene.SetBool("LevelComplete", true);
             });
+        }
+        else
+        {
+            //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+            //if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+            //{
+            //    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
+            //}
         }
     }
 
@@ -612,6 +640,8 @@ public class WordRegion : MonoBehaviour
 
     public void OnClickCellTarget(Cell cell)
     {
+        Prefs.countBooster += 1;
+        Prefs.countBoosterDaily += 1;
         isOpenOverlay = false;
         DialogOverlay.instance.ShowOverlay(false);
         var line = lines.Single(li => li.cells.Contains(cell));
@@ -620,13 +650,13 @@ public class WordRegion : MonoBehaviour
             li.HidenOverlayOfCell();
         }
         line.ShowHintCelltarget(cell);
-
     }
 
     public void BeeClick()
     {
         int count = 0;
-
+        Prefs.countBooster += 1;
+        Prefs.countBoosterDaily += 1;
         var lineNotShow = lines.FindAll(x => !x.isShown);
         for (int i = lineNotShow.Count - 1; i > 0; i--)
         {
@@ -693,6 +723,8 @@ public class WordRegion : MonoBehaviour
             //CPlayerPrefs.SetInt("HINT_LINE_INDEX", hintLineIndex);
             line.ShowHint(() =>
             {
+                Prefs.countBooster += 1;
+                Prefs.countBoosterDaily += 1;
                 if (line.isAds)
                 {
                     line.isAds = false;
@@ -758,6 +790,8 @@ public class WordRegion : MonoBehaviour
                 }
             }
             CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
+            Prefs.countBooster += 1;
+            Prefs.countBoosterDaily += 1;
         }
         else
         {

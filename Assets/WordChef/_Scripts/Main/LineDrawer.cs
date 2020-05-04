@@ -80,6 +80,8 @@ public class LineDrawer : MonoBehaviour
                 //if(currentIndexes!=null)
                 //    pan.SendMessageUpwards("ScaleWord", currentIndexes[nearest]);
 
+                //if (TutorialController.instance.isShowTut && textPreview.GetText().Length > 1)
+                //    TutorialController.instance.HidenPopTut();
             }
             BuildPoints();
         }

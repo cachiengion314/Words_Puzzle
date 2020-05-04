@@ -24,6 +24,7 @@ public class Quest : MonoBehaviour
     [SerializeField] private Button _btnReward;
     [SerializeField] private Image _iconComplete;
     [SerializeField] private Image _iconTask;
+    [SerializeField] private TextMeshProUGUI _textProgress;
 
     public void Run()
     {
@@ -50,7 +51,8 @@ public class Quest : MonoBehaviour
 
     private void ResetupAchie()
     {
-        goal.requiredAmount += goal.amountResetup;
+        goal.amountResetup = goal.requiredAmount * 2;
+        goal.requiredAmount = goal.amountResetup;
         ClearTaskAchievementByKey();
         ClearTask("Completed" + gameObject.name);
         ShowQuestAchie();
@@ -63,6 +65,7 @@ public class Quest : MonoBehaviour
             _fillProgress.value = _fillProgress.maxValue;
             ShowReward(true);
         }
+        _textProgress.text = _fillProgress.value + " / " + _fillProgress.maxValue;
     }
 
     private void ShowReward(bool show)
@@ -117,6 +120,21 @@ public class Quest : MonoBehaviour
                 titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " Chapter" + ((goal.requiredAmount == 1) ? "" : "s");
                 rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
                 _fillProgress.value = Prefs.countChapterDaily;
+                break;
+            case GoalType.ExtraWord:
+                titleText.GetComponent<TextMeshProUGUI>().text = "Collect " + goal.requiredAmount + " extra word" + ((goal.requiredAmount == 1) ? "" : "s");
+                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                _fillProgress.value = Prefs.countExtraDaily;
+                break;
+            case GoalType.Booster:
+                titleText.GetComponent<TextMeshProUGUI>().text = "Use " + goal.requiredAmount + " booster" + ((goal.requiredAmount == 1) ? "" : "s");
+                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                _fillProgress.value = Prefs.countBoosterDaily;
+                break;
+            case GoalType.LevelMisspelling:
+                titleText.GetComponent<TextMeshProUGUI>().text = "Clear any " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s") + " without misspelling";
+                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                _fillProgress.value = Prefs.countLevelMisspellingDaily;
                 break;
             case GoalType.Combos:
                 if (combo == ComboType.amazing)
@@ -174,6 +192,21 @@ public class Quest : MonoBehaviour
                     rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
                     _fillProgress.value = Prefs.countChapter;
                     break;
+                case GoalType.ExtraWord:
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Collect " + goal.requiredAmount + " extra word" + ((goal.requiredAmount == 1) ? "" : "s");
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    _fillProgress.value = Prefs.countExtra;
+                    break;
+                case GoalType.Booster:
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Use " + goal.requiredAmount + " booster" + ((goal.requiredAmount == 1) ? "" : "s");
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    _fillProgress.value = Prefs.countBooster;
+                    break;
+                case GoalType.LevelMisspelling:
+                    titleText.GetComponent<TextMeshProUGUI>().text = "Clear any " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s") + " without misspelling";
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    _fillProgress.value = Prefs.countLevelMisspelling;
+                    break;
                 case GoalType.Combos:
                     if (combo == ComboType.amazing)
                     {
@@ -223,6 +256,18 @@ public class Quest : MonoBehaviour
                 GameState.countChapterDaily = -1;
                 ClearTask(Const.CHAPTER_CLEAR_DAILY);
                 break;
+            case GoalType.ExtraWord:
+                GameState.countExtraDaily = -1;
+                ClearTask(Const.EXTRA_WORD_DAILY);
+                break;
+            case GoalType.Booster:
+                GameState.countBoosterDaily = -1;
+                ClearTask(Const.BOOSTER_DAILY);
+                break;
+            case GoalType.LevelMisspelling:
+                GameState.countLevelMisspellingDaily = -1;
+                ClearTask(Const.LEVEL_MISSPELLING_DAILY);
+                break;
             case GoalType.Combos:
                 if (combo == ComboType.amazing)
                 {
@@ -268,6 +313,18 @@ public class Quest : MonoBehaviour
             case GoalType.ChappterClear:
                 GameState.countChapter = -1;
                 ClearTask(Const.CHAPTER_CLEAR);
+                break;
+            case GoalType.ExtraWord:
+                GameState.countExtra = -1;
+                ClearTask(Const.EXTRA_WORD);
+                break;
+            case GoalType.Booster:
+                GameState.countBooster = -1;
+                ClearTask(Const.BOOSTER);
+                break;
+            case GoalType.LevelMisspelling:
+                GameState.countLevelMisspelling = -1;
+                ClearTask(Const.LEVEL_MISSPELLING);
                 break;
             case GoalType.Combos:
                 if (combo == ComboType.amazing)

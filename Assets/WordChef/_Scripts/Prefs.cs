@@ -89,6 +89,48 @@ public static class Prefs {
         set { CPlayerPrefs.SetInt(Const.CHAPTER_CLEAR, value); GameState.countChapter = value; }
     }
 
+    public static int countExtra
+    {
+        get
+        {
+            if (GameState.countExtra == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.EXTRA_WORD);
+                GameState.countExtra = value;
+            }
+            return GameState.countExtra;
+        }
+        set { CPlayerPrefs.SetInt(Const.EXTRA_WORD, value); GameState.countExtra = value; }
+    }
+
+    public static int countBooster
+    {
+        get
+        {
+            if (GameState.countBooster == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.BOOSTER);
+                GameState.countBooster = value;
+            }
+            return GameState.countBooster;
+        }
+        set { CPlayerPrefs.SetInt(Const.BOOSTER, value); GameState.countBooster = value; }
+    }
+
+    public static int countLevelMisspelling
+    {
+        get
+        {
+            if (GameState.countLevelMisspelling == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.LEVEL_MISSPELLING);
+                GameState.countLevelMisspelling = value;
+            }
+            return GameState.countLevelMisspelling;
+        }
+        set { CPlayerPrefs.SetInt(Const.LEVEL_MISSPELLING, value); GameState.countLevelMisspelling = value; }
+    }
+
     public static int countGood
     {
         get
@@ -197,6 +239,48 @@ public static class Prefs {
             return GameState.countChapterDaily;
         }
         set { CPlayerPrefs.SetInt(Const.CHAPTER_CLEAR_DAILY, value); GameState.countChapterDaily = value; }
+    }
+
+    public static int countExtraDaily
+    {
+        get
+        {
+            if (GameState.countExtraDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.EXTRA_WORD_DAILY);
+                GameState.countExtraDaily = value;
+            }
+            return GameState.countExtraDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.EXTRA_WORD_DAILY, value); GameState.countExtraDaily = value; }
+    }
+
+    public static int countBoosterDaily
+    {
+        get
+        {
+            if (GameState.countBoosterDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.BOOSTER_DAILY);
+                GameState.countBoosterDaily = value;
+            }
+            return GameState.countBoosterDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.BOOSTER_DAILY, value); GameState.countBoosterDaily = value; }
+    }
+
+    public static int countLevelMisspellingDaily
+    {
+        get
+        {
+            if (GameState.countLevelMisspellingDaily == -1)
+            {
+                int value = CPlayerPrefs.GetInt(Const.LEVEL_MISSPELLING_DAILY);
+                GameState.countLevelMisspellingDaily = value;
+            }
+            return GameState.countLevelMisspellingDaily;
+        }
+        set { CPlayerPrefs.SetInt(Const.LEVEL_MISSPELLING_DAILY, value); GameState.countLevelMisspellingDaily = value; }
     }
 
     public static int countGoodDaily

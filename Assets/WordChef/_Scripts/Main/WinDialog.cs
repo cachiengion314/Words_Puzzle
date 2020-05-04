@@ -354,12 +354,10 @@ public class WinDialog : Dialog
         if (Prefs.IsLastLevel())
         {
             FacebookController.instance.newLevel = true;
+            CPlayerPrefs.SetBool("LevelMisspelling", false);
         }
         if (Prefs.IsSaveLevelProgress())
         {
-            Prefs.countLevel += 1;
-            Prefs.countLevelDaily += 1;
-
             FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
             FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
             FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
@@ -420,6 +418,7 @@ public class WinDialog : Dialog
         if (Prefs.IsLastLevel())
         {
             FacebookController.instance.newLevel = true;
+            CPlayerPrefs.SetBool("LevelMisspelling", true);
         }
         if (Prefs.IsSaveLevelProgress())
         {

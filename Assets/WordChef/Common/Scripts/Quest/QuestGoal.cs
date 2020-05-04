@@ -39,7 +39,10 @@ public enum GoalType
     Spelling,
     LevelClear,
     Combos,
-    ChappterClear
+    ChappterClear,
+    ExtraWord,
+    Booster,
+    LevelMisspelling
 }
 public enum ComboType
 {
