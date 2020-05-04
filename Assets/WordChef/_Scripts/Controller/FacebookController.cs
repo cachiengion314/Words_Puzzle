@@ -101,7 +101,7 @@ public class FacebookController : MonoBehaviour
         FB.API("/me/picture?redirect=false", HttpMethod.GET, ProfilePhotoCallback);
         PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
         {
-            DisplayName = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName,
+            DisplayName = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName.Length < 25 ? result.InfoResultPayload.AccountInfo.FacebookInfo.FullName : result.InfoResultPayload.AccountInfo.FacebookInfo.FullName.Substring(0,24),
         }, null, null);
     }
 

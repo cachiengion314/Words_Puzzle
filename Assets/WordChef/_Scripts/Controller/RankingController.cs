@@ -25,7 +25,8 @@ public class RankingController : MonoBehaviour
         _playerName.text = name;
         _playerValue.text = value.ToString();
         _avatarPlayer.photo.sprite = spriteDefault;
-        StartCoroutine(ShowAvatar(urlAvatar));
+        if (urlAvatar != "")
+            StartCoroutine(ShowAvatar(urlAvatar));
     }
 
     private IEnumerator ShowAvatar(string urlAvatar)

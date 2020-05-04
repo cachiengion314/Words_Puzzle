@@ -550,6 +550,7 @@ public class WordRegion : MonoBehaviour
                 ShowAdsInOldLevel();
             textPreview.SetWrongColor();
             lineIndex = 0;
+            compliment.ResetAnimTree();
         }
     }
     public void CheckGameComplete()
