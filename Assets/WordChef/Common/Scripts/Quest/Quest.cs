@@ -35,12 +35,6 @@ public class Quest : MonoBehaviour
         rt = _progressMask.GetComponent<RectTransform>();
         maxWidth = rt.rect.width;
 
-        if (_fillProgress.value >= goal.requiredAmount)
-        {
-            _fillProgress.value = _fillProgress.maxValue;
-            ShowReward(true);
-        }
-        _textProgress.text = _fillProgress.value + " / " + _fillProgress.maxValue;
         UpdateProgress();
     }
 
@@ -76,13 +70,20 @@ public class Quest : MonoBehaviour
         ShowQuestAchie();
     }
 
-    //void Update()
-    //{
-        
-    //}
+    void Update()
+    {
+        UpdateProgress();
+    }
 
     private void UpdateProgress()
     {
+        if (_fillProgress.value >= goal.requiredAmount)
+        {
+            _fillProgress.value = _fillProgress.maxValue;
+            ShowReward(true);
+        }
+        _textProgress.text = _fillProgress.value + " / " + _fillProgress.maxValue;
+
         if (_fillProgress.maxValue == 0) return;
 
         float progress = Mathf.Clamp(_fillProgress.value / _fillProgress.maxValue, 0, 1);
@@ -123,38 +124,38 @@ public class Quest : MonoBehaviour
 
     void ShowQuestDaily()
     {
-        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("+" + goal.requiredAmount);
+        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
         _fillProgress.maxValue = goal.requiredAmount;
         switch (goal.goalType)
         {
             case GoalType.Spelling:
                 titleText.GetComponent<TextMeshProUGUI>().text = "Spell " + goal.requiredAmount + " Word" + ((goal.requiredAmount == 1) ? "" : "s");
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                 _fillProgress.value = Prefs.countSpellDaily;
                 break;
             case GoalType.LevelClear:
                 titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s");
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                 _fillProgress.value = Prefs.countLevelDaily;
                 break;
             case GoalType.ChappterClear:
                 titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " Chapter" + ((goal.requiredAmount == 1) ? "" : "s");
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                 _fillProgress.value = Prefs.countChapterDaily;
                 break;
             case GoalType.ExtraWord:
                 titleText.GetComponent<TextMeshProUGUI>().text = "Collect " + goal.requiredAmount + " extra word" + ((goal.requiredAmount == 1) ? "" : "s");
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                 _fillProgress.value = Prefs.countExtraDaily;
                 break;
             case GoalType.Booster:
                 titleText.GetComponent<TextMeshProUGUI>().text = "Use " + goal.requiredAmount + " booster" + ((goal.requiredAmount == 1) ? "" : "s");
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                 _fillProgress.value = Prefs.countBoosterDaily;
                 break;
             case GoalType.LevelMisspelling:
                 titleText.GetComponent<TextMeshProUGUI>().text = "Clear any " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s") + " without misspelling";
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                 _fillProgress.value = Prefs.countLevelMisspellingDaily;
                 break;
             case GoalType.Combos:
@@ -183,7 +184,7 @@ public class Quest : MonoBehaviour
                     titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GREAT combo" + ((goal.requiredAmount == 1) ? "" : "s");
                     _fillProgress.value = Prefs.countGreatDaily;
                 }
-                rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                 break;
         }
         if (_fillProgress.value < _fillProgress.maxValue)
@@ -192,7 +193,7 @@ public class Quest : MonoBehaviour
 
     void ShowQuestAchie()
     {
-        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("+" + goal.requiredAmount);
+        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
         _fillProgress.maxValue = goal.requiredAmount;
         if (_fillProgress.value < _fillProgress.maxValue)
         {
@@ -200,32 +201,32 @@ public class Quest : MonoBehaviour
             {
                 case GoalType.Spelling:
                     titleText.GetComponent<TextMeshProUGUI>().text = "Spell " + goal.requiredAmount + " Word" + ((goal.requiredAmount == 1) ? "" : "s");
-                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                     _fillProgress.value = Prefs.countSpell;
                     break;
                 case GoalType.LevelClear:
                     titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s");
-                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                     _fillProgress.value = Prefs.countLevel;
                     break;
                 case GoalType.ChappterClear:
                     titleText.GetComponent<TextMeshProUGUI>().text = "Clear " + goal.requiredAmount + " Chapter" + ((goal.requiredAmount == 1) ? "" : "s");
-                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                     _fillProgress.value = Prefs.countChapter;
                     break;
                 case GoalType.ExtraWord:
                     titleText.GetComponent<TextMeshProUGUI>().text = "Collect " + goal.requiredAmount + " extra word" + ((goal.requiredAmount == 1) ? "" : "s");
-                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                     _fillProgress.value = Prefs.countExtra;
                     break;
                 case GoalType.Booster:
                     titleText.GetComponent<TextMeshProUGUI>().text = "Use " + goal.requiredAmount + " booster" + ((goal.requiredAmount == 1) ? "" : "s");
-                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                     _fillProgress.value = Prefs.countBooster;
                     break;
                 case GoalType.LevelMisspelling:
                     titleText.GetComponent<TextMeshProUGUI>().text = "Clear any " + goal.requiredAmount + " level" + ((goal.requiredAmount == 1) ? "" : "s") + " without misspelling";
-                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                     _fillProgress.value = Prefs.countLevelMisspelling;
                     break;
                 case GoalType.Combos:
@@ -254,7 +255,7 @@ public class Quest : MonoBehaviour
                         titleText.GetComponent<TextMeshProUGUI>().text = "Get " + goal.requiredAmount + " GREAT combo" + ((goal.requiredAmount == 1) ? "" : "s");
                         _fillProgress.value = Prefs.countGreat;
                     }
-                    rewardText.GetComponent<TextMeshProUGUI>().text = "+" + goal.reward.ToString();
+                    rewardText.GetComponent<TextMeshProUGUI>().text = "X" + goal.reward.ToString();
                     break;
             }
             ShowReward(false);

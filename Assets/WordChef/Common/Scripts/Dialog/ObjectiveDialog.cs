@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,8 +52,8 @@ public class ObjectiveDialog : Dialog
         tabBtn.transform.Find("IconOn").gameObject.SetActive(status);
         tabBtn.transform.Find("IconOff").gameObject.SetActive(!status);
         if (status)
-            tabBtn.transform.Find("Text").GetComponent<Text>().color = new Vector4(1f, 1f, 1f, 1f);
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = new Vector4(1f, 1f, 1f, 1f);
         else
-            tabBtn.transform.Find("Text").GetComponent<Text>().color = new Vector4(0, 0, 0, 1f);
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = new Vector4(0, 0, 0, 1f);
     }
 }
