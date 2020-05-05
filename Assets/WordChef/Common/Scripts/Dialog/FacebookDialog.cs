@@ -73,7 +73,7 @@ public class FacebookDialog : Dialog
     void OnFacebookInitialized()
     {
         _animLoading.gameObject.SetActive(true);
-        var perms = new List<string>() { "public_profile", "email" };
+        var perms = new List<string>() { "public_profile", "email", "user_friends" };
         FB.LogInWithReadPermissions(perms, OnFacebookLoggedIn);
     }
     void OnFacebookLoggedIn(ILoginResult result)

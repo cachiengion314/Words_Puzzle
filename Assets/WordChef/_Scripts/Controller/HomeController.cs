@@ -49,7 +49,7 @@ public class HomeController : BaseController
                 GameState.currentWorld = Prefs.unlockedWorld;
                 GameState.currentSubWorld = Prefs.unlockedSubWorld;
                 GameState.currentLevel = Prefs.unlockedLevel;
-                GameState.countSpell = Prefs.countSpell;
+                //GameState.countSpell = Prefs.countSpell;
                 //Debug.Log(Prefs.unlockedWorld.ToString() + Prefs.unlockedWorld.ToString() + Prefs.unlockedLevel.ToString());
 
                 CUtils.LoadScene(Const.SCENE_MAIN, false);

@@ -568,8 +568,8 @@ public class WordRegion : MonoBehaviour
         {
             if(isLevelMisspelling)
             {
-                Prefs.countBooster += 1;
-                Prefs.countBoosterDaily += 1;
+                Prefs.countLevelMisspelling += 1;
+                Prefs.countLevelMisspellingDaily += 1;
             }
 
             if (TutorialController.instance.isShowTut)
