@@ -14,6 +14,9 @@ public class ObjectiveDialog : Dialog
     GameObject dailyBtn;
     [SerializeField]
     GameObject achieveBtn;
+    [Space]
+    [SerializeField] private Color _colorOff;
+    [SerializeField] private Color _colorOn;
 
     GameObject homecontroller;
 
@@ -52,8 +55,8 @@ public class ObjectiveDialog : Dialog
         tabBtn.transform.Find("IconOn").gameObject.SetActive(status);
         tabBtn.transform.Find("IconOff").gameObject.SetActive(!status);
         if (status)
-            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = new Vector4(1f, 1f, 1f, 1f);
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = _colorOn;
         else
-            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = new Vector4(0, 0, 0, 1f);
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = _colorOff;
     }
 }
