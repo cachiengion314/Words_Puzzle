@@ -81,11 +81,11 @@ public class LineWord : MonoBehaviour
         }
         answer = word;
         CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
-        foreach (var line in lines)
-        {
-            if (line != this)
-                line.answers.Remove(word);
-        }
+        //foreach (var line in lines)
+        //{
+        //    if (line != this)
+        //        line.answers.Remove(word);
+        //}
         for (int i = 0; i < cells.Count; i++)
         {
             int index = i;
@@ -152,6 +152,15 @@ public class LineWord : MonoBehaviour
         {
             cell.isShown = true;
         }
+        foreach (var line in WordRegion.instance.Lines)
+        {
+            if (line != this && !line.isShown)
+            {
+                if (line.answer == answer)
+                    line.answer = "";
+                line.answers.Remove(answer);
+            }
+        }
         WordRegion.instance.listWordCorrect.Add(answer.ToLower());
         ShowBtnMeanByWord();
         StartCoroutine(IEShowAnswer());
@@ -217,7 +226,16 @@ public class LineWord : MonoBehaviour
     public void ShowHintCelltarget(Cell cellTarget)
     {
         if (answer == "")
-            SetDataLetter(answers[Random.Range(0, answers.Count)]);
+        {
+            var tempAnswers = answers;
+            for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+            {
+                var line = WordRegion.instance.Lines[i];
+                if (line != this && !line.isShown && line.answer != "")
+                    tempAnswers.Remove(line.answer);
+            }
+            SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
+        }
         cellTarget.ShowHint();
         CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
         Sound.instance.PlayButton(Sound.Button.Hint);
