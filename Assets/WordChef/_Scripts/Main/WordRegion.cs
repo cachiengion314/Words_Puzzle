@@ -655,8 +655,6 @@ public class WordRegion : MonoBehaviour
     public void BeeClick()
     {
         int count = 0;
-        Prefs.countBooster += 1;
-        Prefs.countBoosterDaily += 1;
         var lineNotShow = lines.FindAll(x => !x.isShown);
         for (int i = lineNotShow.Count - 1; i > 0; i--)
         {

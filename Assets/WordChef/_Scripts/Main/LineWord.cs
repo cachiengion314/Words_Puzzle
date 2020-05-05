@@ -337,6 +337,8 @@ public class LineWord : MonoBehaviour
     {
         if (!CPlayerPrefs.GetBool(gameObject.name))
         {
+            Prefs.countBooster += 1;
+            Prefs.countBoosterDaily += 1;
             if (answer == "")
             {
                 answer = answers[Random.Range(0, answers.Count)];
