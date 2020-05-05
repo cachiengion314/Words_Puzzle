@@ -20,11 +20,29 @@ public class Quest : MonoBehaviour
     GameObject rewardText;
 
     [SerializeField] private Slider _fillProgress;
+    [SerializeField] private Image _progressMask;
     [SerializeField] private Button _btnGo;
     [SerializeField] private Button _btnReward;
     [SerializeField] private Image _iconComplete;
     [SerializeField] private Image _iconTask;
     [SerializeField] private TextMeshProUGUI _textProgress;
+
+    RectTransform rt;
+    float maxWidth;
+
+    private void Start()
+    {
+        rt = _progressMask.GetComponent<RectTransform>();
+        maxWidth = rt.rect.width;
+
+        if (_fillProgress.value >= goal.requiredAmount)
+        {
+            _fillProgress.value = _fillProgress.maxValue;
+            ShowReward(true);
+        }
+        _textProgress.text = _fillProgress.value + " / " + _fillProgress.maxValue;
+        UpdateProgress();
+    }
 
     public void Run()
     {
@@ -58,14 +76,17 @@ public class Quest : MonoBehaviour
         ShowQuestAchie();
     }
 
-    void Update()
+    //void Update()
+    //{
+        
+    //}
+
+    private void UpdateProgress()
     {
-        if (_fillProgress.value >= goal.requiredAmount)
-        {
-            _fillProgress.value = _fillProgress.maxValue;
-            ShowReward(true);
-        }
-        _textProgress.text = _fillProgress.value + " / " + _fillProgress.maxValue;
+        if (_fillProgress.maxValue == 0) return;
+
+        float progress = Mathf.Clamp(_fillProgress.value / _fillProgress.maxValue, 0, 1);
+        rt.sizeDelta = new Vector2(maxWidth * progress, rt.rect.height);
     }
 
     private void ShowReward(bool show)
