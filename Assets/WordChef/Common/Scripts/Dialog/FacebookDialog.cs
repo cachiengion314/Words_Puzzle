@@ -167,12 +167,14 @@ public class FacebookDialog : Dialog
             Destroy(_rootRanking.GetChild(i).gameObject);
         }
         _notifyLogin.gameObject.SetActive(false);
-        FacebookController.instance.GetLeaderboard("DailyRanking", (result) =>
+        FacebookController.instance.GetLeaderboard(FacebookController.instance.KeysStatic[0], (result) =>
         {
+            var index = 0;
             foreach (var player in result.Leaderboard)
             {
                 var ranking = Instantiate(_rankingPfb, _rootRanking);
-                ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue, player.Profile.AvatarUrl);
+                ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue, player.Profile.AvatarUrl, index < 3 ? ranking.iconsTopRank[index] : null);
+                index += 1;
             }
             TweenControl.GetInstance().ScaleFromZero(_leaderBoard, 0.3f, () =>
             {

@@ -13,14 +13,19 @@ public class RankingController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _playerValue;
     [Space]
     [SerializeField] private Sprite spriteDefault;
+    public List<Sprite> iconsTopRank;
+    //public Sprite iconsNorRank;
 
     public void UpdateRankingPlayer(string name, int value, string urlAvatar, Sprite sprite = null)
     {
         if (sprite != null)
         {
+            _iconPlayer.color = new Color(1,1,1,1);
             _iconPlayer.sprite = sprite;
             _iconPlayer.SetNativeSize();
         }
+        else
+            _iconPlayer.color = new Color(1,1,1,0);
 
         _playerName.text = name;
         _playerValue.text = value.ToString();

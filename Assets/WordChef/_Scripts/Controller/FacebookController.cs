@@ -35,6 +35,15 @@ public class FacebookController : MonoBehaviour
             CurrencyController.UpdateBalanceAndHintFree();
         }
     }
+
+    public List<string> KeysStatic
+    {
+        get
+        {
+            return _keysStatic;
+        }
+    }
+
     public void Logout()
     {
         PlayFabClientAPI.ForgetAllCredentials();

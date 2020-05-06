@@ -58,7 +58,9 @@ public class Compliment : MonoBehaviour
         _particle = Instantiate(particleSystems[type], rootParticle);
         _particle.gameObject.SetActive(false);
         if (type > 0)
-            _animTree.SetAnimation(playAnim,true);
+            _animTree.SetAnimation(playAnim, false, () => {
+                _animTree.SetAnimation(idleAnim, true);
+            });
         if (_useSpine)
         {
             _animCompliment.gameObject.SetActive(true);
