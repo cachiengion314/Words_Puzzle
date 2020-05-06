@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities.Components;
 
 public class ButtonVideoHintFree : MonoBehaviour
 {
-    public Button _btnAds;
+    public SimpleTMPButton _btnAds;
     private Cell _cell;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     private RewardVideoController _rewardController;
