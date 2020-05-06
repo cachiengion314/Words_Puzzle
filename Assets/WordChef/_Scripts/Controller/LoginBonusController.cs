@@ -139,7 +139,7 @@ public class LoginBonusController : MonoBehaviour
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(value / 5, _currencyBallance.transform);
+                MonoUtils.instance.ShowEffect(value / 5);
             }
             yield return new WaitForSeconds(0.02f);
         }

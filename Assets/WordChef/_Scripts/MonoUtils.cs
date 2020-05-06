@@ -7,6 +7,8 @@ public class MonoUtils : MonoBehaviour {
     public Cell cell;
     public LineWord lineWord;
     public Transform textFlyTransform;
+    public Transform posDefault;
+    public Transform rootDefault;
     public GameObject rubyFly;
     public GameObject levelButton;
 
@@ -20,14 +22,19 @@ public class MonoUtils : MonoBehaviour {
     public void ShowEffect(int value,Transform currBalance = null, Transform root = null)
     {
         var tweenControl = TweenControl.GetInstance();
-        var star = Instantiate(rubyFly, root == null ? textFlyTransform : root);
-        star.transform.position = Vector3.zero;
+        var star = Instantiate(rubyFly, root == null ? rootDefault : root);
+        star.transform.position = (root == null ? rootDefault : root).position;
         star.transform.localScale = Vector3.one;
-        tweenControl.Move(star.transform, (currBalance != null ? currBalance : GameObject.FindWithTag("RubyBalance").transform).position, 0.5f, () =>
-        {
+        //tweenControl.Move(star.transform, (currBalance != null ? currBalance : GameObject.FindWithTag("RubyBalance").transform).position, 0.5f, () =>
+        //{
+        //    CurrencyController.CreditBalance(value);
+        //    Sound.instance.Play(Sound.Collects.CoinCollect);
+        //    Destroy(star);
+        //}, EaseType.InBack);
+        tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false,()=> {
             CurrencyController.CreditBalance(value);
             Sound.instance.Play(Sound.Collects.CoinCollect);
             Destroy(star);
-        }, EaseType.InBack);
+        },EaseType.OutQuad);
     }
 }
