@@ -93,6 +93,7 @@ public class Quest : MonoBehaviour
     private void ShowReward(bool show)
     {
         _btnReward.gameObject.SetActive(show);
+        _iconComplete.gameObject.SetActive(false);
         _btnGo.gameObject.SetActive(MainController.instance != null ? false : true);
         var iscompleted = CPlayerPrefs.GetBool("Completed" + gameObject.name, false);
         if (iscompleted)
