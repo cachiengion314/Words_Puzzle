@@ -2241,6 +2241,8 @@ GameObject:
   - component: {fileID: 659823190547572548}
   - component: {fileID: 7959853893843465575}
   - component: {fileID: 2547715117807972200}
+  - component: {fileID: 3571581719254791355}
+  - component: {fileID: -6119463523251774557}
   m_Layer: 0
   m_Name: LimitedSale
   m_TagString: Untagged
@@ -2350,9 +2352,46 @@ MonoBehaviour:
   enableAd: 0
   enableEscape: 1
   scaleDialog: 0
+  resestAnim: 1
   numRubyTexts: {fileID: 4034615769989184905}
   priceTexts: {fileID: 1087324727740947439}
   _indexIAPItem: 6
+--- !u!222 &3571581719254791355
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5799080136257429844}
+  m_CullTransparentMesh: 0
+--- !u!114 &-6119463523251774557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5799080136257429844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.41960785}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5849859714614715250
 GameObject:
   m_ObjectHideFlags: 0

@@ -90,11 +90,11 @@ public class RewardController : MonoBehaviour
         _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
         if (ExtraWord.instance != null)
             ExtraWord.instance.OnClaimed();
-        overLay.SetActive(false);
+        
         Sound.instance.Play(Sound.Others.PopupClose);
         TweenControl.GetInstance().ScaleFromOne(obj, 0.3f, () =>
         {
-
+            overLay.SetActive(false);
         });
     }
 }

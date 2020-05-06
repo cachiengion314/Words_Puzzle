@@ -145,8 +145,9 @@ public class DictionaryDialog : Dialog
 
     public void HideMeanDialog()
     {
-        shadowPanel.SetActive(false);
-        TweenControl.GetInstance().ScaleFromOne(meanDialog.gameObject, 0.3f);
+        TweenControl.GetInstance().ScaleFromOne(meanDialog.gameObject, 0.3f, () => {
+            shadowPanel.SetActive(false);
+        });
     }
 
     public void SetTextMeanDialog(string name, string wordMean)
