@@ -24,17 +24,21 @@ public class MonoUtils : MonoBehaviour {
         var tweenControl = TweenControl.GetInstance();
         var star = Instantiate(rubyFly, root == null ? rootDefault : root);
         star.transform.position = (root == null ? rootDefault : root).position;
-        star.transform.localScale = Vector3.one;
+        star.transform.localScale = Vector3.zero;
         //tweenControl.Move(star.transform, (currBalance != null ? currBalance : GameObject.FindWithTag("RubyBalance").transform).position, 0.5f, () =>
         //{
         //    CurrencyController.CreditBalance(value);
         //    Sound.instance.Play(Sound.Collects.CoinCollect);
         //    Destroy(star);
         //}, EaseType.InBack);
-        tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false,()=> {
-            CurrencyController.CreditBalance(value);
-            Sound.instance.Play(Sound.Collects.CoinCollect);
-            Destroy(star);
-        },EaseType.OutQuad);
+        var targetShow = new Vector3(star.transform.localPosition.x, star.transform.localPosition.y - (star.transform as RectTransform).rect.height);
+        tweenControl.MoveLocal(star.transform, targetShow, 0.5f);
+        tweenControl.ScaleFromZero(star.gameObject,0.5f,()=> {
+            tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false, () => {
+                CurrencyController.CreditBalance(value);
+                Sound.instance.Play(Sound.Collects.CoinCollect);
+                Destroy(star);
+            }, EaseType.OutQuad);
+        });
     }
 }

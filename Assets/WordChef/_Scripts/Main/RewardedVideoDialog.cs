@@ -51,7 +51,7 @@ public class RewardedVideoDialog : Dialog
             {
                 MonoUtils.instance.ShowEffect(result);
             }
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.06f);
         }
 
     }

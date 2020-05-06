@@ -3,7 +3,11 @@ using System.Collections;
 using UnityEngine.UI;
 using static CUtils;
 
-public class CurrencyBallance : MonoBehaviour {
+public class CurrencyBallance : MonoBehaviour
+{
+    [SerializeField] private GameObject _iconStar;
+    [SerializeField] private ParticleSystem _fxLight;
+
     private void Start()
     {
         UpdateBalance();
@@ -19,6 +23,19 @@ public class CurrencyBallance : MonoBehaviour {
     private void OnBalanceChanged()
     {
         UpdateBalance();
+        if (_fxLight != null)
+            _fxLight.Play();
+        if (_iconStar != null)
+        {
+            TweenControl.GetInstance().Scale(_iconStar, Vector3.one * 1.2f, 0.3f, () =>
+            {
+                TweenControl.GetInstance().Scale(_iconStar, Vector3.one, 0.3f);
+            });
+        }
+        TweenControl.GetInstance().Scale(gameObject, Vector3.one * 1.2f, 0.3f, () =>
+        {
+            TweenControl.GetInstance().Scale(gameObject, Vector3.one, 0.3f);
+        });
     }
 
     private void OnDestroy()

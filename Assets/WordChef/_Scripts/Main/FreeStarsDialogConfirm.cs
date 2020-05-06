@@ -58,7 +58,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
             {
                 MonoUtils.instance.ShowEffect(result);
             }
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.06f);
         }
 
     }

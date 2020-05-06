@@ -64,7 +64,7 @@ public class ExtraWordDialog : Dialog
             {
                 MonoUtils.instance.ShowEffect(result);
             }
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.06f);
             if (i == 5)
                 gameObject.GetComponent<GraphicRaycaster>().enabled = true;
         }
@@ -196,5 +196,6 @@ public class ExtraWordDialog : Dialog
     public override void Close()
     {
         base.Close();
+        ExtraWord.instance.OnClaimed();
     }
 }
