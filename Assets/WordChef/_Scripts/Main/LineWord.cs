@@ -277,8 +277,16 @@ public class LineWord : MonoBehaviour
     {
         if (answer == "")
         {
-            answer = answers[Random.Range(0, answers.Count)];
-            SetDataLetter(answer);
+            //answer = answers[Random.Range(0, answers.Count)];
+            //SetDataLetter(answer);
+            var tempAnswers = answers;
+            for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+            {
+                var line = WordRegion.instance.Lines[i];
+                if (line != this && !line.isShown && line.answer != "")
+                    tempAnswers.Remove(line.answer);
+            }
+            SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
         }
         var cellNotShow = cells.FindAll(cell => !cell.isShown);
         var indexAnswer = answer.Length - cellNotShow.Count;
@@ -329,8 +337,16 @@ public class LineWord : MonoBehaviour
     {
         if (answer == "")
         {
-            answer = answers[Random.Range(0, answers.Count)];
-            SetDataLetter(answer);
+            //answer = answers[Random.Range(0, answers.Count)];
+            //SetDataLetter(answer);
+            var tempAnswers = answers;
+            for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+            {
+                var line = WordRegion.instance.Lines[i];
+                if (line != this && !line.isShown && line.answer != "")
+                    tempAnswers.Remove(line.answer);
+            }
+            SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
         }
         var cellNotShow = cells.FindAll(cell => !cell.isShown);
         if (cellNotShow != null && cellNotShow.Count > 0)
@@ -359,8 +375,16 @@ public class LineWord : MonoBehaviour
             Prefs.countBoosterDaily += 1;
             if (answer == "")
             {
-                answer = answers[Random.Range(0, answers.Count)];
-                SetDataLetter(answer);
+                //answer = answers[Random.Range(0, answers.Count)];
+                //SetDataLetter(answer);
+                var tempAnswers = answers;
+                for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+                {
+                    var line = WordRegion.instance.Lines[i];
+                    if (line != this && !line.isShown && line.answer != "")
+                        tempAnswers.Remove(line.answer);
+                }
+                SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
             }
             var cellNotShow = cells.FindAll(cell => !cell.isShown);
             var indexAnswer = answer.Length - cellNotShow.Count;
