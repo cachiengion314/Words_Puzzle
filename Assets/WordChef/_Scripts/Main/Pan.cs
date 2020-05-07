@@ -144,7 +144,7 @@ public class Pan : MonoBehaviour
         {
             tweenControl.DelayCall(transform, 0.15f, () =>
             {
-                tweenControl.LocalRotate(centerPoint, new Vector3(0, 0, centerPoint.localRotation.z + 360), 0.15f/*);tweenControl.ScaleFromZero(centerPoint.gameObject, 0.3f*/, () =>
+                tweenControl.LocalRotate(centerPoint, new Vector3(0, 0, centerPoint.localRotation.z + 360), 0.2f/*);tweenControl.ScaleFromZero(centerPoint.gameObject, 0.3f*/, () =>
                 {
                     BlockScreen.instance.Block(false);
                 });
@@ -157,7 +157,7 @@ public class Pan : MonoBehaviour
             //iTween.MoveTo(text.gameObject, iTween.Hash("position", letterLocalPositions[indexes.IndexOf(i)], "time", 0.15f, "isLocal", true));
             tweenControl.LocalRotate(text.transform, new Vector3(0, 0, 360 * 2 + 360 / letterTexts.Count * i), 0.3f, () =>
             {
-                tweenControl.LocalRotate(text.transform, new Vector3(0, 0, (text.transform.localPosition.z + 360f * 2)), 0.15f, () =>
+                tweenControl.LocalRotate(text.transform, new Vector3(0, 0, (text.transform.localPosition.z + 360f * 2)), 0.2f, () =>
                 {
                     text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
                 });
@@ -168,7 +168,7 @@ public class Pan : MonoBehaviour
                      tweenControl.DelayCall(transform, 0.15f, () =>
                      {
                          tweenControl.PlayTweener(text.transform);
-                         tweenControl.MoveLocal(text.transform, oldPos, 0.15f);
+                         tweenControl.MoveLocal(text.transform, oldPos, 0.2f);
                      });
                  });
 
