@@ -268,7 +268,7 @@ public class WordRegion : MonoBehaviour
         if (numCol >= 2)
         {
             float[] startX = new float[numCol];
-            startX[0] = startFirstColX;
+            startX[0] = -(startFirstColX + (lines[numRow - 1].lineWidth + cellSize * Const.COL_GAP_COEF + lines[lines.Count - 1].lineWidth) / 2);
 
             for (int i = 1; i < numCol; i++)
             {
@@ -282,7 +282,7 @@ public class WordRegion : MonoBehaviour
 
                 float x = startX[lineX];
                 float gapY = (rt.rect.height - cellSize * numRow) / (numRow + 1);
-                float y = (lineY + 1) * gapY + lineY * cellSize;
+                float y = gapY + lineY * cellSize + gapY * (lineY - 1) * Const.CELL_GAP_COEF_Y * lines.Count + gapY / 2;
 
                 lines[i].transform.localPosition = new Vector2(x, y);
             }
@@ -293,7 +293,7 @@ public class WordRegion : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 //float x = rt.rect.width / 2 - lines[i].lineWidth / 2;
-                float x = boardHighlight.rectTransform.rect.width / 2 - lines[i].lineWidth / 2;
+                float x = /*boardHighlight.rectTransform.rect.width / 2 */- lines[i].lineWidth / 2;
                 //float x = startFirstColX;
                 float y;
                 //if (hasLongLine)
@@ -566,7 +566,7 @@ public class WordRegion : MonoBehaviour
         var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
         if (isComplete)
         {
-            if(isLevelMisspelling)
+            if (isLevelMisspelling)
             {
                 Prefs.countLevelMisspelling += 1;
                 Prefs.countLevelMisspellingDaily += 1;
