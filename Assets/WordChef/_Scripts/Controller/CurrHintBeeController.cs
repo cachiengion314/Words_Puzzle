@@ -8,6 +8,13 @@ public class CurrHintBeeController : MonoBehaviour
 {
     [SerializeField] private Text _textBeeAmount;
 
+    private Image _objAmount;
+
+    void Awake()
+    {
+        _objAmount = gameObject.GetComponentInParent<Image>();
+    }
+
     void Start()
     {
         UpdatehintFree();
@@ -16,12 +23,22 @@ public class CurrHintBeeController : MonoBehaviour
 
     private void UpdatehintFree()
     {
-        if (_textBeeAmount != null)
-            _textBeeAmount.text = BeeManager.instance.CurrBee.ToString();
+        if (BeeManager.instance.CurrBee > 0)
+        {
+            _objAmount.gameObject.SetActive(true);
+            if (_textBeeAmount != null)
+            {
+                _textBeeAmount.text = BeeManager.instance.CurrBee.ToString();
+            }
+            else
+            {
+                if (gameObject.GetComponent<TextMeshProUGUI>() != null)
+                    gameObject.SetText(BeeManager.instance.CurrBee.ToString());
+            }
+        }
         else
         {
-            if (gameObject.GetComponent<TextMeshProUGUI>() != null)
-                gameObject.SetText(BeeManager.instance.CurrBee.ToString());
+            _objAmount.gameObject.SetActive(false);
         }
     }
     private void OnBeeChanged()

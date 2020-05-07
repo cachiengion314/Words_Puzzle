@@ -154,10 +154,13 @@ public class Pan : MonoBehaviour
         {
             text.transform.localPosition = letterLocalPositions[indexes.IndexOf(i)];
             var oldPos = text.transform.localPosition;
+            //var distance = Vector3.Distance(text.transform.localPosition, Vector3.zero);
+            //var velocityArg = RADIUS / 0.15f;
+            var timeMove = /*distance / velocityArg*/0.2f;
             //iTween.MoveTo(text.gameObject, iTween.Hash("position", letterLocalPositions[indexes.IndexOf(i)], "time", 0.15f, "isLocal", true));
             tweenControl.LocalRotate(text.transform, new Vector3(0, 0, 360 * 2 + 360 / letterTexts.Count * i), 0.3f, () =>
             {
-                tweenControl.LocalRotate(text.transform, new Vector3(0, 0, (text.transform.localPosition.z + 360f * 2)), 0.2f, () =>
+                tweenControl.LocalRotate(text.transform, new Vector3(0, 0, (text.transform.localPosition.z + 360f * 2)), timeMove, () =>
                 {
                     text.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
                 });
@@ -168,7 +171,7 @@ public class Pan : MonoBehaviour
                      tweenControl.DelayCall(transform, 0.15f, () =>
                      {
                          tweenControl.PlayTweener(text.transform);
-                         tweenControl.MoveLocal(text.transform, oldPos, 0.2f);
+                         tweenControl.MoveLocal(text.transform, oldPos, timeMove);
                      });
                  });
 
