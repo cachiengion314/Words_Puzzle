@@ -282,7 +282,8 @@ public class WordRegion : MonoBehaviour
 
                 float x = startX[lineX];
                 float gapY = (rt.rect.height - cellSize * numRow) / (numRow + 1);
-                float y = gapY + lineY * cellSize + gapY * (lineY - 1) * Const.CELL_GAP_COEF_Y * lines.Count + gapY / 2;
+                //float y = gapY + lineY * cellSize + gapY * (lineY - 1) * Const.CELL_GAP_COEF_Y * lines.Count + gapY / 2;
+                float y = gapY + lineY * cellSize + gapY * (lineY - 1) + gapY;
 
                 lines[i].transform.localPosition = new Vector2(x, y);
             }
