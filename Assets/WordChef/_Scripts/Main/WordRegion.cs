@@ -128,7 +128,7 @@ public class WordRegion : MonoBehaviour
         {
             float coef = (maxCellInWidth + (maxCellInWidth - numCol) * Const.CELL_GAP_COEF_X + (numCol - 1) * Const.COL_GAP_COEF);
             cellSize = rt.rect.width / coef;
-            float maxSize = rt.rect.height / (numRow + (numRow + 1) * Const.CELL_GAP_COEF_Y);
+            float maxSize = rt.rect.height / (numRow + (numRow + numCol) * Const.CELL_GAP_COEF_Y);
             if (maxSize < cellSize)
             {
                 cellSize = maxSize;
@@ -137,7 +137,7 @@ public class WordRegion : MonoBehaviour
         else
         {
             float coef = (maxCellInWidth + (maxCellInWidth - numCol) * Const.CELL_GAP_COEF_X + (numCol - 1) * Const.COL_GAP_COEF);
-            cellSize = boardHighlight.rectTransform.rect.height / (numRow + (numRow - 1) * Const.CELL_GAP_COEF_Y + 0f);
+            cellSize = boardHighlight.rectTransform.rect.height / (numRow + (numRow - 1) * Const.CELL_GAP_COEF_Y);
             float maxSize = boardHighlight.rectTransform.rect.width / (maxCellInWidth + (maxCellInWidth - 1) * Const.CELL_GAP_COEF_X);
 
             if (maxSize < cellSize)
