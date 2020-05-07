@@ -250,7 +250,6 @@ public class ShopDialog : Dialog
             if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
             {
                 chickenBank.SetActive(false);
-                CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
             }
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
             if (i > 1)
