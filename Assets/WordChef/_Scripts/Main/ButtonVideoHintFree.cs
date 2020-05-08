@@ -1,4 +1,5 @@
 ﻿using GoogleMobileAds.Api;
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using Utilities.Components;
 public class ButtonVideoHintFree : MonoBehaviour
 {
     public SimpleTMPButton _btnAds;
-    public RectTransform animbutton;
+    public SkeletonGraphic animbutton;
     private Cell _cell;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     private RewardVideoController _rewardController;

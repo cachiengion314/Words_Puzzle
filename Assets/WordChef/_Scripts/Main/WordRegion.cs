@@ -342,7 +342,7 @@ public class WordRegion : MonoBehaviour
     {
         var ratioScale = cell.GetComponent<RectTransform>().rect.width / _btnHintADS.GetComponentInChildren<Image>().rectTransform.rect.width;
         _btnHintADS.Cell = cell;
-        _btnHintADS.animbutton.localScale = _btnHintADS.animbutton.localScale * ratioScale;
+        _btnHintADS.animbutton.rectTransform.localScale = _btnHintADS.animbutton.rectTransform.localScale * ratioScale;
     }
 
     private Cell CheckCellTarget(List<Cell> cells)
@@ -612,8 +612,8 @@ public class WordRegion : MonoBehaviour
             DialogOverlay.instance.ShowOverlay(isOpenOverlay);
             if (!isOpenOverlay)
             {
-                if (BtnADS != null && !BtnADS._btnAds.image.raycastTarget && !CPlayerPrefs.GetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE"))
-                    BtnADS._btnAds.image.raycastTarget = true;
+                if (BtnADS != null && !BtnADS.animbutton.raycastTarget && !CPlayerPrefs.GetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE"))
+                    BtnADS.animbutton.raycastTarget = true;
                 gameObject.GetComponent<Canvas>().overrideSorting = false;
                 foreach (var li in lines)
                 {
@@ -622,8 +622,8 @@ public class WordRegion : MonoBehaviour
             }
             else
             {
-                if (BtnADS != null && BtnADS._btnAds.image.raycastTarget)
-                    BtnADS._btnAds.image.raycastTarget = false;
+                if (BtnADS != null && BtnADS.animbutton.raycastTarget)
+                    BtnADS.animbutton.raycastTarget = false;
                 gameObject.GetComponent<Canvas>().overrideSorting = true;
                 foreach (var li in lines)
                 {
