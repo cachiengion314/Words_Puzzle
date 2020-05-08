@@ -28,7 +28,7 @@ public class PauseDialog : Dialog {
     public void OnSettingsClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        DialogController.instance.ShowDialog(DialogType.Settings);
+        DialogController.instance.ShowDialog(DialogType.Settings, DialogShow.STACK_DONT_HIDEN);
     }
 
     public void OnHomeClick()
@@ -41,11 +41,11 @@ public class PauseDialog : Dialog {
     {
         Close();
     }
-    public void OnSettingClick()
-    {
-        Sound.instance.Play(Sound.Others.PopupOpen);
-        DialogController.instance.ShowDialog(DialogType.Settings, DialogShow.STACK);
-    }
+    //public void OnSettingClick()
+    //{
+    //    Sound.instance.Play(Sound.Others.PopupOpen);
+    //    DialogController.instance.ShowDialog(DialogType.Settings, DialogShow.STACK_DONT_HIDEN);
+    //}
 
     public virtual void OnHowToPlayClick()
     {
