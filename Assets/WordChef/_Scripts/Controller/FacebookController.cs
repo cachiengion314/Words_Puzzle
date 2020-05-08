@@ -137,7 +137,7 @@ public class FacebookController : MonoBehaviour
             staticUpdate.Add(new StatisticUpdate
             {
                 StatisticName = item,
-                Value = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + 5 * Int32.Parse(user.unlockedWorld)) + 1
+                Value = (Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + 5 * Int32.Parse(user.unlockedWorld)) + 1) * 10 + user.wordPassed.Length
             });
         }
         PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest

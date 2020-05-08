@@ -24,6 +24,7 @@ public class MonoUtils : MonoBehaviour
     {
         var tweenControl = TweenControl.GetInstance();
         var star = Instantiate(rubyFly, root == null ? rootDefault : root);
+        star.transform.SetAsFirstSibling();
         star.transform.position = (posStart != null ? posStart : root == null ? rootDefault : root).position;
         star.transform.localScale = Vector3.zero;
         //tweenControl.Move(star.transform, (currBalance != null ? currBalance : GameObject.FindWithTag("RubyBalance").transform).position, 0.5f, () =>
@@ -33,16 +34,19 @@ public class MonoUtils : MonoBehaviour
         //    Destroy(star);
         //}, EaseType.InBack);
         var targetShow = new Vector3(star.transform.localPosition.x, star.transform.localPosition.y -
-            (posStart != null ? (posStart as RectTransform).rect.height : (star.transform as RectTransform).rect.height));
-        tweenControl.MoveLocal(star.transform, targetShow, 0.5f);
-        tweenControl.ScaleFromZero(star.gameObject, 0.5f, () =>
+            (posStart != null ? (posStart as RectTransform).rect.height * 1.5f : (star.transform as RectTransform).rect.height));
+        tweenControl.MoveLocal(star.transform, targetShow, 0.3f, () =>
         {
-            tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false, () =>
-            {
-                CurrencyController.CreditBalance(value);
-                Sound.instance.Play(Sound.Collects.CoinCollect);
-                Destroy(star);
-            }, EaseType.OutQuad);
+            tweenControl.MoveLocal(star.transform, targetShow - new Vector3(0, 30, 0), 0.2f, () =>
+              {
+                  tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false, () =>
+                  {
+                      CurrencyController.CreditBalance(value);
+                      Sound.instance.Play(Sound.Collects.CoinCollect);
+                      Destroy(star);
+                  }, EaseType.OutQuad);
+              });
         });
+        tweenControl.ScaleFromZero(star.gameObject, 0.5f);
     }
 }

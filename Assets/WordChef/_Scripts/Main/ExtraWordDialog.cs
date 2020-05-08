@@ -47,7 +47,7 @@ public class ExtraWordDialog : Dialog
     void OnCompleteVideo()
     {
         _rewardController.onRewardedCallback -= OnCompleteVideo;
-        StartCoroutine(ShowEffectCollect(_reward));
+        StartCoroutine(ShowEffectCollect(_reward, rewardButton.transform));
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -55,14 +55,14 @@ public class ExtraWordDialog : Dialog
         });
     }
 
-    private IEnumerator ShowEffectCollect(int value)
+    private IEnumerator ShowEffectCollect(int value, Transform posStart)
     {
         var result = value / 5;
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(result,null,null,rewardButton.transform);
+                MonoUtils.instance.ShowEffect(result,null,null, posStart);
             }
             yield return new WaitForSeconds(0.06f);
             if (i == 5)
@@ -111,7 +111,7 @@ public class ExtraWordDialog : Dialog
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
 
-        StartCoroutine(ShowEffectCollect(claimQuantity));
+        StartCoroutine(ShowEffectCollect(claimQuantity, claimButton.transform));
         ExtraWord.instance.OnClaimed();
 
         if (Prefs.extraTarget == _amountWordTarget && Prefs.totalExtraAdded > _amountWordTarget)
