@@ -660,7 +660,7 @@ public class WordRegion : MonoBehaviour
         for (int i = lineNotShow.Count - 1; i > 0; i--)
         {
             var line = lineNotShow[i];
-            if (count < lines.Count / 2 && count < 4)
+            if (BeeManager.instance.CurrBee > 0 && count < lines.Count / 2 && count < 4)
             {
                 if (line.isAds)
                 {
