@@ -342,7 +342,7 @@ public class WordRegion : MonoBehaviour
     {
         var ratioScale = cell.GetComponent<RectTransform>().rect.width / _btnHintADS.GetComponentInChildren<Image>().rectTransform.rect.width;
         _btnHintADS.Cell = cell;
-        _btnHintADS.transform.localScale = new Vector3(ratioScale, ratioScale, ratioScale);
+        _btnHintADS.animbutton.localScale = _btnHintADS.animbutton.localScale * ratioScale;
     }
 
     private Cell CheckCellTarget(List<Cell> cells)

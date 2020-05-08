@@ -10,6 +10,7 @@ using Utilities.Components;
 public class ButtonVideoHintFree : MonoBehaviour
 {
     public SimpleTMPButton _btnAds;
+    public RectTransform animbutton;
     private Cell _cell;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     private RewardVideoController _rewardController;
