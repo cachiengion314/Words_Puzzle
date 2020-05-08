@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class MonoUtils : MonoBehaviour {
+public class MonoUtils : MonoBehaviour
+{
     public Text letter;
     public Cell cell;
     public LineWord lineWord;
@@ -19,11 +20,11 @@ public class MonoUtils : MonoBehaviour {
         instance = this;
     }
 
-    public void ShowEffect(int value,Transform currBalance = null, Transform root = null)
+    public void ShowEffect(int value, Transform currBalance = null, Transform root = null, Transform posStart = null)
     {
         var tweenControl = TweenControl.GetInstance();
         var star = Instantiate(rubyFly, root == null ? rootDefault : root);
-        star.transform.position = (root == null ? rootDefault : root).position;
+        star.transform.position = (posStart != null ? posStart : root == null ? rootDefault : root).position;
         star.transform.localScale = Vector3.zero;
         //tweenControl.Move(star.transform, (currBalance != null ? currBalance : GameObject.FindWithTag("RubyBalance").transform).position, 0.5f, () =>
         //{
@@ -31,10 +32,13 @@ public class MonoUtils : MonoBehaviour {
         //    Sound.instance.Play(Sound.Collects.CoinCollect);
         //    Destroy(star);
         //}, EaseType.InBack);
-        var targetShow = new Vector3(star.transform.localPosition.x, star.transform.localPosition.y - (star.transform as RectTransform).rect.height);
+        var targetShow = new Vector3(star.transform.localPosition.x, star.transform.localPosition.y -
+            (posStart != null ? (posStart as RectTransform).rect.height : (star.transform as RectTransform).rect.height));
         tweenControl.MoveLocal(star.transform, targetShow, 0.5f);
-        tweenControl.ScaleFromZero(star.gameObject,0.5f,()=> {
-            tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false, () => {
+        tweenControl.ScaleFromZero(star.gameObject, 0.5f, () =>
+        {
+            tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false, () =>
+            {
                 CurrencyController.CreditBalance(value);
                 Sound.instance.Play(Sound.Collects.CoinCollect);
                 Destroy(star);

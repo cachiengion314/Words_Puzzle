@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class RewardedVideoDialog : Dialog
 {
+    [SerializeField] private Button _btnReward;
     [SerializeField] private int _amount = 20;
     public TextMeshProUGUI amountText;
     public Text messageText;
@@ -49,7 +50,7 @@ public class RewardedVideoDialog : Dialog
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(result);
+                MonoUtils.instance.ShowEffect(result,null,null,_btnReward.transform);
             }
             yield return new WaitForSeconds(0.06f);
         }

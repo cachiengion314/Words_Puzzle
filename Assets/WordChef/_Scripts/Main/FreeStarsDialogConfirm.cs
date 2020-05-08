@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FreeStarsDialogConfirm : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     private int _amount;
     [SerializeField] private TextMeshProUGUI _textAmount;
     [SerializeField] private RewardController _rewardController;
+    [SerializeField] private Button _rewardButton;
 
     public void Setup(int amount, System.Action callback = null)
     {
@@ -56,7 +58,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(result);
+                MonoUtils.instance.ShowEffect(result, null, null, _rewardButton.transform);
             }
             yield return new WaitForSeconds(0.06f);
         }

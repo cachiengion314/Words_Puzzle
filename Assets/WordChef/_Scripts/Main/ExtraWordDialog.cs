@@ -62,7 +62,7 @@ public class ExtraWordDialog : Dialog
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(result);
+                MonoUtils.instance.ShowEffect(result,null,null,rewardButton.transform);
             }
             yield return new WaitForSeconds(0.06f);
             if (i == 5)
