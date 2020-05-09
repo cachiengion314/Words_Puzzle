@@ -271,6 +271,7 @@ public class LineWord : MonoBehaviour
             cell.bg.color = new Color(1, 1, 1, 1);
         }
         WordRegion.instance.ShowComplimentFX();
+        WordRegion.instance.SetWordOpenInLevelAmount(answer);
     }
 
     public void ShowHint(System.Action callback = null)
@@ -358,12 +359,7 @@ public class LineWord : MonoBehaviour
                 callback?.Invoke();
             }
         }
-        var showDone = cells.All(cell => cell.isShown);
-        if (showDone)
-        {
-            isShown = true;
-            ShowDoneAllCell();
-        }
+        CheckLineDone();
         ClearAds();
     }
 
@@ -401,12 +397,7 @@ public class LineWord : MonoBehaviour
                     TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
                 }
             }
-            var showDone = cells.All(cell => cell.isShown);
-            if (showDone)
-            {
-                isShown = true;
-                ShowDoneAllCell();
-            }
+            CheckLineDone();
             usedBee = true;
             CPlayerPrefs.SetBool(gameObject.name, usedBee);
             ClearAds();

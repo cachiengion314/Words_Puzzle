@@ -361,7 +361,7 @@ public class WordRegion : MonoBehaviour
         return null;
     }
 
-    private void SetWordOpenInLevelAmount(string checkWord)
+    public void SetWordOpenInLevelAmount(string checkWord)
     {
         if (!FacebookController.instance.wordOpenInLevel.Contains(checkWord))
             FacebookController.instance.wordOpenInLevel.Add(checkWord);
