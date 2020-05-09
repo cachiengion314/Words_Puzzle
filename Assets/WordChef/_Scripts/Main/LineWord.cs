@@ -261,6 +261,7 @@ public class LineWord : MonoBehaviour
 
     private void ShowDoneAllCell()
     {
+        WordRegion.instance.SetWordOpenInLevelAmount(answer);
         if (answer != "")
         {
             MainController.instance.SaveWordComplete(answer);
@@ -271,7 +272,6 @@ public class LineWord : MonoBehaviour
             cell.bg.color = new Color(1, 1, 1, 1);
         }
         WordRegion.instance.ShowComplimentFX();
-        WordRegion.instance.SetWordOpenInLevelAmount(answer);
     }
 
     public void ShowHint(System.Action callback = null)

@@ -1,10 +1,10 @@
 {
 "skeleton": {
-	"hash": "cw+krOf1BFuSE/DEVT2lnyEdxCM",
-	"spine": "3.8.94",
-	"x": -2.59,
+	"hash": "yRaYIgSN0KZCMJpl9sOUU+/2gt4",
+	"spine": "3.8.95",
+	"x": -6.09,
 	"y": 64.43,
-	"width": 1080,
+	"width": 1087,
 	"height": 1920,
 	"images": "./WordPuzzle/",
 	"audio": ""
@@ -46,10 +46,15 @@
 	{ "name": "cay 3.2", "parent": "cayR", "length": 119.2, "rotation": 44.63, "x": 17.76, "y": 21.35 },
 	{ "name": "bone17", "parent": "cay 3.2", "length": 119.2, "rotation": 15.78, "x": 119.2 },
 	{ "name": "bone", "parent": "root", "x": 9.1, "y": 1372.18 },
-	{ "name": "Sangggggg", "parent": "root", "x": 568.16, "y": 1288.3 }
+	{ "name": "shadow", "parent": "root", "x": 576.03, "y": 1336.61 },
+	{ "name": "sangggggggg", "parent": "root", "rotation": 54.07, "x": 572.29, "y": 1198.35 },
+	{ "name": "shadow2", "parent": "shadow" },
+	{ "name": "shadow3", "parent": "root", "x": 576.03, "y": 1336.61 }
 ],
 "slots": [
 	{ "name": "BG", "bone": "root" },
+	{ "name": "shadow word puzzle", "bone": "shadow", "attachment": "shadow word puzzle" },
+	{ "name": "shadow word puzzle2", "bone": "shadow3", "attachment": "shadow word puzzle" },
 	{ "name": "R1", "bone": "R1", "attachment": "R1" },
 	{ "name": "L1", "bone": "L1", "attachment": "L1" },
 	{ "name": "cay 1", "bone": "Cay1", "attachment": "cay 1" },
@@ -60,7 +65,7 @@
 	{ "name": "cay3.2", "bone": "cay 3.2", "attachment": "cay3.2" },
 	{ "name": "Layer 48", "bone": "Gold", "attachment": "Layer 48" },
 	{ "name": "sangggggg", "bone": "root", "attachment": "sangggggg" },
-	{ "name": "Sangggggg", "bone": "Sangggggg", "attachment": "Sangggggg" },
+	{ "name": "Sangggggg", "bone": "sangggggggg", "attachment": "Sangggggg" },
 	{ "name": "Layer 64", "bone": "Go", "attachment": "Layer 64" },
 	{ "name": "puzzle", "bone": "Puzzle", "attachment": "puzzle" },
 	{ "name": "Layer 50", "bone": "Egg", "attachment": "Layer 49" },
@@ -98,10 +103,10 @@
 				"Layer 49": { "x": -10, "y": -40.05, "width": 467, "height": 335 }
 			},
 			"Layer 64": {
-				"Layer 64": { "x": -9.81, "y": 4.14, "width": 681, "height": 266 }
+				"Layer 64": { "x": -9.81, "y": 4.14, "width": 650, "height": 225 }
 			},
 			"Layer 110": {
-				"Layer 110": { "x": -6.63, "y": -35.09, "width": 956, "height": 268 }
+				"Layer 110": { "x": -6.63, "y": -35.09, "width": 947, "height": 268 }
 			},
 			"Layer 1360": {
 				"Layer 1360": { "x": 32.28, "y": -31.9, "width": 325, "height": 509 }
@@ -125,7 +130,7 @@
 				}
 			},
 			"Sangggggg": {
-				"Sangggggg": { "x": 3.07, "y": 202.97, "width": 106, "height": 473 }
+				"Sangggggg": { "x": -5.82, "y": 278.1, "width": 106, "height": 473 }
 			},
 			"W": {
 				"W": { "x": -2.92, "y": -13.55, "width": 180, "height": 194 }
@@ -222,12 +227,34 @@
 					"vertices": [ 305.91, 1489.44, 313.62, 1507.05, 324.26, 1525.4, 336.74, 1544.12, 349.95, 1561, 364.26, 1576.42, 380.41, 1589.63, 396.92, 1600.64, 414.44, 1612.04, 434.31, 1622.39, 453.52, 1630.74, 476.9, 1638.26, 500.94, 1643.6, 526.32, 1647.44, 552.37, 1649.11, 577.26, 1649.28, 600.14, 1646.94, 625.52, 1642.1, 644.89, 1636.92, 666.1, 1629.74, 686.81, 1620.22, 707.68, 1609.7, 728.23, 1596.58, 748.25, 1580.73, 765.62, 1563.08, 780.91, 1544.87, 794.4, 1523.6, 802.32, 1507.2, 812.19, 1484.82, 796.94, 1470.22, 776.28, 1477.61, 766.08, 1501.58, 754.35, 1521.22, 736.5, 1542.38, 715.34, 1560.74, 694.43, 1575.53, 669.44, 1588.79, 638.07, 1600.78, 602.63, 1608.43, 563.1, 1612, 530.71, 1610.72, 497.82, 1604.86, 466.45, 1595.17, 437.38, 1582.16, 411.12, 1565.59, 388.42, 1546.97, 369.3, 1525.55, 355.53, 1504.64, 344.31, 1480.67, 338.44, 1458.23, 306.57, 1451.86, 298.92, 1469.71 ],
 					"color": "ce3a3aff"
 				}
+			},
+			"shadow word puzzle": {
+				"shadow word puzzle": {
+					"type": "mesh",
+					"uvs": [ 1, 0.49931, 1, 1, 0, 1, 0, 0.4949, 0, 0.48752, 0, 0, 1, 0, 1, 0.50269 ],
+					"triangles": [ 7, 3, 0, 2, 3, 7, 2, 7, 1, 0, 1, 7, 4, 5, 6, 0, 3, 4, 0, 4, 6 ],
+					"vertices": [ 1, 38, 460.93, 0.41, 1, 1, 39, 460.93, -295, 1, 1, 39, -497.07, -295, 1, 1, 39, -497.07, 3.01, 1, 1, 38, -497.07, 7.36, 1, 1, 38, -497.07, 295, 1, 1, 38, 460.93, 295, 1, 1, 39, 460.93, -1.59, 1 ],
+					"hull": 7,
+					"edges": [ 2, 4, 10, 12, 8, 10, 2, 0, 0, 12, 8, 0, 4, 6, 6, 8, 6, 14 ],
+					"width": 958,
+					"height": 590
+				}
+			},
+			"shadow word puzzle2": {
+				"shadow word puzzle": { "x": -18.07, "width": 958, "height": 590 }
 			}
 		}
 	}
 ],
 "animations": {
 	"Loop": {
+		"slots": {
+			"shadow word puzzle2": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
 		"bones": {
 			"W": {
 				"rotate": [
@@ -598,14 +625,39 @@
 					{ "y": 3.97 }
 				]
 			},
-			"Sangggggg": {
+			"sangggggggg": {
 				"rotate": [
-					{ "angle": 72.1 },
-					{ "time": 0.6667, "angle": 82.46 },
-					{ "time": 1.5333, "angle": -59.13 }
+					{ "curve": "stepped" },
+					{ "time": 0.5, "angle": -0.07 },
+					{ "time": 1.8333, "angle": -174.07 }
 				],
 				"translate": [
-					{ "y": -182.77 }
+					{ "curve": "stepped" },
+					{ "time": 0.5 }
+				],
+				"scale": [
+					{ "x": 0, "curve": "stepped" },
+					{ "time": 0.5 }
+				]
+			},
+			"shadow2": {
+				"translate": [
+					{}
+				],
+				"scale": [
+					{},
+					{ "time": 1, "x": 0.9, "y": 0.9, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "curve": 0.25, "c3": 0.75 },
+					{ "time": 3, "x": 0.9, "y": 0.9, "curve": 0.25, "c3": 0.75 },
+					{ "time": 4 }
+				]
+			},
+			"shadow3": {
+				"translate": [
+					{ "y": 0.08 }
+				],
+				"scale": [
+					{}
 				]
 			}
 		},
@@ -623,6 +675,19 @@
 		}
 	},
 	"animation": {
+		"slots": {
+			"shadow word puzzle": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"shadow word puzzle2": {
+				"color": [
+					{ "color": "ffffff80", "curve": 0.136, "c2": 0.7, "c3": 0.584, "c4": 0.99 },
+					{ "time": 0.4667, "color": "ffffffff" }
+				]
+			}
+		},
 		"bones": {
 			"Ruy bang": {
 				"translate": [
@@ -891,15 +956,6 @@
 					{ "x": 0 }
 				]
 			},
-			"Sangggggg": {
-				"translate": [
-					{ "y": -182.77, "curve": "stepped" },
-					{ "time": 3.8333, "y": -182.77 }
-				],
-				"scale": [
-					{ "x": 0 }
-				]
-			},
 			"Egg": {
 				"translate": [
 					{ "y": 126.95, "curve": 0.25, "c3": 0.75 },
@@ -929,28 +985,31 @@
 			},
 			"o": {
 				"translate": [
-					{ "y": 132.36, "curve": 0.25, "c3": 0.75 },
-					{ "time": 0.4, "y": -75.42, "curve": 0.25, "c3": 0.75 },
-					{ "time": 0.7333, "y": 18.97, "curve": 0.25, "c3": 0.75 },
-					{ "time": 1.1, "y": 3.97, "curve": "stepped" },
+					{ "y": 132.36, "curve": 0.293, "c3": 0.631, "c4": 0.37 },
+					{ "time": 0.0667, "y": 121.44, "curve": 0.307, "c2": 0.24, "c3": 0.756 },
+					{ "time": 0.4333, "y": -75.42, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.7667, "y": 18.97, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.1333, "y": 3.97, "curve": "stepped" },
 					{ "time": 3.8333, "y": 3.97 }
 				]
 			},
 			"R": {
 				"translate": [
-					{ "y": 132.36, "curve": 0.25, "c3": 0.75 },
-					{ "time": 0.4, "y": -75.42, "curve": 0.25, "c3": 0.75 },
-					{ "time": 0.7333, "y": 18.97, "curve": 0.25, "c3": 0.75 },
-					{ "time": 1.1, "y": 3.97, "curve": "stepped" },
+					{ "y": 132.36, "curve": 0.273, "c3": 0.62, "c4": 0.41 },
+					{ "time": 0.1333, "y": 122.29, "curve": 0.337, "c2": 0.35, "c3": 0.758 },
+					{ "time": 0.5, "y": -75.42, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.8333, "y": 18.97, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.2, "y": 3.97, "curve": "stepped" },
 					{ "time": 3.8333, "y": 3.97 }
 				]
 			},
 			"D": {
 				"translate": [
-					{ "y": 132.36, "curve": 0.25, "c3": 0.75 },
-					{ "time": 0.4, "y": -75.42, "curve": 0.25, "c3": 0.75 },
-					{ "time": 0.7333, "y": 18.97, "curve": 0.25, "c3": 0.75 },
-					{ "time": 1.1, "y": 3.97, "curve": "stepped" },
+					{ "y": 132.36, "curve": 0.262, "c3": 0.618, "c4": 0.44 },
+					{ "time": 0.2, "y": 93.33, "curve": 0.355, "c2": 0.41, "c3": 0.756 },
+					{ "time": 0.5667, "y": -75.42, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.9, "y": 18.97, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.2667, "y": 3.97, "curve": "stepped" },
 					{ "time": 3.8333, "y": 3.97 }
 				]
 			},
@@ -996,6 +1055,40 @@
 						"c4": 0.36
 					},
 					{ "time": 0.8 }
+				]
+			},
+			"sangggggggg": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 1.6667, "angle": -0.07 },
+					{ "time": 3.3333, "angle": -174.07 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 1.6667 }
+				],
+				"scale": [
+					{ "x": 0, "curve": "stepped" },
+					{ "time": 1.6667 }
+				]
+			},
+			"shadow3": {
+				"translate": [
+					{ "y": 31.68, "curve": 0.152, "c2": 0.54, "c3": 0.549, "c4": 0.86 },
+					{ "time": 0.4667, "y": -47.91, "curve": 0.328, "c2": 0.42, "c3": 0.663, "c4": 0.75 },
+					{ "time": 0.8, "y": 18.9, "curve": 0.332, "c2": 0.6, "c3": 0.668, "c4": 0.92 },
+					{ "time": 1.2333, "curve": "stepped" },
+					{ "time": 3.8333 }
+				],
+				"scale": [
+					{ "x": 0.7, "y": 0.7, "curve": 0.136, "c2": 0.7, "c3": 0.584, "c4": 0.99 },
+					{ "time": 0.8, "curve": "stepped" },
+					{ "time": 3.8333 }
+				]
+			},
+			"shadow": {
+				"scale": [
+					{ "x": 0 }
 				]
 			}
 		}
