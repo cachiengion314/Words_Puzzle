@@ -67,6 +67,7 @@ public class WordRegion : MonoBehaviour
         instance = this;
         rt = GetComponent<RectTransform>();
         boardHighlight.gameObject.SetActive(false);
+        FacebookController.instance.wordOpenInLevel = new List<string>();
     }
 
     private List<string> GetExtraWordRandom(List<string> words)
@@ -294,7 +295,7 @@ public class WordRegion : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 //float x = rt.rect.width / 2 - lines[i].lineWidth / 2;
-                float x = /*boardHighlight.rectTransform.rect.width / 2 */- lines[i].lineWidth / 2;
+                float x = /*boardHighlight.rectTransform.rect.width / 2 */-lines[i].lineWidth / 2;
                 //float x = startFirstColX;
                 float y;
                 //if (hasLongLine)
@@ -360,6 +361,20 @@ public class WordRegion : MonoBehaviour
         return null;
     }
 
+    private void SetWordOpenInLevelAmount(string checkWord)
+    {
+        if (!FacebookController.instance.wordOpenInLevel.Contains(checkWord))
+            FacebookController.instance.wordOpenInLevel.Add(checkWord);
+        if (ExtraWord.instance.extraWords.Count > 0)
+        {
+            foreach (var exWord in ExtraWord.instance.extraWords)
+            {
+                if (!FacebookController.instance.wordOpenInLevel.Contains(exWord))
+                    FacebookController.instance.wordOpenInLevel.Add(exWord);
+            }
+        }
+    }
+
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
@@ -373,7 +388,7 @@ public class WordRegion : MonoBehaviour
         {
             //if (!line.isShown)
             //{
-
+            SetWordOpenInLevelAmount(checkWord);
             line.SetDataLetter(checkWord);
             textPreview.SetAnswerColor();
             line.selectID = lineIsShown.Count;
