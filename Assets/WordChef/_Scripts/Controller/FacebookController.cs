@@ -16,7 +16,8 @@ public class FacebookController : MonoBehaviour
 
     public PlayFab.ClientModels.LoginResult result;
     public User user;
-    public List<string> wordOpenInLevel;
+    public List<string> newWordOpenInLevel;
+    public List<string> existWord;
 
     [SerializeField] private List<string> _keysStatic;
 
@@ -138,7 +139,7 @@ public class FacebookController : MonoBehaviour
             staticUpdate.Add(new StatisticUpdate
             {
                 StatisticName = item,
-                Value = (Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + 5 * Int32.Parse(user.unlockedWorld)) + 1) * 10 + wordOpenInLevel.Count * 2 + user.wordPassed.Length
+                Value = (Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + 5 * Int32.Parse(user.unlockedWorld)) + 1) * 10 + newWordOpenInLevel.Count * 2 + existWord.Count
             });
         }
         PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest

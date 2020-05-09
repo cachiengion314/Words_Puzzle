@@ -67,7 +67,9 @@ public class WordRegion : MonoBehaviour
         instance = this;
         rt = GetComponent<RectTransform>();
         boardHighlight.gameObject.SetActive(false);
-        FacebookController.instance.wordOpenInLevel = new List<string>();
+        FacebookController.instance.newWordOpenInLevel = new List<string>();
+        FacebookController.instance.existWord = new List<string>();
+
     }
 
     private List<string> GetExtraWordRandom(List<string> words)
@@ -363,8 +365,10 @@ public class WordRegion : MonoBehaviour
 
     public void SetWordOpenInLevelAmount(string checkWord)
     {
-        if (!FacebookController.instance.wordOpenInLevel.Contains(checkWord))
-            FacebookController.instance.wordOpenInLevel.Add(checkWord);
+        if (!FacebookController.instance.newWordOpenInLevel.Contains(checkWord) && !FacebookController.instance.user.wordPassed.Contains(checkWord))
+            FacebookController.instance.newWordOpenInLevel.Add(checkWord);
+        else
+            FacebookController.instance.existWord.Add(checkWord);
     }
 
     private int lineIndex = 0;
