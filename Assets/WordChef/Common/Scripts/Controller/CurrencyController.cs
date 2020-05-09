@@ -8,7 +8,7 @@ public class CurrencyController
 {
     public const string CURRENCY = "ruby";
     public const int DEFAULT_CURRENCY = 200;
-    public static Action onBalanceChanged;
+    public static Action<bool> onBalanceChanged;
     public static Action<int> onBallanceIncreased;
 
     public const int DEFAULT_HINT_FREE = 0;
@@ -23,7 +23,7 @@ public class CurrencyController
             SetHintFree(resultInventory.VirtualCurrency["HF"]);
             SetBalance(resultInventory.VirtualCurrency["CB"]);
             onHintFreeChanged?.Invoke();
-            onBalanceChanged?.Invoke();
+            onBalanceChanged?.Invoke(false);
         }, null);
     }
 
@@ -54,14 +54,14 @@ public class CurrencyController
             PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
             {
                 SetBalance(result.Balance);
-                if (onBalanceChanged != null) onBalanceChanged();
+                if (onBalanceChanged != null) onBalanceChanged(true);
                 if (onBallanceIncreased != null) onBallanceIncreased(value);
             }, null);
         }
         else
         {
             SetBalance(current + value);
-            if (onBalanceChanged != null) onBalanceChanged();
+            if (onBalanceChanged != null) onBalanceChanged(true);
             if (onBallanceIncreased != null) onBallanceIncreased(value);
         }
     }
@@ -84,13 +84,13 @@ public class CurrencyController
             PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
             {
                 SetBalance(result.Balance);
-                if (onBalanceChanged != null) onBalanceChanged();
+                if (onBalanceChanged != null) onBalanceChanged(true);
             }, null);
         }
         else
         {
             SetBalance(current - value);
-            if (onBalanceChanged != null) onBalanceChanged();
+            if (onBalanceChanged != null) onBalanceChanged(true);
         }
         return true;
     }

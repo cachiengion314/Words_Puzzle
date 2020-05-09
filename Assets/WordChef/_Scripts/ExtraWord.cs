@@ -84,6 +84,7 @@ public class ExtraWord : MonoBehaviour
             Prefs.countSpell += 1;
             Prefs.countSpellDaily += 1;
 
+            WordRegion.instance.SetWordOpenInLevelAmount(word);
             MainController.instance.SaveWordComplete(word);
             WordRegion.instance.listWordCorrect.Add(word.ToLower());
             WordRegion.instance.ShowComplimentFX();

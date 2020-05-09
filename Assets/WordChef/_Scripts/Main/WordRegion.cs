@@ -365,14 +365,6 @@ public class WordRegion : MonoBehaviour
     {
         if (!FacebookController.instance.wordOpenInLevel.Contains(checkWord))
             FacebookController.instance.wordOpenInLevel.Add(checkWord);
-        if (ExtraWord.instance.extraWords.Count > 0)
-        {
-            foreach (var exWord in ExtraWord.instance.extraWords)
-            {
-                if (!FacebookController.instance.wordOpenInLevel.Contains(exWord))
-                    FacebookController.instance.wordOpenInLevel.Add(exWord);
-            }
-        }
     }
 
     private int lineIndex = 0;

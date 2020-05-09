@@ -20,22 +20,25 @@ public class CurrencyBallance : MonoBehaviour
         gameObject.SetText(currency);
     }
 
-    private void OnBalanceChanged()
+    private void OnBalanceChanged(bool showFx)
     {
         UpdateBalance();
-        if (_fxLight != null)
-            _fxLight.Play();
-        if (_iconStar != null)
+        if (showFx)
         {
-            TweenControl.GetInstance().Scale(_iconStar, Vector3.one * 1.2f, 0.3f, () =>
+            if (_fxLight != null)
+                _fxLight.Play();
+            if (_iconStar != null)
             {
-                TweenControl.GetInstance().Scale(_iconStar, Vector3.one, 0.3f);
+                TweenControl.GetInstance().Scale(_iconStar, Vector3.one * 1.2f, 0.3f, () =>
+                {
+                    TweenControl.GetInstance().Scale(_iconStar, Vector3.one, 0.3f);
+                });
+            }
+            TweenControl.GetInstance().Scale(gameObject, Vector3.one * 1.2f, 0.3f, () =>
+            {
+                TweenControl.GetInstance().Scale(gameObject, Vector3.one, 0.3f);
             });
         }
-        TweenControl.GetInstance().Scale(gameObject, Vector3.one * 1.2f, 0.3f, () =>
-        {
-            TweenControl.GetInstance().Scale(gameObject, Vector3.one, 0.3f);
-        });
     }
 
     private void OnDestroy()
