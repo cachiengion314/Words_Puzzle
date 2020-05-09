@@ -152,13 +152,13 @@ public class FacebookController : MonoBehaviour
         int numLevels = Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld));
         var request = new UpdatePlayerStatisticsRequest();
         var staticUpdate = new List<StatisticUpdate>();
-        var currlevel = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + _gameData.words.Count * Int32.Parse(user.unlockedWorld));
+        //var currlevel = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + _gameData.words.Count * Int32.Parse(user.unlockedWorld));
         foreach (var item in _keysStatic)
         {
             staticUpdate.Add(new StatisticUpdate
             {
                 StatisticName = item,
-                Value = bestScore + (newWordOpenInLevel.Count * 2 + existWord.Count + currlevel * bonusNewLevel)
+                Value = bestScore + (newWordOpenInLevel.Count * 2 + existWord.Count + bonusNewLevel)
             });
         }
         PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
