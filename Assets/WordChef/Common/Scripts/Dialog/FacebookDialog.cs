@@ -19,6 +19,8 @@ public class FacebookDialog : Dialog
     [SerializeField] private GameObject _leaderBoard;
     [SerializeField] private GameObject _mainUI;
 
+    private TweenControl _tweenControl;
+
     void Start()
     {
         InitUserFB();
@@ -26,6 +28,7 @@ public class FacebookDialog : Dialog
 
     private void InitUserFB()
     {
+        _tweenControl = TweenControl.GetInstance();
         _animLoading.gameObject.SetActive(false);
         _leaderBoard.transform.localScale = Vector3.zero;
         CheckLogin();
@@ -114,7 +117,6 @@ public class FacebookDialog : Dialog
                 ShowBtnLogin(false);
                 ShowLeaderboard();
                 _animLoading.gameObject.SetActive(false);
-                
             });
         }
         else
@@ -160,28 +162,36 @@ public class FacebookDialog : Dialog
         _mainUI.transform.localScale = Vector3.zero;
         _leaderBoard.SetActive(true);
         _rootRanking.gameObject.SetActive(true);
-        var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
-        vertical.enabled = false;
+        //var vertical = _rootRanking.GetComponent<VerticalLayoutGroup>();
+        //vertical.enabled = false;
         for (int i = 0; i < _rootRanking.childCount; i++)
         {
             Destroy(_rootRanking.GetChild(i).gameObject);
         }
         _notifyLogin.gameObject.SetActive(false);
-        FacebookController.instance.GetLeaderboard(FacebookController.instance.KeysStatic[0], (result) =>
+
+
+        _tweenControl.ScaleFromZero(_leaderBoard, 0.3f, () =>
         {
-            var index = 0;
-            foreach (var player in result.Leaderboard)
+            //vertical.enabled = true;
+            StartCoroutine(SpawnLeaderboardElement());
+        });
+    }
+
+    private IEnumerator SpawnLeaderboardElement()
+    {
+        var index = 0;
+        foreach (var player in FacebookController.instance.Players)
+        {
+            var ranking = Instantiate(_rankingPfb, _rootRanking);
+            ranking.transform.localScale = Vector3.zero;
+            _tweenControl.ScaleFromZero(ranking.gameObject, 0.3f, () =>
             {
-                var ranking = Instantiate(_rankingPfb, _rootRanking);
                 ranking.UpdateRankingPlayer(player.DisplayName, player.StatValue, player.Profile.AvatarUrl, index < 3 ? ranking.iconsTopRank[index] : null);
                 index += 1;
-            }
-            TweenControl.GetInstance().ScaleFromZero(_leaderBoard, 0.3f, () =>
-            {
-                vertical.enabled = true;
             });
-        });
-
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     private void ShowTextNameUser()

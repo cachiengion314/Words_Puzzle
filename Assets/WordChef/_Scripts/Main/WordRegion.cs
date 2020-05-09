@@ -67,9 +67,10 @@ public class WordRegion : MonoBehaviour
         instance = this;
         rt = GetComponent<RectTransform>();
         boardHighlight.gameObject.SetActive(false);
+        FacebookController.instance.bonusNewLevel = 0;
         FacebookController.instance.newWordOpenInLevel = new List<string>();
         FacebookController.instance.existWord = new List<string>();
-
+        FacebookController.instance.GetUserData();
     }
 
     private List<string> GetExtraWordRandom(List<string> words)
@@ -365,10 +366,16 @@ public class WordRegion : MonoBehaviour
 
     public void SetWordOpenInLevelAmount(string checkWord)
     {
-        if (!FacebookController.instance.newWordOpenInLevel.Contains(checkWord) && !FacebookController.instance.user.wordPassed.Contains(checkWord))
+        if (!FacebookController.instance.user.wordPassed.Contains(checkWord))
             FacebookController.instance.newWordOpenInLevel.Add(checkWord);
         else
             FacebookController.instance.existWord.Add(checkWord);
+        var isComplete = lines.All(x => x.isShown);
+        if (isComplete && Prefs.IsSaveLevelProgress())
+            FacebookController.instance.bonusNewLevel = 10;
+        else
+            FacebookController.instance.bonusNewLevel = 0;
+        FacebookController.instance.UpdateStaticsUser();
     }
 
     private int lineIndex = 0;
@@ -384,13 +391,13 @@ public class WordRegion : MonoBehaviour
         {
             //if (!line.isShown)
             //{
-            SetWordOpenInLevelAmount(checkWord);
             line.SetDataLetter(checkWord);
             textPreview.SetAnswerColor();
             line.selectID = lineIsShown.Count;
             line.ShowAnswer();
             SaveLevelProgress();
             CheckGameComplete();
+            SetWordOpenInLevelAmount(checkWord);
 
             if (lineIndex > 0)
             {
@@ -590,6 +597,7 @@ public class WordRegion : MonoBehaviour
                 //TutorialController.instance.isShowTut = false;
                 //CPlayerPrefs.SetBool("TUTORIAL", true);
             }
+
             SaveLevelProgress();
             BlockScreen.instance.Block(true);
             MainController.instance.IsLevelClear = true;

@@ -16,12 +16,24 @@ public class FacebookController : MonoBehaviour
 
     public PlayFab.ClientModels.LoginResult result;
     public User user;
+    public int bestScore;
+    public int bonusNewLevel;
     public List<string> newWordOpenInLevel;
     public List<string> existWord;
 
     [SerializeField] private List<string> _keysStatic;
+    [SerializeField] private GameData _gameData;
 
     private string _jsondata;
+    private List<PlayerLeaderboardEntry> _players;
+
+    public List<PlayerLeaderboardEntry> Players
+    {
+        get
+        {
+            return _players;
+        }
+    }
 
     void Awake()
     {
@@ -63,7 +75,13 @@ public class FacebookController : MonoBehaviour
             _jsondata = SaveDataLocal();
             var dicUserData = new Dictionary<string, string>();
             dicUserData.Add("UserData", _jsondata);
-            UpdateUserData(dicUserData, (userResult) => { callback?.Invoke(userResult); });
+            UpdateUserData(dicUserData, (userResult) =>
+            {
+                GetDataLeaderBoard(() =>
+                {
+                    callback?.Invoke(userResult);
+                });
+            });
         }
         else
         {
@@ -112,7 +130,7 @@ public class FacebookController : MonoBehaviour
         FB.API("/me/picture?redirect=false", HttpMethod.GET, ProfilePhotoCallback);
         PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
         {
-            DisplayName = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName.Length < 25 ? result.InfoResultPayload.AccountInfo.FacebookInfo.FullName : result.InfoResultPayload.AccountInfo.FacebookInfo.FullName.Substring(0,24),
+            DisplayName = result.InfoResultPayload.AccountInfo.FacebookInfo.FullName.Length < 25 ? result.InfoResultPayload.AccountInfo.FacebookInfo.FullName : result.InfoResultPayload.AccountInfo.FacebookInfo.FullName.Substring(0, 24),
         }, null, null);
     }
 
@@ -129,17 +147,18 @@ public class FacebookController : MonoBehaviour
         }
     }
 
-    private void UpdateStaticsUser()
+    public void UpdateStaticsUser()
     {
         int numLevels = Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld));
         var request = new UpdatePlayerStatisticsRequest();
         var staticUpdate = new List<StatisticUpdate>();
+        var currlevel = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + _gameData.words.Count * Int32.Parse(user.unlockedWorld));
         foreach (var item in _keysStatic)
         {
             staticUpdate.Add(new StatisticUpdate
             {
                 StatisticName = item,
-                Value = (Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + 5 * Int32.Parse(user.unlockedWorld)) + 1) * 10 + newWordOpenInLevel.Count * 2 + existWord.Count
+                Value = bestScore + (newWordOpenInLevel.Count * 2 + existWord.Count + currlevel * bonusNewLevel)
             });
         }
         PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
@@ -198,9 +217,37 @@ public class FacebookController : MonoBehaviour
         }, null);
     }
 
+    public void GetDataLeaderBoard(Action callback = null)
+    {
+        GetLeaderboard(KeysStatic[0], (result) =>
+        {
+            _players = new List<PlayerLeaderboardEntry>();
+            foreach (var player in result.Leaderboard)
+            {
+                _players.Add(player);
+            }
+            callback?.Invoke();
+        });
+    }
+
     private void GetDataFromPlayfabs(Action callback = null)
     {
         GetFriendList();
+        GetDataLeaderBoard();
+        PlayFabClientAPI.GetPlayerStatistics(new GetPlayerStatisticsRequest
+        {
+            StatisticNames = KeysStatic
+        }, (resultStatistics) =>
+        {
+            foreach (var rs in resultStatistics.Statistics)
+            {
+                if (rs.StatisticName == KeysStatic[0])
+                {
+                    bestScore = rs.Value;
+                    break;
+                }
+            }
+        }, null);
         PlayFabClientAPI.GetUserData(new GetUserDataRequest
         {
             PlayFabId = result.PlayFabId,

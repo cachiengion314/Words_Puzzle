@@ -96,8 +96,8 @@ public class MainController : BaseController
 
         //if (PlayFabClientAPI.IsClientLoggedIn())
         //{
-        FacebookController.instance.user.wordPassed = _wordPassed;
-        FacebookController.instance.SaveDataGame();
+        //FacebookController.instance.user.wordPassed = _wordPassed;
+        //FacebookController.instance.SaveDataGame();
         //}
         // 
         Timer.Schedule(this, 1f, () =>
@@ -111,6 +111,7 @@ public class MainController : BaseController
         if (!CPlayerPrefs.HasKey("WordLevelSave"))
         {
             CPlayerPrefs.SetString("WordLevelSave", wordDone);
+            _wordPassed = wordDone;
         }
         else
         {
@@ -121,6 +122,8 @@ public class MainController : BaseController
             if (_wordPassed.Length > 0 && _wordPassed[_wordPassed.Length - 1].ToString() == "|")
                 _wordPassed.Remove(_wordPassed.Length - 1);
         }
+        FacebookController.instance.user.wordPassed = _wordPassed;
+        FacebookController.instance.SaveDataGame();
     }
 
     private string WordSaveDistinct()
