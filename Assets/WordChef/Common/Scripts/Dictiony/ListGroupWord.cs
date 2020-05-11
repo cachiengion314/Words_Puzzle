@@ -17,6 +17,20 @@ public class ListGroupWord : MonoBehaviour
 
     public void OnButtonClick()
     {
+        DictionaryDialog.instance.currListWord = this;
+        if (!statusGroupWord)
+        {
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            DialogController.instance.ShowDialog(DialogType.OpenWordDictionary, DialogShow.STACK_DONT_HIDEN);
+        }
+        else
+        {
+            OnCompleteReward();
+        }
+    }
+
+    public void OnCompleteReward()
+    {
         CloseAllGroupWord();
         if (transform.GetChild(1).childCount > 0)
         {

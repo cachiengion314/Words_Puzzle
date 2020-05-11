@@ -31,7 +31,8 @@ public enum DialogType
     MeanInGameDialog,
     LimitedSaleDialog,
     FreeStars,
-    ChickenBank
+    ChickenBank,
+    OpenWordDictionary
 };
 
 public enum DialogShow

@@ -23,7 +23,7 @@ public class DictionaryDialog : Dialog
     public static DictionaryDialog instance;
     public Text numWordPassedText;
 
-
+    [HideInInspector] public ListGroupWord currListWord;
     //string wordValid;
     //List<WordData> listMeanWord = new List<WordData>();
 

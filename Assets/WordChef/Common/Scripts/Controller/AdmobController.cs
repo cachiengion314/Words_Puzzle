@@ -162,7 +162,7 @@ public class AdmobController : MonoBehaviour
         return false;
     }
 
-    public void ShowRewardBasedVideo()
+    public void ShowRewardBasedVideo(Action adsNotReadyYetCallback = null)
     {
         if (this.rewardBasedVideo.IsLoaded())
         {
@@ -176,8 +176,9 @@ public class AdmobController : MonoBehaviour
             {
                 if (result == 0)
                 {
-                    Toast.instance.ShowMessage("Reward based video ad is not ready yet");
+                    Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
                     RequestRewardBasedVideo();
+                    adsNotReadyYetCallback?.Invoke();
                 }
                 else
                 {

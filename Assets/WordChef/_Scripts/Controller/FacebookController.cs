@@ -149,22 +149,25 @@ public class FacebookController : MonoBehaviour
 
     public void UpdateStaticsUser()
     {
-        int numLevels = Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld));
-        var request = new UpdatePlayerStatisticsRequest();
-        var staticUpdate = new List<StatisticUpdate>();
-        //var currlevel = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + _gameData.words.Count * Int32.Parse(user.unlockedWorld));
-        foreach (var item in _keysStatic)
+        if (PlayFabClientAPI.IsClientLoggedIn())
         {
-            staticUpdate.Add(new StatisticUpdate
+            int numLevels = Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld));
+            var request = new UpdatePlayerStatisticsRequest();
+            var staticUpdate = new List<StatisticUpdate>();
+            //var currlevel = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + _gameData.words.Count * Int32.Parse(user.unlockedWorld));
+            foreach (var item in _keysStatic)
             {
-                StatisticName = item,
-                Value = bestScore + (newWordOpenInLevel.Count * 2 + existWord.Count + bonusNewLevel)
-            });
+                staticUpdate.Add(new StatisticUpdate
+                {
+                    StatisticName = item,
+                    Value = bestScore + (newWordOpenInLevel.Count * 2 + existWord.Count + bonusNewLevel)
+                });
+            }
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = staticUpdate
+            }, null, null);
         }
-        PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
-        {
-            Statistics = staticUpdate
-        }, null, null);
     }
 
     private void UpdateDataUser(Dictionary<string, string> keyValues, Action<UpdateUserDataResult> callback = null)
