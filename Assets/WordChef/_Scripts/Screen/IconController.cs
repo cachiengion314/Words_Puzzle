@@ -5,6 +5,7 @@ using UnityEngine;
 public class IconController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _buttons;
+    [SerializeField] private List<GameObject> _shadows;
     [SerializeField] private float _timeDelay;
     [SerializeField] private float _timeMove = 0.2f;
 
@@ -22,6 +23,8 @@ public class IconController : MonoBehaviour
         for (int i = 0; i < _buttons.Count; i++)
         {
             var btn = _buttons[i];
+            var shawdow = _shadows[i];
+            TweenControl.GetInstance().ScaleFromZero(shawdow, 0.3f);
             TweenControl.GetInstance().ScaleFromZero(btn, 0.3f, null, EaseType.InOutBack);
             TweenControl.GetInstance().MoveRectY(btn.transform as RectTransform, -55, _timeMove, () =>
             {
