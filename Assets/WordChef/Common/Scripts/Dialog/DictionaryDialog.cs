@@ -120,6 +120,7 @@ public class DictionaryDialog : Dialog
                 {
                     listGroupWordClone.numberWordText.text = item.Value.Count + " words";
                 }
+                listGroupWordClone.numberWord = item.Value.Count;
             }
             foreach (var word in item.Value)
             {

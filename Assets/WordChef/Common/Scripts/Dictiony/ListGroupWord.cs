@@ -9,6 +9,7 @@ public class ListGroupWord : MonoBehaviour
     public TextMeshProUGUI firstButtonText;
     public TextMeshProUGUI numberWordText;
     [HideInInspector] public bool statusGroupWord = false;
+    [HideInInspector] public int numberWord;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class ListGroupWord : MonoBehaviour
     public void OnButtonClick()
     {
         DictionaryDialog.instance.currListWord = this;
-        if (!statusGroupWord)
+        if (!statusGroupWord && numberWord > 0)
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.OpenWordDictionary, DialogShow.STACK_DONT_HIDEN);
