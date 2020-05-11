@@ -57,11 +57,13 @@ public class QuestController : MonoBehaviour
         }
     }
 
-    void DailyActive()
+    void DailyActive(bool refresh = false)
     {
         for (int i = 0; i < dailyTaskContent.transform.childCount; i++)
         {
             var quest = dailyTaskContent.transform.GetChild(i).GetComponent<Quest>();
+            if (refresh)
+                quest.Refresh();
             quest.gameObject.SetActive(false);
         }
 
@@ -77,7 +79,7 @@ public class QuestController : MonoBehaviour
         if (DateTime.Compare(DateTime.Now, nextDay) >= 0)
         {
             UpdateNextDay();
-            DailyActive();
+            DailyActive(true);
         }
         else
         {
