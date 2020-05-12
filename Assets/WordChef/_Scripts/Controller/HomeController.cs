@@ -19,6 +19,7 @@ public class HomeController : BaseController
     [SerializeField] private GameObject _btnPlayShadow;
     [SerializeField] private SpineControl _spineAnimEgg;
     [SerializeField] private SpineControl _spineAnimShadow;
+    [SerializeField] private SpineControl _spineAnimShadow2;
     [SerializeField] private SpineControl _spineAnimGia;
     [SerializeField] private string _showAnim = "animation";
     [SerializeField] private string _loopAnim = "Loop";
@@ -83,7 +84,11 @@ public class HomeController : BaseController
         yield return new WaitForSeconds(1f);
         _spineAnimEgg.gameObject.SetActive(true);
         _spineAnimShadow.gameObject.SetActive(true);
+        _spineAnimShadow2.gameObject.SetActive(true);
         _spineAnimGia.gameObject.SetActive(true);
+        _spineAnimShadow2.SetAnimation(_showShadow, false, () => {
+            _spineAnimShadow2.SetAnimation(_showShadowLoop, true);
+        });
         _spineAnimShadow.SetAnimation(_showShadow, false, () => {
             _spineAnimShadow.SetAnimation(_showShadowLoop, true);
         });
