@@ -11,6 +11,8 @@ public class SettingDialog : PauseDialog
     GameObject musicButton;
     [SerializeField]
     GameObject notiButton;
+    [SerializeField]private Slider _sliderSound;
+    [SerializeField]private Slider _sliderMusic;
 
     GameObject gameMaster;
     Sound soundController;
@@ -28,8 +30,8 @@ public class SettingDialog : PauseDialog
         {
             soundController = Sound.instance;
             musicController = Music.instance;
-            ShowButtonSound(soundController.IsEnabled());
-            ShowButtonMusic(musicController.IsEnabled());
+            ////ShowButtonSound(soundController.IsEnabled());
+            ////ShowButtonMusic(musicController.IsEnabled());
         }
         CheckLogin();
     }
@@ -85,18 +87,20 @@ public class SettingDialog : PauseDialog
     {
         if (soundController)
         {
-            bool _status = soundController.IsEnabled();
-            soundController.SetEnabled(!_status);
-            ShowButtonSound(soundController.IsEnabled());
+            ////bool _status = soundController.IsEnabled();
+            ////soundController.SetEnabled(!_status);
+            ////ShowButtonSound(soundController.IsEnabled());
+            soundController.audioSource.volume = _sliderSound.value;
         }
     }
     public void OnMusicClick()
     {
         if (musicController)
         {
-            bool _status = musicController.IsEnabled();
-            musicController.SetEnabled(!_status, true);
-            ShowButtonMusic(musicController.IsEnabled());
+            ////bool _status = musicController.IsEnabled();
+            ////musicController.SetEnabled(!_status, true);
+            ////ShowButtonMusic(musicController.IsEnabled());
+            musicController.audioSource.volume = _sliderMusic.value;
         }
     }
 
