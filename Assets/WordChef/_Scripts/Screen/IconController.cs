@@ -32,6 +32,9 @@ public class IconController : MonoBehaviour
             tweenControl.ScaleFromZero(btn, 0.3f);
             tweenControl.MoveRectY(btn.transform as RectTransform, -55, _timeMove, () =>
             {
+                tweenControl.Scale(shawdow, new Vector3(1.2f, 1.4f, 1.2f), 0.2f, () => {
+                    tweenControl.Scale(shawdow, Vector3.one, 0.2f);
+                });
                 tweenControl.MoveRectY(btn.transform as RectTransform, -100, 0.2f, () =>
                 {
                     tweenControl.MoveRectY(btn.transform as RectTransform, -73, 0.2f, () =>
