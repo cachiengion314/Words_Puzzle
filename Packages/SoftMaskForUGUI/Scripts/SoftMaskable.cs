@@ -257,7 +257,8 @@ namespace Coffee.UISoftMask
                     graphic.SetMaterialDirtyEx();
                 }
             };
-#endif
         }
+#endif
+
     }
 }
