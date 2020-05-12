@@ -25,11 +25,11 @@ public class IconController : MonoBehaviour
         {
             var btn = _buttons[i];
             var shawdow = _shadows[i];
-            tweenControl.DelayCall(shawdow.transform, 0.1f, () =>
+            tweenControl.DelayCall(shawdow.transform, 0.15f, () =>
             {
                 tweenControl.ScaleFromZero(shawdow, 0.3f);
             });
-            tweenControl.ScaleFromZero(btn, 0.3f, null, EaseType.InOutBack);
+            tweenControl.ScaleFromZero(btn, 0.3f);
             tweenControl.MoveRectY(btn.transform as RectTransform, -55, _timeMove, () =>
             {
                 tweenControl.MoveRectY(btn.transform as RectTransform, -100, 0.2f, () =>

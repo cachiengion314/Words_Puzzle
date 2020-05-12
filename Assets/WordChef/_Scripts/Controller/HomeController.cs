@@ -17,9 +17,9 @@ public class HomeController : BaseController
     [Space]
     [SerializeField] private Button _btnPlay;
     [SerializeField] private GameObject _btnPlayShadow;
+    [SerializeField] private GameObject _maskShadow;
     [SerializeField] private SpineControl _spineAnimEgg;
     [SerializeField] private SpineControl _spineAnimShadow;
-    [SerializeField] private SpineControl _spineAnimShadow2;
     [SerializeField] private SpineControl _spineAnimGia;
     [SerializeField] private string _showAnim = "animation";
     [SerializeField] private string _loopAnim = "Loop";
@@ -84,11 +84,7 @@ public class HomeController : BaseController
         yield return new WaitForSeconds(1f);
         _spineAnimEgg.gameObject.SetActive(true);
         _spineAnimShadow.gameObject.SetActive(true);
-        _spineAnimShadow2.gameObject.SetActive(true);
         _spineAnimGia.gameObject.SetActive(true);
-        _spineAnimShadow2.SetAnimation(_showShadow, false, () => {
-            _spineAnimShadow2.SetAnimation(_showShadowLoop, true);
-        });
         _spineAnimShadow.SetAnimation(_showShadow, false, () => {
             _spineAnimShadow.SetAnimation(_showShadowLoop, true);
         });
@@ -97,6 +93,7 @@ public class HomeController : BaseController
         });
         yield return new WaitForSeconds(0.4f);
         _btnPlay.gameObject.SetActive(true);
+        _maskShadow.gameObject.SetActive(true);
         tweenControl.Scale(_btnPlayShadow, Vector3.one * 1.2f, 0.47f, () => {
             tweenControl.Scale(_btnPlayShadow, Vector3.one, 0.53f);
         });
