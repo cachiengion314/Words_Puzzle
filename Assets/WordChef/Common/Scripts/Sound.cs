@@ -39,6 +39,17 @@ public class Sound : MonoBehaviour
         return !IsEnabled();
     }
 
+    public float GetVolume()
+    {
+        return CPlayerPrefs.GetFloat("sound_volume", 1);
+    }
+
+    public void SetVolume(float value)
+    {
+        CPlayerPrefs.SetFloat("sound_volume", value);
+        UpdateSetting();
+    }
+
     public bool IsEnabled()
     {
         return CPlayerPrefs.GetBool("sound_enabled", true);

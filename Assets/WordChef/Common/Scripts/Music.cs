@@ -23,6 +23,17 @@ public class Music : MonoBehaviour
         return !IsEnabled();
     }
 
+    public float GetVolume()
+    {
+        return CPlayerPrefs.GetFloat("music_volume", 1);
+    }
+
+    public void SetVolume(float value)
+    {
+        CPlayerPrefs.SetFloat("music_volume", value);
+        UpdateSetting();
+    }
+
     public bool IsEnabled()
     {
         return CPlayerPrefs.GetBool("music_enabled", true);

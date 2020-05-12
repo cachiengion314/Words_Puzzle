@@ -32,6 +32,10 @@ public class SettingDialog : PauseDialog
             musicController = Music.instance;
             ////ShowButtonSound(soundController.IsEnabled());
             ////ShowButtonMusic(musicController.IsEnabled());
+            soundController.audioSource.volume = soundController.GetVolume();
+            musicController.audioSource.volume = musicController.GetVolume();
+            _sliderSound.value = soundController.audioSource.volume;
+            _sliderMusic.value = musicController.audioSource.volume;
         }
         CheckLogin();
     }
@@ -80,7 +84,7 @@ public class SettingDialog : PauseDialog
     public override void OnHowToPlayClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
+        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK_DONT_HIDEN);
     }
 
     public void OnSoundClick()
@@ -90,7 +94,8 @@ public class SettingDialog : PauseDialog
             ////bool _status = soundController.IsEnabled();
             ////soundController.SetEnabled(!_status);
             ////ShowButtonSound(soundController.IsEnabled());
-            soundController.audioSource.volume = _sliderSound.value;
+            soundController.SetVolume(_sliderSound.value);
+            soundController.audioSource.volume = soundController.GetVolume();
         }
     }
     public void OnMusicClick()
@@ -100,7 +105,8 @@ public class SettingDialog : PauseDialog
             ////bool _status = musicController.IsEnabled();
             ////musicController.SetEnabled(!_status, true);
             ////ShowButtonMusic(musicController.IsEnabled());
-            musicController.audioSource.volume = _sliderMusic.value;
+            musicController.SetVolume(_sliderMusic.value);
+            musicController.audioSource.volume = musicController.GetVolume();
         }
     }
 
