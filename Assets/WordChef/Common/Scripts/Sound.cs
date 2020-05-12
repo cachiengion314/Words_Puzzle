@@ -83,7 +83,7 @@ public class Sound : MonoBehaviour
     public void Play(Collects type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
-        audioSource.volume = volume;
+        //audioSource.volume = volume;
         audioSource.PlayOneShot(collectClips[index]);
         TweenControl.GetInstance().DelayCall(transform, collectClips[index].length, () =>
         {
@@ -94,7 +94,7 @@ public class Sound : MonoBehaviour
     public void Play(Scenes type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
-        audioSource.volume = volume;
+        //audioSource.volume = volume;
         audioSource.PlayOneShot(sceneClips[index]);
         TweenControl.GetInstance().DelayCall(transform, sceneClips[index].length, () =>
         {
@@ -105,7 +105,7 @@ public class Sound : MonoBehaviour
     public void Play(Others type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
-        audioSource.volume = volume;
+        //audioSource.volume = volume;
         audioSource.PlayOneShot(otherClips[index]);
         TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () =>
         {
@@ -116,7 +116,7 @@ public class Sound : MonoBehaviour
     public void PlayLooping(Others type, float volume = 1, Action onComplete = null)
     {
         int index = (int)type;
-        loopAudioSource.volume = volume;
+        //loopAudioSource.volume = volume;
         loopAudioSource.PlayOneShot(otherClips[index]);
         TweenControl.GetInstance().DelayCall(transform, otherClips[index].length, () =>
         {
@@ -133,5 +133,6 @@ public class Sound : MonoBehaviour
     {
         audioSource.mute = IsMuted();
         loopAudioSource.mute = IsMuted();
+        audioSource.volume = GetVolume();
     }
 }
