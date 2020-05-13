@@ -98,7 +98,9 @@ public class HomeController : BaseController
             tweenControl.Scale(_btnPlayShadow, Vector3.one, 0.53f);
         });
         tweenControl.MoveRectY(_panelTopRect, -30, 0.7f, () => {
-            tweenControl.MoveRectY(_panelTopRect, 0, 0.3f);
+            tweenControl.MoveRectY(_panelTopRect, 20, 0.3f, () => {
+                tweenControl.MoveRectY(_panelTopRect, 0, 0.3f);
+            });
         });
         _spineAnimGia.SetAnimation(_showgiado, false, () => {
             _iconController.AnimIcon();
