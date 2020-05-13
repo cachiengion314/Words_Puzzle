@@ -654,7 +654,7 @@ public class WordRegion : MonoBehaviour
         {
             gameObject.GetComponent<Canvas>().overrideSorting = false;
             Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.Shop2, DialogShow.REPLACE_CURRENT);
+            DialogController.instance.ShowDialog(DialogType.Shop, DialogShow.REPLACE_CURRENT);
         }
     }
 
@@ -712,7 +712,7 @@ public class WordRegion : MonoBehaviour
         else
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.Shop2, DialogShow.REPLACE_CURRENT);
+            DialogController.instance.ShowDialog(DialogType.Shop, DialogShow.REPLACE_CURRENT);
         }
     }
 
@@ -813,7 +813,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            DialogController.instance.ShowDialog(DialogType.Shop2);
+            DialogController.instance.ShowDialog(DialogType.Shop);
         }
     }
 
