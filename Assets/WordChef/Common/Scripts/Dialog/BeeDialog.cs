@@ -164,7 +164,7 @@ public class BeeDialog : Dialog
     {
         //shadowPanelHowToPlay.SetActive(true);
         //TweenControl.GetInstance().ScaleFromZero(panelHowToPlay, 0.3f);
-        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK);
+        DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK_DONT_HIDEN);
         Sound.instance.Play(Sound.Others.PopupOpen);
         HowToPlayDialog.instance.ShowMeanWordByID(selectID);
     }
