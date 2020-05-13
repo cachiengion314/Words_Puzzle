@@ -143,7 +143,7 @@ public class Dialog : MonoBehaviour
         if (showDialogReward)
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.FreeStars, DialogShow.STACK);
+            DialogController.instance.ShowDialog(DialogType.FreeStars, DialogShow.STACK_DONT_HIDEN);
         }
     }
 
