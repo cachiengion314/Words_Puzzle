@@ -86,6 +86,7 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickCollect()
     {
+        Sound.instance.Play(Sound.Collects.LevelOpen);
         _collectButton.gameObject.SetActive(false);
         _currProgressValue = 0;
         CPlayerPrefs.SetBool(TIME_REWARD_KEY, false);
