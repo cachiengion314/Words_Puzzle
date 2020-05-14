@@ -31,6 +31,12 @@ public class PauseDialog : Dialog {
         DialogController.instance.ShowDialog(DialogType.Settings, DialogShow.STACK_DONT_HIDEN);
     }
 
+    public void OnThemesClick()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, "Themes");
+    }
+
     public void OnHomeClick()
     {
         CUtils.LoadScene(Const.SCENE_HOME, false);

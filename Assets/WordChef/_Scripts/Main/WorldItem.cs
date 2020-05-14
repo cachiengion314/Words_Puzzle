@@ -27,7 +27,7 @@ public class WorldItem : MonoBehaviour {
 
     private void Start()
     {
-        itemName.text = "CHAP " + (transform.GetSiblingIndex() + 1);
+        itemName.text = "CHAPTER " + (transform.GetSiblingIndex() + 1);
 
         //world = transform.parent.parent.GetSiblingIndex();
         //subWorld = transform.GetSiblingIndex();

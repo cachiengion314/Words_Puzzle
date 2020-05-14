@@ -32,7 +32,8 @@ public enum DialogType
     LimitedSaleDialog,
     FreeStars,
     ChickenBank,
-    OpenWordDictionary
+    OpenWordDictionary,
+    ComingSoon
 };
 
 public enum DialogShow
@@ -68,10 +69,12 @@ public class DialogController : MonoBehaviour
         ShowDialog((DialogType)type, DialogShow.DONT_SHOW_IF_OTHERS_SHOWING);
     }
 
-    public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT)
+    public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT, string contentTitle = null)
     {
         Dialog dialog = GetDialog(type);
         ShowDialog(dialog, option);
+        if (contentTitle != null || contentTitle != "")
+            dialog.SetTitleContent(contentTitle);
     }
 
     public void ShowYesNoDialog(string title, string content, Action onYesListener, Action onNoListenter, DialogShow option = DialogShow.REPLACE_CURRENT)

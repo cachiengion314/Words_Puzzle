@@ -15,6 +15,10 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private Slider _sliderProgress;
     [SerializeField] private int _maxProgress;
     [SerializeField] private float _valueTimeGift = 12;
+    [SerializeField] private SpineControl _animChest;
+    [SerializeField] private string _idleAnim = "Daily Gift";
+    [SerializeField] private string _collectAnim = "Daily Gift Collect";
+    [SerializeField] private string _collectLoopAnim = "Daily Collect Loop";
 
     private const string PROGRESS_KEY = "PROGRESS";
     private const string TIME_REWARD_KEY = "TIME_REWARD";
@@ -66,7 +70,9 @@ public class DailyGiftsDialog : Dialog
             _rewardedButton.gameObject.SetActive(false);
             _currProgressValue = 0;
             CPlayerPrefs.SetBool(TIME_REWARD_KEY, false);
-            RestartCountdown();
+            _animChest.SetAnimation(_collectAnim, false, () => {
+                RestartCountdown();
+            });
         }
         CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
         UpdateProgress();
@@ -78,10 +84,17 @@ public class DailyGiftsDialog : Dialog
         _endProgress.text = _sliderProgress.maxValue.ToString();
         _currProgress.text = _currProgressValue.ToString();
         _sliderProgress.value = _currProgressValue;
+        //if (_currProgressValue >= _maxProgress)
+        //{
+        //    _animChest.SetAnimation(_collectAnim, false, () => {
+        //        _animChest.SetAnimation(_collectLoopAnim, true);
+        //    });
+        //}
     }
 
     private void RestartCountdown()
     {
+        _animChest.SetAnimation(_idleAnim,true);
         StartCoroutine(ShowEffectCollect(ConfigController.Config.rewardedVideoAmount * 10));
         var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
         _timeTarget = valueTarget;

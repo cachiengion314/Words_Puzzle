@@ -40,6 +40,11 @@ public class Dialog : MonoBehaviour
             Close();
         }
     }
+    
+    public void SetTitleContent(string content)
+    {
+        if (title != null) title.SetText(content);
+    }
 
     public virtual void ShowNoAnim()
     {
