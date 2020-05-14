@@ -58,6 +58,11 @@ public class RewardedButton : MonoBehaviour
     {
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
+#if UNITY_EDITOR
+        onRewarded?.Invoke();
+        content.SetActive(false);
+        ShowTimerText(ConfigController.Config.rewardedVideoPeriod);
+#endif
     }
 
     private void ShowTimerText(int time)

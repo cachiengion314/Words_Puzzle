@@ -47,9 +47,9 @@ public class BeeDialog : Dialog
             {
                 numHintTexts[i].transform.parent.gameObject.SetActive(true);
             }
-
+            var priceLocalize = Purchaser.instance.GetLocalizePrice(Purchaser.instance.beeIapItems[i].productID);
             numHintTexts[i].text = Purchaser.instance.beeIapItems[i].txtValue;
-            priceTexts[i].text = Purchaser.instance.beeIapItems[i].price + "$";
+            priceTexts[i].text = priceLocalize == ""? Purchaser.instance.beeIapItems[i].price + "$" : priceLocalize;
 
             var txtSale = Purchaser.instance.beeIapItems[i].txtSale;
             if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);

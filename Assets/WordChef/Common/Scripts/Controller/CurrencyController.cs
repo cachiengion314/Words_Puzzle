@@ -15,6 +15,10 @@ public class CurrencyController
     public static Action onHintFreeChanged;
     public static Action<int> onHintFreeIncreased;
 
+    public const int DEFAULT_MULTIPLE_HINT_FREE = 0;
+    public static Action onMultipleHintFreeChanged;
+    public static Action<int> onMultipleHintFreeIncreased;
+
     public static void UpdateBalanceAndHintFree()
     {
         GetUserInventoryRequest requestInventory = new GetUserInventoryRequest();
@@ -122,15 +126,15 @@ public class CurrencyController
             PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
             {
                 SetHintFree(result.Balance);
-                if (onBalanceChanged != null) onHintFreeChanged();
-                if (onBallanceIncreased != null) onHintFreeIncreased(value);
+                if (onHintFreeChanged != null) onHintFreeChanged();
+                if (onHintFreeIncreased != null) onHintFreeIncreased(value);
             }, null);
         }
         else
         {
             SetHintFree(current + value);
-            if (onBalanceChanged != null) onHintFreeChanged();
-            if (onBallanceIncreased != null) onHintFreeIncreased(value);
+            if (onHintFreeChanged != null) onHintFreeChanged();
+            if (onHintFreeIncreased != null) onHintFreeIncreased(value);
         }
     }
 
@@ -151,13 +155,80 @@ public class CurrencyController
             PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
             {
                 SetHintFree(result.Balance);
-                if (onBalanceChanged != null) onHintFreeChanged();
+                if (onHintFreeChanged != null) onHintFreeChanged();
             }, null);
         }
         else
         {
             SetHintFree(current - value);
-            if (onBalanceChanged != null) onHintFreeChanged();
+            if (onHintFreeChanged != null) onHintFreeChanged();
+        }
+        return true;
+    }
+    #endregion
+
+    #region Multiple Hints
+    public static int GetMultipleHintFree()
+    {
+        int numHint = DEFAULT_MULTIPLE_HINT_FREE;
+        if (CPlayerPrefs.HasKey(PrefKeys.MULTIPLE_HINT_FREE))
+            numHint = CPlayerPrefs.GetInt(PrefKeys.MULTIPLE_HINT_FREE);
+        return numHint;
+    }
+
+    public static void SetMultipleHintFree(int value)
+    {
+        CPlayerPrefs.SetInt(PrefKeys.MULTIPLE_HINT_FREE, value);
+        CPlayerPrefs.Save();
+    }
+
+    public static void CreditMultipleHintFree(int value)
+    {
+        int current = GetMultipleHintFree();
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "MH";
+            request.Amount = value;
+            PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
+            {
+                SetMultipleHintFree(result.Balance);
+                if (onMultipleHintFreeChanged != null) onMultipleHintFreeChanged();
+                if (onMultipleHintFreeIncreased != null) onMultipleHintFreeIncreased(value);
+            }, null);
+        }
+        else
+        {
+            SetMultipleHintFree(current + value);
+            if (onMultipleHintFreeChanged != null) onMultipleHintFreeChanged();
+            if (onMultipleHintFreeIncreased != null) onMultipleHintFreeIncreased(value);
+        }
+    }
+
+    public static bool DebitMultipleHintFree(int value)
+    {
+        int current = GetMultipleHintFree();
+        if (current < value)
+        {
+            return false;
+        }
+
+
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            SubtractUserVirtualCurrencyRequest request = new SubtractUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "MH";
+            request.Amount = value;
+            PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
+            {
+                SetMultipleHintFree(result.Balance);
+                if (onMultipleHintFreeChanged != null) onMultipleHintFreeChanged();
+            }, null);
+        }
+        else
+        {
+            SetMultipleHintFree(current - value);
+            if (onMultipleHintFreeChanged != null) onMultipleHintFreeChanged();
         }
         return true;
     }

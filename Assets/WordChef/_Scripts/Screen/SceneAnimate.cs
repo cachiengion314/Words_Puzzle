@@ -93,9 +93,9 @@ public class SceneAnimate : MonoBehaviour
         var tweenControl = TweenControl.GetInstance();
         isShowBtnTest = !isShowBtnTest;
         if (isShowBtnTest)
-            tweenControl.MoveRectX(rectTransform, 0, 0.3f);
+            tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x - rectTransform.sizeDelta.x, 0.3f);
         else
-            tweenControl.MoveRectX(rectTransform, -rectTransform.sizeDelta.x, 0.3f);
+            tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x + rectTransform.sizeDelta.x, 0.3f);
     }
     //===
 }

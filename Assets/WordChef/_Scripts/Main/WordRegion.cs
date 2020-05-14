@@ -12,6 +12,8 @@ public class WordRegion : MonoBehaviour
 {
     [SerializeField] private GameObject _hintFree;
     [SerializeField] private GameObject _hintPrice;
+    [SerializeField] private GameObject _MultiplehintFree;
+    [SerializeField] private GameObject _MultiplehintPrice;
 
     [SerializeField] private Sprite _spriteExcellent;
     [SerializeField] private Sprite _spriteNormal;
@@ -176,6 +178,7 @@ public class WordRegion : MonoBehaviour
         SetLinesPosition();
 
         SetupNumhintFree();
+        SetupNumMultiplehintFree();
 
         CheckAdsIsShow();
         FacebookController.instance.newLevel = false;
@@ -263,6 +266,19 @@ public class WordRegion : MonoBehaviour
         else
         {
             ShowPriceHint(true);
+        }
+    }
+
+    private void SetupNumMultiplehintFree()
+    {
+        var multiplehintFree = CurrencyController.GetMultipleHintFree();
+        if (multiplehintFree > 0)
+        {
+            ShowPriceMultipleHint(false);
+        }
+        else
+        {
+            ShowPriceMultipleHint(true);
         }
     }
 
@@ -773,10 +789,16 @@ public class WordRegion : MonoBehaviour
         _hintPrice.SetActive(show);
     }
 
+    private void ShowPriceMultipleHint(bool show)
+    {
+        _MultiplehintFree.SetActive(!show);
+        _MultiplehintPrice.SetActive(show);
+    }
+
     public void HintRandomClick()
     {
         int ballance = CurrencyController.GetBalance();
-        //var hintFree = CurrencyController.GetHintFree();
+        var multiplehintFree = CurrencyController.GetMultipleHintFree();
         if (ballance >= Const.HINT_RANDOM_COST /*|| hintFree > 0*/)
         {
             LineWord line = null;
@@ -807,7 +829,15 @@ public class WordRegion : MonoBehaviour
                     }
                 }
             }
-            CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
+            if (multiplehintFree > 0)
+            {
+                CurrencyController.DebitMultipleHintFree(1);
+            }
+            else
+            {
+                CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
+            }
+            SetupNumMultiplehintFree();
             Prefs.countBooster += 1;
             Prefs.countBoosterDaily += 1;
         }

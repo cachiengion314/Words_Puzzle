@@ -81,8 +81,9 @@ public class ShopDialog : Dialog
                     Purchaser.instance.iapItems[i].value = (int)resultValue;
                     Purchaser.instance.iapItems[i].txtValue = resultValue.ToString();
                 }
+                var priceLocalize = Purchaser.instance.GetLocalizePrice(Purchaser.instance.iapItems[i].productID);
                 numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
-                priceTexts[i].text = Purchaser.instance.iapItems[i].price + "$";
+                priceTexts[i].text = priceLocalize == "" ? Purchaser.instance.iapItems[i].price + "$" : priceLocalize;
 
                 var txtSale = Purchaser.instance.iapItems[i].txtSale;
                 if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);

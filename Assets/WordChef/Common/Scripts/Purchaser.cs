@@ -150,6 +150,19 @@ public class Purchaser : MonoBehaviour, IStoreListener
         return m_StoreController != null && m_StoreExtensionProvider != null;
     }
 
+    public string GetLocalizePrice(string productID)
+    {
+        var price = "";
+        foreach (var product in m_StoreController.products.all)
+        {
+            if (product.transactionID == productID)
+            {
+                return product.metadata.localizedPriceString;
+            }
+        }
+        return price;
+    }
+
     public void BuyProduct(int index)
     {
         BuyProductID(iapItems[index].productID);
