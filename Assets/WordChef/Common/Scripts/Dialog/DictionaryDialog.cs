@@ -21,7 +21,7 @@ public class DictionaryDialog : Dialog
     public ListGroupWord listGroupWord;
     public Transform content;
     public static DictionaryDialog instance;
-    public Text numWordPassedText;
+    public TextMeshProUGUI numWordPassedText;
 
     [HideInInspector] public ListGroupWord currListWord;
     //string wordValid;

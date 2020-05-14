@@ -25,8 +25,23 @@ public class OpenWordDictionaryDialog : Dialog
             _rewardControl = Instantiate(_rewardVideoPfb);
         _rewardControl.onRewardedCallback -= OnCompleteVideo;
         _rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
-        _textTitle.text = CONTENT_DEFAULT;
+        CheckShowTextTitle();
         ShowBtnLater(false);
+    }
+
+    private void CheckShowTextTitle()
+    {
+        CUtils.CheckConnection(this, (result) =>
+        {
+            if (result == 0)
+            {
+                _textTitle.text = CONTENT_DEFAULT;
+            }
+            else
+            {
+                _textTitle.text = CONTENT_NO_INTERNET;
+            }
+        });
     }
 
     private void CheckBtnShowUpdate(bool IsAvailableToShow)
