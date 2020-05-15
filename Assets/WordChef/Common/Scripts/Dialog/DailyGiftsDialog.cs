@@ -107,6 +107,12 @@ public class DailyGiftsDialog : Dialog
         CPlayerPrefs.SetBool(TIME_REWARD_KEY, false);
         CurrencyController.CreditHintFree(ConfigController.Config.gameParameters.rewardHintDaily);
         CurrencyController.CreditMultipleHintFree(ConfigController.Config.gameParameters.rewardMultipleHintDaily);
+        var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
+        _timeTarget = valueTarget;
+        CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
+        InitTimeCountDown();
+        _isReward = false;
+        CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
         _animChest.SetAnimation(_collectAnim, false, () =>
         {
             RestartCountdown();
@@ -133,12 +139,6 @@ public class DailyGiftsDialog : Dialog
         //StartCoroutine(ShowEffectCollect(ConfigController.Config.rewardedVideoAmount * 10));
         //TweenControl.GetInstance().DelayCall(transform, 0.7f,()=> {
         _animChest.SetAnimation(_idleAnim, true);
-        var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
-        _timeTarget = valueTarget;
-        CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
-        InitTimeCountDown();
-        _isReward = false;
-        CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
         CheckTimeReward();
         //});
     }
@@ -176,7 +176,10 @@ public class DailyGiftsDialog : Dialog
     private void ShowReward()
     {
         _timeValue = 0;
-        ShowBtnWatch(true);
+        if (_currProgressValue < _maxProgress)
+            ShowBtnWatch(true);
+        else
+            ShowBtnWatch(false);
         _timeCountdown.transform.localScale = Vector3.zero;
     }
 
