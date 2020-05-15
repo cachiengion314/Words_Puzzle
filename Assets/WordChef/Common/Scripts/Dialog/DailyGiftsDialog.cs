@@ -96,6 +96,7 @@ public class DailyGiftsDialog : Dialog
     {
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
         _rewardedVideoControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        _btnWatch.interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             _currProgressValue += 1;
@@ -105,6 +106,7 @@ public class DailyGiftsDialog : Dialog
             }
             CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
             UpdateProgress();
+            _btnWatch.interactable = true;
         });
     }
 
