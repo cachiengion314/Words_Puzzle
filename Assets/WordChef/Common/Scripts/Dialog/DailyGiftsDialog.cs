@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class DailyGiftsDialog : Dialog
 {
-    [SerializeField] private RewardedButton _rewardedButton;
+    [SerializeField] private RewardVideoController _rewardedButton;
     [SerializeField] private Button _collectButton;
     //[SerializeField] private string _contentReward = "Completely watching 10 rewarded ads, you will get 2 Multiple Hints and 5 Hints";
     [SerializeField] private Text _currProgress;
@@ -48,7 +48,7 @@ public class DailyGiftsDialog : Dialog
         ShowBtnWatch(true);
         _timeTarget = _valueTimeGift * 3600;
         _rewardedButton.gameObject.SetActive(false);
-        _rewardedButton.onRewarded += OnRewarded;
+        _rewardedButton.onRewardedCallback += OnRewarded;
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -117,14 +117,14 @@ public class DailyGiftsDialog : Dialog
     {
         //StartCoroutine(ShowEffectCollect(ConfigController.Config.rewardedVideoAmount * 10));
         //TweenControl.GetInstance().DelayCall(transform, 0.7f,()=> {
-            _animChest.SetAnimation(_idleAnim, true);
-            var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
-            _timeTarget = valueTarget;
-            CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
-            InitTimeCountDown();
-            _isReward = false;
-            CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
-            CheckTimeReward();
+        _animChest.SetAnimation(_idleAnim, true);
+        var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
+        _timeTarget = valueTarget;
+        CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
+        InitTimeCountDown();
+        _isReward = false;
+        CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
+        CheckTimeReward();
         //});
     }
 
@@ -143,17 +143,27 @@ public class DailyGiftsDialog : Dialog
 
     private void CheckTimeReward()
     {
-        _isReward = CPlayerPrefs.GetBool(TIME_REWARD_KEY, false);
-        if (!_isReward)
-            StartCoroutine(CountDownTime());
+        if (CPlayerPrefs.HasKey(TIME_REWARD_KEY))
+        {
+            _isReward = CPlayerPrefs.GetBool(TIME_REWARD_KEY, false);
+            if (!_isReward)
+                StartCoroutine(CountDownTime());
+            else
+                ShowReward();
+        }
         else
         {
-            _timeValue = 0;
-            _rewardedButton.gameObject.SetActive(true);
-            _rewardedButton.content.SetActive(true);
-            _timeCountdown.transform.localScale = Vector3.zero;
+            ShowReward();
             //_timeCountdown.text = _contentReward;
         }
+    }
+
+    private void ShowReward()
+    {
+        _timeValue = 0;
+        _rewardedButton.gameObject.SetActive(true);
+        _rewardedButton.content.SetActive(true);
+        _timeCountdown.transform.localScale = Vector3.zero;
     }
 
     private IEnumerator CountDownTime()
