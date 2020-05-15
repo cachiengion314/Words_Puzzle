@@ -125,7 +125,7 @@ public class Quest : MonoBehaviour
 
     void ShowQuestDaily()
     {
-        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
+        //gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
         _fillProgress.maxValue = goal.requiredAmount;
         switch (goal.goalType)
         {
@@ -194,7 +194,7 @@ public class Quest : MonoBehaviour
 
     void ShowQuestAchie()
     {
-        gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
+        //gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
         _fillProgress.maxValue = goal.requiredAmount;
         if (_fillProgress.value < _fillProgress.maxValue)
         {
