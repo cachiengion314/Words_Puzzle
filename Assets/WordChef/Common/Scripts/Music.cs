@@ -79,7 +79,7 @@ public class Music : MonoBehaviour
         {
             audioSource.Play();
         }
-        //audioSource.volume = 1;
+        audioSource.volume = GetVolume();
     }
 
     private void UpdateSetting()
