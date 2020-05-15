@@ -49,7 +49,7 @@ public class DailyGiftsDialog : Dialog
         _timeTarget = _valueTimeGift * 3600;
         _rewardedButton.gameObject.SetActive(false);
         _rewardedButton.onRewardedCallback -= OnRewarded;
-        
+        _rewardedButton.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -84,16 +84,25 @@ public class DailyGiftsDialog : Dialog
 #endif
     }
 
+    private void CheckBtnShowUpdate(bool IsAvailableToShow)
+    {
+        _rewardedButton.gameObject.SetActive(IsAvailableToShow);
+    }
+
     void OnRewarded()
     {
         _rewardedButton.onRewardedCallback -= OnRewarded;
-        _currProgressValue += 1;
-        if (_currProgressValue >= _maxProgress)
+        _rewardedButton.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            ShowBtnWatch(false);
-        }
-        CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
-        UpdateProgress();
+            _currProgressValue += 1;
+            if (_currProgressValue >= _maxProgress)
+            {
+                ShowBtnWatch(false);
+            }
+            CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
+            UpdateProgress();
+        });
     }
 
     public void OnClickCollect()
@@ -209,6 +218,7 @@ public class DailyGiftsDialog : Dialog
 
     private void OnDestroy()
     {
+        _rewardedButton.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _rewardedButton.onRewardedCallback -= OnRewarded;
     }
 
