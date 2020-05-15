@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class DailyGiftsDialog : Dialog
 {
-    [SerializeField] private RewardVideoController _rewardedButton;
+    [SerializeField] private RewardVideoController _rewardedVideoPfb;
+    [SerializeField] private Button _btnWatch;
     [SerializeField] private Button _collectButton;
     //[SerializeField] private string _contentReward = "Completely watching 10 rewarded ads, you will get 2 Multiple Hints and 5 Hints";
     [SerializeField] private Text _currProgress;
@@ -24,6 +25,7 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private string _collectLoopAnim = "Daily Collect Loop";
     [SerializeField] private Transform _posStart;
 
+    private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
     private const string TIME_REWARD_KEY = "TIME_REWARD";
     private const string DAY_KEY = "DAY";
@@ -45,11 +47,12 @@ public class DailyGiftsDialog : Dialog
 
     private void InitProgress()
     {
-        ShowBtnWatch(true);
         _timeTarget = _valueTimeGift * 3600;
-        _rewardedButton.gameObject.SetActive(false);
-        _rewardedButton.onRewardedCallback -= OnRewarded;
-        _rewardedButton.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
+        _rewardedVideoControl = FindObjectOfType<RewardVideoController>();
+        if (_rewardedVideoControl == null)
+            _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
+        _rewardedVideoControl.onRewardedCallback -= OnRewarded;
+        _rewardedVideoControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -70,13 +73,13 @@ public class DailyGiftsDialog : Dialog
 
     private void ShowBtnWatch(bool show)
     {
-        _rewardedButton.gameObject.SetActive(show);
+        _btnWatch.gameObject.SetActive(show);
         _collectButton.gameObject.SetActive(!show);
     }
 
     public void OnClickReward()
     {
-        _rewardedButton.onRewardedCallback += OnRewarded;
+        _rewardedVideoControl.onRewardedCallback += OnRewarded;
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
@@ -86,13 +89,13 @@ public class DailyGiftsDialog : Dialog
 
     private void CheckBtnShowUpdate(bool IsAvailableToShow)
     {
-        _rewardedButton.gameObject.SetActive(IsAvailableToShow);
+        //_rewardedButton.gameObject.SetActive(IsAvailableToShow);
     }
 
     void OnRewarded()
     {
-        _rewardedButton.onRewardedCallback -= OnRewarded;
-        _rewardedButton.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        _rewardedVideoControl.onRewardedCallback -= OnRewarded;
+        _rewardedVideoControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             _currProgressValue += 1;
@@ -182,8 +185,7 @@ public class DailyGiftsDialog : Dialog
     private void ShowReward()
     {
         _timeValue = 0;
-        _rewardedButton.gameObject.SetActive(true);
-        _rewardedButton.content.SetActive(true);
+        ShowBtnWatch(true);
         _timeCountdown.transform.localScale = Vector3.zero;
     }
 
@@ -199,8 +201,7 @@ public class DailyGiftsDialog : Dialog
                 _timeCountdown.transform.localScale = Vector3.zero;
                 _isReward = true;
                 CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
-                _rewardedButton.gameObject.SetActive(true);
-                _rewardedButton.content.SetActive(true);
+                _btnWatch.gameObject.SetActive(true);
             }
             yield return new WaitForSeconds(1);
             if (_timeValue > 0)
@@ -218,8 +219,8 @@ public class DailyGiftsDialog : Dialog
 
     private void OnDestroy()
     {
-        _rewardedButton.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        _rewardedButton.onRewardedCallback -= OnRewarded;
+        _rewardedVideoControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        _rewardedVideoControl.onRewardedCallback -= OnRewarded;
     }
 
     //TEST
@@ -233,7 +234,7 @@ public class DailyGiftsDialog : Dialog
             _timeCountdown.transform.localScale = Vector3.zero;
             _isReward = true;
             CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
-            _rewardedButton.gameObject.SetActive(true);
+            _rewardedVideoControl.gameObject.SetActive(true);
         }
     }
     //==
