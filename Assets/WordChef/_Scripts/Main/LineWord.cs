@@ -154,9 +154,9 @@ public class LineWord : MonoBehaviour
         }
         foreach (var line in WordRegion.instance.Lines)
         {
-            if (line != this && !line.isShown)
+            if (line != this)
             {
-                if (line.answer == answer)
+                if (line.answer == answer && !line.isShown)
                     line.answer = "";
                 line.answers.Remove(answer);
             }
