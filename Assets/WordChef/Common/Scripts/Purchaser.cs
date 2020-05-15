@@ -157,7 +157,8 @@ public class Purchaser : MonoBehaviour, IStoreListener
         {
             if (product.transactionID == productID)
             {
-                return product.metadata.localizedPriceString;
+                price = product.metadata.localizedPriceString;
+                break;
             }
         }
         return price;

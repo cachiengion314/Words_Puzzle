@@ -52,6 +52,7 @@ public class DailyGiftsDialog : Dialog
         if (_rewardedVideoControl == null)
             _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
+        _rewardedVideoControl.onRewardedCallback += OnRewarded;
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -78,7 +79,6 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickReward()
     {
-        _rewardedVideoControl.onRewardedCallback += OnRewarded;
         AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
@@ -88,16 +88,11 @@ public class DailyGiftsDialog : Dialog
 
     void OnRewarded()
     {
-        _rewardedVideoControl.onRewardedCallback -= OnRewarded;
         _btnWatch.interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             _currProgressValue += 1;
             Debug.Log("fdsadfsfds: " + this.name);
-            if (_currProgressValue >= _maxProgress)
-            {
-                ShowBtnWatch(false);
-            }
             CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
             UpdateProgress();
             _btnWatch.interactable = true;
@@ -187,6 +182,7 @@ public class DailyGiftsDialog : Dialog
 
     private IEnumerator CountDownTime()
     {
+        _btnWatch.gameObject.SetActive(false);
         while (!_isReward)
         {
             _timeCountdown.transform.localScale = Vector3.one;
