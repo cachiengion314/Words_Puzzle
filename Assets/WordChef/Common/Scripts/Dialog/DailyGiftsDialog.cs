@@ -48,7 +48,8 @@ public class DailyGiftsDialog : Dialog
         ShowBtnWatch(true);
         _timeTarget = _valueTimeGift * 3600;
         _rewardedButton.gameObject.SetActive(false);
-        _rewardedButton.onRewardedCallback += OnRewarded;
+        _rewardedButton.onRewardedCallback -= OnRewarded;
+        
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -73,8 +74,19 @@ public class DailyGiftsDialog : Dialog
         _collectButton.gameObject.SetActive(!show);
     }
 
+    public void OnClickReward()
+    {
+        _rewardedButton.onRewardedCallback += OnRewarded;
+        AdmobController.instance.ShowRewardBasedVideo();
+        Sound.instance.Play(Sound.Others.PopupOpen);
+#if UNITY_EDITOR
+        OnRewarded();
+#endif
+    }
+
     void OnRewarded()
     {
+        _rewardedButton.onRewardedCallback -= OnRewarded;
         _currProgressValue += 1;
         if (_currProgressValue >= _maxProgress)
         {
@@ -193,6 +205,11 @@ public class DailyGiftsDialog : Dialog
         _timeValue = (int)(_sumTime - timeNow);
         if (_timeValue <= 0)
             _timeValue = 0;
+    }
+
+    private void OnDestroy()
+    {
+        _rewardedButton.onRewardedCallback -= OnRewarded;
     }
 
     //TEST
