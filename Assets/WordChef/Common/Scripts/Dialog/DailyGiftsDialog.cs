@@ -52,7 +52,6 @@ public class DailyGiftsDialog : Dialog
         if (_rewardedVideoControl == null)
             _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
-        _rewardedVideoControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -87,19 +86,14 @@ public class DailyGiftsDialog : Dialog
 #endif
     }
 
-    private void CheckBtnShowUpdate(bool IsAvailableToShow)
-    {
-        //_rewardedButton.gameObject.SetActive(IsAvailableToShow);
-    }
-
     void OnRewarded()
     {
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
-        _rewardedVideoControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _btnWatch.interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             _currProgressValue += 1;
+            Debug.Log("fdsadfsfds: " + this.name);
             if (_currProgressValue >= _maxProgress)
             {
                 ShowBtnWatch(false);
@@ -221,7 +215,6 @@ public class DailyGiftsDialog : Dialog
 
     private void OnDestroy()
     {
-        _rewardedVideoControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
     }
 
