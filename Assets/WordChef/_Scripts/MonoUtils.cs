@@ -34,21 +34,21 @@ public class MonoUtils : MonoBehaviour
         //    Destroy(star);
         //}, EaseType.InBack);
         var targetShow = new Vector3(star.transform.localPosition.x, star.transform.localPosition.y -
-            (posStart != null ? (posStart as RectTransform).rect.height * 1.5f : (star.transform as RectTransform).rect.height));
-        tweenControl.MoveLocal(star.transform, targetShow, 0.3f, () =>
-        {
-            tweenControl.MoveLocal(star.transform, targetShow - new Vector3(0, 30, 0), 0.2f, () =>
-              {
-                  tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -500f, 1, 1f, false, () =>
+            (posStart != null ? (posStart as RectTransform).rect.height /** 1.3f */: (star.transform as RectTransform).rect.height));
+        //tweenControl.MoveLocal(star.transform, targetShow, 0.3f, () =>
+        //{
+            //tweenControl.MoveLocal(star.transform, targetShow - new Vector3(100, 50, 0), 0.2f, () =>
+            //  {
+                  tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -800f, 1, 1.3f, false, () =>
                   {
                       CurrencyController.CreditBalance(value);
                       Sound.instance.Play(Sound.Collects.CoinCollect);
                       Destroy(star);
-                  }, EaseType.OutQuad);
-              });
-        });
+                  }, EaseType.Linear);
+              //});
+        //});
         tweenControl.Scale(star.gameObject, Vector3.one * 0.6f,0.3f,()=> {
-            tweenControl.Scale(star.gameObject, Vector3.one, 0.2f);
+            tweenControl.Scale(star.gameObject, Vector3.one, 1f);
         });
     }
 }
