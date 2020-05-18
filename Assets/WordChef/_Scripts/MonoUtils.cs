@@ -47,6 +47,8 @@ public class MonoUtils : MonoBehaviour
                   }, EaseType.OutQuad);
               });
         });
-        tweenControl.ScaleFromZero(star.gameObject, 0.5f);
+        tweenControl.Scale(star.gameObject, Vector3.one * 0.6f,0.3f,()=> {
+            tweenControl.Scale(star.gameObject, Vector3.one, 0.2f);
+        });
     }
 }
