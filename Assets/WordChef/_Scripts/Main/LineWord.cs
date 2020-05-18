@@ -263,6 +263,8 @@ public class LineWord : MonoBehaviour
 
     private void ShowDoneAllCell()
     {
+        Prefs.countSpell += 1;
+        Prefs.countSpellDaily += 1;
         WordRegion.instance.SetWordOpenInLevelAmount(answer);
         if (answer != "")
         {
