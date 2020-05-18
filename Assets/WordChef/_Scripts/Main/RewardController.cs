@@ -77,6 +77,9 @@ public class RewardController : MonoBehaviour
         {
             AdmobController.instance.ShowRewardBasedVideo();
             Sound.instance.Play(Sound.Others.PopupOpen);
+#if UNITY_EDITOR
+            OnCompleteVideo();
+#endif
         });
     }
 

@@ -13,6 +13,7 @@ public class RewardedVideoDialog : Dialog
 
     private void Start()
     {
+        GetComponent<Canvas>().worldCamera = Camera.main;
         SetAmount(_amount);
     }
 

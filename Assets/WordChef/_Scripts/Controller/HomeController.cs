@@ -3,10 +3,6 @@ using System;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
-using System.Net.Mail;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 
 public class HomeController : BaseController
 {
