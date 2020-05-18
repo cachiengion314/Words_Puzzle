@@ -3,6 +3,10 @@ using System;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
+using System.Net.Mail;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 public class HomeController : BaseController
 {
@@ -85,24 +89,30 @@ public class HomeController : BaseController
         _spineAnimEgg.gameObject.SetActive(true);
         _spineAnimShadow.gameObject.SetActive(true);
         _spineAnimGia.gameObject.SetActive(true);
-        _spineAnimShadow.SetAnimation(_showShadow, false, () => {
+        _spineAnimShadow.SetAnimation(_showShadow, false, () =>
+        {
             _spineAnimShadow.SetAnimation(_showShadowLoop, true);
         });
-        _spineAnimEgg.SetAnimation(_showAnim, false, () => {
+        _spineAnimEgg.SetAnimation(_showAnim, false, () =>
+        {
             _spineAnimEgg.SetAnimation(_loopAnim, true);
         });
         yield return new WaitForSeconds(0.4f);
         _btnPlay.gameObject.SetActive(true);
         _maskShadow.gameObject.SetActive(true);
-        tweenControl.Scale(_btnPlayShadow, Vector3.one * 1.2f, 0.47f, () => {
+        tweenControl.Scale(_btnPlayShadow, Vector3.one * 1.2f, 0.47f, () =>
+        {
             tweenControl.Scale(_btnPlayShadow, Vector3.one, 0.53f);
         });
-        tweenControl.MoveRectY(_panelTopRect, -30, 0.7f, () => {
-            tweenControl.MoveRectY(_panelTopRect, 20, 0.3f, () => {
+        tweenControl.MoveRectY(_panelTopRect, -30, 0.7f, () =>
+        {
+            tweenControl.MoveRectY(_panelTopRect, 20, 0.3f, () =>
+            {
                 tweenControl.MoveRectY(_panelTopRect, 0, 0.5f);
             });
         });
-        _spineAnimGia.SetAnimation(_showgiado, false, () => {
+        _spineAnimGia.SetAnimation(_showgiado, false, () =>
+        {
             _iconController.AnimIcon();
         });
     }
