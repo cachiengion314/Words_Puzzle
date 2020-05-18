@@ -97,7 +97,9 @@ public class LineWord : MonoBehaviour
     {
         answer = progressAnswer;
         if (answer != "")
+        {
             SetDataLetter(answer);
+        }
         isShown = true;
         int i = 0;
         foreach (var cell in cells)

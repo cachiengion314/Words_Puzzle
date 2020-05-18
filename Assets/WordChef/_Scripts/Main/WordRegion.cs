@@ -233,6 +233,17 @@ public class WordRegion : MonoBehaviour
             lines.Add(line);
             lineIndex++;
         }
+        var tempLinesSown = lines.FindAll(li => li.isShown);
+        foreach (var lineShown in tempLinesSown)
+        {
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i] != lineShown)
+                {
+                    lines[i].answers.Remove(lineShown.answer);
+                }
+            }
+        }
         var checkShowDicBtn = lines.Any(li => li.isShown);
         btnDictionary.gameObject.SetActive(checkShowDicBtn);
     }
