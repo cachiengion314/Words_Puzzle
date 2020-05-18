@@ -810,7 +810,7 @@ public class WordRegion : MonoBehaviour
     {
         int ballance = CurrencyController.GetBalance();
         var multiplehintFree = CurrencyController.GetMultipleHintFree();
-        if (ballance >= Const.HINT_RANDOM_COST /*|| hintFree > 0*/)
+        if (ballance >= Const.HINT_RANDOM_COST || multiplehintFree > 0)
         {
             LineWord line = null;
             for (int i = 0; i < lines.Count; i++)
@@ -827,9 +827,6 @@ public class WordRegion : MonoBehaviour
                                 line.isAds = false;
                                 CPlayerPrefs.SetBool(line.gameObject.name + "_ADS", line.isAds);
                             }
-                            //if (hintFree > 0)
-                            //    CurrencyController.DebitHintFree(hintFree);
-                            //else
                             Sound.instance.audioSource.Stop();
                             Sound.instance.PlayButton(Sound.Button.MultipleHint);
                         });
