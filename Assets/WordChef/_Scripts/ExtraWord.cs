@@ -72,10 +72,11 @@ public class ExtraWord : MonoBehaviour
     {
         if (extraWords.Contains(word))
         {
-            if (isMessageShowing) return;
-            isMessageShowing = true;
+            //if (isMessageShowing) return;
+            //isMessageShowing = true;
 
-            ShowMessage("");
+            //ShowMessage("");
+            NotifyMessage.instance.ShowMessage(NotifyMessage.instance.WORD_EXIST);
         }
         else
         {

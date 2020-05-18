@@ -408,6 +408,14 @@ public class WordRegion : MonoBehaviour
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
+        var checkLength = lines.All(li => !li.isShown && (li.cells.Count != checkWord.Length));
+        if (checkLength)
+        {
+            NotifyMessage.instance.ShowMessage(NotifyMessage.instance.WORD_LENGTH_REQUIREMENT);
+            if (!textPreview.useFX)
+                textPreview.ClearText();
+            return;
+        }
         //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         var lineIsShown = lines.FindAll(li => li.isShown);
         LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown/* && !TutorialController.instance.isShowTut*/ && (x.answer == "" || CheckAnswerFill(x, checkWord)));
@@ -453,6 +461,7 @@ public class WordRegion : MonoBehaviour
             LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown /*&& !TutorialController.instance.isShowTut*/);
             if (lineExist != null && lineExist.answer == checkWord)
             {
+                NotifyMessage.instance.ShowMessage(NotifyMessage.instance.WORD_EXIST);
                 Sound.instance.Play(Sound.Others.WordAlready);
                 lineExist.ShowFxAnswerDuplicate();
                 textPreview.SetExistColor();
