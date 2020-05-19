@@ -142,7 +142,7 @@ public class LineWord : MonoBehaviour
         if (isAds)
         {
             CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
-            WordRegion.instance.BtnADS.gameObject.SetActive(false);
+            WordRegion.instance.BtnADS?.gameObject.SetActive(false);
             isAds = false;
             CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
             CPlayerPrefs.Save();
