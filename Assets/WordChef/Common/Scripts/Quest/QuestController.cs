@@ -39,11 +39,6 @@ public class QuestController : MonoBehaviour
         UpdateNextDay();
     }
 
-    void Start()
-    {
-        UpdateDailyQuest();
-    }
-
     private IEnumerator CountDownTimeRefresh()
     {
         while (DateTime.Compare(DateTime.Now, nextDay) < 0)
@@ -95,12 +90,15 @@ public class QuestController : MonoBehaviour
         {
             var time = CPlayerPrefs.GetLong("DAY_REFRESH");
             nextDay = DateTime.FromBinary(time);
+            Debug.Log("NextDay: " + nextDay);
         }
         else
         {
             nextDay = DateTime.FromBinary(timeRefresh.Ticks);
             CPlayerPrefs.SetLong("DAY_REFRESH", timeRefresh.Ticks);
+            Debug.Log("NextDay New: " + nextDay);
         }
+        UpdateDailyQuest();
         if (DateTime.Compare(DateTime.Now, nextDay) > 0)
         {
             nextDay = DateTime.Today.AddDays(1) + TimeSpan.FromSeconds(_timeRefresh * 3600);
