@@ -103,7 +103,7 @@ public class TextPreview : MonoBehaviour
             text.text.text = sb[i].ToString();
             text.gameObject.SetActive(true);
         }
-        backgroundRT.sizeDelta = new Vector2(sb.Length * 120 + 200, backgroundRT.sizeDelta.y);
+        backgroundRT.sizeDelta = new Vector2(sb.Length * 80 + 200, backgroundRT.sizeDelta.y);
     }
 
     public void SetActive(bool isActive)
