@@ -138,7 +138,6 @@ public class DailyGiftsDialog : Dialog
     {
         //StartCoroutine(ShowEffectCollect(ConfigController.Config.rewardedVideoAmount * 10));
         //TweenControl.GetInstance().DelayCall(transform, 0.7f,()=> {
-        _animChest.SetAnimation(_idleAnim, true);
         CheckTimeReward();
         //});
     }
@@ -176,6 +175,7 @@ public class DailyGiftsDialog : Dialog
 
     private void ShowReward()
     {
+        _animChest.SetAnimation(_idleAnim, true);
         _timeValue = 0;
         if (_currProgressValue < _maxProgress)
             ShowBtnWatch(true);
@@ -186,6 +186,7 @@ public class DailyGiftsDialog : Dialog
 
     private IEnumerator CountDownTime()
     {
+        _animChest.SetAnimation(_collectLoopAnim, true);
         _btnWatch.gameObject.SetActive(false);
         while (!_isReward)
         {
