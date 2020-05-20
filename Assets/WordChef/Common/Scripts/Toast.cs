@@ -34,10 +34,10 @@ public class Toast : MonoBehaviour
     public void SetMessage(string msg)
     {
         messageTransform.GetComponent<Text>().text = msg;
-        Timer.Schedule(this, 0.1f, () =>
-        {
-            backgroundTransform.sizeDelta = new Vector2(messageTransform.GetComponent<Text>().preferredWidth + 60, messageTransform.GetComponent<Text>().preferredHeight + 56);
-        });
+        //Timer.Schedule(this, 0.1f, () =>
+        //{
+        //    backgroundTransform.sizeDelta = new Vector2(messageTransform.GetComponent<Text>().preferredWidth + 60, messageTransform.GetComponent<Text>().preferredHeight + 56);
+        //});
     }
 
     private void Show(AToast aToast)
