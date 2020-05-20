@@ -108,7 +108,8 @@ public class Quest : MonoBehaviour
 
     public void OnReward()
     {
-        CurrencyController.CreditBalance(goal.reward);
+        StartCoroutine(ShowEffectCollect(goal.reward));
+        //CurrencyController.CreditBalance(goal.reward);
         _btnReward.gameObject.SetActive(false);
         _iconComplete.gameObject.SetActive(true);
         CPlayerPrefs.SetBool("Completed" + gameObject.name, true);
@@ -120,6 +121,20 @@ public class Quest : MonoBehaviour
             case TaskType.ACHIEVEMENT:
                 ResetupAchie();
                 break;
+        }
+    }
+
+    private IEnumerator ShowEffectCollect(int value)
+    {
+        MonoUtils.instance.ShowTotalStarCollect(value,null);
+        var result = value / 5;
+        for (int i = 0; i < value; i++)
+        {
+            if (i < 5)
+            {
+                MonoUtils.instance.ShowEffect(result, null, null, _btnReward.transform);
+            }
+            yield return new WaitForSeconds(0.06f);
         }
     }
 

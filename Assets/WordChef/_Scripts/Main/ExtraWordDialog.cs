@@ -57,6 +57,7 @@ public class ExtraWordDialog : Dialog
 
     private IEnumerator ShowEffectCollect(int value, Transform posStart)
     {
+        MonoUtils.instance.ShowTotalStarCollect(value,null);
         var result = value / 5;
         for (int i = 0; i < value; i++)
         {

@@ -145,6 +145,7 @@ public class DailyGiftsDialog : Dialog
 
     private IEnumerator ShowEffectCollect(int value)
     {
+        MonoUtils.instance.ShowTotalStarCollect(value,null);
         for (int i = 0; i < value; i++)
         {
             if (i < 5)

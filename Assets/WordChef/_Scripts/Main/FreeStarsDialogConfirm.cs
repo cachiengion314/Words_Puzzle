@@ -53,6 +53,7 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     //}
     private IEnumerator ShowEffectCollect(int value)
     {
+        MonoUtils.instance.ShowTotalStarCollect(value,null);
         var result = value / 5;
         for (int i = 0; i < value; i++)
         {

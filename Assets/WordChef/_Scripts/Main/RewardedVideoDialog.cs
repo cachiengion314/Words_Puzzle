@@ -46,6 +46,7 @@ public class RewardedVideoDialog : Dialog
 
     private IEnumerator ShowEffectCollect(int value)
     {
+        MonoUtils.instance.ShowTotalStarCollect(value,null);
         var result = value / 5;
         for (int i = 0; i < value; i++)
         {
@@ -55,6 +56,5 @@ public class RewardedVideoDialog : Dialog
             }
             yield return new WaitForSeconds(0.06f);
         }
-
     }
 }

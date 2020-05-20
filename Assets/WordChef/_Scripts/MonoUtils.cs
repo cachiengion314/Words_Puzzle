@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class MonoUtils : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MonoUtils : MonoBehaviour
     public Transform rootDefault;
     public GameObject rubyFly;
     public GameObject levelButton;
+    public TextMeshProUGUI textCollectDefault;
 
     public static MonoUtils instance;
 
@@ -49,6 +51,17 @@ public class MonoUtils : MonoBehaviour
         //});
         tweenControl.Scale(star.gameObject, Vector3.one * 0.6f,0.3f,()=> {
             tweenControl.Scale(star.gameObject, Vector3.one, 1f);
+        });
+    }
+
+    public void ShowTotalStarCollect(int value,TextMeshProUGUI textCollect)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        textCollect.text = "X" + value;
+        tweenControl.DelayCall(transform, 1.6f, () => {
+            tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 1, 0.5f,()=> {
+                tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 0, 0.3f);
+            });
         });
     }
 }

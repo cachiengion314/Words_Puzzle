@@ -7,6 +7,7 @@ using UnityEngine.UI;
 //using Spine.Unity;
 using UnityEngine.Events;
 using DG.Tweening.Core;
+using TMPro;
 
 public enum EaseType
 {
@@ -431,6 +432,12 @@ public class TweenControl : MonoBehaviour
     //}
 
     public void FadeAnfaText(Text txt, float endColor, float duration, TweenCallback onComplete = null, Ease easeType = Ease.Linear, float delay = 0)
+    {
+        var tweener = txt.DOFade(endColor, duration).SetEase(easeType).OnComplete(onComplete).OnKill(() => OnKillFuntion(txt.transform)).SetDelay(delay);
+        AddTweener(txt.gameObject.transform, tweener);
+    }
+
+    public void FadeAnfaText(TextMeshProUGUI txt, float endColor, float duration, TweenCallback onComplete = null, Ease easeType = Ease.Linear, float delay = 0)
     {
         var tweener = txt.DOFade(endColor, duration).SetEase(easeType).OnComplete(onComplete).OnKill(() => OnKillFuntion(txt.transform)).SetDelay(delay);
         AddTweener(txt.gameObject.transform, tweener);
