@@ -57,7 +57,7 @@ public class MonoUtils : MonoBehaviour
     public void ShowTotalStarCollect(int value,TextMeshProUGUI textCollect)
     {
         var tweenControl = TweenControl.GetInstance();
-        textCollect.text = "X" + value;
+        (textCollect != null ? textCollect : textCollectDefault).text = "X" + value;
         tweenControl.DelayCall(transform, 1.6f, () => {
             tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 1, 0.5f,()=> {
                 tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 0, 0.3f);
