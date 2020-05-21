@@ -40,6 +40,7 @@ public class OpenWordDictionaryDialog : Dialog
             else
             {
                 _textTitle.text = CONTENT_NO_INTERNET;
+                ShowBtnLater(true);
             }
         });
     }
@@ -61,10 +62,7 @@ public class OpenWordDictionaryDialog : Dialog
     public void OnClickOpen()
     {
         _rewardControl.onRewardedCallback += OnCompleteVideo;
-        AdmobController.instance.ShowRewardBasedVideo(() =>
-        {
-            ShowBtnLater(true);
-        });
+        AdmobController.instance.ShowRewardBasedVideo(false, LoadAdsFailed, NoInterNet);
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
@@ -77,13 +75,20 @@ public class OpenWordDictionaryDialog : Dialog
                     OnCompleteVideo();
 #endif
                 }
-                else
-                {
-                    _textTitle.text = CONTENT_NO_INTERNET;
-                    ShowBtnLater(true);
-                }
             });
         });
+    }
+
+    void LoadAdsFailed()
+    {
+        _textTitle.text = CONTENT_ADS_LOADED_FAILD;
+        ShowBtnLater(true);
+    }
+
+    void NoInterNet()
+    {
+        _textTitle.text = CONTENT_NO_INTERNET;
+        ShowBtnLater(true);
     }
 
     private void OnCompleteVideo()

@@ -162,7 +162,7 @@ public class AdmobController : MonoBehaviour
         return false;
     }
 
-    public void ShowRewardBasedVideo(Action adsNotReadyYetCallback = null)
+    public void ShowRewardBasedVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         if (this.rewardBasedVideo.IsLoaded())
         {
@@ -171,24 +171,27 @@ public class AdmobController : MonoBehaviour
         else
         {
             //MonoBehaviour.print("Reward based video ad is not ready yet");
-           
+
             CUtils.CheckConnection(this, (result) =>
             {
                 if (result == 0)
                 {
-                    Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
+                    if (showToast)
+                        Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
                     RequestRewardBasedVideo();
                     adsNotReadyYetCallback?.Invoke();
                 }
                 else
                 {
-                    Toast.instance.ShowMessage("No Internet Connection");
+                    if (showToast)
+                        Toast.instance.ShowMessage("No Internet Connection");
+                    noInternetCallback?.Invoke();
                 }
             });
         }
     }
 
-#region Banner callback handlers
+    #region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
@@ -215,9 +218,9 @@ public class AdmobController : MonoBehaviour
         print("HandleAdLeftApplication event received");
     }
 
-#endregion
+    #endregion
 
-#region Interstitial callback handlers
+    #region Interstitial callback handlers
 
     public void HandleInterstitialLoaded(object sender, EventArgs args)
     {
@@ -245,9 +248,9 @@ public class AdmobController : MonoBehaviour
         print("HandleInterstitialLeftApplication event received");
     }
 
-#endregion
+    #endregion
 
-#region RewardBasedVideo callback handlers
+    #region RewardBasedVideo callback handlers
 
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
     {
@@ -289,5 +292,5 @@ public class AdmobController : MonoBehaviour
         MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
     }
 
-#endregion
+    #endregion
 }
