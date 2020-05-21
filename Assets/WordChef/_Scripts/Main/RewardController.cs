@@ -41,6 +41,7 @@ public class RewardController : MonoBehaviour
 
     public void OnShowAdsVideo()
     {
+        CheckShowAgain();
         _rewardVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardVideoControl == null)
             _rewardVideoControl = Instantiate(_rewardVideoPfb);
@@ -50,9 +51,11 @@ public class RewardController : MonoBehaviour
         }
         else
         {
-            overLay.SetActive(true);
+            //overLay.SetActive(true);
+            //Sound.instance.Play(Sound.Others.PopupOpen);
+            //TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch, 0.3f);
             Sound.instance.Play(Sound.Others.PopupOpen);
-            TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch, 0.3f);
+            DialogController.instance.ShowDialog(DialogType.FreeStarsPlay, DialogShow.REPLACE_CURRENT);
         }
     }
 
@@ -72,7 +75,7 @@ public class RewardController : MonoBehaviour
     public void OnWatchClick()
     {
         _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
-        overLay.SetActive(false);
+        //overLay.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             AdmobController.instance.ShowRewardBasedVideo();

@@ -33,7 +33,8 @@ public enum DialogType
     FreeStars,
     ChickenBank,
     OpenWordDictionary,
-    ComingSoon
+    ComingSoon,
+    FreeStarsPlay
 };
 
 public enum DialogShow

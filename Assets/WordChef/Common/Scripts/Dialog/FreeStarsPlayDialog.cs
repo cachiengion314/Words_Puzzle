@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FreeStarsDialog : Dialog
+public class FreeStarsPlayDialog : Dialog
 {
     [SerializeField] private Button _btnWatch;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     [SerializeField] private GameObject _panelWatch;
+    [SerializeField] private Toggle _showAgain;
     private RewardVideoController _rewardControl;
 
     private void OnEnable()
@@ -32,6 +33,11 @@ public class FreeStarsDialog : Dialog
             _rewardControl.onRewardedCallback -= OnCompleteVideo;
             _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         }
+    }
+
+    public void DontShowAgain()
+    {
+        CPlayerPrefs.SetBool("DONT_SHOW", _showAgain.isOn);
     }
 
     public void OnClickOpen()

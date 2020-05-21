@@ -12,14 +12,19 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     [SerializeField] private RewardController _rewardController;
     [SerializeField] private Button _rewardButton;
 
+    [SerializeField] private Transform _posStartCollect;
+
     public void Setup(int amount, System.Action callback = null)
     {
         _amount = amount;
         _currAmount = 0;
         _textAmount.text = "X" + _amount;
-        TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f, () =>
+        TweenControl.GetInstance().DelayCall(transform, 1f, () =>
         {
-            callback?.Invoke();
+            TweenControl.GetInstance().ScaleFromZero(gameObject, 0.3f, () =>
+            {
+                callback?.Invoke();
+            });
         });
     }
 
@@ -30,15 +35,15 @@ public class FreeStarsDialogConfirm : MonoBehaviour
         _rewardController.overLay.SetActive(false);
         Sound.instance.Play(Sound.Others.PopupClose);
         BlockScreen.instance.Block(true);
+        StartCoroutine(ShowEffectCollect(_amount));
         TweenControl.GetInstance().ScaleFromOne(gameObject, 0.3f, () =>
         {
-            //Animate
-            //StartCoroutine(CurrencyBalanceUpFx());
-            StartCoroutine(ShowEffectCollect(_amount));
-            BlockScreen.instance.Block(false);
+                //Animate
+                //StartCoroutine(CurrencyBalanceUpFx());
+                BlockScreen.instance.Block(false);
             _rewardController.gameObject.SetActive(true);
-            //==
-        });
+                //==
+            });
     }
 
     //private IEnumerator CurrencyBalanceUpFx()
@@ -53,13 +58,13 @@ public class FreeStarsDialogConfirm : MonoBehaviour
     //}
     private IEnumerator ShowEffectCollect(int value)
     {
-        MonoUtils.instance.ShowTotalStarCollect(value,null);
+        MonoUtils.instance.ShowTotalStarCollect(value, null);
         var result = value / 5;
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(result, null, null, _rewardButton.transform);
+                MonoUtils.instance.ShowEffect(result, null, null, _posStartCollect);
             }
             yield return new WaitForSeconds(0.06f);
         }

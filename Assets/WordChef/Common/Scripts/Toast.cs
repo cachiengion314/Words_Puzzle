@@ -49,7 +49,7 @@ public class Toast : MonoBehaviour
         isShowing = true;
     }
 
-    public void ShowMessage(string msg, float time = 1.5f)
+    public void ShowMessage(string msg, float time = 2f)
     {
         AToast aToast = new AToast(msg, time);
         queue.Enqueue(aToast);

@@ -12,6 +12,7 @@ public class OpenWordDictionaryDialog : Dialog
     [SerializeField] private Button _btnCancel;
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     [SerializeField] private TextMeshProUGUI _textTitle;
+    [SerializeField] private GameObject _panelWatch;
     private RewardVideoController _rewardControl;
 
     private const string CONTENT_DEFAULT = "You need to watch a rewarded ad to see the list of words founded.";
@@ -95,6 +96,8 @@ public class OpenWordDictionaryDialog : Dialog
     {
         _rewardControl.onRewardedCallback -= OnCompleteVideo;
         _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        _panelWatch.transform.localScale = Vector3.zero;
+        GetComponent<Image>().enabled = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             DictionaryDialog.instance.currListWord.OnCompleteReward();
