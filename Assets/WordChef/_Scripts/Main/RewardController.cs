@@ -61,6 +61,8 @@ public class RewardController : MonoBehaviour
     {
         _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
         overLay.SetActive(true);
+        if (_boardFreeWatch.transform.localScale == Vector3.one)
+            _boardFreeWatch.transform.localScale = Vector3.zero;
         _boardClaim.Setup(_amountStars, () =>
         {
 
@@ -71,8 +73,6 @@ public class RewardController : MonoBehaviour
     {
         _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
         overLay.SetActive(false);
-        if (_boardFreeWatch.transform.localScale == Vector3.one)
-            TweenControl.GetInstance().ScaleFromOne(_boardFreeWatch, 0.3f);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             AdmobController.instance.ShowRewardBasedVideo();

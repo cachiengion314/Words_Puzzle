@@ -46,6 +46,7 @@ public class ButtonWord : MyButton
             }
             else
             {
+                DictionaryDialog.instance.SetTextMeanDialog(text, "");
                 DictionaryDialog.instance.noInternet.SetActive(true);
             }
         });
