@@ -244,8 +244,7 @@ public class WordRegion : MonoBehaviour
                 }
             }
         }
-        var checkShowDicBtn = lines.Any(li => li.isShown);
-        btnDictionary.gameObject.SetActive(checkShowDicBtn);
+        ShowBtnDictionaryInGamePlay();
     }
 
     private void GetCellShowHint(LineWord line)
@@ -259,6 +258,12 @@ public class WordRegion : MonoBehaviour
                 //cell.CalculateTextRaitoScale(cell.iconCoin.rectTransform);
             }
         }
+    }
+
+    public void ShowBtnDictionaryInGamePlay()
+    {
+        var checkShowDicBtn = lines.Any(li => li.isShown);
+        btnDictionary.gameObject.SetActive(checkShowDicBtn);
     }
 
     public bool IsUseBee()

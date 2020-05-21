@@ -36,12 +36,12 @@ public class ButtonWord : MyButton
 
      void WaitTimeGetData()
      {
-        DictionaryDialog.instance.SetTextMeanDialog(text, "");
+        DictionaryDialog.instance.SetTextMeanDialog(text, "Loading...");
         CUtils.CheckConnection(this, (result) =>
         {
             if (result == 0)
             {
-                DictionaryDialog.instance.SetTextMeanDialog(text, "Loading...");
+                //DictionaryDialog.instance.SetTextMeanDialog(text, "Loading...");
                 Dictionary.instance.GetDataFromApi(text.ToLower());
                 DictionaryDialog.instance.noInternet.SetActive(false);
             }

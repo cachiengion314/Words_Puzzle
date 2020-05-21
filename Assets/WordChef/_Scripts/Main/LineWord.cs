@@ -276,6 +276,7 @@ public class LineWord : MonoBehaviour
             cell.bg.color = new Color(1, 1, 1, 1);
         }
         WordRegion.instance.ShowComplimentFX();
+        WordRegion.instance.ShowBtnDictionaryInGamePlay();
     }
 
     public void ShowHint(System.Action callback = null)
