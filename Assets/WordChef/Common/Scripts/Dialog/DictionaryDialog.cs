@@ -64,7 +64,7 @@ public class DictionaryDialog : Dialog
         base.Start();
         if (listWordPassed != null)
             CloneListGroupWord();
-        numWordPassedText.text = "You have collected " + listWordPassed.Count + "/100000 words";
+        numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
     }
 
     public void GetWordPassed()

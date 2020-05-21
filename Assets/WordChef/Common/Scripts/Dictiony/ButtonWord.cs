@@ -16,7 +16,7 @@ public class ButtonWord : MyButton
 
         if (!Dictionary.instance.CheckWExistInDictWordSaved(text))
         {
-            Invoke("WaitTimeGetData", 0.6f);
+            WaitTimeGetData();
         }
         else
         {
@@ -36,6 +36,7 @@ public class ButtonWord : MyButton
 
      void WaitTimeGetData()
      {
+        DictionaryDialog.instance.SetTextMeanDialog(text, "");
         CUtils.CheckConnection(this, (result) =>
         {
             if (result == 0)
