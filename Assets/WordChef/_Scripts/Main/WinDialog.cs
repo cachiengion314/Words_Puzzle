@@ -479,7 +479,6 @@ public class WinDialog : Dialog
             if (!creditBalance)
             {
                 CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
-                StartCoroutine(ShowEffectCollect(value));
                 CPlayerPrefs.SetBool("Received", true);
             }
         }
