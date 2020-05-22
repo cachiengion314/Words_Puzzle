@@ -376,10 +376,41 @@ public class WinDialog : Dialog
             FacebookController.instance.SaveDataGame();
         }
         //Close();
-        _panelDialog.transform.localScale = Vector3.zero;
+        _panelDialog.SetActive(false);
         DialogOverlay.instance.Overlay.enabled = false;
         Sound.instance.Play(Sound.Collects.LevelClose, 1);
-        TweenControl.GetInstance().DelayCall(transform, 0.75f,() =>
+        TweenControl.GetInstance().DelayCall(transform, (level == numLevels - 1) ? 2.5f : 0.75f,() =>
+        {
+            if (level == numLevels - 1)
+                CPlayerPrefs.SetBool("Received", true);
+            Close();
+            CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
+        });
+    }
+
+    public void NextClickReward()
+    {
+        if (_fxEffect != null)
+            Destroy(_fxEffect);
+        gameObject.GetComponent<GraphicRaycaster>().enabled = false;
+
+        if (Prefs.IsLastLevel())
+        {
+            FacebookController.instance.newLevel = true;
+            CPlayerPrefs.SetBool("LevelMisspelling", false);
+        }
+        if (Prefs.IsSaveLevelProgress())
+        {
+            FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
+            FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
+            FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+            FacebookController.instance.SaveDataGame();
+        }
+        //Close();
+        _panelDialog.SetActive(false);
+        DialogOverlay.instance.Overlay.enabled = false;
+        Sound.instance.Play(Sound.Collects.LevelClose, 1);
+        TweenControl.GetInstance().DelayCall(transform, 0.75f, () =>
         {
             if (level == numLevels - 1)
                 CPlayerPrefs.SetBool("Received", true);
@@ -445,7 +476,7 @@ public class WinDialog : Dialog
         }
         TweenControl.GetInstance().DelayCall(transform, 2.5f, () =>
         {
-            NextClick();
+            NextClickReward();
         });
     }
 
