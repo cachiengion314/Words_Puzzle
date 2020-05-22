@@ -192,11 +192,13 @@ public class WordRegion : MonoBehaviour
     {
         int lineIndex = 0;
         int countID = 0;
+        var wordInLevel = wordList.GetRange(0, numWords);
+        wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
         //var countAnswer = wordList.Count < 5 ? wordList.Count : wordList.Count - _extraWord;
         //foreach (var word in wordList)
         for (int i = 0; i < numWords; i++)
         {
-            var word = wordList[i];
+            var word = wordInLevel[i];
             var words = wordList.FindAll(wd => wd.Length == word.Length);
             LineWord line = Instantiate(MonoUtils.instance.lineWord);
             //if (CPlayerPrefs.HasKey(line.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel))
@@ -233,8 +235,8 @@ public class WordRegion : MonoBehaviour
             lines.Add(line);
             lineIndex++;
         }
-        var tempLinesSown = lines.FindAll(li => li.isShown);
-        foreach (var lineShown in tempLinesSown)
+        var tempLinesShown = lines.FindAll(li => li.isShown);
+        foreach (var lineShown in tempLinesShown)
         {
             for (int i = 0; i < lines.Count; i++)
             {

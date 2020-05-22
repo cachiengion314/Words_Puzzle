@@ -35,8 +35,6 @@ public class MonoUtils : MonoBehaviour
         //    Sound.instance.Play(Sound.Collects.CoinCollect);
         //    Destroy(star);
         //}, EaseType.InBack);
-        if (star == null)
-            return;
         var targetShow = new Vector3(star.transform.localPosition.x, star.transform.localPosition.y -
             (posStart != null ? (posStart as RectTransform).rect.height /** 1.3f */: (star.transform as RectTransform).rect.height));
         //tweenControl.MoveLocal(star.transform, targetShow, 0.3f, () =>
