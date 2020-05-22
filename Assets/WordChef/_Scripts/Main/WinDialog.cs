@@ -386,6 +386,21 @@ public class WinDialog : Dialog
         //CUtils.ShowInterstitialAd();
     }
 
+    private IEnumerator ShowEffectCollect(int value)
+    {
+        MonoUtils.instance.ShowTotalStarCollect(value, null);
+        var result = value / 5;
+        for (int i = 0; i < value; i++)
+        {
+            if (i < 5)
+            {
+                MonoUtils.instance.ShowEffect(result, null, null, RewardButton.transform);
+            }
+            yield return new WaitForSeconds(0.06f);
+        }
+
+    }
+
     void OnCompleteReward()
     {
         _rewardControl.onRewardedCallback -= OnCompleteReward;
@@ -394,15 +409,17 @@ public class WinDialog : Dialog
         if (level == numLevels - 1)
         {
             var value = Const.REWARD_ADS_CHAPTER_CLEAR - Const.REWARD_CHAPTER_CLEAR;
-            CurrencyController.CreditBalance(value);
+            //CurrencyController.CreditBalance(value);
+            StartCoroutine(ShowEffectCollect(value));
             CPlayerPrefs.SetBool("Received", true);
         }
         else
         {
-            CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
+            //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
+            StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
             Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
         }
-        TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>
+        TweenControl.GetInstance().DelayCall(transform, 2.4f, () =>
         {
             NextClick();
         });
