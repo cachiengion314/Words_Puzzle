@@ -355,7 +355,7 @@ public class WinDialog : Dialog
             var creditBalance = CPlayerPrefs.GetBool("Received", false);
             if (!creditBalance)
             {
-                StartCoroutine(ShowEffectCollect(Const.REWARD_CHAPTER_CLEAR));
+                StartCoroutine(ShowEffectCollect(Const.REWARD_CHAPTER_CLEAR, _nextButton.transform));
             }
         }
 
@@ -404,7 +404,7 @@ public class WinDialog : Dialog
         //CUtils.ShowInterstitialAd();
     }
 
-    private IEnumerator ShowEffectCollect(int value)
+    private IEnumerator ShowEffectCollect(int value, Transform posCollect = null)
     {
         MonoUtils.instance.ShowTotalStarCollect(value, null);
         var result = value / 5;
@@ -412,7 +412,7 @@ public class WinDialog : Dialog
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(result, null, null, RewardButton.transform);
+                MonoUtils.instance.ShowEffect(result, null, null, posCollect == null ? RewardButton.transform : posCollect);
             }
             yield return new WaitForSeconds(0.06f);
         }
