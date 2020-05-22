@@ -415,8 +415,8 @@ public class WordRegion : MonoBehaviour
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
-        var lineNotShown = lines.FindAll(l => !l.isShown);
-        var checkLength = lines.All(l => !l.answers.Contains(checkWord) && (lineNotShown.All(li => li.cells.Count != checkWord.Length)));
+        //var lineNotShown = lines.FindAll(l => !l.isShown);
+        var checkLength = lines.All(l => !l.answers.Contains(checkWord) && (l.cells.Count != checkWord.Length));
         if (checkLength)
         {
             NotifyMessage.instance.ShowMessage(NotifyMessage.instance.WORD_LENGTH_REQUIREMENT);
