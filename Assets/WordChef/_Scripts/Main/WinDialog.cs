@@ -13,6 +13,8 @@ public class WinDialog : Dialog
     private int subWorld, level;
 
     [SerializeField]
+    private GameObject _panelDialog;
+    [SerializeField]
     private GameObject RewardButton;
     [SerializeField]
     private Button _nextButton;
@@ -366,6 +368,8 @@ public class WinDialog : Dialog
             FacebookController.instance.SaveDataGame();
         }
         //Close();
+        _panelDialog.transform.localScale = Vector3.zero;
+        DialogOverlay.instance.Overlay.enabled = false;
         Sound.instance.Play(Sound.Collects.LevelClose, 1, () =>
         {
             Close();
@@ -412,7 +416,12 @@ public class WinDialog : Dialog
         txtReward.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;
         if (level == numLevels - 1)
         {
+
+#if UNITY_EDITOR
+            var value = Const.REWARD_ADS_CHAPTER_CLEAR;
+#else
             var value = Const.REWARD_ADS_CHAPTER_CLEAR - Const.REWARD_CHAPTER_CLEAR;
+#endif
             //CurrencyController.CreditBalance(value);
             StartCoroutine(ShowEffectCollect(value));
             CPlayerPrefs.SetBool("Received", true);
