@@ -11,6 +11,7 @@ public class WinDialog : Dialog
     private int numLevels;
     private bool isLastLevel;
     private int subWorld, level;
+    private bool _isWatchAds;
 
     [SerializeField]
     private GameObject _panelDialog;
@@ -379,13 +380,13 @@ public class WinDialog : Dialog
         _panelDialog.SetActive(false);
         DialogOverlay.instance.Overlay.enabled = false;
         Sound.instance.Play(Sound.Collects.LevelClose, 1);
-        TweenControl.GetInstance().DelayCall(transform, (level == numLevels - 1) ? 2.5f : 0.75f,() =>
-        {
-            if (level == numLevels - 1)
-                CPlayerPrefs.SetBool("Received", true);
-            Close();
-            CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
-        });
+        TweenControl.GetInstance().DelayCall(transform, (level == numLevels - 1) ? 2.5f : 0.75f, () =>
+         {
+             if (level == numLevels - 1)
+                 CPlayerPrefs.SetBool("Received", true);
+             Close();
+             CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
+         });
     }
 
     public void NextClickReward()
@@ -422,6 +423,7 @@ public class WinDialog : Dialog
 
     public void RewardClick()
     {
+        _isWatchAds = true;
         _nextButton.interactable = false;
         _rewardControl.onRewardedCallback += OnCompleteReward;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
@@ -458,21 +460,22 @@ public class WinDialog : Dialog
         txtReward.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;
         if (level == numLevels - 1)
         {
-
-#if UNITY_EDITOR
-            var value = Const.REWARD_ADS_CHAPTER_CLEAR;
-#else
-            var value = Const.REWARD_ADS_CHAPTER_CLEAR - Const.REWARD_CHAPTER_CLEAR;
-#endif
+            //var value = Const.REWARD_ADS_CHAPTER_CLEAR;
             //CurrencyController.CreditBalance(value);
-            StartCoroutine(ShowEffectCollect(value));
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
+                StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_CHAPTER_CLEAR));
+            });
             CPlayerPrefs.SetBool("Received", true);
         }
         else
         {
-            //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
-            StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
-            Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
+                //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
+                StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
+                Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
+            });
         }
         TweenControl.GetInstance().DelayCall(transform, 2.5f, () =>
         {
@@ -511,7 +514,8 @@ public class WinDialog : Dialog
             var creditBalance = CPlayerPrefs.GetBool("Received", false);
             if (!creditBalance)
             {
-                CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
+                if (!_isWatchAds)
+                    CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
                 CPlayerPrefs.SetBool("Received", true);
             }
         }
