@@ -413,12 +413,12 @@ public class WordRegion : MonoBehaviour
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
-        var checkLength = lines.All(li => !li.isShown && (li.cells.Count != checkWord.Length));
+        var lineNotShown = lines.FindAll(l => !l.isShown);
+        var checkLength = lineNotShown.All(li => li.cells.Count != checkWord.Length);
         if (checkLength)
         {
             NotifyMessage.instance.ShowMessage(NotifyMessage.instance.WORD_LENGTH_REQUIREMENT);
-            if (!textPreview.useFX)
-                textPreview.ClearText();
+            textPreview.ClearText();
             return;
         }
         //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
