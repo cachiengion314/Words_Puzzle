@@ -356,7 +356,6 @@ public class WinDialog : Dialog
             if (!creditBalance)
             {
                 StartCoroutine(ShowEffectCollect(Const.REWARD_CHAPTER_CLEAR));
-                CPlayerPrefs.SetBool("Received", true);
             }
         }
 
@@ -379,8 +378,11 @@ public class WinDialog : Dialog
         //Close();
         _panelDialog.transform.localScale = Vector3.zero;
         DialogOverlay.instance.Overlay.enabled = false;
-        Sound.instance.Play(Sound.Collects.LevelClose, 1, () =>
+        Sound.instance.Play(Sound.Collects.LevelClose, 1);
+        TweenControl.GetInstance().DelayCall(transform, 0.75f,() =>
         {
+            if (level == numLevels - 1)
+                CPlayerPrefs.SetBool("Received", true);
             Close();
             CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         });
