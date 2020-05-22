@@ -350,7 +350,16 @@ public class WinDialog : Dialog
 
     public void NextClick()
     {
-        RewardChapter();
+        if (level == numLevels - 1)
+        {
+            var creditBalance = CPlayerPrefs.GetBool("Received", false);
+            if (!creditBalance)
+            {
+                StartCoroutine(ShowEffectCollect(Const.REWARD_CHAPTER_CLEAR));
+                CPlayerPrefs.SetBool("Received", true);
+            }
+        }
+
         if (_fxEffect != null)
             Destroy(_fxEffect);
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
@@ -470,6 +479,7 @@ public class WinDialog : Dialog
             if (!creditBalance)
             {
                 CurrencyController.CreditBalance(Const.REWARD_CHAPTER_CLEAR);
+                StartCoroutine(ShowEffectCollect(value));
                 CPlayerPrefs.SetBool("Received", true);
             }
         }
