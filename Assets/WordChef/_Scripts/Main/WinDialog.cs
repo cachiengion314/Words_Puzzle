@@ -15,6 +15,8 @@ public class WinDialog : Dialog
     [SerializeField]
     private GameObject RewardButton;
     [SerializeField]
+    private Button _nextButton;
+    [SerializeField]
     private GameObject GroupButton;
     [SerializeField]
     private Transform StarsGrid;
@@ -374,6 +376,7 @@ public class WinDialog : Dialog
 
     public void RewardClick()
     {
+        _nextButton.interactable = false;
         _rewardControl.onRewardedCallback += OnCompleteReward;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -404,7 +407,8 @@ public class WinDialog : Dialog
     void OnCompleteReward()
     {
         _rewardControl.onRewardedCallback -= OnCompleteReward;
-        RewardButton.GetComponent<Button>().interactable = false;
+        //RewardButton.GetComponent<Button>().interactable = false;
+        gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         txtReward.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;
         if (level == numLevels - 1)
         {
@@ -419,7 +423,7 @@ public class WinDialog : Dialog
             StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
             Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
         }
-        TweenControl.GetInstance().DelayCall(transform, 2.4f, () =>
+        TweenControl.GetInstance().DelayCall(transform, 2.5f, () =>
         {
             NextClick();
         });

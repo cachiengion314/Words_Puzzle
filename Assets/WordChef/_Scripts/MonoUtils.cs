@@ -35,31 +35,36 @@ public class MonoUtils : MonoBehaviour
         //    Sound.instance.Play(Sound.Collects.CoinCollect);
         //    Destroy(star);
         //}, EaseType.InBack);
+        if (star == null)
+            return;
         var targetShow = new Vector3(star.transform.localPosition.x, star.transform.localPosition.y -
             (posStart != null ? (posStart as RectTransform).rect.height /** 1.3f */: (star.transform as RectTransform).rect.height));
         //tweenControl.MoveLocal(star.transform, targetShow, 0.3f, () =>
         //{
-            //tweenControl.MoveLocal(star.transform, targetShow - new Vector3(100, 50, 0), 0.2f, () =>
-            //  {
-                  tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -800f, 1, 1.3f, false, () =>
-                  {
-                      CurrencyController.CreditBalance(value);
-                      Sound.instance.Play(Sound.Collects.CoinCollect);
-                      Destroy(star);
-                  }, EaseType.Linear);
-              //});
+        //tweenControl.MoveLocal(star.transform, targetShow - new Vector3(100, 50, 0), 0.2f, () =>
+        //  {
+        tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -800f, 1, 1.3f, false, () =>
+        {
+            CurrencyController.CreditBalance(value);
+            Sound.instance.Play(Sound.Collects.CoinCollect);
+            Destroy(star);
+        }, EaseType.Linear);
         //});
-        tweenControl.Scale(star.gameObject, Vector3.one * 0.6f,0.3f,()=> {
+        //});
+        tweenControl.Scale(star.gameObject, Vector3.one * 0.6f, 0.3f, () =>
+        {
             tweenControl.Scale(star.gameObject, Vector3.one, 1f);
         });
     }
 
-    public void ShowTotalStarCollect(int value,TextMeshProUGUI textCollect)
+    public void ShowTotalStarCollect(int value, TextMeshProUGUI textCollect)
     {
         var tweenControl = TweenControl.GetInstance();
         (textCollect != null ? textCollect : textCollectDefault).text = "X" + value;
-        tweenControl.DelayCall(transform, 1.6f, () => {
-            tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 1, 0.5f,()=> {
+        tweenControl.DelayCall(transform, 1.6f, () =>
+        {
+            tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 1, 0.5f, () =>
+            {
                 tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 0, 0.3f);
             });
         });
