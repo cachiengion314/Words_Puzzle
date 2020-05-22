@@ -47,10 +47,10 @@ public class ExtraWordDialog : Dialog
     void OnCompleteVideo()
     {
         _rewardController.onRewardedCallback -= OnCompleteVideo;
-        StartCoroutine(ShowEffectCollect(_reward, rewardButton.transform));
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
+            StartCoroutine(ShowEffectCollect(_reward, rewardButton.transform));
             Collect();
         });
     }
