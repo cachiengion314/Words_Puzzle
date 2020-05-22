@@ -922,22 +922,26 @@ public class WordRegion : MonoBehaviour
 
     public bool CheckLevelProgress(string[] levelProgress, List<string> wordList)
     {
+        var wordInLevel = wordList.GetRange(0, numWords);
+        wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
         if (levelProgress.Length != numWords) return false;
 
         for (int i = 0; i < numWords; i++)
         {
-            if (levelProgress[i].Length != wordList[i].Length) return false;
+            if (levelProgress[i].Length != wordInLevel[i].Length) return false;
         }
         return true;
     }
 
     public bool CheckAnswerProgress(string[] answerProgress, List<string> wordList, int numWord)
     {
+        var wordInLevel = wordList.GetRange(0, numWords);
+        wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
         if (answerProgress.Length != numWord) return false;
 
         for (int i = 0; i < numWord; i++)
         {
-            if (answerProgress[i].Length != wordList[i].Length) return false;
+            if (answerProgress[i].Length != wordInLevel[i].Length) return false;
         }
         return true;
     }
