@@ -48,6 +48,12 @@ public class WinDialog : Dialog
     [SerializeField]
     private GameObject _btnBee;
     [SerializeField]
+    private GameObject _chickenBank;
+    [SerializeField]
+    private SpineControl _chickenBankAnim;
+    [SerializeField] private string _collectAnim = "icon chicken bank PLAY";
+    [SerializeField] private string _loopAnim = "icon chicken bank PLAY LOOP";
+    [SerializeField]
     private GameObject _starReward;
     [SerializeField]
     private RewardVideoController _rewardVideoPfb;
@@ -173,6 +179,18 @@ public class WinDialog : Dialog
         }
     }
 
+    private IEnumerator PlaySoundCollect()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (i < 5)
+            {
+                Sound.instance.Play(Sound.Collects.CoinCollect);
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     private void ShowPanelButton(bool show)
     {
         //WordRegion.instance.listWordCorrect = new List<string>();
@@ -182,6 +200,18 @@ public class WinDialog : Dialog
         //}
         var tweenControl = TweenControl.GetInstance();
         GroupButton.SetActive(show);
+        
+        var posTargetChicken = _chickenBank.transform.localPosition.x / 2;
+        tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken + 50, 0.5f, () =>
+        {
+            tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken, 0.3f, () =>
+            {
+                StartCoroutine(PlaySoundCollect());
+                _chickenBankAnim.SetAnimation(_collectAnim,false,()=> {
+                    _chickenBankAnim.SetAnimation(_loopAnim, true);
+                });
+            });
+        });
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
             var button = GroupButton.transform.GetChild(i).gameObject;

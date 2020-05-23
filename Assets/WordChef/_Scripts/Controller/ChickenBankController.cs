@@ -43,7 +43,6 @@ public class ChickenBankController : MonoBehaviour
             return;
         if (CurrStarChicken < ConfigController.instance.config.gameParameters.maxBank)
         {
-            Sound.instance.Play(Sound.Collects.CoinCollect);
             FacebookController.instance.user.currBank += _amount;
             FacebookController.instance.SaveDataGame();
         }
