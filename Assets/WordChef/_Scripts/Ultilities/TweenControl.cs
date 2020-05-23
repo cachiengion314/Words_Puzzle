@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using DG.Tweening.Core;
 using TMPro;
+using DG.Tweening.Plugins.Core.PathCore;
+using DG.Tweening.Plugins.Options;
 
 public enum EaseType
 {
@@ -143,6 +145,14 @@ public class TweenControl : MonoBehaviour
         tweenDic.Remove(trans);
     }
 
+    public void KillTweenerCore(Transform trans)
+    {
+        if (!tweenerDic.ContainsKey(trans))
+            return;
+        trans.DOKill(false);
+        tweenDic.Remove(trans);
+    }
+
     void AddTween(Transform tr, Tween tween)
     {
         if (tweenDic.ContainsKey(tr.transform))
@@ -167,6 +177,20 @@ public class TweenControl : MonoBehaviour
         {
             var tweens = new List<Tween>();
             tweens.Add(sequen);
+            tweenDic.Add(tr.transform, tweens);
+        }
+    }
+
+    void AddTweenerCore(Transform tr, TweenerCore<Vector3, Path, PathOptions> tweenerCore)
+    {
+        if (tweenDic.ContainsKey(tr.transform))
+        {
+            tweenDic[tr.transform].Add(tweenerCore);
+        }
+        else
+        {
+            var tweens = new List<Tween>();
+            tweens.Add(tweenerCore);
             tweenDic.Add(tr.transform, tweens);
         }
     }
@@ -325,6 +349,14 @@ public class TweenControl : MonoBehaviour
     {
         var tweener = trans.DOJumpAnchorPos(endValue, jumpPower, numJump, time, snapping).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(trans)).SetDelay(delay);
         AddSequence(trans, tweener);
+
+        return tweener;
+    }
+
+    public TweenerCore<Vector3, Path, PathOptions> MoveLocalPath(Transform trans, Vector3[] waypoint, float duration, PathType pathType = PathType.Linear, PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null,TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, float delay = 0)
+    {
+        var tweener = trans.DOPath(waypoint, duration, pathType, pathMode, resolution, gizmoColor).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(trans)).SetDelay(delay);
+        AddTweenerCore(trans, tweener);
 
         return tweener;
     }

@@ -14,6 +14,8 @@ public class WordRegion : MonoBehaviour
     [SerializeField] private GameObject _hintPrice;
     [SerializeField] private GameObject _MultiplehintFree;
     [SerializeField] private GameObject _MultiplehintPrice;
+    [SerializeField] private List<GameObject> _beehives;
+    [SerializeField] private List<RectTransform> _posTarget;
 
     [SerializeField] private Sprite _spriteExcellent;
     [SerializeField] private Sprite _spriteNormal;
@@ -719,6 +721,7 @@ public class WordRegion : MonoBehaviour
 
     public void BeeClick()
     {
+        BlockScreen.instance.Block(true);
         int count = 0;
         var lineNotShow = lines.FindAll(x => !x.isShown);
         for (int i = lineNotShow.Count - 1; i > 0; i--)
@@ -731,16 +734,50 @@ public class WordRegion : MonoBehaviour
                     line.isAds = false;
                     CPlayerPrefs.SetBool(gameObject.name + "_ADS", line.isAds);
                 }
-                line.ShowCellUseBee();
-                BeeManager.instance.DebitAmountBee(1);
-                SaveLevelProgress();
-                CheckGameComplete();
-                Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                _posTarget[count].transform.position = line.transform.position;
+                var posTarget = _posTarget[count].transform;
+                posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(0, line.cellSize / 2, 0);
+                BeeFly(_beehives[count].transform, posTarget.position, () =>
+                {
+                    Sound.instance.audioSource.Stop();
+                    Sound.instance.PlayButton(Sound.Button.Beehive);
+                }, () =>
+                {
+                    line.ShowCellUseBee();
+                    BeeManager.instance.DebitAmountBee(1);
+                    SaveLevelProgress();
+                    CheckGameComplete();
+                    Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                    MainController.instance.isBeePlay = false;
+                    BlockScreen.instance.Block(false);
+                });
                 count += 1;
             }
         }
-        MainController.instance.isBeePlay = false;
-        Sound.instance.PlayButton(Sound.Button.Beehive);
+    }
+
+    private void BeeFly(Transform beeTarget, Vector3 posTarget, System.Action callback = null, System.Action completeFly = null)
+    {
+        beeTarget.gameObject.SetActive(true);
+        var tweenControl = TweenControl.GetInstance();
+        var midPoint2 = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x, -(Vector3.Lerp(beeTarget.position, posTarget, 0.5f).y / 2), 0);
+        var midPoint3 = Vector3.Lerp(posTarget, midPoint2, 0.5f) - new Vector3(beeTarget.position.x / 2, Vector3.Lerp(beeTarget.position, posTarget, 0.5f).y / 2, 0);
+        var midPoint = midPoint2 - new Vector3(-(beeTarget.position.x), posTarget.y, 0);
+        var waypoint = new Vector3[] { beeTarget.position, midPoint, midPoint2, midPoint3, posTarget };
+        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 2f);
+        tweenControl.MoveLocalPath(beeTarget, waypoint, 2f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
+          {
+              callback?.Invoke();
+              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 2f, () =>
+              {
+                  beeTarget.gameObject.SetActive(false);
+                  completeFly?.Invoke();
+              });
+          }, EaseType.Linear);
+        //tweenControl.JumpRect(beeTarget, posTarget, -800f, 1, 1.3f, false, () =>
+        //{
+
+        //}, EaseType.Linear);
     }
 
     int hintLineIndex = 0;

@@ -25,6 +25,7 @@ public class LineWord : MonoBehaviour
     [SerializeField] private Image _fxAnswerDuplicate;
 
     private string answerrandom;
+    private bool _isResetDataAnswer;
 
     public void Build(bool RTL)
     {
@@ -145,6 +146,7 @@ public class LineWord : MonoBehaviour
         }
         Prefs.countSpell += 1;
         Prefs.countSpellDaily += 1;
+        _isResetDataAnswer = false;
         isShown = true;
         foreach (var cell in cells)
         {
@@ -154,16 +156,16 @@ public class LineWord : MonoBehaviour
         {
             if (line != this)
             {
-                if (line.answer == answer && !line.isShown)
+                line.answers.Remove(answer);
+                if (!line.isShown && line.cells.Count == answer.Length)
                 {
                     line.answer = "";
-                    //foreach (var answer in line.answers)
-                    //{
-                    //    if (answer != line.answer)
-                    //        ResetAnswer(line);
-                    //}
+                    foreach (var an in line.answers)
+                    {
+                        if (an != answer && !_isResetDataAnswer)
+                            ResetAnswer(line, an);
+                    }
                 }
-                line.answers.Remove(answer);
             }
         }
         WordRegion.instance.listWordCorrect.Add(answer.ToLower());
@@ -171,14 +173,15 @@ public class LineWord : MonoBehaviour
         StartCoroutine(IEShowAnswer());
     }
 
-    private void ResetAnswer(LineWord line)
+    private void ResetAnswer(LineWord line, string ansRight)
     {
-        for (int i = 0; i < answer.Length; i++)
+        for (int i = 0; i < ansRight.Length; i++)
         {
-            var ans = answer[i];
+            var ans = ansRight[i];
             if (line.cells[i].isShown && line.cells[i].letter == ans.ToString())
             {
-                line.answer = answer;
+                line.SetDataLetter(ansRight);
+                _isResetDataAnswer = true;
                 break;
             }
             else

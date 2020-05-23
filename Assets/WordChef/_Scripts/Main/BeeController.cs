@@ -42,10 +42,6 @@ public class BeeController : MonoBehaviour
         }
     }
 
-    private void BeeFly()
-    {
-
-    }
 
     #region TEST BEE
     public void AddAmountBee()
