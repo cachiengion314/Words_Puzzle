@@ -81,11 +81,7 @@ public class LineWord : MonoBehaviour
         }
         answer = word;
         CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
-        //foreach (var line in lines)
-        //{
-        //    if (line != this)
-        //        line.answers.Remove(word);
-        //}
+        
         for (int i = 0; i < cells.Count; i++)
         {
             int index = i;
@@ -159,13 +155,34 @@ public class LineWord : MonoBehaviour
             if (line != this)
             {
                 if (line.answer == answer && !line.isShown)
-                    line.answer = "";
+                {
+                    foreach (var answer in line.answers)
+                    {
+                        if (answer != line.answer)
+                            ResetAnswer(line);
+                    }
+                }
                 line.answers.Remove(answer);
             }
         }
         WordRegion.instance.listWordCorrect.Add(answer.ToLower());
         ShowBtnMeanByWord();
         StartCoroutine(IEShowAnswer());
+    }
+
+    private void ResetAnswer(LineWord line)
+    {
+        for (int i = 0; i < answer.Length; i++)
+        {
+            var ans = answer[i];
+            if (line.cells[i].isShown && line.cells[i].letter == ans.ToString())
+            {
+                line.answer = answer;
+                break;
+            }
+            else
+                line.answer = "";
+        }
     }
 
     public IEnumerator IEShowAnswer()
@@ -241,6 +258,7 @@ public class LineWord : MonoBehaviour
         cellTarget.ShowHint();
         CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
         Sound.instance.PlayButton(Sound.Button.Hint);
+        CheckSetDataAnswer(answer);
         CheckLineDone();
         WordRegion.instance.SaveLevelProgress();
         WordRegion.instance.CheckGameComplete();
@@ -306,6 +324,7 @@ public class LineWord : MonoBehaviour
                     //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
                     callback?.Invoke();
+                    CheckSetDataAnswer(answer);
                     CheckLineDone();
                     return;
                 }
@@ -321,6 +340,7 @@ public class LineWord : MonoBehaviour
                     //cell.letter = answer[i + indexAnswer].ToString();
                     cell.ShowHint();
                     callback?.Invoke();
+                    CheckSetDataAnswer(answer);
                     CheckLineDone();
                     return;
                 }
@@ -364,6 +384,7 @@ public class LineWord : MonoBehaviour
                 callback?.Invoke();
             }
         }
+        CheckSetDataAnswer(answer);
         CheckLineDone();
         ClearAds();
     }
@@ -402,6 +423,7 @@ public class LineWord : MonoBehaviour
                     TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
                 }
             }
+            CheckSetDataAnswer(answer);
             CheckLineDone();
             usedBee = true;
             CPlayerPrefs.SetBool(gameObject.name, usedBee);
@@ -409,6 +431,33 @@ public class LineWord : MonoBehaviour
         }
     }
 
+    private void CheckSetDataAnswer(string word)
+    {
+        var lines = WordRegion.instance.Lines;
+        var numOfwordsTheSameCharacter = new List<string>();
+        for (int i = 0; i < answers.Count; i++)
+        {
+            var isRight = false;
+            var indexCell = 0;
+            foreach (var cell in cells)
+            {
+                if (cell.isShown && cell.letter == answers[i][indexCell].ToString())
+                    isRight = true;
+                indexCell++;
+            }
+            if (isRight)
+                numOfwordsTheSameCharacter.Add(answers[i]);
+        }
+
+        if (numOfwordsTheSameCharacter.Count < 2)
+        {
+            foreach (var line in lines)
+            {
+                if (line != this)
+                    line.answers.Remove(word);
+            }
+        }
+    }
 
     private void ClearAds()
     {

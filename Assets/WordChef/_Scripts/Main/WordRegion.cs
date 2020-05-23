@@ -424,8 +424,10 @@ public class WordRegion : MonoBehaviour
             return;
         }
         //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+        var isExist = lines.FindAll(li => !li.isShown).All(l => l.answer != checkWord);
+        var lineAnswerEmpty = lines.FindAll(li => !li.isShown).Find(x => x.answer == "" && isExist && x.cells.Count == checkWord.Length);
         var lineIsShown = lines.FindAll(li => li.isShown);
-        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown/* && !TutorialController.instance.isShowTut*/ && (x.answer == "" || CheckAnswerFill(x, checkWord)));
+        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown/* && !TutorialController.instance.isShowTut*/ && (lineAnswerEmpty != null || CheckAnswerFill(x, checkWord)));
         //if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
         //    line = TutorialController.instance.LineTarget.answer == checkWord ? TutorialController.instance.LineTarget : null;
         //string meaning="";
