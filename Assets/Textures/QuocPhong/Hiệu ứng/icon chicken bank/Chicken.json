@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "XraTaD1/BSNTcvlciR8g1lnrnmU",
+	"hash": "yQhUCsnayJO93OLwBbL3WcLRo6I",
 	"spine": "3.8.95",
 	"x": -80.12,
 	"y": -104.59,
 	"width": 168,
-	"height": 183.16,
+	"height": 186.16,
 	"images": "./icon chicken bank/",
 	"audio": "C:/Users/admin/Desktop/Spine/icon chicken bank"
 },
@@ -46,25 +46,12 @@
 	{ "name": "out2up", "bone": "out2up", "attachment": "out2up" },
 	{ "name": "out3up", "bone": "out3up", "attachment": "out3up" },
 	{ "name": "out4up", "bone": "out4up", "attachment": "out4up" },
-	{ "name": "sang vd", "bone": "sang vd", "attachment": "sang vd" },
-	{ "name": "+25", "bone": "root", "attachment": "+25" }
+	{ "name": "sang vd", "bone": "sang vd", "attachment": "sang vd" }
 ],
 "skins": [
 	{
 		"name": "default",
 		"attachments": {
-			"+25": {
-				"+25": {
-					"type": "mesh",
-					"uvs": [ 0.99153, 0.98, 0.00847, 0.98, 0.00847, 0.02, 0.99153, 0.02 ],
-					"triangles": [ 1, 2, 3, 1, 3, 0 ],
-					"vertices": [ 29, -103.25, -29, -103.25, -29, -79.25, 29, -79.25 ],
-					"hull": 4,
-					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
-					"width": 59,
-					"height": 25
-				}
-			},
 			"All": {
 				"All": {
 					"type": "clipping",
@@ -170,14 +157,12 @@
 		}
 	}
 ],
+"events": {
+	"x25": {}
+},
 "animations": {
 	"icon chicken bank": {
 		"slots": {
-			"+25": {
-				"color": [
-					{ "color": "ffffff00" }
-				]
-			},
 			"VD": {
 				"color": [
 					{ "color": "ffffff00" }
@@ -371,15 +356,6 @@
 	},
 	"icon chicken bank PLAY": {
 		"slots": {
-			"+25": {
-				"color": [
-					{ "color": "ffffff00", "curve": "stepped" },
-					{ "time": 1.1667, "color": "ffffff00" },
-					{ "time": 1.6667, "color": "ffffffff", "curve": "stepped" },
-					{ "time": 2, "color": "ffffffff" },
-					{ "time": 2.5, "color": "ffffff00" }
-				]
-			},
 			"VD": {
 				"color": [
 					{ "color": "ffffff00" }
@@ -593,15 +569,13 @@
 					]
 				}
 			}
-		}
+		},
+		"events": [
+			{ "time": 1.1667, "name": "x25", "string": "x25" }
+		]
 	},
 	"icon chicken bank PLAY LOOP": {
 		"slots": {
-			"+25": {
-				"color": [
-					{ "color": "ffffff00" }
-				]
-			},
 			"VD": {
 				"color": [
 					{ "color": "ffffff00" }
@@ -749,11 +723,6 @@
 	},
 	"icon daily gift": {
 		"slots": {
-			"+25": {
-				"color": [
-					{ "color": "ffffff00" }
-				]
-			},
 			"light": {
 				"color": [
 					{ "color": "ffffff00", "curve": "stepped" },

@@ -46,6 +46,8 @@ public class WinDialog : Dialog
     [SerializeField]
     private TextMeshProUGUI txtRewardByAds;
     [SerializeField]
+    private TextMeshProUGUI _txtCollectChickenBank;
+    [SerializeField]
     private GameObject _btnBee;
     [SerializeField]
     private GameObject _chickenBank;
@@ -200,14 +202,17 @@ public class WinDialog : Dialog
         //}
         var tweenControl = TweenControl.GetInstance();
         GroupButton.SetActive(show);
-        
+
+        _chickenBankAnim.onEventAction = ShowTextCollect;
         var posTargetChicken = _chickenBank.transform.localPosition.x / 2;
         tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken + 50, 0.5f, () =>
         {
             tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken, 0.3f, () =>
             {
                 StartCoroutine(PlaySoundCollect());
-                _chickenBankAnim.SetAnimation(_collectAnim,false,()=> {
+
+                _chickenBankAnim.SetAnimation(_collectAnim, false, () =>
+                {
                     _chickenBankAnim.SetAnimation(_loopAnim, true);
                 });
             });
@@ -242,6 +247,20 @@ public class WinDialog : Dialog
                     });
                 });
             }
+        }
+    }
+
+    private void ShowTextCollect(Spine.Event eventData)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        if (eventData.Data.Name == "x25")
+        {
+
+            tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
+            tweenControl.DelayCall(_txtCollectChickenBank.transform, 1f, () =>
+            {
+                tweenControl.FadeAnfaText(_txtCollectChickenBank, 0, 0.5f);
+            });
         }
     }
 
