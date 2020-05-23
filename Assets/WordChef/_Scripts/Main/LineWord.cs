@@ -156,11 +156,12 @@ public class LineWord : MonoBehaviour
             {
                 if (line.answer == answer && !line.isShown)
                 {
-                    foreach (var answer in line.answers)
-                    {
-                        if (answer != line.answer)
-                            ResetAnswer(line);
-                    }
+                    line.answer = "";
+                    //foreach (var answer in line.answers)
+                    //{
+                    //    if (answer != line.answer)
+                    //        ResetAnswer(line);
+                    //}
                 }
                 line.answers.Remove(answer);
             }
