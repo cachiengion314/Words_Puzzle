@@ -770,11 +770,11 @@ public class WordRegion : MonoBehaviour
             points.Add(point);
         }
         waypoints = points.ToArray();
-        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 2f);
-        tweenControl.MoveLocalPath(beeTarget, waypoints, 2f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
+        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1f);
+        tweenControl.MoveLocalPath(beeTarget, waypoints, 1f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
               callback?.Invoke();
-              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 2f, () =>
+              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 1.5f, () =>
               {
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
@@ -1000,6 +1000,8 @@ public class WordRegion : MonoBehaviour
 
     public bool CheckLevelProgress(string[] levelProgress, List<string> wordList)
     {
+        if(!Prefs.IsSaveLevelProgress())
+            return false;
         var wordInLevel = wordList.GetRange(0, numWords);
         wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
         if (levelProgress.Length != numWords) return false;
@@ -1013,6 +1015,8 @@ public class WordRegion : MonoBehaviour
 
     public bool CheckAnswerProgress(string[] answerProgress, List<string> wordList, int numWord)
     {
+        if (!Prefs.IsSaveLevelProgress())
+            return false;
         var wordInLevel = wordList.GetRange(0, numWords);
         wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
         if (answerProgress.Length != numWord) return false;
