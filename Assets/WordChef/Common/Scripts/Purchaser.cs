@@ -12,6 +12,7 @@ public class IAPItem
     public float price;
     public bool removeAds;
     public int value;
+    public bool isSpecial;
     public int valueHint;
     public int valueMultipleHint;
     public int valueBeehive;
