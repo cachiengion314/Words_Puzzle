@@ -422,25 +422,25 @@ public class LineWord : MonoBehaviour
         }
     }
 
-    private IEnumerator CellShowBee()
-    {
-        var cellNotShow = cells.FindAll(cell => !cell.isShown);
-        var indexAnswer = answer.Length - cellNotShow.Count;
-        for (int i = 0; i < cellNotShow.Count; i++)
-        {
-            var cell = cellNotShow[i];
-            if (i == 0)
-            {
-                //cell.letter = answer[i + indexAnswer].ToString();
-                cell.ShowTextBee();
-            }
-            else
-            {
-                TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
-            }
-            yield return new WaitForSeconds(0.2f);
-        }
-    }
+    //private IEnumerator CellShowBee()
+    //{
+    //    var cellNotShow = cells.FindAll(cell => !cell.isShown);
+    //    var indexAnswer = answer.Length - cellNotShow.Count;
+    //    for (int i = 0; i < cellNotShow.Count; i++)
+    //    {
+    //        var cell = cellNotShow[i];
+    //        if (i == 0)
+    //        {
+    //            //cell.letter = answer[i + indexAnswer].ToString();
+    //            cell.ShowTextBee();
+    //        }
+    //        else
+    //        {
+    //            TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
+    //        }
+    //        yield return new WaitForSeconds(0.2f);
+    //    }
+    //}
 
     private void CheckSetDataAnswer(string word)
     {

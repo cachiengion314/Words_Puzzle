@@ -255,11 +255,14 @@ public class WinDialog : Dialog
         var tweenControl = TweenControl.GetInstance();
         if (eventData.Data.Name == "x25")
         {
-
+            _txtCollectChickenBank.text = "X25";
             tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
             tweenControl.DelayCall(_txtCollectChickenBank.transform, 1f, () =>
             {
-                tweenControl.FadeAnfaText(_txtCollectChickenBank, 0, 0.5f);
+                tweenControl.FadeAnfaText(_txtCollectChickenBank, 0, 0.5f, () => {
+                    _txtCollectChickenBank.text = ChickenBankController.instance.CurrStarChicken.ToString();
+                    tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
+                });
             });
         }
     }

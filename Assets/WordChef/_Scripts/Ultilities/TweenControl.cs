@@ -353,7 +353,7 @@ public class TweenControl : MonoBehaviour
         return tweener;
     }
 
-    public TweenerCore<Vector3, Path, PathOptions> MoveLocalPath(Transform trans, Vector3[] waypoint, float duration, PathType pathType = PathType.Linear, PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null,TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, float delay = 0)
+    public TweenerCore<Vector3, Path, PathOptions> MovePath(Transform trans, Vector3[] waypoint, float duration, PathType pathType = PathType.Linear, PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null,TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, float delay = 0)
     {
         var tweener = trans.DOPath(waypoint, duration, pathType, pathMode, resolution, gizmoColor).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(trans)).SetDelay(delay);
         AddTweenerCore(trans, tweener);

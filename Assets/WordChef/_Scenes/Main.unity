@@ -7082,6 +7082,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160147972}
   m_CullTransparentMesh: 0
+--- !u!1 &160378527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 160378528}
+  m_Layer: 5
+  m_Name: PosBottom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &160378528
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160378527}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 511225055}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 142, y: -52}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &164690842
 GameObject:
   m_ObjectHideFlags: 0
@@ -14367,6 +14402,7 @@ RectTransform:
   - {fileID: 317954776}
   - {fileID: 472073790}
   - {fileID: 1659052656}
+  - {fileID: 160378528}
   m_Father: {fileID: 2115221978}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21879,7 +21915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -366, y: -19.500244}
+  m_AnchoredPosition: {x: -366, y: -19.5}
   m_SizeDelta: {x: 353, y: 39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &897314124
@@ -32299,6 +32335,7 @@ MonoBehaviour:
   - {fileID: 2119570386}
   - {fileID: 495357883}
   - {fileID: 943228996}
+  _posBottom: {fileID: 160378528}
   _spriteExcellent: {fileID: 21300000, guid: c76e203d257d39a4e91670f71f5f8ecf, type: 3}
   _spriteNormal: {fileID: 21300000, guid: 40d22dc56c695b84c8d3feecb41e26c4, type: 3}
   boardHighlight: {fileID: 1595618793}

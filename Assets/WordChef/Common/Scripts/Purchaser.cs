@@ -158,6 +158,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
         var price = "";
         foreach (var product in m_StoreController.products.all)
         {
+            Debug.Log("Product: " + product);
             Debug.Log("Id Product: "+ product.transactionID);
             if (product.transactionID == productID)
             {

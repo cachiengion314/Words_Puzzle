@@ -16,6 +16,7 @@ public class WordRegion : MonoBehaviour
     [SerializeField] private GameObject _MultiplehintPrice;
     [SerializeField] private List<GameObject> _beehives;
     [SerializeField] private List<RectTransform> _posTarget;
+    [SerializeField] private Transform _posBottom;
 
     [SerializeField] private Sprite _spriteExcellent;
     [SerializeField] private Sprite _spriteNormal;
@@ -761,19 +762,19 @@ public class WordRegion : MonoBehaviour
         var animBee = beeTarget.GetComponentInChildren<SpineControl>();
         beeTarget.gameObject.SetActive(true);
         var tweenControl = TweenControl.GetInstance();
-        var midPoint = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x , posTarget.y, 0);
+        //var midPoint = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x / 4, posTarget.y * 2.5f, 0);
         var midPoint2 = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x * 2, -posTarget.y / 2, 0);
         var points = new List<Vector3>();
         var waypoints = new Vector3[] { };
         for (int i = 0; i < 100; i++)
         {
             var t = i / (float)100;
-            var point = CalculateWaypoint(t, beeTarget.position, midPoint, midPoint2, posTarget);
+            var point = CalculateWaypoint(t, beeTarget.position, _posBottom.position, midPoint2, posTarget);
             points.Add(point);
         }
         waypoints = points.ToArray();
         tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.3f);
-        tweenControl.MoveLocalPath(beeTarget, waypoints, 1.3f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
+        tweenControl.MovePath(beeTarget, waypoints, 1.3f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
               animBee.SetAnimation("Loop", true);
               callback?.Invoke();
