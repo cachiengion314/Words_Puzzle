@@ -14,6 +14,14 @@ public class ChickenBankController : MonoBehaviour
 
     [SerializeField] private double _remainChicken;
 
+    public int Amount
+    {
+        get
+        {
+            return _amount;
+        }
+    }
+
     void Awake()
     {
         if (instance == null) instance = this;

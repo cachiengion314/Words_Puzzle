@@ -205,7 +205,7 @@ public class WinDialog : Dialog
 
         _chickenBankAnim.onEventAction = ShowTextCollect;
         var posTargetChicken = _chickenBank.transform.localPosition.x / 2;
-        tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken + 50, 0.5f, () =>
+        tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken - 50, 0.5f, () =>
         {
             tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken, 0.3f, () =>
             {
@@ -255,15 +255,30 @@ public class WinDialog : Dialog
         var tweenControl = TweenControl.GetInstance();
         if (eventData.Data.Name == "x25")
         {
-            _txtCollectChickenBank.text = "X25";
-            tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
-            tweenControl.DelayCall(_txtCollectChickenBank.transform, 1f, () =>
+            StartCoroutine(BankNumberUp());
+            //tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
+            //tweenControl.DelayCall(_txtCollectChickenBank.transform, 1f, () =>
+            //{
+            //    tweenControl.FadeAnfaText(_txtCollectChickenBank, 0, 0.5f, () => {
+            //        _txtCollectChickenBank.text = ChickenBankController.instance.CurrStarChicken.ToString();
+            //        tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
+            //    });
+            //});
+        }
+    }
+
+    private IEnumerator BankNumberUp()
+    {
+        var tempValue = ChickenBankController.instance.CurrStarChicken - ChickenBankController.instance.Amount;
+        var result = tempValue;
+        for (int i = 0; i < ChickenBankController.instance.Amount; i++)
+        {
+            _txtCollectChickenBank.text = "X" + result;
+            if (i < 5)
             {
-                tweenControl.FadeAnfaText(_txtCollectChickenBank, 0, 0.5f, () => {
-                    _txtCollectChickenBank.text = ChickenBankController.instance.CurrStarChicken.ToString();
-                    tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
-                });
-            });
+                result += ChickenBankController.instance.Amount / 5;
+            }
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -287,6 +302,7 @@ public class WinDialog : Dialog
         TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () =>
         {
             ChickenBankController.instance.AddtoBank();
+            _txtCollectChickenBank.text = "X" + (ChickenBankController.instance.CurrStarChicken - ChickenBankController.instance.Amount);
             _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
         });
     }

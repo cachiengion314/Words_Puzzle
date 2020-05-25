@@ -37,7 +37,7 @@ public class BeeDialog : Dialog
         {
             //remove ads roi thi an cac iap ads
             if (Purchaser.instance.beeIapItems[i].removeAds
-                && Purchaser.instance.beeIapItems[i].value <= 0
+                && Purchaser.instance.beeIapItems[i].valueBeehive <= 0
                 && CUtils.IsAdsRemoved())
             {
                 numHintTexts[i].transform.parent.gameObject.SetActive(false);
@@ -97,7 +97,7 @@ public class BeeDialog : Dialog
         // A consumable product has been purchased by this user.
         if (item.productType == ProductType.Consumable)
         {
-            BeeManager.instance.CreaditAmountBee(item.value);
+            BeeManager.instance.CreaditAmountBee(item.valueBeehive);
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.beeIapItems[index].removeAds)
             {
@@ -105,7 +105,7 @@ public class BeeDialog : Dialog
                 for (int i = 0; i < numHintTexts.Length; i++)
                 {
                     if (Purchaser.instance.beeIapItems[i].removeAds
-                        && Purchaser.instance.beeIapItems[i].value <= 0)
+                        && Purchaser.instance.beeIapItems[i].valueBeehive <= 0)
                     {
                         numHintTexts[i].transform.parent.gameObject.SetActive(false);
                     }
