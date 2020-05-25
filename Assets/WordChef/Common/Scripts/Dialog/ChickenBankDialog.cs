@@ -8,13 +8,20 @@ public class ChickenBankDialog : Dialog
 {
     [SerializeField] private TextMeshProUGUI _textPrice;
     [SerializeField] private TextMeshProUGUI _textReward;
+    [SerializeField] private TextMeshProUGUI _textMaxOut;
     [SerializeField] private int _indexItem = 8;
 
     protected override void Start()
     {
         base.Start();
+        var resultValue = ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank ?
+                    ConfigController.instance.config.gameParameters.maxBank : /*currValue*/ChickenBankController.instance.CurrStarChicken;
         _textPrice.text = Purchaser.instance.iapItems[_indexItem].price + "$";
-        _textReward.text = "X" + ChickenBankController.instance.CurrStarChicken.ToString();
+        _textReward.text = "X" + resultValue.ToString();
+        if (ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank)
+            _textMaxOut.gameObject.SetActive(true);
+        else
+            _textMaxOut.gameObject.SetActive(false);
 #if IAP && UNITY_PURCHASING
         Purchaser.instance.onItemPurchased += OnItemPurchased;
 #endif
