@@ -758,21 +758,24 @@ public class WordRegion : MonoBehaviour
 
     private void BeeFly(LineWord line, Transform beeTarget, Vector3 posTarget, System.Action callback = null, System.Action completeFly = null)
     {
+        var animBee = beeTarget.GetComponentInChildren<SpineControl>();
         beeTarget.gameObject.SetActive(true);
         var tweenControl = TweenControl.GetInstance();
-        var midPoint = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x * 2, -(Vector3.Lerp(beeTarget.position, posTarget, 0.5f).y / 2), 0);
+        var midPoint = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x , posTarget.y, 0);
+        var midPoint2 = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x * 2, -posTarget.y / 2, 0);
         var points = new List<Vector3>();
         var waypoints = new Vector3[] { };
         for (int i = 0; i < 100; i++)
         {
             var t = i / (float)100;
-            var point = CalculateWaypoint(t, beeTarget.position, midPoint, posTarget);
+            var point = CalculateWaypoint(t, beeTarget.position, midPoint, midPoint2, posTarget);
             points.Add(point);
         }
         waypoints = points.ToArray();
-        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1f);
-        tweenControl.MoveLocalPath(beeTarget, waypoints, 1f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
+        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.3f);
+        tweenControl.MoveLocalPath(beeTarget, waypoints, 1.3f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
+              animBee.SetAnimation("Loop", true);
               callback?.Invoke();
               tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 1.8f, () =>
               {
@@ -808,14 +811,17 @@ public class WordRegion : MonoBehaviour
         return null;
     }
 
-    private Vector3 CalculateWaypoint(float t, Vector3 pos0, Vector3 pos1, Vector3 pos2)
+    private Vector3 CalculateWaypoint(float t, Vector3 pos0, Vector3 pos1, Vector3 pos2, Vector3 pos3)
     {
-        float u = 1 - t;
-        float tt = t * t;
-        float uu = u * u;
-        Vector3 p = uu * pos0;
-        p += 2 * u * t * pos1;
-        p += tt * pos2;
+        float u = (1 - t);
+        float t2 = t * t;
+        float t3 = t * t * t;
+        float u2 = u * u;
+        float u3 = u * u * u;
+        Vector3 p = u3 * pos0;
+        p += 3 * u2 * t * pos1;
+        p += 3 * u * t2 * pos2;
+        p += t3 * pos3;
         return p;
     }
 
@@ -1000,7 +1006,7 @@ public class WordRegion : MonoBehaviour
 
     public bool CheckLevelProgress(string[] levelProgress, List<string> wordList)
     {
-        if(!Prefs.IsSaveLevelProgress())
+        if (!Prefs.IsSaveLevelProgress())
             return false;
         var wordInLevel = wordList.GetRange(0, numWords);
         wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
