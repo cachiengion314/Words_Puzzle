@@ -727,7 +727,7 @@ public class WordRegion : MonoBehaviour
         for (int i = lineNotShow.Count - 1; i > 0; i--)
         {
             var line = lineNotShow[i];
-            if (BeeManager.instance.CurrBee > 0 && count < lines.Count / 2 && count < 4)
+            if (BeeManager.instance.CurrBee > 0 && count < lines.Count / 2 && count < 4 && count < BeeManager.instance.CurrBee)
             {
                 if (line.isAds)
                 {
@@ -774,7 +774,7 @@ public class WordRegion : MonoBehaviour
         tweenControl.MoveLocalPath(beeTarget, waypoints, 1f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
               callback?.Invoke();
-              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 1.5f, () =>
+              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 1.8f, () =>
               {
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
