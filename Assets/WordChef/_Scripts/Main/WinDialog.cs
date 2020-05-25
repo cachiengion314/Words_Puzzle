@@ -203,20 +203,30 @@ public class WinDialog : Dialog
         var tweenControl = TweenControl.GetInstance();
         GroupButton.SetActive(show);
 
-        _chickenBankAnim.onEventAction = ShowTextCollect;
-        var posTargetChicken = _chickenBank.transform.localPosition.x / 2;
-        tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken - 50, 0.5f, () =>
+        var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
+        var currStarBank = ChickenBankController.instance.CurrStarChicken;
+        if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
         {
-            tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken, 0.3f, () =>
+            _chickenBank.SetActive(false);
+        }
+        else
+        {
+            _chickenBankAnim.onEventAction = ShowTextCollect;
+            var posTargetChicken = _chickenBank.transform.localPosition.x / 2;
+            tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken - 50, 0.5f, () =>
             {
-                StartCoroutine(PlaySoundCollect());
-
-                _chickenBankAnim.SetAnimation(_collectAnim, false, () =>
+                tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken, 0.3f, () =>
                 {
-                    _chickenBankAnim.SetAnimation(_loopAnim, true);
+                    StartCoroutine(PlaySoundCollect());
+
+                    _chickenBankAnim.SetAnimation(_collectAnim, false, () =>
+                    {
+                        _chickenBankAnim.SetAnimation(_loopAnim, true);
+                    });
                 });
             });
-        });
+        }
+
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
             var button = GroupButton.transform.GetChild(i).gameObject;
