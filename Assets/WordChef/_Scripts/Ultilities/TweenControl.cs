@@ -49,6 +49,15 @@ public enum EaseType
     InFlash = 33,
     OutFlash = 34,
     InOutFlash = 35,
+    //
+    // Summary:
+    //     Don't assign this! It's assigned automatically when creating 0 duration tweens
+    INTERNAL_Zero = 36,
+    //
+    // Summary:
+    //     Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve
+    //     or to a custom ease function
+    INTERNAL_Custom = 37
 }
 
 public enum NameAxis

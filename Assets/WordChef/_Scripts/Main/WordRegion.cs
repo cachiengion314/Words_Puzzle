@@ -773,7 +773,7 @@ public class WordRegion : MonoBehaviour
             points.Add(point);
         }
         waypoints = points.ToArray();
-        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.8f, null, EaseType.InQuart);
+        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.8f, null, EaseType.InFlash);
         tweenControl.MovePath(beeTarget, waypoints, 1.8f, DG.Tweening.PathType.CatmullRom, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
               animBee.SetAnimation("Loop", true);
@@ -783,7 +783,7 @@ public class WordRegion : MonoBehaviour
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
               }, () => CheckBeeFlyAndShowCell(line, beeTarget));
-          }, EaseType.InQuart);
+          }, EaseType.InFlash);
         //tweenControl.JumpRect(beeTarget, posTarget, -800f, 1, 1.3f, false, () =>
         //{
 
