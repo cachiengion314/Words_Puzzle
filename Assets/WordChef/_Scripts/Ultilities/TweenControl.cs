@@ -433,9 +433,9 @@ public class TweenControl : MonoBehaviour
         AddTweener(gameObj.transform, tweener);
     }
 
-    public void MoveRectX(RectTransform gameObj, float X, float time = 1.0f, TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, float delay = 0)
+    public void MoveRectX(RectTransform gameObj, float X, float time = 1.0f, TweenCallback onComplete = null, TweenCallback onUpdate = null, EaseType easeType = EaseType.Linear, float delay = 0)
     {
-        var tweener = gameObj.DOAnchorPosX(X, time).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(gameObj.transform)).SetDelay(delay);
+        var tweener = gameObj.DOAnchorPosX(X, time).OnUpdate(onUpdate).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(gameObj.transform)).SetDelay(delay);
         AddTweener(gameObj.transform, tweener);
     }
 
@@ -652,7 +652,7 @@ public class TweenControl : MonoBehaviour
     // Di chuyển GameObject theo đường cong có điểm đỉnh.
     public void MoveFollowBenzier(GameObject go, Vector3 mounthPos, Vector3 endPos, float timeMoveUp = 2.5f, float timeMoveDown = 1.5f, System.Action callback = null)
     {
-        TweenControl.GetInstance().MoveRectX(go.GetComponent<RectTransform>(), endPos.x, timeMoveUp + timeMoveDown, null, EaseType.Linear);
+        TweenControl.GetInstance().MoveRectX(go.GetComponent<RectTransform>(), endPos.x, timeMoveUp + timeMoveDown, null, null,EaseType.Linear);
 
         TweenControl.GetInstance().MoveRectY(go.GetComponent<RectTransform>(), mounthPos.y, timeMoveUp, () =>
         {
@@ -672,8 +672,8 @@ public class TweenControl : MonoBehaviour
             TweenControl.GetInstance().MoveRectX(go.GetComponent<RectTransform>(), endPos.x, timeMoveDown, () =>
             {
                 callback?.Invoke();
-            }, EaseType.InQuad);
-        }, EaseType.OutQuad);
+            }, null,EaseType.InQuad);
+        }, null, EaseType.OutQuad);
     }
 }
 

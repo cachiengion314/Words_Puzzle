@@ -737,47 +737,86 @@ public class WordRegion : MonoBehaviour
                 _posTarget[count].transform.position = line.transform.position;
                 var posTarget = _posTarget[count].transform;
                 posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(0, line.cellSize / 2, 0);
-                BeeFly(_beehives[count].transform, posTarget.position, () =>
-                {
-                    Sound.instance.audioSource.Stop();
-                    Sound.instance.PlayButton(Sound.Button.Beehive);
-                }, () =>
-                {
-                    line.ShowCellUseBee();
-                    BeeManager.instance.DebitAmountBee(1);
-                    SaveLevelProgress();
-                    CheckGameComplete();
-                    Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
-                    MainController.instance.isBeePlay = false;
-                    BlockScreen.instance.Block(false);
-                });
+                BeeFly(line, _beehives[count].transform, posTarget.position, () =>
+                 {
+                     Sound.instance.audioSource.Stop();
+                     Sound.instance.PlayButton(Sound.Button.Beehive);
+                     line.ShowCellUseBee();
+                     BeeManager.instance.DebitAmountBee(1);
+                 }, () =>
+                 {
+                     SaveLevelProgress();
+                     CheckGameComplete();
+                     Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                     MainController.instance.isBeePlay = false;
+                     BlockScreen.instance.Block(false);
+                 });
                 count += 1;
             }
         }
     }
 
-    private void BeeFly(Transform beeTarget, Vector3 posTarget, System.Action callback = null, System.Action completeFly = null)
+    private void BeeFly(LineWord line, Transform beeTarget, Vector3 posTarget, System.Action callback = null, System.Action completeFly = null)
     {
         beeTarget.gameObject.SetActive(true);
         var tweenControl = TweenControl.GetInstance();
-        var midPoint2 = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x, -(Vector3.Lerp(beeTarget.position, posTarget, 0.5f).y / 2), 0);
-        var midPoint3 = Vector3.Lerp(posTarget, midPoint2, 0.5f) - new Vector3(beeTarget.position.x / 2, Vector3.Lerp(beeTarget.position, posTarget, 0.5f).y / 2, 0);
-        var midPoint = midPoint2 - new Vector3(-(beeTarget.position.x), posTarget.y, 0);
-        var waypoint = new Vector3[] { beeTarget.position, midPoint, midPoint2, midPoint3, posTarget };
+        var midPoint = Vector3.Lerp(beeTarget.position, posTarget, 0.5f) - new Vector3(beeTarget.position.x * 2, -(Vector3.Lerp(beeTarget.position, posTarget, 0.5f).y / 2), 0);
+        var points = new List<Vector3>();
+        var waypoints = new Vector3[] { };
+        for (int i = 0; i < 100; i++)
+        {
+            var t = i / (float)100;
+            var point = CalculateWaypoint(t, beeTarget.position, midPoint, posTarget);
+            points.Add(point);
+        }
+        waypoints = points.ToArray();
         tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 2f);
-        tweenControl.MoveLocalPath(beeTarget, waypoint, 2f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
+        tweenControl.MoveLocalPath(beeTarget, waypoints, 2f, DG.Tweening.PathType.Linear, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
               callback?.Invoke();
               tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 2f, () =>
               {
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
-              });
+              }, () => CheckBeeFlyAndShowCell(line, beeTarget));
           }, EaseType.Linear);
         //tweenControl.JumpRect(beeTarget, posTarget, -800f, 1, 1.3f, false, () =>
         //{
 
         //}, EaseType.Linear);
+    }
+
+    private void CheckBeeFlyAndShowCell(LineWord line, Transform beeTarget)
+    {
+        var cellTarget = GetCellBeeTarget(line, beeTarget);
+        if (cellTarget == null)
+            return;
+        if (cellTarget == line.cells[0])
+            cellTarget.ShowTextBee();
+        else
+            TweenControl.GetInstance().ScaleFromZero(cellTarget.iconCoin.gameObject, 0.5f);
+    }
+
+    private Cell GetCellBeeTarget(LineWord line, Transform beeTarget)
+    {
+        foreach (var cell in line.cells)
+        {
+            var distance = Vector3.Distance(beeTarget.position, cell.transform.position);
+            if (distance < 2)
+                return cell;
+        }
+        return null;
+    }
+
+    private Vector3 CalculateWaypoint(float t, Vector3 pos0, Vector3 pos1, Vector3 pos2)
+    {
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+        Vector3 p = uu * pos0;
+        p += 2 * u * t * pos1;
+        p += tt * pos2;
+        return p;
     }
 
     int hintLineIndex = 0;

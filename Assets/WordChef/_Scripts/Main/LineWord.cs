@@ -82,7 +82,7 @@ public class LineWord : MonoBehaviour
         }
         answer = word;
         CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
-        
+
         for (int i = 0; i < cells.Count; i++)
         {
             int index = i;
@@ -412,26 +412,33 @@ public class LineWord : MonoBehaviour
                 }
                 SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
             }
-            var cellNotShow = cells.FindAll(cell => !cell.isShown);
-            var indexAnswer = answer.Length - cellNotShow.Count;
-            for (int i = 0; i < cellNotShow.Count; i++)
-            {
-                var cell = cellNotShow[i];
-                if (i == 0)
-                {
-                    //cell.letter = answer[i + indexAnswer].ToString();
-                    cell.ShowTextBee();
-                }
-                else
-                {
-                    TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
-                }
-            }
+
+
             CheckSetDataAnswer(answer);
             CheckLineDone();
             usedBee = true;
             CPlayerPrefs.SetBool(gameObject.name, usedBee);
             ClearAds();
+        }
+    }
+
+    private IEnumerator CellShowBee()
+    {
+        var cellNotShow = cells.FindAll(cell => !cell.isShown);
+        var indexAnswer = answer.Length - cellNotShow.Count;
+        for (int i = 0; i < cellNotShow.Count; i++)
+        {
+            var cell = cellNotShow[i];
+            if (i == 0)
+            {
+                //cell.letter = answer[i + indexAnswer].ToString();
+                cell.ShowTextBee();
+            }
+            else
+            {
+                TweenControl.GetInstance().ScaleFromZero(cell.iconCoin.gameObject, 0.5f);
+            }
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
