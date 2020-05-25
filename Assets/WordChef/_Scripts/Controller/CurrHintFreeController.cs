@@ -10,11 +10,15 @@ public class CurrHintFreeController : MonoBehaviour
     void Start()
     {
         if (!isMultipleHints)
+        {
             UpdatehintFree();
+            CurrencyController.onHintFreeChanged += OnHintFreChanged;
+        }
         else
+        {
             UpdateMultiplehintFree();
-        CurrencyController.onHintFreeChanged += OnHintFreChanged;
-        CurrencyController.onMultipleHintFreeChanged += OnMultipleHintFreChanged;
+            CurrencyController.onMultipleHintFreeChanged += OnMultipleHintFreChanged;
+        }
     }
 
     private void UpdatehintFree()
