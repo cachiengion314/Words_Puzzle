@@ -220,7 +220,7 @@ public class WinDialog : Dialog
         for (int i = 0; i < GroupButton.transform.childCount; i++)
         {
             var button = GroupButton.transform.GetChild(i).gameObject;
-            if (button != _btnBee)
+            if (button != _btnBee && button != _chickenBank)
             {
                 button.transform.localScale = Vector3.zero;
                 tweenControl.Scale(button, Vector3.one * 1.2f, 0.3f, () =>
