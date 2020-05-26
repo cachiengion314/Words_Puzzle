@@ -60,7 +60,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
     public static string kProductIDSubscription = "subscription";
 
     public IAPItem[] iapItems;
-    public IAPItem[] hintIapItems;
+    //public IAPItem[] hintIapItems;
     public IAPItem[] beeIapItems;
 
     // Apple App Store-specific product identifier for the subscription product.
@@ -126,13 +126,6 @@ public class Purchaser : MonoBehaviour, IStoreListener
             builder.AddProduct(item.productID, item.productType);
         }
 
-        foreach (var item in hintIapItems)
-        {
-#if UNITY_STANDALONE_OSX
-            item.productID += ".mac";
-#endif
-            builder.AddProduct(item.productID, item.productType);
-        }
 
         foreach (var item in beeIapItems)
         {
@@ -178,10 +171,6 @@ public class Purchaser : MonoBehaviour, IStoreListener
         BuyProductID(iapItems[index].productID);
     }
 
-    public void BuyHintProduct(int index)
-    {
-        BuyProductID(hintIapItems[index].productID);
-    }
 
     public void BuyBeeProduct(int index)
     {
@@ -323,20 +312,6 @@ public class Purchaser : MonoBehaviour, IStoreListener
                 if (onItemPurchased != null)
                 {
                     onItemPurchased(item, Array.IndexOf(iapItems, item));
-                    break;
-                }
-            }
-        }
-
-        foreach (var i in hintIapItems)
-        {
-            if (String.Equals(args.purchasedProduct.definition.id, i.productID, StringComparison.Ordinal))
-            {
-                Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
-                item = i;
-                if (onItemPurchased != null)
-                {
-                    onItemPurchased(item, Array.IndexOf(hintIapItems, item));
                     break;
                 }
             }

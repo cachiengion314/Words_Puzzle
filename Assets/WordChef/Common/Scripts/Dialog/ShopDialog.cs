@@ -17,6 +17,9 @@ public class ShopDialog : Dialog
     public Sprite adsSprite;
 
     public TextMeshProUGUI[] numRubyTexts;
+    public TextMeshProUGUI[] _numBeehiveTexts;
+    public TextMeshProUGUI[] _numHintTexts;
+    public TextMeshProUGUI[] _numMultipleHintTexts;
     public Text[] priceTexts, saleTexts;
     public Image[] hotImages, candyImages;
     public ScrollRect scroll;
@@ -84,6 +87,10 @@ public class ShopDialog : Dialog
                 var priceLocalize = Purchaser.instance.GetLocalizePrice(Purchaser.instance.iapItems[i].productID);
                 numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
                 priceTexts[i].text = priceLocalize == "" ? Purchaser.instance.iapItems[i].price + "$" : priceLocalize;
+
+                if (_numBeehiveTexts[i] != null) _numBeehiveTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueBeehive;
+                if (_numHintTexts[i] != null) _numHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueHint;
+                if (_numMultipleHintTexts[i] != null) _numMultipleHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueMultipleHint;
 
                 var txtSale = Purchaser.instance.iapItems[i].txtSale;
                 if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
@@ -176,6 +183,13 @@ public class ShopDialog : Dialog
                 ChickenBankController.instance.CollectBank(item.value);
             else
                 CurrencyController.CreditBalance(item.value);
+            if (item.valueBeehive > 0)
+                BeeManager.instance.CreaditAmountBee(item.valueBeehive);
+            if (item.valueHint > 0)
+                CurrencyController.CreditHintFree(item.valueHint);
+            if (item.valueMultipleHint > 0)
+                CurrencyController.CreditMultipleHintFree(item.valueMultipleHint);
+
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.iapItems[index].removeAds)
             {
@@ -256,6 +270,7 @@ public class ShopDialog : Dialog
             if (i > 1)
             {
                 shopItemObject[i].transform.localScale = Vector3.zero;
+
                 if (shopItemObject[i].activeInHierarchy)
                 {
                     StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));

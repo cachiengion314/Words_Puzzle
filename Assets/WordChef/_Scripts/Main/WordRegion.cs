@@ -702,6 +702,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            ConfigController.instance.isShopHint = true;
             gameObject.GetComponent<Canvas>().overrideSorting = false;
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.Shop, DialogShow.REPLACE_CURRENT);
@@ -841,6 +842,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            ConfigController.instance.isShopHint = true;
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.Shop, DialogShow.REPLACE_CURRENT);
         }
@@ -954,6 +956,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            ConfigController.instance.isShopHint = true;
             DialogController.instance.ShowDialog(DialogType.Shop);
         }
     }

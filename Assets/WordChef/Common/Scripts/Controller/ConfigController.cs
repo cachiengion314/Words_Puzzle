@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class ConfigController : MonoBehaviour {
+
+    [HideInInspector] public bool isShopHint;
+
     public GameConfig config;
 
     public static GameConfig Config

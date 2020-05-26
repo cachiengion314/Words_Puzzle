@@ -345,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e20d130630daf4898999f32e34fe7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isShopHint: 0
   config:
     gameParameters:
       rewardedBeeAmount: 1
@@ -388,6 +389,7 @@ MonoBehaviour:
     price: 0.99
     removeAds: 1
     value: 600
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -400,6 +402,7 @@ MonoBehaviour:
     price: 1.99
     removeAds: 0
     value: 20
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -412,6 +415,7 @@ MonoBehaviour:
     price: 1.99
     removeAds: 0
     value: 125
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -424,6 +428,7 @@ MonoBehaviour:
     price: 1.99
     removeAds: 1
     value: 0
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -436,6 +441,7 @@ MonoBehaviour:
     price: 2.99
     removeAds: 0
     value: 250
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -448,6 +454,7 @@ MonoBehaviour:
     price: 1.99
     removeAds: 0
     value: 500
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -460,6 +467,7 @@ MonoBehaviour:
     price: 2.99
     removeAds: 1
     value: 600
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -472,6 +480,7 @@ MonoBehaviour:
     price: 0.99
     removeAds: 0
     value: 1200
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -484,6 +493,7 @@ MonoBehaviour:
     price: 2.99
     removeAds: 0
     value: 800
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 0
@@ -491,42 +501,31 @@ MonoBehaviour:
     txtHot: 
     txtSale: 80% OFF
     limitTime: -1
-  hintIapItems:
-  - productID: hint.item1
+  - productID: word.supperbundle
     productType: 0
-    price: 0.99
+    price: 4.99
     removeAds: 0
-    value: 1
-    valueHint: 0
-    valueMultipleHint: 0
-    valueBeehive: 0
-    txtValue: X1
+    value: 25000
+    isSpecial: 1
+    valueHint: 3
+    valueMultipleHint: 3
+    valueBeehive: 3
+    txtValue: X25000
     txtHot: 
     txtSale: 
     limitTime: -1
-  - productID: hint.item2
+  - productID: word.ultimatebundle
     productType: 0
-    price: 2.99
+    price: 9.99
     removeAds: 0
-    value: 5
-    valueHint: 0
-    valueMultipleHint: 0
-    valueBeehive: 0
-    txtValue: X5
-    txtHot: hot
-    txtSale: 20% OFF
-    limitTime: -1
-  - productID: hint.item3
-    productType: 0
-    price: 5.99
-    removeAds: 0
-    value: 10
-    valueHint: 0
-    valueMultipleHint: 0
-    valueBeehive: 0
-    txtValue: X10
-    txtHot: best
-    txtSale: 20% OFF
+    value: 50000
+    isSpecial: 1
+    valueHint: 5
+    valueMultipleHint: 5
+    valueBeehive: 5
+    txtValue: X50000
+    txtHot: 
+    txtSale: 
     limitTime: -1
   beeIapItems:
   - productID: small_beehive
@@ -534,6 +533,7 @@ MonoBehaviour:
     price: 1.99
     removeAds: 0
     value: 32
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 32
@@ -546,6 +546,7 @@ MonoBehaviour:
     price: 8.99
     removeAds: 0
     value: 200
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 200
@@ -558,6 +559,7 @@ MonoBehaviour:
     price: 39.99
     removeAds: 0
     value: 960
+    isSpecial: 0
     valueHint: 0
     valueMultipleHint: 0
     valueBeehive: 960
