@@ -279,7 +279,7 @@ public class WinDialog : Dialog
 
     private IEnumerator BankNumberUp()
     {
-        var tempValue = ChickenBankController.instance.CurrStarChicken - ChickenBankController.instance.Amount;
+        var tempValue = (ChickenBankController.instance.CurrStarChicken + FacebookController.instance.user.remainBank) - ChickenBankController.instance.Amount;
         var result = tempValue;
         for (int i = 0; i < ChickenBankController.instance.Amount; i++)
         {
@@ -312,7 +312,8 @@ public class WinDialog : Dialog
         TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () =>
         {
             ChickenBankController.instance.AddtoBank();
-            _txtCollectChickenBank.text = "X" + (ChickenBankController.instance.CurrStarChicken - ChickenBankController.instance.Amount);
+            var result = (ChickenBankController.instance.CurrStarChicken + FacebookController.instance.user.remainBank) - ChickenBankController.instance.Amount;
+            _txtCollectChickenBank.text = "X" + result;
             _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
         });
     }

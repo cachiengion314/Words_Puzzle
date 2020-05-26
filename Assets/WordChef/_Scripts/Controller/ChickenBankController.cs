@@ -52,11 +52,19 @@ public class ChickenBankController : MonoBehaviour
         if (CurrStarChicken < ConfigController.instance.config.gameParameters.maxBank)
         {
             FacebookController.instance.user.currBank += _amount;
+            if(CurrStarChicken > ConfigController.instance.config.gameParameters.maxBank)
+            {
+                var remainCurrBank = CurrStarChicken - ConfigController.instance.config.gameParameters.maxBank;
+                FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.maxBank;
+                FacebookController.instance.user.remainBank += remainCurrBank;
+            }
             FacebookController.instance.SaveDataGame();
         }
         else
         {
-            FacebookController.instance.user.remainBank += _amount;
+            var remainCurrBank = CurrStarChicken - ConfigController.instance.config.gameParameters.maxBank;
+            FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.maxBank;
+            FacebookController.instance.user.remainBank += _amount + remainCurrBank;
             FacebookController.instance.SaveDataGame();
         }
     }
