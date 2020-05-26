@@ -24,6 +24,9 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private string _collectAnim = "Daily Gift Collect";
     [SerializeField] private string _collectLoopAnim = "Daily Collect Loop";
     [SerializeField] private Transform _posStart;
+    [SerializeField] private GameObject _overlayCollect;
+    [SerializeField] private TextMeshProUGUI _textHintCollect;
+    [SerializeField] private TextMeshProUGUI _textMultipleHintCollect;
 
     private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
@@ -101,6 +104,8 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickCollect()
     {
+        _textHintCollect.text = "X" + ConfigController.Config.gameParameters.rewardHintDaily;
+        _textMultipleHintCollect.text = "X" + ConfigController.Config.gameParameters.rewardMultipleHintDaily;
         Sound.instance.Play(Sound.Collects.LevelOpen);
         _collectButton.gameObject.SetActive(false);
         _currProgressValue = 0;
@@ -113,12 +118,25 @@ public class DailyGiftsDialog : Dialog
         InitTimeCountDown();
         _isReward = false;
         CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
+        _animChest.onEventAction = OpenChestEvent;
         _animChest.SetAnimation(_collectAnim, false, () =>
         {
             RestartCountdown();
         });
         CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
         UpdateProgress();
+    }
+
+    void OpenChestEvent(Spine.Event eventData)
+    {
+        if (eventData.Data.Name == "ket thuc collect")
+        {
+            _overlayCollect.SetActive(true);
+            TweenControl.GetInstance().DelayCall(transform, 3f, () =>
+            {
+                _overlayCollect.SetActive(false);
+            });
+        }
     }
 
     private void UpdateProgress()
@@ -144,7 +162,7 @@ public class DailyGiftsDialog : Dialog
 
     private IEnumerator ShowEffectCollect(int value)
     {
-        MonoUtils.instance.ShowTotalStarCollect(value,null);
+        MonoUtils.instance.ShowTotalStarCollect(value, null);
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
