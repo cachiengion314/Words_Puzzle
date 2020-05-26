@@ -775,12 +775,12 @@ public class WordRegion : MonoBehaviour
             points.Add(point);
         }
         waypoints = points.ToArray();
-        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.2f, null, EaseType.InOutFlash);
-        tweenControl.MovePath(beeTarget, waypoints, 1.2f, DG.Tweening.PathType.CatmullRom, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
+        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.6f, null, EaseType.InOutFlash);
+        tweenControl.MovePath(beeTarget, waypoints, 1.6f, DG.Tweening.PathType.CatmullRom, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
               animBee.SetAnimation("Loop", true);
               callback?.Invoke();
-              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 1f, () =>
+              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 1.3f, () =>
               {
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
