@@ -23,6 +23,8 @@ public class LineWord : MonoBehaviour
     [Space]
     [SerializeField] private Button _btnMeanWord;
     [SerializeField] private Image _fxAnswerDuplicate;
+    [Space]
+    [SerializeField] private GameObject _fxShowHintPfb;
 
     private string answerrandom;
     private bool _isResetDataAnswer;
@@ -212,6 +214,22 @@ public class LineWord : MonoBehaviour
         }
     }
 
+    private void ShowFxShowHint(Transform objStart, Cell cell, System.Action callback = null)
+    {
+        BlockScreen.instance.Block(true);
+        TutorialController.instance.isBlockSwipe = true;
+        var tweenControl = TweenControl.GetInstance();
+        var fxShow = Instantiate(_fxShowHintPfb, transform);
+        fxShow.transform.position = objStart.position;
+        tweenControl.JumpRect(fxShow.transform as RectTransform, cell.transform.localPosition, -800f, 1, 1.3f, false, () =>
+        {
+            BlockScreen.instance.Block(false);
+            TutorialController.instance.isBlockSwipe = false;
+            Destroy(fxShow);
+            callback?.Invoke();
+        }, EaseType.Linear);
+    }
+
     private void ShowCellTarget(bool active)
     {
         foreach (var cell in cells)
@@ -259,14 +277,17 @@ public class LineWord : MonoBehaviour
             }
             SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
         }
-        cellTarget.ShowHint();
-        CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
-        Sound.instance.PlayButton(Sound.Button.Hint);
-        CheckSetDataAnswer(answer);
-        CheckLineDone();
-        WordRegion.instance.SaveLevelProgress();
-        WordRegion.instance.CheckGameComplete();
-        ClearAds();
+        ShowFxShowHint(WordRegion.instance.btnHintTarget.transform, cellTarget, () =>
+        {
+            cellTarget.ShowHint();
+            CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
+            Sound.instance.PlayButton(Sound.Button.Hint);
+            CheckSetDataAnswer(answer);
+            CheckLineDone();
+            WordRegion.instance.SaveLevelProgress();
+            WordRegion.instance.CheckGameComplete();
+            ClearAds();
+        });
     }
 
     public void OnClickLine()
@@ -326,10 +347,13 @@ public class LineWord : MonoBehaviour
                 if (!cell.isShown)
                 {
                     //cell.letter = answer[i + indexAnswer].ToString();
-                    cell.ShowHint();
-                    callback?.Invoke();
-                    CheckSetDataAnswer(answer);
-                    CheckLineDone();
+                    ShowFxShowHint(WordRegion.instance.btnHint.transform, cell, () =>
+                    {
+                        cell.ShowHint();
+                        CheckSetDataAnswer(answer);
+                        CheckLineDone();
+                        callback?.Invoke();
+                    });
                     return;
                 }
             }
@@ -342,10 +366,13 @@ public class LineWord : MonoBehaviour
                 if (!cell.isShown)
                 {
                     //cell.letter = answer[i + indexAnswer].ToString();
-                    cell.ShowHint();
-                    callback?.Invoke();
-                    CheckSetDataAnswer(answer);
-                    CheckLineDone();
+                    ShowFxShowHint(WordRegion.instance.btnHint.transform, cell, () =>
+                    {
+                        cell.ShowHint();
+                        CheckSetDataAnswer(answer);
+                        CheckLineDone();
+                        callback?.Invoke();
+                    });
                     return;
                 }
             }
@@ -382,15 +409,17 @@ public class LineWord : MonoBehaviour
         if (cellNotShow != null && cellNotShow.Count > 0)
         {
             var cellRandom = GetRandomCell(cellNotShow);
-            if (cellRandom != null)
-            {
-                cellRandom.ShowHint();
+            ShowFxShowHint(WordRegion.instance.btnMultipleHint.transform, cellRandom, () => {
+                if (cellRandom != null)
+                {
+                    cellRandom.ShowHint();
+                }
+                CheckSetDataAnswer(answer);
+                CheckLineDone();
+                ClearAds();
                 callback?.Invoke();
-            }
+            });
         }
-        CheckSetDataAnswer(answer);
-        CheckLineDone();
-        ClearAds();
     }
 
     public void ShowCellUseBee(System.Action callback = null)

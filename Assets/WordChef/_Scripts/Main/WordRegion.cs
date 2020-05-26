@@ -31,6 +31,8 @@ public class WordRegion : MonoBehaviour
     public Transform parentAdsHint;
     public Button btnDictionary;
     public Button btnHintTarget;
+    public Button btnHint;
+    public Button btnMultipleHint;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -737,7 +739,7 @@ public class WordRegion : MonoBehaviour
                 }
                 _posTarget[count].transform.position = line.transform.position;
                 var posTarget = _posTarget[count].transform;
-                posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(0, line.cellSize / 2, 0);
+                posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(-line.cellSize, line.cellSize / 2, 0);
                 BeeFly(line, _beehives[count].transform, posTarget.position, () =>
                  {
                      Sound.instance.audioSource.Stop();
@@ -773,7 +775,7 @@ public class WordRegion : MonoBehaviour
             points.Add(point);
         }
         waypoints = points.ToArray();
-        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.2f, null, EaseType.InFlash);
+        tweenControl.LocalRotate(beeTarget, new Vector3(0, 0, -90), 1.2f, null, EaseType.InOutFlash);
         tweenControl.MovePath(beeTarget, waypoints, 1.2f, DG.Tweening.PathType.CatmullRom, DG.Tweening.PathMode.TopDown2D, 5, Color.red, () =>
           {
               animBee.SetAnimation("Loop", true);
@@ -783,7 +785,7 @@ public class WordRegion : MonoBehaviour
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
               }, () => CheckBeeFlyAndShowCell(line, beeTarget));
-          }, EaseType.InFlash);
+          }, EaseType.InOutFlash);
         //tweenControl.JumpRect(beeTarget, posTarget, -800f, 1, 1.3f, false, () =>
         //{
 
@@ -887,11 +889,11 @@ public class WordRegion : MonoBehaviour
                     Sound.instance.PlayButton(Sound.Button.Hint);
                 }
                 SetupNumhintFree();
-            });
-            SaveLevelProgress();
-            CheckGameComplete();
+                SaveLevelProgress();
+                CheckGameComplete();
 
-            Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+            });
         }
     }
 
@@ -930,11 +932,11 @@ public class WordRegion : MonoBehaviour
                             }
                             Sound.instance.audioSource.Stop();
                             Sound.instance.PlayButton(Sound.Button.MultipleHint);
-                        });
-                        SaveLevelProgress();
-                        CheckGameComplete();
+                            SaveLevelProgress();
+                            CheckGameComplete();
 
-                        Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                            Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                        });
                     }
                 }
             }
