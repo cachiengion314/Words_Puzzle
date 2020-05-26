@@ -63,12 +63,17 @@ public class RewardController : MonoBehaviour
     private void OnCompleteVideo()
     {
         _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
-        overLay.SetActive(true);
+        //overLay.SetActive(true);
         if (_boardFreeWatch.transform.localScale == Vector3.one)
             _boardFreeWatch.transform.localScale = Vector3.zero;
-        _boardClaim.Setup(_amountStars, () =>
-        {
+        //_boardClaim.Setup(_amountStars, () =>
+        //{
 
+        //});
+        TweenControl.GetInstance().DelayCall(transform, 0.25f, () =>
+        {
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            DialogController.instance.ShowDialog(DialogType.RewardedVideo, DialogShow.REPLACE_CURRENT);
         });
     }
 

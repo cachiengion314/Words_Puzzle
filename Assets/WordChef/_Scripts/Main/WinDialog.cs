@@ -156,7 +156,7 @@ public class WinDialog : Dialog
         if (level == numLevels - 1)
         {
             ShowEggChapterClear(true);
-            TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
+            TweenControl.GetInstance().DelayCall(transform, 1.2f, () =>
             {
                 _animEggChapterClear.gameObject.SetActive(true);
                 _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
@@ -169,7 +169,7 @@ public class WinDialog : Dialog
         else
         {
             ShowEggChapterClear(false);
-            TweenControl.GetInstance().DelayCall(transform, 1.4f, () =>
+            TweenControl.GetInstance().DelayCall(transform, 1.2f, () =>
             {
                 _animEggLevelClear.gameObject.SetActive(true);
                 _animEggLevelClear.SetAnimation(eggLevelAnim, false, () =>
@@ -265,6 +265,9 @@ public class WinDialog : Dialog
         var tweenControl = TweenControl.GetInstance();
         if (eventData.Data.Name == "x25")
         {
+            var condition = GetChickenbankNonReward();
+            if (condition > FacebookController.instance.user.maxbank)
+                return;
             StartCoroutine(BankNumberUp());
             //tweenControl.FadeAnfaText(_txtCollectChickenBank, 1, 0.5f);
             //tweenControl.DelayCall(_txtCollectChickenBank.transform, 1f, () =>
@@ -277,14 +280,15 @@ public class WinDialog : Dialog
         }
     }
 
+
     private IEnumerator BankNumberUp()
     {
-        var tempValue = (ChickenBankController.instance.CurrStarChicken + FacebookController.instance.user.remainBank) - ChickenBankController.instance.Amount;
+        var tempValue = GetChickenbankNonReward();
         var result = tempValue;
         for (int i = 0; i < ChickenBankController.instance.Amount; i++)
         {
             _txtCollectChickenBank.text = "X" + result;
-            if (i < 5)
+            if (i < 5 && result < FacebookController.instance.user.maxbank)
             {
                 result += ChickenBankController.instance.Amount / 5;
             }
@@ -312,10 +316,15 @@ public class WinDialog : Dialog
         TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () =>
         {
             ChickenBankController.instance.AddtoBank();
-            var result = (ChickenBankController.instance.CurrStarChicken + FacebookController.instance.user.remainBank) - ChickenBankController.instance.Amount;
-            _txtCollectChickenBank.text = "X" + result;
+            var result = GetChickenbankNonReward();
+            _txtCollectChickenBank.text = "X" + (result > FacebookController.instance.user.maxbank ? FacebookController.instance.user.maxbank : result);
             _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
         });
+    }
+
+    private double GetChickenbankNonReward()
+    {
+        return (ChickenBankController.instance.CurrStarChicken + FacebookController.instance.user.remainBank) - ChickenBankController.instance.Amount;
     }
 
     private void ShowEggChapterClear(bool show)
