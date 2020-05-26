@@ -739,7 +739,7 @@ public class WordRegion : MonoBehaviour
                 }
                 _posTarget[count].transform.position = line.transform.position;
                 var posTarget = _posTarget[count].transform;
-                posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(-line.cellSize, line.cellSize / 2, 0);
+                posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(-line.cellSize/2, line.cellSize / 2, 0);
                 BeeFly(line, _beehives[count].transform, posTarget.position, () =>
                  {
                      Sound.instance.audioSource.Stop();
