@@ -221,7 +221,7 @@ public class LineWord : MonoBehaviour
         var tweenControl = TweenControl.GetInstance();
         var fxShow = Instantiate(_fxShowHintPfb, transform);
         fxShow.transform.position = objStart.position;
-        tweenControl.JumpRect(fxShow.transform as RectTransform, cell.transform.localPosition, -800f, 1, 1.3f, false, () =>
+        tweenControl.JumpRect(fxShow.transform as RectTransform, cell.transform.localPosition, -800f, 1, 1.1f, false, () =>
         {
             BlockScreen.instance.Block(false);
             TutorialController.instance.isBlockSwipe = false;

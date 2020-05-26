@@ -780,7 +780,7 @@ public class WordRegion : MonoBehaviour
           {
               animBee.SetAnimation("Loop", true);
               callback?.Invoke();
-              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 2f, () =>
+              tweenControl.MoveRectX(beeTarget as RectTransform, 1080, 1.8f, () =>
               {
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
