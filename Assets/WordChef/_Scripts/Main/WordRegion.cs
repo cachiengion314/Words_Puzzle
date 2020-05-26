@@ -784,7 +784,7 @@ public class WordRegion : MonoBehaviour
               {
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
-              }, () => CheckBeeFlyAndShowCell(line, beeTarget));
+              }, () => CheckBeeFlyAndShowCell(line, beeTarget),EaseType.InFlash);
           }, EaseType.InOutFlash);
         //tweenControl.JumpRect(beeTarget, posTarget, -800f, 1, 1.3f, false, () =>
         //{
@@ -808,7 +808,7 @@ public class WordRegion : MonoBehaviour
         foreach (var cell in line.cells)
         {
             var distance = Vector3.Distance(beeTarget.position, cell.transform.position);
-            if (distance < 2)
+            if (distance < 0.2)
                 return cell;
         }
         return null;
