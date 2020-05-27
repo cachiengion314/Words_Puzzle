@@ -21,6 +21,7 @@ public class Dialog : MonoBehaviour
 
     private AnimatorStateInfo info;
     private bool isShowing;
+    [HideInInspector] public bool isSound = true;
 
     protected virtual void Awake()
     {
@@ -40,7 +41,7 @@ public class Dialog : MonoBehaviour
             Close();
         }
     }
-    
+
     public void SetTitleContent(string content)
     {
         if (title != null) title.SetText(content);
@@ -110,8 +111,8 @@ public class Dialog : MonoBehaviour
 
     public virtual void Close()
     {
-        Sound.instance.Play(Sound.Others.PopupClose);
         if (isShowing == false) return;
+        if (isSound) Sound.instance.Play(Sound.Others.PopupClose);
         isShowing = false;
         if (anim != null && IsIdle() && hidingAnimation != null)
         {
@@ -131,7 +132,12 @@ public class Dialog : MonoBehaviour
             else
             {
                 anim.SetTrigger("hide");
-                Timer.Schedule(this, hidingAnimation.length, DoClose);
+                //Timer.Schedule(this, hidingAnimation.length, DoClose);
+                TweenControl.GetInstance().KillDelayCall(transform);
+                TweenControl.GetInstance().DelayCall(transform, hidingAnimation.length, () =>
+                {
+                    DoClose();
+                });
             }
         }
         else

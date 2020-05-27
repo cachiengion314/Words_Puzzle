@@ -58,6 +58,7 @@ public class DialogController : MonoBehaviour
 
     public Action onDialogsOpened;
     public Action onDialogsClosed;
+    public Action onDialogsCompleteClosed;
     public Stack<Dialog> dialogs = new Stack<Dialog>();
 
     public void Awake()
@@ -125,6 +126,7 @@ public class DialogController : MonoBehaviour
         {
             current.onDialogOpened += OnOneDialogOpened;
             current.onDialogClosed += OnOneDialogClosed;
+            current.onDialogCompleteClosed += OnOneDialogCompleteClosed;
             dialogs.Push(current);
         }
 
@@ -187,6 +189,11 @@ public class DialogController : MonoBehaviour
                 ShowDialog(dialogs.Peek(), DialogShow.SHOW_PREVIOUS);
             }
         }
+    }
+
+    private void OnOneDialogCompleteClosed()
+    {
+        onDialogsCompleteClosed?.Invoke();
     }
 
 }

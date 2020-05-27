@@ -26,7 +26,7 @@ public class DialogOverlay : MonoBehaviour
     void Start()
     {
         DialogController.instance.onDialogsOpened += OnDialogOpened;
-        DialogController.instance.onDialogsClosed += OnDialogClosed;
+        DialogController.instance.onDialogsCompleteClosed += OnDialogClosed;
     }
 
     public void OnClickScreen()

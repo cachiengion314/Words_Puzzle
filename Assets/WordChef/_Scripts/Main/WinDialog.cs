@@ -91,6 +91,7 @@ public class WinDialog : Dialog
         if (_rewardControl == null)
             _rewardControl = Instantiate(_rewardVideoPfb, transform);
         _rewardControl.onRewardedCallback -= OnCompleteReward;
+        isSound = false;
     }
 
     private void ShowStars()
@@ -472,6 +473,7 @@ public class WinDialog : Dialog
          {
              if (level == numLevels - 1)
                  CPlayerPrefs.SetBool("Received", true);
+             Close();
              CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
          });
     }
@@ -502,6 +504,7 @@ public class WinDialog : Dialog
         {
             if (level == numLevels - 1)
                 CPlayerPrefs.SetBool("Received", true);
+             Close();
             CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         });
     }
