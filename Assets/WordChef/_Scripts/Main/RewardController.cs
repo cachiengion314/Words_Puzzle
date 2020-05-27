@@ -70,7 +70,7 @@ public class RewardController : MonoBehaviour
         //{
 
         //});
-        TweenControl.GetInstance().DelayCall(transform, 0.375f, () =>
+        TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.RewardedVideo, DialogShow.REPLACE_CURRENT);
