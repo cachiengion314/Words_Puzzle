@@ -25,7 +25,7 @@ public class ShopDialog : Dialog
     public ScrollRect scroll;
     public RectTransform scrollRT;
     public GameObject btnMore;
-    public Text[] limitTimeTexts;
+    public TextMeshProUGUI[] limitTimeTexts;
 
     private float currentTimeVipPack;
     private float[] maxTimeVipPacks;
@@ -79,7 +79,7 @@ public class ShopDialog : Dialog
                 //var currValue = FacebookController.instance.user.maxbank - currStar;
                 var resultValue = ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank ?
                     ConfigController.instance.config.gameParameters.maxBank : /*currValue*/ChickenBankController.instance.CurrStarChicken;
-                if (i == 8)
+                if (i == 7)
                 {
                     Purchaser.instance.iapItems[i].value = (int)resultValue;
                     Purchaser.instance.iapItems[i].txtValue = resultValue.ToString();
@@ -179,7 +179,7 @@ public class ShopDialog : Dialog
         // A consumable product has been purchased by this user.
         if (item.productType == ProductType.Consumable)
         {
-            if (item.productID == "word.chickenbank")
+            if (item.productID == "chicken_bank")
                 ChickenBankController.instance.CollectBank(item.value);
             else
                 CurrencyController.CreditBalance(item.value);

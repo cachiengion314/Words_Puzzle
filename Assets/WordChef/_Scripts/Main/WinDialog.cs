@@ -467,12 +467,11 @@ public class WinDialog : Dialog
         //Close();
         _panelDialog.SetActive(false);
         DialogOverlay.instance.Overlay.enabled = false;
-        Sound.instance.Play(Sound.Collects.LevelClose, 1);
+        Sound.instance.Play(Sound.Collects.LevelClose);
         TweenControl.GetInstance().DelayCall(transform, (level == numLevels - 1) ? 2.5f : 0.75f, () =>
          {
              if (level == numLevels - 1)
                  CPlayerPrefs.SetBool("Received", true);
-             Close();
              CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
          });
     }
@@ -498,12 +497,11 @@ public class WinDialog : Dialog
         //Close();
         _panelDialog.SetActive(false);
         DialogOverlay.instance.Overlay.enabled = false;
-        Sound.instance.Play(Sound.Collects.LevelClose, 1);
+        Sound.instance.Play(Sound.Collects.LevelClose);
         TweenControl.GetInstance().DelayCall(transform, 0.75f, () =>
         {
             if (level == numLevels - 1)
                 CPlayerPrefs.SetBool("Received", true);
-            Close();
             CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         });
     }
