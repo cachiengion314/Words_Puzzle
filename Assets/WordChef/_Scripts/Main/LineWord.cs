@@ -266,6 +266,7 @@ public class LineWord : MonoBehaviour
 
     public void ShowHintCelltarget(Cell cellTarget)
     {
+        var selectedhintFree = CurrencyController.GetSelectedHintFree();
         if (answer == "")
         {
             var tempAnswers = answers;
@@ -280,8 +281,16 @@ public class LineWord : MonoBehaviour
         ShowFxShowHint(WordRegion.instance.btnHintTarget.transform, cellTarget, () =>
         {
             cellTarget.ShowHint();
-            CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
-            Sound.instance.PlayButton(Sound.Button.Hint);
+            if (selectedhintFree > 0)
+            {
+                CurrencyController.DebitSelectedHintFree(1);
+                Sound.instance.PlayButton(Sound.Button.Hint);
+            }
+            else
+            {
+                CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
+                Sound.instance.PlayButton(Sound.Button.Hint);
+            }
             CheckSetDataAnswer(answer);
             CheckLineDone();
             WordRegion.instance.SaveLevelProgress();

@@ -19,6 +19,10 @@ public class CurrencyController
     public static Action onMultipleHintFreeChanged;
     public static Action<int> onMultipleHintFreeIncreased;
 
+    public const int DEFAULT_SELECTED_HINT_FREE = 0;
+    public static Action onSelectedHintFreeChanged;
+    public static Action<int> onSelectedHintFreeIncreased;
+
     public static void UpdateBalanceAndHintFree()
     {
         GetUserInventoryRequest requestInventory = new GetUserInventoryRequest();
@@ -229,6 +233,73 @@ public class CurrencyController
         {
             SetMultipleHintFree(current - value);
             if (onMultipleHintFreeChanged != null) onMultipleHintFreeChanged();
+        }
+        return true;
+    }
+    #endregion
+
+    #region Selected Hints
+    public static int GetSelectedHintFree()
+    {
+        int numHint = DEFAULT_SELECTED_HINT_FREE;
+        if (CPlayerPrefs.HasKey(PrefKeys.SELECTED_HINT_FREE))
+            numHint = CPlayerPrefs.GetInt(PrefKeys.SELECTED_HINT_FREE);
+        return numHint;
+    }
+
+    public static void SetSelectedHintFree(int value)
+    {
+        CPlayerPrefs.SetInt(PrefKeys.SELECTED_HINT_FREE, value);
+        CPlayerPrefs.Save();
+    }
+
+    public static void CreditSelectedHintFree(int value)
+    {
+        int current = GetSelectedHintFree();
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "SH";
+            request.Amount = value;
+            PlayFabClientAPI.AddUserVirtualCurrency(request, (result) =>
+            {
+                SetSelectedHintFree(result.Balance);
+                if (onSelectedHintFreeChanged != null) onSelectedHintFreeChanged();
+                if (onSelectedHintFreeIncreased != null) onSelectedHintFreeIncreased(value);
+            }, null);
+        }
+        else
+        {
+            SetSelectedHintFree(current + value);
+            if (onSelectedHintFreeChanged != null) onSelectedHintFreeChanged();
+            if (onSelectedHintFreeIncreased != null) onSelectedHintFreeIncreased(value);
+        }
+    }
+
+    public static bool DebitSelectedHintFree(int value)
+    {
+        int current = GetSelectedHintFree();
+        if (current < value)
+        {
+            return false;
+        }
+
+
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            SubtractUserVirtualCurrencyRequest request = new SubtractUserVirtualCurrencyRequest();
+            request.VirtualCurrency = "SH";
+            request.Amount = value;
+            PlayFabClientAPI.SubtractUserVirtualCurrency(request, (result) =>
+            {
+                SetSelectedHintFree(result.Balance);
+                if (onSelectedHintFreeChanged != null) onSelectedHintFreeChanged();
+            }, null);
+        }
+        else
+        {
+            SetSelectedHintFree(current - value);
+            if (onSelectedHintFreeChanged != null) onSelectedHintFreeChanged();
         }
         return true;
     }

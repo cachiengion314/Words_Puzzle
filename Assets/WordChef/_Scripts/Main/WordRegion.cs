@@ -14,6 +14,8 @@ public class WordRegion : MonoBehaviour
     [SerializeField] private GameObject _hintPrice;
     [SerializeField] private GameObject _MultiplehintFree;
     [SerializeField] private GameObject _MultiplehintPrice;
+    [SerializeField] private GameObject _selectedhintFree;
+    [SerializeField] private GameObject _SelectedhintPrice;
     [SerializeField] private List<GameObject> _beehives;
     [SerializeField] private List<RectTransform> _posTarget;
     [SerializeField] private Transform _posBottom;
@@ -184,8 +186,10 @@ public class WordRegion : MonoBehaviour
 
         SetupNumhintFree();
         SetupNumMultiplehintFree();
+        SetupNumSelectedhintFree();
         CurrencyController.onHintFreeChanged += UpdateHintFree;
         CurrencyController.onMultipleHintFreeChanged += UpdateHintFree;
+        CurrencyController.onSelectedHintFreeChanged += UpdateHintFree;
 
         CheckAdsIsShow();
         FacebookController.instance.newLevel = false;
@@ -199,6 +203,7 @@ public class WordRegion : MonoBehaviour
     {
         SetupNumhintFree();
         SetupNumMultiplehintFree();
+        SetupNumSelectedhintFree();
     }
 
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress, string[] answerProgress)
@@ -310,6 +315,19 @@ public class WordRegion : MonoBehaviour
         else
         {
             ShowPriceMultipleHint(true);
+        }
+    }
+
+    private void SetupNumSelectedhintFree()
+    {
+        var selectedhintFree = CurrencyController.GetSelectedHintFree();
+        if (selectedhintFree > 0)
+        {
+            ShowPriceSelectedHint(false);
+        }
+        else
+        {
+            ShowPriceSelectedHint(true);
         }
     }
 
@@ -919,6 +937,12 @@ public class WordRegion : MonoBehaviour
         _MultiplehintPrice.SetActive(show);
     }
 
+    private void ShowPriceSelectedHint(bool show)
+    {
+        _selectedhintFree.SetActive(!show);
+        _SelectedhintPrice.SetActive(show);
+    }
+
     public void HintRandomClick()
     {
         int ballance = CurrencyController.GetBalance();
@@ -1064,6 +1088,7 @@ public class WordRegion : MonoBehaviour
     {
         CurrencyController.onHintFreeChanged -= UpdateHintFree;
         CurrencyController.onMultipleHintFreeChanged -= UpdateHintFree;
+        CurrencyController.onSelectedHintFreeChanged -= UpdateHintFree;
     }
 
     private void UpdateBoard()

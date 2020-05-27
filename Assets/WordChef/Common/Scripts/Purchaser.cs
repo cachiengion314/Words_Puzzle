@@ -15,6 +15,7 @@ public class IAPItem
     public bool isSpecial;
     public int valueHint;
     public int valueMultipleHint;
+    public int valueSelectedHint;
     public int valueBeehive;
     public string txtValue;
     public string txtHot;

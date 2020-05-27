@@ -20,6 +20,7 @@ public class ShopDialog : Dialog
     public TextMeshProUGUI[] _numBeehiveTexts;
     public TextMeshProUGUI[] _numHintTexts;
     public TextMeshProUGUI[] _numMultipleHintTexts;
+    public TextMeshProUGUI[] _numSelectedHintTexts;
     public Text[] priceTexts, saleTexts;
     public Image[] hotImages, candyImages;
     public ScrollRect scroll;
@@ -92,6 +93,7 @@ public class ShopDialog : Dialog
                 if (_numBeehiveTexts[i] != null) _numBeehiveTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueBeehive;
                 if (_numHintTexts[i] != null) _numHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueHint;
                 if (_numMultipleHintTexts[i] != null) _numMultipleHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueMultipleHint;
+                if (_numSelectedHintTexts[i] != null) _numSelectedHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueSelectedHint;
 
                 var txtSale = Purchaser.instance.iapItems[i].txtSale;
                 if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
@@ -190,6 +192,8 @@ public class ShopDialog : Dialog
                 CurrencyController.CreditHintFree(item.valueHint);
             if (item.valueMultipleHint > 0)
                 CurrencyController.CreditMultipleHintFree(item.valueMultipleHint);
+            if (item.valueSelectedHint > 0)
+                CurrencyController.CreditSelectedHintFree(item.valueSelectedHint);
 
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.iapItems[index].removeAds)
