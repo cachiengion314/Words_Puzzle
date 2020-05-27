@@ -114,7 +114,7 @@ public class Dialog : MonoBehaviour
         if (isShowing == false) return;
         if (isSound) Sound.instance.Play(Sound.Others.PopupClose);
         isShowing = false;
-        if (anim != null && IsIdle() && hidingAnimation != null)
+        if (anim != null /*&& IsIdle()*/ && hidingAnimation != null)
         {
             if (scaleDialog)
             {

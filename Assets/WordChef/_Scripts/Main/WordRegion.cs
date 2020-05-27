@@ -184,6 +184,8 @@ public class WordRegion : MonoBehaviour
 
         SetupNumhintFree();
         SetupNumMultiplehintFree();
+        CurrencyController.onHintFreeChanged += UpdateHintFree;
+        CurrencyController.onMultipleHintFreeChanged += UpdateHintFree;
 
         CheckAdsIsShow();
         FacebookController.instance.newLevel = false;
@@ -191,6 +193,12 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
+    }
+
+    void UpdateHintFree()
+    {
+        SetupNumhintFree();
+        SetupNumMultiplehintFree();
     }
 
     private void SetupLine(List<string> wordList, bool useProgress, string[] levelProgress, string[] answerProgress)
@@ -1050,6 +1058,12 @@ public class WordRegion : MonoBehaviour
 
             });
         }
+    }
+
+    void OnDestroy()
+    {
+        CurrencyController.onHintFreeChanged -= UpdateHintFree;
+        CurrencyController.onMultipleHintFreeChanged -= UpdateHintFree;
     }
 
     private void UpdateBoard()
