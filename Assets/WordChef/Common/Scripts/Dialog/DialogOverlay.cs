@@ -72,7 +72,8 @@ public class DialogOverlay : MonoBehaviour
 
     private void OnDialogClosed()
     {
-        overlay.enabled = false;
+        if (DialogController.instance.current == null)
+            overlay.enabled = false;
     }
 
     private void OnDestroy()
