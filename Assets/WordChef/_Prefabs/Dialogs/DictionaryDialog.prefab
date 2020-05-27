@@ -183,7 +183,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e5d3f627d381038449e8d5a9d878aa86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9a784a02d8287c4c820f5e983b4f161, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -460,7 +460,7 @@ MonoBehaviour:
   resestAnim: 1
   buttonWord: {fileID: 532514713862931885, guid: 12ffae1b216345a4096ec02b008d4d82,
     type: 3}
-  groupWord: {fileID: 8074268519865998218}
+  groupWord: {fileID: 8141466217811729507}
   noInternet: {fileID: 1422555926663132082}
   listGroupWord: {fileID: 5744791269999203264, guid: e88d70944dc33204683fa79a064a892a,
     type: 3}
@@ -2026,7 +2026,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 471, y: -69.4}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 81, y: 81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2928422859539307002
 CanvasRenderer:
@@ -2054,7 +2054,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bc97779a8b740544088157b34195d4de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc915fa54adec0e40a8316caeb57847f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2255,7 +2255,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8525314753949654644}
+  - {fileID: 8141466217811727159}
   m_Father: {fileID: 3954219437222351101}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2599,7 +2599,8 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b468cbd941af09745864c54e821b4944, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -7275709708783235473, guid: b468cbd941af09745864c54e821b4944,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3614,7 +3615,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7230762049983255523}
-  - component: {fileID: 4973314909898410512}
   - component: {fileID: 4527611440336272072}
   m_Layer: 9
   m_Name: MeanDialog
@@ -3646,52 +3646,6 @@ RectTransform:
   m_AnchoredPosition: {x: -8.9826, y: -0.000053406}
   m_SizeDelta: {x: 943.03, y: 1100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4973314909898410512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7440074260203568529}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9abba54ea6f5a4cdcb20c33c181ed38d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 7356432623417814811}
-  hidingAnimation: {fileID: 7400000, guid: a5204ff6b8ef9014ab6bbcf52ec3357b, type: 2}
-  title: {fileID: 0}
-  message: {fileID: 0}
-  dialogType: 14
-  showDialogReward: 0
-  enableAd: 0
-  enableEscape: 1
-  scaleDialog: 0
-  resestAnim: 1
-  hotSprite: {fileID: 21300000, guid: c01de3e0a1a21be4db4b1a110fac2e10, type: 3}
-  bestSprite: {fileID: 21300000, guid: 5ba1916574baac64bb45ddf47f778ed7, type: 3}
-  candySprite: {fileID: 21300000, guid: d1caa2bdb92704a8b93f65e601ec976c, type: 3}
-  adsSprite: {fileID: 21300000, guid: bebd982eb7712f245b8f982f3ecde787, type: 3}
-  numHintTexts:
-  - {fileID: 3059520471008220721}
-  - {fileID: 0}
-  - {fileID: 0}
-  priceTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  saleTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  hotImages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  contentItemShop: {fileID: 0}
-  shopItemObject: []
-  shadowPanelHowToPlay: {fileID: 0}
-  panelHowToPlay: {fileID: 0}
 --- !u!114 &4527611440336272072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4812,15 +4766,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e88d70944dc33204683fa79a064a892a, type: 3}
---- !u!224 &8525314753949654644 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 480843897989365789, guid: e88d70944dc33204683fa79a064a892a,
+--- !u!1 &8141466217811729507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 68077444694377955, guid: e88d70944dc33204683fa79a064a892a,
     type: 3}
   m_PrefabInstance: {fileID: 8141466217811730025}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8074268519865998218 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 68077444694377955, guid: e88d70944dc33204683fa79a064a892a,
+--- !u!224 &8141466217811727159 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 480843897989365789, guid: e88d70944dc33204683fa79a064a892a,
     type: 3}
   m_PrefabInstance: {fileID: 8141466217811730025}
   m_PrefabAsset: {fileID: 0}
