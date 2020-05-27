@@ -5,25 +5,27 @@ using UnityEngine;
 
 public class CurrMultipleHintFreeController : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _textMultipleHintFree;
+
     void Start()
     {
-        UpdateMultiplehintFree();
-        CurrencyController.onMultipleHintFreeChanged += OnMultipleHintFreChanged;
+        this.UpdateMultiplehintFree();
+        CurrencyController.onMultipleHintFreeChanged += this.OnMultipleHintFreChanged;
     }
 
     private void UpdateMultiplehintFree()
     {
-        if (gameObject.GetComponent<TextMeshProUGUI>() != null)
-            gameObject.SetText(CurrencyController.GetMultipleHintFree().ToString());
+        if (_textMultipleHintFree != null)
+            _textMultipleHintFree.text = CurrencyController.GetMultipleHintFree().ToString();
     }
     private void OnMultipleHintFreChanged()
     {
-        UpdateMultiplehintFree();
+        this.UpdateMultiplehintFree();
     }
 
     private void OnDestroy()
     {
-        CurrencyController.onHintFreeChanged -= OnMultipleHintFreChanged;
+        CurrencyController.onHintFreeChanged -= this.OnMultipleHintFreChanged;
     }
 
 }

@@ -72,7 +72,8 @@ public class ShopDialog : Dialog
                 }
                 else
                 {
-                    numRubyTexts[i].transform.parent.gameObject.SetActive(true);
+                    if (i != 0)
+                        numRubyTexts[i].transform.parent.gameObject.SetActive(true);
                 }
 
                 //var currStar = CurrencyController.GetBalance();
