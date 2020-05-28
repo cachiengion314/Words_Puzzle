@@ -16,6 +16,7 @@ public class ShopDialog : Dialog
     public Sprite candySprite;
     public Sprite adsSprite;
 
+    public ItemShop[] _items;
     public TextMeshProUGUI[] numRubyTexts;
     public TextMeshProUGUI[] _numBeehiveTexts;
     public TextMeshProUGUI[] _numHintTexts;
@@ -51,6 +52,7 @@ public class ShopDialog : Dialog
         {
             if (numRubyTexts[i] != null)
             {
+                _items[i].idProduct = i;
                 //vip pack la limitTime > 0
                 if (Purchaser.instance.iapItems[i].limitTime > 0)
                 {
@@ -272,9 +274,17 @@ public class ShopDialog : Dialog
                 chickenBank.SetActive(false);
             }
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
+            var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
             if (i > 1)
             {
                 shopItemObject[i].transform.localScale = Vector3.zero;
+                if (ConfigController.instance.isShopHint)
+                {
+                    if (Purchaser.instance.iapItems[itemShop].valueHint > 0 || Purchaser.instance.iapItems[itemShop].valueMultipleHint > 0 || Purchaser.instance.iapItems[itemShop].valueSelectedHint > 0)
+                        shopItemObject[i].gameObject.SetActive(true);
+                    else
+                        shopItemObject[i].gameObject.SetActive(false);
+                }
 
                 if (shopItemObject[i].activeInHierarchy)
                 {
