@@ -71,6 +71,7 @@ public class ChickenBankController : MonoBehaviour
 
     public void CollectBank(int value)
     {
+        Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Collects.CoinCollect);
         if (CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank)
             CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.maxBank);
