@@ -75,8 +75,12 @@ public class WinDialog : Dialog
     private List<GameObject> _stars;
     private RewardVideoController _rewardControl;
 
+    public static WinDialog instance;
+
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
         _animEggChapterClear.onEventAction = ShowStarsEffect;
         _animEggLevelClear.onEventAction = ShowStarsEffect;
     }
@@ -281,6 +285,10 @@ public class WinDialog : Dialog
         }
     }
 
+    public void UpdateChickenBankAmount()
+    {
+        _txtCollectChickenBank.text = "X" + ChickenBankController.instance.CurrStarChicken;
+    }
 
     private IEnumerator BankNumberUp()
     {
@@ -504,7 +512,7 @@ public class WinDialog : Dialog
         {
             if (level == numLevels - 1)
                 CPlayerPrefs.SetBool("Received", true);
-             Close();
+            Close();
             CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
         });
     }
