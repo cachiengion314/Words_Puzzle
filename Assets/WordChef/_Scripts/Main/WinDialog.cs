@@ -186,18 +186,6 @@ public class WinDialog : Dialog
         }
     }
 
-    private IEnumerator PlaySoundCollect()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            if (i < 5)
-            {
-                Sound.instance.Play(Sound.Collects.CoinCollect);
-            }
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
     private void ShowPanelButton(bool show)
     {
         //WordRegion.instance.listWordCorrect = new List<string>();
@@ -222,8 +210,6 @@ public class WinDialog : Dialog
             {
                 tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken, 0.3f, () =>
                 {
-                    StartCoroutine(PlaySoundCollect());
-
                     _chickenBankAnim.SetAnimation(_collectAnim, false, () =>
                     {
                         _chickenBankAnim.SetAnimation(_loopAnim, true);
@@ -300,8 +286,9 @@ public class WinDialog : Dialog
             if (i < 5 && result < FacebookController.instance.user.maxbank)
             {
                 result += ChickenBankController.instance.Amount / 5;
+                Sound.instance.Play(Sound.Collects.CoinCollect);
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.06f);
         }
     }
 
