@@ -4,6 +4,13 @@ using UnityEngine;
 using Firebase;
 public class CrashlyticsInitializer : MonoBehaviour
 {
+    public static CrashlyticsInitializer instance;
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }
     // Use this for initialization
     void Start()
     {

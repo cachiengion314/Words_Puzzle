@@ -79,6 +79,7 @@ public class QuestController : MonoBehaviour
     {
         if (DateTime.Compare(DateTime.Now, nextDay) >= 0)
         {
+            CPlayerPrefs.SetBool("IS_REFRESH", false);
             UpdateNextDay();
             DailyActive(true);
         }
@@ -91,6 +92,7 @@ public class QuestController : MonoBehaviour
 
     void UpdateNextDay()
     {
+        var isRefresh = CPlayerPrefs.GetBool("IS_REFRESH", false);
         var timeRefresh = DateTime.Now.Date + TimeSpan.FromSeconds(_timeRefresh * 3600);
         if (CPlayerPrefs.HasKey("DAY_REFRESH"))
         {
@@ -104,9 +106,11 @@ public class QuestController : MonoBehaviour
             CPlayerPrefs.SetLong("DAY_REFRESH", timeRefresh.Ticks);
             Debug.Log("NextDay New: " + nextDay);
         }
-        if (DateTime.Compare(DateTime.Now, nextDay) > 0)
+        if (DateTime.Compare(DateTime.Now, nextDay) > 0 && !isRefresh)
         {
-            nextDay = DateTime.Today.AddDays(1) + TimeSpan.FromSeconds(_timeRefresh * 3600);
+            CPlayerPrefs.SetBool("IS_REFRESH", true);
+            nextDay = DateTime.Now.Date.AddDays(1)/* + TimeSpan.FromSeconds(_timeRefresh * 3600)*/;
+            Debug.Log("NextDay New Refresh: " + nextDay);
             CPlayerPrefs.SetLong("DAY_REFRESH", nextDay.Ticks);
             CPlayerPrefs.SetInt("DAILY_DATA", UnityEngine.Random.Range(0, _dailyTaskDatas.Count));
             indexData = CPlayerPrefs.GetInt("DAILY_DATA", 0);
