@@ -15,7 +15,8 @@ public class CrashlyticsInitializer : MonoBehaviour
     void Start()
     {
         // Initialize Firebase
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {

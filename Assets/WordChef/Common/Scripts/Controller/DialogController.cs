@@ -5,6 +5,7 @@ using System;
 
 public enum DialogType
 {
+    ShareDialog,
     PromoteQuit,
     PromotePopup,
     QuitGame,
