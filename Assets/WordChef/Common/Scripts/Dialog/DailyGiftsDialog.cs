@@ -28,6 +28,7 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private TextMeshProUGUI _textHintCollect;
     [SerializeField] private TextMeshProUGUI _textMultipleHintCollect;
     [SerializeField] private TextMeshProUGUI _textSelectedHintCollect;
+    [SerializeField] private TextMeshProUGUI _textNotifyCollect;
 
     private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
@@ -39,7 +40,9 @@ public class DailyGiftsDialog : Dialog
     private double _sumTime;
     private double _timeTarget;
 
-    private List<int> listRandom = new List<int>();
+    private List<int> listRandomMultiple = new List<int>();
+    private List<int> listRandomSelected = new List<int>();
+    private List<int> listRandomHint = new List<int>();
 
     void Awake()
     {
@@ -48,7 +51,9 @@ public class DailyGiftsDialog : Dialog
 
     void Start()
     {
-        InitListRandom();
+        InitListRandomMultipleHint();
+        InitListRandomSelectedHint();
+        InitListRandomHint();
         CheckTimeReward();
     }
 
@@ -66,9 +71,9 @@ public class DailyGiftsDialog : Dialog
         InitTimeCountDown();
     }
 
-    private void InitListRandom()
+    private void InitListRandomMultipleHint()
     {
-        listRandom = new List<int>();
+        listRandomMultiple = new List<int>();
         int num = 100;
         var rate5 = (int)(0.04f * num);
         var rate4 = (int)((0.04f + 0.06f) * num);
@@ -78,15 +83,63 @@ public class DailyGiftsDialog : Dialog
         for (int i = 0; i < num; i++)
         {
             if (i <= rate5)
-                listRandom.Add(5);
+                listRandomMultiple.Add(5);
             if (rate5 < i && i <= rate4)
-                listRandom.Add(4);
+                listRandomMultiple.Add(4);
             if (rate4 < i && i <= rate3)
-                listRandom.Add(3);
+                listRandomMultiple.Add(3);
             if (rate3 < i && i <= rate2)
-                listRandom.Add(2);
+                listRandomMultiple.Add(2);
             if (rate2 < i)
-                listRandom.Add(1);
+                listRandomMultiple.Add(1);
+        }
+    }
+
+    private void InitListRandomSelectedHint()
+    {
+        listRandomSelected = new List<int>();
+        int num = 100;
+        var rate5 = (int)(0.08f * num);
+        var rate4 = (int)((0.08f + 0.12f) * num);
+        var rate3 = (int)((0.08f + 0.12f + 0.2f) * num);
+        var rate2 = (int)((0.08f + 0.12f + 0.2f + 0.4f) * num);
+        //var rate1 = (int)(0.6f * num);
+        for (int i = 0; i < num; i++)
+        {
+            if (i <= rate5)
+                listRandomSelected.Add(5);
+            if (rate5 < i && i <= rate4)
+                listRandomSelected.Add(4);
+            if (rate4 < i && i <= rate3)
+                listRandomSelected.Add(3);
+            if (rate3 < i && i <= rate2)
+                listRandomSelected.Add(2);
+            if (rate2 < i)
+                listRandomSelected.Add(1);
+        }
+    }
+
+    private void InitListRandomHint()
+    {
+        listRandomHint = new List<int>();
+        int num = 100;
+        var rate5 = (int)(0.6f * num);
+        var rate4 = (int)((0.6f + 0.2f) * num);
+        var rate3 = (int)((0.6f + 0.2f + 0.15f) * num);
+        var rate2 = (int)((0.6f + 0.2f + 0.15f + 0.05f) * num);
+        //var rate1 = (int)(0.6f * num);
+        for (int i = 0; i < num; i++)
+        {
+            if (i <= rate5)
+                listRandomHint.Add(5);
+            if (rate5 < i && i <= rate4)
+                listRandomHint.Add(4);
+            if (rate4 < i && i <= rate3)
+                listRandomHint.Add(3);
+            if (rate3 < i && i <= rate2)
+                listRandomHint.Add(2);
+            if (rate2 < i)
+                listRandomHint.Add(1);
         }
     }
 
@@ -132,9 +185,9 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickCollect()
     {
-        var hintRandomAmount = RandomSingle();
-        var multipleHintRandomAmount = RandomSingle();
-        var selectedHintRandomAmount = RandomSingle();
+        var hintRandomAmount = RandomSingle(listRandomHint);
+        var multipleHintRandomAmount = RandomSingle(listRandomMultiple);
+        var selectedHintRandomAmount = RandomSingle(listRandomSelected);
         _textHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardHintDaily*/hintRandomAmount;
         _textMultipleHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/multipleHintRandomAmount;
         _textSelectedHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/selectedHintRandomAmount;
@@ -164,15 +217,19 @@ public class DailyGiftsDialog : Dialog
     {
         if (eventData.Data.Name == "ket thuc collect")
         {
-            _overlayCollect.SetActive(true);
-            TweenControl.GetInstance().DelayCall(transform, 3f, () =>
-            {
-                _overlayCollect.SetActive(false);
-            });
+            _textNotifyCollect.gameObject.SetActive(false);
+            TweenControl.GetInstance().ScaleFromZero(_textHintCollect.gameObject, 0.3f);
+            TweenControl.GetInstance().ScaleFromZero(_textMultipleHintCollect.gameObject, 0.3f);
+            TweenControl.GetInstance().ScaleFromZero(_textSelectedHintCollect.gameObject, 0.3f);
+            //_overlayCollect.SetActive(true);
+            //TweenControl.GetInstance().DelayCall(transform, 3f, () =>
+            //{
+            //    _overlayCollect.SetActive(false);
+            //});
         }
     }
 
-    private int RandomSingle()
+    private int RandomSingle(List<int> listRandom)
     {
         var temp = 0;
         temp = UnityEngine.Random.Range(0, listRandom.Count);
@@ -251,11 +308,19 @@ public class DailyGiftsDialog : Dialog
         _btnWatch.gameObject.SetActive(false);
         while (!_isReward)
         {
+            _textHintCollect.transform.localScale = Vector3.one;
+            _textMultipleHintCollect.transform.localScale = Vector3.one;
+            _textSelectedHintCollect.transform.localScale = Vector3.one;
+            _textNotifyCollect.gameObject.SetActive(false);
             _timeCountdown.transform.localScale = Vector3.one;
             TimeSpan timeSpan = TimeSpan.FromSeconds(_timeValue);
             _timeCountdown.text = timeSpan.ToString();
             if (_timeCountdown.text == "00:00:00" || _timeCountdown.text == "")
             {
+                _textHintCollect.transform.localScale = Vector3.zero;
+                _textMultipleHintCollect.transform.localScale = Vector3.zero;
+                _textSelectedHintCollect.transform.localScale = Vector3.zero;
+                _textNotifyCollect.gameObject.SetActive(true);
                 _timeCountdown.transform.localScale = Vector3.zero;
                 _isReward = true;
                 CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
