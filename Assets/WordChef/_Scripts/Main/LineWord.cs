@@ -281,22 +281,21 @@ public class LineWord : MonoBehaviour
         ShowFxShowHint(WordRegion.instance.btnHintTarget.transform, cellTarget, () =>
         {
             cellTarget.ShowHint();
-            if (selectedhintFree > 0)
-            {
-                CurrencyController.DebitSelectedHintFree(1);
-                Sound.instance.PlayButton(Sound.Button.Hint);
-            }
-            else
-            {
-                CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
-                Sound.instance.PlayButton(Sound.Button.Hint);
-            }
+            Sound.instance.PlayButton(Sound.Button.Hint);
             CheckSetDataAnswer(answer);
             CheckLineDone();
             WordRegion.instance.SaveLevelProgress();
             WordRegion.instance.CheckGameComplete();
             ClearAds();
         });
+        if (selectedhintFree > 0)
+        {
+            CurrencyController.DebitSelectedHintFree(1);
+        }
+        else
+        {
+            CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
+        }
     }
 
     public void OnClickLine()
@@ -418,7 +417,8 @@ public class LineWord : MonoBehaviour
         if (cellNotShow != null && cellNotShow.Count > 0)
         {
             var cellRandom = GetRandomCell(cellNotShow);
-            ShowFxShowHint(WordRegion.instance.btnMultipleHint.transform, cellRandom, () => {
+            ShowFxShowHint(WordRegion.instance.btnMultipleHint.transform, cellRandom, () =>
+            {
                 if (cellRandom != null)
                 {
                     cellRandom.ShowHint();

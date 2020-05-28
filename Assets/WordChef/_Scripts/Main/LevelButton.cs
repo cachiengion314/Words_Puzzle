@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelButton : MonoBehaviour {
+public class LevelButton : MonoBehaviour
+{
     public GameData gameData;
     [Space]
     public Text levelText;
@@ -39,8 +40,8 @@ public class LevelButton : MonoBehaviour {
         int unlockedSubWorld = Prefs.unlockedSubWorld;
         int unlockedLevel = Prefs.unlockedLevel;
 
-        if  (world < unlockedWorld || 
-            (world == unlockedWorld && subWorld < unlockedSubWorld) || 
+        if (world < unlockedWorld ||
+            (world == unlockedWorld && subWorld < unlockedSubWorld) ||
             (world == unlockedWorld && subWorld <= unlockedSubWorld && level < unlockedLevel))
         {
             background.sprite = solvedSprite;
@@ -109,6 +110,7 @@ public class LevelButton : MonoBehaviour {
         Sound.instance.Play(Sound.Others.PopupOpen);
 
         // Set the music
-        Music.instance.Play(CUtils.GetRandom(Music.Type.Main_0, Music.Type.Main_1, Music.Type.Main_2));
+        if (!Music.instance.audioSource.isPlaying)
+            Music.instance.Play(CUtils.GetRandom(Music.Type.Main_0, Music.Type.Main_1, Music.Type.Main_2));
     }
 }

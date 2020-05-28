@@ -766,7 +766,7 @@ public class WordRegion : MonoBehaviour
                 }
                 _posTarget[count].transform.position = line.transform.position;
                 var posTarget = _posTarget[count].transform;
-                posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(-line.cellSize/2, line.cellSize / 2, 0);
+                posTarget.localPosition = _posTarget[count].transform.localPosition + new Vector3(-line.cellSize / 2, line.cellSize / 2, 0);
                 BeeFly(line, _beehives[count].transform, posTarget.position, () =>
                  {
                      Sound.instance.audioSource.Stop();
@@ -811,7 +811,7 @@ public class WordRegion : MonoBehaviour
               {
                   beeTarget.gameObject.SetActive(false);
                   completeFly?.Invoke();
-              }, () => CheckBeeFlyAndShowCell(line, beeTarget),EaseType.InFlash);
+              }, () => CheckBeeFlyAndShowCell(line, beeTarget), EaseType.InFlash);
           }, EaseType.InOutFlash);
         //tweenControl.JumpRect(beeTarget, posTarget, -800f, 1, 1.3f, false, () =>
         //{
@@ -906,22 +906,21 @@ public class WordRegion : MonoBehaviour
                     line.isAds = false;
                     CPlayerPrefs.SetBool(gameObject.name + "_ADS", line.isAds);
                 }
-                if (hintFree > 0)
-                {
-                    CurrencyController.DebitHintFree(1);
-                    Sound.instance.PlayButton(Sound.Button.Hint);
-                }
-                else
-                {
-                    CurrencyController.DebitBalance(Const.HINT_COST);
-                    Sound.instance.PlayButton(Sound.Button.Hint);
-                }
+                Sound.instance.PlayButton(Sound.Button.Hint);
                 SetupNumhintFree();
                 SaveLevelProgress();
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
             });
+            if (hintFree > 0)
+            {
+                CurrencyController.DebitHintFree(1);
+            }
+            else
+            {
+                CurrencyController.DebitBalance(Const.HINT_COST);
+            }
         }
     }
 

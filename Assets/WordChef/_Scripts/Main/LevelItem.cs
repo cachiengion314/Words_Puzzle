@@ -122,6 +122,7 @@ public class LevelItem : MonoBehaviour {
         Sound.instance.Play(Sound.Others.PopupOpen);
 
         // Set the music
-        Music.instance.Play(CUtils.GetRandom(Music.Type.Main_0, Music.Type.Main_1, Music.Type.Main_2));
+        if (!Music.instance.audioSource.isPlaying)
+            Music.instance.Play(CUtils.GetRandom(Music.Type.Main_0, Music.Type.Main_1, Music.Type.Main_2));
     }
 }
