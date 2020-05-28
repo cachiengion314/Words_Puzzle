@@ -321,6 +321,7 @@ public class LineWord : MonoBehaviour
         {
             MainController.instance.SaveWordComplete(answer);
             WordRegion.instance.listWordCorrect.Add(answer.ToLower());
+            ResetAnswer(this,answer);
         }
         foreach (var cell in cells)
         {
