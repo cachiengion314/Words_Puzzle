@@ -321,7 +321,6 @@ public class LineWord : MonoBehaviour
         {
             MainController.instance.SaveWordComplete(answer);
             WordRegion.instance.listWordCorrect.Add(answer.ToLower());
-            ResetAnswer(this,answer);
         }
         foreach (var cell in cells)
         {
@@ -481,7 +480,7 @@ public class LineWord : MonoBehaviour
     //    }
     //}
 
-    private void CheckSetDataAnswer(string word)
+    public void CheckSetDataAnswer(string word)
     {
         var lines = WordRegion.instance.Lines;
         var numOfwordsTheSameCharacter = new List<string>();

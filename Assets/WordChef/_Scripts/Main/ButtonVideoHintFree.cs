@@ -59,8 +59,17 @@ public class ButtonVideoHintFree : MonoBehaviour
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             var line = WordRegion.instance.Lines.Single(li => li.cells.Contains(Cell));
-            line.SetDataLetter(line.answers[UnityEngine.Random.Range(0, line.answers.Count)]);
+            var tempAnswers = line.answers;
+            for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+            {
+                var l = WordRegion.instance.Lines[i];
+                if (l != line && !l.isShown && l.answer != "")
+                    tempAnswers.Remove(l.answer);
+            }
+            line.SetDataLetter(tempAnswers[UnityEngine.Random.Range(0, tempAnswers.Count)]);
+            //line.SetDataLetter(line.answers[UnityEngine.Random.Range(0, line.answers.Count)]);
             Cell.ShowHint();
+            line.CheckSetDataAnswer(line.answer);
             line.CheckLineDone();
             WordRegion.instance.SaveLevelProgress();
             WordRegion.instance.CheckGameComplete();
