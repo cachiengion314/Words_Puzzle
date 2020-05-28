@@ -27,6 +27,7 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private GameObject _overlayCollect;
     [SerializeField] private TextMeshProUGUI _textHintCollect;
     [SerializeField] private TextMeshProUGUI _textMultipleHintCollect;
+    [SerializeField] private TextMeshProUGUI _textSelectedHintCollect;
 
     private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
@@ -37,6 +38,8 @@ public class DailyGiftsDialog : Dialog
     private bool _isReward;
     private double _sumTime;
     private double _timeTarget;
+
+    private List<int> listRandom = new List<int>();
 
     void Awake()
     {
@@ -50,6 +53,7 @@ public class DailyGiftsDialog : Dialog
 
     private void InitProgress()
     {
+        InitListRandom();
         _timeTarget = _valueTimeGift * 3600;
         _rewardedVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardedVideoControl == null)
@@ -60,6 +64,30 @@ public class DailyGiftsDialog : Dialog
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
         InitTimeCountDown();
+    }
+
+    private void InitListRandom()
+    {
+        listRandom = new List<int>();
+        int num = 100;
+        float rate5 = 0.03f * num;
+        float rate4 = 0.07f * num;
+        float rate3 = 0.1f * num;
+        float rate2 = 0.2f * num;
+        float rate1 = 0.6f * num;
+        for (int i = 0; i < num; i++)
+        {
+            if (i <= rate1)
+                listRandom.Add(1);
+            else if (i <= rate2)
+                listRandom.Add(2);
+            else if (i <= rate3)
+                listRandom.Add(3);
+            else if (i <= rate4)
+                listRandom.Add(4);
+            else if (i <= rate5)
+                listRandom.Add(5);
+        }
     }
 
     private void InitTimeCountDown()
@@ -104,14 +132,19 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickCollect()
     {
-        _textHintCollect.text = "X" + ConfigController.Config.gameParameters.rewardHintDaily;
-        _textMultipleHintCollect.text = "X" + ConfigController.Config.gameParameters.rewardMultipleHintDaily;
+        var hintRandomAmount = RandomSingle();
+        var multipleHintRandomAmount = RandomSingle();
+        var selectedHintRandomAmount = RandomSingle();
+        _textHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardHintDaily*/hintRandomAmount;
+        _textMultipleHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/multipleHintRandomAmount;
+        _textSelectedHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/selectedHintRandomAmount;
         Sound.instance.Play(Sound.Collects.LevelOpen);
         _collectButton.gameObject.SetActive(false);
         _currProgressValue = 0;
         CPlayerPrefs.SetBool(TIME_REWARD_KEY, false);
-        CurrencyController.CreditHintFree(ConfigController.Config.gameParameters.rewardHintDaily);
-        CurrencyController.CreditMultipleHintFree(ConfigController.Config.gameParameters.rewardMultipleHintDaily);
+        CurrencyController.CreditHintFree(/*ConfigController.Config.gameParameters.rewardHintDaily*/hintRandomAmount);
+        CurrencyController.CreditMultipleHintFree(/*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/multipleHintRandomAmount);
+        CurrencyController.CreditSelectedHintFree(/*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/selectedHintRandomAmount);
         var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
         _timeTarget = valueTarget;
         CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
@@ -137,6 +170,18 @@ public class DailyGiftsDialog : Dialog
                 _overlayCollect.SetActive(false);
             });
         }
+    }
+
+    private int RandomSingle()
+    {
+        System.Random rand = new System.Random();
+        var numsRandom = 0;
+        int temp = 0;
+
+        temp = rand.Next(listRandom.Count);
+        numsRandom = temp;
+        listRandom.RemoveAt(temp);
+        return numsRandom;
     }
 
     private void UpdateProgress()
