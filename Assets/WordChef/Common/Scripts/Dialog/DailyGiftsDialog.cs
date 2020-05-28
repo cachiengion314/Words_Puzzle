@@ -48,12 +48,12 @@ public class DailyGiftsDialog : Dialog
 
     void Start()
     {
+        InitListRandom();
         CheckTimeReward();
     }
 
     private void InitProgress()
     {
-        InitListRandom();
         _timeTarget = _valueTimeGift * 3600;
         _rewardedVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardedVideoControl == null)
@@ -70,23 +70,23 @@ public class DailyGiftsDialog : Dialog
     {
         listRandom = new List<int>();
         int num = 100;
-        float rate5 = 0.03f * num;
-        float rate4 = 0.07f * num;
-        float rate3 = 0.1f * num;
-        float rate2 = 0.2f * num;
-        float rate1 = 0.6f * num;
+        var rate5 = (int)(0.04f * num);
+        var rate4 = (int)((0.04f + 0.06f) * num);
+        var rate3 = (int)((0.04f + 0.06f + 0.1f) * num);
+        var rate2 = (int)((0.04f + 0.06f + 0.1f + 0.2f) * num);
+        //var rate1 = (int)(0.6f * num);
         for (int i = 0; i < num; i++)
         {
-            if (i <= rate1)
-                listRandom.Add(1);
-            else if (i <= rate2)
-                listRandom.Add(2);
-            else if (i <= rate3)
-                listRandom.Add(3);
-            else if (i <= rate4)
-                listRandom.Add(4);
-            else if (i <= rate5)
+            if (i <= rate5)
                 listRandom.Add(5);
+            if (rate5 < i && i <= rate4)
+                listRandom.Add(4);
+            if (rate4 < i && i <= rate3)
+                listRandom.Add(3);
+            if (rate3 < i && i <= rate2)
+                listRandom.Add(2);
+            if (rate2 < i)
+                listRandom.Add(1);
         }
     }
 
@@ -174,12 +174,10 @@ public class DailyGiftsDialog : Dialog
 
     private int RandomSingle()
     {
-        System.Random rand = new System.Random();
+        var temp = 0;
+        temp = UnityEngine.Random.Range(0, listRandom.Count);
         var numsRandom = 0;
-        int temp = 0;
-
-        temp = rand.Next(listRandom.Count);
-        numsRandom = temp;
+        numsRandom = listRandom[temp];
         listRandom.RemoveAt(temp);
         return numsRandom;
     }
