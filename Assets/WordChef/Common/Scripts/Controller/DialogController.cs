@@ -5,7 +5,6 @@ using System;
 
 public enum DialogType
 {
-    ShareDialog,
     PromoteQuit,
     PromotePopup,
     QuitGame,
@@ -35,7 +34,8 @@ public enum DialogType
     ChickenBank,
     OpenWordDictionary,
     ComingSoon,
-    FreeStarsPlay
+    FreeStarsPlay,
+    ShareDialog
 };
 
 public enum DialogShow

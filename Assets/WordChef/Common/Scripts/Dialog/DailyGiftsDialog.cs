@@ -29,6 +29,7 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private TextMeshProUGUI _textMultipleHintCollect;
     [SerializeField] private TextMeshProUGUI _textSelectedHintCollect;
     [SerializeField] private TextMeshProUGUI _textNotifyCollect;
+    [SerializeField] private TextMeshProUGUI _textNotifyTitle;
 
     private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
@@ -43,6 +44,9 @@ public class DailyGiftsDialog : Dialog
     private List<int> listRandomMultiple = new List<int>();
     private List<int> listRandomSelected = new List<int>();
     private List<int> listRandomHint = new List<int>();
+
+    private const string CLOSE_CHEST = "Complete watching 10 rewarded ads, you can get";
+    private const string OPEN_CHEST = "Thanks for supporting us! Here are your rewards.";
 
     void Awake()
     {
@@ -308,6 +312,7 @@ public class DailyGiftsDialog : Dialog
         _btnWatch.gameObject.SetActive(false);
         while (!_isReward)
         {
+            _textNotifyTitle.text = OPEN_CHEST;
             _textHintCollect.transform.localScale = Vector3.one;
             _textMultipleHintCollect.transform.localScale = Vector3.one;
             _textSelectedHintCollect.transform.localScale = Vector3.one;
@@ -317,6 +322,7 @@ public class DailyGiftsDialog : Dialog
             _timeCountdown.text = timeSpan.ToString();
             if (_timeCountdown.text == "00:00:00" || _timeCountdown.text == "")
             {
+                _textNotifyTitle.text = CLOSE_CHEST;
                 _textHintCollect.transform.localScale = Vector3.zero;
                 _textMultipleHintCollect.transform.localScale = Vector3.zero;
                 _textSelectedHintCollect.transform.localScale = Vector3.zero;
