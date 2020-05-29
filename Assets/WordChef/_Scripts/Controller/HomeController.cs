@@ -73,7 +73,7 @@ public class HomeController : BaseController
         Debug.Log("Play Animation Man Home");
         //animatorTitle.enabled = true;
         //animatorTitle.SetBool("Play", true);
-        _btnPlay.gameObject.SetActive(false);
+        SceneAnimate.Instance._btnPlay.gameObject.SetActive(false);
         _btnPlayShadow.transform.localScale = Vector3.zero;
         StartCoroutine(PlayAnimButton());
     }
@@ -81,21 +81,22 @@ public class HomeController : BaseController
     private IEnumerator PlayAnimButton()
     {
         var tweenControl = TweenControl.GetInstance();
+        var sceneAnimate = SceneAnimate.Instance;
         yield return new WaitForSeconds(1f);
-        _spineAnimEgg.gameObject.SetActive(true);
-        _spineAnimShadow.gameObject.SetActive(true);
+        sceneAnimate._spineAnimEgg.gameObject.SetActive(true);
+        sceneAnimate._spineAnimShadow.gameObject.SetActive(true);
         _spineAnimGia.gameObject.SetActive(true);
-        _spineAnimShadow.SetAnimation(_showShadow, false, () =>
+        sceneAnimate._spineAnimShadow.SetAnimation(_showShadow, false, () =>
         {
-            _spineAnimShadow.SetAnimation(_showShadowLoop, true);
+            sceneAnimate._spineAnimShadow.SetAnimation(_showShadowLoop, true);
         });
-        _spineAnimEgg.SetAnimation(_showAnim, false, () =>
+        sceneAnimate._spineAnimEgg.SetAnimation(_showAnim, false, () =>
         {
-            _spineAnimEgg.SetAnimation(_loopAnim, true);
+            sceneAnimate._spineAnimEgg.SetAnimation(_loopAnim, true);
         });
         yield return new WaitForSeconds(0.4f);
-        _btnPlay.gameObject.SetActive(true);
-        _maskShadow.gameObject.SetActive(true);
+        sceneAnimate._btnPlay.gameObject.SetActive(true);
+        sceneAnimate._maskShadow.gameObject.SetActive(true);
         tweenControl.Scale(_btnPlayShadow, Vector3.one * 1.2f, 0.47f, () =>
         {
             tweenControl.Scale(_btnPlayShadow, Vector3.one, 0.53f);
