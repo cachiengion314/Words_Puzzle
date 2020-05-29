@@ -95,6 +95,7 @@ public class HomeController : BaseController
             sceneAnimate._spineAnimEgg.SetAnimation(_loopAnim, true);
         });
         yield return new WaitForSeconds(0.4f);
+        sceneAnimate._loadingScreen.gameObject.SetActive(false);
         sceneAnimate._btnPlay.gameObject.SetActive(true);
         sceneAnimate._maskShadow.gameObject.SetActive(true);
         tweenControl.Scale(_btnPlayShadow, Vector3.one * 1.2f, 0.47f, () =>

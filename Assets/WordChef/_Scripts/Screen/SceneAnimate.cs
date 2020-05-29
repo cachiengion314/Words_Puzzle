@@ -120,7 +120,7 @@ public class SceneAnimate : MonoBehaviour
                 _progressLoading.value = _progressLoading.maxValue;
                 _textProgress.text = "Loading 100%";
                 asyncOp.allowSceneActivation = true;
-                _loadingScreen.gameObject.SetActive(false);
+                //_loadingScreen.gameObject.SetActive(false);
             }
             yield return null;
         }
