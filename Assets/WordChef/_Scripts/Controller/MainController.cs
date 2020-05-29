@@ -73,10 +73,10 @@ public class MainController : BaseController
         {
             Timer.Schedule(this, 0.5f, () =>
             {
-                //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+                var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
                 //DialogController.instance.ShowDialog(DialogType.HowtoPlay);
-                //if (!isTut)
-                //    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
+                if (!isTut)
+                    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
             });
         }
         //GameState.currentSubWorldName

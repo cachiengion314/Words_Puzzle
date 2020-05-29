@@ -454,13 +454,13 @@ public class WordRegion : MonoBehaviour
             textPreview.ClearText();
             return;
         }
-        //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+        var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         var isExist = lines.FindAll(li => !li.isShown).All(l => l.answer != checkWord);
         var lineAnswerEmpty = lines.FindAll(li => !li.isShown).Find(x => x.answer == "" && isExist && x.cells.Count == checkWord.Length);
         var lineIsShown = lines.FindAll(li => li.isShown);
-        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown/* && !TutorialController.instance.isShowTut*/ && (lineAnswerEmpty != null || CheckAnswerFill(x, checkWord)));
-        //if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
-        //    line = TutorialController.instance.LineTarget.answer == checkWord ? TutorialController.instance.LineTarget : null;
+        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown && !TutorialController.instance.isShowTut && (lineAnswerEmpty != null || CheckAnswerFill(x, checkWord)));
+        if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+            line = TutorialController.instance.LineTarget.answer == checkWord ? TutorialController.instance.LineTarget : null;
         //string meaning="";
         if (line != null)
         {
@@ -512,8 +512,8 @@ public class WordRegion : MonoBehaviour
             {
                 CheckExtraWordAndWrong(checkWord);
             }
-            //if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
-            //    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain);
+            if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain);
         }
         if (!textPreview.useFX)
             textPreview.ClearText();
@@ -669,9 +669,9 @@ public class WordRegion : MonoBehaviour
 
             if (TutorialController.instance.isShowTut)
             {
-                //TutorialController.instance.HidenPopTut();
-                //TutorialController.instance.isShowTut = false;
-                //CPlayerPrefs.SetBool("TUTORIAL", true);
+                TutorialController.instance.HidenPopTut();
+                TutorialController.instance.isShowTut = false;
+                CPlayerPrefs.SetBool("TUTORIAL", true);
             }
 
             SaveLevelProgress();
@@ -690,11 +690,11 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            //var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
-            //if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
-            //{
-            //    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
-            //}
+            var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+            if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+            {
+                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
+            }
         }
     }
 

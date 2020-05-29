@@ -30,7 +30,10 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private TextMeshProUGUI _textSelectedHintCollect;
     [SerializeField] private TextMeshProUGUI _textNotifyCollect;
     [SerializeField] private TextMeshProUGUI _textNotifyTitle;
+    [SerializeField] private GameObject _fxLightPfb;
+    [SerializeField] private Transform _posChest;
 
+    private GameObject _fxEffect;
     private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
     private const string TIME_REWARD_KEY = "TIME_REWARD";
@@ -55,6 +58,7 @@ public class DailyGiftsDialog : Dialog
 
     void Start()
     {
+        base.Start();
         InitListRandomMultipleHint();
         InitListRandomSelectedHint();
         InitListRandomHint();
@@ -221,6 +225,8 @@ public class DailyGiftsDialog : Dialog
     {
         if (eventData.Data.Name == "ket thuc collect")
         {
+            _fxEffect = Instantiate(_fxLightPfb, transform);
+            _fxEffect.transform.position = _posChest.position;
             _textNotifyTitle.text = OPEN_CHEST;
             _textNotifyCollect.gameObject.SetActive(false);
             TweenControl.GetInstance().ScaleFromZero(_textHintCollect.gameObject, 0.3f);
@@ -349,6 +355,8 @@ public class DailyGiftsDialog : Dialog
 
     private void OnDestroy()
     {
+        if (_fxEffect != null)
+            Destroy(_fxEffect);
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
     }
 
