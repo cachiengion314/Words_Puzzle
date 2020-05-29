@@ -22,6 +22,7 @@ public class SettingDialog : PauseDialog
     [SerializeField] private GameObject _btnLogout;
     [SerializeField] private Text _textNameUser;
     [SerializeField] private GameObject _panelExit;
+    [SerializeField] private GameObject _panelOverlay;
 
     protected override void Start()
     {
@@ -126,6 +127,7 @@ public class SettingDialog : PauseDialog
     public void OnClickExitGame()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
+        _panelOverlay.SetActive(true);
         TweenControl.GetInstance().ScaleFromZero(_panelExit, 0.3f);
     }
 
@@ -138,7 +140,10 @@ public class SettingDialog : PauseDialog
     public void OnNoExitClick()
     {
         Sound.instance.Play(Sound.Others.PopupClose);
-        TweenControl.GetInstance().ScaleFromOne(_panelExit, 0.3f);
+        TweenControl.GetInstance().ScaleFromOne(_panelExit, 0.3f, () =>
+        {
+            _panelOverlay.SetActive(false);
+        });
     }
 
     private void CheckLogin()
