@@ -221,6 +221,7 @@ public class DailyGiftsDialog : Dialog
     {
         if (eventData.Data.Name == "ket thuc collect")
         {
+            _textNotifyTitle.text = OPEN_CHEST;
             _textNotifyCollect.gameObject.SetActive(false);
             TweenControl.GetInstance().ScaleFromZero(_textHintCollect.gameObject, 0.3f);
             TweenControl.GetInstance().ScaleFromZero(_textMultipleHintCollect.gameObject, 0.3f);
