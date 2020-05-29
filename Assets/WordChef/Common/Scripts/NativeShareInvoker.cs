@@ -91,18 +91,20 @@ public class NativeShareInvoker : MonoBehaviour
         //       File.WriteAllBytes(path, imageBytes);
         //   }).Start();
 
-        string filePath = Path.Combine(Application.temporaryCachePath, "WordPuzzle-Level.png");
+        string filePath = Path.Combine(Application.temporaryCachePath, "WordPuzzle-Level_" + GameState.currentLevel + 1 + ".png");
         File.WriteAllBytes(filePath, imageBytes);
         Destroy(screenImage);
 
         if (androidPackageName != null)
         {
-            new NativeShare().AddFile(filePath).SetSubject("Subject Test").SetText("I have the best score, beat me up")
+            new NativeShare().AddFile(filePath).SetSubject("LOOKING FOR HELP! Nearly made it!")
+                .SetText("Hey guys, please help me complete this level. I nearly break the record!")
          .SetTarget(androidPackageName).Share();
         }
         else
         {
-            new NativeShare().AddFile(filePath).SetSubject("Can you beat my score?").SetText("I have the best score").Share();
+            new NativeShare().AddFile(filePath).SetSubject("LOOKING FOR HELP! Nearly made it!")
+                .SetText("Hey guys, please help me complete this level. I nearly break the record!").Share();
         }
     }
     private void NativeShareGalleryMethod(byte[] imageBytes)
