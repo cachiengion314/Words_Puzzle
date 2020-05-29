@@ -37,7 +37,8 @@ public enum DialogType
     FreeStarsPlay,
     ShareDialog,
     FeedbackDialog,
-    MissingWordsFeedbackDialog
+    MissingWordsFeedbackDialog,
+    LevelWordsFeedbackDialog
 };
 
 public enum DialogShow

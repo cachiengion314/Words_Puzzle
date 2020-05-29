@@ -4,7 +4,15 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class FeedbackDialog : PauseDialog
 {
-
+    protected override void Start()
+    {
+        base.Start();
+    }
+    public void OnLevelWordsFeedbackClick()
+    {
+        Sound.instance.PlayButton();
+        DialogController.instance.ShowDialog(DialogType.LevelWordsFeedbackDialog, DialogShow.STACK_DONT_HIDEN);
+    }
     public void OnMissingWordsFeedbackClick()
     {
         Sound.instance.PlayButton();
