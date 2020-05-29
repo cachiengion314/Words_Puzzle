@@ -92,10 +92,10 @@ public class ShopDialog : Dialog
                 numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
                 priceTexts[i].text = priceLocalize == "" ? Purchaser.instance.iapItems[i].price + "$" : priceLocalize;
 
-                if (_numBeehiveTexts[i] != null) _numBeehiveTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueBeehive;
-                if (_numHintTexts[i] != null) _numHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueHint;
-                if (_numMultipleHintTexts[i] != null) _numMultipleHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueMultipleHint;
-                if (_numSelectedHintTexts[i] != null) _numSelectedHintTexts[i].text = "X" + Purchaser.instance.iapItems[i].valueSelectedHint;
+                if (_numBeehiveTexts[i] != null) _numBeehiveTexts[i].text = "" + Purchaser.instance.iapItems[i].valueBeehive;
+                if (_numHintTexts[i] != null) _numHintTexts[i].text = "" + Purchaser.instance.iapItems[i].valueHint;
+                if (_numMultipleHintTexts[i] != null) _numMultipleHintTexts[i].text = "" + Purchaser.instance.iapItems[i].valueMultipleHint;
+                if (_numSelectedHintTexts[i] != null) _numSelectedHintTexts[i].text = "" + Purchaser.instance.iapItems[i].valueSelectedHint;
 
                 var txtSale = Purchaser.instance.iapItems[i].txtSale;
                 if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
@@ -109,7 +109,7 @@ public class ShopDialog : Dialog
                     if (bonusTexts[i] != null && bonus > 0)
                     {
                         bonusTexts[i].transform.parent.gameObject.SetActive(true);
-                        bonusTexts[i].text = "+ " + (int)bonus + "%";
+                        bonusTexts[i].text = "+" + (int)bonus + "%";
                     }
                 }
                 else
