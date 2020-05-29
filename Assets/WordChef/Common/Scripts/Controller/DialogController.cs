@@ -35,7 +35,9 @@ public enum DialogType
     OpenWordDictionary,
     ComingSoon,
     FreeStarsPlay,
-    ShareDialog
+    ShareDialog,
+    FeedbackDialog,
+    MissingWordsFeedbackDialog
 };
 
 public enum DialogShow

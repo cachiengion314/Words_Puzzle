@@ -3,8 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class PauseDialog : Dialog {
-
+public class PauseDialog : Dialog
+{
     protected override void Start()
     {
         base.Start();
@@ -12,7 +12,7 @@ public class PauseDialog : Dialog {
     public void OnFeedbackClick()
     {
         Sound.instance.PlayButton();
-        SendMail();
+        DialogController.instance.ShowDialog(DialogType.FeedbackDialog, DialogShow.REPLACE_CURRENT);
     }
     public void OnHelpClick()
     {
@@ -68,16 +68,5 @@ public class PauseDialog : Dialog {
         Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.HowtoPlay);
     }
-    private void SendMail()
-    {
-        string email = "hello@percas.vn";
-        string subject = MyEscapeURL("Your FeedBack");
-        string body = MyEscapeURL("Please say somthing");
-
-        Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
-    }
-    private string MyEscapeURL(string URL)
-    {
-        return UnityWebRequest.EscapeURL(URL).Replace("+", "%20");
-    }
+   
 }
