@@ -22,7 +22,7 @@ public class ShopDialog : Dialog
     public TextMeshProUGUI[] _numHintTexts;
     public TextMeshProUGUI[] _numMultipleHintTexts;
     public TextMeshProUGUI[] _numSelectedHintTexts;
-    public Text[] priceTexts, saleTexts;
+    public Text[] priceTexts, saleTexts, bonusTexts;
     public Image[] hotImages, candyImages;
     public ScrollRect scroll;
     public RectTransform scrollRT;
@@ -100,6 +100,23 @@ public class ShopDialog : Dialog
                 var txtSale = Purchaser.instance.iapItems[i].txtSale;
                 if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
                 else saleTexts[i].text = txtSale;
+
+                if (Purchaser.instance.iapItems[i].isBonus && Purchaser.instance.iapItems[i].productID == "chicken_bank")
+                {
+                    var bonus = (ChickenBankController.instance.CurrStarChicken - ConfigController.instance.config.gameParameters.minBank) / ConfigController.instance.config.gameParameters.minBank * 100;
+                    if (saleTexts[i] != null)
+                        saleTexts[i].transform.parent.gameObject.SetActive(false);
+                    if (bonusTexts[i] != null && bonus > 0)
+                    {
+                        bonusTexts[i].transform.parent.gameObject.SetActive(true);
+                        bonusTexts[i].text = "+ " + (int)bonus + "%";
+                    }
+                }
+                else
+                {
+                    if (bonusTexts[i] != null)
+                        bonusTexts[i].transform.parent.gameObject.SetActive(false);
+                }
 
                 if (hotImages[i] != null)
                 {
@@ -270,12 +287,11 @@ public class ShopDialog : Dialog
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
         {
             if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
-            {
                 chickenBank.SetActive(false);
-            }
+
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
             var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
-            if (i > 1)
+            if (i > 0)
             {
                 shopItemObject[i].transform.localScale = Vector3.zero;
                 if (ConfigController.instance.isShopHint)

@@ -11,6 +11,7 @@ public class IAPItem
     public ProductType productType;
     public float price;
     public bool removeAds;
+    public bool isBonus;
     public int value;
     public bool isSpecial;
     public int valueHint;
