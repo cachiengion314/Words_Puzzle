@@ -16,12 +16,13 @@ public class ChickenBankDialog : Dialog
         base.Start();
         var resultValue = ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank ?
                     ConfigController.instance.config.gameParameters.maxBank : /*currValue*/ChickenBankController.instance.CurrStarChicken;
-        _textPrice.text = Purchaser.instance.iapItems[_indexItem].price + "$";
-        _textReward.text = "X" + resultValue.ToString();
+        var priceLocalize = Purchaser.instance.GetLocalizePrice(Purchaser.instance.iapItems[_indexItem].productID);
+        _textPrice.text = priceLocalize == "" ? Purchaser.instance.iapItems[_indexItem].price + "$" : priceLocalize;
+        _textMaxOut.gameObject.SetActive(false);
         if (ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank)
-            _textMaxOut.gameObject.SetActive(true);
+            _textReward.text = "X" + resultValue + " Maxed Out!";
         else
-            _textMaxOut.gameObject.SetActive(false);
+            _textReward.text = "X" + resultValue;
 #if IAP && UNITY_PURCHASING
         Purchaser.instance.onItemPurchased += OnItemPurchased;
 #endif
