@@ -114,11 +114,11 @@ public class SceneAnimate : MonoBehaviour
         while (_progressLoading.value < _progressLoading.maxValue)
         {
             _progressLoading.value = asyncOp.progress * 100;
-            _textProgress.text = (int)_progressLoading.value + "%";
+            _textProgress.text = "Loading " + (int)_progressLoading.value + "%";
             if (asyncOp.progress >= 0.9f)
             {
                 _progressLoading.value = _progressLoading.maxValue;
-                _textProgress.text = "100%";
+                _textProgress.text = "Loading 100%";
                 asyncOp.allowSceneActivation = true;
                 _loadingScreen.gameObject.SetActive(false);
             }
