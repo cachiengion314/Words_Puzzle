@@ -91,7 +91,7 @@ public class NativeShareInvoker : MonoBehaviour
         //       File.WriteAllBytes(path, imageBytes);
         //   }).Start();
 
-        string filePath = Path.Combine(Application.temporaryCachePath, "SharedImg.png");
+        string filePath = Path.Combine(Application.temporaryCachePath, "WordPuzzle-Level.png");
         File.WriteAllBytes(filePath, imageBytes);
         Destroy(screenImage);
 
