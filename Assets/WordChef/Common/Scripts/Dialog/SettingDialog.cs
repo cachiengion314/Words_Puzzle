@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class SettingDialog : PauseDialog
-{   
+{
     [SerializeField]
     GameObject soundButton;
     [SerializeField]
     GameObject musicButton;
     [SerializeField]
     GameObject notiButton;
-    [SerializeField]private Slider _sliderSound;
-    [SerializeField]private Slider _sliderMusic;
+    [SerializeField] private Slider _sliderSound;
+    [SerializeField] private Slider _sliderMusic;
 
     GameObject gameMaster;
     Sound soundController;
@@ -116,10 +117,16 @@ public class SettingDialog : PauseDialog
         FacebookController.instance.Logout();
     }
 
+    public void OnClickFeedBack()
+    {
+        Sound.instance.PlayButton();
+        SendMail();
+    }
+
     public void OnClickExitGame()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        TweenControl.GetInstance().ScaleFromZero(_panelExit,0.3f);
+        TweenControl.GetInstance().ScaleFromZero(_panelExit, 0.3f);
     }
 
     public void OnExitClick()
@@ -146,6 +153,20 @@ public class SettingDialog : PauseDialog
             _textNameUser.text = "";
             _btnLogout.SetActive(false);
         }
+    }
+
+    private void SendMail()
+    {
+        string email = "hello@percas.vn";
+        string subject = MyEscapeURL("Your FeedBack");
+        string body = MyEscapeURL("Please say somthing");
+
+        Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
+    }
+
+    private string MyEscapeURL(string URL)
+    {
+        return UnityWebRequest.EscapeURL(URL).Replace("+", "%20");
     }
 }
 
