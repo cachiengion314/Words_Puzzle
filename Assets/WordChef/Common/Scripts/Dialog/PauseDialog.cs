@@ -11,13 +11,13 @@ public class PauseDialog : Dialog
     }
     public void OnFeedbackClick()
     {
-        Sound.instance.PlayButton();
-        DialogController.instance.ShowDialog(DialogType.FeedbackDialog, DialogShow.REPLACE_CURRENT);
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        DialogController.instance.ShowDialog(DialogType.FeedbackDialog, DialogShow.STACK_DONT_HIDEN);
     }
     public void OnHelpClick()
     {
-        Sound.instance.PlayButton();
-        DialogController.instance.ShowDialog(DialogType.ShareDialog, DialogShow.REPLACE_CURRENT);
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        DialogController.instance.ShowDialog(DialogType.ShareDialog, DialogShow.STACK_DONT_HIDEN);
     }
     public void OnContinueClick()
     {
