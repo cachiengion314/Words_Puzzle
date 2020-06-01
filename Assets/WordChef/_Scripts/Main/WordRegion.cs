@@ -456,9 +456,10 @@ public class WordRegion : MonoBehaviour
         }
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         var isExist = lines.FindAll(li => !li.isShown).All(l => l.answer != checkWord);
-        var lineAnswerEmpty = lines.FindAll(li => !li.isShown).Find(x => x.answer == "" && isExist && x.cells.Count == checkWord.Length);
+        //var lineLengthEqualCheckWord = lines.FindAll(li => !li.isShown && li.cells.Count == checkWord.Length);
+        //var lineAnswerEmpty = lineLengthEqualCheckWord.Find(x => x.answer == "" && isExist);
         var lineIsShown = lines.FindAll(li => li.isShown);
-        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown && !TutorialController.instance.isShowTut && (lineAnswerEmpty != null || CheckAnswerFill(x, checkWord)));
+        LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown && !TutorialController.instance.isShowTut && (/*lineAnswerEmpty != null ||*/ CheckAnswerFill(x, checkWord)));
         if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
             line = TutorialController.instance.LineTarget.answer == checkWord ? TutorialController.instance.LineTarget : null;
         //string meaning="";
@@ -612,7 +613,7 @@ public class WordRegion : MonoBehaviour
     private bool CheckAnswerFill(LineWord line, string wordFill)
     {
         var isRight = true;
-        if (line.cells.Count == wordFill.Length)
+        if (!line.isShown && line.cells.Count == wordFill.Length)
         {
             //var cellsIsShown = line.cells.FindAll(cell => cell.isShown);
             for (int i = 0; i < line.cells.Count; i++)
