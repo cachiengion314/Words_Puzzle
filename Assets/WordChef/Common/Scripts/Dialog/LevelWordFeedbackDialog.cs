@@ -56,10 +56,13 @@ public class LevelWordFeedbackDialog : FeedbackDialog
     }
     public void WordsCorrectDoneByPlayer()
     {
-        for (int i = 0; i < WordRegion.instance.listWordCorrect.Count; i++)
+        if (WordRegion.instance != null && WordRegion.instance.listWordCorrect.Count > 0)
         {
-            string word = WordRegion.instance.listWordCorrect[i];
-            correctWordsDoneByPlayerList.Add(word);
+            for (int i = 0; i < WordRegion.instance.listWordCorrect.Count; i++)
+            {
+                string word = WordRegion.instance.listWordCorrect[i];
+                correctWordsDoneByPlayerList.Add(word);
+            }
         }
     }
     public new void OnCloseClick()
