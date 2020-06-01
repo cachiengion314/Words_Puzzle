@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelItem : MonoBehaviour {
+public class LevelItem : MonoBehaviour
+{
     public GameData gameData;
     [Space]
     public Text levelText;
@@ -24,6 +25,7 @@ public class LevelItem : MonoBehaviour {
 
     public void Start()
     {
+        //levelText.text = "Level " + (!(world == 0 && subWorld == 0) ? (level + 1) + GetNumberLevel() : (level + 1));
         levelText.text = "Level " + ((level + numlevels * subWorld + world * gameData.words.Count) + 1);
         GetComponent<Button>().onClick.AddListener(OnButtonClick);
 
@@ -38,8 +40,8 @@ public class LevelItem : MonoBehaviour {
         int unlockedSubWorld = Prefs.unlockedSubWorld;
         int unlockedLevel = Prefs.unlockedLevel;
 
-        if  (world < unlockedWorld || 
-            (world == unlockedWorld && subWorld < unlockedSubWorld) || 
+        if (world < unlockedWorld ||
+            (world == unlockedWorld && subWorld < unlockedSubWorld) ||
             (world == unlockedWorld && subWorld <= unlockedSubWorld && level < unlockedLevel))
         {
             background.sprite = solvedSprite;
@@ -65,6 +67,22 @@ public class LevelItem : MonoBehaviour {
             lockedBtn.SetActive(true);
             levelText.color = colorTextLock;
         }
+    }
+
+    private int GetNumberLevel()
+    {
+        var levels = 0;
+        for (int i = 0; i <= world; i++)
+        {
+            int wordId = i;
+            for (int j = 0; j <= subWorld; j++)
+            {
+                int subWordId = j;
+                if (!(wordId == 0 && subWordId == 0))
+                    levels += Superpow.Utils.GetNumLevels(wordId, subWordId);
+            }
+        }
+        return levels;
     }
 
     //public void Load()

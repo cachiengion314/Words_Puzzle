@@ -14,9 +14,9 @@ public class SuperpowWindowEditor
     static void UnlockAllLevel()
     {
         CPlayerPrefs.useRijndael(CommonConst.ENCRYPTION_PREFS);
-        Prefs.unlockedWorld = 10;
-        Prefs.unlockedSubWorld = 5;
-        Prefs.unlockedLevel = 100;
+        Prefs.unlockedWorld = 4;
+        Prefs.unlockedSubWorld = 4;
+        Prefs.unlockedLevel = 6;
     }
 
     [MenuItem("Superpow/Credit balance (ruby, coin..)")]
