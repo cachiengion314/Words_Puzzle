@@ -499,7 +499,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown /*&& !TutorialController.instance.isShowTut*/);
+            LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown && !TutorialController.instance.isShowTut);
             if (lineExist != null && lineExist.answer == checkWord)
             {
                 NotifyMessage.instance.ShowMessage(NotifyMessage.instance.WORD_EXIST);
@@ -633,7 +633,7 @@ public class WordRegion : MonoBehaviour
 
     private void CheckExtraWordAndWrong(string checkWord)
     {
-        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count /*&& !TutorialController.instance.isShowTut*/);
+        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count && !TutorialController.instance.isShowTut);
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
             ExtraWord.instance.ProcessWorld(checkWord);
