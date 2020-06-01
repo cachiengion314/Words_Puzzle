@@ -114,14 +114,20 @@ public class SettingDialog : PauseDialog
 
     public void OnClickLogout()
     {
-        Sound.instance.Play(Sound.Others.PopupClose);
+        Sound.instance.Play(Sound.Others.PopupOpen);
         FacebookController.instance.Logout();
     }
 
     public void OnClickFeedBack()
     {
-        Sound.instance.PlayButton();
-        SendMail();
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        DialogController.instance.ShowDialog(DialogType.FeedbackDialog, DialogShow.STACK_DONT_HIDEN);
+    }
+
+    public void OnClickRateUs()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        CUtils.RateGame();
     }
 
     public void OnClickExitGame()
@@ -158,20 +164,6 @@ public class SettingDialog : PauseDialog
             _textNameUser.text = "";
             _btnLogout.SetActive(false);
         }
-    }
-
-    private void SendMail()
-    {
-        string email = "hello@percas.vn";
-        string subject = MyEscapeURL("Your FeedBack");
-        string body = MyEscapeURL("Please say somthing");
-
-        Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
-    }
-
-    private string MyEscapeURL(string URL)
-    {
-        return UnityWebRequest.EscapeURL(URL).Replace("+", "%20");
     }
 }
 

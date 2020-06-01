@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Superpow;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,8 @@ public class WorldController : BaseController
 
         //UpdateUI();
         //snapScroll.InitPoints(_root.childCount);
-        target = Prefs.unlockedSubWorld + Prefs.unlockedWorld * 5;
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedSubWorld, Prefs.unlockedWorld);
+        target = Prefs.unlockedSubWorld + Prefs.unlockedWorld * numlevels;
         SetPosScroll();
     }
     private void Update()
