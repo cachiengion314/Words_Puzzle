@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase;
+using Firebase.Unity.Editor;
+
 public class CrashlyticsInitializer : MonoBehaviour
 {
     public static CrashlyticsInitializer instance;
@@ -25,6 +27,7 @@ public class CrashlyticsInitializer : MonoBehaviour
                 // Crashlytics will use the DefaultInstance, as well;
                 // this ensures that Crashlytics is initialized.
                 FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
+                app.SetEditorDatabaseUrl("https://word-puzzle-896ff.firebaseio.com/");
 
                 // Set a flag here for indicating that your project is ready to use Firebase.
             }
