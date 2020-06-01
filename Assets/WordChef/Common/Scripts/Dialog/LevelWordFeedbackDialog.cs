@@ -7,8 +7,8 @@ using Utilities.Common;
 
 public class LevelWordFeedbackDialog : FeedbackDialog
 {
-    public List<string> correctWordsDoneByPlayerList = new List<string>();
-    public List<RectTransform> textTransformPosList = new List<RectTransform>();
+    private List<string> correctWordsDoneByPlayerList = new List<string>();
+    private List<RectTransform> textTransformPosList = new List<RectTransform>();
     public RectTransform textBackgroundPrefab;
     public RectTransform wordDoneByPlayerPrefab;
     protected override void Start()
@@ -19,7 +19,7 @@ public class LevelWordFeedbackDialog : FeedbackDialog
         {
             textTransformPosList.Add(child);
         }
-        if(correctWordsDoneByPlayerList.Count > 0)
+        if (correctWordsDoneByPlayerList.Count > 0)
         {
             for (int i = 0; i < correctWordsDoneByPlayerList.Count; i++)
             {
@@ -31,7 +31,7 @@ public class LevelWordFeedbackDialog : FeedbackDialog
                 textToggle.transform.position = textTransformPosList[i].position;
                 text.text = correctWordsDoneByPlayerList[i].ToString();
             }
-        }      
+        }
     }
     public void WordsCorrectDoneByPlayer()
     {
