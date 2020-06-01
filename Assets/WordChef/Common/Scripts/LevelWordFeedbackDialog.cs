@@ -3,31 +3,41 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities.Common;
 
 public class LevelWordFeedbackDialog : FeedbackDialog
 {
     public List<string> correctWordsDoneByPlayerList = new List<string>();
-    public List<Transform> textTransformPosList = new List<Transform>();
-    public Transform textBackgroundPrefab;
-    public Button wordDoneByPlayerPrefab;
+    public List<RectTransform> textTransformPosList = new List<RectTransform>();
+    public RectTransform textBackgroundPrefab;
+    public RectTransform wordDoneByPlayerPrefab;
     protected override void Start()
     {
         base.Start();
-        foreach (Transform transform in textBackgroundPrefab)
+        WordsCorrectDoneByPlayer();
+        foreach (RectTransform child in textBackgroundPrefab)
         {
-            textTransformPosList.Add(transform);
+            textTransformPosList.Add(child);
         }
-        for (int i = 0; i < correctWordsDoneByPlayerList.Count; i++)
+        if(correctWordsDoneByPlayerList.Count > 0)
         {
-            TextMeshProUGUI text = Instantiate(wordDoneByPlayerPrefab, textTransformPosList[i].position, Quaternion.identity).GetComponent<TextMeshProUGUI>();
-            text.text = correctWordsDoneByPlayerList[i].ToString();
-        }
+            for (int i = 0; i < correctWordsDoneByPlayerList.Count; i++)
+            {
+                Toggle textToggle = Instantiate(wordDoneByPlayerPrefab).GetComponent<Toggle>();
+                textToggle.isOn = false;
+                textToggle.SetParent(textBackgroundPrefab);
+                TextMeshProUGUI text = textToggle.GetComponentInChildren<TextMeshProUGUI>();
+                textToggle.transform.localScale = Vector3.one;
+                textToggle.transform.position = textTransformPosList[i].position;
+                text.text = correctWordsDoneByPlayerList[i].ToString();
+            }
+        }      
     }
     public void WordsCorrectDoneByPlayer()
     {
-        for (int j = 0; j < WordRegion.instance.listWordCorrect.Count; j++)
+        for (int i = 0; i < WordRegion.instance.listWordCorrect.Count; i++)
         {
-            string word = WordRegion.instance.listWordCorrect[j];
+            string word = WordRegion.instance.listWordCorrect[i];
             correctWordsDoneByPlayerList.Add(word);
         }
     }
