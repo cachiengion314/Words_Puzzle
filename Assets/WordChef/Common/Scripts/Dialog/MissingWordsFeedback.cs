@@ -50,6 +50,8 @@ public class MissingWordsFeedback : FeedbackDialog
 
         childUpdates["/Missing words/" + key] = missingWord;
         _missingWordsRef.UpdateChildrenAsync(childUpdates);
+
+        Close();
     }
     public new void OnCloseClick()
     {

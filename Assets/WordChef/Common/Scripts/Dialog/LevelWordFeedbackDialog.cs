@@ -53,6 +53,7 @@ public class LevelWordFeedbackDialog : FeedbackDialog
             MissingWordsFeedback.childUpdates["/Irrelevant words/" + key] = TMP.text;
             MissingWordsFeedback._missingWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
         }
+        Close();
     }
     public void WordsCorrectDoneByPlayer()
     {

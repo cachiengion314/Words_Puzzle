@@ -9,12 +9,20 @@ using System.Net.Security;
 
 public class FeedbackDialog : Dialog
 {
-    private string fromEmail = "cachiengion314@gmail.com"; // yourGmailAccountFromWhereYouWantToSendEmail
+    private string fromEmail = "goofyart314@gmail.com"; // your Gmail Account From Where You Want To Send Email
     private string toEmail = "cachiengion314@gmail.com";
     private string subject = "SubjectName";
     private string body = "Body of the email";
+<<<<<<< HEAD
     private string password = "songngu31419932016"; // YourGmailAccountPassword
 
+=======
+    private string password = ""; // Your Gmail Account Password
+    protected override void Start()
+    {
+        base.Start();
+    }
+>>>>>>> 12c211ef... fix tinh nang feedback
     public void OnLevelWordsFeedbackClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
@@ -45,13 +53,14 @@ public class FeedbackDialog : Dialog
         delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         { return true; };
         smtpServer.Send(mail);
-    }
 
+        Close();
+    }
     public void SendURLMail()
     {
         string email = "hello@percas.vn";
-        string subject = MyEscapeURL("Your FeedBack");
-        string body = MyEscapeURL("Please say somthing");
+        string subject = MyEscapeURL("FeedBack");
+        string body = MyEscapeURL("You can tell us anything you want");
 
         Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
     }
