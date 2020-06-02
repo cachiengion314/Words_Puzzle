@@ -27,8 +27,10 @@ public class CrashlyticsInitializer : MonoBehaviour
                 // Crashlytics will use the DefaultInstance, as well;
                 // this ensures that Crashlytics is initialized.
                 FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
+                // for database
                 app.SetEditorDatabaseUrl("https://word-puzzle-896ff.firebaseio.com/");
-
+                // for remote config
+                InitializeFirebase();
                 // Set a flag here for indicating that your project is ready to use Firebase.
             }
             else
@@ -39,5 +41,20 @@ public class CrashlyticsInitializer : MonoBehaviour
             }
         });
     }
+    void InitializeFirebase()
+    {
+        System.Collections.Generic.Dictionary<string, object> defaults =
+            new System.Collections.Generic.Dictionary<string, object>();
 
+        // These are the values that are used if we haven't fetched data from the
+        // server
+        // yet, or if we ask for values that the server doesn't have:
+        defaults.Add("config_test_string", "default local string");
+        defaults.Add("config_test_int", 1);
+        defaults.Add("config_test_float", 1.0);
+        defaults.Add("config_test_bool", false);
+
+        Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
+        Debug.Log("Remote config ready!");
+    }
 }
