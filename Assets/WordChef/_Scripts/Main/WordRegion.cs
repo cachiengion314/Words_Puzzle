@@ -702,7 +702,8 @@ public class WordRegion : MonoBehaviour
     public void OnClickHintTarget()
     {
         int ballance = CurrencyController.GetBalance();
-        if (ballance >= Const.HINT_TARGET_COST)
+        var selectedhintFree = CurrencyController.GetSelectedHintFree();
+        if (selectedhintFree > 0 || ballance >= Const.HINT_TARGET_COST)
         {
             isOpenOverlay = !isOpenOverlay;
             DialogOverlay.instance.ShowOverlay(isOpenOverlay);
