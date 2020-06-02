@@ -13,16 +13,14 @@ public class FeedbackDialog : Dialog
     private string toEmail = "cachiengion314@gmail.com";
     private string subject = "SubjectName";
     private string body = "Body of the email";
-<<<<<<< HEAD
+
     private string password = "songngu31419932016"; // YourGmailAccountPassword
 
-=======
-    private string password = ""; // Your Gmail Account Password
     protected override void Start()
     {
         base.Start();
     }
->>>>>>> 12c211ef... fix tinh nang feedback
+
     public void OnLevelWordsFeedbackClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
