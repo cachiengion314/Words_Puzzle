@@ -148,7 +148,6 @@ public class LineWord : MonoBehaviour
         }
         Prefs.countSpell += 1;
         Prefs.countSpellDaily += 1;
-        _isResetDataAnswer = false;
         isShown = true;
         foreach (var cell in cells)
         {
@@ -158,10 +157,10 @@ public class LineWord : MonoBehaviour
         {
             if (line != this)
             {
+                _isResetDataAnswer = false;
                 line.answers.Remove(answer);
                 if (!line.isShown && line.cells.Count == answer.Length)
                 {
-                    line.answer = "";
                     foreach (var an in line.answers)
                     {
                         if (an != answer && !_isResetDataAnswer)
