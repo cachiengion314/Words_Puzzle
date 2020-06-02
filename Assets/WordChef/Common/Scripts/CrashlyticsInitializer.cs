@@ -47,8 +47,7 @@ public class CrashlyticsInitializer : MonoBehaviour
             new System.Collections.Generic.Dictionary<string, object>();
 
         // These are the values that are used if we haven't fetched data from the
-        // server
-        // yet, or if we ask for values that the server doesn't have:
+        // server yet, or if we ask for values that the server doesn't have:
         defaults.Add("config_test_string", "default local string");
         defaults.Add("config_test_int", 1);
         defaults.Add("config_test_float", 1.0);

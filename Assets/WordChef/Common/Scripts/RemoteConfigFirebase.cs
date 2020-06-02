@@ -2,24 +2,28 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using Firebase.RemoteConfig;
+using TMPro;
 public class RemoteConfigFirebase : MonoBehaviour
 {
+    public TextMeshProUGUI textPrefab;
     public void FetchFireBase()
     {
         FetchDataAsync();
     }
     public void ShowData()
     {
-        Debug.Log("maxCountToShowAdmob: " +
-            FirebaseRemoteConfig.GetValue("maxCountToShowAdmob").StringValue);
-
-
-        //   DebugLog("config_test_string: " +
-        //        Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue("config_test_string").LongValue);
-        //   DebugLog("config_test_float: " +
-        //            Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue("config_test_float").DoubleValue);
-        //   DebugLog("config_test_bool: " +
-        //            Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue("config_test_bool").BooleanValue);
+        Debug.Log("testParameterNam: " +
+           FirebaseRemoteConfig.GetValue("testParameterNam").LongValue);
+        textPrefab.text = "testParameterNam: " +
+            FirebaseRemoteConfig.GetValue("testParameterNam").StringValue;
+        /*
+        Debug.Log("config_test_string: " +
+             FirebaseRemoteConfig.GetValue("config_test_string").StringValue);
+        Debug.Log("config_test_float: " +
+              FirebaseRemoteConfig.GetValue("config_test_float").DoubleValue);
+        Debug.Log("config_test_bool: " +
+                FirebaseRemoteConfig.GetValue("config_test_bool").BooleanValue);
+        */
     }
 
     // Start a fetch request.
