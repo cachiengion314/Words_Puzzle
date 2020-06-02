@@ -18,8 +18,15 @@ public class JsonBuilder : MonoBehaviour
             data.letters = lv.letters;
             data.answers = lv.answers;
             data.validWords = lv.validWords;
+            data.numAnswers = lv.numAnswers;
             gameLevels.Add(data);
         }
+    }
+
+    public int GetTotalAnswers(LevelData levelData)
+    {
+        var result = levelData.answers.Split(new string[] { "|" },System.StringSplitOptions.RemoveEmptyEntries);
+        return result.Length;
     }
 }
 
@@ -29,4 +36,5 @@ public class LevelData
     public string letters;
     public string answers;
     public string validWords;
+    public int numAnswers;
 }

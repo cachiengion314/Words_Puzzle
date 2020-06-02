@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilites;
 
 public class LineWord : MonoBehaviour
 {
@@ -218,13 +219,14 @@ public class LineWord : MonoBehaviour
         BlockScreen.instance.Block(true);
         TutorialController.instance.isBlockSwipe = true;
         var tweenControl = TweenControl.GetInstance();
-        var fxShow = Instantiate(_fxShowHintPfb, transform);
+        var fxShow = this.Spawn(_fxShowHintPfb, transform);
+        fxShow.transform.SetParent(transform);
         fxShow.transform.position = objStart.position;
         tweenControl.JumpRect(fxShow.transform as RectTransform, cell.transform.localPosition, -800f, 1, 1.1f, false, () =>
         {
             BlockScreen.instance.Block(false);
             TutorialController.instance.isBlockSwipe = false;
-            Destroy(fxShow);
+            this.Despawn(fxShow);
             callback?.Invoke();
         }, EaseType.Linear);
     }

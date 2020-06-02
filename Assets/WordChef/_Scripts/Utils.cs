@@ -7,23 +7,23 @@ namespace Superpow
     {
         public static int GetNumLevels(int world, int subWorld)
         {
-
+            var gameData = Resources.Load<GameData>("GameData");
             // Indicate the number of levels in specific sub-worlds.
-            int[,] numLevels =
-            {
-                { 7, 7, 7, 7, 7 }, // For world 0
-                { 7, 7, 7, 7, 7 }, // For world 1
-                { 7, 7, 7, 7, 7 }, // For world 2
-                { 7, 7, 7, 7, 7 }, // For world 3
-                { 7, 7, 7, 7, 7 }, // For world 4
-                { 7, 7, 7, 7, 7 }, // For world 5
-                { 7, 7, 7, 7, 7 }, // Not used yet
-                { 7, 7, 7, 7, 7 }, // Not used yet
-                { 7, 7, 7, 7, 7 }, // Not used yet
-                { 7, 7, 7, 7, 7 },  // Not used yet
-            };
+            //int[,] numLevels =
+            //{
+            //    { 7, 7, 7, 7, 7 }, // For world 0
+            //    { 7, 7, 7, 7, 7 }, // For world 1
+            //    { 7, 7, 7, 7, 7 }, // For world 2
+            //    { 7, 7, 7, 7, 7 }, // For world 3
+            //    { 7, 7, 7, 7, 7 }, // For world 4
+            //    { 7, 7, 7, 7, 7 }, // For world 5
+            //    { 7, 7, 7, 7, 7 }, // Not used yet
+            //    { 7, 7, 7, 7, 7 }, // Not used yet
+            //    { 7, 7, 7, 7, 7 }, // Not used yet
+            //    { 7, 7, 7, 7, 7 },  // Not used yet
+            //};
 
-            return numLevels[world, subWorld];
+            return /*numLevels[world, subWorld]*/gameData.words[world].subWords[subWorld].gameLevels.Count;
         }
 
         public static int GetLeaderboardScore()
