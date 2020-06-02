@@ -13,7 +13,7 @@ public class MissingWordsFeedback : FeedbackDialog
 {
     public TMP_InputField inputfield;
     private TMP_InputField.SubmitEvent submitEvent;
-
+    private TMP_InputField.SelectionEvent selectEvent;
     private string missingWord;
 
     public static DatabaseReference _missingWordsRef;
@@ -25,7 +25,7 @@ public class MissingWordsFeedback : FeedbackDialog
     {
         base.Awake();
         submitEvent = new TMP_InputField.SubmitEvent();
-        submitEvent.AddListener(typingCallback);
+        submitEvent.AddListener(typingCall);
         inputfield.onEndEdit = submitEvent;
 
         // Firebase setup
@@ -40,7 +40,12 @@ public class MissingWordsFeedback : FeedbackDialog
     {
         _missingWordsRef.ValueChanged -= OnCountUpdated;
     }
-    public void typingCallback(string arg0Words)
+    public void SelectCall(string arg0)
+    {
+        if (inputfield)
+            inputfield.text = null;
+    }
+    public void typingCall(string arg0Words)
     {
         missingWord = arg0Words;
     }
