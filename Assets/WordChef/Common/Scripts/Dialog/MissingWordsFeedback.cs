@@ -13,7 +13,6 @@ public class MissingWordsFeedback : FeedbackDialog
 {
     public TMP_InputField inputfield;
     private TMP_InputField.SubmitEvent submitEvent;
-    private TMP_InputField.SelectionEvent selectEvent;
     private string missingWord;
 
     public static DatabaseReference _missingWordsRef;
