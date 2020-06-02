@@ -7,25 +7,22 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 
-public class FeedbackDialog : PauseDialog
+public class FeedbackDialog : Dialog
 {
     private string fromEmail = "cachiengion314@gmail.com"; // yourGmailAccountFromWhereYouWantToSendEmail
     private string toEmail = "cachiengion314@gmail.com";
     private string subject = "SubjectName";
     private string body = "Body of the email";
     private string password = "songngu31419932016"; // YourGmailAccountPassword
-    protected override void Start()
-    {
-        base.Start();
-    }
+
     public void OnLevelWordsFeedbackClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.LevelWordsFeedbackDialog, DialogShow.STACK_DONT_HIDEN);
     }
     public void OnMissingWordsFeedbackClick()
     {
-        Sound.instance.PlayButton();
+        Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.MissingWordsFeedbackDialog, DialogShow.STACK_DONT_HIDEN);
     }
     public void OnCloseClick()
