@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase;
 using Firebase.Unity.Editor;
+using Firebase.Messaging;
 
 public class CrashlyticsInitializer : MonoBehaviour
 {
@@ -40,6 +41,9 @@ public class CrashlyticsInitializer : MonoBehaviour
                 // Firebase Unity SDK is not safe to use here.
             }
         });
+        // for firebase clound Messenger
+
+        StartCoroutine(DelayTest());
     }
     void InitializeFirebase()
     {
@@ -55,5 +59,20 @@ public class CrashlyticsInitializer : MonoBehaviour
 
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
         Debug.Log("Remote config ready!");
+    }
+    public void OnTokenReceived(object sender, TokenReceivedEventArgs token)
+    {
+        Debug.Log("Received Registration Token: " + token.Token);
+    }
+
+    public void OnMessageReceived(object sender, MessageReceivedEventArgs e)
+    {
+        Debug.Log("Received a new message from: " + e.Message.From);
+    }
+    IEnumerator DelayTest()
+    {
+        yield return new WaitForEndOfFrame();
+        FirebaseMessaging.TokenReceived += OnTokenReceived;
+        FirebaseMessaging.MessageReceived += OnMessageReceived;
     }
 }
