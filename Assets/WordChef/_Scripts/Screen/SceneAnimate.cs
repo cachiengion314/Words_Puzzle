@@ -77,12 +77,6 @@ public class SceneAnimate : MonoBehaviour
         Sound.instance.Play(Sound.Others.PopupOpen);
     }
 
-    private void Update()
-    {
-        if (gameObject.GetComponent<Canvas>().worldCamera == null)
-            gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
-    }
-
     public void ShowTitleHome(bool show)
     {
         if (!show)

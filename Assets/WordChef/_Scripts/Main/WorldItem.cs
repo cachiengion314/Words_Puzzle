@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 public class WorldItem : MonoBehaviour {
+    public GameObject rootBg;
     public MaskableGraphic itemNumber, itemNumberBack;
     public Image play, star, bg;
     public Button button;

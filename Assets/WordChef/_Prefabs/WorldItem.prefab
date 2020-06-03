@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c0a7f094ef2714f95850dc2fcadd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootBg: {fileID: 1927498749073274}
   itemNumber: {fileID: 114755251168547390}
   itemNumberBack: {fileID: 114366766523765376}
   play: {fileID: 114875328566837442}
@@ -454,6 +455,7 @@ MonoBehaviour:
   world: 0
   subWorld: 0
   scroll: {fileID: 0}
+  worldController: {fileID: 0}
 --- !u!114 &7382797688790923245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +492,7 @@ GameObject:
   - component: {fileID: 224023109940626496}
   - component: {fileID: 222558839474151972}
   - component: {fileID: 114609223531753220}
-  - component: {fileID: 1763251685378120283}
+  - component: {fileID: 7398785018874874686}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -505,9 +507,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927498749073274}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 268605138967073874}
   - {fileID: 224592403246853542}
@@ -558,7 +560,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1763251685378120283
+--- !u!114 &7398785018874874686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
