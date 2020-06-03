@@ -35,6 +35,8 @@ public class WordRegion : MonoBehaviour
     public Button btnHintTarget;
     public Button btnHint;
     public Button btnMultipleHint;
+    public Button btnShuffle;
+    public Button btnRewardAds;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -162,6 +164,12 @@ public class WordRegion : MonoBehaviour
 
         if (cellSize > 130f) cellSize = 130f;
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+        if(Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut)
+        {
+            btnMultipleHint.gameObject.SetActive(false);
+            btnHintTarget.gameObject.SetActive(false);
+            btnRewardAds.gameObject.SetActive(false);
+        }
         string[] levelProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetLevelProgress();
         string[] answerProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetAnswerProgress();
         bool useProgress = false;

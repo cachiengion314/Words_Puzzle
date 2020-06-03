@@ -35,6 +35,11 @@ public class SceneAnimate : MonoBehaviour
 
     private void Awake()
     {
+        if (!CPlayerPrefs.HasKey("INSTALLED"))
+        {
+            CPlayerPrefs.DeleteAll();
+            CPlayerPrefs.Save();
+        }
         if (Instance == null) Instance = this;
         else if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
@@ -117,13 +122,14 @@ public class SceneAnimate : MonoBehaviour
         _loadingScreen.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
-        if (!isTut)
+        var isFirstGame = CPlayerPrefs.GetBool("INSTALLED", true);
+        if (!isTut && isFirstGame)
         {
             GameState.currentWorld = Prefs.unlockedWorld;
             GameState.currentSubWorld = Prefs.unlockedSubWorld;
             GameState.currentLevel = Prefs.unlockedLevel;
         }
-        var asyncOp = SceneManager.LoadSceneAsync((GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut) ? Const.SCENE_MAIN : Const.SCENE_HOME);
+        var asyncOp = SceneManager.LoadSceneAsync((GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut && isFirstGame) ? Const.SCENE_MAIN : Const.SCENE_HOME);
         asyncOp.allowSceneActivation = false;
         while (_progressLoading.value < _progressLoading.maxValue)
         {
@@ -133,7 +139,7 @@ public class SceneAnimate : MonoBehaviour
             {
                 _progressLoading.value = _progressLoading.maxValue;
                 _textProgress.text = "Loading 100%";
-                if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+                if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut && isFirstGame)
                 {
                     ShowTitleHome(false);
                     _loadingScreen.gameObject.SetActive(false);
