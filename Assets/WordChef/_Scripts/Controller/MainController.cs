@@ -144,6 +144,16 @@ public class MainController : BaseController
     }
 #endif
 
+    private void OpenSceneWithAnim(float timeDelay = 1f)
+    {
+        SceneAnimate.Instance.SceneOpen();
+        ScreenFader.instance.DelayCall(timeDelay, () =>
+        {
+            animatorScene.enabled = true;
+            animatorScene.SetBool("PlayAnimScene", true);
+        });
+    }
+
     public void OpenChapterScene()
     {
         CUtils.LoadScene(Const.SCENE_CHAPTER, false);
@@ -155,12 +165,19 @@ public class MainController : BaseController
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         if (world == 0 && subWorld == 0 && level == 0 && !isTut)
         {
-            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            if (SceneAnimate.Instance.animatorScene.GetCurrentAnimatorStateInfo(0).IsName(SceneAnimate.Instance.CloseSceneName))
             {
-                BlockScreen.instance.Block(true);
-                animatorScene.enabled = true;
-                animatorScene.SetBool("PlayAnimScene", true);
-            });
+                OpenSceneWithAnim();
+            }
+            else
+            {
+                TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+                {
+                    BlockScreen.instance.Block(true);
+                    animatorScene.enabled = true;
+                    animatorScene.SetBool("PlayAnimScene", true);
+                });
+            }
         }
         else
         {
@@ -172,12 +189,7 @@ public class MainController : BaseController
             }
             else
             {
-                SceneAnimate.Instance.SceneOpen();
-                ScreenFader.instance.DelayCall(1f, () =>
-                {
-                    animatorScene.enabled = true;
-                    animatorScene.SetBool("PlayAnimScene", true);
-                });
+                OpenSceneWithAnim();
             }
         }
     }
