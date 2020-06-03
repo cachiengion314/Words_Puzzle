@@ -48,6 +48,7 @@ public class SceneAnimate : MonoBehaviour
             CPlayerPrefs.DeleteAll();
             CPlayerPrefs.Save();
         }
+        CPlayerPrefs.useRijndael(CommonConst.ENCRYPTION_PREFS);
         if (Instance == null) Instance = this;
         else if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);

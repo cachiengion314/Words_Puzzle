@@ -11,9 +11,7 @@ public class BaseController : MonoBehaviour {
     {
         if (!CPlayerPrefs.HasKey("INSTALLED"))
         {
-            CPlayerPrefs.DeleteAll();
             CPlayerPrefs.SetBool("INSTALLED", true);
-            CPlayerPrefs.Save();
         }
         if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
             Instantiate(donotDestroyOnLoad);
