@@ -14,6 +14,7 @@ public class TutorialController : MonoBehaviour
     public string contentHintFree;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
+    [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
 
     private LineWord _lineTarget;
@@ -43,6 +44,7 @@ public class TutorialController : MonoBehaviour
     public void ShowPopWordTut(string contentPop)
     {
         isShowTut = true;
+        _overlay.SetActive(true);
         _popText.SetActive(true);
         foreach (var line in WordRegion.instance.Lines)
         {
@@ -63,6 +65,7 @@ public class TutorialController : MonoBehaviour
     {
         isShowTut = true;
         isBlockSwipe = true;
+        _overlay.SetActive(true);
         _popHint.SetActive(true);
         _textTutorial.text = contentHintFree;
     }
@@ -72,6 +75,7 @@ public class TutorialController : MonoBehaviour
         isBlockSwipe = false;
         _popText.SetActive(false);
         _popHint.SetActive(false);
+        _overlay.SetActive(false);
         _textTutorial.text = "";
     }
 }
