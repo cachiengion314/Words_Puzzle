@@ -16,7 +16,11 @@ public class FeedbackDialog : Dialog
 
     private string password = "songngu31419932016"; // YourGmailAccountPassword
 
-
+    public void OnContactUsClick()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        DialogController.instance.ShowDialog(DialogType.ContactUsDialog, DialogShow.STACK_DONT_HIDEN);
+    }
     public void OnLevelWordsFeedbackClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);

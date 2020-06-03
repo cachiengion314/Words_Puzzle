@@ -57,7 +57,7 @@ public class MissingWordsFeedback : Dialog
 
         Close();
     }
-    public new void OnCloseClick()
+    public  void OnCloseClick()
     {
         Close();
     }
