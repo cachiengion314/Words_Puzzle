@@ -85,6 +85,8 @@ public class ScreenFader : MonoBehaviour
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        if (SceneAnimate.Instance.GetComponent<Canvas>().worldCamera == null)
+            SceneAnimate.Instance.GetComponent<Canvas>().worldCamera = Camera.main;
         BlockScreen.instance.Block(false);
 
         if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
