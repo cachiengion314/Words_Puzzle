@@ -69,16 +69,6 @@ public class MainController : BaseController
         WordRegion.instance.Load(gameLevel, currlevel);
         BeeManager.instance.Load(CPlayerPrefs.GetInt("amount_bee", 0));
 
-        if (world == 0 && subWorld == 0 && level == 0)
-        {
-            Timer.Schedule(this, 0.5f, () =>
-            {
-                var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
-                //DialogController.instance.ShowDialog(DialogType.HowtoPlay);
-                if (!isTut)
-                    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
-            });
-        }
         //GameState.currentSubWorldName
 
         levelNameText.text = "LEVEL " + (currlevel + 1);
@@ -162,20 +152,33 @@ public class MainController : BaseController
 
     public void PlayAnimScene()
     {
-        if (ScreenFader.instance.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
+        var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+        if (world == 0 && subWorld == 0 && level == 0 && !isTut)
         {
-            animatorScene.enabled = true;
-            animatorScene.SetBool("PlayAnimScene", true);
-            ScreenFader.instance.FadeIn(null);
-        }
-        else
-        {
-            SceneAnimate.Instance.SceneOpen();
-            ScreenFader.instance.DelayCall(1f, () =>
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
+                BlockScreen.instance.Block(true);
                 animatorScene.enabled = true;
                 animatorScene.SetBool("PlayAnimScene", true);
             });
+        }
+        else
+        {
+            if (ScreenFader.instance.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
+            {
+                animatorScene.enabled = true;
+                animatorScene.SetBool("PlayAnimScene", true);
+                ScreenFader.instance.FadeIn(null);
+            }
+            else
+            {
+                SceneAnimate.Instance.SceneOpen();
+                ScreenFader.instance.DelayCall(1f, () =>
+                {
+                    animatorScene.enabled = true;
+                    animatorScene.SetBool("PlayAnimScene", true);
+                });
+            }
         }
     }
 

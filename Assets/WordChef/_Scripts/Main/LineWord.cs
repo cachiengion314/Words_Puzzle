@@ -24,6 +24,7 @@ public class LineWord : MonoBehaviour
     [Space]
     [SerializeField] private Button _btnMeanWord;
     [SerializeField] private Image _fxAnswerDuplicate;
+    public Image lineTutorialBG;
     [Space]
     [SerializeField] private GameObject _fxShowHintPfb;
 

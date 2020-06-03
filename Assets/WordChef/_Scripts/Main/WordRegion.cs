@@ -161,9 +161,9 @@ public class WordRegion : MonoBehaviour
         }
 
         if (cellSize > 130f) cellSize = 130f;
-
-        string[] levelProgress = GetLevelProgress();
-        string[] answerProgress = GetAnswerProgress();
+        var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+        string[] levelProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetLevelProgress();
+        string[] answerProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetAnswerProgress();
         bool useProgress = false;
         bool useAnsProgress = false;
 
@@ -355,6 +355,8 @@ public class WordRegion : MonoBehaviour
                 float y = gapY + lineY * cellSize + gapY * (lineY - 1) + gapY;
 
                 lines[i].transform.localPosition = new Vector2(x, y);
+                lines[i].gameObject.AddComponent<GraphicRaycaster>();
+                lines[i].GetComponent<Canvas>().overrideSorting = false;
             }
         }
         else
@@ -377,6 +379,8 @@ public class WordRegion : MonoBehaviour
                 y = gapY * (count - 1 - i) + (boardHighlight.rectTransform.rect.height - gapY * count + cellSize * Const.CELL_GAP_COEF_Y) / 2f;
                 //}
                 lines[i].transform.localPosition = new Vector2(x, y);
+                lines[i].gameObject.AddComponent<GraphicRaycaster>();
+                lines[i].GetComponent<Canvas>().overrideSorting = false;
             }
         }
     }
@@ -467,6 +471,11 @@ public class WordRegion : MonoBehaviour
         {
             //if (!line.isShown)
             //{
+            if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+            {
+                line.GetComponent<Canvas>().overrideSorting = false;
+                line.lineTutorialBG.gameObject.SetActive(false);
+            }
             line.SetDataLetter(checkWord);
             textPreview.SetAnswerColor();
             line.selectID = lineIsShown.Count;
@@ -694,7 +703,15 @@ public class WordRegion : MonoBehaviour
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
             {
-                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
+                TutorialController.instance.HidenPopTut();
+                BlockScreen.instance.Block(true);
+                TutorialController.instance.isBlockSwipe = true;
+                TweenControl.GetInstance().DelayCall(transform, 1.5f, () =>
+                {
+                    TutorialController.instance.isBlockSwipe = false;
+                    BlockScreen.instance.Block(false);
+                    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
+                });
             }
         }
     }

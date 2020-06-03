@@ -21,7 +21,18 @@ public class AnimEvent : MonoBehaviour
     {
         if (MainController.instance != null)
         {
+            BlockScreen.instance.Block(false);
             MainController.instance.beeController.OnBeeButtonClick();
+            if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0)
+            {
+                //Timer.Schedule(this, 1f, () =>
+                //{
+                var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+                //DialogController.instance.ShowDialog(DialogType.HowtoPlay);
+                if (!isTut)
+                    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
+                //});
+            }
         }
     }
 

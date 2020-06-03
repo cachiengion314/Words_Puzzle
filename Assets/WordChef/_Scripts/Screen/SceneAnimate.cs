@@ -26,6 +26,8 @@ public class SceneAnimate : MonoBehaviour
     public string _showShadow = "Shadow";
     public string _showShadowLoop = "Shadow Loop";
     public string _showgiado = "animation2";
+    public string _idleEgg = "Không Anim";
+    public string _idleEggShadow = "Không Anim Shadow";
 
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
@@ -63,12 +65,17 @@ public class SceneAnimate : MonoBehaviour
 
     private void Update()
     {
-        if(gameObject.GetComponent<Canvas>().worldCamera == null)
+        if (gameObject.GetComponent<Canvas>().worldCamera == null)
             gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
     }
 
     public void ShowTitleHome(bool show)
     {
+        if (!show)
+        {
+            _spineAnimEgg.SetAnimation(_idleEgg, false);
+            _spineAnimShadow.SetAnimation(_idleEggShadow, false);
+        }
         _spineAnimEgg.gameObject.SetActive(show);
         _spineAnimShadow.gameObject.SetActive(show);
         _btnPlay.gameObject.SetActive(show);
@@ -109,7 +116,14 @@ public class SceneAnimate : MonoBehaviour
         _progressLoading.value = 0;
         _loadingScreen.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
-        var asyncOp = SceneManager.LoadSceneAsync(Const.SCENE_HOME);
+        var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
+        if (!isTut)
+        {
+            GameState.currentWorld = Prefs.unlockedWorld;
+            GameState.currentSubWorld = Prefs.unlockedSubWorld;
+            GameState.currentLevel = Prefs.unlockedLevel;
+        }
+        var asyncOp = SceneManager.LoadSceneAsync((GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut) ? Const.SCENE_MAIN : Const.SCENE_HOME);
         asyncOp.allowSceneActivation = false;
         while (_progressLoading.value < _progressLoading.maxValue)
         {
@@ -119,6 +133,11 @@ public class SceneAnimate : MonoBehaviour
             {
                 _progressLoading.value = _progressLoading.maxValue;
                 _textProgress.text = "Loading 100%";
+                if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
+                {
+                    ShowTitleHome(false);
+                    _loadingScreen.gameObject.SetActive(false);
+                }
                 asyncOp.allowSceneActivation = true;
                 //_loadingScreen.gameObject.SetActive(false);
             }

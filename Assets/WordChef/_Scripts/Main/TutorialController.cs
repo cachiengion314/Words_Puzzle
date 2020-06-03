@@ -13,6 +13,7 @@ public class TutorialController : MonoBehaviour
     public string contentManipulation;
     public string contentHintFree;
     [SerializeField] private GameObject _popText;
+    [SerializeField] private GameObject _popHint;
     [SerializeField] private TextMeshProUGUI _textTutorial;
 
     private LineWord _lineTarget;
@@ -51,6 +52,8 @@ public class TutorialController : MonoBehaviour
                 _answerTarget = line.answers[0];
                 line.SetDataLetter(line.answers[0]);
                 _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
+                LineTarget.GetComponent<Canvas>().overrideSorting = true;
+                LineTarget.lineTutorialBG.gameObject.SetActive(true);
                 break;
             }
         }
@@ -60,7 +63,7 @@ public class TutorialController : MonoBehaviour
     {
         isShowTut = true;
         isBlockSwipe = true;
-        _popText.SetActive(true);
+        _popHint.SetActive(true);
         _textTutorial.text = contentHintFree;
     }
 
@@ -68,6 +71,7 @@ public class TutorialController : MonoBehaviour
     {
         isBlockSwipe = false;
         _popText.SetActive(false);
+        _popHint.SetActive(false);
         _textTutorial.text = "";
     }
 }
