@@ -9,7 +9,7 @@ using Firebase.Database;
 using UnityEngine.UI;
 using TMPro;
 
-public class MissingWordsFeedback : FeedbackDialog
+public class MissingWordsFeedback : Dialog
 {
     public TMP_InputField inputfield;
     private TMP_InputField.SubmitEvent submitEvent;

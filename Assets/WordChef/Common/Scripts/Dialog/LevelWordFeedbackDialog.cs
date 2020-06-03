@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utilities.Common;
 
-public class LevelWordFeedbackDialog : FeedbackDialog
+public class LevelWordFeedbackDialog : Dialog
 {
     public static List<Toggle> toggleList = new List<Toggle>();
 

@@ -16,10 +16,6 @@ public class FeedbackDialog : Dialog
 
     private string password = "songngu31419932016"; // YourGmailAccountPassword
 
-    protected override void Start()
-    {
-        base.Start();
-    }
 
     public void OnLevelWordsFeedbackClick()
     {

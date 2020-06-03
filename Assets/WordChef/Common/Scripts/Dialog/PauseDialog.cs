@@ -5,10 +5,7 @@ using UnityEngine.Networking;
 
 public class PauseDialog : Dialog
 {
-    protected override void Start()
-    {
-        base.Start();
-    }
+
     public void OnFeedbackClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
