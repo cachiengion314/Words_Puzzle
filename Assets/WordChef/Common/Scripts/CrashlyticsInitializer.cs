@@ -32,6 +32,9 @@ public class CrashlyticsInitializer : MonoBehaviour
                 app.SetEditorDatabaseUrl("https://word-puzzle-896ff.firebaseio.com/");
                 // for remote config
                 InitializeFirebase();
+                // for push notification config
+                FirebaseMessaging.TokenReceived += OnTokenReceived;
+                FirebaseMessaging.MessageReceived += OnMessageReceived;
                 // Set a flag here for indicating that your project is ready to use Firebase.
             }
             else
@@ -42,8 +45,6 @@ public class CrashlyticsInitializer : MonoBehaviour
             }
         });
         // for firebase clound Messenger
-
-        StartCoroutine(DelayTest());
     }
     void InitializeFirebase()
     {
@@ -68,11 +69,5 @@ public class CrashlyticsInitializer : MonoBehaviour
     public void OnMessageReceived(object sender, MessageReceivedEventArgs e)
     {
         Debug.Log("Received a new message from: " + e.Message.From);
-    }
-    IEnumerator DelayTest()
-    {
-        yield return new WaitForEndOfFrame();
-        FirebaseMessaging.TokenReceived += OnTokenReceived;
-        FirebaseMessaging.MessageReceived += OnMessageReceived;
     }
 }

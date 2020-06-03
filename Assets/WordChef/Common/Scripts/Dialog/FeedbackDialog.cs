@@ -27,10 +27,15 @@ public class FeedbackDialog : Dialog
         Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.MissingWordsFeedbackDialog, DialogShow.STACK_DONT_HIDEN);
     }
+    public void ContactUsDialog()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        DialogController.instance.ShowDialog(DialogType.ContactUsDialog, DialogShow.STACK_DONT_HIDEN);
+    }
     public void OnCloseClick()
     {
         Close();
-    }
+    }   
     public void SendMail()
     {
         MailMessage mail = new MailMessage();

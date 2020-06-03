@@ -47,10 +47,10 @@ public class LevelWordFeedbackDialog : Dialog
     {
         for (int i = 0; i < toggleList.Count; i++)
         {
-            TextMeshProUGUI TMP = toggleList[i].GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI textMeshPro = toggleList[i].GetComponentInChildren<TextMeshProUGUI>();
 
             string key = MissingWordsFeedback._missingWordsRef.Push().Key;
-            MissingWordsFeedback.childUpdates["/Irrelevant words/" + key] = TMP.text;
+            MissingWordsFeedback.childUpdates["/Irrelevant words/" + key] = textMeshPro.text;
             MissingWordsFeedback._missingWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
         }
         Close();
