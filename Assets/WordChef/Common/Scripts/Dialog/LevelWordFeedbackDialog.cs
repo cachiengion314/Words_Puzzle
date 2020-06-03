@@ -1,5 +1,5 @@
 ﻿using Firebase.Database;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,8 +18,8 @@ public class LevelWordFeedbackDialog : Dialog
     {
         base.Awake();
 
-        MissingWordsFeedback._missingWordsRef = FirebaseDatabase.DefaultInstance
-           .GetReference("Missing and Irrelevant Words");
+        MissingWordsFeedback._dataWordsRef = FirebaseDatabase.DefaultInstance
+           .GetReference("feedback");
     }
     protected override void Start()
     {
@@ -45,14 +45,24 @@ public class LevelWordFeedbackDialog : Dialog
     }
     public void OnSendIrrelevantWords()
     {
+        string longText = null;
         for (int i = 0; i < toggleList.Count; i++)
         {
-            TextMeshProUGUI TMP = toggleList[i].GetComponentInChildren<TextMeshProUGUI>();
-
-            string key = MissingWordsFeedback._missingWordsRef.Push().Key;
-            MissingWordsFeedback.childUpdates["/Irrelevant words/" + key] = TMP.text;
-            MissingWordsFeedback._missingWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
+            TextMeshProUGUI textMeshPro = toggleList[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (i < toggleList.Count - 1)
+                longText += textMeshPro.text.ToString() + ",";
+            else
+                longText += textMeshPro.text.ToString();
         }
+        string key = MissingWordsFeedback._dataWordsRef.Push().Key;
+        Dictionary<string, object> infoDic = new Dictionary<string, object>();
+        infoDic["type"] = "irregular";
+        infoDic["result"] = longText;
+        infoDic["date"] = DateTime.Now.ToString("MM/dd/yyyy");
+        infoDic["status"] = "open";
+        MissingWordsFeedback.childUpdates["/" + key] = infoDic;
+
+        MissingWordsFeedback._dataWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
         Close();
     }
     public void WordsCorrectDoneByPlayer()
@@ -66,7 +76,7 @@ public class LevelWordFeedbackDialog : Dialog
             }
         }
     }
-    public new void OnCloseClick()
+    public void OnCloseClick()
     {
         Close();
     }

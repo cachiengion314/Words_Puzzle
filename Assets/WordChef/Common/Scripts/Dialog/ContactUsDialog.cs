@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -17,8 +17,8 @@ public class ContactUsDialog : Dialog
     {
         base.Awake();
         // get the reference key in database
-        MissingWordsFeedback._missingWordsRef = FirebaseDatabase.DefaultInstance
-        .GetReference("Missing and Irrelevant Words");
+        MissingWordsFeedback._dataWordsRef = FirebaseDatabase.DefaultInstance
+        .GetReference("feedback");
 
         submitBodyEvent = new TMP_InputField.SubmitEvent();
         submitBodyEvent.AddListener(EndEditInputFieldBodyCallback);
@@ -31,12 +31,10 @@ public class ContactUsDialog : Dialog
     public void EndEditInputFieldBodyCallback(string arg)
     {
         emailBody = arg;
-        Debug.Log(emailBody);
     }
     public void EndEditinputFieldYourEmailCallback(string arg)
     {
         email = arg;
-        Debug.Log(email);
     }
     public void SelectYourEmailCall(string arg0)
     {
@@ -48,12 +46,26 @@ public class ContactUsDialog : Dialog
     }
     public void OnSendEmailFirebase()
     {
-        string key = MissingWordsFeedback._missingWordsRef.Push().Key;
+        string key = MissingWordsFeedback._dataWordsRef.Push().Key;
+        Dictionary<string, object> infoDic = new Dictionary<string, object>();
 
-        MissingWordsFeedback.childUpdates["/Email/" + key] = email;
-        MissingWordsFeedback._missingWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
+        infoDic["type"] = "contact";
+        infoDic["result"] = ToResultDictionary();
+        infoDic["date"] = DateTime.Now.ToString("MM/dd/yyyy");
+        infoDic["status"] = "open";
+        MissingWordsFeedback.childUpdates["/" + key] = infoDic;
+
+        MissingWordsFeedback._dataWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
 
         Close();
+    }
+    private Dictionary<string, object> ToResultDictionary()
+    {
+        Dictionary<string, object> infoDic = new Dictionary<string, object>();
+        infoDic["email"] = email;
+        infoDic["email body"] = emailBody;
+
+        return infoDic;
     }
     public void CloseBtt()
     {

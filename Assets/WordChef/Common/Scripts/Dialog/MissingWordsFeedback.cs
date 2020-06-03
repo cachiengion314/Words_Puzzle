@@ -1,24 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Firebase;
-using Firebase.Unity.Editor;
-using UnityEngine.Events;
-using Firebase.Extensions;
 using Firebase.Database;
-using UnityEngine.UI;
 using TMPro;
-
+using System;
 public class MissingWordsFeedback : Dialog
 {
     public TMP_InputField inputfield;
     private TMP_InputField.SubmitEvent submitEvent;
     private string missingWord;
 
-    public static DatabaseReference _missingWordsRef;
+    public static DatabaseReference _dataWordsRef;
     public static Dictionary<string, object> childUpdates = new Dictionary<string, object>();
 
-
+    // test data
     private int _count = 0;
     protected override void Awake()
     {
@@ -28,16 +23,15 @@ public class MissingWordsFeedback : Dialog
         inputfield.onEndEdit = submitEvent;
 
         // Firebase setup
-        _missingWordsRef = FirebaseDatabase.DefaultInstance
-            .GetReference("Missing and Irrelevant Words");
+        _dataWordsRef = FirebaseDatabase.DefaultInstance
+            .GetReference("feedback");
 
-        _missingWordsRef.ValueChanged += OnCountUpdated;
+        // _dataWordsRef.ValueChanged += OnCountUpdated;
 
     }
-
     private void OnDestroy()
     {
-        _missingWordsRef.ValueChanged -= OnCountUpdated;
+        _dataWordsRef.ValueChanged -= OnCountUpdated;
     }
     public void SelectCall(string arg0)
     {
@@ -50,21 +44,26 @@ public class MissingWordsFeedback : Dialog
     }
     public void OnSendWords()
     {
-        string key = _missingWordsRef.Push().Key;
+        string key = _dataWordsRef.Push().Key;
+        Dictionary<string, object> infoDic = new Dictionary<string, object>();
+        infoDic["type"] = "missing";
+        infoDic["result"] = missingWord;
+        infoDic["date"] = DateTime.Now.ToString("MM/dd/yyyy");
+        infoDic["status"] = "open";
+        childUpdates["/" + key] = infoDic;
 
-        childUpdates["/Missing words/" + key] = missingWord;
-        _missingWordsRef.UpdateChildrenAsync(childUpdates);
+        _dataWordsRef.UpdateChildrenAsync(childUpdates);
 
         Close();
     }
-    public  void OnCloseClick()
+    public void OnCloseClick()
     {
         Close();
     }
     // Test Firebase Database Method
     public void IncrementClickCounter()
     {
-        _missingWordsRef.RunTransaction(data =>
+        _dataWordsRef.RunTransaction(data =>
         {
             data.Value = _count + 1;
             return TransactionResult.Success(data);
@@ -82,9 +81,14 @@ public class MissingWordsFeedback : Dialog
             return;
         }
 
-        if (e.Snapshot == null || e.Snapshot.Value == null) { } // missingWordsList = null;
-        else { } // missingWordsList = (List<string>) e.Snapshot.Value;
-
+        if (e.Snapshot == null || e.Snapshot.Value == null)
+        {
+            _count = 0;
+        }
+        else
+        {
+            _count = int.Parse(e.Snapshot.Value.ToString());
+        }
         // We check for an error, then set the value of our _count according to what the database value returns. 
         // The return value is in the Snapshot variable.
         // Note that we check for e.Snapshot == null - this is important because if there isn't any data at the path, 
