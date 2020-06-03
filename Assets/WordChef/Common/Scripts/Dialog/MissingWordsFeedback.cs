@@ -9,12 +9,6 @@ using Firebase.Database;
 using UnityEngine.UI;
 using TMPro;
 
-public class InfoTest
-{
-    public string infoString = "Nam";
-    public int infoInt = 5;
-    public float infoFloat = 1.5f;
-}
 public class MissingWordsFeedback : Dialog
 {
     public TMP_InputField inputfield;
@@ -58,12 +52,12 @@ public class MissingWordsFeedback : Dialog
     {
         string key = _missingWordsRef.Push().Key;
 
-        childUpdates["/Missing words/" + key] = JsonUtility.ToJson(new InfoTest());
+        childUpdates["/Missing words/" + key] = missingWord;
         _missingWordsRef.UpdateChildrenAsync(childUpdates);
 
         Close();
     }
-    public void OnCloseClick()
+    public new void OnCloseClick()
     {
         Close();
     }

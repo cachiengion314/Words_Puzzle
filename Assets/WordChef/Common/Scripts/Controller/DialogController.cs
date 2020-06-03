@@ -38,8 +38,7 @@ public enum DialogType
     ShareDialog,
     FeedbackDialog,
     MissingWordsFeedbackDialog,
-    LevelWordsFeedbackDialog,
-    ContactUsDialog
+    LevelWordsFeedbackDialog
 };
 
 public enum DialogShow
