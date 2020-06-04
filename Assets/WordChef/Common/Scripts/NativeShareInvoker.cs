@@ -50,7 +50,7 @@ public class NativeShareInvoker : MonoBehaviour
     }
     private IEnumerator TakeScreenShotAndShare(string androidPackageName = null)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.8f);
         StartCoroutine(ScreenShotCoroutine(androidPackageName));
     }
     private IEnumerator ScreenShotCoroutine(string androidPackageName = null)

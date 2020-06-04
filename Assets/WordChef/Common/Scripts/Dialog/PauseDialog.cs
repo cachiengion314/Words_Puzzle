@@ -14,7 +14,7 @@ public class PauseDialog : Dialog
     public void OnHelpClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        DialogController.instance.ShowDialog(DialogType.ShareDialog, DialogShow.STACK_DONT_HIDEN);
+        DialogController.instance.ShowDialog(DialogType.ShareDialog, DialogShow.REPLACE_CURRENT);
     }
     public void OnContinueClick()
     {
