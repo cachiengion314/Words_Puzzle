@@ -121,7 +121,7 @@ public class SettingDialog : PauseDialog
     public void OnClickFeedBack()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        DialogController.instance.ShowDialog(DialogType.FeedbackDialog, DialogShow.STACK_DONT_HIDEN);
+        DialogController.instance.ShowDialog(DialogType.ContactUsDialog, DialogShow.STACK_DONT_HIDEN);
     }
 
     public void OnClickRateUs()
