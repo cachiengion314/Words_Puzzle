@@ -23,10 +23,17 @@ public class WorldController : BaseController
     private Vector2 posTarget;
     public int target;
 
+
     protected override void Awake()
     {
         base.Awake();
-        CreateWord();
+        // CreateWord();
+
+        //  TESTING FIX LAG WHEN SCROLL
+        wordCountMax = _data.words.Count; // dataWordCountMax = 122   
+        _scroll.onValueChanged.AddListener(ScrollRectCallBack);
+
+        FirstCreateWord();
     }
 
     protected override void Start()
@@ -56,8 +63,8 @@ public class WorldController : BaseController
             //DetecthShowChapter();
         }
 
-        if (_isCheckItem)
-            DetecthShowChapter();
+        //if (_isCheckItem)
+        //    DetecthShowChapter();
     }
 
     //private void UpdateUI()
@@ -72,7 +79,7 @@ public class WorldController : BaseController
         {
             TweenControl.GetInstance().DelayCall(transform, 1f, () =>
             {
-                var spacing = 30;
+                // var spacing = 30;
                 //var distance = mainUI.transform.localPosition - worldItems[target].transform.position;
                 var sizeDeltaYItem = (worldItems[target].transform as RectTransform).sizeDelta.y;
                 //var contentY = (distance.y - sizeDeltaYItem) / 2 - sizeDeltaYItem / 2 + spacing;
@@ -90,7 +97,7 @@ public class WorldController : BaseController
             });
         }
 
-        StartCoroutine(DelaySetPosRemainItem());
+        //StartCoroutine(DelaySetPosRemainItem());
     }
 
     private IEnumerator DelaySetPosRemainItem()
@@ -143,5 +150,93 @@ public class WorldController : BaseController
             else
                 item.gameObject.SetActive(false);
         }
+    }
+    // TESTING FIX LAG WHEN SCROLL
+    private bool isMaxPossibleChaper;
+    private int countItemStatic;
+    private int countItem = 0;
+    private int wordCountMax;
+    private bool isCreateDone;
+    private int currentIndexStatic;
+    private int maxWordsTemp = 10;
+    void ScrollRectCallBack(Vector2 value)
+    {
+        if (value.y <= .1f)
+        {
+            if (!isCreateDone && !isMaxPossibleChaper)
+            {
+                if (maxWordsTemp >= (wordCountMax - wordCountMax % 5))
+                {
+                    maxWordsTemp += wordCountMax % 5;
+                    CreateWordDelay();
+                    isMaxPossibleChaper = true;
+                    Debug.Log("IS MAX" + isMaxPossibleChaper);
+                }
+                else
+                {
+                    maxWordsTemp += 5;
+                    CreateWordDelay();
+                    isCreateDone = true;
+                }
+            }
+        }
+        else
+        {
+            isCreateDone = false;
+        }
+    }
+    private void CreateWordDelay()
+    {
+        countItem = countItemStatic;
+        int tempIndex;
+        for (tempIndex = currentIndexStatic; tempIndex < maxWordsTemp; tempIndex++)
+        {
+            int index = tempIndex;
+            var data = _data.words[tempIndex];
+            int indexSub = 0;
+            foreach (var sub in data.subWords)
+            {
+                //var wordItem = Instantiate(_wordItemPfb, _root);
+                //wordItem.worldController = this;
+                //wordItem.scroll = _scroll;
+                //wordItem.world = index;
+                //wordItem.subWorld = indexSub;
+
+                //worldItems.Add(wordItem);
+              
+                worldItems[5 * tempIndex + indexSub].gameObject.SetActive(true);
+                indexSub++;
+            }
+        }
+        currentIndexStatic = tempIndex;
+        Debug.Log("maxWordsTemp " + maxWordsTemp);
+        Debug.Log("currentIndexStatic " + currentIndexStatic);
+    }
+    private void FirstCreateWord()
+    {
+        worldItems.Clear();
+        worldItems = new List<WorldItem>();
+        int tempIndex;
+        for (tempIndex = 0; tempIndex < _data.words.Count; tempIndex++)
+        {
+            int index = tempIndex;
+            var data = _data.words[tempIndex];
+            int indexSub = 0;
+            foreach (var sub in data.subWords)
+            {
+                var wordItem = Instantiate(_wordItemPfb, _root);
+                wordItem.worldController = this;
+                wordItem.scroll = _scroll;
+                wordItem.world = index;
+                wordItem.subWorld = indexSub;
+                if (countItem > 9)
+                    wordItem.gameObject.SetActive(false);
+                worldItems.Add(wordItem);
+                countItem++;
+                indexSub++;
+            }
+        }
+        countItemStatic = countItem + 1;
+        currentIndexStatic = 10;
     }
 }
