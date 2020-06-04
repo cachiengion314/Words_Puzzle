@@ -24,7 +24,7 @@ public class MissingWordsFeedback : Dialog
 
         // Firebase setup
         _dataWordsRef = FirebaseDatabase.DefaultInstance
-            .GetReference("feedback");
+            .GetReference("feedbacks");
 
         // _dataWordsRef.ValueChanged += OnCountUpdated;
 
@@ -45,11 +45,13 @@ public class MissingWordsFeedback : Dialog
     public void OnSendWords()
     {
         string key = _dataWordsRef.Push().Key;
-        Dictionary<string, object> infoDic = new Dictionary<string, object>();
-        infoDic["type"] = "missing";
-        infoDic["result"] = missingWord;
-        infoDic["date"] = DateTime.Now.ToString("MM/dd/yyyy");
-        infoDic["status"] = "open";
+        Dictionary<string, object> infoDic = new Dictionary<string, object>
+        {
+            ["type"] = "missing",
+            ["results"] = missingWord,
+            ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
+            ["status"] = "open"
+        };
         childUpdates["/" + key] = infoDic;
 
         _dataWordsRef.UpdateChildrenAsync(childUpdates);

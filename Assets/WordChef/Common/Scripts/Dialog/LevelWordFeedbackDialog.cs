@@ -19,7 +19,7 @@ public class LevelWordFeedbackDialog : Dialog
         base.Awake();
 
         MissingWordsFeedback._dataWordsRef = FirebaseDatabase.DefaultInstance
-           .GetReference("feedback");
+           .GetReference("feedbacks");
     }
     protected override void Start()
     {
@@ -55,11 +55,13 @@ public class LevelWordFeedbackDialog : Dialog
                 longText += textMeshPro.text.ToString();
         }
         string key = MissingWordsFeedback._dataWordsRef.Push().Key;
-        Dictionary<string, object> infoDic = new Dictionary<string, object>();
-        infoDic["type"] = "irregular";
-        infoDic["result"] = longText;
-        infoDic["date"] = DateTime.Now.ToString("MM/dd/yyyy");
-        infoDic["status"] = "open";
+        Dictionary<string, object> infoDic = new Dictionary<string, object>
+        {
+            ["type"] = "irregular",
+            ["results"] = longText,
+            ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
+            ["status"] = "open"
+        };
         MissingWordsFeedback.childUpdates["/" + key] = infoDic;
 
         MissingWordsFeedback._dataWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);

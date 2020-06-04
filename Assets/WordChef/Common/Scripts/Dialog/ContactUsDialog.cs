@@ -18,7 +18,7 @@ public class ContactUsDialog : Dialog
         base.Awake();
         // get the reference key in database
         MissingWordsFeedback._dataWordsRef = FirebaseDatabase.DefaultInstance
-        .GetReference("feedback");
+        .GetReference("feedbacks");
 
         submitBodyEvent = new TMP_InputField.SubmitEvent();
         submitBodyEvent.AddListener(EndEditInputFieldBodyCallback);
@@ -47,12 +47,13 @@ public class ContactUsDialog : Dialog
     public void OnSendEmailFirebase()
     {
         string key = MissingWordsFeedback._dataWordsRef.Push().Key;
-        Dictionary<string, object> infoDic = new Dictionary<string, object>();
-
-        infoDic["type"] = "contact";
-        infoDic["result"] = ToResultDictionary();
-        infoDic["date"] = DateTime.Now.ToString("MM/dd/yyyy");
-        infoDic["status"] = "open";
+        Dictionary<string, object> infoDic = new Dictionary<string, object>
+        {
+            ["type"] = "contact",
+            ["results"] = ToResultDictionary(),
+            ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
+            ["status"] = "open"
+        };
         MissingWordsFeedback.childUpdates["/" + key] = infoDic;
 
         MissingWordsFeedback._dataWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
@@ -63,7 +64,7 @@ public class ContactUsDialog : Dialog
     {
         Dictionary<string, object> infoDic = new Dictionary<string, object>();
         infoDic["email"] = email;
-        infoDic["email body"] = emailBody;
+        infoDic["body"] = emailBody;
 
         return infoDic;
     }
