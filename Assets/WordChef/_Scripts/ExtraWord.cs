@@ -43,7 +43,7 @@ public class ExtraWord : MonoBehaviour
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;
         extraWords = (Prefs.IsSaveLevelProgress()) ? Prefs.GetExtraWords(world, subWorld, level).ToList() : new List<string>();
-        if(extraWords.Count > 0)
+        if (extraWords.Count > 0)
         {
             foreach (var word in extraWords)
             {
@@ -85,6 +85,7 @@ public class ExtraWord : MonoBehaviour
             Prefs.countSpell += 1;
             Prefs.countSpellDaily += 1;
 
+            WordRegion.instance.btnBonusBox.gameObject.SetActive(true);
             WordRegion.instance.SetWordOpenInLevelAmount(word);
             MainController.instance.SaveWordComplete(word);
             WordRegion.instance.listWordCorrect.Add(word.ToLower());
@@ -115,6 +116,13 @@ public class ExtraWord : MonoBehaviour
 
     public void AddNewExtraWord(string word)
     {
+        if (!CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+        {
+            TweenControl.GetInstance().DelayCall(transform, 2f, () =>
+            {
+                TutorialController.instance.ShowPopBonusBoxTut();
+            });
+        }
         extraWords.Add(word);
         if (Prefs.IsSaveLevelProgress())
         {

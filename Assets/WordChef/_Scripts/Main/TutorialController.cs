@@ -16,17 +16,20 @@ public class TutorialController : MonoBehaviour
     public string contentShuffle;
     public string contentSelectedHint;
     public string contentMultipleHint;
+    public string contentBonusBox;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
     [SerializeField] private GameObject _popSelectedHint;
     [SerializeField] private GameObject _popMultipleHint;
+    [SerializeField] private GameObject _popBonusBox;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
     [SerializeField] private TextMeshProUGUI _textTutorialShuffle;
     [SerializeField] private TextMeshProUGUI _textTutorialSelectedHint;
     [SerializeField] private TextMeshProUGUI _textTutorialMultipleHint;
+    [SerializeField] private TextMeshProUGUI _textTutorialBonusBox;
 
     private LineWord _lineTarget;
     private string _answerTarget;
@@ -94,6 +97,18 @@ public class TutorialController : MonoBehaviour
         _textTutorialShuffle.text = contentShuffle;
     }
 
+    public void ShowPopBonusBoxTut()
+    {
+        CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
+        if (WordRegion.instance != null)
+            WordRegion.instance.btnBonusBox.GetComponent<Canvas>().overrideSorting = true;
+        isShowTut = true;
+        isBlockSwipe = true;
+        _overlay.SetActive(true);
+        _popBonusBox.SetActive(true);
+        _textTutorialBonusBox.text = contentBonusBox;
+    }
+
     public void ShowPopSelectedHintTut()
     {
         if (WordRegion.instance != null)
@@ -102,7 +117,7 @@ public class TutorialController : MonoBehaviour
         isBlockSwipe = true;
         _overlay.SetActive(true);
         _popSelectedHint.SetActive(true);
-        _textTutorialShuffle.text = contentSelectedHint;
+        _textTutorialSelectedHint.text = contentSelectedHint;
     }
 
     public void ShowPopMultipleTut()
@@ -113,7 +128,7 @@ public class TutorialController : MonoBehaviour
         isBlockSwipe = true;
         _overlay.SetActive(true);
         _popMultipleHint.SetActive(true);
-        _textTutorialShuffle.text = contentMultipleHint;
+        _textTutorialMultipleHint.text = contentMultipleHint;
     }
 
     public void HidenPopTut()
@@ -132,6 +147,7 @@ public class TutorialController : MonoBehaviour
         _popShuffle.SetActive(false);
         _popSelectedHint.SetActive(false);
         _popMultipleHint.SetActive(false);
+        _popBonusBox.SetActive(false);
         _overlay.SetActive(false);
         _textTutorial.text = "";
     }
@@ -160,16 +176,18 @@ public class TutorialController : MonoBehaviour
             {
 
             }
-            else if (currlevel == 12)
+            else if (currlevel == 12 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
-                
+                ShowPopBonusBoxTut();
             }
             else if (currlevel == 23)
             {
+                CurrencyController.CreditSelectedHintFree(2);
                 ShowPopSelectedHintTut();
             }
             else if (currlevel == 30)
             {
+                CurrencyController.CreditMultipleHintFree(2);
                 ShowPopMultipleTut();
             }
             else if (currlevel == 33)

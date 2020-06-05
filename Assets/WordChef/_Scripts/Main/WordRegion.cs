@@ -208,22 +208,12 @@ public class WordRegion : MonoBehaviour
 
     private void CheckShowButton(bool isTut)
     {
-        
-        if (_currLevel == 1 && !isTut)
+        if (_currLevel < 30)
         {
-            btnMultipleHint.gameObject.SetActive(false);
-            btnHintTarget.gameObject.SetActive(false);
-            btnRewardAds.gameObject.SetActive(false);
-            btnBonusBox.gameObject.SetActive(false);
-        }
-        else if (_currLevel > 11 && _currLevel < 23)
-        {
-            btnMultipleHint.gameObject.SetActive(false);
-            btnHintTarget.gameObject.SetActive(false);
-            btnRewardAds.gameObject.SetActive(false);
-        }
-        else if (_currLevel > 22 && _currLevel < 30)
-        {
+            if (_currLevel < 23)
+                btnHintTarget.gameObject.SetActive(false);
+            if (_currLevel < 12 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+                btnBonusBox.gameObject.SetActive(false);
             btnMultipleHint.gameObject.SetActive(false);
             btnRewardAds.gameObject.SetActive(false);
         }
@@ -751,6 +741,7 @@ public class WordRegion : MonoBehaviour
 
     public void OnClickHintTarget()
     {
+        TutorialController.instance.HidenPopTut();
         int ballance = CurrencyController.GetBalance();
         var selectedhintFree = CurrencyController.GetSelectedHintFree();
         if (selectedhintFree > 0 || ballance >= Const.HINT_TARGET_COST)
@@ -997,6 +988,7 @@ public class WordRegion : MonoBehaviour
 
     public void HintRandomClick()
     {
+        TutorialController.instance.HidenPopTut();
         int ballance = CurrencyController.GetBalance();
         var multiplehintFree = CurrencyController.GetMultipleHintFree();
         if (ballance >= Const.HINT_RANDOM_COST || multiplehintFree > 0)
