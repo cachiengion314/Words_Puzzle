@@ -9,6 +9,7 @@ public class BaseController : MonoBehaviour {
 
     protected virtual void Awake()
     {
+        Application.targetFrameRate = 60;
         if (!CPlayerPrefs.HasKey("INSTALLED"))
         {
             CPlayerPrefs.SetBool("INSTALLED", true);

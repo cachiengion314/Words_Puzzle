@@ -33,6 +33,7 @@ public class AnimEvent : MonoBehaviour
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
                 //});
             }
+            TutorialController.instance.CheckAndShowTutorial();
         }
     }
 

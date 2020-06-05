@@ -886,6 +886,7 @@ public class WordRegion : MonoBehaviour
     int cellIndex = 0;
     public void HintClick()
     {
+        TutorialController.instance.HidenPopTut();
         int ballance = CurrencyController.GetBalance();
         var hintFree = CurrencyController.GetHintFree();
         if (ballance >= Const.HINT_COST || hintFree > 0)

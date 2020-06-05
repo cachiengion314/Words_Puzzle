@@ -134,6 +134,7 @@ public class Pan : MonoBehaviour
 
     public void Shuffle()
     {
+        TutorialController.instance.HidenPopTut();
         var tweenControl = TweenControl.GetInstance();
         GetShuffeWord();
         Prefs.SetPanWordIndexes(world, subWorld, level, indexes.ToArray());
