@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System;
+using Superpow;
 
 public class WinDialog : Dialog
 {
@@ -231,6 +232,12 @@ public class WinDialog : Dialog
             }
             else
             {
+                var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+                var currlevel = (Prefs.unlockedLevel + numlevels * (Prefs.unlockedSubWorld + MainController.instance.gameData.words.Count * Prefs.unlockedWorld)) + 1;
+                if (currlevel >= 33)
+                    _btnBee.gameObject.SetActive(true);
+                else
+                    _btnBee.gameObject.SetActive(false);
                 var posTarget = _btnBee.transform.localPosition.x / 2;
                 tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget + 50, 0.5f, () =>
                 {

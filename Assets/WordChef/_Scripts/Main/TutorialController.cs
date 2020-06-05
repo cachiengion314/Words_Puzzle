@@ -90,6 +90,7 @@ public class TutorialController : MonoBehaviour
     {
         WordRegion.instance.btnHint.GetComponent<Canvas>().overrideSorting = false;
         WordRegion.instance.btnShuffle.GetComponent<Canvas>().overrideSorting = false;
+        isShowTut = false;
         isBlockSwipe = false;
         _popText.SetActive(false);
         _popHint.SetActive(false);

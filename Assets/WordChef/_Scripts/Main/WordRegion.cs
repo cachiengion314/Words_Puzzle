@@ -37,6 +37,7 @@ public class WordRegion : MonoBehaviour
     public Button btnMultipleHint;
     public Button btnShuffle;
     public Button btnRewardAds;
+    public Button btnBonusBox;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -50,6 +51,7 @@ public class WordRegion : MonoBehaviour
     private bool hasLongLine;
 
     private RectTransform rt;
+    private int _currLevel;
 
     [HideInInspector] public string keyLevel;
     public List<string> listWordInLevel;
@@ -114,6 +116,7 @@ public class WordRegion : MonoBehaviour
     public void Load(GameLevel gameLevel, int level)
     {
         keyLevel = level.ToString();
+        _currLevel = level + 1;
         this.gameLevel = gameLevel;
         _extraWord = gameLevel.numExtra;
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
@@ -169,6 +172,7 @@ public class WordRegion : MonoBehaviour
             btnMultipleHint.gameObject.SetActive(false);
             btnHintTarget.gameObject.SetActive(false);
             btnRewardAds.gameObject.SetActive(false);
+            btnBonusBox.gameObject.SetActive(false);
         }
         string[] levelProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetLevelProgress();
         string[] answerProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetAnswerProgress();
@@ -664,10 +668,13 @@ public class WordRegion : MonoBehaviour
             board.sprite = _spriteNormal;
             board.SetNativeSize();
             Sound.instance.Play(Sound.Others.WordInvalid);
-            if (Prefs.IsSaveLevelProgress())
-                SetupCellAds();
-            else
-                ShowAdsInOldLevel();
+            if (_currLevel > 1)
+            {
+                if (Prefs.IsSaveLevelProgress())
+                    SetupCellAds();
+                else
+                    ShowAdsInOldLevel();
+            }
             textPreview.SetWrongColor();
             lineIndex = 0;
             compliment.ResetAnimTree();
