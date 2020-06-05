@@ -209,8 +209,8 @@ public class WorldController : BaseController
             }
         }
         currentIndexStatic = tempIndex;
-        Debug.Log("maxWordsTemp " + maxWordsTemp);
-        Debug.Log("currentIndexStatic " + currentIndexStatic);
+        //Debug.Log("maxWordsTemp " + maxWordsTemp);
+        //Debug.Log("currentIndexStatic " + currentIndexStatic);
     }
     private void FirstCreateWord()
     {
