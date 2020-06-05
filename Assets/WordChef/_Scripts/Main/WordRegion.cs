@@ -167,13 +167,8 @@ public class WordRegion : MonoBehaviour
 
         if (cellSize > 130f) cellSize = 130f;
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
-        if(Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut)
-        {
-            btnMultipleHint.gameObject.SetActive(false);
-            btnHintTarget.gameObject.SetActive(false);
-            btnRewardAds.gameObject.SetActive(false);
-            btnBonusBox.gameObject.SetActive(false);
-        }
+        CheckShowButton(isTut);
+
         string[] levelProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetLevelProgress();
         string[] answerProgress = (Prefs.unlockedWorld == 0 && Prefs.unlockedSubWorld == 0 && Prefs.unlockedLevel == 0 && !isTut) ? new string[0] : GetAnswerProgress();
         bool useProgress = false;
@@ -209,6 +204,29 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
+    }
+
+    private void CheckShowButton(bool isTut)
+    {
+        
+        if (_currLevel == 1 && !isTut)
+        {
+            btnMultipleHint.gameObject.SetActive(false);
+            btnHintTarget.gameObject.SetActive(false);
+            btnRewardAds.gameObject.SetActive(false);
+            btnBonusBox.gameObject.SetActive(false);
+        }
+        else if (_currLevel > 11 && _currLevel < 23)
+        {
+            btnMultipleHint.gameObject.SetActive(false);
+            btnHintTarget.gameObject.SetActive(false);
+            btnRewardAds.gameObject.SetActive(false);
+        }
+        else if (_currLevel > 22 && _currLevel < 30)
+        {
+            btnMultipleHint.gameObject.SetActive(false);
+            btnRewardAds.gameObject.SetActive(false);
+        }
     }
 
     void UpdateHintFree()
