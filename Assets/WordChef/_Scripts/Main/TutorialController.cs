@@ -99,7 +99,6 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopBonusBoxTut()
     {
-        CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
         if (WordRegion.instance != null)
             WordRegion.instance.btnBonusBox.GetComponent<Canvas>().overrideSorting = true;
         isShowTut = true;

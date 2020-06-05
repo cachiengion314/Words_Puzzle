@@ -118,6 +118,7 @@ public class ExtraWord : MonoBehaviour
     {
         if (!CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
         {
+            CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
             TweenControl.GetInstance().DelayCall(transform, 2f, () =>
             {
                 TutorialController.instance.ShowPopBonusBoxTut();
