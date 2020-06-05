@@ -46,16 +46,19 @@ public class ContactUsDialog : Dialog
     }
     public void OnSendEmailFirebase()
     {
-        string key = MissingWordsFeedback._dataWordsRef.Push().Key;
         Dictionary<string, object> infoDic = new Dictionary<string, object>
         {
             ["type"] = "contact",
             ["results"] = ToResultDictionary(),
             ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
-            ["status"] = "open"
+            ["status"] = "open",
+            ["level"] = (GameState.currentLevel + 1)
         };
-        MissingWordsFeedback.childUpdates["/" + key] = infoDic;
+        if (infoDic["results"] == null) { Close(); return; }
 
+        // Push imformation
+        string key = MissingWordsFeedback._dataWordsRef.Push().Key;
+        MissingWordsFeedback.childUpdates["/" + key] = infoDic;
         MissingWordsFeedback._dataWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
 
         Close();
@@ -66,7 +69,11 @@ public class ContactUsDialog : Dialog
         infoDic["email"] = email;
         infoDic["body"] = emailBody;
 
-        return infoDic;
+        if (email == null && emailBody == null) { return null; }
+        else if (email?.Length == 0 && emailBody?.Length == 0) { return null; }
+        else if (email == null && emailBody?.Length == 0) { return null; }
+        else if (email?.Length == 0 && emailBody == null) { return null; }
+        else { return infoDic; }
     }
     public void CloseBtt()
     {

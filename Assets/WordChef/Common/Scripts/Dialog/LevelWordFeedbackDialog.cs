@@ -54,17 +54,21 @@ public class LevelWordFeedbackDialog : Dialog
             else
                 longText += textMeshPro.text.ToString();
         }
+        if (longText == null || longText.Length == 0) { Close(); return; }
+      
         string key = MissingWordsFeedback._dataWordsRef.Push().Key;
         Dictionary<string, object> infoDic = new Dictionary<string, object>
         {
             ["type"] = "irregular",
             ["results"] = longText,
             ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
-            ["status"] = "open"
+            ["status"] = "open",
+            ["level"] = (GameState.currentLevel + 1)
         };
-        MissingWordsFeedback.childUpdates["/" + key] = infoDic;
-
+        // Push information
+        MissingWordsFeedback.childUpdates["/" + key] = infoDic;      
         MissingWordsFeedback._dataWordsRef.UpdateChildrenAsync(MissingWordsFeedback.childUpdates);
+
         Close();
     }
     public void WordsCorrectDoneByPlayer()

@@ -44,16 +44,19 @@ public class MissingWordsFeedback : Dialog
     }
     public void OnSendWords()
     {
-        string key = _dataWordsRef.Push().Key;
+        if (missingWord == null || missingWord.Length == 0 ) { Close(); return; }
+       
         Dictionary<string, object> infoDic = new Dictionary<string, object>
         {
             ["type"] = "missing",
             ["results"] = missingWord,
             ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
-            ["status"] = "open"
+            ["status"] = "open",
+            ["level"] = (GameState.currentLevel + 1)
         };
-        childUpdates["/" + key] = infoDic;
-
+        // push information
+        string key = _dataWordsRef.Push().Key;
+        childUpdates["/" + key] = infoDic;    
         _dataWordsRef.UpdateChildrenAsync(childUpdates);
 
         Close();
