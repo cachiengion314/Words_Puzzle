@@ -721,7 +721,7 @@ public class WordRegion : MonoBehaviour
                 TutorialController.instance.HidenPopTut();
                 BlockScreen.instance.Block(true);
                 TutorialController.instance.isBlockSwipe = true;
-                TweenControl.GetInstance().DelayCall(transform, 1.5f, () =>
+                TweenControl.GetInstance().DelayCall(transform, 2f, () =>
                 {
                     TutorialController.instance.isBlockSwipe = false;
                     BlockScreen.instance.Block(false);
