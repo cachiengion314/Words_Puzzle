@@ -29,6 +29,7 @@ public class Cell : MonoBehaviour
     public void Animate()
     {
         SetBgLetter(_spriteLetter);
+        Mask.SetActive(true);
         bg.transform.SetParent(Mask.transform);
         ImgPedestal.SetActive(true);
         CollectStar();
@@ -80,6 +81,7 @@ public class Cell : MonoBehaviour
         bg.transform.SetParent(transform);
         bg.transform.localPosition = Vector3.zero;
         fxExplode.gameObject.SetActive(true);
+        Mask.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.15f, OnScaleUpComplete);
     }
 
@@ -88,6 +90,13 @@ public class Cell : MonoBehaviour
         iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.15f));
         //fxExplode.gameObject.SetActive(false);
         CalculateTextRaitoScale(letterTextNor.rectTransform);
+        StartCoroutine(TurnOffContentsSizeFilter());
+    }
+
+    private IEnumerator TurnOffContentsSizeFilter()
+    {
+        yield return new WaitForEndOfFrame();
+        letterTextNor.GetComponent<ContentSizeFitter>().enabled = false;
     }
 
     public void ShowHint()
@@ -136,6 +145,7 @@ public class Cell : MonoBehaviour
         {
             letterTextNor.text = letter;
             CalculateTextRaitoScale(letterTextNor.rectTransform);
+            StartCoroutine(TurnOffContentsSizeFilter());
         }
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);
