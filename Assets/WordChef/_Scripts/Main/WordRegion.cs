@@ -204,6 +204,14 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
+
+        if (_currLevel == 8)
+        {
+            foreach (var cellTut in lines[lines.Count - 1].cells)
+            {
+                cellTut.iconCoin.transform.localScale = Vector3.one;
+            }
+        }
     }
 
     private void CheckShowButton(bool isTut)
@@ -376,7 +384,8 @@ public class WordRegion : MonoBehaviour
 
                 lines[i].transform.localPosition = new Vector2(x, y);
                 lines[i].gameObject.AddComponent<GraphicRaycaster>();
-                lines[i].GetComponent<Canvas>().overrideSorting = false;
+                var canvas = lines[i].GetComponent<Canvas>();
+                canvas.overrideSorting = false;
             }
         }
         else
@@ -400,7 +409,8 @@ public class WordRegion : MonoBehaviour
                 //}
                 lines[i].transform.localPosition = new Vector2(x, y);
                 lines[i].gameObject.AddComponent<GraphicRaycaster>();
-                lines[i].GetComponent<Canvas>().overrideSorting = false;
+                var canvas = lines[i].GetComponent<Canvas>();
+                canvas.overrideSorting = false;
             }
         }
     }
@@ -491,11 +501,6 @@ public class WordRegion : MonoBehaviour
         {
             //if (!line.isShown)
             //{
-            if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
-            {
-                line.GetComponent<Canvas>().overrideSorting = false;
-                line.lineTutorialBG.gameObject.SetActive(false);
-            }
             line.SetDataLetter(checkWord);
             textPreview.SetAnswerColor();
             line.selectID = lineIsShown.Count;
