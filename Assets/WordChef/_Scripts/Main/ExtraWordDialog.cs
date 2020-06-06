@@ -17,6 +17,7 @@ public class ExtraWordDialog : Dialog
     public CanvasGroup panelNewLevel;
     public CanvasGroup panelOldLevel;
     [SerializeField] private TextMeshProUGUI _bonusWordPfb;
+    [SerializeField] private TextMeshProUGUI _textCollectEnough;
     [SerializeField] private Transform _contentScroll;
     [Space]
     [SerializeField] private RewardVideoController _rewardVideoPfb;
@@ -157,6 +158,7 @@ public class ExtraWordDialog : Dialog
     private void UpdateUI()
     {
         claimQuantityText.text = claimQuantity.ToString();
+        _textCollectEnough.gameObject.SetActive(extraProgress.current < extraProgress.target);
         claimButton.SetActive(extraProgress.current >= extraProgress.target);
         rewardButton.SetActive(extraProgress.current >= extraProgress.target);
         progressText.text = extraProgress.current + "/" + extraProgress.target;
