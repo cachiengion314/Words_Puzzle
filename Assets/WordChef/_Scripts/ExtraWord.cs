@@ -86,6 +86,7 @@ public class ExtraWord : MonoBehaviour
             Prefs.countSpellDaily += 1;
 
             WordRegion.instance.btnBonusBox.gameObject.SetActive(true);
+            WordRegion.instance.shadowBonuxbox.SetActive(true);
             WordRegion.instance.SetWordOpenInLevelAmount(word);
             MainController.instance.SaveWordComplete(word);
             WordRegion.instance.listWordCorrect.Add(word.ToLower());

@@ -38,6 +38,7 @@ public class WordRegion : MonoBehaviour
     public Button btnShuffle;
     public Button btnRewardAds;
     public Button btnBonusBox;
+    public GameObject shadowBonuxbox;
     public Button btnSetting;
 
     private List<LineWord> lines = new List<LineWord>();
@@ -225,7 +226,10 @@ public class WordRegion : MonoBehaviour
             if (_currLevel < 23)
                 btnHintTarget.gameObject.SetActive(false);
             if (_currLevel < 12 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            {
                 btnBonusBox.gameObject.SetActive(false);
+                shadowBonuxbox.SetActive(false);
+            }
             btnMultipleHint.gameObject.SetActive(false);
             btnRewardAds.gameObject.SetActive(false);
         }
