@@ -39,6 +39,7 @@ public class HomeController : BaseController
         CUtils.CloseBannerAd();
         ShowChickenBank();
         var sceneAnimate = SceneAnimate.Instance;
+        sceneAnimate._btnPlay.interactable = true;
         sceneAnimate._spineAnimEgg.gameObject.SetActive(true);
         sceneAnimate._spineAnimShadow.gameObject.SetActive(true);
         sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate._idleEgg, false);

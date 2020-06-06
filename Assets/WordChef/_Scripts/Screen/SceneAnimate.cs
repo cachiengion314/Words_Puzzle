@@ -59,6 +59,7 @@ public class SceneAnimate : MonoBehaviour
 
     public void OnClick(int index)
     {
+        _btnPlay.interactable = false;
         switch (index)
         {
             case PLAY:
