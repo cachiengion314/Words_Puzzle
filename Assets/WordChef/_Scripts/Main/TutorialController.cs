@@ -139,7 +139,7 @@ public class TutorialController : MonoBehaviour
         isBlockSwipe = true;
         _overlay.SetActive(true);
         _popCellStar.SetActive(true);
-        _textTutorialMultipleHint.text = contentMultipleHint;
+        _textTutorialCellStar.text = contentMultipleHint;
 
         _lineTarget = WordRegion.instance.Lines[WordRegion.instance.Lines.Count - 1];
         var canvas = LineTarget.GetComponent<Canvas>();
@@ -210,7 +210,7 @@ public class TutorialController : MonoBehaviour
             }
             else if (currlevel == 30)
             {
-                CurrencyController.CreditMultipleHintFree(2);
+                CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
             else if (currlevel == 33)
