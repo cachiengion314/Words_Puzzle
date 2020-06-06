@@ -144,7 +144,7 @@ public class MainController : BaseController
     }
 #endif
 
-    private void OpenSceneWithAnim(float timeDelay = 1f)
+    private void OpenSceneWithAnim(float timeDelay = 0.7f)
     {
         SceneAnimate.Instance.SceneOpen();
         ScreenFader.instance.DelayCall(timeDelay, () =>
