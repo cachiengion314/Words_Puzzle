@@ -73,6 +73,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
     public static Purchaser instance;
     public Action<IAPItem, int> onItemPurchased;
+    public Action<IAPItem, int> onItemBeePurchased;
 
     private void Awake()
     {
@@ -325,9 +326,9 @@ public class Purchaser : MonoBehaviour, IStoreListener
             {
                 Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
                 item = i;
-                if (onItemPurchased != null)
+                if (onItemBeePurchased != null)
                 {
-                    onItemPurchased(item, Array.IndexOf(beeIapItems, item));
+                    onItemBeePurchased(item, Array.IndexOf(beeIapItems, item));
                     break;
                 }
             }

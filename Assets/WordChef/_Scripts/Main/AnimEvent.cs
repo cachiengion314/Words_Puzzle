@@ -22,7 +22,6 @@ public class AnimEvent : MonoBehaviour
         if (MainController.instance != null)
         {
             BlockScreen.instance.Block(false);
-            MainController.instance.beeController.OnBeeButtonClick();
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0)
             {
                 //Timer.Schedule(this, 1f, () =>
@@ -34,6 +33,8 @@ public class AnimEvent : MonoBehaviour
                 //});
             }
             TutorialController.instance.CheckAndShowTutorial();
+            if (CPlayerPrefs.HasKey("BEE_TUTORIAL"))
+                MainController.instance.beeController.OnBeeButtonClick();
         }
     }
 

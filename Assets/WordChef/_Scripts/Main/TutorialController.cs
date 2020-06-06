@@ -9,6 +9,7 @@ public class TutorialController : MonoBehaviour
     public static TutorialController instance { get; private set; }
     [HideInInspector] public bool isShowTut;
     [HideInInspector] public bool isBlockSwipe;
+    [HideInInspector] public bool isTutBeehive;
     public string contentNext;
     public string contentWordAgain;
     public string contentManipulation;
@@ -19,6 +20,7 @@ public class TutorialController : MonoBehaviour
     public string contentBonusBox;
     public string contentCellStar;
     public string contentSetting;
+    public string contentBeehive;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
@@ -28,6 +30,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popCellStar;
     [SerializeField] private GameObject _popSetting;
     [SerializeField] private GameObject _popObjective;
+    [SerializeField] private GameObject _popBeehive;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
@@ -37,6 +40,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialBonusBox;
     [SerializeField] private TextMeshProUGUI _textTutorialCellStar;
     [SerializeField] private TextMeshProUGUI _textTutorialSetting;
+    [SerializeField] private TextMeshProUGUI _textTutorialBeehive;
 
     private LineWord _lineTarget;
     private string _answerTarget;
@@ -171,6 +175,23 @@ public class TutorialController : MonoBehaviour
         _popObjective.SetActive(true);
     }
 
+    public void ShowPopBeeTut()
+    {
+        isShowTut = true;
+        isBlockSwipe = true;
+        isTutBeehive = true;
+        _overlay.SetActive(true);
+        _popBeehive.SetActive(true);
+        _textTutorialBeehive.text = contentBeehive;
+    }
+
+    public void OnClickOkBeehive()
+    {
+        CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
+        MainController.instance.beeController.OnBeeButtonClick();
+        HidenPopTut();
+    }
+
     public void HidenPopTut()
     {
         if (WordRegion.instance != null)
@@ -188,6 +209,7 @@ public class TutorialController : MonoBehaviour
         }
         isShowTut = false;
         isBlockSwipe = false;
+        isTutBeehive = false;
         _popText.SetActive(false);
         _popHint.SetActive(false);
         _popShuffle.SetActive(false);
@@ -197,6 +219,7 @@ public class TutorialController : MonoBehaviour
         _popCellStar.SetActive(false);
         _popSetting.SetActive(false);
         _popObjective.SetActive(false);
+        _popBeehive.SetActive(false);
         _overlay.SetActive(false);
         _textTutorial.text = "";
     }
@@ -239,9 +262,11 @@ public class TutorialController : MonoBehaviour
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
-            else if (currlevel == 33)
+            else if ((currlevel == 33 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
-                BeeManager.instance.CreaditAmountBee(1);
+                if (BeeManager.instance.CurrBee > 0)
+                    BeeManager.instance.CreaditAmountBee(3);
+                ShowPopBeeTut();
             }
             CPlayerPrefs.SetBool("LEVEL " + currlevel, true);
         }
