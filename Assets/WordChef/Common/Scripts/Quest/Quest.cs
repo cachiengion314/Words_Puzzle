@@ -108,6 +108,9 @@ public class Quest : MonoBehaviour
 
     public void OnReward()
     {
+        GetComponent<Canvas>().overrideSorting = false;
+        CPlayerPrefs.SetBool("OBJ_TUTORIAL", true);
+        TutorialController.instance.HidenPopTut();
         StartCoroutine(ShowEffectCollect(goal.reward));
         //CurrencyController.CreditBalance(goal.reward);
         _btnReward.gameObject.SetActive(false);

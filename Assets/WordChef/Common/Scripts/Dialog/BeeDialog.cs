@@ -98,6 +98,7 @@ public class BeeDialog : Dialog
         if (item.productType == ProductType.Consumable)
         {
             BeeManager.instance.CreaditAmountBee(item.valueBeehive);
+            CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
             Toast.instance.ShowMessage("Your purchase is successful");
             if (Purchaser.instance.beeIapItems[index].removeAds)
             {

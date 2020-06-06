@@ -234,7 +234,7 @@ public class WinDialog : Dialog
             {
                 var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
                 var currlevel = (Prefs.unlockedLevel + numlevels * (Prefs.unlockedSubWorld + MainController.instance.gameData.words.Count * Prefs.unlockedWorld)) + 1;
-                if (currlevel >= 33)
+                if (currlevel >= 33 || CPlayerPrefs.HasKey("BEE_TUTORIAL"))
                     _btnBee.gameObject.SetActive(true);
                 else
                     _btnBee.gameObject.SetActive(false);

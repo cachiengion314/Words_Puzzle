@@ -73,6 +73,19 @@ public class QuestController : MonoBehaviour
             ques.gameObject.SetActive(true);
             ques.Run();
         }
+
+        if (!CPlayerPrefs.HasKey("OBJ_TUTORIAL") && Prefs.countLevelDaily >= _dailyTaskDatas[0].quests[0].goal.requiredAmount)
+        {
+            var canvas = _dailyTaskDatas[0].quests[0].GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI2";
+            BlockScreen.instance.Block(true);
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
+                TutorialController.instance.ShowPopObjectiveTut();
+                BlockScreen.instance.Block(false);
+            });
+        }
     }
 
     void UpdateDailyQuest()
@@ -118,7 +131,10 @@ public class QuestController : MonoBehaviour
         }
     }
 
-
+    private void OnDisable()
+    {
+        TweenControl.GetInstance().KillDelayCall(transform);
+    }
 }
 
 [Serializable]

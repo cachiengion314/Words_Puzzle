@@ -18,6 +18,7 @@ public class TutorialController : MonoBehaviour
     public string contentMultipleHint;
     public string contentBonusBox;
     public string contentCellStar;
+    public string contentSetting;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
@@ -25,6 +26,8 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popMultipleHint;
     [SerializeField] private GameObject _popBonusBox;
     [SerializeField] private GameObject _popCellStar;
+    [SerializeField] private GameObject _popSetting;
+    [SerializeField] private GameObject _popObjective;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
@@ -33,6 +36,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialMultipleHint;
     [SerializeField] private TextMeshProUGUI _textTutorialBonusBox;
     [SerializeField] private TextMeshProUGUI _textTutorialCellStar;
+    [SerializeField] private TextMeshProUGUI _textTutorialSetting;
 
     private LineWord _lineTarget;
     private string _answerTarget;
@@ -148,6 +152,25 @@ public class TutorialController : MonoBehaviour
         LineTarget.lineTutorialBG.gameObject.SetActive(true);
     }
 
+    public void ShowPopSettingTut()
+    {
+        if (WordRegion.instance != null)
+            WordRegion.instance.btnSetting.GetComponent<Canvas>().overrideSorting = true;
+        isShowTut = true;
+        isBlockSwipe = true;
+        _overlay.SetActive(true);
+        _popSetting.SetActive(true);
+        _textTutorialSetting.text = contentSetting;
+    }
+
+    public void ShowPopObjectiveTut()
+    {
+        isShowTut = true;
+        isBlockSwipe = true;
+        _overlay.SetActive(true);
+        _popObjective.SetActive(true);
+    }
+
     public void HidenPopTut()
     {
         if (WordRegion.instance != null)
@@ -156,6 +179,7 @@ public class TutorialController : MonoBehaviour
             WordRegion.instance.btnShuffle.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnMultipleHint.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnHintTarget.GetComponent<Canvas>().overrideSorting = false;
+            WordRegion.instance.btnSetting.GetComponent<Canvas>().overrideSorting = false;
             if (LineTarget != null)
             {
                 LineTarget.GetComponent<Canvas>().overrideSorting = false;
@@ -171,6 +195,8 @@ public class TutorialController : MonoBehaviour
         _popMultipleHint.SetActive(false);
         _popBonusBox.SetActive(false);
         _popCellStar.SetActive(false);
+        _popSetting.SetActive(false);
+        _popObjective.SetActive(false);
         _overlay.SetActive(false);
         _textTutorial.text = "";
     }
@@ -195,9 +221,9 @@ public class TutorialController : MonoBehaviour
             {
                 ShowPopCellStarTut();
             }
-            else if (currlevel == 11)
+            else if ((currlevel == 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
             {
-
+                ShowPopSettingTut();
             }
             else if (currlevel == 12 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
@@ -215,7 +241,7 @@ public class TutorialController : MonoBehaviour
             }
             else if (currlevel == 33)
             {
-
+                BeeManager.instance.CreaditAmountBee(1);
             }
             CPlayerPrefs.SetBool("LEVEL " + currlevel, true);
         }

@@ -38,6 +38,7 @@ public class WordRegion : MonoBehaviour
     public Button btnShuffle;
     public Button btnRewardAds;
     public Button btnBonusBox;
+    public Button btnSetting;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -904,6 +905,20 @@ public class WordRegion : MonoBehaviour
         p += 3 * u * t2 * pos2;
         p += t3 * pos3;
         return p;
+    }
+
+    public void OnClickSetting()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen); 
+        TutorialController.instance.HidenPopTut();
+        if (!CPlayerPrefs.HasKey("OBJ_TUTORIAL") && Prefs.countLevelDaily >= 2)
+        {
+            DialogController.instance.ShowDialog(DialogType.Objective, DialogShow.STACK_DONT_HIDEN);
+        }
+        else
+        {
+            DialogController.instance.ShowDialog(DialogType.Pause, DialogShow.STACK_DONT_HIDEN);
+        }
     }
 
     int hintLineIndex = 0;

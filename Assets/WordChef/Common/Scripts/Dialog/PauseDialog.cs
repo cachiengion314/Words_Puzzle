@@ -46,6 +46,10 @@ public class PauseDialog : Dialog
 
     public void OnHomeClick()
     {
+        if (WordRegion.instance != null)
+            WordRegion.instance.btnRewardAds.GetComponent<RewardController>().overLay.SetActive(true);
+        DialogOverlay.instance.Overlay.enabled = false;
+        GetComponent<Image>().enabled = false;
         CUtils.LoadScene(Const.SCENE_HOME, false);
         Close();
     }
