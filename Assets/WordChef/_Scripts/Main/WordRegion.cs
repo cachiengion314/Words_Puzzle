@@ -123,6 +123,9 @@ public class WordRegion : MonoBehaviour
         //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
         //wordList = wordList.Count <= 4 ? wordList : GetExtraWordRandom(wordList);
         numWords = wordList.Count <= 4 ? wordList.Count : wordList.Count - _extraWord;
+        var wordInLevel = wordList.GetRange(0, numWords);
+        wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
+
         foreach (var word in wordList)
         {
             listWordInLevel.Add(word.ToLower());
@@ -137,10 +140,10 @@ public class WordRegion : MonoBehaviour
 
         for (int i = numRow; i <= numWords; i += numRow)
         {
-            maxCellInWidth += wordList[i - 1].Length;
+            maxCellInWidth += wordInLevel[i - 1].Length;
         }
 
-        if (numWords % numCol != 0) maxCellInWidth += wordList[numWords - 1].Length;
+        if (numWords % numCol != 0) maxCellInWidth += wordInLevel[wordInLevel.Count - 1].Length;
 
         if (numCol > 1)
         {
