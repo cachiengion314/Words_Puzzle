@@ -12,7 +12,7 @@ public class Quest : MonoBehaviour
     [Space]
     public QuestGoal goal;
     public ComboType combo;
-    [SerializeField] 
+    [SerializeField]
     private Sprite _spriteTask;
     [SerializeField]
     GameObject titleText;
@@ -108,7 +108,8 @@ public class Quest : MonoBehaviour
 
     public void OnReward()
     {
-        GetComponent<Canvas>().overrideSorting = false;
+        if (GetComponent<Canvas>() != null)
+            GetComponent<Canvas>().overrideSorting = false;
         CPlayerPrefs.SetBool("OBJ_TUTORIAL", true);
         TutorialController.instance.HidenPopTut();
         StartCoroutine(ShowEffectCollect(goal.reward));
@@ -129,7 +130,7 @@ public class Quest : MonoBehaviour
 
     private IEnumerator ShowEffectCollect(int value)
     {
-        MonoUtils.instance.ShowTotalStarCollect(value,null);
+        MonoUtils.instance.ShowTotalStarCollect(value, null);
         var result = value / 5;
         for (int i = 0; i < value; i++)
         {
