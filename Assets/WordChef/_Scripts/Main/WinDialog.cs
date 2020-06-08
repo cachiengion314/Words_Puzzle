@@ -390,8 +390,8 @@ public class WinDialog : Dialog
         {
             Prefs.countChapter += 1;
             Prefs.countChapterDaily += 1;
-            GameState.currentSubWorld = (subWorld + 1) % MainController.instance.gameData.words.Count;
-            if (subWorld == MainController.instance.gameData.words.Count - 1)
+            GameState.currentSubWorld = (subWorld + 1) % MainController.instance.gameData.words[0].subWords.Count;
+            if (subWorld == MainController.instance.gameData.words[0].subWords.Count - 1)
             {
                 GameState.currentWorld++;
             }

@@ -22,7 +22,7 @@ namespace Superpow
             //    { 7, 7, 7, 7, 7 }, // Not used yet
             //    { 7, 7, 7, 7, 7 },  // Not used yet
             //};
-
+            Debug.Log("world: " + world + " - Chapter: " + subWorld);
             return /*numLevels[world, subWorld]*/gameData.words[world].subWords[subWorld].gameLevels.Count;
         }
 

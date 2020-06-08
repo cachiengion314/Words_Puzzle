@@ -770,7 +770,7 @@ public class WordRegion : MonoBehaviour
             TutorialController.instance.ShowPopSelectedHint2Tut();
             CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
         }
-        
+
         if (selectedhintFree > 0 || ballance >= Const.HINT_TARGET_COST)
         {
             isOpenOverlay = !isOpenOverlay;
@@ -898,7 +898,7 @@ public class WordRegion : MonoBehaviour
             return;
         if (cellTarget == line.cells[0])
             cellTarget.ShowTextBee();
-        else
+        else if (!cellTarget.isShown)
             TweenControl.GetInstance().ScaleFromZero(cellTarget.iconCoin.gameObject, 0.5f);
     }
 
