@@ -755,6 +755,7 @@ public class WordRegion : MonoBehaviour
     public void OnClickHintTarget()
     {
         TutorialController.instance.HidenPopTut();
+        TutorialController.instance.ShowPopSelectedHint2Tut();
         int ballance = CurrencyController.GetBalance();
         var selectedhintFree = CurrencyController.GetSelectedHintFree();
         if (selectedhintFree > 0 || ballance >= Const.HINT_TARGET_COST)
@@ -793,6 +794,7 @@ public class WordRegion : MonoBehaviour
 
     public void OnClickCellTarget(Cell cell)
     {
+        TutorialController.instance.HidenPopTut();
         Prefs.countBooster += 1;
         Prefs.countBoosterDaily += 1;
         isOpenOverlay = false;

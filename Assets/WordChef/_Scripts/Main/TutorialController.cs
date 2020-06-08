@@ -16,6 +16,7 @@ public class TutorialController : MonoBehaviour
     public string contentHintFree;
     public string contentShuffle;
     public string contentSelectedHint;
+    public string contentSelectedHint2;
     public string contentMultipleHint;
     public string contentBonusBox;
     public string contentCellStar;
@@ -25,6 +26,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
     [SerializeField] private GameObject _popSelectedHint;
+    [SerializeField] private GameObject _popSelectedHint2;
     [SerializeField] private GameObject _popMultipleHint;
     [SerializeField] private GameObject _popBonusBox;
     [SerializeField] private GameObject _popCellStar;
@@ -36,6 +38,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
     [SerializeField] private TextMeshProUGUI _textTutorialShuffle;
     [SerializeField] private TextMeshProUGUI _textTutorialSelectedHint;
+    [SerializeField] private TextMeshProUGUI _textTutorialSelectedHint2;
     [SerializeField] private TextMeshProUGUI _textTutorialMultipleHint;
     [SerializeField] private TextMeshProUGUI _textTutorialBonusBox;
     [SerializeField] private TextMeshProUGUI _textTutorialCellStar;
@@ -130,6 +133,15 @@ public class TutorialController : MonoBehaviour
         _textTutorialSelectedHint.text = contentSelectedHint;
     }
 
+    public void ShowPopSelectedHint2Tut()
+    {
+        isShowTut = true;
+        isBlockSwipe = true;
+        _overlay.SetActive(true);
+        _popSelectedHint2.SetActive(true);
+        _textTutorialSelectedHint2.text = contentSelectedHint2;
+    }
+
     public void ShowPopMultipleTut()
     {
         if (WordRegion.instance != null)
@@ -214,6 +226,7 @@ public class TutorialController : MonoBehaviour
         _popHint.SetActive(false);
         _popShuffle.SetActive(false);
         _popSelectedHint.SetActive(false);
+        _popSelectedHint2.SetActive(false);
         _popMultipleHint.SetActive(false);
         _popBonusBox.SetActive(false);
         _popCellStar.SetActive(false);
@@ -264,7 +277,7 @@ public class TutorialController : MonoBehaviour
             }
             else if ((currlevel == 33 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
-                if (BeeManager.instance.CurrBee > 0)
+                if (BeeManager.instance.CurrBee <= 0)
                     BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();
             }
