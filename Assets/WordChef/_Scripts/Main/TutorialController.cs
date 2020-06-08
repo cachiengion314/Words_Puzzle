@@ -285,20 +285,19 @@ public class TutorialController : MonoBehaviour
             {
                 ShowPopBonusBoxTut();
             }
-            else if (currlevel == 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL"))
+            else if ((currlevel == 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditSelectedHintFree(2);
                 ShowPopSelectedHintTut();
             }
-            else if (currlevel == 30)
+            else if ((currlevel == 30 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
             else if ((currlevel == 33 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
-                if (BeeManager.instance.CurrBee <= 0)
-                    BeeManager.instance.CreaditAmountBee(3);
+                BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();
             }
             CPlayerPrefs.SetBool("LEVEL " + currlevel, true);

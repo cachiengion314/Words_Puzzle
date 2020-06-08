@@ -230,14 +230,15 @@ public class WordRegion : MonoBehaviour
                 btnHelp.gameObject.SetActive(false);
                 shadowHelp.SetActive(false);
             }
-            if (_currLevel < 23)
+            if (_currLevel < 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CurrencyController.GetSelectedHintFree() <= 0)
                 btnHintTarget.gameObject.SetActive(false);
             if (_currLevel < 12 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
                 btnBonusBox.gameObject.SetActive(false);
                 shadowBonuxbox.SetActive(false);
             }
-            //btnMultipleHint.gameObject.SetActive(false);
+            if (!CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") && CurrencyController.GetMultipleHintFree() <= 0)
+                btnMultipleHint.gameObject.SetActive(false);
             btnRewardAds.gameObject.SetActive(false);
         }
     }
@@ -761,14 +762,15 @@ public class WordRegion : MonoBehaviour
 
     public void OnClickHintTarget()
     {
+        int ballance = CurrencyController.GetBalance();
+        var selectedhintFree = CurrencyController.GetSelectedHintFree();
         TutorialController.instance.HidenPopTut();
-        if (_currLevel >= 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL"))
+        if ((_currLevel >= 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (selectedhintFree > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
         {
             TutorialController.instance.ShowPopSelectedHint2Tut();
             CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
         }
-        int ballance = CurrencyController.GetBalance();
-        var selectedhintFree = CurrencyController.GetSelectedHintFree();
+        
         if (selectedhintFree > 0 || ballance >= Const.HINT_TARGET_COST)
         {
             isOpenOverlay = !isOpenOverlay;
@@ -926,7 +928,7 @@ public class WordRegion : MonoBehaviour
 
     public void OnClickSetting()
     {
-        Sound.instance.Play(Sound.Others.PopupOpen); 
+        Sound.instance.Play(Sound.Others.PopupOpen);
         TutorialController.instance.HidenPopTut();
         if (!CPlayerPrefs.HasKey("OBJ_TUTORIAL") && Prefs.countLevelDaily >= 2)
         {
@@ -1031,6 +1033,8 @@ public class WordRegion : MonoBehaviour
         TutorialController.instance.HidenPopTut();
         int ballance = CurrencyController.GetBalance();
         var multiplehintFree = CurrencyController.GetMultipleHintFree();
+        if (multiplehintFree > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL"))
+            CPlayerPrefs.SetBool("MULTIPLE_HINT_TUTORIAL", true);
         if (ballance >= Const.HINT_RANDOM_COST || multiplehintFree > 0)
         {
             LineWord line = null;
