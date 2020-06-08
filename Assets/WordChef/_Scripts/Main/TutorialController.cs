@@ -22,6 +22,7 @@ public class TutorialController : MonoBehaviour
     public string contentCellStar;
     public string contentSetting;
     public string contentBeehive;
+    public string contentHelp;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
@@ -33,6 +34,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popSetting;
     [SerializeField] private GameObject _popObjective;
     [SerializeField] private GameObject _popBeehive;
+    [SerializeField] private GameObject _popHelp;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
@@ -44,6 +46,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialCellStar;
     [SerializeField] private TextMeshProUGUI _textTutorialSetting;
     [SerializeField] private TextMeshProUGUI _textTutorialBeehive;
+    [SerializeField] private TextMeshProUGUI _textTutorialHelp;
 
     private LineWord _lineTarget;
     private string _answerTarget;
@@ -204,6 +207,17 @@ public class TutorialController : MonoBehaviour
         HidenPopTut();
     }
 
+    public void ShowPopHelpTut()
+    {
+        if (WordRegion.instance != null)
+            WordRegion.instance.btnHelp.GetComponent<Canvas>().overrideSorting = true;
+        isShowTut = true;
+        isBlockSwipe = true;
+        _overlay.SetActive(true);
+        _popHelp.SetActive(true);
+        _textTutorialHelp.text = contentHelp;
+    }
+
     public void HidenPopTut()
     {
         if (WordRegion.instance != null)
@@ -213,6 +227,7 @@ public class TutorialController : MonoBehaviour
             WordRegion.instance.btnMultipleHint.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnHintTarget.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnSetting.GetComponent<Canvas>().overrideSorting = false;
+            WordRegion.instance.btnHelp.GetComponent<Canvas>().overrideSorting = false;
             if (LineTarget != null)
             {
                 LineTarget.GetComponent<Canvas>().overrideSorting = false;
@@ -233,6 +248,7 @@ public class TutorialController : MonoBehaviour
         _popSetting.SetActive(false);
         _popObjective.SetActive(false);
         _popBeehive.SetActive(false);
+        _popHelp.SetActive(false);
         _overlay.SetActive(false);
         _textTutorial.text = "";
     }
@@ -256,6 +272,10 @@ public class TutorialController : MonoBehaviour
             else if (currlevel == 8)
             {
                 ShowPopCellStarTut();
+            }
+            else if (currlevel == 9)
+            {
+                ShowPopHelpTut();
             }
             else if ((currlevel == 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
             {

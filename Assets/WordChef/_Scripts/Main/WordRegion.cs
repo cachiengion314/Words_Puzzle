@@ -40,6 +40,7 @@ public class WordRegion : MonoBehaviour
     public Button btnBonusBox;
     public GameObject shadowBonuxbox;
     public Button btnSetting;
+    public Button btnHelp;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
@@ -223,6 +224,8 @@ public class WordRegion : MonoBehaviour
     {
         if (_currLevel < 30)
         {
+            if (_currLevel < 9)
+                btnHelp.gameObject.SetActive(false);
             if (_currLevel < 23)
                 btnHintTarget.gameObject.SetActive(false);
             if (_currLevel < 12 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
