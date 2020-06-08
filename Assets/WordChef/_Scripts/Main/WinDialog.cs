@@ -65,12 +65,15 @@ public class WinDialog : Dialog
     [SerializeField] private SpineControl _animLevelClear;
     [SerializeField] private SpineControl _animEggLevelClear;
     [SerializeField] private SpineControl _animEggChapterClear;
+    [SerializeField] private SpineControl _animCandyChapterClear;
     [SerializeField] private string levelClearIdleAnim = "idle";
     [SerializeField] private string showLevelClearAnim = "animation";
     [SerializeField] private string eggLevelAnim = "Level Clear";
     [SerializeField] private string eggChapterAnim = "Chapter Clear";
     [SerializeField] private string eggLevelIdleAnim = "idle Level Clear";
     [SerializeField] private string eggChapterIdleAnim = "idle Chapter Clear";
+    [SerializeField] private string candyChapterAnim = "Keo truoc";
+    [SerializeField] private string candyChapterIdleAnim = "Keo truoc loop";
 
     private GameObject _fxEffect;
     private List<GameObject> _stars;
@@ -165,10 +168,13 @@ public class WinDialog : Dialog
             TweenControl.GetInstance().DelayCall(transform, 1.2f, () =>
             {
                 _animEggChapterClear.gameObject.SetActive(true);
+                _animCandyChapterClear.SetAnimation(candyChapterAnim, false, () =>
+                {
+                    _animCandyChapterClear.SetAnimation(candyChapterIdleAnim, true);
+                });
                 _animEggChapterClear.SetAnimation(eggChapterAnim, false, () =>
                 {
                     _animEggChapterClear.SetAnimation(eggChapterIdleAnim, true);
-
                 });
             });
         }
