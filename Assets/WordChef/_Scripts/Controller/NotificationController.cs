@@ -22,7 +22,10 @@ public class NotificationController : MonoBehaviour
     private const string DAILYTIME_AFTERNOON = "16:00:00";
     private const string DAILYTIME_DINNER = "18:00:00";
     private const string DAILYTIME_NIGHT = "21:00:00";
-    private string DAILYTIME_CUSTOM = "16:32:00";
+    private string DAILYTIME_CUSTOM = "12:00:00";
+
+    private int MAX_CURRENT_LOOP = 7;
+    private double secondsToHoursValue = 24 * 3600;
 
     private bool ingame = false;
     private void Start()
@@ -36,16 +39,18 @@ public class NotificationController : MonoBehaviour
         if (pause)
         {
             // OutGame();
+            //OutGameNewFunc();
         }
         else
         {
+            // InGame();
             InGameNewFunc();
         }
     }
-
     private void OnApplicationQuit()
     {
         //  OutGame();
+        // OutGameNewFunc();
     }
     private TimeSpan RunCodeAtSpecificTime(string DAILYTIME)
     {
@@ -76,13 +81,10 @@ public class NotificationController : MonoBehaviour
     }
     private void NotificationLooper(string DAILYTIME)
     {
-        int MAX_CURRENT_LOOP = 7;
-        double secondsToHoursValue = 24 * 3600;
         for (int i = 0; i < MAX_CURRENT_LOOP; i++)
         {
             PushUnlockLetterNewFunc(RunCodeAtSpecificTime(DAILYTIME).TotalSeconds + (i * secondsToHoursValue));
         }
-        NotificationCallback(RunCodeAtSpecificTime(DAILYTIME).TotalSeconds + (MAX_CURRENT_LOOP * secondsToHoursValue));
     }
     private void InGameNewFunc()
     {
@@ -91,7 +93,16 @@ public class NotificationController : MonoBehaviour
         Prefs.isNoti1Enabled = true;
         if (Prefs.isNoti1Enabled)
         {
-            NotificationLooper(DAILYTIME_LUNCH);
+            NotificationLooper(DAILYTIME_CUSTOM);
+            Prefs.isNoti1Enabled = false;
+        }
+    }
+    private void OutGameNewFunc()
+    {
+        NotificationCallback(RunCodeAtSpecificTime(DAILYTIME_CUSTOM).TotalSeconds + (MAX_CURRENT_LOOP * secondsToHoursValue));
+        if (Prefs.isNoti1Enabled)
+        {
+            NotificationLooper(DAILYTIME_CUSTOM);
             Prefs.isNoti1Enabled = false;
         }
     }
