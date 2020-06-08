@@ -245,13 +245,16 @@ public class WinDialog : Dialog
                     {
                         _starReward.SetActive(true);
                         _starReward.transform.localScale = Vector3.zero;
-                        var cvGR = _starReward.GetComponent<CanvasGroup>();
-                        tweenControl.FadeAnfa(cvGR, 1, 1.2f);
-                        tweenControl.ScaleFromZero(_starReward.gameObject, 1.5f);
-                        tweenControl.MoveRectY(_starReward.transform as RectTransform, -20, 0.6f, () =>
-                        {
-                            tweenControl.MoveRectY(_starReward.transform as RectTransform, -95, 0.4f);
+                        tweenControl.Scale(_starReward, Vector3.one * 1.2f, 0.3f, () => {
+                            tweenControl.Scale(_starReward, Vector3.one, 0.3f);
                         });
+                        //var cvGR = _starReward.GetComponent<CanvasGroup>();
+                        //tweenControl.FadeAnfa(cvGR, 1, 1.2f);
+                        //tweenControl.ScaleFromZero(_starReward.gameObject, 1.5f);
+                        //tweenControl.MoveRectY(_starReward.transform as RectTransform, -20, 0.6f, () =>
+                        //{
+                        //    tweenControl.MoveRectY(_starReward.transform as RectTransform, -95, 0.4f);
+                        //});
                     });
                 });
             }

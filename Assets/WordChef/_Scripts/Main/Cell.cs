@@ -134,6 +134,8 @@ public class Cell : MonoBehaviour
         originLetterScale = letterText.transform.localScale;
         ShowText();
         bg.color = new Color(1, 1, 1, 0.5f);
+        TweenControl.GetInstance().KillTweener(iconCoin.transform);
+        iconCoin.transform.localScale = Vector3.zero;
         OnMoveToComplete();
     }
 
