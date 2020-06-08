@@ -762,7 +762,7 @@ public class WordRegion : MonoBehaviour
     public void OnClickHintTarget()
     {
         TutorialController.instance.HidenPopTut();
-        if (!CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL"))
+        if (_currLevel >= 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL"))
         {
             TutorialController.instance.ShowPopSelectedHint2Tut();
             CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
