@@ -808,6 +808,7 @@ public class WordRegion : MonoBehaviour
     public void OnClickCellTarget(Cell cell)
     {
         TutorialController.instance.HidenPopTut();
+        MainController.instance.beeController.OnBeeButtonClick();
         Prefs.countBooster += 1;
         Prefs.countBoosterDaily += 1;
         isOpenOverlay = false;

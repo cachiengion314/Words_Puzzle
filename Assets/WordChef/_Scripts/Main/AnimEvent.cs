@@ -33,7 +33,7 @@ public class AnimEvent : MonoBehaviour
                 //});
             }
             TutorialController.instance.CheckAndShowTutorial();
-            if (CPlayerPrefs.HasKey("BEE_TUTORIAL"))
+            if (CPlayerPrefs.HasKey("BEE_TUTORIAL") && !TutorialController.instance.isShowTut)
                 MainController.instance.beeController.OnBeeButtonClick();
         }
     }

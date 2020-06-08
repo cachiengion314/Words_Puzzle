@@ -18,10 +18,10 @@ public class Compliment : MonoBehaviour
     [SerializeField] private bool _useSpine;
     [SerializeField] private SpineControl _animCompliment;
     [SerializeField] private string[] nameAnim;
-    [Space]
-    [SerializeField] private SpineControl _animTree;
-    [SerializeField] private string idleAnim = "Loop (ko anim)";
-    [SerializeField] private string playAnim = "animation";
+    //[Space]
+    //[SerializeField] private SpineControl _animTree;
+    //[SerializeField] private string idleAnim = "Loop (ko anim)";
+    //[SerializeField] private string playAnim = "animation";
 
     int idAnim;
     ParticleSystem _particle;
@@ -57,10 +57,10 @@ public class Compliment : MonoBehaviour
             Destroy(_particle.gameObject);
         _particle = Instantiate(particleSystems[type], rootParticle);
         _particle.gameObject.SetActive(false);
-        if (type > 0)
-            _animTree.SetAnimation(playAnim, false, () => {
-                _animTree.SetAnimation(idleAnim, true);
-            });
+        //if (type > 0)
+        //    _animTree.SetAnimation(playAnim, false, () => {
+        //        _animTree.SetAnimation(idleAnim, true);
+        //    });
         if (_useSpine)
         {
             _animCompliment.gameObject.SetActive(true);
@@ -102,7 +102,7 @@ public class Compliment : MonoBehaviour
 
     public void ResetAnimTree()
     {
-        _animTree.SetAnimation(idleAnim, true);
+        //_animTree.SetAnimation(idleAnim, true);
     }
 
     private void OnShowEffect(Spine.Event e)

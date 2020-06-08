@@ -15,16 +15,8 @@ public class HomeController : BaseController
     [SerializeField] private IconController _iconController;
     [SerializeField] private RectTransform _panelTopRect;
     [Space]
-    [SerializeField] private Button _btnPlay;
     [SerializeField] private GameObject _btnPlayShadow;
-    [SerializeField] private GameObject _maskShadow;
-    [SerializeField] private SpineControl _spineAnimEgg;
-    [SerializeField] private SpineControl _spineAnimShadow;
     [SerializeField] private SpineControl _spineAnimGia;
-    [SerializeField] private string _showAnim = "animation";
-    [SerializeField] private string _loopAnim = "Loop";
-    [SerializeField] private string _showShadow = "Shadow";
-    [SerializeField] private string _showShadowLoop = "Shadow Loop";
     [SerializeField] private string _showgiado = "animation2";
 
     protected override void Awake()
@@ -42,8 +34,8 @@ public class HomeController : BaseController
         sceneAnimate._btnPlay.interactable = true;
         sceneAnimate._spineAnimEgg.gameObject.SetActive(true);
         sceneAnimate._spineAnimShadow.gameObject.SetActive(true);
-        sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate._idleEgg, false);
-        sceneAnimate._spineAnimShadow.SetAnimation(sceneAnimate._idleEggShadow, false);
+        sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate.idleEgg, false);
+        sceneAnimate._spineAnimShadow.SetAnimation(sceneAnimate.idleEggShadow, false);
         PlayAnimTitle();
         //var firstLoad = CPlayerPrefs.GetBool("First_Load", false);
         //if (!firstLoad)
@@ -92,13 +84,13 @@ public class HomeController : BaseController
         sceneAnimate._spineAnimEgg.gameObject.SetActive(true);
         sceneAnimate._spineAnimShadow.gameObject.SetActive(true);
         _spineAnimGia.gameObject.SetActive(true);
-        sceneAnimate._spineAnimShadow.SetAnimation(_showShadow, false, () =>
+        sceneAnimate._spineAnimShadow.SetAnimation(sceneAnimate.showShadow, false, () =>
         {
-            sceneAnimate._spineAnimShadow.SetAnimation(_showShadowLoop, true);
+            sceneAnimate._spineAnimShadow.SetAnimation(sceneAnimate.showShadowLoop, true);
         });
-        sceneAnimate._spineAnimEgg.SetAnimation(_showAnim, false, () =>
+        sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate.showAnim, false, () =>
         {
-            sceneAnimate._spineAnimEgg.SetAnimation(_loopAnim, true);
+            sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate.loopAnim, true);
         });
         sceneAnimate._loadingScreen.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.4f);

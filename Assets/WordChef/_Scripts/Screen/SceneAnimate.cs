@@ -21,13 +21,13 @@ public class SceneAnimate : MonoBehaviour
     public GameObject _maskShadow;
     public SpineControl _spineAnimEgg;
     public SpineControl _spineAnimShadow;
-    public string _showAnim = "animation";
-    public string _loopAnim = "Loop";
-    public string _showShadow = "Shadow";
-    public string _showShadowLoop = "Shadow Loop";
-    public string _showgiado = "animation2";
-    public string _idleEgg = "Không Anim";
-    public string _idleEggShadow = "Không Anim Shadow";
+    public string showAnim = "animation";
+    public string loopAnim = "Loop";
+    public string showShadow = "Shadow";
+    public string showShadowLoop = "Shadow Loop";
+    public string showgiado = "animation2";
+    public string idleEgg = "Không Anim";
+    public string idleEggShadow = "Không Anim Shadow";
 
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
@@ -82,8 +82,8 @@ public class SceneAnimate : MonoBehaviour
     {
         if (!show)
         {
-            _spineAnimEgg.SetAnimation(_idleEgg, false);
-            _spineAnimShadow.SetAnimation(_idleEggShadow, false);
+            _spineAnimEgg.SetAnimation(idleEgg, false);
+            _spineAnimShadow.SetAnimation(idleEggShadow, false);
         }
         _spineAnimEgg.gameObject.SetActive(show);
         _spineAnimShadow.gameObject.SetActive(show);

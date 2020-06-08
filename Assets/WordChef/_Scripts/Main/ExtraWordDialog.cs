@@ -200,5 +200,6 @@ public class ExtraWordDialog : Dialog
     {
         base.Close();
         ExtraWord.instance.OnClaimed();
+        MainController.instance.beeController.OnBeeButtonClick();
     }
 }

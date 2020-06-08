@@ -11,6 +11,7 @@ public class ShareDialog : Dialog
     public void OnCloseClick()
     {
         Close();
+        MainController.instance.beeController.OnBeeButtonClick();
     }
     public void OnMessengerClick()
     {

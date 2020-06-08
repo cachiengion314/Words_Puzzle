@@ -200,11 +200,9 @@ public class TutorialController : MonoBehaviour
         _textTutorialBeehive.text = contentBeehive;
     }
 
-    public void OnClickOkBeehive()
+    public void BeeFly()
     {
-        CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
         MainController.instance.beeController.OnBeeButtonClick();
-        HidenPopTut();
     }
 
     public void ShowPopHelpTut()
@@ -220,6 +218,11 @@ public class TutorialController : MonoBehaviour
 
     public void HidenPopTut()
     {
+        if (isTutBeehive)
+        {
+            CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
+            MainController.instance.beeController.OnBeeButtonClick();
+        }
         if (WordRegion.instance != null)
         {
             WordRegion.instance.btnHint.GetComponent<Canvas>().overrideSorting = false;

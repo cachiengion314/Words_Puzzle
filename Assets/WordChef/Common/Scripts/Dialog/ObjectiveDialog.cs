@@ -59,4 +59,10 @@ public class ObjectiveDialog : Dialog
         else
             tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = _colorOff;
     }
+
+    public override void Close()
+    {
+        base.Close();
+        MainController.instance.beeController.OnBeeButtonClick();
+    }
 }
