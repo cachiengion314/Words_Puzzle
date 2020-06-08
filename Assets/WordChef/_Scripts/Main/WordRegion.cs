@@ -237,7 +237,7 @@ public class WordRegion : MonoBehaviour
                 btnBonusBox.gameObject.SetActive(false);
                 shadowBonuxbox.SetActive(false);
             }
-            btnMultipleHint.gameObject.SetActive(false);
+            //btnMultipleHint.gameObject.SetActive(false);
             btnRewardAds.gameObject.SetActive(false);
         }
     }
@@ -762,7 +762,11 @@ public class WordRegion : MonoBehaviour
     public void OnClickHintTarget()
     {
         TutorialController.instance.HidenPopTut();
-        TutorialController.instance.ShowPopSelectedHint2Tut();
+        if (!CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL"))
+        {
+            TutorialController.instance.ShowPopSelectedHint2Tut();
+            CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
+        }
         int ballance = CurrencyController.GetBalance();
         var selectedhintFree = CurrencyController.GetSelectedHintFree();
         if (selectedhintFree > 0 || ballance >= Const.HINT_TARGET_COST)

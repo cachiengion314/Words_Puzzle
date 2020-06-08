@@ -31,7 +31,7 @@ public class DialogOverlay : MonoBehaviour
 
     public void OnClickScreen()
     {
-        if (overlay.gameObject.activeInHierarchy)
+        if (overlay.gameObject.activeInHierarchy && !TutorialController.instance.isShowTut)
         {
             gameObject.GetComponent<Button>().interactable = false;
             WordRegion.instance.OnClickHintTarget();

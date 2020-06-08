@@ -231,7 +231,7 @@ public class WinDialog : Dialog
             if (button != _btnBee && button != _chickenBank)
             {
                 button.transform.localScale = Vector3.zero;
-                tweenControl.Scale(button, Vector3.one * 1.2f, 0.3f, () =>
+                tweenControl.Scale(button, Vector3.one * 1.3f, 0.3f, () =>
                 {
                     tweenControl.Scale(button, Vector3.one, 0.3f, null, EaseType.InQuad);
                 });
@@ -251,9 +251,9 @@ public class WinDialog : Dialog
                     {
                         _starReward.SetActive(true);
                         _starReward.transform.localScale = Vector3.zero;
-                        tweenControl.Scale(_starReward, Vector3.one * 1.2f, 0.3f, () => {
+                        tweenControl.Scale(_starReward, Vector3.one * 1.35f, 0.3f, () => {
                             tweenControl.Scale(_starReward, Vector3.one, 0.3f);
-                        });
+                        },EaseType.Linear);
                         //var cvGR = _starReward.GetComponent<CanvasGroup>();
                         //tweenControl.FadeAnfa(cvGR, 1, 1.2f);
                         //tweenControl.ScaleFromZero(_starReward.gameObject, 1.5f);
@@ -451,6 +451,7 @@ public class WinDialog : Dialog
 
     public void NextClick()
     {
+        //CheckUnlock();
         if (level == numLevels - 1)
         {
             var creditBalance = CPlayerPrefs.GetBool("Received", false);

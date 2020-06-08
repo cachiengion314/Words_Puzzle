@@ -285,7 +285,7 @@ public class TutorialController : MonoBehaviour
             {
                 ShowPopBonusBoxTut();
             }
-            else if (currlevel == 23)
+            else if (currlevel == 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL"))
             {
                 CurrencyController.CreditSelectedHintFree(2);
                 ShowPopSelectedHintTut();
