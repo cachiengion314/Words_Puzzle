@@ -252,7 +252,7 @@ public class WinDialog : Dialog
                         _starReward.SetActive(true);
                         _starReward.transform.localScale = Vector3.zero;
                         tweenControl.Scale(_starReward, Vector3.one * 1.35f, 0.3f, () => {
-                            tweenControl.Scale(_starReward, Vector3.one, 0.3f);
+                            tweenControl.Scale(_starReward, Vector3.one, 0.8f);
                         },EaseType.Linear);
                         //var cvGR = _starReward.GetComponent<CanvasGroup>();
                         //tweenControl.FadeAnfa(cvGR, 1, 1.2f);
