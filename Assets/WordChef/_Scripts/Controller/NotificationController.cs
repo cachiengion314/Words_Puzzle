@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 public class NotificationController : MonoBehaviour
 {
-    private const double NOTI_DELAY_1 = 1 * 24;
-    private const double NOTI_DELAY_2 = 2 * 24;
-    private const double NOTI_DELAY_3 = 4 * 24;
-    private const double NOTI_DELAY_4 = 7 * 24;
-    private const double NOTI_DELAY_5 = 10 * 24;
-    private const double NOTI_DELAY_6 = 15 * 24;
-    private const double NOTI_DELAY_7 = 30 * 24;
+    private const double NOTI_DELAY_1 = 1 * 24 * 3600;
+    private const double NOTI_DELAY_2 = 2 * 24 * 3600;
+    private const double NOTI_DELAY_3 = 4 * 24 * 3600;
+    private const double NOTI_DELAY_4 = 7 * 24 * 3600;
+    private const double NOTI_DELAY_5 = 10 * 24 * 3600;
+    private const double NOTI_DELAY_6 = 15 * 24 * 3600;
+    private const double NOTI_DELAY_7 = 30 * 24 * 3600;
 
     private const string DAILYTIME_MORNING = "6:00:00";
     private const string DAILYTIME_LUNCH = "12:00:00";
@@ -31,7 +31,7 @@ public class NotificationController : MonoBehaviour
     private void Start()
     {
         // InGame();
-        InGameNewFunc();
+        //InGamePushNotification();
     }
 
     private void OnApplicationPause(bool pause)
@@ -39,18 +39,18 @@ public class NotificationController : MonoBehaviour
         if (pause)
         {
             // OutGame();
-            //OutGameNewFunc();
+           // OutGamePushNotification();
         }
         else
         {
             // InGame();
-            InGameNewFunc();
+           // InGamePushNotification();
         }
     }
     private void OnApplicationQuit()
     {
         //  OutGame();
-        // OutGameNewFunc();
+       // OutGamePushNotification();
     }
     private TimeSpan RunCodeAtSpecificTime(string DAILYTIME)
     {
@@ -77,48 +77,38 @@ public class NotificationController : MonoBehaviour
     }
     private void NotiCallback()
     {
-        Prefs.isNoti1Enabled = true;
+    
     }
-    private void NotificationLooper(string DAILYTIME)
+    private void PushManyNotifications(string DAILYTIME)
     {
         for (int i = 0; i < MAX_CURRENT_LOOP; i++)
         {
-            PushUnlockLetterNewFunc(RunCodeAtSpecificTime(DAILYTIME).TotalSeconds + (i * secondsToHoursValue));
+            PushNotification(RunCodeAtSpecificTime(DAILYTIME).TotalSeconds + (i * secondsToHoursValue));
         }
     }
-    private void InGameNewFunc()
+    private void OutGamePushNotification()
+    {
+        ingame = false;
+
+        NotificationManager.CancelAll();
+        PushManyNotifications(DAILYTIME_CUSTOM);
+    }
+    private void InGamePushNotification()
     {
         if (ingame) return;
         ingame = true;
-        Prefs.isNoti1Enabled = true;
-        if (Prefs.isNoti1Enabled)
-        {
-            NotificationLooper(DAILYTIME_CUSTOM);
-            Prefs.isNoti1Enabled = false;
-        }
+
+        NotificationManager.CancelAll();
+        PushManyNotifications(DAILYTIME_CUSTOM);
     }
-    private void OutGameNewFunc()
-    {
-        NotificationCallback(RunCodeAtSpecificTime(DAILYTIME_CUSTOM).TotalSeconds + (MAX_CURRENT_LOOP * secondsToHoursValue));
-        if (Prefs.isNoti1Enabled)
-        {
-            NotificationLooper(DAILYTIME_CUSTOM);
-            Prefs.isNoti1Enabled = false;
-        }
-    }
-    private void PushUnlockLetterNewFunc(double delay)
+    private void PushNotification(double delay)
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
         string message = "Come and play the game testing messenger ";
         NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
 #endif
-#if UNITY_EDITOR
-        string message = "Come and play the game: ";
-        Debug.Log("Testing messenger" + message);
-#endif
     }
-
-    // //////////////////////////////////////////////////////////////// Old func
+    /////////////////////////////////////////////////////////////////// Old func
     private void InGame()
     {
         if (ingame) return;
