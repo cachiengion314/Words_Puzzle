@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Superpow;
 
-public class ButtonOpenDialog : MyButton {
+public class ButtonOpenDialog : MyButton
+{
 
+    public bool isObjectives;
     public string contentTitle;
     public string contentMesage;
     public DialogType dialogType;
@@ -12,6 +15,20 @@ public class ButtonOpenDialog : MyButton {
     {
         ConfigController.instance.isShopHint = false;
         base.OnButtonClick();
-        DialogController.instance.ShowDialog(dialogType, dialogShow, contentTitle, contentMesage);
+        if (isObjectives)
+            CheckShowObjectivesDialog();
+        else
+            DialogController.instance.ShowDialog(dialogType, dialogShow, contentTitle, contentMesage);
+    }
+
+    private void CheckShowObjectivesDialog()
+    {
+        var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
+        var currlevel = (GameState.currentLevel + numlevels * (GameState.currentSubWorld + MainController.instance.gameData.words.Count * GameState.currentWorld)) + 1;
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        if ((currlevel < 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily < 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
+            DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, contentTitle, contentMesage);
+        else
+            DialogController.instance.ShowDialog(DialogType.Objective, DialogShow.STACK_DONT_HIDEN);
     }
 }
