@@ -188,6 +188,8 @@ public class TutorialController : MonoBehaviour
         isShowTut = true;
         isBlockSwipe = true;
         _overlay.SetActive(true);
+        var canvasOverlay = _overlay.GetComponent<Canvas>();
+        canvasOverlay.sortingLayerName = "UI2";
         _popObjective.SetActive(true);
     }
 
@@ -238,7 +240,9 @@ public class TutorialController : MonoBehaviour
                 LineTarget.lineTutorialBG.gameObject.SetActive(false);
             }
         }
-        _overlay.GetComponent<Canvas>().sortingOrder = 3;
+        var canvasOverlay = _overlay.GetComponent<Canvas>();
+        canvasOverlay.sortingLayerName = "Default";
+        canvasOverlay.sortingOrder = 3;
         isShowTut = false;
         isBlockSwipe = false;
         isTutBeehive = false;

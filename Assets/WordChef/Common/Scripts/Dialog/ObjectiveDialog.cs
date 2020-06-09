@@ -63,6 +63,7 @@ public class ObjectiveDialog : Dialog
     public override void Close()
     {
         base.Close();
-        MainController.instance.beeController.OnBeeButtonClick();
+        if (MainController.instance != null)
+            MainController.instance.beeController.OnBeeButtonClick();
     }
 }
