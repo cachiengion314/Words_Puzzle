@@ -76,6 +76,7 @@ public class TutorialController : MonoBehaviour
     {
         isShowTut = true;
         _overlay.SetActive(true);
+        _overlay.GetComponent<Canvas>().sortingOrder = 0;
         _popText.SetActive(true);
         foreach (var line in WordRegion.instance.Lines)
         {
@@ -237,6 +238,7 @@ public class TutorialController : MonoBehaviour
                 LineTarget.lineTutorialBG.gameObject.SetActive(false);
             }
         }
+        _overlay.GetComponent<Canvas>().sortingOrder = 3;
         isShowTut = false;
         isBlockSwipe = false;
         isTutBeehive = false;
