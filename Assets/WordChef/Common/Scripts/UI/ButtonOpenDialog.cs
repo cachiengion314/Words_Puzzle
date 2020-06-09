@@ -4,6 +4,7 @@ using System.Collections;
 public class ButtonOpenDialog : MyButton {
 
     public string contentTitle;
+    public string contentMesage;
     public DialogType dialogType;
     public DialogShow dialogShow;
 
@@ -11,6 +12,6 @@ public class ButtonOpenDialog : MyButton {
     {
         ConfigController.instance.isShopHint = false;
         base.OnButtonClick();
-        DialogController.instance.ShowDialog(dialogType, dialogShow, contentTitle);
+        DialogController.instance.ShowDialog(dialogType, dialogShow, contentTitle, contentMesage);
     }
 }

@@ -76,12 +76,14 @@ public class DialogController : MonoBehaviour
         ShowDialog((DialogType)type, DialogShow.DONT_SHOW_IF_OTHERS_SHOWING);
     }
 
-    public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT, string contentTitle = null)
+    public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT, string contentTitle = null, string contentMessage = null)
     {
         Dialog dialog = GetDialog(type);
         ShowDialog(dialog, option);
         if (contentTitle != null || contentTitle != "")
             dialog.SetTitleContent(contentTitle);
+        if (contentMessage != null || contentMessage != "")
+            dialog.SetMessageContent(contentMessage);
     }
 
     public void ShowYesNoDialog(string title, string content, Action onYesListener, Action onNoListenter, DialogShow option = DialogShow.REPLACE_CURRENT)

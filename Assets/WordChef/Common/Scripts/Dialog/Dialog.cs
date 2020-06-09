@@ -47,6 +47,11 @@ public class Dialog : MonoBehaviour
         if (title != null) title.SetText(content);
     }
 
+    public void SetMessageContent(string content)
+    {
+        if (message != null) message.SetText(content);
+    }
+
     public virtual void ShowNoAnim()
     {
         if (gameObject != null)
