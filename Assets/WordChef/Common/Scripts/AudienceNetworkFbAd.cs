@@ -16,10 +16,10 @@ public class AudienceNetworkFbAd : MonoBehaviour
     // UI elements in scene
     public Text statusLabel;
 
-    private void Awake()
-    {
-        AudienceNetworkAds.Initialize();
-    }
+    //private void Awake()
+    //{
+    //    AudienceNetworkAds.Initialize();
+    //}
 
     // Load button
     public void LoadRewardedVideo()
