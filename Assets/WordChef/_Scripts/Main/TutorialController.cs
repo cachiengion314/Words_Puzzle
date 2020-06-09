@@ -274,6 +274,11 @@ public class TutorialController : MonoBehaviour
                 CurrencyController.CreditHintFree(2);
                 ShowPopHintFreeTut();
             }
+            else if ((currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            {
+                BeeManager.instance.CreaditAmountBee(3);
+                ShowPopBeeTut();
+            }
             else if (currlevel == 4)
             {
                 ShowPopShuffleTut();
@@ -304,11 +309,7 @@ public class TutorialController : MonoBehaviour
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
-            else if ((currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
-            {
-                BeeManager.instance.CreaditAmountBee(3);
-                ShowPopBeeTut();
-            }
+            
             CPlayerPrefs.SetBool("LEVEL " + currlevel, true);
         }
     }
