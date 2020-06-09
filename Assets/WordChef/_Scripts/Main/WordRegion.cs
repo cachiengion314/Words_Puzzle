@@ -223,16 +223,16 @@ public class WordRegion : MonoBehaviour
 
     private void CheckShowButton(bool isTut)
     {
-        if (_currLevel < 30)
+        if (_currLevel < 10)
         {
-            if (_currLevel < 9)
+            if (_currLevel < 6)
             {
                 btnHelp.gameObject.SetActive(false);
                 shadowHelp.SetActive(false);
             }
-            if (_currLevel < 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CurrencyController.GetSelectedHintFree() <= 0)
+            if (_currLevel < 9 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CurrencyController.GetSelectedHintFree() <= 0)
                 btnHintTarget.gameObject.SetActive(false);
-            if (_currLevel < 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            if (_currLevel < 7 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
                 btnBonusBox.gameObject.SetActive(false);
                 shadowBonuxbox.SetActive(false);

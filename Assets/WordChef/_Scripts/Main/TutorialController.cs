@@ -274,37 +274,37 @@ public class TutorialController : MonoBehaviour
                 CurrencyController.CreditHintFree(2);
                 ShowPopHintFreeTut();
             }
-            else if (currlevel == 6)
+            else if (currlevel == 4)
             {
                 ShowPopShuffleTut();
             }
-            else if (currlevel == 8)
+            else if (currlevel == 5)
             {
                 ShowPopCellStarTut();
             }
-            else if (currlevel == 9)
+            else if (currlevel == 6)
             {
                 ShowPopHelpTut();
             }
-            else if (currlevel == 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            else if (currlevel == 7 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
                 ShowPopBonusBoxTut();
             }
-            else if ((currlevel == 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
+            else if ((currlevel == 8 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
             {
                 ShowPopSettingTut();
             }
-            else if ((currlevel == 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
+            else if ((currlevel == 9 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditSelectedHintFree(2);
                 ShowPopSelectedHintTut();
             }
-            else if ((currlevel == 30 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
+            else if ((currlevel == 10 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
-            else if ((currlevel == 33 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            else if ((currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
                 BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();

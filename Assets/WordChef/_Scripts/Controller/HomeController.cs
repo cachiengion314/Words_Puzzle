@@ -29,13 +29,13 @@ public class HomeController : BaseController
     {
         base.Start();
         CUtils.CloseBannerAd();
-        ShowChickenBank();
         var sceneAnimate = SceneAnimate.Instance;
         sceneAnimate._btnPlay.interactable = true;
         sceneAnimate._spineAnimEgg.gameObject.SetActive(true);
         sceneAnimate._spineAnimShadow.gameObject.SetActive(true);
         sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate.idleEgg, false);
         sceneAnimate._spineAnimShadow.SetAnimation(sceneAnimate.idleEggShadow, false);
+        ShowChickenBank();
         PlayAnimTitle();
         //var firstLoad = CPlayerPrefs.GetBool("First_Load", false);
         //if (!firstLoad)
