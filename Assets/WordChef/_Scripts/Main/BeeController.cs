@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Superpow;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -25,6 +26,8 @@ public class BeeController : MonoBehaviour
 
     public void OnBeeButtonClick()
     {
+        var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
+        var currlevel = (GameState.currentLevel + numlevels * (GameState.currentSubWorld + MainController.instance.gameData.words.Count * GameState.currentWorld)) + 1;
         var isUsed = WordRegion.instance.Lines.Any(line => line.usedBee);
         var isCellClear = WordRegion.instance.Lines.All(line => line.cells.All(cell => !cell.isShown));
         if (BeeManager.instance.CurrBee > 0 && !isUsed && isCellClear && Prefs.IsSaveLevelProgress())
@@ -32,12 +35,19 @@ public class BeeController : MonoBehaviour
             MainController.instance.isBeePlay = true;
             if (WordRegion.instance.IsUseBee())
                 return;
-            WordRegion.instance.BeeClick();
+            if ((currlevel == 5 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            {
+                MainController.instance.isBeePlay = false;
+                TutorialController.instance.CheckAndShowTutorial();
+            }
+            else
+                WordRegion.instance.BeeClick();
             UpdateAmountBee();
         }
         else
         {
             MainController.instance.isBeePlay = false;
+            TutorialController.instance.CheckAndShowTutorial();
             //DialogController.instance.ShowDialog(DialogType.Bee);
         }
     }

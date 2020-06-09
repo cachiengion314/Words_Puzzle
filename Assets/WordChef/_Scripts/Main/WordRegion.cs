@@ -212,7 +212,7 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
 
-        if (_currLevel == 8)
+        if (_currLevel == 5)
         {
             foreach (var cellTut in lines[lines.Count - 1].cells)
             {
@@ -808,7 +808,6 @@ public class WordRegion : MonoBehaviour
     public void OnClickCellTarget(Cell cell)
     {
         TutorialController.instance.HidenPopTut();
-        MainController.instance.beeController.OnBeeButtonClick();
         Prefs.countBooster += 1;
         Prefs.countBoosterDaily += 1;
         isOpenOverlay = false;
@@ -852,6 +851,7 @@ public class WordRegion : MonoBehaviour
                      Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                      MainController.instance.isBeePlay = false;
                      BlockScreen.instance.Block(false);
+                     TutorialController.instance.CheckAndShowTutorial();
                  });
                 count += 1;
             }
