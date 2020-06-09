@@ -67,8 +67,7 @@ public class HomeController : BaseController
 
     public void PlayAnimTitle()
     {
-        SceneAnimate.Instance.btnTest.SetActive(true);
-        Debug.Log("Play Animation Man Home");
+        //SceneAnimate.Instance.btnTest.SetActive(true);
         //animatorTitle.enabled = true;
         //animatorTitle.SetBool("Play", true);
         SceneAnimate.Instance._btnPlay.gameObject.SetActive(false);
@@ -93,6 +92,7 @@ public class HomeController : BaseController
             sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate.loopAnim, true);
         });
         sceneAnimate._loadingScreen.gameObject.SetActive(false);
+        Debug.Log("Play Animation Man Home");
         yield return new WaitForSeconds(0.4f);
         sceneAnimate._btnPlay.gameObject.SetActive(true);
         sceneAnimate._maskShadow.gameObject.SetActive(true);
