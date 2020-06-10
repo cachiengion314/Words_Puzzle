@@ -58,7 +58,7 @@ public class Quest : MonoBehaviour
     public void Refresh()
     {
         ClearTaskDailyByKey();
-        ClearTask(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest);
+        ClearTask((taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_") + idQuest);
         ShowQuestDaily();
     }
 
@@ -67,7 +67,7 @@ public class Quest : MonoBehaviour
         goal.amountResetup = goal.requiredAmount * 2;
         goal.requiredAmount = goal.amountResetup;
         ClearTaskAchievementByKey();
-        ClearTask(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest);
+        ClearTask((taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_") + idQuest);
         ShowQuestAchie();
         ObjectiveManager.instance.ResetupAchie(idQuest, goal.requiredAmount);
     }
@@ -97,7 +97,7 @@ public class Quest : MonoBehaviour
         _btnReward.gameObject.SetActive(show);
         _iconComplete.gameObject.SetActive(false);
         _btnGo.gameObject.SetActive(MainController.instance != null ? false : true);
-        var iscompleted = CPlayerPrefs.GetBool(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest, false);
+        var iscompleted = CPlayerPrefs.GetBool((taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_") + idQuest, false);
         if (iscompleted)
         {
             _btnReward.gameObject.SetActive(false);
@@ -119,7 +119,7 @@ public class Quest : MonoBehaviour
         //CurrencyController.CreditBalance(goal.reward);
         _btnReward.gameObject.SetActive(false);
         _iconComplete.gameObject.SetActive(true);
-        CPlayerPrefs.SetBool(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest, true);
+        CPlayerPrefs.SetBool((taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_") + idQuest, true);
         switch (taskType)
         {
             case TaskType.DAILY:
