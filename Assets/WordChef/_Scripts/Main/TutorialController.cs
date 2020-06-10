@@ -335,6 +335,7 @@ public class TutorialController : MonoBehaviour
             }
             else if (currlevel >= 7 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
+                CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
                 ShowPopBonusBoxTut();
             }
 
