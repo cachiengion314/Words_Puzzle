@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class MailDialog : Dialog
 {
-
+    public RectTransform ingameNotifyBttPrefb;
+    public void CloseMailDialog()
+    {
+        Close();
+    }
 }

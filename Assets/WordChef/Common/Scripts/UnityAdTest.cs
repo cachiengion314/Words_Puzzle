@@ -53,7 +53,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         if (showResult == ShowResult.Finished)
         {
             // Reward the user for watching the ad to completion.
-
+            AdsManager.instance.onAdsRewarded?.Invoke();
             Debug.Log("You get a Reward!!!");
         }
         else if (showResult == ShowResult.Skipped)
@@ -87,7 +87,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     public void OnUnityAdsDidStart(string placementId)
     {
         // Optional actions to take when the end-users triggers an ad.
-        AdsManager.instance.onAdsRewarded?.Invoke();
+     
     }
 
     /// <summary>

@@ -115,7 +115,6 @@ public class RewardVideoController : MonoBehaviour
 #endif
     }
 
-
     private void OnApplicationPause(bool pause)
     {
         if (!pause)

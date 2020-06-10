@@ -14,7 +14,7 @@ public class FeedbackDialog : Dialog
     private string subject = "SubjectName";
     private string body = "Body of the email";
 
-    private string password = "songngu31419932016"; // YourGmailAccountPassword
+    private string password = "null"; // YourGmailAccountPassword
 
     public void OnContactUsClick()
     {

@@ -24,11 +24,16 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         AudienceNetworkAds.Initialize();
 #endif
     }
-
+    private void Start()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        LoadRewardedVideo();
+#endif
+    }
     // Load button
     public void LoadRewardedVideo()
     {
-        statusLabel.text = "Loading rewardedVideo ad...";
+        //statusLabel.text = "Loading rewardedVideo ad...";
 
         // Create the rewarded video unit with a placement ID (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
@@ -56,12 +61,12 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             isLoaded = true;
             didClose = false;
             string isAdValid = rewardedVideoAd.IsValid() ? "valid" : "invalid";
-            statusLabel.text = "Ad loaded and is " + isAdValid + ". Click show to present!";
+            //statusLabel.text = "Ad loaded and is " + isAdValid + ". Click show to present!";
         };
         rewardedVideoAd.RewardedVideoAdDidFailWithError = delegate (string error)
         {
             Debug.Log("RewardedVideo ad failed to load with error: " + error);
-            statusLabel.text = "RewardedVideo ad failed to load. Check console for details.";
+            //statusLabel.text = "RewardedVideo ad failed to load. Check console for details.";
         };
         rewardedVideoAd.RewardedVideoAdWillLogImpression = delegate ()
         {
