@@ -188,7 +188,8 @@ public class TutorialController : MonoBehaviour
 
         foreach (var cellTut in _lineTarget.cells)
         {
-            cellTut.iconCoin.transform.localScale = Vector3.one;
+            if (!cellTut.isShown)
+                cellTut.iconCoin.transform.localScale = Vector3.one;
         }
     }
 
