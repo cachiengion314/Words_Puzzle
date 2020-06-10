@@ -28,7 +28,7 @@ public class ButtonOpenDialog : MyButton
         var currlevel = (GameState.currentLevel + numlevels * (GameState.currentSubWorld + gameData.words.Count * GameState.currentWorld)) + 1;
         Sound.instance.Play(Sound.Others.PopupOpen);
         if ((currlevel < 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily < 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
-            DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, contentTitle, contentMesage);
+            DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, contentTitle, contentMesage.Replace("\\n","\n"));
         else
             DialogController.instance.ShowDialog(DialogType.Objective, DialogShow.STACK_DONT_HIDEN);
     }
