@@ -160,15 +160,20 @@ public class LineWord : MonoBehaviour
             if (line != this)
             {
                 _isResetDataAnswer = false;
-                line.answers.Remove(answer);
-                if (!line.isShown && line.cells.Count == answer.Length)
+                if (line.answer != "" && !line.isShown && line.cells.Count == answer.Length)
                 {
                     foreach (var an in line.answers)
                     {
-                        if (an != answer && !_isResetDataAnswer)
-                            ResetAnswer(line, an);
+                        if (an != answer)
+                        {
+                            if (!_isResetDataAnswer)
+                                ResetAnswer(line, an);
+                            else
+                                break;
+                        }
                     }
                 }
+                line.answers.Remove(answer);
             }
         }
         WordRegion.instance.listWordCorrect.Add(answer.ToLower());
