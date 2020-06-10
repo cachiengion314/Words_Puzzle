@@ -211,33 +211,29 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
-
-        if (_currLevel == 5)
-        {
-            foreach (var cellTut in lines[lines.Count - 1].cells)
-            {
-                cellTut.iconCoin.transform.localScale = Vector3.one;
-            }
-        }
     }
 
     private void CheckShowButton(bool isTut)
     {
         if (_currLevel < 10)
         {
-            if (_currLevel < 6)
+            if (!CPlayerPrefs.HasKey("HINT_TUTORIAL"))
+                btnHint.gameObject.SetActive(false);
+            if (!CPlayerPrefs.HasKey("SHUFFLE_TUTORIAL"))
+                btnShuffle.gameObject.SetActive(false);
+            if (!CPlayerPrefs.HasKey("HELP_TUTORIAL"))
             {
                 btnHelp.gameObject.SetActive(false);
                 shadowHelp.SetActive(false);
             }
-            if (_currLevel < 9 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CurrencyController.GetSelectedHintFree() <= 0)
+            if (!CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL"))
                 btnHintTarget.gameObject.SetActive(false);
-            if (_currLevel < 7 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            if (!CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
                 btnBonusBox.gameObject.SetActive(false);
                 shadowBonuxbox.SetActive(false);
             }
-            if (!CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") && CurrencyController.GetMultipleHintFree() <= 0)
+            if (!CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL"))
                 btnMultipleHint.gameObject.SetActive(false);
             btnRewardAds.gameObject.SetActive(false);
         }
