@@ -2,7 +2,7 @@
 using System;
 using GoogleMobileAds.Api;
 
-public class AdmobController : MonoBehaviour
+public class AdmobController : MonoBehaviour, IAds
 {
     private BannerView bannerView;
     public InterstitialAd interstitial;
@@ -171,7 +171,7 @@ public class AdmobController : MonoBehaviour
         else
         {
             //MonoBehaviour.print("Reward based video ad is not ready yet");
-
+           
             CUtils.CheckConnection(this, (result) =>
             {
                 if (result == 0)
@@ -190,7 +190,6 @@ public class AdmobController : MonoBehaviour
             });
         }
     }
-
     #region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
@@ -219,6 +218,7 @@ public class AdmobController : MonoBehaviour
     }
 
     #endregion
+
 
     #region Interstitial callback handlers
 
@@ -291,6 +291,47 @@ public class AdmobController : MonoBehaviour
     {
         MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
     }
-
     #endregion
+
+    /// <summary>
+    /// Implement Interface
+    /// </summary>
+    public void LoadVideoAds()
+    {
+
+    }
+
+    public void ShowVideoAds()
+    {
+        if (this.rewardBasedVideo.IsLoaded())
+        {
+            this.rewardBasedVideo.Show();
+        }
+        else
+        {
+            //MonoBehaviour.print("Reward based video ad is not ready yet");
+
+            CUtils.CheckConnection(this, (result) =>
+            {
+                if (result == 0)
+                {
+                    RequestRewardBasedVideo();
+                }
+                else
+                {
+                    Toast.instance.ShowMessage("No Internet Connection");
+                }
+            });
+        }
+    }
+
+    public void ShowBannerAds()
+    {
+
+    }
+
+    public void ShowInterstitialAds()
+    {
+
+    }
 }

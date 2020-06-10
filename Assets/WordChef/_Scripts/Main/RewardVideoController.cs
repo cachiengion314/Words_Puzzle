@@ -1,4 +1,5 @@
-﻿using GoogleMobileAds.Api;
+﻿using AudienceNetwork;
+using GoogleMobileAds.Api;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ public class RewardVideoController : MonoBehaviour
     }
 
     private void AddEvents()
-    {
+    {        
         if (AdmobController.instance.rewardBasedVideo != null)
         {
             AdmobController.instance.rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
@@ -51,9 +52,8 @@ public class RewardVideoController : MonoBehaviour
         else
         {
             Debug.Log("Video reward null");
-        }
+        }        
     }
-
     private void IUpdate()
     {
         content.SetActive(IsAvailableToShow());

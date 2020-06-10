@@ -1,23 +1,32 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
-public class UnityAdTest : MonoBehaviour, IUnityAdsListener
+public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
 {
+    public static UnityAdTest instance;
+    public Action UpdateProgress;
     private string androidGameId = "3645143"; // this string is a constant value and cannot be changed
     private bool testMode = true;
 
     private string myPlacementId = "rewardedVideo"; // this string is a constant value and cannot be changed
 
     public string bannerPlacementId = "bannerPlacement"; // this string is a constant value and cannot be changed
+
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
+        //////////////////////////////////////////////
         Advertisement.Initialize(androidGameId, testMode);
-
         Advertisement.AddListener(this);
 
-        StartCoroutine(ShowBannerWhenReady());
+        //StartCoroutine(ShowBannerWhenReady());
     }
+
     private IEnumerator ShowBannerWhenReady()
     {
         while (!Advertisement.IsReady(bannerPlacementId))
@@ -37,7 +46,6 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener
         Advertisement.Show(myPlacementId);
     }
 
-
     // Implement IUnityAdsListener interface methods:
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
@@ -45,6 +53,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener
         if (showResult == ShowResult.Finished)
         {
             // Reward the user for watching the ad to completion.
+
             Debug.Log("You get a Reward!!!");
         }
         else if (showResult == ShowResult.Skipped)
@@ -54,6 +63,9 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener
         }
         else if (showResult == ShowResult.Failed)
         {
+            AdsManager.instance._adsController = AdmobController.instance;
+            AdsManager.instance.ShowVideoAds();
+
             Debug.LogWarning("The ad did not finish due to an error.");
         }
     }
@@ -75,6 +87,30 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener
     public void OnUnityAdsDidStart(string placementId)
     {
         // Optional actions to take when the end-users triggers an ad.
+        AdsManager.instance.onAdsRewarded?.Invoke();
+    }
+
+    /// <summary>
+    /// //////////////////// Implement interface
+    /// </summary>
+    public void ShowVideoAds()
+    {
+        Advertisement.Show(myPlacementId);
+    }
+
+    public void ShowBannerAds()
+    {
+
+    }
+
+    public void ShowInterstitialAds()
+    {
+
+    }
+
+    public void LoadVideoAds()
+    {
+
     }
 }
 

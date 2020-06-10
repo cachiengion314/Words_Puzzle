@@ -68,11 +68,16 @@ public class DailyGiftsDialog : Dialog
     private void InitProgress()
     {
         _timeTarget = _valueTimeGift * 3600;
+
         _rewardedVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardedVideoControl == null)
             _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
         _rewardedVideoControl.onRewardedCallback += OnRewarded;
+
+        AdsManager.instance.onAdsRewarded -= OnRewarded;
+        AdsManager.instance.onAdsRewarded += OnRewarded;
+
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -171,20 +176,22 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickReward()
     {
-        AdmobController.instance.ShowRewardBasedVideo();
+        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
+        AdsManager.instance.ShowVideoAds();
+
+        // AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
         OnRewarded();
 #endif
     }
-
     void OnRewarded()
     {
         _btnWatch.interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             _currProgressValue += 1;
-            Debug.Log("fdsadfsfds: " + this.name);
+            Debug.Log("OnRewarded invoke: " + this.name);
             CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
             UpdateProgress();
             _btnWatch.interactable = true;
@@ -357,7 +364,9 @@ public class DailyGiftsDialog : Dialog
     {
         if (_fxEffect != null)
             Destroy(_fxEffect);
+
         _rewardedVideoControl.onRewardedCallback -= OnRewarded;
+        AdsManager.instance.onAdsRewarded -= OnRewarded;
     }
 
     //TEST

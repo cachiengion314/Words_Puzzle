@@ -98,7 +98,10 @@ public class WinDialog : Dialog
         _rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
         if (_rewardControl == null)
             _rewardControl = Instantiate(_rewardVideoPfb, transform);
+
         _rewardControl.onRewardedCallback -= OnCompleteReward;
+        AdsManager.instance.onAdsRewarded -= OnCompleteReward;
+
         isSound = false;
     }
 
@@ -251,9 +254,10 @@ public class WinDialog : Dialog
                     {
                         _starReward.SetActive(true);
                         _starReward.transform.localScale = Vector3.zero;
-                        tweenControl.Scale(_starReward, Vector3.one * 1.35f, 0.3f, () => {
+                        tweenControl.Scale(_starReward, Vector3.one * 1.35f, 0.3f, () =>
+                        {
                             tweenControl.Scale(_starReward, Vector3.one, 0.8f);
-                        },EaseType.Linear);
+                        }, EaseType.Linear);
                         //var cvGR = _starReward.GetComponent<CanvasGroup>();
                         //tweenControl.FadeAnfa(cvGR, 1, 1.2f);
                         //tweenControl.ScaleFromZero(_starReward.gameObject, 1.5f);
@@ -527,10 +531,15 @@ public class WinDialog : Dialog
         _isWatchAds = true;
         _nextButton.interactable = false;
         _rewardControl.onRewardedCallback += OnCompleteReward;
+        AdsManager.instance.onAdsRewarded += OnCompleteReward;
+
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
-            AdmobController.instance.ShowRewardBasedVideo();
+            //AdmobController.instance.ShowRewardBasedVideo();
+            AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
+            AdsManager.instance.ShowVideoAds();
+
 #if UNITY_EDITOR
             OnCompleteReward();
 #endif
@@ -556,6 +565,9 @@ public class WinDialog : Dialog
     void OnCompleteReward()
     {
         _rewardControl.onRewardedCallback -= OnCompleteReward;
+        AdsManager.instance.onAdsRewarded -= OnCompleteReward;
+        Debug.Log("OnCompleteReward invoked");
+
         //RewardButton.GetComponent<Button>().interactable = false;
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         txtReward.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;

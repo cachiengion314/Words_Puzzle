@@ -15,18 +15,20 @@ public class AdsManager : MonoBehaviour
     public Action onAdsRewarded;
     public Action onAdsStarted;
 
-    [SerializeField] private AdsController _adsController;
+    public IAds _adsController;
 
     void Awake()
     {
         if (instance == null)
             instance = this;
-        if (_adsController == null)
-            _adsController = GetComponent<AdsController>();
     }
 
 
     #region Show Ads Handle
+    public void LoadVideoAds()
+    {
+        _adsController.LoadVideoAds();
+    }
     public void ShowVideoAds()
     {
         _adsController.ShowVideoAds();
