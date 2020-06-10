@@ -58,12 +58,8 @@ public class PauseDialog : Dialog
 
     public void OnHomeClick()
     {
-        if (WordRegion.instance != null)
-            WordRegion.instance.btnRewardAds.GetComponent<RewardController>().overLay.SetActive(true);
-        DialogOverlay.instance.Overlay.enabled = false;
-        GetComponent<Image>().enabled = false;
         CUtils.LoadScene(Const.SCENE_HOME, false);
-        Close();
+        //Close();
     }
 
     public void OnShareClick()
@@ -81,5 +77,9 @@ public class PauseDialog : Dialog
         Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.HowtoPlay);
     }
-   
+
+    void OnDestroy()
+    {
+        Close();
+    }
 }
