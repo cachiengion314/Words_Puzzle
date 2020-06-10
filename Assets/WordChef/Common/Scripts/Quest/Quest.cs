@@ -8,6 +8,7 @@ using Utilities.Components;
 [System.Serializable]
 public class Quest : MonoBehaviour
 {
+    public int idQuest;
     public TaskType taskType;
     [Space]
     public QuestGoal goal;
@@ -57,7 +58,7 @@ public class Quest : MonoBehaviour
     public void Refresh()
     {
         ClearTaskDailyByKey();
-        ClearTask("Completed" + gameObject.name);
+        ClearTask(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest);
         ShowQuestDaily();
     }
 
@@ -66,8 +67,9 @@ public class Quest : MonoBehaviour
         goal.amountResetup = goal.requiredAmount * 2;
         goal.requiredAmount = goal.amountResetup;
         ClearTaskAchievementByKey();
-        ClearTask("Completed" + gameObject.name);
+        ClearTask(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest);
         ShowQuestAchie();
+        ObjectiveManager.instance.ResetupAchie(idQuest, goal.requiredAmount);
     }
 
     void Update()
@@ -95,7 +97,7 @@ public class Quest : MonoBehaviour
         _btnReward.gameObject.SetActive(show);
         _iconComplete.gameObject.SetActive(false);
         _btnGo.gameObject.SetActive(MainController.instance != null ? false : true);
-        var iscompleted = CPlayerPrefs.GetBool("Completed" + gameObject.name, false);
+        var iscompleted = CPlayerPrefs.GetBool(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest, false);
         if (iscompleted)
         {
             _btnReward.gameObject.SetActive(false);
@@ -117,7 +119,7 @@ public class Quest : MonoBehaviour
         //CurrencyController.CreditBalance(goal.reward);
         _btnReward.gameObject.SetActive(false);
         _iconComplete.gameObject.SetActive(true);
-        CPlayerPrefs.SetBool("Completed" + gameObject.name, true);
+        CPlayerPrefs.SetBool(taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_" + idQuest, true);
         switch (taskType)
         {
             case TaskType.DAILY:
@@ -127,6 +129,7 @@ public class Quest : MonoBehaviour
                 ResetupAchie();
                 break;
         }
+        ObjectiveManager.instance.CheckTaskComplete();
     }
 
     private IEnumerator ShowEffectCollect(int value)

@@ -752,6 +752,7 @@ public class WordRegion : MonoBehaviour
                 });
             }
         }
+        ObjectiveManager.instance.CheckTaskComplete();
     }
 
     public void OnClickHintTarget()
