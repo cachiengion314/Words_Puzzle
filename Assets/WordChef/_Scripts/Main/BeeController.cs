@@ -35,7 +35,7 @@ public class BeeController : MonoBehaviour
             MainController.instance.isBeePlay = true;
             if (WordRegion.instance.IsUseBee())
                 return;
-            if ((currlevel == 5 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            if ((currlevel == 5 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (currlevel < 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
                 MainController.instance.isBeePlay = false;
                 TutorialController.instance.CheckAndShowTutorial();

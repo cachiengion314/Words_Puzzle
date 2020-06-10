@@ -269,15 +269,15 @@ public class TutorialController : MonoBehaviour
 
         if (!CPlayerPrefs.HasKey("LEVEL " + currlevel))
         {
-            if (currlevel == 2)
-            {
-                CurrencyController.CreditHintFree(2);
-                ShowPopHintFreeTut();
-            }
-            else if ((currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            if ((currlevel == 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
                 BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();
+            }
+            else if (currlevel == 2)
+            {
+                CurrencyController.CreditHintFree(2);
+                ShowPopHintFreeTut();
             }
             else if (currlevel == 4)
             {
