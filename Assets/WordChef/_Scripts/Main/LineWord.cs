@@ -160,7 +160,7 @@ public class LineWord : MonoBehaviour
             if (line != this)
             {
                 _isResetDataAnswer = false;
-                if (line.answer != "" && !line.isShown && line.cells.Count == answer.Length)
+                if (!line.isShown && line.cells.Count == answer.Length)
                 {
                     foreach (var an in line.answers)
                     {
@@ -186,9 +186,16 @@ public class LineWord : MonoBehaviour
         for (int i = 0; i < ansRight.Length; i++)
         {
             var ans = ansRight[i];
+            var countAnsRight = line.answers.FindAll(a => a[i].ToString() == ans.ToString());
             if (line.cells[i].isShown && line.cells[i].letter == ans.ToString())
             {
                 line.SetDataLetter(ansRight);
+                if (countAnsRight.Count < 2)
+                {
+                    foreach (var li in WordRegion.instance.Lines)
+                        if (li != line)
+                            li.answers.Remove(ansRight);
+                }
                 _isResetDataAnswer = true;
                 break;
             }
