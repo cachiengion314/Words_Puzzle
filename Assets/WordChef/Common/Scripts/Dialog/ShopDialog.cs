@@ -202,7 +202,15 @@ public class ShopDialog : Dialog
         if (item.productType == ProductType.Consumable)
         {
             if (item.productID == "chicken_bank")
+            {
                 ChickenBankController.instance.CollectBank(item.value);
+                var resultValue = ChickenBankController.instance.CurrStarChicken >= ConfigController.instance.config.gameParameters.maxBank ?
+                    ConfigController.instance.config.gameParameters.maxBank : /*currValue*/ChickenBankController.instance.CurrStarChicken;
+                item.value = (int)resultValue;
+                item.txtValue = resultValue.ToString();
+                var priceLocalize = Purchaser.instance.GetLocalizePrice(item.productID);
+                numRubyTexts[index].text = item.txtValue;
+            }
             else
                 CurrencyController.CreditBalance(item.value);
             if (item.valueBeehive > 0)
@@ -288,6 +296,12 @@ public class ShopDialog : Dialog
         {
             if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
                 chickenBank.SetActive(false);
+            else if (currStarBank >= valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
+            {
+                chickenBank.SetActive(true);
+                CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
+            }
+
 
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
             var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
