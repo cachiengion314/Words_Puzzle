@@ -206,6 +206,8 @@ public class LineWord : MonoBehaviour
 
     public IEnumerator IEShowAnswer()
     {
+        var cellStar = cells.FindAll(cell => cell.iconCoin.transform.localScale == Vector3.one);
+        WordRegion.instance.numStarCollect = cellStar.Count;
         if (!RTL)
         {
             foreach (var cell in cells)
@@ -294,6 +296,7 @@ public class LineWord : MonoBehaviour
         }
         ShowFxShowHint(WordRegion.instance.btnHintTarget.transform, cellTarget, () =>
         {
+            WordRegion.instance.numStarCollect = cellTarget.iconCoin.transform.localScale == Vector3.one ? 1 : 0;
             cellTarget.ShowHint();
             Sound.instance.PlayButton(Sound.Button.Hint);
             CheckSetDataAnswer(answer);
@@ -371,6 +374,7 @@ public class LineWord : MonoBehaviour
                     //cell.letter = answer[i + indexAnswer].ToString();
                     ShowFxShowHint(WordRegion.instance.btnHint.transform, cell, () =>
                     {
+                        WordRegion.instance.numStarCollect = cell.iconCoin.transform.localScale == Vector3.one ? 1 : 0;
                         cell.ShowHint();
                         CheckSetDataAnswer(answer);
                         CheckLineDone();
@@ -390,6 +394,7 @@ public class LineWord : MonoBehaviour
                     //cell.letter = answer[i + indexAnswer].ToString();
                     ShowFxShowHint(WordRegion.instance.btnHint.transform, cell, () =>
                     {
+                        WordRegion.instance.numStarCollect = cell.iconCoin.transform.localScale == Vector3.one ? 1 : 0;
                         cell.ShowHint();
                         CheckSetDataAnswer(answer);
                         CheckLineDone();
@@ -435,6 +440,7 @@ public class LineWord : MonoBehaviour
             {
                 if (cellRandom != null)
                 {
+                    WordRegion.instance.numStarCollect += cellRandom.iconCoin.transform.localScale == Vector3.one ? 1 : 0;
                     cellRandom.ShowHint();
                 }
                 CheckSetDataAnswer(answer);

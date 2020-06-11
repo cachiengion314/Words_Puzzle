@@ -60,8 +60,20 @@ public class Cell : MonoBehaviour
     {
         if (iconCoin.transform.localScale == Vector3.one)
         {
-            iconCoin.transform.localScale = Vector3.zero;
-            CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
+            var canvas = iconCoin.gameObject.GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI2";
+            TweenControl.GetInstance().MoveRectY(iconCoin.transform as RectTransform, bg.rectTransform.sizeDelta.y, 0.5f, () =>
+            {
+                TweenControl.GetInstance().Move(iconCoin.transform, MonoUtils.instance.posDefault.position, 0.5f, () =>
+                {
+                    CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
+                    iconCoin.transform.localScale = Vector3.zero;
+                    canvas.sortingLayerName = "Default";
+                    canvas.overrideSorting = false;
+                    MonoUtils.instance.ShowTotalStarCollect(WordRegion.instance.numStarCollect, MonoUtils.instance.textCollectDefault, 0.3f);
+                });
+            }, EaseType.OutBack);
             Sound.instance.Play(Sound.Collects.CoinCollect);
         }
     }
@@ -114,8 +126,8 @@ public class Cell : MonoBehaviour
         ShowText();
         bg.color = new Color(1, 1, 1, 0.5f);
         imgHiden.gameObject.SetActive(false);
-        TweenControl.GetInstance().KillTweener(iconCoin.transform);
-        iconCoin.transform.localScale = Vector3.zero;
+        //TweenControl.GetInstance().KillTweener(iconCoin.transform);
+        //iconCoin.transform.localScale = Vector3.zero;
         OnMoveToComplete();
     }
 

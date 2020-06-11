@@ -61,6 +61,7 @@ public class WordRegion : MonoBehaviour
     public List<string> listWordInLevel;
     public List<string> listWordCorrect;
     [HideInInspector] public bool isOpenOverlay = false;
+    [HideInInspector] public int numStarCollect;
     public static WordRegion instance;
 
     public ButtonVideoHintFree BtnADS
