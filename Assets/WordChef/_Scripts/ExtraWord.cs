@@ -119,10 +119,13 @@ public class ExtraWord : MonoBehaviour
     {
         if (!CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
         {
+            TutorialController.instance.isBlockSwipe = true;
+            BlockScreen.instance.Block(true);
             CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
             TweenControl.GetInstance().DelayCall(transform, 2f, () =>
             {
                 TutorialController.instance.ShowPopBonusBoxTut();
+                BlockScreen.instance.Block(false);
             });
         }
         extraWords.Add(word);
