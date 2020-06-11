@@ -23,6 +23,7 @@ public class TutorialController : MonoBehaviour
     public string contentSetting;
     public string contentBeehive;
     public string contentHelp;
+    public string contentChickenBank;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
@@ -35,6 +36,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popObjective;
     [SerializeField] private GameObject _popBeehive;
     [SerializeField] private GameObject _popHelp;
+    [SerializeField] private GameObject _popChickenBank;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
@@ -47,6 +49,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialSetting;
     [SerializeField] private TextMeshProUGUI _textTutorialBeehive;
     [SerializeField] private TextMeshProUGUI _textTutorialHelp;
+    [SerializeField] private TextMeshProUGUI _textTutorialChickenBank;
 
     private LineWord _lineTarget;
     private string _answerTarget;
@@ -243,6 +246,25 @@ public class TutorialController : MonoBehaviour
         _textTutorialHelp.text = contentHelp;
     }
 
+    public void ShowPopChickenBankTut()
+    {
+        if (WinDialog.instance != null)
+        {
+            WinDialog.instance._chickenBank.SetActive(true);
+            var canvas = WinDialog.instance._chickenBank.GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI2";
+            canvas.sortingOrder = 5;
+        }
+        isShowTut = true;
+        isBlockSwipe = true;
+        _overlay.SetActive(true);
+        var canvasOverlay = _overlay.GetComponent<Canvas>();
+        canvasOverlay.sortingLayerName = "UI2";
+        _popChickenBank.SetActive(true);
+        _textTutorialChickenBank.text = contentChickenBank;
+    }
+
     public void HidenPopTut()
     {
         if (isTutBeehive)
@@ -264,6 +286,10 @@ public class TutorialController : MonoBehaviour
                 LineTarget.lineTutorialBG.gameObject.SetActive(false);
             }
         }
+        if (WinDialog.instance != null)
+        {
+            WinDialog.instance._chickenBank.GetComponent<Canvas>().overrideSorting = false;
+        }
         var canvasOverlay = _overlay.GetComponent<Canvas>();
         canvasOverlay.sortingLayerName = "Default";
         canvasOverlay.sortingOrder = 3;
@@ -282,6 +308,7 @@ public class TutorialController : MonoBehaviour
         _popObjective.SetActive(false);
         _popBeehive.SetActive(false);
         _popHelp.SetActive(false);
+        _popChickenBank.SetActive(false);
         _overlay.SetActive(false);
         _textTutorial.text = "";
     }

@@ -50,8 +50,7 @@ public class WinDialog : Dialog
     private TextMeshProUGUI _txtCollectChickenBank;
     [SerializeField]
     private GameObject _btnBee;
-    [SerializeField]
-    private GameObject _chickenBank;
+    public GameObject _chickenBank;
     [SerializeField]
     private SpineControl _chickenBankAnim;
     [SerializeField] private string _collectAnim = "icon chicken bank PLAY";
@@ -214,12 +213,23 @@ public class WinDialog : Dialog
         }
         else
         {
+            if (currStarBank >= valueShow && !CPlayerPrefs.HasKey("CHICKEN_TUTORIAL"))
+            {
+                _chickenBank.SetActive(false);
+                gameObject.GetComponent<GraphicRaycaster>().enabled = false;
+            }
             _chickenBankAnim.onEventAction = ShowTextCollect;
             var posTargetChicken = _chickenBank.transform.localPosition.x / 2;
             tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken - 50, 0.5f, () =>
             {
                 tweenControl.MoveRectX(_chickenBank.transform as RectTransform, posTargetChicken, 0.3f, () =>
                 {
+                    if (currStarBank >= valueShow && !CPlayerPrefs.HasKey("CHICKEN_TUTORIAL"))
+                    {
+                        gameObject.GetComponent<GraphicRaycaster>().enabled = true;
+                        CPlayerPrefs.SetBool("CHICKEN_TUTORIAL", true);
+                        TutorialController.instance.ShowPopChickenBankTut();
+                    }
                     _chickenBankAnim.SetAnimation(_collectAnim, false, () =>
                     {
                         _chickenBankAnim.SetAnimation(_loopAnim, true);
@@ -269,6 +279,11 @@ public class WinDialog : Dialog
                 });
             }
         }
+    }
+
+    public void HidenTut()
+    {
+        TutorialController.instance.HidenPopTut();
     }
 
     private void ShowTextCollect(Spine.Event eventData)
