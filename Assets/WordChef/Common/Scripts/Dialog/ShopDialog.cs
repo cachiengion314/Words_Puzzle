@@ -208,8 +208,11 @@ public class ShopDialog : Dialog
                     ConfigController.instance.config.gameParameters.maxBank : /*currValue*/ChickenBankController.instance.CurrStarChicken;
                 item.value = (int)resultValue;
                 item.txtValue = resultValue.ToString();
-                var priceLocalize = Purchaser.instance.GetLocalizePrice(item.productID);
                 numRubyTexts[index].text = item.txtValue;
+                var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
+                var currStarBank = ChickenBankController.instance.CurrStarChicken;
+                if (currStarBank < valueShow)
+                    chickenBank.SetActive(false);
             }
             else
                 CurrencyController.CreditBalance(item.value);
@@ -294,12 +297,13 @@ public class ShopDialog : Dialog
         //btnMore.transform.localScale = Vector3.zero;
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
         {
-            if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
+            if (currStarBank < valueShow)
                 chickenBank.SetActive(false);
-            else if (currStarBank >= valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
+            else
             {
                 chickenBank.SetActive(true);
-                CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
+                if (!CPlayerPrefs.HasKey("OPEN_CHICKEN"))
+                    CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
             }
 
 
