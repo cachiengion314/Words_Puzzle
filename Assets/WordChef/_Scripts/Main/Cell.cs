@@ -60,7 +60,7 @@ public class Cell : MonoBehaviour
     {
         if (iconCoin.transform.localScale == Vector3.one)
         {
-            var canvas = iconCoin.gameObject.GetComponent<Canvas>();
+            var canvas = iconCoin.gameObject.AddComponent<Canvas>();
             canvas.overrideSorting = true;
             canvas.sortingLayerName = "UI2";
             TweenControl.GetInstance().MoveRectY(iconCoin.transform as RectTransform, bg.rectTransform.sizeDelta.y, 0.5f, () =>
@@ -69,8 +69,7 @@ public class Cell : MonoBehaviour
                 {
                     CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
                     iconCoin.transform.localScale = Vector3.zero;
-                    canvas.sortingLayerName = "Default";
-                    canvas.overrideSorting = false;
+                    Destroy(iconCoin.GetComponent<Canvas>());
                     MonoUtils.instance.ShowTotalStarCollect(WordRegion.instance.numStarCollect, MonoUtils.instance.textCollectDefault, 0.3f);
                 });
             }, EaseType.OutBack);
