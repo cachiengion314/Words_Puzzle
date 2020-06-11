@@ -130,6 +130,8 @@ public class Quest : MonoBehaviour
                 break;
         }
         ObjectiveManager.instance.CheckTaskComplete();
+        if (PauseDialog.instance != null)
+            PauseDialog.instance.CheckShowIconTaskComplete();
     }
 
     private IEnumerator ShowEffectCollect(int value)

@@ -7,11 +7,24 @@ using Superpow;
 public class PauseDialog : Dialog
 {
     [SerializeField] private GameObject _iconTask;
+    public static PauseDialog instance;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     protected override void Start()
     {
         base.Start();
-        if (_iconTask != null) _iconTask.SetActive(ObjectiveManager.instance.Icon.activeSelf);
+        CheckShowIconTaskComplete();
+    }
+
+    public void CheckShowIconTaskComplete()
+    {
+        if (_iconTask != null) 
+            _iconTask.SetActive(ObjectiveManager.instance.Icon.activeSelf);
     }
 
     public void OnFeedbackClick()
