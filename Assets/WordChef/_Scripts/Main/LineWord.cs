@@ -436,11 +436,11 @@ public class LineWord : MonoBehaviour
         if (cellNotShow != null && cellNotShow.Count > 0)
         {
             var cellRandom = GetRandomCell(cellNotShow);
+            WordRegion.instance.numStarCollect += cellRandom.iconCoin.transform.localScale == Vector3.one ? 1 : 0;
             ShowFxShowHint(WordRegion.instance.btnMultipleHint.transform, cellRandom, () =>
             {
                 if (cellRandom != null)
                 {
-                    WordRegion.instance.numStarCollect += cellRandom.iconCoin.transform.localScale == Vector3.one ? 1 : 0;
                     cellRandom.ShowHint();
                 }
                 CheckSetDataAnswer(answer);

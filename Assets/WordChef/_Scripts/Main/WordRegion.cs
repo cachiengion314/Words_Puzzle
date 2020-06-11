@@ -1027,6 +1027,7 @@ public class WordRegion : MonoBehaviour
 
     public void HintRandomClick()
     {
+        numStarCollect = 0;
         TutorialController.instance.HidenPopTut();
         int ballance = CurrencyController.GetBalance();
         var multiplehintFree = CurrencyController.GetMultipleHintFree();
