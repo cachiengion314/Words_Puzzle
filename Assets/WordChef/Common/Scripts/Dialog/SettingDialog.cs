@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class SettingDialog : PauseDialog
+public class SettingDialog : Dialog
 {
     [SerializeField]
     GameObject soundButton;
@@ -83,7 +83,7 @@ public class SettingDialog : PauseDialog
         }
     }
 
-    public override void OnHowToPlayClick()
+    public void OnHowToPlayClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
         DialogController.instance.ShowDialog(DialogType.HowtoPlay, DialogShow.STACK_DONT_HIDEN);

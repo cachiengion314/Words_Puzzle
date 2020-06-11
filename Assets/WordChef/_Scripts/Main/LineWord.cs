@@ -186,7 +186,7 @@ public class LineWord : MonoBehaviour
         for (int i = 0; i < ansRight.Length; i++)
         {
             var ans = ansRight[i];
-            var countAnsRight = line.answers.FindAll(a => a[i].ToString() == ans.ToString());
+            var countAnsRight = line.answers.FindAll(a => a[i].ToString() == ans.ToString() && a != answer);
             if (line.cells[i].isShown && line.cells[i].letter == ans.ToString())
             {
                 line.SetDataLetter(ansRight);
