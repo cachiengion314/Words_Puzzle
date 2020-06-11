@@ -66,7 +66,7 @@ public class Cell : MonoBehaviour
             TweenControl.GetInstance().MoveRectY(iconCoin.transform as RectTransform, bg.rectTransform.sizeDelta.y, 0.5f, () =>
             {
                 iconCoin.transform.SetParent(MonoUtils.instance.rootDefault);
-                TweenControl.GetInstance().JumpRect(iconCoin.transform as RectTransform, MonoUtils.instance.posDefault.localPosition, -800f, 1, 0.5f, false, () =>
+                TweenControl.GetInstance().JumpRect(iconCoin.transform as RectTransform, MonoUtils.instance.posDefault.localPosition, -400f, 1, 0.5f, false, () =>
                 {
                     CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
                     iconCoin.transform.localScale = Vector3.zero;
