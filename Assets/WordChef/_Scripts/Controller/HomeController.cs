@@ -11,6 +11,7 @@ public class HomeController : BaseController
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
     public Button btnChickenBank;
+    public Button btnFreeBoosters;
     public Animator animatorTitle;
     [SerializeField] private IconController _iconController;
     [SerializeField] private RectTransform _panelTopRect;
@@ -43,6 +44,8 @@ public class HomeController : BaseController
         //    CPlayerPrefs.SetBool("First_Load", true);
         //    SceneAnimate.Instance.LoadSceneWithProgressLoading();
         //}
+        if (!CPlayerPrefs.HasKey("FREEBOOSTERS_TUTORIAL"))
+            btnFreeBoosters.gameObject.SetActive(false);
     }
 
     public void OnClick(int index)
@@ -104,13 +107,26 @@ public class HomeController : BaseController
         {
             tweenControl.MoveRectY(_panelTopRect, 20, 0.3f, () =>
             {
-                tweenControl.MoveRectY(_panelTopRect, 0, 0.5f);
+                tweenControl.MoveRectY(_panelTopRect, 0, 0.5f, () =>
+                {
+                    CheckShowFreeBooster();
+                });
             });
         });
         _spineAnimGia.SetAnimation(_showgiado, false, () =>
         {
             _iconController.AnimIcon();
         });
+    }
+
+    private void CheckShowFreeBooster()
+    {
+        if (CPlayerPrefs.HasKey("HINT_TUTORIAL") && CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") && !CPlayerPrefs.HasKey("FREEBOOSTERS_TUTORIAL"))
+        {
+            btnFreeBoosters.gameObject.SetActive(true);
+            TutorialController.instance.ShowPopFreeBoostersTut();
+            CPlayerPrefs.SetBool("FREEBOOSTERS_TUTORIAL", true);
+        }
     }
 
     public void StopAnimtitle()

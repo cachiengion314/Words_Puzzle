@@ -24,6 +24,7 @@ public class TutorialController : MonoBehaviour
     public string contentBeehive;
     public string contentHelp;
     public string contentChickenBank;
+    public string contentFreeBoosters;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
@@ -37,6 +38,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popBeehive;
     [SerializeField] private GameObject _popHelp;
     [SerializeField] private GameObject _popChickenBank;
+    [SerializeField] private GameObject _popFreeBoosters;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
@@ -50,6 +52,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialBeehive;
     [SerializeField] private TextMeshProUGUI _textTutorialHelp;
     [SerializeField] private TextMeshProUGUI _textTutorialChickenBank;
+    [SerializeField] private TextMeshProUGUI _textTutorialFreeBoosters;
 
     private LineWord _lineTarget;
     private string _answerTarget;
@@ -265,9 +268,26 @@ public class TutorialController : MonoBehaviour
         _textTutorialChickenBank.text = contentChickenBank;
     }
 
+    public void ShowPopFreeBoostersTut()
+    {
+        if (HomeController.instance != null)
+        {
+            HomeController.instance.btnFreeBoosters.gameObject.SetActive(true);
+            var canvas = HomeController.instance.btnFreeBoosters.GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+        }
+        isShowTut = true;
+        isBlockSwipe = true;
+        _overlay.SetActive(true);
+        var canvasOverlay = _overlay.GetComponent<Canvas>();
+        canvasOverlay.sortingLayerName = "UI";
+        _popFreeBoosters.SetActive(true);
+        _textTutorialFreeBoosters.text = contentFreeBoosters;
+    }
+
     public void HidenPopTut()
     {
-        if (isTutBeehive)
+        if (isTutBeehive && MainController.instance != null)
         {
             CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
             MainController.instance.beeController.OnBeeButtonClick();
@@ -290,27 +310,33 @@ public class TutorialController : MonoBehaviour
         {
             WinDialog.instance._chickenBank.GetComponent<Canvas>().overrideSorting = false;
         }
+        if (HomeController.instance != null)
+        {
+            var canvas = HomeController.instance.btnFreeBoosters.GetComponent<Canvas>();
+            canvas.overrideSorting = false;
+        }
         var canvasOverlay = _overlay.GetComponent<Canvas>();
         canvasOverlay.sortingLayerName = "Default";
         canvasOverlay.sortingOrder = 3;
         isShowTut = false;
         isBlockSwipe = false;
         isTutBeehive = false;
-        _popText.SetActive(false);
-        _popHint.SetActive(false);
-        _popShuffle.SetActive(false);
-        _popSelectedHint.SetActive(false);
-        _popSelectedHint2.SetActive(false);
-        _popMultipleHint.SetActive(false);
-        _popBonusBox.SetActive(false);
-        _popCellStar.SetActive(false);
-        _popSetting.SetActive(false);
-        _popObjective.SetActive(false);
-        _popBeehive.SetActive(false);
-        _popHelp.SetActive(false);
-        _popChickenBank.SetActive(false);
-        _overlay.SetActive(false);
-        _textTutorial.text = "";
+        if (_popText != null) _popText.SetActive(false);
+        if (_popHint != null) _popHint.SetActive(false);
+        if (_popShuffle != null) _popShuffle.SetActive(false);
+        if (_popSelectedHint != null) _popSelectedHint.SetActive(false);
+        if (_popSelectedHint2 != null) _popSelectedHint2.SetActive(false);
+        if (_popMultipleHint != null) _popMultipleHint.SetActive(false);
+        if (_popBonusBox != null) _popBonusBox.SetActive(false);
+        if (_popCellStar != null) _popCellStar.SetActive(false);
+        if (_popSetting != null) _popSetting.SetActive(false);
+        if (_popObjective != null) _popObjective.SetActive(false);
+        if (_popBeehive != null) _popBeehive.SetActive(false);
+        if (_popHelp != null) _popHelp.SetActive(false);
+        if (_popChickenBank != null) _popChickenBank.SetActive(false);
+        if (_popFreeBoosters != null) _popFreeBoosters.SetActive(false);
+        if (_overlay != null) _overlay.SetActive(false);
+        if (_textTutorial != null) _textTutorial.text = "";
     }
 
     public void CheckAndShowTutorial()
