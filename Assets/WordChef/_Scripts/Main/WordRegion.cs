@@ -893,7 +893,11 @@ public class WordRegion : MonoBehaviour
         if (cellTarget == null)
             return;
         if (cellTarget == line.cells[0])
+        {
             cellTarget.ShowTextBee();
+            line.CheckSetDataAnswer(line.answer);
+            line.CheckLineDone();
+        }
         else if (!cellTarget.isShown)
             TweenControl.GetInstance().ScaleFromZero(cellTarget.iconCoin.gameObject, 0.5f);
     }

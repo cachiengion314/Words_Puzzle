@@ -471,9 +471,6 @@ public class LineWord : MonoBehaviour
                 SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
             }
 
-
-            CheckSetDataAnswer(answer);
-            CheckLineDone();
             usedBee = true;
             CPlayerPrefs.SetBool(gameObject.name, usedBee);
             ClearAds();
