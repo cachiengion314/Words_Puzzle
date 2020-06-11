@@ -36,6 +36,7 @@ public class ExtraWordDialog : Dialog
         if (_rewardController == null)
             _rewardController = Instantiate(_rewardVideoPfb);
         _rewardController.onRewardedCallback -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
 
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
@@ -48,6 +49,8 @@ public class ExtraWordDialog : Dialog
     void OnCompleteVideo()
     {
         _rewardController.onRewardedCallback -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
@@ -58,13 +61,13 @@ public class ExtraWordDialog : Dialog
 
     private IEnumerator ShowEffectCollect(int value, Transform posStart)
     {
-        MonoUtils.instance.ShowTotalStarCollect(value,null);
+        MonoUtils.instance.ShowTotalStarCollect(value, null);
         var result = value / 5;
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
             {
-                MonoUtils.instance.ShowEffect(result,null,null, posStart);
+                MonoUtils.instance.ShowEffect(result, null, null, posStart);
             }
             yield return new WaitForSeconds(0.06f);
             if (i == 5)
@@ -75,7 +78,11 @@ public class ExtraWordDialog : Dialog
     public void OnClickShowVideoAds()
     {
         _rewardController.onRewardedCallback += OnCompleteVideo;
-        AdmobController.instance.ShowRewardBasedVideo();
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
+        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
+        AdsManager.instance.ShowVideoAds();
+        // AdmobController.instance.ShowRewardBasedVideo();
+
         Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
         OnCompleteVideo();

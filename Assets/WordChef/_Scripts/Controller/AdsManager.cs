@@ -29,9 +29,9 @@ public class AdsManager : MonoBehaviour
     {
         _adsController.LoadVideoAds();
     }
-    public void ShowVideoAds()
+    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        _adsController.ShowVideoAds();
+        _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
     }
 
     public void ShowBannerAds()

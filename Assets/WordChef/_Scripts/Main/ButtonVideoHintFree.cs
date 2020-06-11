@@ -34,6 +34,7 @@ public class ButtonVideoHintFree : MonoBehaviour
         if (_rewardController == null)
             _rewardController = Instantiate(_rewardVideoPfb);
         _rewardController.onRewardedCallback -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
     private void OnDisable()
@@ -45,7 +46,11 @@ public class ButtonVideoHintFree : MonoBehaviour
     public void OnClickOpen()
     {
         _rewardController.onRewardedCallback += OnCompleteVideo;
-        AdmobController.instance.ShowRewardBasedVideo();
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
+        //AdmobController.instance.ShowRewardBasedVideo();
+        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
+        AdsManager.instance.ShowVideoAds();
+
         Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
         OnCompleteVideo();
@@ -55,6 +60,8 @@ public class ButtonVideoHintFree : MonoBehaviour
     private void OnCompleteVideo()
     {
         _rewardController.onRewardedCallback -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+
         gameObject.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {

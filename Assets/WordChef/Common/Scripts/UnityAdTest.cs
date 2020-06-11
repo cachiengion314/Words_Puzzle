@@ -64,7 +64,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         else if (showResult == ShowResult.Failed)
         {
             AdsManager.instance._adsController = AdmobController.instance;
-            AdsManager.instance.ShowVideoAds();
+            AdsManager.instance.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
 
             Debug.LogWarning("The ad did not finish due to an error.");
         }
@@ -87,15 +87,19 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     public void OnUnityAdsDidStart(string placementId)
     {
         // Optional actions to take when the end-users triggers an ad.
-     
+
     }
 
     /// <summary>
     /// //////////////////// Implement interface
     /// </summary>
-    public void ShowVideoAds()
+    Action adsNotReadyYetCallback;
+    Action noInternetCallback;
+    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         Advertisement.Show(myPlacementId);
+        this.adsNotReadyYetCallback = adsNotReadyYetCallback;
+        this.noInternetCallback = noInternetCallback;
     }
 
     public void ShowBannerAds()

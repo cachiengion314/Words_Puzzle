@@ -26,6 +26,8 @@ public class OpenWordDictionaryDialog : Dialog
             _rewardControl = Instantiate(_rewardVideoPfb);
         _rewardControl.onRewardedCallback -= OnCompleteVideo;
         _rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+
         CheckShowTextTitle();
         ShowBtnLater(false);
     }
@@ -58,12 +60,16 @@ public class OpenWordDictionaryDialog : Dialog
             _rewardControl.onRewardedCallback -= OnCompleteVideo;
             _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         }
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
     public void OnClickOpen()
     {
         _rewardControl.onRewardedCallback += OnCompleteVideo;
-        AdmobController.instance.ShowRewardBasedVideo(false, LoadAdsFailed, NoInterNet);
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
+        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
+        AdsManager.instance.ShowVideoAds(LoadAdsFailed, NoInterNet);
+
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
@@ -95,6 +101,8 @@ public class OpenWordDictionaryDialog : Dialog
     private void OnCompleteVideo()
     {
         _rewardControl.onRewardedCallback -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+
         _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _panelWatch.transform.localScale = Vector3.zero;
         GetComponent<Image>().enabled = false;

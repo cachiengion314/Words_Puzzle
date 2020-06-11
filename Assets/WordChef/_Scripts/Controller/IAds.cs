@@ -1,7 +1,9 @@
-﻿public interface IAds
+﻿using System;
+
+public interface IAds
 {
     void LoadVideoAds();
-    void ShowVideoAds();
+    void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null);
 
     void ShowBannerAds();
 

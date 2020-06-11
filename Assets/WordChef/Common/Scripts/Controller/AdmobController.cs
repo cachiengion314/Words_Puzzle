@@ -301,7 +301,7 @@ public class AdmobController : MonoBehaviour, IAds
 
     }
 
-    public void ShowVideoAds()
+    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         if (this.rewardBasedVideo.IsLoaded())
         {
@@ -310,16 +310,17 @@ public class AdmobController : MonoBehaviour, IAds
         else
         {
             //MonoBehaviour.print("Reward based video ad is not ready yet");
-
             CUtils.CheckConnection(this, (result) =>
             {
                 if (result == 0)
                 {
                     RequestRewardBasedVideo();
+                    adsNotReadyYetCallback?.Invoke();
                 }
                 else
                 {
-                    Toast.instance.ShowMessage("No Internet Connection");
+                    noInternetCallback?.Invoke();
+                    Debug.Log("No Internet Connection");
                 }
             });
         }

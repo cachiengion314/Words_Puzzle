@@ -4,6 +4,7 @@ using AudienceNetwork;
 using UnityEngine.SceneManagement;
 using AudienceNetwork.Utility;
 using System.Collections;
+using System;
 
 public class AudienceNetworkFbAd : MonoBehaviour, IAds
 {
@@ -156,7 +157,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     /// <summary>
     /// Implement Interface
     /// </summary>
-    public void ShowVideoAds()
+    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         if (isLoaded)
         {
@@ -168,9 +169,20 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         }
         else
         {
-            AdsManager.instance._adsController = UnityAdTest.instance;
-            AdsManager.instance.ShowVideoAds();
-            Debug.Log("Ad not loaded. Click load to request an ad.");
+            CUtils.CheckConnection(this, (result) =>
+            {
+                if (result == 0)
+                {
+                    AdsManager.instance._adsController = UnityAdTest.instance;
+                    AdsManager.instance.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
+                }
+                else
+                {
+                    Debug.Log("No Internet Connection");
+                    noInternetCallback?.Invoke();
+                }
+            });
+            Debug.Log("Facebook Ad not loaded. Click load to request an ad.");
         }
     }
 
