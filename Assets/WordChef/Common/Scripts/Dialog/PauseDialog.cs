@@ -6,6 +6,13 @@ using Superpow;
 
 public class PauseDialog : Dialog
 {
+    [SerializeField] private GameObject _iconTask;
+
+    protected override void Start()
+    {
+        base.Start();
+        if (_iconTask != null) _iconTask.SetActive(ObjectiveManager.instance.Icon.activeSelf);
+    }
 
     public void OnFeedbackClick()
     {

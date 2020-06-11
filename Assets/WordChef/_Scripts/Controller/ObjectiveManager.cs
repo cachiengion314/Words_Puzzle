@@ -9,6 +9,14 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField] private GameObject icon;
     public ObjectiveData objectiveData;
 
+    public GameObject Icon
+    {
+        get
+        {
+            return icon;
+        }
+    }
+
     void Awake()
     {
         if (instance == null)

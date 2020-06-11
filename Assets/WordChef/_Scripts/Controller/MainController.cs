@@ -171,8 +171,10 @@ public class MainController : BaseController
             }
             else
             {
-                TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+                Pan.instance.centerPoint.gameObject.SetActive(false);
+                TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
                 {
+                    Pan.instance.centerPoint.gameObject.SetActive(true);
                     BlockScreen.instance.Block(true);
                     animatorScene.enabled = true;
                     animatorScene.SetBool("PlayAnimScene", true);
