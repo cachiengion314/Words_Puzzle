@@ -79,8 +79,8 @@ public class AnimEvent : MonoBehaviour
                 var canvasGroup = letter.GetComponent<CanvasGroup>();
                 canvasGroup.alpha = 1;
                 //letter.transform.localScale = Vector3.zero;
-                Sound.instance.audioSource.Stop();
-                Sound.instance.PlayButton(Sound.Button.Hint);
+                //Sound.instance.audioSource.Stop();
+                //Sound.instance.PlayButton(Sound.Button.Hint);
                 TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.2f, 0.3f, () =>
                 {
                     TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.5f);
