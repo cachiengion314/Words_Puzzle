@@ -80,6 +80,14 @@ public class WordRegion : MonoBehaviour
         }
     }
 
+    public int CurLevel
+    {
+        get
+        {
+            return _currLevel;
+        }
+    }
+
     private void Awake()
     {
         instance = this;
@@ -212,6 +220,16 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
+        if (_currLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
+        {
+            foreach (var cellTut in lines[lines.Count - 1].cells)
+            {
+                if (!cellTut.isShown)
+                {
+                    cellTut.iconCoin.transform.localScale = Vector3.one;
+                }
+            }
+        }
     }
 
     private void CheckShowButton(bool isTut)

@@ -381,7 +381,7 @@ public class TutorialController : MonoBehaviour
             }
             else if (currlevel >= 5 && !CPlayerPrefs.HasKey("CELL_STAR_TUTORIAL"))
             {
-                CPlayerPrefs.SetBool("CELL_STAR_TUTORIAL", true);
+                CPlayerPrefs.SetBool("CELL_STAR_TUTORIAL",true);
                 ShowPopCellStarTut();
             }
             else if (currlevel >= 6 && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))

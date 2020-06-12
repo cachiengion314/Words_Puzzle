@@ -331,6 +331,8 @@ public class LineWord : MonoBehaviour
 
     private void ShowDoneAllCell()
     {
+        if (WordRegion.instance.CurLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
+            CPlayerPrefs.SetBool("SHOW_TUT_CELL_STAR", true);
         Prefs.countSpell += 1;
         Prefs.countSpellDaily += 1;
         WordRegion.instance.SetWordOpenInLevelAmount(answer);

@@ -68,6 +68,8 @@ public class Cell : MonoBehaviour
     {
         if (iconCoin.transform.localScale == Vector3.one)
         {
+            if (WordRegion.instance.CurLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
+                CPlayerPrefs.SetBool("SHOW_TUT_CELL_STAR", true);
             //var canvas = iconCoin.gameObject.AddComponent<Canvas>();
             //canvas.overrideSorting = true;
             //canvas.sortingLayerName = "UI2";
