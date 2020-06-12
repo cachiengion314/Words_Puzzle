@@ -953,7 +953,7 @@ public class WordRegion : MonoBehaviour
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
         TutorialController.instance.HidenPopTut();
-        if (!CPlayerPrefs.HasKey("OBJ_TUTORIAL") && Prefs.countLevelDaily >= 2)
+        if (!CPlayerPrefs.HasKey("OBJ_TUTORIAL") && Prefs.countLevelDaily >= 10)
         {
             DialogController.instance.ShowDialog(DialogType.Objective, DialogShow.STACK_DONT_HIDEN);
         }
