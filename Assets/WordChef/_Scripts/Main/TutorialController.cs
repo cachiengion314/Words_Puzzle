@@ -349,7 +349,7 @@ public class TutorialController : MonoBehaviour
 
         if (!CPlayerPrefs.HasKey("LEVEL " + currlevel))
         {
-            if ((currlevel >= 11 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            if ((currlevel >= 33 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
                 BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();
@@ -360,36 +360,36 @@ public class TutorialController : MonoBehaviour
                 ShowPopHintFreeTut();
                 CPlayerPrefs.SetBool("HINT_TUTORIAL", true);
             }
-            else if ((currlevel >= 8 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
+            else if ((currlevel >= 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
             {
                 ShowPopSettingTut();
             }
-            else if ((currlevel >= 9 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
+            else if ((currlevel >= 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditSelectedHintFree(2);
                 ShowPopSelectedHintTut();
             }
-            else if ((currlevel >= 10 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
+            else if ((currlevel >= 30 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
-            else if (currlevel >= 4 && !CPlayerPrefs.HasKey("SHUFFLE_TUTORIAL"))
+            else if (currlevel >= 6 && !CPlayerPrefs.HasKey("SHUFFLE_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("SHUFFLE_TUTORIAL", true);
                 ShowPopShuffleTut();
             }
-            else if (currlevel >= 5 && !CPlayerPrefs.HasKey("CELL_STAR_TUTORIAL"))
+            else if (currlevel >= 8 && !CPlayerPrefs.HasKey("CELL_STAR_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("CELL_STAR_TUTORIAL",true);
                 ShowPopCellStarTut();
             }
-            else if (currlevel >= 6 && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))
+            else if (currlevel >= 9 && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("HELP_TUTORIAL", true);
                 ShowPopHelpTut();
             }
-            else if (currlevel >= 7 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            else if (currlevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
             {
                 CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
                 ShowPopBonusBoxTut();

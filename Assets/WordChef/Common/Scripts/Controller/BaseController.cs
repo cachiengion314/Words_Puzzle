@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseController : MonoBehaviour {
+public class BaseController : MonoBehaviour
+{
     public GameObject donotDestroyOnLoad;
     public string sceneName;
     public Music.Type music = Music.Type.None;
@@ -33,14 +34,15 @@ public class BaseController : MonoBehaviour {
 #if UNITY_WSA && !UNITY_EDITOR
         StartCoroutine(SavePrefs());
 #endif
-        Music.instance.Play(music);
-        
+        if (!Music.instance.audioSource.isPlaying)
+            Music.instance.Play(music);
+
         //CUtils.ShowBannerAd();
     }
 
     public virtual void OnApplicationPause(bool pause)
     {
-        Debug.Log("On Application Pause: "  + pause);
+        Debug.Log("On Application Pause: " + pause);
         CPlayerPrefs.Save();
         //if (pause == false)
         //{
