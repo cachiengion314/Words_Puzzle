@@ -208,6 +208,10 @@ public class LineWord : MonoBehaviour
     {
         var cellStar = cells.FindAll(cell => cell.iconCoin.transform.localScale == Vector3.one);
         WordRegion.instance.numStarCollect = cellStar.Count;
+        foreach (var cell in cellStar)
+        {
+            cell.iconCoin.gameObject.SetActive(false);
+        }
         if (!RTL)
         {
             foreach (var cell in cells)

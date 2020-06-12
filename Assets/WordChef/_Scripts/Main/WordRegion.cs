@@ -917,7 +917,10 @@ public class WordRegion : MonoBehaviour
             line.CheckLineDone();
         }
         else if (!cellTarget.isShown)
+        {
+            cellTarget.iconCoin.gameObject.SetActive(true);
             TweenControl.GetInstance().ScaleFromZero(cellTarget.iconCoin.gameObject, 0.5f);
+        }
     }
 
     private Cell GetCellBeeTarget(LineWord line, Transform beeTarget)
