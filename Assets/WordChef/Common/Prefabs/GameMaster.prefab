@@ -200,7 +200,7 @@ RectTransform:
   - {fileID: 22427566}
   - {fileID: 22469868}
   m_Father: {fileID: 499218}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -312,6 +312,7 @@ Transform:
   - {fileID: 465984}
   - {fileID: 4139744168166431517}
   - {fileID: 470560}
+  - {fileID: 2128932802148351041}
   - {fileID: 494744}
   - {fileID: 423180}
   - {fileID: 4120072707556424}
@@ -775,7 +776,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 499218}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11429732
 MonoBehaviour:
@@ -1252,7 +1253,7 @@ Transform:
   m_Children:
   - {fileID: 455130}
   m_Father: {fileID: 499218}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11434216
 MonoBehaviour:
@@ -1820,7 +1821,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 499218}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11425640
 MonoBehaviour:
@@ -2044,7 +2045,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 499218}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114794766863846258
 MonoBehaviour:
@@ -2087,7 +2088,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 499218}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2974365051531797831
 MonoBehaviour:
@@ -2134,7 +2135,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 499218}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7913140882866863981
 MonoBehaviour:
@@ -3153,7 +3154,7 @@ RectTransform:
   m_Children:
   - {fileID: 22444654}
   m_Father: {fileID: 499218}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3220,3 +3221,59 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &8518675000872752244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2128932802148351041}
+  - component: {fileID: 3935621138619510727}
+  m_Layer: 0
+  m_Name: NotifyMailDialogData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2128932802148351041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8518675000872752244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 499218}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3935621138619510727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8518675000872752244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5eace2f35d67f54585ae571c8c4987c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tittle: Update news
+  contain: 'this is just a testing dialog, this is just a testing dialog, this is
+    just a testing dialog, '
+  notifyData: []
+  isGameVersionChange: 0
+  currentGameVersion: 
+  tinyRedNotifyPrefb: {fileID: 8852587237908193419, guid: 7b19568e37550e341aaa4b62ed701f48,
+    type: 3}
+  ingameNotifyPrefb: {fileID: 4282985296860722719, guid: 5d08a034373b59a4cb0ab64b5f0cdff0,
+    type: 3}
+  scrollViewContent: {fileID: 0}
+  mailDialog: {fileID: 0}
+  ingameNotify: {fileID: 0}
