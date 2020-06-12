@@ -346,7 +346,8 @@ public class WinDialog : Dialog
     {
         TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () =>
         {
-            ChickenBankController.instance.AddtoBank();
+            if (WordRegion.instance != null && WordRegion.instance.CurLevel >= 38)
+                ChickenBankController.instance.AddtoBank();
             var result = GetChickenbankNonReward();
             _txtCollectChickenBank.text = "X" + (result > FacebookController.instance.user.maxbank ? FacebookController.instance.user.maxbank : result);
             _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
