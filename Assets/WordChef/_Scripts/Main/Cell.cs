@@ -38,6 +38,14 @@ public class Cell : MonoBehaviour
         Vector3 middlePoint = CUtils.GetMiddlePoint(beginPosition, transform.position, -0.3f);
         Vector3[] waypoint = { beginPosition, middlePoint, transform.position };
 
+        if (isAds && WordRegion.instance.BtnADS != null)
+        {
+            WordRegion.instance.BtnADS.gameObject.SetActive(false);
+            CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
+            isAds = false;
+            CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
+        }
+
         ShowText();
         //letterText.transform.localScale = Vector3.one * 1.1f;
         bg.transform.localPosition = new Vector3(0, -55, 0);
