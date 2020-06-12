@@ -90,7 +90,7 @@ public class MainController : BaseController
         //FacebookController.instance.SaveDataGame();
         //}
         // 
-        Timer.Schedule(this, 1f, () =>
+        Timer.Schedule(this, 0.2f, () =>
         {
             DialogController.instance.ShowDialog(DialogType.Win);
         });

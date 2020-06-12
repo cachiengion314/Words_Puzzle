@@ -56,7 +56,9 @@ public class AnimEvent : MonoBehaviour
 
     public void LevelClearAnimComplete()
     {
-        MainController.instance.OnComplete();
+        //MainController.instance.OnComplete();
+        if (WinDialog.instance != null)
+            WinDialog.instance.ShowLevelChapterClear();
     }
 
     public void PlayParticleCompliment()

@@ -20,16 +20,16 @@ public class BaseController : MonoBehaviour
         iTween.dimensionMode = CommonConst.ITWEEN_MODE;
         CPlayerPrefs.useRijndael(CommonConst.ENCRYPTION_PREFS);
 
-        numofEnterScene = CUtils.IncreaseNumofEnterScene(sceneName);
+        //numofEnterScene = CUtils.IncreaseNumofEnterScene(sceneName);
     }
 
     protected virtual void Start()
     {
         CPlayerPrefs.Save();
-        if (JobWorker.instance.onEnterScene != null)
-        {
-            JobWorker.instance.onEnterScene(sceneName);
-        }
+        //if (JobWorker.instance.onEnterScene != null)
+        //{
+        //    JobWorker.instance.onEnterScene(sceneName);
+        //}
 
 #if UNITY_WSA && !UNITY_EDITOR
         StartCoroutine(SavePrefs());

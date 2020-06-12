@@ -115,6 +115,14 @@ public class WinDialog : Dialog
         GroupButton.SetActive(false);
         SetupStars();
 
+        _panelDialog.SetActive(false);
+        DialogOverlay.instance.Overlay.enabled = false;
+    }
+
+    public void ShowLevelChapterClear()
+    {
+        _panelDialog.SetActive(true);
+        DialogOverlay.instance.Overlay.enabled = true;
         ShowTitleAnim();
         if (isLastLevel)
         {

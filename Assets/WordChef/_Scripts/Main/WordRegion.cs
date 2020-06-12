@@ -220,7 +220,7 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
-        if (_currLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
+        if (_currLevel >= 8 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
         {
             foreach (var cellTut in lines[lines.Count - 1].cells)
             {
@@ -745,11 +745,12 @@ public class WordRegion : MonoBehaviour
             BlockScreen.instance.Block(true);
             MainController.instance.IsLevelClear = true;
             ClearLevelProgress();
-            //MainController.instance.OnComplete();
+            MainController.instance.OnComplete();
             //if (lines.Count >= 6)
             //{
             //    compliment.ShowRandom();
             //}
+
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
                 MainController.instance.animatorScene.SetBool("LevelComplete", true);
