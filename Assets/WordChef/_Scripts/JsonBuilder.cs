@@ -15,17 +15,17 @@ public class JsonBuilder : MonoBehaviour
         foreach (var lv in level)
         {
             LevelData data = new LevelData();
+            data.level = lv.level;
             data.letters = lv.letters;
+            data.valid_answers = lv.valid_answers;
             data.answers = lv.answers;
-            data.validWords = lv.validWords;
-            data.numAnswers = lv.numAnswers;
             gameLevels.Add(data);
         }
     }
 
     public int GetTotalAnswers(LevelData levelData)
     {
-        var result = levelData.answers.Split(new string[] { "|" },System.StringSplitOptions.RemoveEmptyEntries);
+        var result = levelData.valid_answers.Split(new string[] { "|" }, System.StringSplitOptions.RemoveEmptyEntries);
         return result.Length;
     }
 }
@@ -33,8 +33,8 @@ public class JsonBuilder : MonoBehaviour
 [System.Serializable]
 public class LevelData
 {
+    public int level;
     public string letters;
-    public string answers;
-    public string validWords;
-    public int numAnswers;
+    public string valid_answers;
+    public int answers;
 }

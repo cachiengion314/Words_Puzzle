@@ -8,7 +8,6 @@ public class CreateAsset : MonoBehaviour
 {
     [SerializeField] private GameData _gameData;
     [SerializeField] private JsonBuilder _jsonBuilder;
-    public int numEnd;
     public int numStart;
     public int numLevelInChapter = 8;
     public int numChapterInWord = 5;
@@ -83,9 +82,9 @@ public class CreateAsset : MonoBehaviour
                     var totalAns = _jsonBuilder.GetTotalAnswers(_jsonBuilder.gameLevels[indexLevel]);
                     var data = new GameLevel();
                     data.word = _jsonBuilder.gameLevels[indexLevel].letters;
-                    data.answers = _jsonBuilder.gameLevels[indexLevel].answers;
-                    data.validWords = _jsonBuilder.gameLevels[indexLevel].validWords;
-                    data.numExtra = totalAns - (_jsonBuilder.gameLevels[indexLevel].numAnswers == 0 ? totalAns : _jsonBuilder.gameLevels[indexLevel].numAnswers);
+                    data.answers = _jsonBuilder.gameLevels[indexLevel].valid_answers;
+                    data.validWords = "";
+                    data.numExtra = totalAns - (_jsonBuilder.gameLevels[indexLevel].answers == 0 ? totalAns : _jsonBuilder.gameLevels[indexLevel].answers);
                     subWord.gameLevels.Add(data);
                 }
             }
