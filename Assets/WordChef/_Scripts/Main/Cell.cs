@@ -71,18 +71,20 @@ public class Cell : MonoBehaviour
             //var canvas = iconCoin.gameObject.AddComponent<Canvas>();
             //canvas.overrideSorting = true;
             //canvas.sortingLayerName = "UI2";
-            TweenControl.GetInstance().MoveRectY(iconCoin.transform as RectTransform, bg.rectTransform.sizeDelta.y, 0.5f, () =>
-            {
-                iconCoin.transform.SetParent(MonoUtils.instance.rootDefault);
-                TweenControl.GetInstance().JumpRect(iconCoin.transform as RectTransform, MonoUtils.instance.posDefault.localPosition, -400f, 1, 0.5f, false, () =>
-                {
-                    CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
-                    iconCoin.transform.localScale = Vector3.zero;
-                    //Destroy(iconCoin.GetComponent<Canvas>());
-                    MonoUtils.instance.ShowTotalStarCollect(WordRegion.instance.numStarCollect, MonoUtils.instance.textCollectDefault, 0.3f);
-                });
-            }, EaseType.OutBack);
-            Sound.instance.Play(Sound.Collects.CoinCollect);
+            //TweenControl.GetInstance().MoveRectY(iconCoin.transform as RectTransform, bg.rectTransform.sizeDelta.y, 0.5f, () =>
+            //{
+            //    iconCoin.transform.SetParent(MonoUtils.instance.rootDefault);
+            //    TweenControl.GetInstance().JumpRect(iconCoin.transform as RectTransform, MonoUtils.instance.posDefault.localPosition, -400f, 1, 0.5f, false, () =>
+            //    {
+            //        CurrencyController.CreditBalance(ConfigController.instance.config.gameParameters.rewardedBeeAmount);
+            //        iconCoin.transform.localScale = Vector3.zero;
+            //        //Destroy(iconCoin.GetComponent<Canvas>());
+            //        MonoUtils.instance.ShowTotalStarCollect(WordRegion.instance.numStarCollect, MonoUtils.instance.textCollectDefault, 0.3f);
+            //    });
+            //}, EaseType.OutBack);
+            //Sound.instance.Play(Sound.Collects.CoinCollect);
+            MonoUtils.instance.ShowEffect(ConfigController.instance.config.gameParameters.rewardedBeeAmount, null, null, transform);
+            MonoUtils.instance.ShowTotalStarCollect(WordRegion.instance.numStarCollect, MonoUtils.instance.textCollectDefault, 0.3f);
         }
     }
 
@@ -135,7 +137,7 @@ public class Cell : MonoBehaviour
         bg.color = new Color(1, 1, 1, 0.5f);
         imgHiden.gameObject.SetActive(false);
         //TweenControl.GetInstance().KillTweener(iconCoin.transform);
-        //iconCoin.transform.localScale = Vector3.zero;
+        iconCoin.transform.localScale = Vector3.zero;
         OnMoveToComplete();
     }
 
