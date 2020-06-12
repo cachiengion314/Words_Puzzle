@@ -298,6 +298,7 @@ public class TutorialController : MonoBehaviour
         {
             WordRegion.instance.btnHint.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnShuffle.GetComponent<Canvas>().overrideSorting = false;
+            WordRegion.instance.btnBonusBox.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnMultipleHint.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnHintTarget.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnSetting.GetComponent<Canvas>().overrideSorting = false;
