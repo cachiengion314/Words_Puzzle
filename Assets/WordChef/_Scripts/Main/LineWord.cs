@@ -511,6 +511,8 @@ public class LineWord : MonoBehaviour
             {
                 if (cell.isShown && cell.letter == answers[i][indexCell].ToString())
                     isRight = true;
+                else if(cell.isShown && cell.letter != answers[i][indexCell].ToString())
+                    isRight = false;
                 indexCell++;
             }
             if (isRight)
