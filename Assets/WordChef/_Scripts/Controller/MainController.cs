@@ -158,6 +158,8 @@ public class MainController : BaseController
     {
         CUtils.LoadScene(Const.SCENE_CHAPTER, false);
         Sound.instance.Play(Sound.Others.PopupOpen);
+
+        AudienceNetworkBanner.instance.DisposeAllBannerAd();
     }
 
     public void PlayAnimScene()

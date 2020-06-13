@@ -6,11 +6,12 @@ using AudienceNetwork.Utility;
 
 public class AudienceNetworkBanner : MonoBehaviour
 {
+    public static AudienceNetworkBanner instance;
+
     private AdView adView;
     private AdPosition currentAdViewPosition;
     private ScreenOrientation currentScreenOrientation;
     public Text statusLabel;
-
     void OnDestroy()
     {
         // Dispose of banner ad when the scene is destroyed
@@ -20,6 +21,8 @@ public class AudienceNetworkBanner : MonoBehaviour
     private void Awake()
     {
         //AudienceNetworkAds.Initialize();
+        instance = this;
+
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
     private void ChangedActiveScene(Scene current, Scene next)
@@ -29,20 +32,23 @@ public class AudienceNetworkBanner : MonoBehaviour
         if (nextName == 3)
         {
             if (CUtils.IsAdsRemoved()) return;
+
             if (!hasLoadMainScene)
             {
-                LoadBanner();
-            }           
+#if UNITY_ANDROID && !UNITY_EDITOR
+            LoadBanner();
+#endif
+            }
             hasLoadMainScene = true;
         }
         else if (nextName != 3)
         {
             hasLoadMainScene = false;
 
-            DisposeAllBannerAd();
+           // DisposeAllBannerAd();
         }
     }
-    private void DisposeAllBannerAd()
+    public void DisposeAllBannerAd()
     {
         if (adView)
         {
@@ -54,6 +60,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         {
             AdmobController.instance.bannerView.Destroy();
         }
+        Debug.Log("Test Disposs action");
     }
 
     // Load Banner button

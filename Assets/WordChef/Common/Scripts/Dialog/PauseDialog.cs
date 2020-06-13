@@ -3,10 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using Superpow;
+using System;
 
 public class PauseDialog : Dialog
 {
     [SerializeField] private GameObject _iconTask;
+
     public static PauseDialog instance;
 
     void Awake()
@@ -79,6 +81,8 @@ public class PauseDialog : Dialog
     public void OnHomeClick()
     {
         CUtils.LoadScene(Const.SCENE_HOME, false);
+
+        AudienceNetworkBanner.instance.DisposeAllBannerAd();
         //Close();
     }
 

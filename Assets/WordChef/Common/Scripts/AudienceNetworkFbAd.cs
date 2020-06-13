@@ -25,12 +25,6 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         AudienceNetworkAds.Initialize();
 #endif
     }
-    private void Start()
-    {
-#if UNITY_ANDROID && !UNITY_EDITOR
-       
-#endif
-    }
     // Load button
     public void LoadRewardedVideo()
     {
