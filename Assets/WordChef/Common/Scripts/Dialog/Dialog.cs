@@ -31,7 +31,9 @@ public class Dialog : MonoBehaviour
     protected virtual void Start()
     {
         onDialogCompleteClosed += OnDialogCompleteClosed;
-        GetComponent<Canvas>().worldCamera = Camera.main;
+        var canvas = GetComponent<Canvas>();
+        canvas.worldCamera = Camera.main;
+        canvas.sortingLayerName = "UI2";
     }
 
     private void Update()
