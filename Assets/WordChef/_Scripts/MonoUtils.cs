@@ -23,10 +23,11 @@ public class MonoUtils : MonoBehaviour
         instance = this;
     }
 
-    public void ShowEffect(int value, Transform currBalance = null, Transform root = null, Transform posStart = null)
+    public void ShowEffect(int value, Transform currBalance = null, Transform root = null, Transform posStart = null, GameObject starPfb = null)
     {
         var tweenControl = TweenControl.GetInstance();
-        var star = Instantiate(rubyFly, root == null ? rootDefault : root);
+        var star = Instantiate(starPfb == null ? rubyFly : starPfb, root == null ? rootDefault : root);
+        star.gameObject.SetActive(true);
         star.transform.SetAsFirstSibling();
         star.transform.position = (posStart != null ? posStart : root == null ? rootDefault : root).position;
         star.transform.localScale = Vector3.zero;

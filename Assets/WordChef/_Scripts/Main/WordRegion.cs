@@ -42,6 +42,7 @@ public class WordRegion : MonoBehaviour
     public GameObject shadowHelp;
     public Button btnSetting;
     public Button btnHelp;
+    public GameObject starCollectPfb;
 
     private List<LineWord> lines = new List<LineWord>();
     private List<string> validWords = new List<string>();
