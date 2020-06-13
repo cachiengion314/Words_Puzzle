@@ -4,7 +4,7 @@ using GoogleMobileAds.Api;
 
 public class AdmobController : MonoBehaviour, IAds
 {
-    private BannerView bannerView;
+    public BannerView bannerView;
     public InterstitialAd interstitial;
     public RewardBasedVideoAd rewardBasedVideo;
 
@@ -54,9 +54,9 @@ public class AdmobController : MonoBehaviour, IAds
 #else
         string adUnitId = "unexpected_platform";
 #endif
-
+       
         // Create a 320x50 banner at the top of the screen.
-        this.bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
+        this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
         // Register for ad events.
         this.bannerView.OnAdLoaded += this.HandleAdLoaded;
@@ -320,7 +320,7 @@ public class AdmobController : MonoBehaviour, IAds
                 else
                 {
                     noInternetCallback?.Invoke();
-                    Debug.Log("No Internet Connection");
+                    //Debug.Log("No Internet Connection");
                 }
             });
         }

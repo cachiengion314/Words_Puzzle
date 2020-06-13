@@ -28,7 +28,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     private void Start()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-        LoadRewardedVideo();
+       
 #endif
     }
     // Load button
@@ -149,23 +149,20 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         Debug.Log("RewardedVideoAdTest was destroyed!");
     }
 
-    // Next button
-    public void NextScene()
-    {
-        SceneManager.LoadScene("InterstitialAdScene");
-    }
+  
     /// <summary>
     /// Implement Interface
     /// </summary>
-    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
+    IEnumerator LoadAndShowVideoDelay(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
+        LoadVideoAds();
+        yield return new WaitForSeconds(1.3f);
+
         if (isLoaded)
         {
+            // ad is loaded
             rewardedVideoAd.Show();
             isLoaded = false;
-
-            AdsManager.instance.onAdsRewarded?.Invoke();
-            Debug.Log("Ad loaded.");
         }
         else
         {
@@ -175,15 +172,21 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
                 {
                     AdsManager.instance._adsController = UnityAdTest.instance;
                     AdsManager.instance.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
+
+                    //Toast.instance.ShowMessage("Cannot load video");
                 }
                 else
                 {
-                    Debug.Log("No Internet Connection");
+                    Toast.instance.ShowMessage("No Internet Connection");
                     noInternetCallback?.Invoke();
                 }
             });
-            Debug.Log("Facebook Ad not loaded. Click load to request an ad.");
+            //Debug.Log("Facebook Ad not loaded. Click load to request an ad.");
         }
+    }
+    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
+    {
+        StartCoroutine(LoadAndShowVideoDelay(adsNotReadyYetCallback, noInternetCallback));
     }
 
     public void ShowBannerAds()
@@ -202,7 +205,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
         // Create the rewarded video unit with a placement ID (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
-        rewardedVideoAd = new RewardedVideoAd("YOUR_PLACEMENT_ID");
+        rewardedVideoAd = new RewardedVideoAd("583616318955925_583618328955724");
 
         // For S2S validation you can create the rewarded video ad with the reward data
         // Refer to documentation here:
@@ -214,7 +217,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             Currency = "REWARD_ID"
         };
 #pragma warning disable 0219
-        RewardedVideoAd s2sRewardedVideoAd = new RewardedVideoAd("YOUR_PLACEMENT_ID", rewardData);
+        RewardedVideoAd s2sRewardedVideoAd = new RewardedVideoAd("583616318955925_583618328955724", rewardData);
 #pragma warning restore 0219
 
         rewardedVideoAd.Register(gameObject);
@@ -259,6 +262,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
             Debug.Log("Rewarded video ad did close.");
+
+            AdsManager.instance.onAdsRewarded?.Invoke();
             didClose = true;
             if (rewardedVideoAd != null)
             {
