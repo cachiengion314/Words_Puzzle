@@ -894,7 +894,7 @@ public class WordRegion : MonoBehaviour
                  }, () =>
                  {
                      SaveLevelProgress();
-                     CheckGameComplete();
+                     //CheckGameComplete();
                      Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                      MainController.instance.isBeePlay = false;
                      BlockScreen.instance.Block(false);

@@ -47,7 +47,8 @@ public class MonoUtils : MonoBehaviour
         {
             CurrencyController.CreditBalance(value);
             Sound.instance.Play(Sound.Collects.CoinCollect);
-            Destroy(star);
+            star.gameObject.SetActive(false);
+            Destroy(star, 0.1f);
         }, EaseType.Linear);
         //});
         //});
