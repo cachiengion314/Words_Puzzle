@@ -82,6 +82,10 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopWordTut(string contentPop, int indexAnser = 0, bool lineNotShown = true, string contentAfter = "")
     {
+        if (WordRegion.instance.BtnADS != null)
+        {
+            WordRegion.instance.BtnADS._btnAds.interactable = false;
+        }
         isShowTut = true;
         _overlay.SetActive(true);
         _overlay.GetComponent<Canvas>().sortingOrder = 0;
@@ -326,6 +330,8 @@ public class TutorialController : MonoBehaviour
         }
         if (WordRegion.instance != null)
         {
+            if (WordRegion.instance.BtnADS != null)
+                WordRegion.instance.BtnADS._btnAds.interactable = true;
             WordRegion.instance.btnHint.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnShuffle.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnBonusBox.GetComponent<Canvas>().overrideSorting = false;

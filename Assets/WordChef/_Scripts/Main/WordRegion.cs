@@ -703,12 +703,13 @@ public class WordRegion : MonoBehaviour
 
     private void CheckExtraWordAndWrong(string checkWord)
     {
+        var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count && !TutorialController.instance.isShowTut);
-        if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+        if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
             noMoreLine = lines.Find(li => li == TutorialController.instance.LineTarget && li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
-            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
             {
                 CPlayerPrefs.SetBool("TUTORIAL", true);
                 TutorialController.instance.HidenPopTut();
@@ -719,7 +720,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false);
             }
