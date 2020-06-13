@@ -525,9 +525,12 @@ public class WordRegion : MonoBehaviour
         LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown && !TutorialController.instance.isShowTut && (/*lineAnswerEmpty != null ||*/ CheckAnswerFill(x, checkWord)));
         if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
             line = TutorialController.instance.LineTarget.answer == checkWord ? TutorialController.instance.LineTarget : null;
+        else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
+            line = null;
         //string meaning="";
         if (line != null)
         {
+
             //if (!line.isShown)
             //{
             line.SetDataLetter(checkWord);
@@ -571,6 +574,10 @@ public class WordRegion : MonoBehaviour
                 textPreview.SetExistColor();
                 if (textPreview.useFX)
                     textPreview.ClearText();
+                if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+                {
+                    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false);
+                }
             }
             else
             {
@@ -696,15 +703,24 @@ public class WordRegion : MonoBehaviour
 
     private void CheckExtraWordAndWrong(string checkWord)
     {
-        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count && !TutorialController.instance.isShowTut);
+        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count && (!TutorialController.instance.isShowTut || (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))));
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
+            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            {
+                CPlayerPrefs.SetBool("TUTORIAL", true);
+                TutorialController.instance.HidenPopTut();
+            }
             ExtraWord.instance.ProcessWorld(checkWord);
             if (textPreview.useFX)
                 textPreview.ClearText();
         }
         else
         {
+            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            {
+                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false);
+            }
             CPlayerPrefs.SetBool("LevelMisspelling", false);
             //boardHighlight.gameObject.SetActive(false);
             board.sprite = _spriteNormal;
@@ -712,7 +728,7 @@ public class WordRegion : MonoBehaviour
             Sound.instance.Play(Sound.Others.WordInvalid);
             if (_currLevel > 1)
             {
-                if (Prefs.IsSaveLevelProgress())
+                if (Prefs.IsSaveLevelProgress() && !TutorialController.instance.isShowTut)
                     SetupCellAds();
                 else
                     ShowAdsInOldLevel();
@@ -769,6 +785,18 @@ public class WordRegion : MonoBehaviour
                     TutorialController.instance.isBlockSwipe = false;
                     BlockScreen.instance.Block(false);
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
+                });
+            }
+            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            {
+                CPlayerPrefs.SetBool("TUTORIAL", false);
+                BlockScreen.instance.Block(true);
+                TutorialController.instance.isBlockSwipe = true;
+                TweenControl.GetInstance().DelayCall(transform, 2f, () =>
+                {
+                    TutorialController.instance.isBlockSwipe = false;
+                    BlockScreen.instance.Block(false);
+                    TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation, 0, false, TutorialController.instance.contentUnlockBonusBox);
                 });
             }
         }

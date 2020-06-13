@@ -1,6 +1,7 @@
 ﻿using Superpow;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class TutorialController : MonoBehaviour
     public string contentSelectedHint2;
     public string contentMultipleHint;
     public string contentBonusBox;
+    public string contentUnlockBonusBox;
     public string contentCellStar;
     public string contentSetting;
     public string contentBeehive;
@@ -78,23 +80,51 @@ public class TutorialController : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void ShowPopWordTut(string contentPop)
+    public void ShowPopWordTut(string contentPop, int indexAnser = 0, bool lineNotShown = true, string contentAfter = "")
     {
         isShowTut = true;
         _overlay.SetActive(true);
         _overlay.GetComponent<Canvas>().sortingOrder = 0;
         _popText.SetActive(true);
-        foreach (var line in WordRegion.instance.Lines)
+        if (lineNotShown)
         {
-            if (!line.isShown)
+            foreach (var line in WordRegion.instance.Lines)
             {
-                _lineTarget = line;
-                _answerTarget = line.answers[0];
-                line.SetDataLetter(line.answers[0]);
-                _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
-                LineTarget.GetComponent<Canvas>().overrideSorting = true;
-                LineTarget.lineTutorialBG.gameObject.SetActive(true);
-                break;
+                if (!line.isShown)
+                {
+                    _lineTarget = line;
+                    _answerTarget = line.answers[indexAnser];
+                    line.SetDataLetter(line.answers[indexAnser]);
+                    _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
+                    LineTarget.GetComponent<Canvas>().overrideSorting = true;
+                    LineTarget.lineTutorialBG.gameObject.SetActive(true);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            foreach (var line in WordRegion.instance.Lines)
+            {
+                if (line.isShown)
+                {
+                    _lineTarget = line;
+                    var otherAnswers = line.answers.FindAll(ans => ans != _lineTarget.answer);
+                    var index = 0;
+                    _answerTarget = "";
+                    foreach (var ans in otherAnswers)
+                    {
+                        if (index < otherAnswers.Count - 1)
+                            _answerTarget += ans + ", ";
+                        else
+                            _answerTarget += ans;
+                        index++;
+                    }
+                    _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
+                    LineTarget.GetComponent<Canvas>().overrideSorting = true;
+                    LineTarget.lineTutorialBG.gameObject.SetActive(true);
+                    break;
+                }
             }
         }
     }
@@ -381,7 +411,7 @@ public class TutorialController : MonoBehaviour
             }
             else if (currlevel >= 8 && !CPlayerPrefs.HasKey("CELL_STAR_TUTORIAL"))
             {
-                CPlayerPrefs.SetBool("CELL_STAR_TUTORIAL",true);
+                CPlayerPrefs.SetBool("CELL_STAR_TUTORIAL", true);
                 ShowPopCellStarTut();
             }
             else if (currlevel >= 9 && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))
@@ -389,11 +419,11 @@ public class TutorialController : MonoBehaviour
                 CPlayerPrefs.SetBool("HELP_TUTORIAL", true);
                 ShowPopHelpTut();
             }
-            else if (currlevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
-            {
-                CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
-                ShowPopBonusBoxTut();
-            }
+            //else if (currlevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            //{
+            //    CPlayerPrefs.SetBool("TUT_EXTRA_WORD", true);
+            //    ShowPopBonusBoxTut();
+            //}
 
             CPlayerPrefs.SetBool("LEVEL " + currlevel, true);
         }

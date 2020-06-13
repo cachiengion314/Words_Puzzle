@@ -21,17 +21,19 @@ public class AnimEvent : MonoBehaviour
     {
         if (MainController.instance != null)
         {
+            var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
             BlockScreen.instance.Block(false);
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0)
             {
                 //Timer.Schedule(this, 1f, () =>
                 //{
-                var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
                 //DialogController.instance.ShowDialog(DialogType.HowtoPlay);
                 if (!isTut)
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
                 //});
             }
+            else if (WordRegion.instance.CurLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
+                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation, 0, false, TutorialController.instance.contentUnlockBonusBox);
             //TutorialController.instance.CheckAndShowTutorial();
             //if (CPlayerPrefs.HasKey("BEE_TUTORIAL") && !TutorialController.instance.isShowTut)
             MainController.instance.beeController.OnBeeButtonClick();
