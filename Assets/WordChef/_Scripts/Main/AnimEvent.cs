@@ -59,13 +59,13 @@ public class AnimEvent : MonoBehaviour
     public void LevelClearAnimComplete()
     {
         //MainController.instance.OnComplete();
-        if (WinDialog.instance != null)
-        {
-            TweenControl.GetInstance().DelayCall(transform, 0.75f, () =>
-            {
-                WinDialog.instance.ShowLevelChapterClear();
-            });
-        }
+        //if (WinDialog.instance != null)
+        //{
+        //    TweenControl.GetInstance().DelayCall(transform, 0.75f, () =>
+        //    {
+        //        WinDialog.instance.ShowLevelChapterClear();
+        //    });
+        //}
     }
 
     public void PlayParticleCompliment()
@@ -99,6 +99,16 @@ public class AnimEvent : MonoBehaviour
                     }, EaseType.InQuad);
                 });
                 yield return new WaitForSeconds(0.2f);
+                if (i >= Pan.instance.LetterTexts.Count - 1)
+                {
+                    if (WinDialog.instance != null)
+                    {
+                        TweenControl.GetInstance().DelayCall(transform, 1.3f, () =>
+                        {
+                            WinDialog.instance.ShowLevelChapterClear();
+                        });
+                    }
+                }
             }
         }
     }
