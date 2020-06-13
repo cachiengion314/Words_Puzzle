@@ -60,7 +60,12 @@ public class AnimEvent : MonoBehaviour
     {
         //MainController.instance.OnComplete();
         if (WinDialog.instance != null)
-            WinDialog.instance.ShowLevelChapterClear();
+        {
+            TweenControl.GetInstance().DelayCall(transform, 0.75f, () =>
+            {
+                WinDialog.instance.ShowLevelChapterClear();
+            });
+        }
     }
 
     public void PlayParticleCompliment()
