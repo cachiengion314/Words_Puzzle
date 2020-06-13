@@ -703,7 +703,9 @@ public class WordRegion : MonoBehaviour
 
     private void CheckExtraWordAndWrong(string checkWord)
     {
-        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count && (!TutorialController.instance.isShowTut || (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))));
+        var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count && !TutorialController.instance.isShowTut);
+        if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            noMoreLine = lines.Find(li => li == TutorialController.instance.LineTarget && li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
             if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
@@ -726,9 +728,9 @@ public class WordRegion : MonoBehaviour
             board.sprite = _spriteNormal;
             board.SetNativeSize();
             Sound.instance.Play(Sound.Others.WordInvalid);
-            if (_currLevel > 1)
+            if (_currLevel > 1 && !TutorialController.instance.isShowTut)
             {
-                if (Prefs.IsSaveLevelProgress() && !TutorialController.instance.isShowTut)
+                if (Prefs.IsSaveLevelProgress())
                     SetupCellAds();
                 else
                     ShowAdsInOldLevel();
