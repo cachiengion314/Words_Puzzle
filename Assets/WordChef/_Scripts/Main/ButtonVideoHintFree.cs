@@ -45,6 +45,7 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     public void OnClickOpen()
     {
+        _btnAds.interactable = false;
         _rewardController.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
         //AdmobController.instance.ShowRewardBasedVideo();
@@ -58,6 +59,7 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnCompleteVideo()
     {
+        _btnAds.interactable = true;
         _rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
 
