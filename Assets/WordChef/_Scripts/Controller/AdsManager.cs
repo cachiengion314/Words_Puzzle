@@ -23,15 +23,70 @@ public class AdsManager : MonoBehaviour
             instance = this;
     }
 
+    void Start()
+    {
+        LoadDataAds();
+    }
+
+    private void LoadDataAds()
+    {
+        if (AudienceNetworkFbAd.instance != null)
+            AudienceNetworkFbAd.instance.LoadVideoAds();
+        if (AdmobController.instance != null)
+            AdmobController.instance.RequestRewardBasedVideo();
+        if (UnityAdTest.instance != null)
+            UnityAdTest.instance.ReloadVideoAds();
+    }
+
+    private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (AudienceNetworkFbAd.instance.isLoaded)
+        {
+            _adsController = AudienceNetworkFbAd.instance;
+            _adsController.ShowVideoAds();
+        }
+        else
+        {
+            if (AdmobController.instance.rewardBasedVideo.IsLoaded())
+            {
+                _adsController = AdmobController.instance;
+                _adsController.ShowVideoAds();
+            }
+            else
+            {
+                if (UnityAdTest.instance.IsLoaded())
+                {
+                    _adsController = UnityAdTest.instance;
+                    _adsController.ShowVideoAds();
+                }
+                else
+                {
+                    CUtils.CheckConnection(this, (result) =>
+                    {
+                        if (result == 0)
+                        {
+                            if (showToast)
+                                Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
+                            LoadDataAds();
+                            adsNotReadyYetCallback?.Invoke();
+                        }
+                        else
+                        {
+                            if (showToast)
+                                Toast.instance.ShowMessage("No Internet Connection");
+                            noInternetCallback?.Invoke();
+                        }
+                    });
+                }
+            }
+        }
+    }
 
     #region Show Ads Handle
-    public void LoadVideoAds()
+    public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        _adsController.LoadVideoAds();
-    }
-    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
-    {
-        _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
+        StartCoroutine(ShowVideo());
     }
 
     public void ShowBannerAds()

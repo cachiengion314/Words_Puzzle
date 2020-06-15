@@ -10,7 +10,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 {
     public static AudienceNetworkFbAd instance;
     public RewardedVideoAd rewardedVideoAd;
-    private bool isLoaded;
+    public bool isLoaded;
 #pragma warning disable 0414
     private bool didClose;
 #pragma warning restore 0414
@@ -143,7 +143,6 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         Debug.Log("RewardedVideoAdTest was destroyed!");
     }
 
-  
     /// <summary>
     /// Implement Interface
     /// </summary>
@@ -151,32 +150,9 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     {
         LoadVideoAds();
         yield return new WaitForSeconds(1.3f);
-
-        if (isLoaded)
-        {
-            // ad is loaded
-            rewardedVideoAd.Show();
-            isLoaded = false;
-        }
-        else
-        {
-            CUtils.CheckConnection(this, (result) =>
-            {
-                if (result == 0)
-                {
-                    AdsManager.instance._adsController = UnityAdTest.instance;
-                    AdsManager.instance.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
-
-                    //Toast.instance.ShowMessage("Cannot load video");
-                }
-                else
-                {
-                    //Toast.instance.ShowMessage("No Internet Connection");
-                    noInternetCallback?.Invoke();
-                }
-            });
-            //Debug.Log("Facebook Ad not loaded. Click load to request an ad.");
-        }
+        // ad is loaded
+        rewardedVideoAd.Show();
+        isLoaded = false;
     }
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {

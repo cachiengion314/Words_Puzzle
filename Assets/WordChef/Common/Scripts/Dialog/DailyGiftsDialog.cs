@@ -176,7 +176,6 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickReward()
     {
-        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
         AdsManager.instance.ShowVideoAds();
 
         // AdmobController.instance.ShowRewardBasedVideo();

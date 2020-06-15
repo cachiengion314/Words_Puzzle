@@ -562,9 +562,8 @@ public class WinDialog : Dialog
             Sound.instance.Play(Sound.Others.PopupOpen);
             //AdmobController.instance.ShowRewardBasedVideo();
             AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
-            AdsManager.instance.ShowVideoAds(null, () => {
-                _nextButton.interactable = true; 
-                Toast.instance.ShowMessage("No Internet Connection");
+            AdsManager.instance.ShowVideoAds(true, null, () => {
+                _nextButton.interactable = true;
             });
 
 #if UNITY_EDITOR

@@ -27,6 +27,16 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         //StartCoroutine(ShowBannerWhenReady());
     }
 
+    public bool IsLoaded()
+    {
+        return Advertisement.isShowing;
+    }
+
+    public void ReloadVideoAds()
+    {
+        Advertisement.Load(myPlacementId);
+    }
+
     private IEnumerator ShowBannerWhenReady()
     {
         while (!Advertisement.IsReady(bannerPlacementId))
@@ -63,9 +73,6 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         }
         else if (showResult == ShowResult.Failed)
         {
-            AdsManager.instance._adsController = AdmobController.instance;
-            AdsManager.instance.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
-
             Debug.LogWarning("The ad did not finish due to an error.");
         }
     }
@@ -93,13 +100,9 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     /// <summary>
     /// //////////////////// Implement interface
     /// </summary>
-    Action adsNotReadyYetCallback;
-    Action noInternetCallback;
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         Advertisement.Show(myPlacementId);
-        this.adsNotReadyYetCallback = adsNotReadyYetCallback;
-        this.noInternetCallback = noInternetCallback;
     }
 
     public void ShowBannerAds()

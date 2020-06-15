@@ -48,7 +48,6 @@ public class ButtonVideoHintFree : MonoBehaviour
         _rewardController.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
         //AdmobController.instance.ShowRewardBasedVideo();
-        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
         AdsManager.instance.ShowVideoAds();
 
         Sound.instance.Play(Sound.Others.PopupOpen);

@@ -43,7 +43,6 @@ public class FreeStarsDialog : Dialog
         _rewardControl.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
-        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
         AdsManager.instance.ShowVideoAds();
         //AdmobController.instance.ShowRewardBasedVideo();
 

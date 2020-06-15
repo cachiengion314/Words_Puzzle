@@ -67,8 +67,8 @@ public class OpenWordDictionaryDialog : Dialog
     {
         _rewardControl.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
-        AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
-        AdsManager.instance.ShowVideoAds(LoadAdsFailed, NoInterNet);
+
+        AdsManager.instance.ShowVideoAds(false,LoadAdsFailed, NoInterNet);
 
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
