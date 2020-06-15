@@ -328,13 +328,16 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopCellAdsTut()
     {
+        CPlayerPrefs.SetBool("CELL_ADS_TUTORIAL", true);
         if (WordRegion.instance.BtnADS != null)
         {
-            WordRegion.instance.BtnADS._btnAds.GetComponent<Canvas>().overrideSorting = true;
+            var canvas = WordRegion.instance.BtnADS.GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI1";
         }
         isShowTut = true;
         _overlay.SetActive(true);
-        _overlay.GetComponent<Canvas>().sortingOrder = 0;
         _popCellAds.SetActive(true);
         _textTutorialCellAds.text = contentCellAds;
     }
@@ -351,7 +354,9 @@ public class TutorialController : MonoBehaviour
             if (WordRegion.instance.BtnADS != null)
             {
                 WordRegion.instance.BtnADS._btnAds.interactable = true;
-                WordRegion.instance.BtnADS._btnAds.GetComponent<Canvas>().overrideSorting = true;
+                var canvas = WordRegion.instance.BtnADS.GetComponent<Canvas>();
+                canvas.overrideSorting = false;
+                canvas.sortingLayerName = "Default";
             }
             WordRegion.instance.GetComponent<Canvas>().sortingLayerName = "UI1";
             WordRegion.instance.btnHint.GetComponent<Canvas>().overrideSorting = false;

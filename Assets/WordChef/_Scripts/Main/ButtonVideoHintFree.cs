@@ -59,7 +59,6 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnCompleteVideo()
     {
-        CPlayerPrefs.SetBool("ADS_CELL_TUTORIAL",true);
         _btnAds.interactable = true;
         _rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
