@@ -384,8 +384,7 @@ public class TutorialController : MonoBehaviour
     public void CheckAndShowTutorial()
     {
         var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
-        var currlevel = (GameState.currentLevel + numlevels * (GameState.currentSubWorld + MainController.instance.gameData.words.Count * GameState.currentWorld)) + 1;
-
+        var currlevel = WordRegion.instance.CurLevel;
         if (!CPlayerPrefs.HasKey("LEVEL " + currlevel))
         {
             if ((currlevel >= 33 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
@@ -408,7 +407,7 @@ public class TutorialController : MonoBehaviour
                 CurrencyController.CreditSelectedHintFree(2);
                 ShowPopSelectedHintTut();
             }
-            else if ((currlevel >= 30 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
+            else if ((currlevel >= 30 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetMultipleHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
