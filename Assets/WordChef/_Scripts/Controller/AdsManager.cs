@@ -62,6 +62,8 @@ public class AdsManager : MonoBehaviour
                 }
                 else
                 {
+                    if (WordRegion.instance != null && WordRegion.instance.BtnADS != null)
+                        WordRegion.instance.BtnADS._btnAds.interactable = true;
                     CUtils.CheckConnection(this, (result) =>
                     {
                         if (result == 0)
