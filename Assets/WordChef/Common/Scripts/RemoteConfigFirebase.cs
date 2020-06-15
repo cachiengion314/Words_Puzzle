@@ -5,25 +5,34 @@ using Firebase.RemoteConfig;
 using TMPro;
 public class RemoteConfigFirebase : MonoBehaviour
 {
-    public TextMeshProUGUI textPrefab;
+    //public TextMeshProUGUI textPrefab;
+
+    private bool isNeedToFetch = true;
+    private void Update()
+    {
+        if (!isNeedToFetch) return;
+        isNeedToFetch = false;
+
+        FetchFireBase();
+
+        Invoke("ShowData", 1.7f);
+    }
     public void FetchFireBase()
     {
         FetchDataAsync();
     }
     public void ShowData()
     {
-        Debug.Log("testParameterNam: " +
-           FirebaseRemoteConfig.GetValue("testParameterNam").LongValue);
-        textPrefab.text = "testParameterNam: " +
-            FirebaseRemoteConfig.GetValue("testParameterNam").StringValue;
-        /*
-        Debug.Log("config_test_string: " +
-             FirebaseRemoteConfig.GetValue("config_test_string").StringValue);
-        Debug.Log("config_test_float: " +
-              FirebaseRemoteConfig.GetValue("config_test_float").DoubleValue);
-        Debug.Log("config_test_bool: " +
-                FirebaseRemoteConfig.GetValue("config_test_bool").BooleanValue);
-        */
+        //Debug.Log("TittleMail: " +
+        //   FirebaseRemoteConfig.GetValue("TittleMail").StringValue);
+        //textPrefab.text = "TittleMail: " +
+        //    FirebaseRemoteConfig.GetValue("TittleMail").StringValue;
+
+        string tempTittle = FirebaseRemoteConfig.GetValue("TittleMail").StringValue;
+        bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tempTittle;
+
+        if (!NotifyMailDialogData.instance.IsShowBefore || isNeedToNotify)
+            MailDialog.CreateNewNotify(tempTittle, FirebaseRemoteConfig.GetValue("ContainMail").StringValue);
     }
 
     // Start a fetch request.
@@ -53,6 +62,7 @@ public class RemoteConfigFirebase : MonoBehaviour
         else if (fetchTask.IsCompleted)
         {
             Debug.Log("Fetch completed successfully!");
+            // don't put callback in here. It doesn work properly.
         }
 
         var info = FirebaseRemoteConfig.Info;

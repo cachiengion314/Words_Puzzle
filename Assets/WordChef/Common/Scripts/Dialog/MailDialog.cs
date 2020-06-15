@@ -23,13 +23,10 @@ public class MailDialog : Dialog
         ingameNotifyTranf.SetParent(NotifyMailDialogData.instance.scrollViewContent.transform);
         ingameNotifyTranf.localScale = Vector3.one;
         NotifyMailDialogData.instance.ingameNotify = ingameNotifyTranf.GetComponent<IngameNotify>();
-        NotifyMailDialogData.instance.ingameNotify.CreateNotify(NotifyMailDialogData.instance.tittle, NotifyMailDialogData.instance.contain);
 
-        if (!NotifyMailDialogData.instance.IsShowBefore)
-        {
-            NotifyMailDialogData.instance.IsShowBefore = true;
-            NotifyMailDialogData.MailBttAction?.Invoke();
-        }
+        // Create a messenger 
+        NotifyMailDialogData.instance.ingameNotify.CreateNotify(NotifyMailDialogData.instance.Tittle, NotifyMailDialogData.instance.Contain);
+
     }
     public bool RemoveLatestNotify()
     {
@@ -38,8 +35,8 @@ public class MailDialog : Dialog
     }
     public static void CreateNewNotify(string tittle, string contain)
     {
-        NotifyMailDialogData.instance.tittle = tittle;
-        NotifyMailDialogData.instance.contain = contain;
+        NotifyMailDialogData.instance.Tittle = tittle;
+        NotifyMailDialogData.instance.Contain = contain;
 
         NotifyMailDialogData.instance.IsShowBefore = false;
     }
@@ -49,6 +46,12 @@ public class MailDialog : Dialog
     }
     public void CloseMailDialog()
     {
+        if (!NotifyMailDialogData.instance.IsShowBefore)
+        {
+            NotifyMailDialogData.instance.IsShowBefore = true;
+            NotifyMailDialogData.MailBttAction?.Invoke();
+        }
+
         RemoveLatestNotify();
         Close();
     }

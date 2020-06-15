@@ -6,8 +6,34 @@ using UnityEngine;
 
 public class NotifyMailDialogData : MonoBehaviour
 {
-    public string tittle;
-    public string contain;
+    [SerializeField] private string tittle; // for mail dialog
+    public string Tittle
+    {
+        get
+        {
+            tittle = PlayerPrefs.GetString("MailDialog_Tittle");
+            return tittle;
+        }
+        set
+        {
+            tittle = value;
+            PlayerPrefs.SetString("MailDialog_Tittle", tittle);
+        }
+    }
+    [SerializeField] private string contain; // for mail dialog
+    public string Contain
+    {
+        get
+        {
+            contain = PlayerPrefs.GetString("MailDialog_Contain");
+            return contain;
+        }
+        set
+        {
+            contain = value;
+            PlayerPrefs.SetString("MailDialog_Contain", contain);
+        }
+    }
 
     public static NotifyMailDialogData instance;
     public List<string> notifyData = new List<string>();

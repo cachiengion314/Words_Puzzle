@@ -60,7 +60,6 @@ public class AudienceNetworkBanner : MonoBehaviour
         {
             AdmobController.instance.bannerView.Destroy();
         }
-        Debug.Log("Test Disposs action");
     }
 
     // Load Banner button
