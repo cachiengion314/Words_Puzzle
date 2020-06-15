@@ -15,11 +15,22 @@ public class RemoteConfigFirebase : MonoBehaviour
 
         FetchFireBase();
 
-        Invoke("ShowData", 1.7f);
+        Invoke("ShowData", 1.5f);
     }
     public void FetchFireBase()
     {
         FetchDataAsync();
+    }
+    private string ConvertFirebaseStringToNormal(string firebasestr)
+    {
+        string[] tempFirebaseStrArr = firebasestr.Split(new char[1] { '"' });
+        firebasestr = null;
+        foreach (string item in tempFirebaseStrArr)
+        {
+            firebasestr += item;
+        }
+
+        return firebasestr;
     }
     public void ShowData()
     {
@@ -28,11 +39,16 @@ public class RemoteConfigFirebase : MonoBehaviour
         //textPrefab.text = "TittleMail: " +
         //    FirebaseRemoteConfig.GetValue("TittleMail").StringValue;
 
-        string tempTittle = FirebaseRemoteConfig.GetValue("TittleMail").StringValue;
+        string tempTittle = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("TittleMail").StringValue);
+        string tempContain = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("ContainMail").StringValue);
+
         bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tempTittle;
 
         if (!NotifyMailDialogData.instance.IsShowBefore || isNeedToNotify)
-            MailDialog.CreateNewNotify(tempTittle, FirebaseRemoteConfig.GetValue("ContainMail").StringValue);
+        {
+            MailDialog.CreateNewNotify(tempTittle, tempContain);
+            DialogController.instance.ShowDialog(DialogType.Mail, DialogShow.STACK_DONT_HIDEN);
+        }
     }
 
     // Start a fetch request.
