@@ -146,17 +146,17 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     /// <summary>
     /// Implement Interface
     /// </summary>
-    IEnumerator LoadAndShowVideoDelay(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
+    void LoadAndShowVideoDelay(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        LoadVideoAds();
-        yield return new WaitForSeconds(1.3f);
+        //LoadVideoAds();
+        //yield return new WaitForSeconds(1.3f);
         // ad is loaded
         rewardedVideoAd.Show();
         isLoaded = false;
     }
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        StartCoroutine(LoadAndShowVideoDelay(adsNotReadyYetCallback, noInternetCallback));
+        /*StartCoroutine(*/LoadAndShowVideoDelay(adsNotReadyYetCallback, noInternetCallback)/*)*/;
     }
 
     public void ShowBannerAds()
