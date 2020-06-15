@@ -463,6 +463,8 @@ public class WordRegion : MonoBehaviour
 
             var cellTarget = CheckCellTarget(line.cells);
             CalculateRatioScaleBtnAds(cellTarget);
+            if (!CPlayerPrefs.HasKey("ADS_CELL_TUTORIAL") && !TutorialController.instance.isShowTut)
+                TutorialController.instance.ShowPopCellAdsTut();
         }
         else
         {
@@ -611,8 +613,10 @@ public class WordRegion : MonoBehaviour
         var countRandomShow = Random.Range(3, 6);
         var isAdsHintFree = CPlayerPrefs.GetBool(keyLevel + "ADS_HINT_FREE", false);
         _countShowAdsHintFree += 1;
-        if (_countShowAdsHintFree > countRandomShow && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy) /*&& !TutorialController.instance.isShowTut*/)
+        if (_countShowAdsHintFree > countRandomShow && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy))
         {
+            if (!CPlayerPrefs.HasKey("ADS_CELL_TUTORIAL") && !TutorialController.instance.isShowTut)
+                TutorialController.instance.ShowPopCellAdsTut();
             if (CPlayerPrefs.HasKey(keyLevel + "POS_ADS_BUTTON_X"))
             {
                 var line = lines.Single(l => l.isAds);
