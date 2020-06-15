@@ -171,7 +171,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
                 }
                 else
                 {
-                    Toast.instance.ShowMessage("No Internet Connection");
+                    //Toast.instance.ShowMessage("No Internet Connection");
                     noInternetCallback?.Invoke();
                 }
             });
