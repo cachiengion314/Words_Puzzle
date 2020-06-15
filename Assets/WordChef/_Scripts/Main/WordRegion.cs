@@ -526,8 +526,8 @@ public class WordRegion : MonoBehaviour
         LineWord line = lines.Find(x => x.answers.Contains(checkWord) && !x.isShown && !TutorialController.instance.isShowTut && (/*lineAnswerEmpty != null ||*/ CheckAnswerFill(x, checkWord)));
         if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
             line = TutorialController.instance.LineTarget.answer == checkWord ? TutorialController.instance.LineTarget : null;
-        else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
-            line = null;
+        //else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
+        //    line = null;
         //string meaning="";
         if (line != null)
         {
@@ -575,7 +575,7 @@ public class WordRegion : MonoBehaviour
                 textPreview.SetExistColor();
                 if (textPreview.useFX)
                     textPreview.ClearText();
-                if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+                if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(li => li.isShown))
                 {
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false);
                 }
@@ -721,7 +721,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
+            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown))
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false);
             }
@@ -791,7 +791,7 @@ public class WordRegion : MonoBehaviour
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
                 });
             }
-            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD"))
+            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown))
             {
                 CPlayerPrefs.SetBool("TUTORIAL", false);
                 BlockScreen.instance.Block(true);
@@ -822,11 +822,13 @@ public class WordRegion : MonoBehaviour
         {
             isOpenOverlay = !isOpenOverlay;
             DialogOverlay.instance.ShowOverlay(isOpenOverlay);
+            var canvas = gameObject.GetComponent<Canvas>();
             if (!isOpenOverlay)
             {
                 if (BtnADS != null && !BtnADS.animbutton.raycastTarget && !CPlayerPrefs.GetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE"))
                     BtnADS.animbutton.raycastTarget = true;
-                gameObject.GetComponent<Canvas>().overrideSorting = false;
+                canvas.sortingLayerName = "UI1";
+                canvas.overrideSorting = false;
                 foreach (var li in lines)
                 {
                     li.HidenOverlayOfCell();
@@ -836,7 +838,8 @@ public class WordRegion : MonoBehaviour
             {
                 if (BtnADS != null && BtnADS.animbutton.raycastTarget)
                     BtnADS.animbutton.raycastTarget = false;
-                gameObject.GetComponent<Canvas>().overrideSorting = true;
+                canvas.overrideSorting = true;
+                canvas.sortingLayerName = "UI2";
                 foreach (var li in lines)
                 {
                     li.HighlightCellNotShown();

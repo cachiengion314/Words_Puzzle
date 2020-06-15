@@ -32,8 +32,6 @@ public class AnimEvent : MonoBehaviour
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
                 //});
             }
-            else if (WordRegion.instance.CurLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
-                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation, 0, false, TutorialController.instance.contentUnlockBonusBox);
             //TutorialController.instance.CheckAndShowTutorial();
             //if (CPlayerPrefs.HasKey("BEE_TUTORIAL") && !TutorialController.instance.isShowTut)
             MainController.instance.beeController.OnBeeButtonClick();
@@ -92,8 +90,8 @@ public class AnimEvent : MonoBehaviour
                 //Sound.instance.PlayButton(Sound.Button.Hint);
                 TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.2f, 0.3f, () =>
                 {
-                    TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.5f);
-                    TweenControl.GetInstance().Scale(letter.gameObject, Vector3.zero, 0.5f, () =>
+                    TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.3f);
+                    TweenControl.GetInstance().Scale(letter.gameObject, Vector3.zero, 0.3f, () =>
                     {
                         var fxEffect = Instantiate(WordRegion.instance.compliment.fxHidenLetter, letter.transform);
                     }, EaseType.InQuad);
@@ -103,7 +101,7 @@ public class AnimEvent : MonoBehaviour
                 {
                     if (WinDialog.instance != null)
                     {
-                        TweenControl.GetInstance().DelayCall(transform, 1.3f, () =>
+                        TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>
                         {
                             WinDialog.instance.ShowLevelChapterClear();
                         });

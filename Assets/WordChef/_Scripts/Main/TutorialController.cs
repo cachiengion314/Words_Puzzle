@@ -191,6 +191,8 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopSelectedHint2Tut()
     {
+        if (WordRegion.instance != null)
+            WordRegion.instance.GetComponent<Canvas>().sortingLayerName = "UI2";
         isShowTut = true;
         isBlockSwipe = true;
         _overlay.SetActive(true);
@@ -332,6 +334,7 @@ public class TutorialController : MonoBehaviour
         {
             if (WordRegion.instance.BtnADS != null)
                 WordRegion.instance.BtnADS._btnAds.interactable = true;
+            WordRegion.instance.GetComponent<Canvas>().sortingLayerName = "UI1";
             WordRegion.instance.btnHint.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnShuffle.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnBonusBox.GetComponent<Canvas>().overrideSorting = false;
