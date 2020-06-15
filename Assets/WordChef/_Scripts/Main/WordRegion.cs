@@ -608,9 +608,10 @@ public class WordRegion : MonoBehaviour
 
     private void SetupCellAds()
     {
+        var countRandomShow = Random.Range(3, 6);
         var isAdsHintFree = CPlayerPrefs.GetBool(keyLevel + "ADS_HINT_FREE", false);
         _countShowAdsHintFree += 1;
-        if (_countShowAdsHintFree > 2 && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy) /*&& !TutorialController.instance.isShowTut*/)
+        if (_countShowAdsHintFree > countRandomShow && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy) /*&& !TutorialController.instance.isShowTut*/)
         {
             if (CPlayerPrefs.HasKey(keyLevel + "POS_ADS_BUTTON_X"))
             {
@@ -657,9 +658,10 @@ public class WordRegion : MonoBehaviour
 
     private void ShowAdsInOldLevel()
     {
+        var countRandomShow = Random.Range(3, 6);
         var isAdsHintFree = lines.All(line => !line.isAds);
         _countShowAdsHintFreeOldLevel += 1;
-        if (_countShowAdsHintFreeOldLevel > 2 && isAdsHintFree)
+        if (_countShowAdsHintFreeOldLevel > countRandomShow && isAdsHintFree)
         {
             var lineNotShown = lines.FindAll(l => !l.isShown && !l.usedBee);
             var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
