@@ -314,6 +314,7 @@ public class TutorialController : MonoBehaviour
         if (HomeController.instance != null)
         {
             HomeController.instance.btnFreeBoosters.gameObject.SetActive(true);
+            HomeController.instance.FreeBoostersShadow.SetActive(true);
             var canvas = HomeController.instance.btnFreeBoosters.GetComponent<Canvas>();
             canvas.overrideSorting = true;
         }
