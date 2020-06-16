@@ -166,7 +166,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         }
         else
         {
-            AdmobController.instance.RequestBanner();
+            AdmobController.instance.RequestAdaptiveBanner();
         }
     }
 }

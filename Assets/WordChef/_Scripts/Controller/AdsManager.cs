@@ -31,11 +31,21 @@ public class AdsManager : MonoBehaviour
     private void LoadDataAds()
     {
         if (AudienceNetworkFbAd.instance != null)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
             AudienceNetworkFbAd.instance.LoadVideoAds();
+#endif
+        }
         if (AdmobController.instance != null)
+        {
             AdmobController.instance.RequestRewardBasedVideo();
+        }
+
         if (UnityAdTest.instance != null)
+        {
             UnityAdTest.instance.ReloadVideoAds();
+        }
+
     }
 
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)

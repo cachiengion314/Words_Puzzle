@@ -20,11 +20,13 @@ public class AdmobController : MonoBehaviour, IAds
         if (!CUtils.IsAdsRemoved())
         {
             //RequestBanner();
-            RequestInterstitial();
+            //RequestInterstitial();
         }
 
         InitRewardedVideo();
         RequestRewardBasedVideo();
+
+        // ShowBanner(); // working
     }
 
     private void InitRewardedVideo()
@@ -54,7 +56,7 @@ public class AdmobController : MonoBehaviour, IAds
 #else
         string adUnitId = "unexpected_platform";
 #endif
-       
+
         // Create a 320x50 banner at the top of the screen.
         this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
@@ -171,7 +173,7 @@ public class AdmobController : MonoBehaviour, IAds
         else
         {
             //MonoBehaviour.print("Reward based video ad is not ready yet");
-           
+
             CUtils.CheckConnection(this, (result) =>
             {
                 if (result == 0)
@@ -194,7 +196,10 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
-        print("HandleAdLoaded event received.");
+        MonoBehaviour.print("HandleAdLoaded event received");
+        MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}",
+            this.bannerView.GetHeightInPixels(),
+            this.bannerView.GetWidthInPixels()));
     }
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
@@ -334,5 +339,68 @@ public class AdmobController : MonoBehaviour, IAds
     public void ShowInterstitialAds()
     {
 
+    }
+    // Adaptive banner
+    public void OnGUIq()
+    {
+        GUI.skin.label.fontSize = 60;
+        Rect textOutputRect = new Rect(
+          0.15f * Screen.width,
+          0.25f * Screen.height,
+          0.7f * Screen.width,
+          0.3f * Screen.height);
+        GUI.Label(textOutputRect, "Adaptive Banner Example");
+    }
+
+    public void RequestAdaptiveBanner()
+    {
+        // These ad units are configured to always serve test ads.
+#if UNITY_EDITOR
+        string adUnitId = "unused";
+#elif UNITY_ANDROID
+            string adUnitId = "ca-app-pub-3212738706492790/6113697308";
+#elif UNITY_IPHONE
+            string adUnitId = "ca-app-pub-3212738706492790/5381898163";
+#else
+            string adUnitId = "unexpected_platform";
+#endif
+
+        // Clean up banner ad before creating a new one.
+        if (this.bannerView != null)
+        {
+            this.bannerView.Destroy();
+        }
+
+        AdSize adaptiveSize =
+                AdSize.GetPortraitAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+
+        this.bannerView = new BannerView(adUnitId, adaptiveSize, AdPosition.Bottom);
+
+        // Register for ad events.
+        this.bannerView.OnAdLoaded += this.HandleAdLoaded;
+        this.bannerView.OnAdFailedToLoad += this.HandleAdFailedToLoad;
+        this.bannerView.OnAdOpening += this.HandleAdOpened;
+        this.bannerView.OnAdClosed += this.HandleAdClosed;
+        this.bannerView.OnAdLeavingApplication += this.HandleAdLeftApplication;
+
+        AdRequest adRequest = new AdRequest.Builder()
+            .AddTestDevice(AdRequest.TestDeviceSimulator)
+            .AddTestDevice("0123456789ABCDEF0123456789ABCDEF")
+            .Build();
+
+        // Load a banner ad.
+        this.bannerView.LoadAd(adRequest);
+    }
+    public void ShowAdaptiveBanner()
+    {
+        if (CUtils.IsAdsRemoved()) return;
+        if (bannerView != null)
+        {
+            bannerView.Show();
+        }
+        else
+        {
+            RequestAdaptiveBanner();
+        }
     }
 }

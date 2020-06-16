@@ -603,12 +603,13 @@ public class CUtils
     public static void ShowBannerAd()
     {
         if (IsAdsRemoved()) return;
-
+/*
 #if UNITY_ANDROID || UNITY_IPHONE
         AdmobController.instance.ShowBanner();
 #else
         if (JobWorker.instance.onShowBanner != null) JobWorker.instance.onShowBanner();
 #endif
+*/
     }
 
     public static void CloseBannerAd()
