@@ -31,11 +31,16 @@ public class Quest : MonoBehaviour
     RectTransform rt;
     float maxWidth;
 
-    private void Start()
+    void OnEnable()
+    {
+        goal.requiredAmount = CPlayerPrefs.GetInt((taskType == TaskType.ACHIEVEMENT ? "Completed_" : "Completed_Daily_") + idQuest, goal.requiredAmount);
+        _fillProgress.maxValue = goal.requiredAmount;
+    }
+
+    void Start()
     {
         rt = _progressMask.GetComponent<RectTransform>();
         maxWidth = rt.rect.width;
-
         UpdateProgress();
     }
 
@@ -66,8 +71,9 @@ public class Quest : MonoBehaviour
     {
         goal.amountResetup = goal.requiredAmount * 2;
         goal.requiredAmount = goal.amountResetup;
+        if (taskType == TaskType.ACHIEVEMENT)
+            CPlayerPrefs.SetInt("Completed_" + idQuest, goal.requiredAmount);
         ClearTaskAchievementByKey();
-        ClearTask((taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_") + idQuest);
         ShowQuestAchie();
         ObjectiveManager.instance.ResetupAchie(idQuest, goal.requiredAmount);
     }
@@ -220,6 +226,8 @@ public class Quest : MonoBehaviour
     void ShowQuestAchie()
     {
         //gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
+        if (taskType == TaskType.ACHIEVEMENT)
+            goal.requiredAmount = CPlayerPrefs.GetInt("Completed_" + idQuest, goal.requiredAmount);
         _fillProgress.maxValue = goal.requiredAmount;
         if (_fillProgress.value < _fillProgress.maxValue)
         {
