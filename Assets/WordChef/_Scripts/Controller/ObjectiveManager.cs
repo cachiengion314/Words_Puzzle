@@ -48,6 +48,22 @@ public class ObjectiveManager : MonoBehaviour
             ShowIcon(false);
     }
 
+    public bool CheckTaskAchie()
+    {
+        if ((Prefs.countLevel >= objectiveData.achievementsDatas[0]) ||
+            (Prefs.countGreat >= objectiveData.achievementsDatas[1]) ||
+            (Prefs.countAmazing >= objectiveData.achievementsDatas[2]) ||
+            (Prefs.countAwesome >= objectiveData.achievementsDatas[3]) ||
+            (Prefs.countExcellent >= objectiveData.achievementsDatas[4]) ||
+            (Prefs.countSpell >= objectiveData.achievementsDatas[5]) ||
+            (Prefs.countExtra >= objectiveData.achievementsDatas[6]) ||
+            (Prefs.countBooster >= objectiveData.achievementsDatas[7]) ||
+            (Prefs.countLevelMisspelling >= objectiveData.achievementsDatas[8]))
+            return true;
+        else
+            return false;
+    }
+
     public void ResetupAchie(int index, int value)
     {
         objectiveData.achievementsDatas[index] = value;

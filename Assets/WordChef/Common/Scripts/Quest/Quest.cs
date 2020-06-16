@@ -28,6 +28,8 @@ public class Quest : MonoBehaviour
     [SerializeField] private Image _iconTask;
     [SerializeField] private TextMeshProUGUI _textProgress;
 
+    [HideInInspector] public bool taskComplete;
+    [HideInInspector] public bool taskCollected;
     RectTransform rt;
     float maxWidth;
 
@@ -35,10 +37,6 @@ public class Quest : MonoBehaviour
     {
         goal.requiredAmount = CPlayerPrefs.GetInt((taskType == TaskType.ACHIEVEMENT ? "Completed_" : "Completed_Daily_") + idQuest, goal.requiredAmount);
         _fillProgress.maxValue = goal.requiredAmount;
-    }
-
-    void Start()
-    {
         rt = _progressMask.GetComponent<RectTransform>();
         maxWidth = rt.rect.width;
         UpdateProgress();
@@ -100,10 +98,12 @@ public class Quest : MonoBehaviour
 
     private void ShowReward(bool show)
     {
+        taskComplete = show;
         _btnReward.gameObject.SetActive(show);
         _iconComplete.gameObject.SetActive(false);
         _btnGo.gameObject.SetActive(MainController.instance != null ? false : true);
         var iscompleted = CPlayerPrefs.GetBool((taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_") + idQuest, false);
+        taskCollected = iscompleted;
         if (iscompleted)
         {
             _btnReward.gameObject.SetActive(false);
