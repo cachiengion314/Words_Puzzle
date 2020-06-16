@@ -70,7 +70,7 @@ public class PauseDialog : Dialog
     public void OnTaskClick()
     {
         var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
-        var currlevel = (GameState.currentLevel + numlevels * (GameState.currentSubWorld + MainController.instance.gameData.words.Count * GameState.currentWorld)) + 1;
+        var currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * GameState.currentWorld) + 1;
         Sound.instance.Play(Sound.Others.PopupOpen);
         if ((currlevel < 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily < 2 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
             DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, "Objectives", "This feature is not unlocked.\nKeep it up!");

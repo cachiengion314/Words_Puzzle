@@ -49,7 +49,7 @@ public class WorldController : BaseController
         //UpdateUI();
         //snapScroll.InitPoints(_root.childCount);
         var numlevels = Utils.GetNumLevels(Prefs.unlockedSubWorld, Prefs.unlockedWorld);
-        target = Prefs.unlockedSubWorld + Prefs.unlockedWorld * numlevels;
+        target = Prefs.unlockedLevel + Prefs.unlockedSubWorld * numlevels + Prefs.unlockedWorld * _data.words[0].subWords.Count * numlevels;
         _heightItem = (_wordItemPfb.transform as RectTransform).rect.height;
         _heightRoot = _heightItem * worldItems.Count;
         SetPosScroll();

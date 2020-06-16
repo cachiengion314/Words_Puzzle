@@ -27,7 +27,7 @@ public class BeeController : MonoBehaviour
     public void OnBeeButtonClick()
     {
         var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
-        var currlevel = (GameState.currentLevel + numlevels * (GameState.currentSubWorld + MainController.instance.gameData.words.Count * GameState.currentWorld)) + 1;
+        var currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + MainController.instance.gameData.words[0].subWords.Count * GameState.currentWorld * numlevels) + 1;
         var isUsed = WordRegion.instance.Lines.Any(line => line.usedBee);
         var isCellClear = WordRegion.instance.Lines.All(line => line.cells.All(cell => !cell.isShown));
         if (BeeManager.instance.CurrBee > 0 && !isUsed && isCellClear && Prefs.IsSaveLevelProgress())
