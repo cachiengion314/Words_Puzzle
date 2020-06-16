@@ -49,7 +49,7 @@ public class WorldController : BaseController
         //UpdateUI();
         //snapScroll.InitPoints(_root.childCount);
         var numlevels = Utils.GetNumLevels(Prefs.unlockedSubWorld, Prefs.unlockedWorld);
-        target = Prefs.unlockedLevel + Prefs.unlockedSubWorld * numlevels + Prefs.unlockedWorld * _data.words[0].subWords.Count * numlevels;
+        target = Prefs.unlockedLevel + Prefs.unlockedSubWorld * numlevels + Prefs.unlockedWorld * _data.words[0].subWords.Count * numlevels - 1;
         _heightItem = (_wordItemPfb.transform as RectTransform).rect.height;
         _heightRoot = _heightItem * worldItems.Count;
         SetPosScroll();
@@ -158,16 +158,16 @@ public class WorldController : BaseController
     private int wordCountMax;
     private bool isCreateDone;
     private int currentIndexStatic;
-    private int maxWordsTemp = 10;
+    private int maxWordsTemp = 2;
     void ScrollRectCallBack(Vector2 value)
     {
-        if (value.y <= .1f)
+        if (value.y <= 0.1f)
         {
             if (!isCreateDone && !isMaxPossibleChaper)
             {
-                if (maxWordsTemp >= (wordCountMax - wordCountMax % 5))
+                if (maxWordsTemp >= (wordCountMax - wordCountMax % _data.words[0].subWords.Count))
                 {
-                    maxWordsTemp += wordCountMax % 5;
+                    maxWordsTemp += wordCountMax % _data.words[0].subWords.Count;
                     CreateWordDelay();
                     isMaxPossibleChaper = true;
                     Debug.Log("IS MAX" + isMaxPossibleChaper);
@@ -203,8 +203,8 @@ public class WorldController : BaseController
                 //wordItem.subWorld = indexSub;
 
                 //worldItems.Add(wordItem);
-              
-                worldItems[5 * tempIndex + indexSub].gameObject.SetActive(true);
+
+                worldItems[_data.words[0].subWords.Count * tempIndex + indexSub].gameObject.SetActive(true);
                 indexSub++;
             }
         }
