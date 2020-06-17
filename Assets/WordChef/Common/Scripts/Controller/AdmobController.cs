@@ -27,6 +27,7 @@ public class AdmobController : MonoBehaviour, IAds
         RequestRewardBasedVideo();
 
         // ShowBanner(); // working
+        // ShowAdaptiveBanner(); not working yet
     }
 
     private void InitRewardedVideo()

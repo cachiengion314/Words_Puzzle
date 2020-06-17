@@ -17,40 +17,38 @@ public class NotificationController : MonoBehaviour
     private const double NOTI_DELAY_6 = 15 * 24 * 3600;
     private const double NOTI_DELAY_7 = 30 * 24 * 3600;
 
-    private const string DAILYTIME_MORNING = "6:00:00";
-    private const string DAILYTIME_LUNCH = "12:00:00";
-    private const string DAILYTIME_AFTERNOON = "16:00:00";
-    private const string DAILYTIME_DINNER = "18:00:00";
-    private const string DAILYTIME_NIGHT = "21:00:00";
-    private string DAILYTIME_CUSTOM = "12:00:00";
+    private const string DAILYTIME_MORNING = "10:00:00"; // +3 hours
+    private const string DAILYTIME_AFTERNOON = "18:00:00"; // +3 hours
+
+    private string DAILYTIME_CUSTOM = "17:00:00";
 
     private int MAX_CURRENT_LOOP = 7;
-    private double secondsToHoursValue = 24 * 3600;
+    private double dayToSecondsValue = 24 * 3600; // 24 * 3600
+    private float hourToSecondsValue = 3600; // 3600
 
     private bool ingame = false;
     private void Start()
     {
-        // InGame();
-        //InGamePushNotification();
+        //InGame();
+        InGamePushNotification();
     }
-
     private void OnApplicationPause(bool pause)
     {
         if (pause)
         {
             // OutGame();
-           // OutGamePushNotification();
+            OutGamePushNotification();
         }
         else
         {
             // InGame();
-           // InGamePushNotification();
+            InGamePushNotification();
         }
     }
     private void OnApplicationQuit()
     {
         //  OutGame();
-       // OutGamePushNotification();
+        OutGamePushNotification();
     }
     private TimeSpan RunCodeAtSpecificTime(string DAILYTIME)
     {
@@ -69,29 +67,39 @@ public class NotificationController : MonoBehaviour
         }
         return intervalTime;
     }
-    private TimeSpan NotificationCallback(double TIME)
+    private TimeSpan NotificationCall(double TIME)
     {
         TimeSpan specificTime = TimeSpan.FromSeconds(TIME);
-        Task.Delay(specificTime).ContinueWith((x) => NotiCallback());
+        Task.Delay(specificTime).ContinueWith((x) => { });
         return specificTime;
-    }
-    private void NotiCallback()
-    {
-    
     }
     private void PushManyNotifications(string DAILYTIME)
     {
+        double tempSeconds = RunCodeAtSpecificTime(DAILYTIME).TotalSeconds;
+        float randomNum = UnityEngine.Random.Range(0f, 3f * hourToSecondsValue);
+        tempSeconds += (double)randomNum;
+
         for (int i = 0; i < MAX_CURRENT_LOOP; i++)
         {
-            PushNotification(RunCodeAtSpecificTime(DAILYTIME).TotalSeconds + (i * secondsToHoursValue));
+            int randomIndex = UnityEngine.Random.Range(0, 3);
+            if (randomIndex == 0) PushChickenBankNotification(tempSeconds + (i * dayToSecondsValue));
+            else if (randomIndex == 1) PushFindWordsNotification(tempSeconds + (i * dayToSecondsValue));
+            else if (randomIndex == 2) PushFreeBoostersNotification(tempSeconds + (i * dayToSecondsValue));
         }
+    }
+    private string RandomDailyTimePick(string DAILY_TIME1, string DAILY_TIME2)
+    {
+        string dailyTime = DAILY_TIME1;
+        if (UnityEngine.Random.Range(0, 2) == 1) dailyTime = DAILY_TIME2;
+        return dailyTime;
     }
     private void OutGamePushNotification()
     {
         ingame = false;
 
         NotificationManager.CancelAll();
-        PushManyNotifications(DAILYTIME_CUSTOM);
+        string DAILY_TIME = RandomDailyTimePick(DAILYTIME_MORNING, DAILYTIME_AFTERNOON);
+        PushManyNotifications(DAILY_TIME);
     }
     private void InGamePushNotification()
     {
@@ -99,16 +107,25 @@ public class NotificationController : MonoBehaviour
         ingame = true;
 
         NotificationManager.CancelAll();
-        PushManyNotifications(DAILYTIME_CUSTOM);
+        string DAILY_TIME = RandomDailyTimePick(DAILYTIME_MORNING, DAILYTIME_AFTERNOON);
+        PushManyNotifications(DAILY_TIME);
     }
-    private void PushNotification(double delay)
+    private void PushChickenBankNotification(double delay)
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        string message = "Come and play the game testing messenger ";
+        string message = "Chicken Bank is full. Crack to open it!";
         NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
-#endif
     }
-    /////////////////////////////////////////////////////////////////// Old func
+    private void PushFindWordsNotification(double delay)
+    {
+        string message = "Find the words built from the letters A, B, C. ";
+        NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
+    }
+    private void PushFreeBoostersNotification(double delay)
+    {
+        string message = "Free Boosters are ready! Let's discover what they are!";
+        NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
+    }
+    /////////////////////////////////////////////////////////////////// Old function
     private void InGame()
     {
         if (ingame) return;
@@ -171,7 +188,7 @@ public class NotificationController : MonoBehaviour
 
         Prefs.isNoti1Enabled = false;
         Prefs.isNoti2Enabled = false;
-        NotificationManager.CancelAll();
+        //NotificationManager.CancelAll();
     }
 
     private void OutGame()

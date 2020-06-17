@@ -3,6 +3,7 @@ using AudienceNetwork;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using AudienceNetwork.Utility;
+using System.Collections;
 
 public class AudienceNetworkBanner : MonoBehaviour
 {
@@ -25,6 +26,14 @@ public class AudienceNetworkBanner : MonoBehaviour
 
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
+    private IEnumerator ReLoadFacebookBanner()
+    {
+        while (true)
+        {
+            LoadBanner();
+            yield return new WaitForSeconds(5);
+        }        
+    }
     private void ChangedActiveScene(Scene current, Scene next)
     {
         int nextName = next.buildIndex;
@@ -35,6 +44,7 @@ public class AudienceNetworkBanner : MonoBehaviour
 
             if (!hasLoadMainScene)
             {
+                //StartCoroutine(ReLoadFacebookBanner());
 #if UNITY_ANDROID && !UNITY_EDITOR
             LoadBanner();
 #endif
