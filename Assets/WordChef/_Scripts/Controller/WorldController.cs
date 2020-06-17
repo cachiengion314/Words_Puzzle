@@ -22,7 +22,7 @@ public class WorldController : BaseController
     private float _heightRoot;
     private Vector2 posTarget;
     public int target;
-
+    [SerializeField] private RectTransform posLast;
 
     protected override void Awake()
     {
@@ -159,34 +159,68 @@ public class WorldController : BaseController
     private bool isCreateDone;
     private int currentIndexStatic;
     private int maxWordsTemp = 2;
+    private int countChapter;
+    private int wordNew;
     void ScrollRectCallBack(Vector2 value)
     {
+        //if (value.y <= 0.1f)
+        //{
+        //    if (!isCreateDone && !isMaxPossibleChaper)
+        //    {
+        //        if (maxWordsTemp >= (wordCountMax - wordCountMax % _data.words[0].subWords.Count))
+        //        {
+        //            maxWordsTemp += wordCountMax % _data.words[0].subWords.Count;
+        //            CreateWordDelay();
+        //            isMaxPossibleChaper = true;
+        //            Debug.Log("IS MAX" + isMaxPossibleChaper);
+        //        }
+        //        else
+        //        {
+        //            maxWordsTemp += 5;
+        //            CreateWordDelay();
+        //            isCreateDone = true;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    isCreateDone = false;
+        //}
+
         if (value.y <= 0.1f)
         {
-            if (!isCreateDone && !isMaxPossibleChaper)
+            var wordItem = Instantiate(_wordItemPfb, _root);
+            wordItem.worldController = this;
+            wordItem.itemTemp = true;
+            wordItem.scroll = _scroll;
+            wordItem.world = wordNew;
+            wordItem.subWorld = countChapter;
+            worldItems.Add(wordItem);
+            countChapter++;
+            if (countChapter >= _data.words[0].subWords.Count - 1)
             {
-                if (maxWordsTemp >= (wordCountMax - wordCountMax % _data.words[0].subWords.Count))
-                {
-                    maxWordsTemp += wordCountMax % _data.words[0].subWords.Count;
-                    CreateWordDelay();
-                    isMaxPossibleChaper = true;
-                    Debug.Log("IS MAX" + isMaxPossibleChaper);
-                }
-                else
-                {
-                    maxWordsTemp += 5;
-                    CreateWordDelay();
-                    isCreateDone = true;
-                }
+                wordNew += 1;
+                countChapter = 0;
+                maxWordsTemp = wordNew;
             }
         }
-        else
+        CheckShowItem();
+    }
+
+    private void CheckShowItem()
+    {
+        foreach (var item in worldItems)
         {
-            isCreateDone = false;
+            if (item.transform.position.y < posLast.position.y)
+                item.gameObject.SetActive(false);
+            else
+                item.gameObject.SetActive(true);
         }
     }
+
     private void CreateWordDelay()
     {
+        maxWordsTemp = wordNew;
         countItem = countItemStatic;
         int tempIndex;
         for (tempIndex = currentIndexStatic; tempIndex < maxWordsTemp; tempIndex++)
@@ -222,6 +256,7 @@ public class WorldController : BaseController
             int index = tempIndex;
             var data = _data.words[tempIndex];
             int indexSub = 0;
+            wordNew = tempIndex + 1;
             foreach (var sub in data.subWords)
             {
                 var wordItem = Instantiate(_wordItemPfb, _root);

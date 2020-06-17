@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 public class WorldItem : MonoBehaviour {
+    [HideInInspector] public bool itemTemp;
     public GameObject rootBg;
     public MaskableGraphic itemNumber, itemNumberBack;
     public Image play, star, bg;
@@ -32,23 +33,27 @@ public class WorldItem : MonoBehaviour {
 
         //world = transform.parent.parent.GetSiblingIndex();
         //subWorld = transform.GetSiblingIndex();
-        int numLevels = Superpow.Utils.GetNumLevels(world, subWorld);
-
-         unlockedWorld = Prefs.unlockedWorld;
-         unlockedSubWorld = Prefs.unlockedSubWorld;
-         unlockedLevel = Prefs.unlockedLevel;
-
-        //Load level
-        for (int i = 0; i < numLevels; i++)
+        int numLevels = 0;
+        if (!itemTemp)
         {
-            LevelItem levelButton = Instantiate(levelItemPrefab);
-            levelButton.numlevels = numLevels;
-            levelButton.world = world;
-            levelButton.subWorld = subWorld;
-            levelButton.level = i;
-            levelButton.transform.SetParent(levelGrid);
-            levelButton.transform.localScale = Vector3.one;
-            levelButton.transform.SetLocalZ(0);
+            numLevels = Superpow.Utils.GetNumLevels(world, subWorld);
+
+            unlockedWorld = Prefs.unlockedWorld;
+            unlockedSubWorld = Prefs.unlockedSubWorld;
+            unlockedLevel = Prefs.unlockedLevel;
+
+            //Load level
+            for (int i = 0; i < numLevels; i++)
+            {
+                LevelItem levelButton = Instantiate(levelItemPrefab);
+                levelButton.numlevels = numLevels;
+                levelButton.world = world;
+                levelButton.subWorld = subWorld;
+                levelButton.level = i;
+                levelButton.transform.SetParent(levelGrid);
+                levelButton.transform.localScale = Vector3.one;
+                levelButton.transform.SetLocalZ(0);
+            }
         }
 
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
