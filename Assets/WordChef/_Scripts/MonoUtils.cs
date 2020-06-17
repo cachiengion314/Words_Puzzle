@@ -23,7 +23,7 @@ public class MonoUtils : MonoBehaviour
         instance = this;
     }
 
-    public void ShowEffect(int value, Transform currBalance = null, Transform root = null, Transform posStart = null, GameObject starPfb = null)
+    public void ShowEffect(int value, Transform currBalance = null, Transform root = null, Transform posStart = null, GameObject starPfb = null, float power = -800f)
     {
         var tweenControl = TweenControl.GetInstance();
         var star = Instantiate(starPfb == null ? rubyFly : starPfb, root == null ? rootDefault : root);
@@ -43,7 +43,7 @@ public class MonoUtils : MonoBehaviour
         //{
         //tweenControl.MoveLocal(star.transform, targetShow - new Vector3(100, 50, 0), 0.2f, () =>
         //  {
-        tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, -800f, 1, 1.3f, false, () =>
+        tweenControl.JumpRect(star.transform as RectTransform, (currBalance != null ? currBalance as RectTransform : posDefault as RectTransform).anchoredPosition, power, 1, 1.3f, false, () =>
         {
             CurrencyController.CreditBalance(value);
             Sound.instance.Play(Sound.Collects.CoinCollect);
