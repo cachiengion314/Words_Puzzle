@@ -311,6 +311,7 @@ public class WordRegion : MonoBehaviour
             lineIndex++;
         }
         var tempLinesShown = lines.FindAll(li => li.isShown);
+        var tempLinesNotShown = lines.FindAll(li => !li.isShown);
         foreach (var lineShown in tempLinesShown)
         {
             for (int i = 0; i < lines.Count; i++)
@@ -319,6 +320,14 @@ public class WordRegion : MonoBehaviour
                 {
                     lines[i].answers.Remove(lineShown.answer);
                 }
+            }
+        }
+        foreach (var lineNotShown in tempLinesNotShown)
+        {
+            foreach (var li in lines)
+            {
+                if (li != lineNotShown && li.cells.Count == lineNotShown.cells.Count)
+                    lineNotShown.FilterSuitableAnswers(li);
             }
         }
         ShowBtnDictionaryInGamePlay();

@@ -155,27 +155,7 @@ public class LineWord : MonoBehaviour
         {
             cell.isShown = true;
         }
-        foreach (var line in WordRegion.instance.Lines)
-        {
-            if (line != this)
-            {
-                _isResetDataAnswer = false;
-                if (!line.isShown && line.cells.Count == answer.Length)
-                {
-                    foreach (var an in line.answers)
-                    {
-                        if (an != answer)
-                        {
-                            if (!_isResetDataAnswer)
-                                ResetAnswer(line, an);
-                            else
-                                break;
-                        }
-                    }
-                }
-                line.answers.Remove(answer);
-            }
-        }
+        FilterAnswers();
         WordRegion.instance.listWordCorrect.Add(answer.ToLower());
         ShowBtnMeanByWord();
         StartCoroutine(IEShowAnswer());
@@ -201,6 +181,46 @@ public class LineWord : MonoBehaviour
             }
             else
                 line.answer = "";
+        }
+    }
+
+    private void FilterAnswers()
+    {
+        foreach (var line in WordRegion.instance.Lines)
+        {
+            if (line != this)
+            {
+                _isResetDataAnswer = false;
+                if (!line.isShown && line.cells.Count == answer.Length)
+                {
+                    foreach (var an in line.answers)
+                    {
+                        if (an != answer)
+                        {
+                            if (!_isResetDataAnswer)
+                                ResetAnswer(line, an);
+                            else
+                                break;
+                        }
+                    }
+                }
+                line.answers.Remove(answer);
+            }
+        }
+    }
+
+    public void FilterSuitableAnswers(LineWord line)
+    {
+        _isResetDataAnswer = false;
+        foreach (var an in line.answers)
+        {
+            if (an != answer)
+            {
+                if (!_isResetDataAnswer)
+                    ResetAnswer(line, an);
+                else
+                    break;
+            }
         }
     }
 
