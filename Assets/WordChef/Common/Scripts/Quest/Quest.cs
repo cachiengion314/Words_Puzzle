@@ -36,7 +36,8 @@ public class Quest : MonoBehaviour
     void OnEnable()
     {
         goal.requiredAmount = CPlayerPrefs.GetInt((taskType == TaskType.ACHIEVEMENT ? "Completed_" : "Completed_Daily_") + idQuest, goal.requiredAmount);
-        _fillProgress.maxValue = goal.requiredAmount;
+        if (taskType == TaskType.ACHIEVEMENT)
+            _fillProgress.maxValue = goal.requiredAmount;
         rt = _progressMask.GetComponent<RectTransform>();
         maxWidth = rt.rect.width;
         UpdateProgress();
