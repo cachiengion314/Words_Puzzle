@@ -172,13 +172,13 @@ public class HomeController : BaseController
         {
             var _isReward = CPlayerPrefs.GetBool(TIME_REWARD_KEY, false);
             if (!_isReward)
-                notiChickenMax.SetActive(false);
+                notiOpenFreeBoosters.SetActive(false);
             else
-                notiChickenMax.SetActive(true);
+                notiOpenFreeBoosters.SetActive(true);
         }
         else
         {
-            notiChickenMax.SetActive(true);
+            notiOpenFreeBoosters.SetActive(true);
         }
     }
 }

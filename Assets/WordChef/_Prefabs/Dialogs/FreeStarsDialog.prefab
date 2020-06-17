@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 224311725539365746}
   - component: {fileID: 222474720025330464}
   - component: {fileID: 114249283444980292}
-  - component: {fileID: 114856019115115668}
+  - component: {fileID: 7699836044122227687}
   m_Layer: 8
   m_Name: Watch
   m_TagString: Untagged
@@ -604,7 +604,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &114856019115115668
+--- !u!114 &7699836044122227687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -613,11 +613,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1835698497554610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: af82d309aabc2be46a6dda1e9a2bc6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -640,7 +640,7 @@ MonoBehaviour:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
-    m_SelectedTrigger: Highlighted
+    m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 114249283444980292}
@@ -658,6 +658,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  mPivotForFX: 6
+  mEnabledFX: 1
+  mImg: {fileID: 114249283444980292}
+  mRelatedObjects: []
+  mInitialScale: {x: 1, y: 1}
+  mLabelTMP: {fileID: 0}
 --- !u!1 &1859683632719506
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +789,7 @@ MonoBehaviour:
   scaleDialog: 1
   resestAnim: 1
   isSound: 1
-  _btnWatch: {fileID: 114856019115115668}
+  _btnWatch: {fileID: 7699836044122227687}
   _rewardVideoPfb: {fileID: 679568237335923316, guid: 6a6c5a43263ccfe42a21893a9cacc9a6,
     type: 3}
   _panelWatch: {fileID: 1201005843010644}
