@@ -24,13 +24,13 @@ public class WorldController : BaseController
     public int target;
     [SerializeField] private RectTransform posLast;
 
+    private int countItem = 0;
+    private int countChapter;
+    private int wordNew;
+
     protected override void Awake()
     {
         base.Awake();
-        // CreateWord();
-
-        //  TESTING FIX LAG WHEN SCROLL
-        wordCountMax = _data.words.Count; // dataWordCountMax = 122   
         _scroll.onValueChanged.AddListener(ScrollRectCallBack);
 
         FirstCreateWord();
@@ -44,49 +44,36 @@ public class WorldController : BaseController
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
         float screenAspect = screenWidth * 1.0f / screenHeight;
-        //if (screenAspect < (9f / 16f)) title.SetActive(false);
 
-        //UpdateUI();
-        //snapScroll.InitPoints(_root.childCount);
         var numlevels = Utils.GetNumLevels(Prefs.unlockedSubWorld, Prefs.unlockedWorld);
-        target = Prefs.unlockedLevel + Prefs.unlockedSubWorld * numlevels + Prefs.unlockedWorld * _data.words[0].subWords.Count * numlevels - 1;
+        target = Prefs.unlockedSubWorld + Prefs.unlockedWorld * _data.words[0].subWords.Count;
         _heightItem = (_wordItemPfb.transform as RectTransform).rect.height;
         _heightRoot = _heightItem * worldItems.Count;
+        mainUI.anchoredPosition = scrollContent.anchoredPosition;
         SetPosScroll();
     }
+
     private void Update()
     {
-        //UpdateUI();
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //SetPosScroll();
-            //DetecthShowChapter();
-        }
-
-        //if (_isCheckItem)
-        //    DetecthShowChapter();
+            SetPosScroll();
     }
-
-    //private void UpdateUI()
-    //{
-    //    scrollContent.sizeDelta = new Vector2(scrollContent.sizeDelta.x, mainUI.rect.width * scrollContent.childCount);
-    //    contentLayoutGroup.spacing = mainUI.rect.width;
-    //}
 
     private void SetPosScroll()
     {
         if (target > 0)
         {
+            var sizeDeltaYItem = (worldItems[target].transform as RectTransform).sizeDelta.y;
+            var contentY = mainUI.anchoredPosition.y + (sizeDeltaYItem - 20) * target;
+            var result = new Vector2(_scroll.content.anchoredPosition.x, contentY);
             TweenControl.GetInstance().DelayCall(transform, 1f, () =>
             {
-                // var spacing = 30;
-                //var distance = mainUI.transform.localPosition - worldItems[target].transform.position;
-                var sizeDeltaYItem = (worldItems[target].transform as RectTransform).sizeDelta.y;
-                //var contentY = (distance.y - sizeDeltaYItem) / 2 - sizeDeltaYItem / 2 + spacing;
-                //snapScroll.SetPage(target);
-                var contentY = mainUI.anchoredPosition.y + sizeDeltaYItem * target;
-                scrollContent.anchoredPosition = new Vector3(scrollContent.anchoredPosition.x, contentY, 0);
-                worldItems[target].OnButtonClick();
+                _scroll.content.anchoredPosition = result;
+                TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+                {
+                    _scroll.content.anchoredPosition = result;
+                    worldItems[target].OnButtonClick();
+                });
             });
         }
         else
@@ -96,97 +83,10 @@ public class WorldController : BaseController
                 worldItems[0].OnButtonClick();
             });
         }
-
-        //StartCoroutine(DelaySetPosRemainItem());
     }
 
-    private IEnumerator DelaySetPosRemainItem()
-    {
-        for (int i = 11; i < worldItems.Count; i++)
-        {
-            var item = worldItems[i];
-            item.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
-    private void CreateWord()
-    {
-        worldItems = new List<WorldItem>();
-        var countItem = 0;
-        for (int i = 0; i < _data.words.Count; i++)
-        {
-            int index = i;
-            var data = _data.words[i];
-            int indexSub = 0;
-            foreach (var sub in data.subWords)
-            {
-                var wordItem = Instantiate(_wordItemPfb, _root);
-                wordItem.worldController = this;
-                wordItem.scroll = _scroll;
-                wordItem.world = index;
-                wordItem.subWorld = indexSub;
-                if (countItem > 9)
-                    wordItem.gameObject.SetActive(false);
-                worldItems.Add(wordItem);
-                countItem++;
-                indexSub++;
-            }
-        }
-    }
-
-    public void DetecthShowChapter()
-    {
-        //_root.GetComponent<ContentSizeFitter>().enabled = false;
-        //_root.GetComponent<VerticalLayoutGroup>().enabled = false;
-        //_scroll.content.sizeDelta = new Vector2(_scroll.content.rect.width, _heightRoot);
-        foreach (var item in worldItems)
-        {
-            var posItem = item.transform.position - _scroll.transform.position;
-            var distance = Vector3.Distance(_scroll.transform.position, posItem);
-
-            if (distance < 100)
-                item.gameObject.SetActive(true);
-            else
-                item.gameObject.SetActive(false);
-        }
-    }
-    // TESTING FIX LAG WHEN SCROLL
-    private bool isMaxPossibleChaper;
-    private int countItemStatic;
-    private int countItem = 0;
-    private int wordCountMax;
-    private bool isCreateDone;
-    private int currentIndexStatic;
-    private int maxWordsTemp = 2;
-    private int countChapter;
-    private int wordNew;
     void ScrollRectCallBack(Vector2 value)
     {
-        //if (value.y <= 0.1f)
-        //{
-        //    if (!isCreateDone && !isMaxPossibleChaper)
-        //    {
-        //        if (maxWordsTemp >= (wordCountMax - wordCountMax % _data.words[0].subWords.Count))
-        //        {
-        //            maxWordsTemp += wordCountMax % _data.words[0].subWords.Count;
-        //            CreateWordDelay();
-        //            isMaxPossibleChaper = true;
-        //            Debug.Log("IS MAX" + isMaxPossibleChaper);
-        //        }
-        //        else
-        //        {
-        //            maxWordsTemp += 5;
-        //            CreateWordDelay();
-        //            isCreateDone = true;
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    isCreateDone = false;
-        //}
-
         if (value.y <= 0.1f)
         {
             var wordItem = Instantiate(_wordItemPfb, _root);
@@ -201,7 +101,6 @@ public class WorldController : BaseController
             {
                 wordNew += 1;
                 countChapter = 0;
-                maxWordsTemp = wordNew;
             }
         }
         CheckShowItem();
@@ -218,34 +117,6 @@ public class WorldController : BaseController
         }
     }
 
-    private void CreateWordDelay()
-    {
-        maxWordsTemp = wordNew;
-        countItem = countItemStatic;
-        int tempIndex;
-        for (tempIndex = currentIndexStatic; tempIndex < maxWordsTemp; tempIndex++)
-        {
-            int index = tempIndex;
-            var data = _data.words[tempIndex];
-            int indexSub = 0;
-            foreach (var sub in data.subWords)
-            {
-                //var wordItem = Instantiate(_wordItemPfb, _root);
-                //wordItem.worldController = this;
-                //wordItem.scroll = _scroll;
-                //wordItem.world = index;
-                //wordItem.subWorld = indexSub;
-
-                //worldItems.Add(wordItem);
-
-                worldItems[_data.words[0].subWords.Count * tempIndex + indexSub].gameObject.SetActive(true);
-                indexSub++;
-            }
-        }
-        currentIndexStatic = tempIndex;
-        //Debug.Log("maxWordsTemp " + maxWordsTemp);
-        //Debug.Log("currentIndexStatic " + currentIndexStatic);
-    }
     private void FirstCreateWord()
     {
         worldItems.Clear();
@@ -271,7 +142,5 @@ public class WorldController : BaseController
                 indexSub++;
             }
         }
-        countItemStatic = countItem + 1;
-        currentIndexStatic = 10;
     }
 }
