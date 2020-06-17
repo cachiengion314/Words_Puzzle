@@ -45,6 +45,7 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     public void OnClickOpen()
     {
+        TutorialController.instance.HidenPopTut();
         _btnAds.interactable = false;
         _rewardController.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;

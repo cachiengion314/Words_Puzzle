@@ -36,6 +36,10 @@ public class AnimEvent : MonoBehaviour
             //if (CPlayerPrefs.HasKey("BEE_TUTORIAL") && !TutorialController.instance.isShowTut)
             MainController.instance.beeController.OnBeeButtonClick();
         }
+        if(WordRegion.instance != null)
+        {
+            WordRegion.instance.CheckAdsIsShow();
+        }
     }
 
     public void SceneLoaded()

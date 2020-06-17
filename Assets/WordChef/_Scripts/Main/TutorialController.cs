@@ -1,4 +1,5 @@
-﻿using Superpow;
+﻿using Spine.Unity;
+using Superpow;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,8 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialChickenBank;
     [SerializeField] private TextMeshProUGUI _textTutorialFreeBoosters;
     [SerializeField] private TextMeshProUGUI _textTutorialCellAds;
+    [Space]
+    [SerializeField] private GameObject _handCellAdsTut;
 
     private LineWord _lineTarget;
     private string _answerTarget;
@@ -333,14 +336,15 @@ public class TutorialController : MonoBehaviour
         if (WordRegion.instance.BtnADS != null)
         {
             var canvas = WordRegion.instance.BtnADS.GetComponent<Canvas>();
-            canvas.worldCamera = Camera.main;
             canvas.overrideSorting = true;
             canvas.sortingLayerName = "UI1";
+            _handCellAdsTut.transform.position = WordRegion.instance.BtnADS.transform.position;
         }
         isShowTut = true;
         _overlay.SetActive(true);
         _popCellAds.SetActive(true);
         _textTutorialCellAds.text = contentCellAds;
+        
     }
 
     public void HidenPopTut()

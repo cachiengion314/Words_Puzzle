@@ -215,7 +215,6 @@ public class WordRegion : MonoBehaviour
         CurrencyController.onMultipleHintFreeChanged += UpdateHintFree;
         CurrencyController.onSelectedHintFreeChanged += UpdateHintFree;
 
-        CheckAdsIsShow();
         FacebookController.instance.newLevel = false;
         //FacebookController.instance.user.levelProgress = levelProgress;
         //FacebookController.instance.user.answerProgress = answerProgress;
@@ -445,7 +444,7 @@ public class WordRegion : MonoBehaviour
         }
     }
 
-    private void CheckAdsIsShow()
+    public void CheckAdsIsShow()
     {
         var isAdsHintFree = CPlayerPrefs.GetBool(keyLevel + "ADS_HINT_FREE", false);
         var keyPos = CPlayerPrefs.HasKey(keyLevel + "POS_ADS_BUTTON_X");
@@ -615,8 +614,6 @@ public class WordRegion : MonoBehaviour
         _countShowAdsHintFree += 1;
         if (_countShowAdsHintFree > countRandomShow && !isAdsHintFree && (_btnHintADS == null || !_btnHintADS.gameObject.activeInHierarchy))
         {
-            if (!CPlayerPrefs.HasKey("CELL_ADS_TUTORIAL") && !TutorialController.instance.isShowTut)
-                TutorialController.instance.ShowPopCellAdsTut();
             if (CPlayerPrefs.HasKey(keyLevel + "POS_ADS_BUTTON_X"))
             {
                 var line = lines.Single(l => l.isAds);
@@ -657,6 +654,8 @@ public class WordRegion : MonoBehaviour
                 _btnHintADS.Cell = cellRandom;
                 CalculateRatioScaleBtnAds(cellRandom);
             }
+            if (!CPlayerPrefs.HasKey("CELL_ADS_TUTORIAL") && !TutorialController.instance.isShowTut)
+                TutorialController.instance.ShowPopCellAdsTut();
         }
     }
 
