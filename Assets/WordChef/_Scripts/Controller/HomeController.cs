@@ -10,9 +10,12 @@ public class HomeController : BaseController
 
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
+    private const string TIME_REWARD_KEY = "TIME_REWARD";
     public Button btnChickenBank;
     public Button btnFreeBoosters;
     public GameObject FreeBoostersShadow;
+    public GameObject notiChickenMax;
+    public GameObject notiOpenFreeBoosters;
     public Animator animatorTitle;
     [SerializeField] private IconController _iconController;
     [SerializeField] private RectTransform _panelTopRect;
@@ -50,6 +53,7 @@ public class HomeController : BaseController
             btnFreeBoosters.gameObject.SetActive(false);
             FreeBoostersShadow.SetActive(false);
         }
+        ShowIconNoti();
     }
 
     public void OnClick(int index)
@@ -154,6 +158,27 @@ public class HomeController : BaseController
                 btnChickenBank.gameObject.SetActive(true);
                 CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
             }
+        }
+    }
+
+    private void ShowIconNoti()
+    {
+        if(ChickenBankController.instance.CurrStarChicken >= FacebookController.instance.user.maxbank)
+            notiChickenMax.SetActive(true);
+        else
+            notiChickenMax.SetActive(false);
+
+        if (CPlayerPrefs.HasKey(TIME_REWARD_KEY))
+        {
+            var _isReward = CPlayerPrefs.GetBool(TIME_REWARD_KEY, false);
+            if (!_isReward)
+                notiChickenMax.SetActive(false);
+            else
+                notiChickenMax.SetActive(true);
+        }
+        else
+        {
+            notiChickenMax.SetActive(true);
         }
     }
 }
