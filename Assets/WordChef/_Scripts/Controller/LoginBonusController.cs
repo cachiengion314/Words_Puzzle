@@ -98,15 +98,6 @@ public class LoginBonusController : MonoBehaviour
         _root.transform.localScale = Vector3.zero;
         switch (_dataItems[_currAngle].itemType)
         {
-            case ItemType.HINT:
-                CurrencyController.CreditHintFree(itemValue);
-                break;
-            case ItemType.HINT_RANDOM:
-                CurrencyController.CreditMultipleHintFree(itemValue);
-                break;
-            case ItemType.HINT_SELECT:
-                CurrencyController.CreditSelectedHintFree(itemValue);
-                break;
             case ItemType.CURRENCY_BALANCE:
                 StartCoroutine(ShowEffectCollect(itemValue));
                 break;
@@ -127,6 +118,19 @@ public class LoginBonusController : MonoBehaviour
             _imageHighlight.SetActive(true);
             var currItem = _dataItems[_currAngle];
             _panelCollect.ShowItemCollect(currItem.spriteDone, currItem.value);
+            var itemValue = currItem.value;
+            switch (_dataItems[_currAngle].itemType)
+            {
+                case ItemType.HINT:
+                    CurrencyController.CreditHintFree(itemValue);
+                    break;
+                case ItemType.HINT_RANDOM:
+                    CurrencyController.CreditMultipleHintFree(itemValue);
+                    break;
+                case ItemType.HINT_SELECT:
+                    CurrencyController.CreditSelectedHintFree(itemValue);
+                    break;
+            }
             TweenControl.GetInstance().ScaleFromZero(_panelCollect.gameObject, 0.3f, () => { callback?.Invoke(); });
         }, EaseType.OutQuad);
     }
