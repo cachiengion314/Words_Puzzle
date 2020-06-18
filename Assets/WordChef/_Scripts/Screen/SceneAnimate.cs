@@ -165,6 +165,9 @@ public class SceneAnimate : MonoBehaviour
     {
         CurrencyController.CreditBalance(10000);
         CurrencyController.CreditHintFree(3);
+        CPlayerPrefs.SetBool("HINT_TUTORIAL", true);
+        CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
+        CPlayerPrefs.SetBool("MULTIPLE_HINT_TUTORIAL", true);
         BeeManager.instance.CreaditAmountBee(numBee);
         if (HomeController.instance != null)
             HomeController.instance.ShowChickenBank();

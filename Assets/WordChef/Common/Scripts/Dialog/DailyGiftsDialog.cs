@@ -82,6 +82,13 @@ public class DailyGiftsDialog : Dialog
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
         InitTimeCountDown();
+
+        var hintAmount = CPlayerPrefs.GetInt("HINT_COLLECT", 0);
+        var multipleHintAmount = CPlayerPrefs.GetInt("MULTIPLE_HINT_COLLECT", 0);
+        var selectedHintAmount = CPlayerPrefs.GetInt("SELECTED_HINT_COLLECT", 0);
+        _textHintCollect.text = hintAmount > 0 ? "X" + hintAmount : "";
+        _textMultipleHintCollect.text = multipleHintAmount > 0 ? "X" + multipleHintAmount : "";
+        _textSelectedHintCollect.text = selectedHintAmount > 0 ? "X" + selectedHintAmount : "";
     }
 
     private void InitListRandomMultipleHint()
@@ -202,6 +209,9 @@ public class DailyGiftsDialog : Dialog
         var hintRandomAmount = RandomSingle(listRandomHint);
         var multipleHintRandomAmount = RandomSingle(listRandomMultiple);
         var selectedHintRandomAmount = RandomSingle(listRandomSelected);
+        CPlayerPrefs.SetInt("HINT_COLLECT", hintRandomAmount);
+        CPlayerPrefs.SetInt("MULTIPLE_HINT_COLLECT", multipleHintRandomAmount);
+        CPlayerPrefs.SetInt("SELECTED_HINT_COLLECT", selectedHintRandomAmount);
         _textHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardHintDaily*/hintRandomAmount;
         _textMultipleHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/multipleHintRandomAmount;
         _textSelectedHintCollect.text = "X" + /*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/selectedHintRandomAmount;
