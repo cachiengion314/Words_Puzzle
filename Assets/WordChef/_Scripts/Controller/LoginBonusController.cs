@@ -99,10 +99,13 @@ public class LoginBonusController : MonoBehaviour
         switch (_dataItems[_currAngle].itemType)
         {
             case ItemType.HINT:
-                CurrencyController.SetHintFree(itemValue + CurrencyController.GetHintFree());
+                CurrencyController.CreditHintFree(itemValue);
                 break;
             case ItemType.HINT_RANDOM:
-
+                CurrencyController.CreditMultipleHintFree(itemValue);
+                break;
+            case ItemType.HINT_SELECT:
+                CurrencyController.CreditSelectedHintFree(itemValue);
                 break;
             case ItemType.CURRENCY_BALANCE:
                 StartCoroutine(ShowEffectCollect(itemValue));
@@ -160,5 +163,6 @@ public enum ItemType
 {
     HINT,
     HINT_RANDOM,
+    HINT_SELECT,
     CURRENCY_BALANCE
 }
