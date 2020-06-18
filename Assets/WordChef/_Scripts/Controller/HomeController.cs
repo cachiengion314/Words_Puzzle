@@ -161,7 +161,7 @@ public class HomeController : BaseController
         }
     }
 
-    private void ShowIconNoti()
+    public void ShowIconNoti()
     {
         if(ChickenBankController.instance.CurrStarChicken >= FacebookController.instance.user.maxbank)
             notiChickenMax.SetActive(true);

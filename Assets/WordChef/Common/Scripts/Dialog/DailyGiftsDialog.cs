@@ -49,7 +49,7 @@ public class DailyGiftsDialog : Dialog
     private List<int> listRandomHint = new List<int>();
 
     private const string CLOSE_CHEST = "Complete watching 10 rewarded ads, you can get";
-    private const string OPEN_CHEST = "Thanks for supporting us! Here are your rewards.";
+    private const string OPEN_CHEST = "Here are your rewards.";
 
     void Awake()
     {
@@ -218,6 +218,8 @@ public class DailyGiftsDialog : Dialog
         InitTimeCountDown();
         _isReward = false;
         CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
+        if (HomeController.instance != null)
+            HomeController.instance.ShowIconNoti();
         _animChest.onEventAction = OpenChestEvent;
         _animChest.SetAnimation(_collectAnim, false, () =>
         {
