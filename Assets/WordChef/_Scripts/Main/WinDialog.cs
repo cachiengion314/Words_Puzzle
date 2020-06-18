@@ -261,7 +261,7 @@ public class WinDialog : Dialog
             {
                 var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
                 var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
-                if (currlevel >= 33 || CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0)
+                if (currlevel >= 40 || CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0)
                     _btnBee.gameObject.SetActive(true);
                 else
                     _btnBee.gameObject.SetActive(false);
@@ -354,7 +354,7 @@ public class WinDialog : Dialog
     {
         TweenControl.GetInstance().DelayCall(transform, timeDelayShow, () =>
         {
-            if (WordRegion.instance != null && WordRegion.instance.CurLevel >= 38)
+            if (WordRegion.instance != null && WordRegion.instance.CurLevel >= 48)
                 ChickenBankController.instance.AddtoBank();
             var result = GetChickenbankNonReward();
             _txtCollectChickenBank.text = "X" + (result > FacebookController.instance.user.maxbank ? FacebookController.instance.user.maxbank : result);

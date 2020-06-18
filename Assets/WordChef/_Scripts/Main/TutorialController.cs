@@ -417,7 +417,7 @@ public class TutorialController : MonoBehaviour
         var currlevel = WordRegion.instance.CurLevel;
         if (!CPlayerPrefs.HasKey("LEVEL " + currlevel))
         {
-            if ((currlevel >= 33 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            if ((currlevel >= 40 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
                 BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();
