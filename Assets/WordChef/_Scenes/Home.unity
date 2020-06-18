@@ -4437,6 +4437,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 104956, guid: dd1beb674d717c14b92640e4d64aaf0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 11404958, guid: dd1beb674d717c14b92640e4d64aaf0f, type: 3}
       propertyPath: m_ReferenceResolution.x
       value: 1080
@@ -6905,7 +6909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 436.3482, y: -120.349976}
+  m_AnchoredPosition: {x: 436, y: -120.3501}
   m_SizeDelta: {x: 168, y: 183}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1043368024
@@ -16513,7 +16517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1735072372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16526,7 +16530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c4c499e62e37e4e89d9794f1c3f681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hidenSpin: 0
+  _hidenSpin: 1
   _root: {fileID: 729142187}
   _objSpin: {fileID: 570252670}
   _imageHighlight: {fileID: 519905592}

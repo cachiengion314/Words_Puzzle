@@ -33,6 +33,7 @@ public class ChickenBankController : MonoBehaviour
     {
         _currStarChicken = CurrStarChicken;
         _remainChicken = FacebookController.instance.user.remainBank;
+      
     }
 
     public double CurrStarChicken
@@ -56,7 +57,7 @@ public class ChickenBankController : MonoBehaviour
             {
                 var remainCurrBank = CurrStarChicken - ConfigController.instance.config.gameParameters.maxBank;
                 FacebookController.instance.user.currBank = ConfigController.instance.config.gameParameters.maxBank;
-                FacebookController.instance.user.remainBank += remainCurrBank;
+                FacebookController.instance.user.remainBank += remainCurrBank;                
             }
             FacebookController.instance.SaveDataGame();
         }

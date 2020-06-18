@@ -17,16 +17,58 @@ public class NotificationController : MonoBehaviour
     private const double NOTI_DELAY_6 = 15 * 24 * 3600;
     private const double NOTI_DELAY_7 = 30 * 24 * 3600;
 
-    private const string DAILYTIME_MORNING = "10:00:00"; // +3 hours
-    private const string DAILYTIME_AFTERNOON = "18:00:00"; // +3 hours
+    private const string DAILYTIME_MORNING = "10:00:00"; // 10:00:00 +3 more hours 
+    private const string DAILYTIME_AFTERNOON = "18:00:00"; // 18:00:00 +3 more hours
 
     private string DAILYTIME_CUSTOM = "17:00:00";
 
-    private int MAX_CURRENT_LOOP = 7;
-    private double dayToSecondsValue = 24 * 3600; // 24 * 3600
-    private float hourToSecondsValue = 3600; // 3600
+    private int MAX_CURRENT_LOOP = 7; // 7
+    private readonly double dayToSecondsValue = 24 * 3600; // 24 * 3600
+    private readonly float hourToSecondsValue = 3600; // 3600
+
+    public static NotificationController instance;
+    public int maxFreeBoostersProgress;
+    public int currentFreeBoostersProgress;
+    public double currentChickenBank;
+    public int maxChickenBank;
+   
+    private bool isNotificationOn;
+    public bool IsNotificationOn
+    {
+        get
+        {
+            int intToBool = PlayerPrefs.GetInt("Is_Notification_On");
+            isNotificationOn = true;
+            if (intToBool == -1) { isNotificationOn = false; }
+            return isNotificationOn;
+        }
+        set
+        {
+            isNotificationOn = value;
+            int intTobool = -1;
+            if (isNotificationOn) intTobool = 1;
+            PlayerPrefs.SetInt("Is_Notification_On", intTobool);
+        }
+    }
 
     private bool ingame = false;
+
+    private void Awake()
+    {
+        instance = this;
+
+        maxFreeBoostersProgress = PlayerPrefs.GetInt("Max_FreeBooster_Progress"); // DailyGiftsDialog
+        //Debug.Log(maxFreeBoostersProgress);
+
+        currentFreeBoostersProgress = CPlayerPrefs.GetInt("PROGRESS", 0);
+        //Debug.Log(currentFreeBoostersProgress);
+
+        currentChickenBank = FacebookController.instance.user.currBank; // ChickenBankController
+        //Debug.Log(currentChickenBank);
+
+        maxChickenBank = ConfigController.instance.config.gameParameters.maxBank;
+        //Debug.Log(maxChickenBank);
+    }
     private void Start()
     {
         //InGame();
@@ -75,6 +117,8 @@ public class NotificationController : MonoBehaviour
     }
     private void PushManyNotifications(string DAILYTIME)
     {
+        if (!IsNotificationOn) return;
+
         double tempSeconds = RunCodeAtSpecificTime(DAILYTIME).TotalSeconds;
         float randomNum = UnityEngine.Random.Range(0f, 3f * hourToSecondsValue);
         tempSeconds += (double)randomNum;
@@ -110,21 +154,33 @@ public class NotificationController : MonoBehaviour
         string DAILY_TIME = RandomDailyTimePick(DAILYTIME_MORNING, DAILYTIME_AFTERNOON);
         PushManyNotifications(DAILY_TIME);
     }
+
     private void PushChickenBankNotification(double delay)
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if(currentChickenBank < maxChickenBank) { PushFindWordsNotification(delay); return; }
+
         string message = "Chicken Bank is full. Crack to open it!";
         NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
+#endif
     }
     private void PushFindWordsNotification(double delay)
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         string message = "Find the words built from the letters A, B, C. ";
         NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
+#endif
     }
     private void PushFreeBoostersNotification(double delay)
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        if (currentFreeBoostersProgress < maxFreeBoostersProgress || maxFreeBoostersProgress == 0 ) { PushFindWordsNotification(delay); return; }
+
         string message = "Free Boosters are ready! Let's discover what they are!";
         NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
+#endif
     }
+
     /////////////////////////////////////////////////////////////////// Old function
     private void InGame()
     {

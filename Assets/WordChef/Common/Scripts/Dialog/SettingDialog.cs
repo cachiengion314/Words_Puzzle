@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -12,6 +13,8 @@ public class SettingDialog : Dialog
     GameObject musicButton;
     [SerializeField]
     GameObject notiButton;
+    private GameObject notiBttOff;
+
     [SerializeField] private Slider _sliderSound;
     [SerializeField] private Slider _sliderMusic;
 
@@ -27,6 +30,17 @@ public class SettingDialog : Dialog
     protected override void Start()
     {
         base.Start();
+
+        notiBttOff = notiButton.transform.Find("Off").gameObject;
+        if (NotificationController.instance.IsNotificationOn)
+        {
+            notiBttOff.gameObject.SetActive(false);
+        }
+        else
+        {
+            notiBttOff.gameObject.SetActive(true);
+        }
+
         //gameMaster = GameObject.FindGameObjectWithTag("GameMaster");
         if (Sound.instance != null && Music.instance != null)
         {
@@ -82,7 +96,22 @@ public class SettingDialog : Dialog
             soundButton.transform.Find("On").gameObject.SetActive(true);
         }
     }
+    public void OnNativeNotificationClick()
+    {
+        if (!notiBttOff.gameObject.activeInHierarchy)
+        {
+            // notification off
+            notiBttOff.gameObject.SetActive(true);
+            NotificationController.instance.IsNotificationOn = false;
+        }
+        else
+        {
+            // notification on
+            notiBttOff.gameObject.SetActive(false);
+            NotificationController.instance.IsNotificationOn = true;
+        }
 
+    }
     public void OnHowToPlayClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);

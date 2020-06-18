@@ -54,6 +54,7 @@ public class DailyGiftsDialog : Dialog
     void Awake()
     {
         InitProgress();
+        PlayerPrefs.SetInt("Max_FreeBooster_Progress",_maxProgress);
     }
 
     void Start()
@@ -62,7 +63,7 @@ public class DailyGiftsDialog : Dialog
         InitListRandomMultipleHint();
         InitListRandomSelectedHint();
         InitListRandomHint();
-        CheckTimeReward();
+        CheckTimeReward();       
     }
 
     private void InitProgress()
