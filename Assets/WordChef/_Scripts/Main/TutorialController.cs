@@ -442,7 +442,7 @@ public class TutorialController : MonoBehaviour
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
-            else if (currlevel >= 6 && !CPlayerPrefs.HasKey("SHUFFLE_TUTORIAL"))
+            else if (currlevel >= 5 && !CPlayerPrefs.HasKey("SHUFFLE_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("SHUFFLE_TUTORIAL", true);
                 ShowPopShuffleTut();
@@ -452,7 +452,7 @@ public class TutorialController : MonoBehaviour
                 CPlayerPrefs.SetBool("CELL_STAR_TUTORIAL", true);
                 ShowPopCellStarTut();
             }
-            else if (currlevel >= 9 && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))
+            else if (currlevel >= 16 && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("HELP_TUTORIAL", true);
                 ShowPopHelpTut();
