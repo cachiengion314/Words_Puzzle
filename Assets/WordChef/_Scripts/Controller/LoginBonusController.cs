@@ -111,6 +111,7 @@ public class LoginBonusController : MonoBehaviour
                 StartCoroutine(ShowEffectCollect(itemValue));
                 break;
         }
+        RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
     }
 
     private void Spin(Action callback = null)

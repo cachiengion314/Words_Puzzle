@@ -46,7 +46,7 @@ public class NotificationController : MonoBehaviour
         {
             isNotificationOn = value;
             int intTobool = -1;
-            if (isNotificationOn) intTobool = 1;
+            if (isNotificationOn) { intTobool = 1; CancelAndPushManyNotification(); }
             PlayerPrefs.SetInt("Is_Notification_On", intTobool);
         }
     }
@@ -130,29 +130,31 @@ public class NotificationController : MonoBehaviour
             else if (randomIndex == 1) PushFindWordsNotification(tempSeconds + (i * dayToSecondsValue));
             else if (randomIndex == 2) PushFreeBoostersNotification(tempSeconds + (i * dayToSecondsValue));
         }
-    }
+    }   
     private string RandomDailyTimePick(string DAILY_TIME1, string DAILY_TIME2)
     {
         string dailyTime = DAILY_TIME1;
         if (UnityEngine.Random.Range(0, 2) == 1) dailyTime = DAILY_TIME2;
         return dailyTime;
     }
+    private void CancelAndPushManyNotification()
+    {
+        NotificationManager.CancelAll();
+        string DAILY_TIME = RandomDailyTimePick(DAILYTIME_MORNING, DAILYTIME_AFTERNOON);
+        PushManyNotifications(DAILY_TIME);
+    }
     private void OutGamePushNotification()
     {
         ingame = false;
 
-        NotificationManager.CancelAll();
-        string DAILY_TIME = RandomDailyTimePick(DAILYTIME_MORNING, DAILYTIME_AFTERNOON);
-        PushManyNotifications(DAILY_TIME);
+        CancelAndPushManyNotification();
     }
     private void InGamePushNotification()
     {
         if (ingame) return;
         ingame = true;
 
-        NotificationManager.CancelAll();
-        string DAILY_TIME = RandomDailyTimePick(DAILYTIME_MORNING, DAILYTIME_AFTERNOON);
-        PushManyNotifications(DAILY_TIME);
+        CancelAndPushManyNotification();
     }
 
     private void PushChickenBankNotification(double delay)

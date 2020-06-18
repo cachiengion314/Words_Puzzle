@@ -6,8 +6,29 @@ using TMPro;
 public class RemoteConfigFirebase : MonoBehaviour
 {
     //public TextMeshProUGUI textPrefab;
+    public static RemoteConfigFirebase instance;
+    public Action notifyIngameCall;
+    private string tittle;
+    private string contain;
+
 
     private bool isNeedToFetch = true;
+
+    private void Awake()
+    {
+        instance = this;
+        notifyIngameCall += () =>
+        {
+            bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tittle;
+
+            if (!NotifyMailDialogData.instance.IsShowBefore && !CPlayerPrefs.GetBool("FIRST")
+           || isNeedToNotify && !CPlayerPrefs.GetBool("FIRST"))
+            {
+                MailDialog.CreateNewNotify(tittle, contain);
+                DialogController.instance.ShowDialog(DialogType.Mail, DialogShow.STACK_DONT_HIDEN);
+            }
+        };
+    }
     private void Update()
     {
         if (!isNeedToFetch) return;
@@ -39,14 +60,15 @@ public class RemoteConfigFirebase : MonoBehaviour
         //textPrefab.text = "TittleMail: " +
         //    FirebaseRemoteConfig.GetValue("TittleMail").StringValue;
 
-        string tempTittle = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("TittleMail").StringValue);
-        string tempContain = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("ContainMail").StringValue);
+        tittle = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("TittleMail").StringValue);
+        contain = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("ContainMail").StringValue);
 
-        bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tempTittle;
+        bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tittle;
 
-        if (!NotifyMailDialogData.instance.IsShowBefore || isNeedToNotify)
+        if (!NotifyMailDialogData.instance.IsShowBefore && CPlayerPrefs.GetBool("FIRST")
+            || isNeedToNotify && CPlayerPrefs.GetBool("FIRST"))
         {
-            MailDialog.CreateNewNotify(tempTittle, tempContain);
+            MailDialog.CreateNewNotify(tittle, contain);
             DialogController.instance.ShowDialog(DialogType.Mail, DialogShow.STACK_DONT_HIDEN);
         }
     }
