@@ -116,7 +116,7 @@ public class TutorialController : MonoBehaviour
         {
             foreach (var line in WordRegion.instance.Lines)
             {
-                if (line.isShown)
+                if (line.isShown && line.answers.Count > 1)
                 {
                     _lineTarget = line;
                     var otherAnswers = line.answers.FindAll(ans => ans != _lineTarget.answer);
