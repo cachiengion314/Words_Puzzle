@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -26,13 +27,17 @@ public class CreateAsset : MonoBehaviour
         Word word = new Word();
         word.subWords = new List<SubWord>();
         _jsonBuilder.GetGameLevels();
-        var numChapter = _jsonBuilder.gameLevels.Count / numLevelInChapter;
+        double numChapter = _jsonBuilder.gameLevels.Count / numLevelInChapter;
+        var numChapterRound = Math.Round(numChapter, 0, MidpointRounding.AwayFromZero);
         for (int j = 0; j < numChapterInWord; j++)
         {
             SubWord subWord = new SubWord();
             word.subWords.Add(subWord);
         }
-        _numWord = numChapter / numChapterInWord;
+        var result = numChapterRound / numChapterInWord;
+        var numWordRound = Math.Round(result, 0, MidpointRounding.AwayFromZero);
+        Debug.Log("resultRound: " + numWordRound);
+        _numWord = (int)numWordRound;
         for (int i = 0; i < _numWord; i++)
         {
             _gameData.words.Add(word);
@@ -60,9 +65,9 @@ public class CreateAsset : MonoBehaviour
             for (int j = 0; j < numLevelInChapter; j++)
             {
                 int indexLevel = j + numLevelInChapter * indexSubword + (index * numChapterInWord * numLevelInChapter);
-                var dataFromJson = _jsonBuilder.gameLevels[indexLevel];
                 if (indexLevel < _jsonBuilder.gameLevels.Count)
                 {
+                    var dataFromJson = _jsonBuilder.gameLevels[indexLevel];
                     var totalAns = _jsonBuilder.GetTotalAnswers(dataFromJson);
                     var data = new GameLevel();
                     data.word = dataFromJson.letters;

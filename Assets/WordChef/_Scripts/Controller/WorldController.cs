@@ -22,6 +22,7 @@ public class WorldController : BaseController
     private float _heightRoot;
     private Vector2 posTarget;
     public int target;
+    [SerializeField] private RectTransform posFirst;
     [SerializeField] private RectTransform posLast;
 
     private int countItem = 0;
@@ -89,18 +90,26 @@ public class WorldController : BaseController
     {
         if (value.y <= 0.1f)
         {
-            var wordItem = Instantiate(_wordItemPfb, _root);
-            wordItem.worldController = this;
-            wordItem.itemTemp = true;
-            wordItem.scroll = _scroll;
-            wordItem.world = wordNew;
-            wordItem.subWorld = countChapter;
-            worldItems.Add(wordItem);
-            countChapter++;
-            if (countChapter >= _data.words[0].subWords.Count - 1)
+            //var wordItem = Instantiate(_wordItemPfb, _root);
+            //wordItem.worldController = this;
+            //wordItem.itemTemp = true;
+            //wordItem.scroll = _scroll;
+            //wordItem.world = wordNew;
+            //wordItem.subWorld = countChapter;
+            //worldItems.Add(wordItem);
+            //countChapter++;
+            //if (countChapter >= _data.words[0].subWords.Count - 1)
+            //{
+            //    wordNew += 1;
+            //    countChapter = 0;
+            //}
+            foreach (var item in worldItems)
             {
-                wordNew += 1;
-                countChapter = 0;
+                if (!item.gameObject.activeInHierarchy)
+                {
+                    item.gameObject.SetActive(true);
+                    break;
+                }
             }
         }
         CheckShowItem();
