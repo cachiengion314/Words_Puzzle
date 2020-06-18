@@ -40,7 +40,7 @@ public class ExtraWordDialog : Dialog
 
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
-        claimQuantity = (int)extraProgress.target / _amountWordTarget * 15;
+        claimQuantity = (int)extraProgress.target / _amountWordTarget * _amountWordTarget;
 
         UpdateUI();
         ShowPanelCurrLevel();
@@ -126,7 +126,7 @@ public class ExtraWordDialog : Dialog
         {
             Prefs.extraTarget = _amountWordTarget;
             extraProgress.target = _amountWordTarget;
-            claimQuantity = (int)extraProgress.target / _amountWordTarget * 15;
+            claimQuantity = (int)extraProgress.target / _amountWordTarget * _amountWordTarget;
             UpdateUI();
         }
     }
@@ -143,7 +143,7 @@ public class ExtraWordDialog : Dialog
         {
             Prefs.extraTarget = _amountWordTarget;
             extraProgress.target = _amountWordTarget;
-            claimQuantity = (int)extraProgress.target / _amountWordTarget * 15;
+            claimQuantity = (int)extraProgress.target / _amountWordTarget * _amountWordTarget;
             UpdateUI();
         }
     }

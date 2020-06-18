@@ -394,7 +394,7 @@ public static class Prefs {
 
     public static int extraTarget
     {
-        get { return CPlayerPrefs.GetInt("extra_target", 15); }
+        get { return CPlayerPrefs.GetInt("extra_target", 5); }
         set { CPlayerPrefs.SetInt("extra_target", value); }
     }
 
