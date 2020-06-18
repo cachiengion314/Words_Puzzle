@@ -36,14 +36,14 @@ public class WorldItem : MonoBehaviour {
         int numLevels = 0;
         if (!itemTemp)
         {
-            numLevels = Superpow.Utils.GetNumLevels(world, subWorld);
-
+            numLevels = Superpow.Utils.GetNumLevels(0, 0);
+            var numLevelReality = Superpow.Utils.GetNumLevels(world, subWorld);
             unlockedWorld = Prefs.unlockedWorld;
             unlockedSubWorld = Prefs.unlockedSubWorld;
             unlockedLevel = Prefs.unlockedLevel;
 
             //Load level
-            for (int i = 0; i < numLevels; i++)
+            for (int i = 0; i < numLevelReality; i++)
             {
                 LevelItem levelButton = Instantiate(levelItemPrefab);
                 levelButton.numlevels = numLevels;

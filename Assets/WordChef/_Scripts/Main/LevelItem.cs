@@ -26,7 +26,7 @@ public class LevelItem : MonoBehaviour
     public void Start()
     {
         //levelText.text = "Level " + (!(world == 0 && subWorld == 0) ? (level + 1) + GetNumberLevel() : (level + 1));
-        levelText.text = "Level " + ((level + numlevels * subWorld + world * gameData.words.Count) + 1);
+        levelText.text = "Level " + ((level + numlevels * subWorld + world * gameData.words[0].subWords.Count * numlevels) + 1);
         GetComponent<Button>().onClick.AddListener(OnButtonClick);
 
         //gameLevel = Resources.Load<GameLevel>("World_" + world + "/SubWorld_" + subWorld + "/Level_" + level);
