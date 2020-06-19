@@ -33,6 +33,12 @@ public class Quest : MonoBehaviour
     RectTransform rt;
     float maxWidth;
 
+    void Awake()
+    {
+        rt = _progressMask.GetComponent<RectTransform>();
+        maxWidth = rt.rect.width;
+    }
+
     void OnEnable()
     {
         if (taskType == TaskType.ACHIEVEMENT)
@@ -40,8 +46,6 @@ public class Quest : MonoBehaviour
             goal.requiredAmount = CPlayerPrefs.GetInt("Completed_" + idQuest, goal.requiredAmount);
             _fillProgress.maxValue = goal.requiredAmount;
         }
-        rt = _progressMask.GetComponent<RectTransform>();
-        maxWidth = rt.rect.width;
         UpdateProgress();
     }
 
