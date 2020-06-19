@@ -104,7 +104,8 @@ public class WinDialog : Dialog
 
         _rewardControl.onRewardedCallback -= OnCompleteReward;
         AdsManager.instance.onAdsRewarded -= OnCompleteReward;
-
+        if (!AdsManager.instance.AdsIsLoaded())
+            AdsManager.instance.LoadDataAds();
         isSound = false;
     }
 
@@ -580,15 +581,31 @@ public class WinDialog : Dialog
             Sound.instance.Play(Sound.Others.PopupOpen);
             //AdmobController.instance.ShowRewardBasedVideo();
             AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
-            AdsManager.instance.ShowVideoAds(true, null, () => {
-                _nextButton.interactable = true;
-            });
+            AdsManager.instance.ShowVideoAds(true, CheckShowAdsButton, CheckShowAdsButton);
 
 #if UNITY_EDITOR
             OnCompleteReward();
 #endif
         });
         //CUtils.ShowInterstitialAd();
+    }
+
+    private void CheckShowAdsButton()
+    {
+        if (AdsManager.instance != null)
+        {
+            if (!AdsManager.instance.AdsIsLoaded())
+            {
+                _btnAdsDisable.SetActive(true);
+                txtRewardByAds.color = _colorDisable;
+                _nextButton.interactable = true;
+            }
+            else
+            {
+                _btnAdsDisable.SetActive(false);
+                txtRewardByAds.color = _colorNormal;
+            }
+        }
     }
 
     private IEnumerator ShowEffectCollect(int value, Transform posCollect = null)

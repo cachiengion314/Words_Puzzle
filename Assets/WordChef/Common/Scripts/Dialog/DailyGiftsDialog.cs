@@ -61,6 +61,8 @@ public class DailyGiftsDialog : Dialog
     void Start()
     {
         base.Start();
+        if (!AdsManager.instance.AdsIsLoaded())
+            AdsManager.instance.LoadDataAds();
         InitListRandomMultipleHint();
         InitListRandomSelectedHint();
         InitListRandomHint();

@@ -28,7 +28,7 @@ public class AdsManager : MonoBehaviour
         LoadDataAds();
     }
 
-    private void LoadDataAds()
+    public void LoadDataAds()
     {
         if (AudienceNetworkFbAd.instance != null)
         {
