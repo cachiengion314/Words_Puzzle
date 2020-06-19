@@ -283,6 +283,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         RequestRewardBasedVideo();
         MonoBehaviour.print("HandleRewardBasedVideoClosed event received");
+        AdsManager.instance.onAdsClose?.Invoke();
     }
 
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)

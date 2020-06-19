@@ -747,10 +747,16 @@ public class WordRegion : MonoBehaviour
             Sound.instance.Play(Sound.Others.WordInvalid);
             if (_currLevel > 1 && !TutorialController.instance.isShowTut)
             {
-                if (Prefs.IsSaveLevelProgress())
-                    SetupCellAds();
-                else
-                    ShowAdsInOldLevel();
+                CUtils.CheckConnection(this, (result) =>
+                {
+                    if (result == 0)
+                    {
+                        if (Prefs.IsSaveLevelProgress())
+                            SetupCellAds();
+                        else
+                            ShowAdsInOldLevel();
+                    }
+                });
             }
             textPreview.SetWrongColor();
             lineIndex = 0;

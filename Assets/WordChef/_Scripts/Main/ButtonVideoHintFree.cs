@@ -41,6 +41,8 @@ public class ButtonVideoHintFree : MonoBehaviour
     {
         if (_rewardController != null)
             _rewardController.onRewardedCallback -= OnCompleteVideo;
+        if (AdsManager.instance != null)
+            AdsManager.instance.onAdsClose -= OnAdsClosed;
     }
 
     public void OnClickOpen()
@@ -49,6 +51,7 @@ public class ButtonVideoHintFree : MonoBehaviour
         _btnAds.interactable = false;
         _rewardController.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
+        AdsManager.instance.onAdsClose += OnAdsClosed;
         //AdmobController.instance.ShowRewardBasedVideo();
         AdsManager.instance.ShowVideoAds();
 
@@ -85,5 +88,11 @@ public class ButtonVideoHintFree : MonoBehaviour
         });
         //_rewardController.gameObject.SetActive(true);
         CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
+    }
+
+    void OnAdsClosed()
+    {
+        _btnAds.interactable = true;
+        AdsManager.instance.onAdsClose -= OnAdsClosed;
     }
 }
