@@ -136,7 +136,7 @@ public class WordRegion : MonoBehaviour
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
         //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
         //wordList = wordList.Count <= 4 ? wordList : GetExtraWordRandom(wordList);
-        numWords = wordList.Count <= 4 ? wordList.Count : wordList.Count - _extraWord;
+        numWords = wordList.Count - _extraWord;
         var wordInLevel = wordList.GetRange(0, numWords);
         wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
 
@@ -805,7 +805,7 @@ public class WordRegion : MonoBehaviour
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
                 });
             }
-            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown))
+            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown && line.answers.Count > 1))
             {
                 CPlayerPrefs.SetBool("TUTORIAL", false);
                 BlockScreen.instance.Block(true);
