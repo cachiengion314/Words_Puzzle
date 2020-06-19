@@ -55,7 +55,7 @@ public class DailyGiftsDialog : Dialog
     void Awake()
     {
         InitProgress();
-        PlayerPrefs.SetInt("Max_FreeBooster_Progress",_maxProgress);
+        PlayerPrefs.SetInt("Max_FreeBooster_Progress", _maxProgress);
     }
 
     void Start()
@@ -64,7 +64,7 @@ public class DailyGiftsDialog : Dialog
         InitListRandomMultipleHint();
         InitListRandomSelectedHint();
         InitListRandomHint();
-        CheckTimeReward();       
+        CheckTimeReward();
     }
 
     private void InitProgress()
@@ -328,6 +328,8 @@ public class DailyGiftsDialog : Dialog
         {
             if (!AdsManager.instance.AdsIsLoaded())
                 _btnAdsDisable.SetActive(true);
+            else
+                _btnAdsDisable.SetActive(false);
         }
         _animChest.SetAnimation(_idleAnim, true);
         _timeValue = 0;

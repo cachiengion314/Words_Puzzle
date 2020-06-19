@@ -164,10 +164,12 @@ public class ExtraWordDialog : Dialog
 
     private void UpdateUI()
     {
-        if(AdsManager.instance != null)
+        if (AdsManager.instance != null)
         {
             if (!AdsManager.instance.AdsIsLoaded())
                 _btnAdsDisable.SetActive(true);
+            else
+                _btnAdsDisable.SetActive(false);
         }
         claimQuantityText.text = claimQuantity.ToString();
         _textCollectEnough.gameObject.SetActive(extraProgress.current < extraProgress.target);

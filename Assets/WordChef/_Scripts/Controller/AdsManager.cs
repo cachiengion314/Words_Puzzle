@@ -106,7 +106,7 @@ public class AdsManager : MonoBehaviour
     #region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        StartCoroutine(ShowVideo());
+        StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
     }
 
     public void ShowBannerAds()

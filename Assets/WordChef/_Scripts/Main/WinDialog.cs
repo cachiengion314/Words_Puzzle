@@ -73,6 +73,10 @@ public class WinDialog : Dialog
     [SerializeField] private string eggChapterIdleAnim = "idle Chapter Clear";
     [SerializeField] private string candyChapterAnim = "Keo truoc";
     [SerializeField] private string candyChapterIdleAnim = "Keo truoc loop";
+    [Space]
+    [SerializeField] private GameObject _btnAdsDisable;
+    [SerializeField] private Color _colorDisable;
+    [SerializeField] private Color _colorNormal;
 
     private GameObject _fxEffect;
     private List<GameObject> _stars;
@@ -210,6 +214,20 @@ public class WinDialog : Dialog
         //{
         //    WordRegion.instance.listWordCorrect.Add(line.answer);
         //}
+        if (AdsManager.instance != null)
+        {
+            if (!AdsManager.instance.AdsIsLoaded())
+            {
+                _btnAdsDisable.SetActive(true);
+                txtRewardByAds.color = _colorDisable;
+            }
+            else
+            {
+                _btnAdsDisable.SetActive(false);
+                txtRewardByAds.color = _colorNormal;
+            }
+        }
+
         var tweenControl = TweenControl.GetInstance();
         GroupButton.SetActive(show);
 
