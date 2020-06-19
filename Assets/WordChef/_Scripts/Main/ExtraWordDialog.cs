@@ -24,6 +24,7 @@ public class ExtraWordDialog : Dialog
     [SerializeField] private int _reward = 40;
     [SerializeField] private int _amountWordTarget = 2;
     [SerializeField] private Transform _currBanlancePos;
+    [SerializeField] private GameObject _btnAdsDisable;
 
     private RewardVideoController _rewardController;
     private int numWords, claimQuantity;
@@ -163,6 +164,11 @@ public class ExtraWordDialog : Dialog
 
     private void UpdateUI()
     {
+        if(AdsManager.instance != null)
+        {
+            if (!AdsManager.instance.AdsIsLoaded())
+                _btnAdsDisable.SetActive(true);
+        }
         claimQuantityText.text = claimQuantity.ToString();
         _textCollectEnough.gameObject.SetActive(extraProgress.current < extraProgress.target);
         claimButton.SetActive(extraProgress.current >= extraProgress.target);

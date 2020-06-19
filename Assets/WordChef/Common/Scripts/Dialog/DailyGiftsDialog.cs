@@ -10,6 +10,7 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private RewardVideoController _rewardedVideoPfb;
     [SerializeField] private Button _btnWatch;
     [SerializeField] private Button _collectButton;
+    [SerializeField] private GameObject _btnAdsDisable;
     //[SerializeField] private string _contentReward = "Completely watching 10 rewarded ads, you will get 2 Multiple Hints and 5 Hints";
     [SerializeField] private Text _currProgress;
     [SerializeField] private Text _startrogress;
@@ -323,6 +324,11 @@ public class DailyGiftsDialog : Dialog
 
     private void ShowReward()
     {
+        if (AdsManager.instance != null)
+        {
+            if (!AdsManager.instance.AdsIsLoaded())
+                _btnAdsDisable.SetActive(true);
+        }
         _animChest.SetAnimation(_idleAnim, true);
         _timeValue = 0;
         if (_currProgressValue < _maxProgress)

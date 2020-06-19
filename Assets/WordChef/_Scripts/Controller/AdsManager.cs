@@ -95,6 +95,14 @@ public class AdsManager : MonoBehaviour
         }
     }
 
+    public bool AdsIsLoaded()
+    {
+        if (AudienceNetworkFbAd.instance.isLoaded || AdmobController.instance.rewardBasedVideo.IsLoaded() || UnityAdTest.instance.IsLoaded())
+            return true;
+        else
+            return false;
+    }
+
     #region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
