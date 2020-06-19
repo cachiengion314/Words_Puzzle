@@ -517,6 +517,7 @@ public class WordRegion : MonoBehaviour
         FacebookController.instance.UpdateStaticsUser();
     }
 
+    private LineWord _lineIsChecking;
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
@@ -541,7 +542,7 @@ public class WordRegion : MonoBehaviour
         //string meaning="";
         if (line != null)
         {
-
+            _lineIsChecking = line;
             //if (!line.isShown)
             //{
             line.SetDataLetter(checkWord);
@@ -805,7 +806,7 @@ public class WordRegion : MonoBehaviour
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
                 });
             }
-            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown && line.answers.Count > 1))
+            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown && line.answers.Count > 1) && !lines.Any(line => !line.isShown && line.cells.Count == _lineIsChecking.cells.Count))
             {
                 CPlayerPrefs.SetBool("TUTORIAL", false);
                 BlockScreen.instance.Block(true);
