@@ -10,6 +10,8 @@ public class SceneAnimate : MonoBehaviour
 {
     public static SceneAnimate Instance { get; private set; }
 
+    public GameObject donotDestroyOnLoad;
+    [Space]
     [SerializeField] private string _closeScene;
     public Animator animatorScene;
     public GameObject _loadingScreen;
@@ -56,6 +58,12 @@ public class SceneAnimate : MonoBehaviour
         animatorScene.gameObject.SetActive(false);
         _loadingScreen.gameObject.SetActive(false);
         _textProgress.text = "";
+    }
+
+    void Start()
+    {
+        if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
+            Instantiate(donotDestroyOnLoad);
     }
 
     public void OnClick(int index)

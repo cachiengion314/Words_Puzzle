@@ -18,7 +18,7 @@ public class BaseController : MonoBehaviour
         if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
             Instantiate(donotDestroyOnLoad);
         iTween.dimensionMode = CommonConst.ITWEEN_MODE;
-        CPlayerPrefs.useRijndael(CommonConst.ENCRYPTION_PREFS);
+        //CPlayerPrefs.useRijndael(CommonConst.ENCRYPTION_PREFS);
 
         //numofEnterScene = CUtils.IncreaseNumofEnterScene(sceneName);
     }

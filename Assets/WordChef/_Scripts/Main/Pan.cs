@@ -74,8 +74,8 @@ public class Pan : MonoBehaviour
 
         for (int i = 0; i < numLetters; i++)
         {
-            Text letter = Instantiate(MonoUtils.instance.letter);
-            letter.transform.SetParent(centerPoint);
+            Text letter = Instantiate(MonoUtils.instance.letter, centerPoint);
+            //letter.transform.SetParent(centerPoint);
             letter.transform.localScale = Vector3.one;
             letter.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(-10, 10)));
             letter.text = gameLevel.word[i].ToString().ToUpper();
