@@ -58,7 +58,7 @@ public class CrashlyticsInitializer : MonoBehaviour
         defaults.Add("config_test_bool", false);
 
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
-        Debug.Log("Remote config ready!");
+        //Debug.Log("Remote config ready!");
     }
     public void OnTokenReceived(object sender, TokenReceivedEventArgs token)
     {

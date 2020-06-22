@@ -12,10 +12,4 @@ public class TxtVersion : MonoBehaviour
     {
         mTxtText.text = Application.version;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
