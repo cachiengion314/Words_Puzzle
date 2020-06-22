@@ -48,6 +48,7 @@ public class HomeController : BaseController
         //    CPlayerPrefs.SetBool("First_Load", true);
         //    SceneAnimate.Instance.LoadSceneWithProgressLoading();
         //}
+
         if (!CPlayerPrefs.HasKey("FREEBOOSTERS_TUTORIAL"))
         {
             btnFreeBoosters.gameObject.SetActive(false);
@@ -118,7 +119,8 @@ public class HomeController : BaseController
             {
                 tweenControl.MoveRectY(_panelTopRect, 0, 0.5f, () =>
                 {
-                    CheckShowFreeBooster();
+                    if (!LoginBonusController.instance.isShowLoginbonus && !RemoteConfigFirebase.instance.isShowNoti)
+                        CheckShowFreeBooster();
                 });
             });
         });
@@ -128,7 +130,7 @@ public class HomeController : BaseController
         });
     }
 
-    private void CheckShowFreeBooster()
+    public void CheckShowFreeBooster()
     {
         if (CPlayerPrefs.HasKey("HINT_TUTORIAL") && CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") && !CPlayerPrefs.HasKey("FREEBOOSTERS_TUTORIAL"))
         {
@@ -163,7 +165,7 @@ public class HomeController : BaseController
 
     public void ShowIconNoti()
     {
-        if(ChickenBankController.instance.CurrStarChicken >= FacebookController.instance.user.maxbank)
+        if (ChickenBankController.instance.CurrStarChicken >= FacebookController.instance.user.maxbank)
             notiChickenMax.SetActive(true);
         else
             notiChickenMax.SetActive(false);

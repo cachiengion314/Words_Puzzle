@@ -10,7 +10,7 @@ public class RemoteConfigFirebase : MonoBehaviour
     public Action notifyIngameCall;
     private string tittle;
     private string contain;
-
+    [HideInInspector] public bool isShowNoti;
 
     private bool isNeedToFetch = true;
 
@@ -26,6 +26,12 @@ public class RemoteConfigFirebase : MonoBehaviour
             {
                 MailDialog.CreateNewNotify(tittle, contain);
                 DialogController.instance.ShowDialog(DialogType.Mail, DialogShow.STACK_DONT_HIDEN);
+                isShowNoti = true;
+            }
+            else
+            {
+                if (HomeController.instance != null)
+                    HomeController.instance.CheckShowFreeBooster();
             }
         };
     }

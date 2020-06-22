@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class LoginBonusController : MonoBehaviour
 {
+    public Action onCollectSpinCallback;
     public static LoginBonusController instance;
+    [HideInInspector] public bool isShowLoginbonus;
     [SerializeField] private bool _hidenSpin;
     [SerializeField] private GameObject _root;
     [SerializeField] private GameObject _objSpin;
@@ -56,6 +58,7 @@ public class LoginBonusController : MonoBehaviour
         BlockScreen.instance.Block(true);
         if (showBonus || firstPlay)
         {
+            isShowLoginbonus = true;
             TweenControl.GetInstance().DelayCall(transform, 2f, () =>
             {
                 BlockScreen.instance.Block(false);
@@ -65,6 +68,7 @@ public class LoginBonusController : MonoBehaviour
         }
         else
         {
+            isShowLoginbonus = false;
             BlockScreen.instance.Block(false);
         }
     }
@@ -103,6 +107,7 @@ public class LoginBonusController : MonoBehaviour
                 break;
         }
         RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
+        onCollectSpinCallback?.Invoke();
     }
 
     private void Spin(Action callback = null)
@@ -115,6 +120,7 @@ public class LoginBonusController : MonoBehaviour
         Sound.instance.Play(_fxSpin);
         TweenControl.GetInstance().LocalRotate(_objSpin.transform, new Vector3(0, 0, -angle), _fxSpin.length, () =>
         {
+            isShowLoginbonus = false;
             _imageHighlight.SetActive(true);
             var currItem = _dataItems[_currAngle];
             _panelCollect.ShowItemCollect(currItem.spriteDone, currItem.value);

@@ -51,7 +51,8 @@ public class MailDialog : Dialog
             NotifyMailDialogData.instance.IsShowBefore = true;
             NotifyMailDialogData.MailBttAction?.Invoke();
         }
-
+        if (HomeController.instance != null)
+            HomeController.instance.CheckShowFreeBooster();
         RemoveLatestNotify();
         Close();
     }
