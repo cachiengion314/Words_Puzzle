@@ -101,12 +101,12 @@ public class HomeController : BaseController
         });
         sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate.showAnim, false, () =>
         {
-            Debug.Log("Play Animation Man Home");
+            //Debug.Log("Play Animation Man Home");
             sceneAnimate._spineAnimEgg.SetAnimation(sceneAnimate.loopAnim, true);
         });
         sceneAnimate._loadingScreen.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.4f);
-        Debug.Log("Play Animation Man Home Done");
+        //Debug.Log("Play Animation Man Home Done");
         sceneAnimate._btnPlay.gameObject.SetActive(true);
         sceneAnimate._maskShadow.gameObject.SetActive(true);
         tweenControl.Scale(_btnPlayShadow, Vector3.one * 1.2f, 0.47f, () =>

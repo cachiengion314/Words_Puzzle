@@ -25,7 +25,7 @@ namespace GoogleMobileAds.Common
     {
         public DummyClient()
         {
-            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            //Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
         }
 
         // Disable warnings for unused dummy ad events.
@@ -177,7 +177,7 @@ namespace GoogleMobileAds.Common
 
         public bool IsLoaded()
         {
-            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            //Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
             return true;
         }
 
@@ -193,7 +193,7 @@ namespace GoogleMobileAds.Common
 
         public void CreateRewardBasedVideoAd()
         {
-            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            //Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
         }
 
         public void SetUserId(string userId)
@@ -203,7 +203,7 @@ namespace GoogleMobileAds.Common
 
         public void LoadAd(AdRequest request, string adUnitId)
         {
-            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            //Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
         }
 
         public void DestroyRewardBasedVideoAd()

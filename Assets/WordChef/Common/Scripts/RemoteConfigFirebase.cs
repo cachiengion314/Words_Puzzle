@@ -82,7 +82,7 @@ public class RemoteConfigFirebase : MonoBehaviour
     // Start a fetch request.
     public Task FetchDataAsync()
     {
-        Debug.Log("Fetching data...");
+        //Debug.Log("Fetching data...");
         // FetchAsync only fetches new data if the current data is older than the provided
         // timespan.  Otherwise it assumes the data is "recent enough", and does nothing.
         // By default the timespan is 12 hours, and for production apps, this is a good
@@ -105,7 +105,7 @@ public class RemoteConfigFirebase : MonoBehaviour
         }
         else if (fetchTask.IsCompleted)
         {
-            Debug.Log("Fetch completed successfully!");
+            //Debug.Log("Fetch completed successfully!");
             // don't put callback in here. It doesn work properly.
         }
 
@@ -114,22 +114,22 @@ public class RemoteConfigFirebase : MonoBehaviour
         {
             case LastFetchStatus.Success:
                 FirebaseRemoteConfig.ActivateFetched();
-                Debug.Log(String.Format("Remote data loaded and ready (last fetch time {0}).",
-                    info.FetchTime));
+                //Debug.Log(String.Format("Remote data loaded and ready (last fetch time {0}).",
+                //    info.FetchTime));
                 break;
             case LastFetchStatus.Failure:
                 switch (info.LastFetchFailureReason)
                 {
                     case FetchFailureReason.Error:
-                        Debug.Log("Fetch failed for unknown reason");
+                        //Debug.Log("Fetch failed for unknown reason");
                         break;
                     case Firebase.RemoteConfig.FetchFailureReason.Throttled:
-                        Debug.Log("Fetch throttled until " + info.ThrottledEndTime);
+                        //Debug.Log("Fetch throttled until " + info.ThrottledEndTime);
                         break;
                 }
                 break;
             case LastFetchStatus.Pending:
-                Debug.Log("Latest Fetch call still pending.");
+                //Debug.Log("Latest Fetch call still pending.");
                 break;
         }
     }
