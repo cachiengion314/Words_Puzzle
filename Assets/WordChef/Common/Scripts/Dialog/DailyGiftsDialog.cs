@@ -377,8 +377,9 @@ public class DailyGiftsDialog : Dialog
     private void UpdateTimeValue()
     {
         var timeNow = DateTime.Now.TimeOfDay.TotalSeconds;
-        _timeValue = (int)(_sumTime - timeNow);
+        _timeValue = (int)(_sumTime - timeNow); // _timeValue = (int)(_sumTime - timeNow);
         if (_timeValue <= 0)
+            if (_timeValue <= 0)
             _timeValue = 0;
     }
 
