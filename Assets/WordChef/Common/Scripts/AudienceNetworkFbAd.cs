@@ -52,7 +52,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         // Set delegates to get notified on changes or when the user interacts with the ad.
         rewardedVideoAd.RewardedVideoAdDidLoad = delegate ()
         {
-            Debug.Log("RewardedVideo ad loaded.");
+            //Debug.Log("RewardedVideo ad loaded.");
             isLoaded = true;
             didClose = false;
             string isAdValid = rewardedVideoAd.IsValid() ? "valid" : "invalid";
@@ -60,16 +60,16 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         };
         rewardedVideoAd.RewardedVideoAdDidFailWithError = delegate (string error)
         {
-            Debug.Log("RewardedVideo ad failed to load with error: " + error);
+            //Debug.Log("RewardedVideo ad failed to load with error: " + error);
             //statusLabel.text = "RewardedVideo ad failed to load. Check console for details.";
         };
         rewardedVideoAd.RewardedVideoAdWillLogImpression = delegate ()
         {
-            Debug.Log("RewardedVideo ad logged impression.");
+            //Debug.Log("RewardedVideo ad logged impression.");
         };
         rewardedVideoAd.RewardedVideoAdDidClick = delegate ()
         {
-            Debug.Log("RewardedVideo ad clicked.");
+            //Debug.Log("RewardedVideo ad clicked.");
         };
 
         // For S2S validation you need to register the following two callback
@@ -78,17 +78,17 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         // https://developers.facebook.com/docs/audience-network/ios/rewarded-video#server-side-reward-validation
         rewardedVideoAd.RewardedVideoAdDidSucceed = delegate ()
         {
-            Debug.Log("Rewarded video ad validated by server");
+            //Debug.Log("Rewarded video ad validated by server");
         };
 
         rewardedVideoAd.RewardedVideoAdDidFail = delegate ()
         {
-            Debug.Log("Rewarded video ad not validated, or no response from server");
+            //Debug.Log("Rewarded video ad not validated, or no response from server");
         };
 
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
-            Debug.Log("Rewarded video ad did close.");
+            //Debug.Log("Rewarded video ad did close.");
             didClose = true;
             if (rewardedVideoAd != null)
             {
@@ -108,8 +108,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             if (!didClose)
             {
-                Debug.Log("Rewarded video activity destroyed without being closed first.");
-                Debug.Log("Game should resume. User should not get a reward.");
+                //Debug.Log("Rewarded video activity destroyed without being closed first.");
+                //Debug.Log("Game should resume. User should not get a reward.");
             }
         };
 #endif
@@ -140,7 +140,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             rewardedVideoAd.Dispose();
         }
-        Debug.Log("RewardedVideoAdTest was destroyed!");
+        //Debug.Log("RewardedVideoAdTest was destroyed!");
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
     public void LoadVideoAds()
     {
-        Debug.Log("Loading rewardedVideo ad...");
+        //Debug.Log("Loading rewardedVideo ad...");
 
         // Create the rewarded video unit with a placement ID (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
@@ -195,24 +195,24 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         // Set delegates to get notified on changes or when the user interacts with the ad.
         rewardedVideoAd.RewardedVideoAdDidLoad = delegate ()
         {
-            Debug.Log("RewardedVideo ad loaded.");
+            //Debug.Log("RewardedVideo ad loaded.");
             isLoaded = true;
             didClose = false;
             string isAdValid = rewardedVideoAd.IsValid() ? "valid" : "invalid";
-            Debug.Log("Ad loaded and is " + isAdValid + ". Click show to present!");
+            //Debug.Log("Ad loaded and is " + isAdValid + ". Click show to present!");
         };
         rewardedVideoAd.RewardedVideoAdDidFailWithError = delegate (string error)
         {
-            Debug.Log("RewardedVideo ad failed to load with error: " + error);
-            Debug.Log("RewardedVideo ad failed to load. Check console for details.");
+            //Debug.Log("RewardedVideo ad failed to load with error: " + error);
+            //Debug.Log("RewardedVideo ad failed to load. Check console for details.");
         };
         rewardedVideoAd.RewardedVideoAdWillLogImpression = delegate ()
         {
-            Debug.Log("RewardedVideo ad logged impression.");
+            //Debug.Log("RewardedVideo ad logged impression.");
         };
         rewardedVideoAd.RewardedVideoAdDidClick = delegate ()
         {
-            Debug.Log("RewardedVideo ad clicked.");
+            //Debug.Log("RewardedVideo ad clicked.");
         };
 
         // For S2S validation you need to register the following two callback
@@ -221,17 +221,17 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         // https://developers.facebook.com/docs/audience-network/ios/rewarded-video#server-side-reward-validation
         rewardedVideoAd.RewardedVideoAdDidSucceed = delegate ()
         {
-            Debug.Log("Rewarded video ad validated by server");
+            //Debug.Log("Rewarded video ad validated by server");
         };
 
         rewardedVideoAd.RewardedVideoAdDidFail = delegate ()
         {
-            Debug.Log("Rewarded video ad not validated, or no response from server");
+            //Debug.Log("Rewarded video ad not validated, or no response from server");
         };
 
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
-            Debug.Log("Rewarded video ad did close.");
+            //Debug.Log("Rewarded video ad did close.");
 
             AdsManager.instance.onAdsRewarded?.Invoke();
             didClose = true;
@@ -253,8 +253,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             if (!didClose)
             {
-                Debug.Log("Rewarded video activity destroyed without being closed first.");
-                Debug.Log("Game should resume. User should not get a reward.");
+                //Debug.Log("Rewarded video activity destroyed without being closed first.");
+                //Debug.Log("Game should resume. User should not get a reward.");
             }
         };
 #endif

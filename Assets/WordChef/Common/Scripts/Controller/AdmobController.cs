@@ -260,29 +260,29 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoLoaded event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoLoaded event received");
     }
 
     public void HandleRewardBasedVideoFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        MonoBehaviour.print(
-            "HandleRewardBasedVideoFailedToLoad event received with message: " + args.Message);
+        //MonoBehaviour.print(
+        //    "HandleRewardBasedVideoFailedToLoad event received with message: " + args.Message);
     }
 
     public void HandleRewardBasedVideoOpened(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoOpened event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoOpened event received");
     }
 
     public void HandleRewardBasedVideoStarted(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoStarted event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoStarted event received");
     }
 
     public void HandleRewardBasedVideoClosed(object sender, EventArgs args)
     {
         RequestRewardBasedVideo();
-        MonoBehaviour.print("HandleRewardBasedVideoClosed event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoClosed event received");
         AdsManager.instance.onAdsClose?.Invoke();
     }
 
@@ -290,13 +290,13 @@ public class AdmobController : MonoBehaviour, IAds
     {
         string type = args.Type;
         double amount = args.Amount;
-        MonoBehaviour.print(
-            "HandleRewardBasedVideoRewarded event received for " + amount.ToString() + " " + type);
+        //MonoBehaviour.print(
+        //    "HandleRewardBasedVideoRewarded event received for " + amount.ToString() + " " + type);
     }
 
     public void HandleRewardBasedVideoLeftApplication(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
     }
     #endregion
 

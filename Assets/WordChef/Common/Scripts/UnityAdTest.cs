@@ -64,16 +64,16 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         {
             // Reward the user for watching the ad to completion.
             AdsManager.instance.onAdsRewarded?.Invoke();
-            Debug.Log("You get a Reward!!!");
+            //Debug.Log("You get a Reward!!!");
         }
         else if (showResult == ShowResult.Skipped)
         {
             // Do not reward the user for skipping the ad.
-            Debug.Log("You don't get a Reward!!");
+            //Debug.Log("You don't get a Reward!!");
         }
         else if (showResult == ShowResult.Failed)
         {
-            Debug.LogWarning("The ad did not finish due to an error.");
+            //Debug.LogWarning("The ad did not finish due to an error.");
         }
     }
 
