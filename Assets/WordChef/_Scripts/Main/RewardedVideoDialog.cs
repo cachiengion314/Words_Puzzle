@@ -31,6 +31,7 @@ public class RewardedVideoDialog : Dialog
 
     public void OnConfirmClick()
     {
+        _btnReward.interactable = false;
         Sound.instance.Play(Sound.Others.PopupOpen);
         StartCoroutine(ShowEffectCollect(_amount));
         TweenControl.GetInstance().DelayCall(transform, 0.2f,()=> {
