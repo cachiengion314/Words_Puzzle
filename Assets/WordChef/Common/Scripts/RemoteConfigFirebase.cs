@@ -97,11 +97,11 @@ public class RemoteConfigFirebase : MonoBehaviour
     {
         if (fetchTask.IsCanceled)
         {
-            Debug.Log("Fetch canceled.");
+            //Debug.Log("Fetch canceled.");
         }
         else if (fetchTask.IsFaulted)
         {
-            Debug.Log("Fetch encountered an error.");
+            //Debug.Log("Fetch encountered an error.");
         }
         else if (fetchTask.IsCompleted)
         {
