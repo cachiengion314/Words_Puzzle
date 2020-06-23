@@ -9,7 +9,7 @@ public class ThemesData : ScriptableObject
 {
     public bool showAnsScale;
     public FontData fontData;
-    public SpriteData spriteData;
+    public UIData uiData;
     public AnimData animData;
 }
 
@@ -21,8 +21,9 @@ public class FontData
 }
 
 [Serializable]
-public class SpriteData
+public class UIData
 {
+    public bool showShadow = true;
     public Sprite background;
     public Sprite boardWordRegion;
     public Sprite header;
@@ -34,7 +35,10 @@ public class SpriteData
     public Sprite iconDictionary;
     public Sprite btnSetting;
     public Sprite iconSetting;
+    public Sprite iconCoinCell;
     public Sprite bgCell;
+    public Sprite bgCellDone;
+    public Sprite imgPedestal;
     public Sprite bgLetter;
 }
 

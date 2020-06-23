@@ -20,6 +20,7 @@ public class Cell : MonoBehaviour
     public bool isShown;
     public bool isBee;
     public bool isAds;
+    public bool showAnsScale;
     [Space]
     public Sprite _spriteLetter;
     public Sprite _spriteLetterDone;
@@ -40,7 +41,10 @@ public class Cell : MonoBehaviour
 
         ShowText();
         //letterText.transform.localScale = Vector3.one * 1.1f;
-        bg.transform.localPosition = new Vector3(0, -55, 0);
+        if (!showAnsScale)
+            bg.transform.localPosition = new Vector3(0, -55, 0);
+        else
+            letterText.transform.localScale = Vector3.zero;
         var canvasGroup = bg.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0.5f;
         //letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
@@ -51,7 +55,10 @@ public class Cell : MonoBehaviour
         //iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.2f));
         TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.05f, () =>
         {
-            TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -69f, 0), 0.1f, OnMoveToComplete);
+            if (!showAnsScale)
+                TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -69f, 0), 0.1f, OnMoveToComplete);
+            else
+                TweenControl.GetInstance().ScaleFromZero(letterText.gameObject, 0.2f, OnMoveToComplete);
         });
         //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
     }

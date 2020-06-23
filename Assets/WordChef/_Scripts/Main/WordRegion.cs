@@ -7,6 +7,7 @@ using PlayFab;
 using UnityEngine.UI;
 using TMPro;
 using Superpow;
+using Spine.Unity;
 
 public class WordRegion : MonoBehaviour
 {
@@ -64,6 +65,25 @@ public class WordRegion : MonoBehaviour
     [HideInInspector] public bool isOpenOverlay = false;
     [HideInInspector] public int numStarCollect;
     public static WordRegion instance;
+
+    [Header("Object To Change Themes")]
+    public Image background;
+    public Image boardWordRegion;
+    public Image header;
+    public Image iconStar;
+    public Image iconAdd;
+    public Image bgCurrency;
+    public Image bgLevelTitle;
+    [Space]
+    public SkeletonGraphic animBtnHelp;
+    public SkeletonGraphic animBtnBonusBox;
+    public SkeletonGraphic animBtnHint;
+    public SkeletonGraphic animBtnHintTarget;
+    public SkeletonGraphic animBtnMultipleHint;
+    public SkeletonGraphic animBtnShuffle;
+    public SkeletonGraphic animBtnRewardAds;
+    public SkeletonGraphic animBtnBonusBoxShadow;
+    public SkeletonGraphic animBtnHelpShadow;
 
     public ButtonVideoHintFree BtnADS
     {
