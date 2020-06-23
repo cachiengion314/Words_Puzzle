@@ -25,6 +25,7 @@ public class ThemesControl : MonoBehaviour
         cellPfb.showAnsScale = currTheme.showAnsScale;
         cellPfb._spriteLetter = currTheme.uiData.bgCell;
         cellPfb._spriteLetterDone = currTheme.uiData.bgCellDone;
+        cellPfb.letterTextNor.font = currTheme.fontData.fontNormal;
         letterTextPfb.font = currTheme.fontData.fontNormal;
         var bgLetter = letterTextPfb.GetComponentInChildren<Image>();
         bgLetter.sprite = currTheme.uiData.bgLetter;
