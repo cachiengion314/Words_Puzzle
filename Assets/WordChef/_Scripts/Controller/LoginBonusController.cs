@@ -18,6 +18,9 @@ public class LoginBonusController : MonoBehaviour
     [SerializeField] private ItemManager _itemManager;
     [SerializeField] private PanelCollectItem _panelCollect;
     [SerializeField] private AudioClip _fxSpin;
+    [SerializeField] private SpineControl _animPet;
+    [SerializeField] private string _idleAnim;
+    [SerializeField] private string _showAnim;
     [Header("Data Spin")]
     [SerializeField] private List<DataItem> _dataItems;
 
@@ -63,7 +66,15 @@ public class LoginBonusController : MonoBehaviour
             {
                 BlockScreen.instance.Block(false);
                 if (!_hidenSpin)
-                    TweenControl.GetInstance().ScaleFromZero(_root, 0.3f, null);
+                {
+                    TweenControl.GetInstance().ScaleFromZero(_root, 0.3f, () =>
+                    {
+                        _animPet.SetAnimation(_showAnim, false, () =>
+                        {
+                            _animPet.SetAnimation(_idleAnim, true);
+                        });
+                    });
+                }
             });
         }
         else
