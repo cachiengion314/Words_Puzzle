@@ -64,6 +64,7 @@ public class SceneAnimate : MonoBehaviour
     {
         if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
             Instantiate(donotDestroyOnLoad);
+        LoadScenHomeWithProgress();
     }
 
     public void OnClick(int index)

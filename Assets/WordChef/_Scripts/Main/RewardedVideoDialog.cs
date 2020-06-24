@@ -11,9 +11,9 @@ public class RewardedVideoDialog : Dialog
     public TextMeshProUGUI amountText;
     public Text messageText;
 
-    private void Start()
+    protected override void Start()
     {
-        GetComponent<Canvas>().worldCamera = Camera.main;
+        base.Start();
         SetAmount(_amount);
     }
 
@@ -31,6 +31,11 @@ public class RewardedVideoDialog : Dialog
 
     public void OnConfirmClick()
     {
+        if (MainController.instance != null)
+        {
+            MainController.instance.canvasFx.gameObject.SetActive(true);
+            MainController.instance.canvasCollect.gameObject.SetActive(true);
+        }
         _btnReward.interactable = false;
         Sound.instance.Play(Sound.Others.PopupOpen);
         StartCoroutine(ShowEffectCollect(_amount));

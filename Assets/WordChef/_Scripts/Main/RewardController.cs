@@ -83,7 +83,7 @@ public class RewardController : MonoBehaviour
         //overLay.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            AdmobController.instance.ShowRewardBasedVideo();
+            AdsManager.instance.ShowVideoAds();
             Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
             OnCompleteVideo();

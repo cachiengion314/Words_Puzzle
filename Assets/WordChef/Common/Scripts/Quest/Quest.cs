@@ -123,6 +123,11 @@ public class Quest : MonoBehaviour
 
     public void OnReward()
     {
+        if (MainController.instance != null)
+        {
+            MainController.instance.canvasFx.gameObject.SetActive(true);
+            MainController.instance.canvasCollect.gameObject.SetActive(true);
+        }
         if (GetComponent<Canvas>() != null)
             GetComponent<Canvas>().overrideSorting = false;
         CPlayerPrefs.SetBool("OBJ_TUTORIAL", true);

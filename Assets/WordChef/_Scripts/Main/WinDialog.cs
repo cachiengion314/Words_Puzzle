@@ -571,6 +571,11 @@ public class WinDialog : Dialog
 
     public void RewardClick()
     {
+        if (MainController.instance != null)
+        {
+            MainController.instance.canvasFx.gameObject.SetActive(true);
+            MainController.instance.canvasCollect.gameObject.SetActive(true);
+        }
         _isWatchAds = true;
         _nextButton.interactable = false;
         _rewardControl.onRewardedCallback += OnCompleteReward;

@@ -16,7 +16,10 @@ public class MainController : BaseController
     public TextMeshProUGUI levelNameText;
     public Animator animatorScene;
     public BeeController beeController;
-
+    [Space]
+    public Canvas canvasPopup;
+    public Canvas canvasFx;
+    public Canvas canvasCollect;
     private int world, subWorld, level;
     private bool _isGameComplete;
     private bool _isLevelClear;

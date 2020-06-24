@@ -624,6 +624,10 @@ public class WordRegion : MonoBehaviour
 
     public void ShowComplimentFX()
     {
+        if (MainController.instance != null)
+        {
+            MainController.instance.canvasFx.gameObject.SetActive(true);
+        }
         gameObject.GetComponent<Canvas>().overrideSorting = false;
         compliment.Show(lineIndex);
         Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
@@ -913,6 +917,8 @@ public class WordRegion : MonoBehaviour
 
     public void BeeClick()
     {
+        if (MainController.instance != null)
+            MainController.instance.canvasPopup.gameObject.SetActive(true);
         BlockScreen.instance.Block(true);
         int count = 0;
         var lineNotShow = lines.FindAll(x => !x.isShown);
@@ -943,6 +949,8 @@ public class WordRegion : MonoBehaviour
                      MainController.instance.isBeePlay = false;
                      BlockScreen.instance.Block(false);
                      TutorialController.instance.CheckAndShowTutorial();
+                     if (MainController.instance != null)
+                         MainController.instance.canvasPopup.gameObject.SetActive(false);
                  });
                 count += 1;
             }

@@ -72,16 +72,22 @@ public class AnimEvent : MonoBehaviour
 
     public void PlayParticleCompliment()
     {
+        if (MainController.instance != null)
+            MainController.instance.canvasFx.gameObject.SetActive(true);
         WordRegion.instance.compliment.PlayParticle();
     }
 
     public void HidenParticleCompliment()
     {
         WordRegion.instance.compliment.Hidenarticle();
+        if (MainController.instance != null)
+            MainController.instance.canvasFx.gameObject.SetActive(false);
     }
 
     private IEnumerator HidenLetters()
     {
+        if (MainController.instance != null)
+            MainController.instance.canvasFx.gameObject.SetActive(true);
         if (Pan.instance != null && Pan.instance.LetterTexts.Count > 0)
         {
             for (int i = 0; i < Pan.instance.LetterTexts.Count; i++)
