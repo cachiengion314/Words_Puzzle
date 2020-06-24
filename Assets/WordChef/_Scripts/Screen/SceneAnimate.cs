@@ -48,6 +48,7 @@ public class SceneAnimate : MonoBehaviour
         Application.targetFrameRate = 60;
         if (!CPlayerPrefs.HasKey("INSTALLED"))
         {
+            Caching.ClearCache();
             CPlayerPrefs.DeleteAll();
             CPlayerPrefs.Save();
         }
