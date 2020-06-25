@@ -106,6 +106,7 @@ public class WinDialog : Dialog
         AdsManager.instance.onAdsRewarded -= OnCompleteReward;
         if (!AdsManager.instance.AdsIsLoaded())
             AdsManager.instance.LoadDataAds();
+        CheckShowAdsButton();
         isSound = false;
     }
 
