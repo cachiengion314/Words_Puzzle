@@ -26,12 +26,6 @@ public class ThemesDialog : Dialog
         });
     }
 
-    public override void Close()
-    {
-        base.Close();
-        CUtils.LoadScene(Const.SCENE_MAIN, true);
-    }
-
     private void ClearItem()
     {
         foreach (var item in _themes)
