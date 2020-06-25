@@ -201,7 +201,7 @@ public class DailyGiftsDialog : Dialog
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             _currProgressValue += 1;
-            Debug.Log("OnRewarded invoke: " + this.name);
+            //Debug.Log("OnRewarded invoke: " + this.name);
             CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
             UpdateProgress();
             _btnWatch.interactable = true;
@@ -326,19 +326,21 @@ public class DailyGiftsDialog : Dialog
 
     private void ShowReward()
     {
-        if (AdsManager.instance != null)
-        {
-            if (!AdsManager.instance.AdsIsLoaded())
-                _btnAdsDisable.SetActive(true);
-            else
-                _btnAdsDisable.SetActive(false);
-        }
         _animChest.SetAnimation(_idleAnim, true);
         _timeValue = 0;
         if (_currProgressValue < _maxProgress)
             ShowBtnWatch(true);
         else
             ShowBtnWatch(false);
+        if (AdsManager.instance != null)
+        {
+            if (!AdsManager.instance.AdsIsLoaded())
+                //_btnAdsDisable.SetActive(true);
+                _btnWatch.gameObject.SetActive(false);
+            else
+                //_btnAdsDisable.SetActive(false);
+                _btnWatch.gameObject.SetActive(true);
+        }
         _timeCountdown.transform.localScale = Vector3.zero;
     }
 

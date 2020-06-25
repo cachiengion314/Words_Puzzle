@@ -280,7 +280,7 @@ public class WinDialog : Dialog
             {
                 var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
                 var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
-                if (currlevel >= 40 || CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0)
+                if (currlevel > 40 || CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0)
                     _btnBee.gameObject.SetActive(true);
                 else
                     _btnBee.gameObject.SetActive(false);
@@ -585,7 +585,7 @@ public class WinDialog : Dialog
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
             //AdmobController.instance.ShowRewardBasedVideo();
-            AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
+            //AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
             AdsManager.instance.ShowVideoAds(true, CheckShowAdsButton, CheckShowAdsButton);
 
 #if UNITY_EDITOR
@@ -601,13 +601,14 @@ public class WinDialog : Dialog
         {
             if (!AdsManager.instance.AdsIsLoaded())
             {
-                _btnAdsDisable.SetActive(true);
-                txtRewardByAds.color = _colorDisable;
+                //_btnAdsDisable.SetActive(true);
+                RewardButton.gameObject.SetActive(false);
+                //txtRewardByAds.color = _colorDisable;
                 _nextButton.interactable = true;
             }
             else
             {
-                _btnAdsDisable.SetActive(false);
+                //_btnAdsDisable.SetActive(false);
                 txtRewardByAds.color = _colorNormal;
             }
         }
