@@ -47,7 +47,7 @@ public class WorldController : BaseController
         float screenAspect = screenWidth * 1.0f / screenHeight;
 
         //var numlevels = Utils.GetNumLevels(Prefs.unlockedSubWorld, Prefs.unlockedWorld);
-        target = Prefs.unlockedSubWorld + (Prefs.unlockedWorld - 1) * _data.words[0].subWords.Count;
+        target = Prefs.unlockedSubWorld + (Prefs.unlockedWorld - Prefs.unlockedWorld > 0 ? 1 : 0) * _data.words[0].subWords.Count;
         _heightItem = (_wordItemPfb.transform as RectTransform).rect.height;
         _heightRoot = _heightItem * worldItems.Count;
         mainUI.anchoredPosition = scrollContent.anchoredPosition;
