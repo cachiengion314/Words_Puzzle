@@ -541,15 +541,15 @@ public class WordRegion : MonoBehaviour
     private int lineIndex = 0;
     public void CheckAnswer(string checkWord)
     {
+        var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         //var lineNotShown = lines.FindAll(l => !l.isShown);
         var checkLength = lines.All(l => !l.answers.Contains(checkWord) && (l.cells.Count != checkWord.Length));
-        if (checkLength)
+        if (checkLength && !TutorialController.instance.isShowTut)
         {
             NotifyMessage.instance.ShowMessage(NotifyMessage.instance.WORD_LENGTH_REQUIREMENT);
             textPreview.ClearText();
             return;
         }
-        var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         var isExist = lines.FindAll(li => !li.isShown).All(l => l.answer != checkWord);
         //var lineLengthEqualCheckWord = lines.FindAll(li => !li.isShown && li.cells.Count == checkWord.Length);
         //var lineAnswerEmpty = lineLengthEqualCheckWord.Find(x => x.answer == "" && isExist);
@@ -977,6 +977,7 @@ public class WordRegion : MonoBehaviour
         }
         else if (!CPlayerPrefs.HasKey("BONUSBOX_TUT") && ExtraWord.instance.extraWords.Count > 0)
         {
+            CPlayerPrefs.SetBool("BONUSBOX_TUT", true);
             BlockScreen.instance.Block(true);
             TutorialController.instance.isBlockSwipe = true;
             TweenControl.GetInstance().DelayCall(transform, 1f, () =>
@@ -984,7 +985,6 @@ public class WordRegion : MonoBehaviour
                 TutorialController.instance.isBlockSwipe = false;
                 BlockScreen.instance.Block(false);
                 TutorialController.instance.ShowPopBonusBoxTut();
-                CPlayerPrefs.SetBool("BONUSBOX_TUT", true);
             });
         }
     }
