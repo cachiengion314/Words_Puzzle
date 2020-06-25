@@ -951,9 +951,41 @@ public class WordRegion : MonoBehaviour
                      TutorialController.instance.CheckAndShowTutorial();
                      if (MainController.instance != null)
                          MainController.instance.canvasPopup.gameObject.SetActive(false);
+                     CheckShowBonusBoxTut();
                  });
                 count += 1;
             }
+        }
+    }
+
+    public void CheckShowBonusBoxTut()
+    {
+        var lastLineIsShown = lines.FindAll(li => li.isShown);
+        if (lastLineIsShown.Count > 0)
+            _lineIsChecking = lastLineIsShown[lastLineIsShown.Count - 1];
+        if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown && line.answers.Count > 1) && !lines.Any(line => !line.isShown && line.cells.Count == _lineIsChecking.cells.Count))
+        {
+            CPlayerPrefs.SetBool("TUTORIAL", false);
+            BlockScreen.instance.Block(true);
+            TutorialController.instance.isBlockSwipe = true;
+            TweenControl.GetInstance().DelayCall(transform, 1f, () =>
+            {
+                TutorialController.instance.isBlockSwipe = false;
+                BlockScreen.instance.Block(false);
+                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation, 0, false, TutorialController.instance.contentUnlockBonusBox);
+            });
+        }
+        else if (!CPlayerPrefs.HasKey("BONUSBOX_TUT") && ExtraWord.instance.extraWords.Count > 0)
+        {
+            BlockScreen.instance.Block(true);
+            TutorialController.instance.isBlockSwipe = true;
+            TweenControl.GetInstance().DelayCall(transform, 1f, () =>
+            {
+                TutorialController.instance.isBlockSwipe = false;
+                BlockScreen.instance.Block(false);
+                TutorialController.instance.ShowPopBonusBoxTut();
+                CPlayerPrefs.SetBool("BONUSBOX_TUT", true);
+            });
         }
     }
 

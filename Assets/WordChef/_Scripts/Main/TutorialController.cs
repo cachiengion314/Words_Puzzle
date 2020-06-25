@@ -415,7 +415,7 @@ public class TutorialController : MonoBehaviour
     {
         var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
         var currlevel = WordRegion.instance.CurLevel;
-        if (!CPlayerPrefs.HasKey("LEVEL " + currlevel))
+        if (!CPlayerPrefs.HasKey("LEVEL " + currlevel) && !isShowTut)
         {
             if ((currlevel >= 40 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {

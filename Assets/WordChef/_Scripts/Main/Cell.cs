@@ -67,6 +67,11 @@ public class Cell : MonoBehaviour
     {
         if (iconCoin.transform.localScale == Vector3.one)
         {
+            if (MainController.instance != null)
+            {
+                MainController.instance.canvasFx.gameObject.SetActive(true);
+                MainController.instance.canvasCollect.gameObject.SetActive(true);
+            }
             if (WordRegion.instance.CurLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
                 CPlayerPrefs.SetBool("SHOW_TUT_CELL_STAR", true);
             //var canvas = iconCoin.gameObject.AddComponent<Canvas>();

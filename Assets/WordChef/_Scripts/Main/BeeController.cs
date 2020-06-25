@@ -38,6 +38,7 @@ public class BeeController : MonoBehaviour
             if ((currlevel == 8 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || currlevel <= 40 && !CPlayerPrefs.HasKey("BEE_TUTORIAL"))
             {
                 MainController.instance.isBeePlay = false;
+                WordRegion.instance.CheckShowBonusBoxTut();
                 TutorialController.instance.CheckAndShowTutorial();
             }
             else
@@ -47,6 +48,7 @@ public class BeeController : MonoBehaviour
         else
         {
             MainController.instance.isBeePlay = false;
+            WordRegion.instance.CheckShowBonusBoxTut();
             TutorialController.instance.CheckAndShowTutorial();
             //DialogController.instance.ShowDialog(DialogType.Bee);
         }
