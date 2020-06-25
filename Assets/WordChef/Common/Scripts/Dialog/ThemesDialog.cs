@@ -15,6 +15,7 @@ public class ThemesDialog : Dialog
 
     public void SelectThemes(ThemeItem theme)
     {
+        GetComponent<GraphicRaycaster>().enabled = false;
         ClearItem();
         CPlayerPrefs.SetInt("CURR_THEMES", theme.idTheme);
         theme.iconSelected.gameObject.SetActive(true);
@@ -41,7 +42,6 @@ public class ThemesDialog : Dialog
 
     private void CheckShowSelectedTheme()
     {
-        GetComponent<GraphicRaycaster>().enabled = false;
         ClearItem();
         var iddthem = CPlayerPrefs.GetInt("CURR_THEMES", 0);
         _themes[iddthem].iconSelected.gameObject.SetActive(true);
