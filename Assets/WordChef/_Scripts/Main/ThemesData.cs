@@ -50,6 +50,8 @@ public class UIData
     public Sprite bgCellDone;
     public Sprite imgPedestal;
     public Sprite bgLetter;
+    public Sprite numBooster;
+    public Sprite priceBooster;
 }
 
 [Serializable]

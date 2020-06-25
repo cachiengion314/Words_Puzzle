@@ -83,6 +83,19 @@ public class WordRegion : MonoBehaviour
     public GameObject iconLevelTitle;
     public TextMeshProUGUI textNumberStar;
     [Space]
+    public Image imgNumHint;
+    public Image imgPriceHint;
+    public Image imgNumMultipleHint;
+    public Image imgPriceMultipleHint;
+    public Image imgNumSelectedHint;
+    public Image imgPriceSelectedHint;
+    public TextMeshProUGUI textNumHint;
+    public TextMeshProUGUI textPriceHint;
+    public TextMeshProUGUI textNumMultipleHint;
+    public TextMeshProUGUI textPriceMultipleHint;
+    public TextMeshProUGUI textNumSelectedHint;
+    public TextMeshProUGUI textPriceSelectedHint;
+    [Space]
     public SpineControl animBtnHelp;
     public SpineControl animBtnBonusBox;
     public SpineControl animBtnHint;

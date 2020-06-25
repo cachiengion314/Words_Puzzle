@@ -119,8 +119,10 @@ public class Cell : MonoBehaviour
         iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.15f));
         //fxExplode.gameObject.SetActive(false);
         if (ThemesControl.instance.CurrTheme.fontData.fontScale)
+        {
             CalculateTextRaitoScale(letterTextNor.rectTransform);
-        StartCoroutine(TurnOffContentsSizeFilter());
+            StartCoroutine(TurnOffContentsSizeFilter());
+        }
     }
 
     private IEnumerator TurnOffContentsSizeFilter()
@@ -177,8 +179,10 @@ public class Cell : MonoBehaviour
         {
             letterTextNor.text = letter;
             if (ThemesControl.instance.CurrTheme.fontData.fontScale)
+            {
                 CalculateTextRaitoScale(letterTextNor.rectTransform);
-            StartCoroutine(TurnOffContentsSizeFilter());
+                StartCoroutine(TurnOffContentsSizeFilter());
+            }
         }
         bg.color = new Color(1, 1, 1, 1);
         bg.gameObject.SetActive(true);

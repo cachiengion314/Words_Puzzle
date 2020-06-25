@@ -19,6 +19,9 @@ public class ThemesDialog : Dialog
         CPlayerPrefs.SetInt("CURR_THEMES", theme.idTheme);
         theme.iconSelected.gameObject.SetActive(true);
         theme.btnTheme.interactable = false;
+
+        Close();
+        CUtils.LoadScene(Const.SCENE_MAIN, true);
     }
 
     public override void Close()
@@ -38,6 +41,7 @@ public class ThemesDialog : Dialog
 
     private void CheckShowSelectedTheme()
     {
+        GetComponent<GraphicRaycaster>().enabled = false;
         ClearItem();
         var iddthem = CPlayerPrefs.GetInt("CURR_THEMES", 0);
         _themes[iddthem].iconSelected.gameObject.SetActive(true);

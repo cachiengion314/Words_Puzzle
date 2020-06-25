@@ -39,6 +39,7 @@ public class ThemesControl : MonoBehaviour
         cellPfb._spriteLetter = currTheme.uiData.bgCell;
         cellPfb._spriteLetterDone = currTheme.uiData.bgCellDone;
         cellPfb.letterTextNor.font = currTheme.fontData.fontNormal;
+        cellPfb.letterTextNor.GetComponent<ContentSizeFitter>().enabled = currTheme.fontData.fontScale;
         if (!currTheme.fontData.fontScale)
             cellPfb.letterTextNor.fontSize = currTheme.fontData.fontSize;
         cellPfb.letterTextNor.color = currTheme.fontData.colorCell;
@@ -68,6 +69,13 @@ public class ThemesControl : MonoBehaviour
             wordRegion.iconDictionary.sprite = currTheme.uiData.iconDictionary;
             wordRegion.imageGround.sprite = currTheme.uiData.imgGround;
 
+            wordRegion.imgNumHint.sprite = currTheme.uiData.numBooster;
+            wordRegion.imgNumMultipleHint.sprite = currTheme.uiData.numBooster;
+            wordRegion.imgNumSelectedHint.sprite = currTheme.uiData.numBooster;
+            wordRegion.imgPriceHint.sprite = currTheme.uiData.priceBooster;
+            wordRegion.imgPriceMultipleHint.sprite = currTheme.uiData.priceBooster;
+            wordRegion.imgPriceSelectedHint.sprite = currTheme.uiData.priceBooster;
+
             wordRegion.board.SetNativeSize();
             wordRegion.iconStar.SetNativeSize();
             wordRegion.iconAdd.SetNativeSize();
@@ -75,6 +83,13 @@ public class ThemesControl : MonoBehaviour
             wordRegion.bgLevelTitle.SetNativeSize();
             wordRegion.iconSetting.SetNativeSize();
             wordRegion.iconDictionary.SetNativeSize();
+
+            wordRegion.imgNumHint.SetNativeSize();
+            wordRegion.imgNumMultipleHint.SetNativeSize();
+            wordRegion.imgNumSelectedHint.SetNativeSize();
+            wordRegion.imgPriceHint.SetNativeSize();
+            wordRegion.imgPriceMultipleHint.SetNativeSize();
+            wordRegion.imgPriceSelectedHint.SetNativeSize();
 
             wordRegion.shadowBonuxbox.SetActive(currTheme.uiData.showShadow);
             wordRegion.shadowHelp.SetActive(currTheme.uiData.showShadow);
@@ -87,6 +102,9 @@ public class ThemesControl : MonoBehaviour
             wordRegion._textLevel.fontSizeMax = currTheme.fontData.fontSizeMax;
             wordRegion.textNumberStar.font = currTheme.fontData.fontAsset;
             wordRegion.textNumberStar.color = currTheme.fontData.colorTextHeader;
+            wordRegion.textNumHint.font = currTheme.fontData.fontAsset;
+            wordRegion.textNumMultipleHint.font = currTheme.fontData.fontAsset;
+            wordRegion.textNumSelectedHint.font = currTheme.fontData.fontAsset;
 
             wordRegion.animBtnBonusBox.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHint.SetSkin(currTheme.animData.skinAnim);

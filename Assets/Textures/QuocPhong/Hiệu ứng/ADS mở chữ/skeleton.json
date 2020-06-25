@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "AObv+M8GG7vyjIDkRtsKnFvw728",
+	"hash": "HdsYhf76l6hEjR8RpuokUsovZLs",
 	"spine": "3.8.95",
 	"x": -57.97,
 	"y": -56.33,
@@ -32,7 +32,7 @@
 ],
 "skins": [
 	{
-		"name": "default",
+		"name": "1",
 		"attachments": {
 			"Layer 1426": {
 				"Layer 1426": { "x": -0.15, "y": -1, "width": 20, "height": 19 }
@@ -57,6 +57,45 @@
 			},
 			"icon vd": {
 				"icon vd": { "x": -0.36, "y": 0.89, "width": 42, "height": 40 }
+			}
+		}
+	},
+	{
+		"name": "2",
+		"attachments": {
+			"Layer 1426": {
+				"Layer 1426": { "x": -0.15, "y": -1, "scaleX": 0, "width": 20, "height": 19 }
+			},
+			"Layer 1427": {
+				"Layer 1426": { "x": -0.15, "y": -1, "scaleX": 0, "width": 20, "height": 19 }
+			},
+			"Layer 1428": {
+				"Layer 1428": { "x": 0.27, "y": -0.44, "scaleX": 0, "width": 14, "height": 13 }
+			},
+			"Layer 1429": {
+				"Layer 1428": { "x": 0.27, "y": -0.44, "scaleX": 0, "width": 14, "height": 13 }
+			},
+			"Layer 1430": {
+				"Layer 1428": { "x": 0.27, "y": -0.44, "scaleX": 0, "width": 14, "height": 13 }
+			},
+			"Layer 1431": {
+				"Layer 1428": { "x": 0.27, "y": -0.44, "scaleX": 0, "width": 14, "height": 13 }
+			},
+			"Video copy 2": {
+				"Video copy 2": {
+					"name": "2/Video copy 2",
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 18, -37.5, -18, -37.5, -18, 37.5, 18, 37.5 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 36,
+					"height": 75
+				}
+			},
+			"icon vd": {
+				"icon vd": { "x": -0.36, "y": 0.89, "scaleX": 0, "width": 42, "height": 40 }
 			}
 		}
 	}
@@ -285,6 +324,64 @@
 					{ "time": 2.1, "angle": -5.53 },
 					{ "time": 2.2 }
 				]
+			}
+		},
+		"deform": {
+			"2": {
+				"Video copy 2": {
+					"Video copy 2": [
+						{
+							"offset": 1,
+							"vertices": [ -0.1 ],
+							"curve": "stepped"
+						},
+						{
+							"time": 0.1667,
+							"offset": 1,
+							"vertices": [ -0.1 ],
+							"curve": 0.25,
+							"c3": 0.75
+						},
+						{
+							"time": 0.5,
+							"vertices": [ -8.32734, 17.28718, 8.33104, 17.3409, 8.33104, -17.36404, -8.32734, -17.36404 ],
+							"curve": 0.25,
+							"c3": 0.75
+						},
+						{
+							"time": 0.8333,
+							"offset": 1,
+							"vertices": [ -0.1 ],
+							"curve": "stepped"
+						},
+						{
+							"time": 1.1667,
+							"offset": 1,
+							"vertices": [ -0.1 ]
+						},
+						{
+							"time": 1.2667,
+							"vertices": [ 4.24343, 2.24513, 4.47558, -1.83784, -4.23758, -2.34572, -4.48134, 1.83659 ]
+						},
+						{
+							"time": 1.3667,
+							"vertices": [ -5.073, -2.13224, -4.7502, 2.67896, 5.06651, 2.0337, 4.75681, -2.67832 ]
+						},
+						{
+							"time": 1.4667,
+							"vertices": [ 4.24343, 2.24513, 4.47558, -1.83784, -4.23758, -2.34572, -4.48134, 1.83659 ]
+						},
+						{
+							"time": 1.5667,
+							"vertices": [ -5.073, -2.13224, -4.7502, 2.67896, 5.06651, 2.0337, 4.75681, -2.67832 ]
+						},
+						{
+							"time": 1.6667,
+							"offset": 1,
+							"vertices": [ -0.1 ]
+						}
+					]
+				}
 			}
 		}
 	}
