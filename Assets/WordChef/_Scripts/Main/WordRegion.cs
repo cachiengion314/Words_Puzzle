@@ -68,22 +68,30 @@ public class WordRegion : MonoBehaviour
 
     [Header("Object To Change Themes")]
     public Image background;
-    public Image boardWordRegion;
     public Image header;
     public Image iconStar;
     public Image iconAdd;
     public Image bgCurrency;
     public Image bgLevelTitle;
+    public Image iconSetting;
+    public Image iconDictionary;
+    public Image imageGround;
     [Space]
-    public SkeletonGraphic animBtnHelp;
-    public SkeletonGraphic animBtnBonusBox;
-    public SkeletonGraphic animBtnHint;
-    public SkeletonGraphic animBtnHintTarget;
-    public SkeletonGraphic animBtnMultipleHint;
-    public SkeletonGraphic animBtnShuffle;
-    public SkeletonGraphic animBtnRewardAds;
-    public SkeletonGraphic animBtnBonusBoxShadow;
-    public SkeletonGraphic animBtnHelpShadow;
+    public Image imgLeafTopLeft;
+    public Image imgLeafTopRight;
+    public GameObject imgLeafBoardWordRegion;
+    public GameObject iconLevelTitle;
+    public TextMeshProUGUI textNumberStar;
+    [Space]
+    public SpineControl animBtnHelp;
+    public SpineControl animBtnBonusBox;
+    public SpineControl animBtnHint;
+    public SpineControl animBtnHintTarget;
+    public SpineControl animBtnMultipleHint;
+    public SpineControl animBtnShuffle;
+    public SpineControl animBtnRewardAds;
+    public SpineControl animBtnBonusBoxShadow;
+    public SpineControl animBtnHelpShadow;
 
     public ButtonVideoHintFree BtnADS
     {
@@ -106,6 +114,18 @@ public class WordRegion : MonoBehaviour
         get
         {
             return _currLevel;
+        }
+    }
+
+    public Sprite SpriteNormal
+    {
+        get
+        {
+            return _spriteNormal;
+        }
+        set
+        {
+            _spriteNormal = value;
         }
     }
 

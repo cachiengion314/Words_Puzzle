@@ -10,6 +10,16 @@ public class ThemesControl : MonoBehaviour
     [SerializeField] private Cell cellPfb;
     [SerializeField] private Text letterTextPfb;
 
+    private ThemesData _currTheme;
+
+    public ThemesData CurrTheme
+    {
+        get
+        {
+            return _currTheme;
+        }
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -20,13 +30,20 @@ public class ThemesControl : MonoBehaviour
     {
         CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
         var currTheme = _themesDatas[indexTheme];
+        _currTheme = currTheme;
+        cellPfb.imageCell.sprite = currTheme.uiData.imgCell;
+        cellPfb.imageCell.SetNativeSize();
         cellPfb.bg.sprite = currTheme.uiData.bgCellDone;
         cellPfb.iconCoin.sprite = currTheme.uiData.iconCoinCell;
         cellPfb.showAnsScale = currTheme.showAnsScale;
         cellPfb._spriteLetter = currTheme.uiData.bgCell;
         cellPfb._spriteLetterDone = currTheme.uiData.bgCellDone;
         cellPfb.letterTextNor.font = currTheme.fontData.fontNormal;
+        if (!currTheme.fontData.fontScale)
+            cellPfb.letterTextNor.fontSize = currTheme.fontData.fontSize;
+        cellPfb.letterTextNor.color = currTheme.fontData.colorCell;
         letterTextPfb.font = currTheme.fontData.fontNormal;
+        letterTextPfb.color = currTheme.fontData.colorLetter;
         var bgLetter = letterTextPfb.GetComponentInChildren<Image>();
         bgLetter.sprite = currTheme.uiData.bgLetter;
         bgLetter.SetNativeSize();
@@ -38,12 +55,8 @@ public class ThemesControl : MonoBehaviour
             wordRegion.btnSetting.image.sprite = currTheme.uiData.btnSetting;
             wordRegion.btnDictionary.image.SetNativeSize();
             wordRegion.btnSetting.image.SetNativeSize();
-            var iconDictionary = wordRegion.btnDictionary.GetComponentInChildren<Image>();
-            iconDictionary.sprite = currTheme.uiData.btnDictionary;
-            iconDictionary.SetNativeSize();
-            var iconSetting = wordRegion.btnSetting.GetComponentInChildren<Image>();
-            iconSetting.sprite = currTheme.uiData.btnSetting;
-            iconSetting.SetNativeSize();
+            wordRegion.board.sprite = currTheme.uiData.boardWordRegion;
+            wordRegion.SpriteNormal = currTheme.uiData.boardWordRegion;
 
             wordRegion.background.sprite = currTheme.uiData.background;
             wordRegion.header.sprite = currTheme.uiData.header;
@@ -51,24 +64,39 @@ public class ThemesControl : MonoBehaviour
             wordRegion.iconAdd.sprite = currTheme.uiData.iconAdd;
             wordRegion.bgCurrency.sprite = currTheme.uiData.bgCurrency;
             wordRegion.bgLevelTitle.sprite = currTheme.uiData.bgLevelTitle;
+            wordRegion.iconSetting.sprite = currTheme.uiData.iconSetting;
+            wordRegion.iconDictionary.sprite = currTheme.uiData.iconDictionary;
+            wordRegion.imageGround.sprite = currTheme.uiData.imgGround;
 
+            wordRegion.board.SetNativeSize();
             wordRegion.iconStar.SetNativeSize();
             wordRegion.iconAdd.SetNativeSize();
             wordRegion.bgCurrency.SetNativeSize();
             wordRegion.bgLevelTitle.SetNativeSize();
+            wordRegion.iconSetting.SetNativeSize();
+            wordRegion.iconDictionary.SetNativeSize();
 
             wordRegion.shadowBonuxbox.SetActive(currTheme.uiData.showShadow);
             wordRegion.shadowHelp.SetActive(currTheme.uiData.showShadow);
+            wordRegion.imgLeafTopLeft.gameObject.SetActive(currTheme.uiData.showLeaf);
+            wordRegion.imgLeafTopRight.gameObject.SetActive(currTheme.uiData.showLeaf);
+            wordRegion.imgLeafBoardWordRegion.SetActive(currTheme.uiData.showLeaf);
+            wordRegion.iconLevelTitle.SetActive(currTheme.uiData.showIconLevelTitle);
+            wordRegion._textLevel.font = currTheme.fontData.fontAsset;
+            wordRegion._textLevel.color = currTheme.fontData.colorTextHeader;
+            wordRegion._textLevel.fontSizeMax = currTheme.fontData.fontSizeMax;
+            wordRegion.textNumberStar.font = currTheme.fontData.fontAsset;
+            wordRegion.textNumberStar.color = currTheme.fontData.colorTextHeader;
 
-            wordRegion.animBtnBonusBox.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnHint.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnHintTarget.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnMultipleHint.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnShuffle.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnRewardAds.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnHelp.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnHelpShadow.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBtnBonusBoxShadow.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnBonusBox.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnHint.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnHintTarget.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnMultipleHint.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnShuffle.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnRewardAds.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnHelp.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnHelpShadow.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnBonusBoxShadow.SetSkin(currTheme.animData.skinAnim);
         }
     }
 }

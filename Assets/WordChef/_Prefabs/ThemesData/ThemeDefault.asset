@@ -14,10 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showAnsScale: 0
   fontData:
+    fontScale: 1
     fontAsset: {fileID: 11400000, guid: d7ddf40b41871b543977d673ede6543b, type: 2}
     fontNormal: {fileID: 12800000, guid: 20ee7d91ad1cd48d1a0992bb56adacbc, type: 2}
+    fontSize: 0
+    fontSizeMax: 44
+    colorLetter: {r: 1, g: 1, b: 1, a: 1}
+    colorCell: {r: 1, g: 1, b: 1, a: 1}
+    colorTextHeader: {r: 1, g: 0.7294118, b: 0.46666667, a: 1}
   uiData:
     showShadow: 1
+    showLeaf: 1
+    showIconLevelTitle: 1
     background: {fileID: 21300000, guid: 016e9117726b6d24ba40b0ff28eb9d42, type: 3}
     boardWordRegion: {fileID: 21300000, guid: 40d22dc56c695b84c8d3feecb41e26c4, type: 3}
     header: {fileID: 21300000, guid: 92bb3702ba1271c458abf5d6135952d7, type: 3}
@@ -27,12 +35,14 @@ MonoBehaviour:
     bgLevelTitle: {fileID: 21300000, guid: ccec3bf4b3498e641b84272c72918602, type: 3}
     btnDictionary: {fileID: 21300000, guid: efebd23d3c5990e478ade6cec859fbae, type: 3}
     iconDictionary: {fileID: 21300000, guid: c2fc011eeb47d9a4abcb7802004185bf, type: 3}
+    imgGround: {fileID: 21300000, guid: 92b2117f54e84354d9f062b51d60c41a, type: 3}
     btnSetting: {fileID: 21300000, guid: efebd23d3c5990e478ade6cec859fbae, type: 3}
     iconSetting: {fileID: 21300000, guid: 14c508a7bc7f0d449b30b5714ee039be, type: 3}
     iconCoinCell: {fileID: 21300000, guid: fefd0c1883ba04a40b772127ba6b84f5, type: 3}
+    imgCell: {fileID: 21300000, guid: 7e08a22272528af4b8bbbcb2d5e967cb, type: 3}
     bgCell: {fileID: 21300000, guid: 3696f1474bf5b8646a25cad82eaf630f, type: 3}
     bgCellDone: {fileID: 21300000, guid: 0db83434b3613e349b4c1075e1eae8af, type: 3}
     imgPedestal: {fileID: 21300000, guid: 17f22abcb3150834d87f4ba84b9e1190, type: 3}
     bgLetter: {fileID: 21300000, guid: de21469e333bc3944bb6784257cf26ba, type: 3}
   animData:
-    skinAnim: Default
+    skinAnim: 1

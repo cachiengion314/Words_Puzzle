@@ -10,6 +10,7 @@ public class Cell : MonoBehaviour
     public TextMeshProUGUI letterText;
     public Text letterTextNor;
     public Image bg;
+    public Image imageCell;
     public GameObject ImgPedestal;
     public Image iconCoin;
     public Image imgHiden;
@@ -117,7 +118,8 @@ public class Cell : MonoBehaviour
     {
         iTween.ScaleTo(letterText.gameObject, iTween.Hash("scale", originLetterScale, "time", 0.15f));
         //fxExplode.gameObject.SetActive(false);
-        CalculateTextRaitoScale(letterTextNor.rectTransform);
+        if (ThemesControl.instance.CurrTheme.fontData.fontScale)
+            CalculateTextRaitoScale(letterTextNor.rectTransform);
         StartCoroutine(TurnOffContentsSizeFilter());
     }
 
@@ -174,7 +176,8 @@ public class Cell : MonoBehaviour
         if (letterTextNor != null)
         {
             letterTextNor.text = letter;
-            CalculateTextRaitoScale(letterTextNor.rectTransform);
+            if (ThemesControl.instance.CurrTheme.fontData.fontScale)
+                CalculateTextRaitoScale(letterTextNor.rectTransform);
             StartCoroutine(TurnOffContentsSizeFilter());
         }
         bg.color = new Color(1, 1, 1, 1);
