@@ -20,9 +20,10 @@ public class ThemesDialog : Dialog
         CPlayerPrefs.SetInt("CURR_THEMES", theme.idTheme);
         theme.iconSelected.gameObject.SetActive(true);
         theme.btnTheme.interactable = false;
-
-        Close();
-        CUtils.LoadScene(Const.SCENE_MAIN, true);
+        TweenControl.GetInstance().DelayCall(transform, 0.5f,()=> {
+            Close();
+            CUtils.LoadScene(Const.SCENE_MAIN, true);
+        });
     }
 
     public override void Close()
