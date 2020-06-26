@@ -34,6 +34,7 @@ public class AdsManager : MonoBehaviour
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             AudienceNetworkFbAd.instance.LoadVideoAds();
+            AudienceNetworkFbAd.instance.LoadInterstitial();
 #endif
         }
         if (AdmobController.instance != null)
@@ -99,7 +100,7 @@ public class AdsManager : MonoBehaviour
     {
         if (CUtils.IsAdsRemoved()) return;
 
-        if (AudienceNetworkFbAd.instance.isLoaded)
+        if (AudienceNetworkFbAd.instance.isIntersLoaded)
         {
             _adsController = AudienceNetworkFbAd.instance;
             _adsController.ShowInterstitialAds();
@@ -120,22 +121,22 @@ public class AdsManager : MonoBehaviour
                 }
                 else
                 {
-                    CUtils.CheckConnection(this, (result) =>
-                    {
-                        if (result == 0)
-                        {
-                            if (showToast)
-                                Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
-                            LoadDataAds();
-                            adsNotReadyYetCallback?.Invoke();
-                        }
-                        else
-                        {
-                            if (showToast)
-                                Toast.instance.ShowMessage("No Internet Connection");
-                            noInternetCallback?.Invoke();
-                        }
-                    });
+                    //CUtils.CheckConnection(this, (result) =>
+                    //{
+                    //    if (result == 0)
+                    //    {
+                    //        if (showToast)
+                    //            Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
+                    //        LoadDataAds();
+                    //        adsNotReadyYetCallback?.Invoke();
+                    //    }
+                    //    else
+                    //    {
+                    //        if (showToast)
+                    //            Toast.instance.ShowMessage("No Internet Connection");
+                    //        noInternetCallback?.Invoke();
+                    //    }
+                    //});
                 }
             }
         }
