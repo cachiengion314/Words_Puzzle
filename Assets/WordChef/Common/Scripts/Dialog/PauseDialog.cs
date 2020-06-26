@@ -64,8 +64,8 @@ public class PauseDialog : Dialog
     public void OnThemesClick()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
-        //DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, "Themes", "This feature is coming soon. Please try again later!");
-        DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.STACK_DONT_HIDEN);
+        DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, "Themes", "This feature is coming soon. Please try again later!");
+        //DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.STACK_DONT_HIDEN);
     }
 
     public void OnTaskClick()
