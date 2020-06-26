@@ -58,16 +58,16 @@ public class AdsManager : MonoBehaviour
         }
         else
         {
-            if (AdmobController.instance.rewardBasedVideo.IsLoaded())
+            if (UnityAdTest.instance.IsLoaded())
             {
-                _adsController = AdmobController.instance;
+                _adsController = UnityAdTest.instance;
                 _adsController.ShowVideoAds();
             }
             else
             {
-                if (UnityAdTest.instance.IsLoaded())
+                if (AdmobController.instance.rewardBasedVideo.IsLoaded())
                 {
-                    _adsController = UnityAdTest.instance;
+                    _adsController = AdmobController.instance;
                     _adsController.ShowVideoAds();
                 }
                 else
