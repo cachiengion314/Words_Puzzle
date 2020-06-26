@@ -15,6 +15,8 @@ public class WinDialog : Dialog
     private bool _isWatchAds;
 
     [SerializeField]
+    private GameObject explosiveFxPref;
+    [SerializeField]
     private GameObject _panelDialog;
     [SerializeField]
     private GameObject RewardButton;
@@ -175,7 +177,11 @@ public class WinDialog : Dialog
             });
         }
     }
-
+    private void ExplosiveEffect()
+    {
+        GameObject explosive = Instantiate(explosiveFxPref, _panelDialog.transform);
+        explosive.transform.localPosition = new Vector3(0, 110, 0);
+    }
     private void ShowEggAnim()
     {
         if (level == numLevels - 1)
@@ -183,6 +189,8 @@ public class WinDialog : Dialog
             ShowEggChapterClear(true);
             TweenControl.GetInstance().DelayCall(transform, 1.2f, () =>
             {
+                Invoke("ExplosiveEffect", 1.7f);
+
                 _animEggChapterClear.gameObject.SetActive(true);
                 _animCandyChapterClear.SetAnimation(candyChapterAnim, false, () =>
                 {

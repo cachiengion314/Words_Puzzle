@@ -29,9 +29,10 @@ public class AudienceNetworkBanner : MonoBehaviour
     private IEnumerator ReLoadFacebookBanner()
     {
         while (true)
-        {
-            LoadBanner();
+        {           
             yield return new WaitForSeconds(5);
+            DisposeAllBannerAd();
+            LoadBanner();
         }        
     }
     private void ChangedActiveScene(Scene current, Scene next)
@@ -44,9 +45,9 @@ public class AudienceNetworkBanner : MonoBehaviour
 
             if (!hasLoadMainScene)
             {
-                //StartCoroutine(ReLoadFacebookBanner());
+
 #if UNITY_ANDROID && !UNITY_EDITOR
-            LoadBanner();
+            StartCoroutine(ReLoadFacebookBanner());
 #endif
             }
             hasLoadMainScene = true;
@@ -85,16 +86,15 @@ public class AudienceNetworkBanner : MonoBehaviour
         // Create a banner's ad view with a unique placement ID (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
         adView = new AdView("583616318955925_583618328955724", AdSize.BANNER_HEIGHT_50);
-
-        adView.Show(AdPosition.BOTTOM);
         adView.Register(gameObject);
+
         currentAdViewPosition = AdPosition.BOTTOM;
 
         // Set delegates to get notified on changes or when the user interacts with the ad.
         adView.AdViewDidLoad = delegate ()
         {
             currentScreenOrientation = Screen.orientation;
-            adView.Show(100);
+            adView.Show(AdPosition.BOTTOM);
             string isAdValid = adView.IsValid() ? "valid" : "invalid";
             //statusLabel.text = "Banner loaded and is " + isAdValid + ".";
         };
@@ -107,7 +107,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         adView.AdViewWillLogImpression = delegate ()
         {
             //statusLabel.text = "Banner logged impression.";
-            SetAdViewPosition(AdPosition.BOTTOM);
+            //SetAdViewPosition(AdPosition.BOTTOM);
         };
         adView.AdViewDidClick = delegate ()
         {

@@ -12,9 +12,15 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     public RewardedVideoAd rewardedVideoAd;
     public bool isLoaded;
 #pragma warning disable 0414
-    private bool didClose;
+    public bool didClose;
 #pragma warning restore 0414
 
+
+    public InterstitialAd interstitialAd;
+    public bool isIntersLoaded;
+#pragma warning disable 0414
+    public bool didIntersClose;
+#pragma warning restore 0414
     // UI elements in scene
     public Text statusLabel;
 
@@ -26,6 +32,83 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 #endif
     }
     // Load button
+    public void LoadInterstitial()
+    {
+        statusLabel.text = "Loading interstitial ad...";
+
+        // Create the interstitial unit with a placement ID (generate your own on the Facebook app settings).
+        // Use different ID for each ad placement in your app.
+        interstitialAd = new InterstitialAd("583616318955925_583618328955724");
+
+        interstitialAd.Register(gameObject);
+
+        // Set delegates to get notified on changes or when the user interacts with the ad.
+        interstitialAd.InterstitialAdDidLoad = delegate ()
+        {
+            Debug.Log("Interstitial ad loaded.");
+            isIntersLoaded = true;
+            didIntersClose = false;
+            string isAdValid = interstitialAd.IsValid() ? "valid" : "invalid";
+            statusLabel.text = "Ad loaded and is " + isAdValid + ". Click show to present!";
+        };
+        interstitialAd.InterstitialAdDidFailWithError = delegate (string error)
+        {
+            Debug.Log("Interstitial ad failed to load with error: " + error);
+            statusLabel.text = "Interstitial ad failed to load. Check console for details.";
+        };
+        interstitialAd.InterstitialAdWillLogImpression = delegate ()
+        {
+            Debug.Log("Interstitial ad logged impression.");
+        };
+        interstitialAd.InterstitialAdDidClick = delegate ()
+        {
+            Debug.Log("Interstitial ad clicked.");
+        };
+        interstitialAd.InterstitialAdDidClose = delegate ()
+        {
+            Debug.Log("Interstitial ad did close.");
+            AdsManager.instance.onAdsRewarded?.Invoke();
+            didIntersClose = true;
+            if (interstitialAd != null)
+            {
+                interstitialAd.Dispose();
+            }
+
+        };
+
+#if UNITY_ANDROID
+        /*
+         * Only relevant to Android.
+         * This callback will only be triggered if the Interstitial activity has
+         * been destroyed without being properly closed. This can happen if an
+         * app with launchMode:singleTask (such as a Unity game) goes to
+         * background and is then relaunched by tapping the icon.
+         */
+        interstitialAd.interstitialAdActivityDestroyed = delegate () {
+            if (!didIntersClose)
+            {
+                Debug.Log("Interstitial activity destroyed without being closed first.");
+                Debug.Log("Game should resume.");
+            }
+        };
+#endif
+
+        // Initiate the request to load the ad.
+        interstitialAd.LoadAd();
+    }
+    private void ShowInterstitial()
+    {
+        if (isIntersLoaded)
+        {
+            interstitialAd.Show();
+            isIntersLoaded = false;
+            statusLabel.text = "";
+        }
+        else
+        {
+            statusLabel.text = "Ad not loaded. Click load to request an ad.";
+        }
+    }
     public void LoadRewardedVideo()
     {
         //statusLabel.text = "Loading rewardedVideo ad...";
@@ -141,6 +224,13 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             rewardedVideoAd.Dispose();
         }
         //Debug.Log("RewardedVideoAdTest was destroyed!");
+
+        // Dispose of interstitial ad when the scene is destroyed
+        if (interstitialAd != null)
+        {
+            interstitialAd.Dispose();
+        }
+        Debug.Log("InterstitialAdTest was destroyed!");
     }
 
     /// <summary>
@@ -166,7 +256,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
     public void ShowInterstitialAds()
     {
-
+        ShowInterstitial();
     }
 
     public void LoadVideoAds()
