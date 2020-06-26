@@ -26,6 +26,14 @@ public class LoginBonusController : MonoBehaviour
 
     private int _currAngle;
 
+    public bool HidenSpin
+    {
+        get
+        {
+            return _hidenSpin;
+        }
+    }
+
     void Awake()
     {
         if (instance == null)
