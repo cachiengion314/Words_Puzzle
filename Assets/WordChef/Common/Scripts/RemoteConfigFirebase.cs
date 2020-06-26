@@ -10,6 +10,7 @@ public class RemoteConfigFirebase : MonoBehaviour
     public Action notifyIngameCall;
     private string tittle;
     private string contain;
+    private bool notifyIngameOn;
     [HideInInspector] public bool isShowNoti;
 
     private bool isNeedToFetch = true;
@@ -19,6 +20,8 @@ public class RemoteConfigFirebase : MonoBehaviour
         instance = this;
         notifyIngameCall += () =>
         {
+            if (!notifyIngameOn) return;
+
             bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tittle;
 
             if (!NotifyMailDialogData.instance.IsShowBefore && !CPlayerPrefs.GetBool("FIRST")
@@ -42,7 +45,7 @@ public class RemoteConfigFirebase : MonoBehaviour
 
         FetchFireBase();
 
-        Invoke("ShowData", 1.5f);
+        Invoke("ShowData", 1.9f);
     }
     public void FetchFireBase()
     {
@@ -61,10 +64,7 @@ public class RemoteConfigFirebase : MonoBehaviour
     }
     public void ShowData()
     {
-        //Debug.Log("TittleMail: " +
-        //   FirebaseRemoteConfig.GetValue("TittleMail").StringValue);
-        //textPrefab.text = "TittleMail: " +
-        //    FirebaseRemoteConfig.GetValue("TittleMail").StringValue;
+        if (!notifyIngameOn) return;
 
         tittle = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("TittleMail").StringValue);
         contain = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("ContainMail").StringValue);
