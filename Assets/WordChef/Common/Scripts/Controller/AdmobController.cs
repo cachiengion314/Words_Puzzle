@@ -340,7 +340,7 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowInterstitialAds()
     {
-
+        CUtils.ShowInterstitialAd();
     }
     // Adaptive banner
     public void OnGUIq()

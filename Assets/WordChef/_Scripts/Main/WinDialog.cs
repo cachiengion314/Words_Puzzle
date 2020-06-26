@@ -150,7 +150,7 @@ public class WinDialog : Dialog
             {
                 ShowTitleChapterClear(true);
                 Sound.instance.Play(Sound.Scenes.ChapterClear);
-                ShowEffectTitle(1.4f);
+                ShowEffectTitle(0.84f);
                 _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
                     _animChapterClear.SetAnimation(levelClearIdleAnim, true);
@@ -639,24 +639,30 @@ public class WinDialog : Dialog
         //RewardButton.GetComponent<Button>().interactable = false;
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         txtReward.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;
-        if (level == numLevels - 1)
+        var creditBalance = CPlayerPrefs.GetBool("Received", false);
+        if (!creditBalance)
         {
-            //var value = Const.REWARD_ADS_CHAPTER_CLEAR;
-            //CurrencyController.CreditBalance(value);
-            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            if (level == numLevels - 1)
             {
-                StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_CHAPTER_CLEAR));
-            });
-            CPlayerPrefs.SetBool("Received", true);
-        }
-        else
-        {
-            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+                //var value = Const.REWARD_ADS_CHAPTER_CLEAR;
+                //CurrencyController.CreditBalance(value);
+
+                CPlayerPrefs.SetBool("Received", true);
+                TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+                {
+                    StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_CHAPTER_CLEAR));
+                });
+            }
+            else
             {
-                //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
-                StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
-                Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
-            });
+                TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+                {
+                    //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
+                    StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
+                    //Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
+                });
+
+            }
         }
         TweenControl.GetInstance().DelayCall(transform, 2.5f, () =>
         {

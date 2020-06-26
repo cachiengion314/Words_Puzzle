@@ -95,6 +95,52 @@ public class AdsManager : MonoBehaviour
         }
     }
 
+    private void ShowInterstitial(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
+    {
+        if (CUtils.IsAdsRemoved()) return;
+
+        if (AudienceNetworkFbAd.instance.isLoaded)
+        {
+            _adsController = AudienceNetworkFbAd.instance;
+            _adsController.ShowInterstitialAds();
+        }
+        else
+        {
+            if (UnityAdTest.instance.IsLoaded())
+            {
+                _adsController = UnityAdTest.instance;
+                _adsController.ShowInterstitialAds();
+            }
+            else
+            {
+                if (AdmobController.instance.interstitial != null && AdmobController.instance.interstitial.IsLoaded())
+                {
+                    _adsController = AdmobController.instance;
+                    _adsController.ShowInterstitialAds();
+                }
+                else
+                {
+                    CUtils.CheckConnection(this, (result) =>
+                    {
+                        if (result == 0)
+                        {
+                            if (showToast)
+                                Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
+                            LoadDataAds();
+                            adsNotReadyYetCallback?.Invoke();
+                        }
+                        else
+                        {
+                            if (showToast)
+                                Toast.instance.ShowMessage("No Internet Connection");
+                            noInternetCallback?.Invoke();
+                        }
+                    });
+                }
+            }
+        }
+    }
+
     public bool AdsIsLoaded()
     {
         if (AudienceNetworkFbAd.instance.isLoaded || AdmobController.instance.rewardBasedVideo.IsLoaded() || UnityAdTest.instance.IsLoaded())
@@ -116,7 +162,7 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAds()
     {
-        _adsController.ShowInterstitialAds();
+        ShowInterstitial();
     }
     #endregion
 

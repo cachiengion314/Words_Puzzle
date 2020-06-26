@@ -36,7 +36,7 @@ public class AnimEvent : MonoBehaviour
             //if (CPlayerPrefs.HasKey("BEE_TUTORIAL") && !TutorialController.instance.isShowTut)
             MainController.instance.beeController.OnBeeButtonClick();
         }
-        if(WordRegion.instance != null)
+        if (WordRegion.instance != null)
         {
             WordRegion.instance.CheckAdsIsShow();
         }
@@ -111,6 +111,8 @@ public class AnimEvent : MonoBehaviour
                 {
                     if (WinDialog.instance != null)
                     {
+                        if (IsShowAds())
+                            AdsManager.instance.ShowInterstitialAds();
                         TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>
                         {
                             WinDialog.instance.ShowLevelChapterClear();
@@ -119,6 +121,30 @@ public class AnimEvent : MonoBehaviour
                 }
             }
         }
+    }
+
+    private List<bool> InitListRandom()
+    {
+        var rateShow  = new List<bool>();
+        int num = 100;
+        var rate1 = (int)(0.5f * num);
+        var rate2 = (int)(0.5f * num);
+        for (int i = 0; i < num; i++)
+        {
+            if (i <= rate1)
+                rateShow.Add(true);
+            if (rate1 < i && i <= rate2)
+                rateShow.Add(false);
+        }
+        return rateShow;
+    }
+
+
+    private bool IsShowAds()
+    {
+        var randomList = InitListRandom();
+        var result = Random.Range(0, randomList.Count);
+        return randomList[result];
     }
 
     private void ScaleLetters()

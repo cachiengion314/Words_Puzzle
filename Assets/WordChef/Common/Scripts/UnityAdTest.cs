@@ -112,12 +112,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
 
     public void ShowInterstitialAds()
     {
-
-    }
-
-    public void LoadVideoAds()
-    {
-
+        DisplayInterstitialAds();
     }
 }
 
