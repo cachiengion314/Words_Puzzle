@@ -26,37 +26,36 @@ public class AudienceNetworkBanner : MonoBehaviour
 
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
+    int nextSceneName;
     private IEnumerator ReLoadFacebookBanner()
     {
-        while (true)
+        while (nextSceneName == 3)
         {           
             yield return new WaitForSeconds(5);
             DisposeAllBannerAd();
             LoadBanner();
-        }        
+        }
+        DisposeAllBannerAd();
     }
     private void ChangedActiveScene(Scene current, Scene next)
     {
-        int nextName = next.buildIndex;
+        nextSceneName = next.buildIndex;
 
-        if (nextName == 3)
+        if (nextSceneName == 3)
         {
             if (CUtils.IsAdsRemoved()) return;
 
             if (!hasLoadMainScene)
             {
-
 #if UNITY_ANDROID && !UNITY_EDITOR
             StartCoroutine(ReLoadFacebookBanner());
 #endif
             }
             hasLoadMainScene = true;
         }
-        else if (nextName != 3)
+        else if (nextSceneName != 3)
         {
             hasLoadMainScene = false;
-
-           // DisposeAllBannerAd();
         }
     }
     public void DisposeAllBannerAd()
