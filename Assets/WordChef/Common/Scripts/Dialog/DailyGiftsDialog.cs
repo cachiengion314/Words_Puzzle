@@ -222,11 +222,11 @@ public class DailyGiftsDialog : Dialog
         Sound.instance.Play(Sound.Collects.LevelOpen);
         _collectButton.gameObject.SetActive(false);
         _currProgressValue = 0;
-        CPlayerPrefs.SetBool(TIME_REWARD_KEY, false);
         CurrencyController.CreditHintFree(/*ConfigController.Config.gameParameters.rewardHintDaily*/hintRandomAmount);
         CurrencyController.CreditMultipleHintFree(/*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/multipleHintRandomAmount);
         CurrencyController.CreditSelectedHintFree(/*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/selectedHintRandomAmount);
-        var valueTarget = (_timeTarget == _valueTimeGift * 3600) ? (_valueTimeGift * 2) * 3600 : _valueTimeGift * 3600;
+        var timeRate = _valueTimeGift * 3600;
+        var valueTarget = DateTime.Today.TimeOfDay.TotalSeconds + timeRate;
         _timeTarget = valueTarget;
         CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
         InitTimeCountDown();
@@ -329,18 +329,20 @@ public class DailyGiftsDialog : Dialog
         _animChest.SetAnimation(_idleAnim, true);
         _timeValue = 0;
         if (_currProgressValue < _maxProgress)
+        {
             ShowBtnWatch(true);
+            if (AdsManager.instance != null)
+            {
+                if (!AdsManager.instance.AdsIsLoaded())
+                    //_btnAdsDisable.SetActive(true);
+                    _btnWatch.gameObject.SetActive(false);
+                else
+                    //_btnAdsDisable.SetActive(false);
+                    _btnWatch.gameObject.SetActive(true);
+            }
+        }
         else
             ShowBtnWatch(false);
-        if (AdsManager.instance != null)
-        {
-            if (!AdsManager.instance.AdsIsLoaded())
-                //_btnAdsDisable.SetActive(true);
-                _btnWatch.gameObject.SetActive(false);
-            else
-                //_btnAdsDisable.SetActive(false);
-                _btnWatch.gameObject.SetActive(true);
-        }
         _timeCountdown.transform.localScale = Vector3.zero;
     }
 
@@ -381,7 +383,6 @@ public class DailyGiftsDialog : Dialog
         var timeNow = DateTime.Now.TimeOfDay.TotalSeconds;
         _timeValue = (int)(_sumTime - timeNow); // _timeValue = (int)(_sumTime - timeNow);
         if (_timeValue <= 0)
-            if (_timeValue <= 0)
             _timeValue = 0;
     }
 
