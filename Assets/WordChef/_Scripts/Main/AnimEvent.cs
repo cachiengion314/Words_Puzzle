@@ -111,7 +111,7 @@ public class AnimEvent : MonoBehaviour
                 {
                     if (WinDialog.instance != null)
                     {
-                        if (IsShowAds())
+                        if (IsShowAds() && WordRegion.instance.CurLevel > 17)
                             AdsManager.instance.ShowInterstitialAds();
                         TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>
                         {
