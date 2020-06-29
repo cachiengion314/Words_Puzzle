@@ -28,12 +28,15 @@ public class ObjectiveDialog : Dialog
     [SerializeField] private List<Quest> _dailys;
     [SerializeField] private List<Quest> _achievements;
 
-    GameObject homecontroller;
+    HomeController homecontroller;
 
     protected override void Start()
     {
         base.Start();
-        homecontroller = GameObject.FindGameObjectWithTag("HomeController");
+        if (MainController.instance != null)
+            MainController.instance.canvasCollect.gameObject.SetActive(true);
+        if (HomeController.instance != null)
+            homecontroller = HomeController.instance;
         CheckTaskComplete();
         TurnOnIconTask(_iconTaskAchie, false);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
@@ -67,7 +70,7 @@ public class ObjectiveDialog : Dialog
     {
         gameObject.GetComponent<Dialog>().Close();
         if (homecontroller != null)
-            homecontroller.GetComponent<HomeController>().OnClick(0);
+            homecontroller.OnClick(0);
     }
 
     private void TurnOnIconTask(Image icon, bool turnOn)
