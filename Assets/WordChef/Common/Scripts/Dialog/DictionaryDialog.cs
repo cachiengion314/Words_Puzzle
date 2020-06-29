@@ -34,7 +34,7 @@ public class DictionaryDialog : Dialog
     List<string> defaultValue = new List<string>();
     List<string> listWordPassed;
     [HideInInspector] public List<ListGroupWord> groupWords = new List<ListGroupWord>();
-    GameObject homecontroller;
+    HomeController homecontroller;
 
     public MeanDialog meanDialog;
 
@@ -49,8 +49,10 @@ public class DictionaryDialog : Dialog
 
     protected override void Awake()
     {
-        instance = this;
-        homecontroller = GameObject.FindGameObjectWithTag("HomeController");
+        if (instance == null)
+            instance = this;
+        if (HomeController.instance != null)
+            homecontroller = HomeController.instance;
         keys = Enumerable.Range('a', 'z' - 'a' + 1).Select(i => (Char)i).ToArray();
         foreach (char key in keys)
         {
@@ -133,9 +135,9 @@ public class DictionaryDialog : Dialog
 
     public void OnPlayClick()
     {
-        homecontroller.GetComponent<HomeController>().OnClick(0);
-        gameObject.GetComponent<Dialog>().Close();
-
+        if (homecontroller != null)
+            homecontroller.OnClick(0);
+        Close();
     }
 
     public void ShowMeanDialog()
@@ -146,7 +148,8 @@ public class DictionaryDialog : Dialog
 
     public void HideMeanDialog()
     {
-        TweenControl.GetInstance().ScaleFromOne(meanDialog.gameObject, 0.3f, () => {
+        TweenControl.GetInstance().ScaleFromOne(meanDialog.gameObject, 0.3f, () =>
+        {
             shadowPanel.SetActive(false);
         });
     }
