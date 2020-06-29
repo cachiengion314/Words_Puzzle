@@ -115,7 +115,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion.animBtnHelp.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHelpShadow.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnBonusBoxShadow.SetSkin(currTheme.animData.skinAnim);
-            wordRegion.compliment.SetSkinAnimCompliment(currTheme.animData.skinAnim);
+            //wordRegion.compliment.SetSkinAnimCompliment(currTheme.animData.skinAnim);
         }
     }
 }
