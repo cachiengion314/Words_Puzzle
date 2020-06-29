@@ -90,7 +90,7 @@ public class ShopDialog : Dialog
                 }
                 var priceLocalize = Purchaser.instance.GetLocalizePrice(Purchaser.instance.iapItems[i].productID);
                 numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
-                priceTexts[i].text = priceLocalize == "" ? Purchaser.instance.iapItems[i].price + "$" : priceLocalize;
+                priceTexts[i].text = (priceLocalize == "" || priceLocalize == null) ? Purchaser.instance.iapItems[i].price + "$" : priceLocalize;
 
                 if (_numBeehiveTexts[i] != null) _numBeehiveTexts[i].text = "" + Purchaser.instance.iapItems[i].valueBeehive;
                 if (_numHintTexts[i] != null) _numHintTexts[i].text = "" + Purchaser.instance.iapItems[i].valueHint;

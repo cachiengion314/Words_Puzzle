@@ -155,14 +155,11 @@ public class Purchaser : MonoBehaviour, IStoreListener
         var price = "";
         foreach (var product in m_StoreController.products.all)
         {
-            Debug.Log("Product: " + product);
-            Debug.Log("Id Product: "+ product.transactionID);
+            //Debug.Log("Product: " + product);
+            //Debug.Log("Id Product: "+ product.transactionID);
             if (product.transactionID == productID)
             {
                 price = product.metadata.localizedPriceString;
-                Debug.Log("Price Localize Product: " + price);
-                Debug.Log("Title Localize Product: " + product.metadata.localizedTitle);
-                Debug.Log("Price Localize Value Product: " + product.metadata.localizedPrice);
                 break;
             }
         }
