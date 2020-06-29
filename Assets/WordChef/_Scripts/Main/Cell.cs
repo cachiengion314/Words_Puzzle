@@ -59,7 +59,7 @@ public class Cell : MonoBehaviour
             if (!showAnsScale)
                 TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -69f, 0), 0.1f, OnMoveToComplete);
             else
-                TweenControl.GetInstance().Scale(letterTextNor.gameObject, Vector3.one * 1.2f, 0.2f, ()=> {
+                TweenControl.GetInstance().Scale(letterTextNor.gameObject, Vector3.one * 1.5f, 0.2f, ()=> {
                     TweenControl.GetInstance().Scale(letterTextNor.gameObject, Vector3.one, 0.2f, OnMoveToComplete);
                 });
         });
