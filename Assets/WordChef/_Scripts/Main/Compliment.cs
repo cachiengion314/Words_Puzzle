@@ -32,11 +32,6 @@ public class Compliment : MonoBehaviour
             _animCompliment.onEventAction = OnShowEffect;
     }
 
-    public void SetSkinAnimCompliment(string skinName)
-    {
-        _animCompliment.SetSkin(skinName);
-    }
-
     public void PlayParticle()
     {
         if (_particle != null)
@@ -69,6 +64,7 @@ public class Compliment : MonoBehaviour
         if (_useSpine)
         {
             _animCompliment.gameObject.SetActive(true);
+            _animCompliment.SetSkin(ThemesControl.instance.CurrTheme.animData.skinAnim);
             _animCompliment.SetAnimation(nameAnim[type], false);
         }
         else
