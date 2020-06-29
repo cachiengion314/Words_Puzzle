@@ -32,7 +32,8 @@ public class ExtraWordDialog : Dialog
     protected override void Start()
     {
         base.Start();
-
+        if (MainController.instance != null)
+            MainController.instance.canvasCollect.gameObject.SetActive(true);
         _rewardController = FindObjectOfType<RewardVideoController>();
         if (_rewardController == null)
             _rewardController = Instantiate(_rewardVideoPfb);
