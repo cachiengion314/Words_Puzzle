@@ -108,7 +108,7 @@ public class AdsManager : MonoBehaviour
         }
         else
         {
-            if (UnityAdTest.instance.IsLoaded())
+            if (UnityAdTest.instance.IsLoadedInterstitial())
             {
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowInterstitialAds();
