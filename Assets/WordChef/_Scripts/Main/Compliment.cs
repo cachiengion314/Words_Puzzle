@@ -32,6 +32,11 @@ public class Compliment : MonoBehaviour
             _animCompliment.onEventAction = OnShowEffect;
     }
 
+    public void SetSkinAnimCompliment(string skinName)
+    {
+        _animCompliment.SetSkin(skinName);
+    }
+
     public void PlayParticle()
     {
         if (_particle != null)
