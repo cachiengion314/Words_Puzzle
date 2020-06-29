@@ -8,6 +8,7 @@ public class TextPreview : MonoBehaviour
 {
     public GameObject content;
     public RectTransform backgroundRT;
+    public Image backgroundImg;
     public string word;
     public TextInImg textPrefab;
     public Transform textGrid;

@@ -6,4 +6,5 @@ using UnityEngine.UI;
 public class TextInImg : MonoBehaviour
 {
     public Text text;
+    public Image bgCell;
 }

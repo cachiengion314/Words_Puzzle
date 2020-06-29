@@ -42,6 +42,8 @@ public class UIData
     public Sprite btnDictionary;
     public Sprite iconDictionary;
     public Sprite imgGround;
+    public Sprite imgBgTextPreview;
+    public Sprite imgBgCellPreview;
     public Sprite btnSetting;
     public Sprite iconSetting;
     public Sprite iconCoinCell;

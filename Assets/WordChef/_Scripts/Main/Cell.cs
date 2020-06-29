@@ -45,7 +45,7 @@ public class Cell : MonoBehaviour
         if (!showAnsScale)
             bg.transform.localPosition = new Vector3(0, -55, 0);
         else
-            letterText.transform.localScale = Vector3.zero;
+            letterTextNor.transform.localScale = Vector3.zero;
         var canvasGroup = bg.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0.5f;
         //letterText.transform.localPosition = new Vector3(letterText.transform.localPosition.x,
@@ -59,7 +59,9 @@ public class Cell : MonoBehaviour
             if (!showAnsScale)
                 TweenControl.GetInstance().MoveRect(bg.transform as RectTransform, new Vector3(0, -69f, 0), 0.1f, OnMoveToComplete);
             else
-                TweenControl.GetInstance().ScaleFromZero(letterText.gameObject, 0.2f, OnMoveToComplete);
+                TweenControl.GetInstance().Scale(letterTextNor.gameObject, Vector3.one * 1.2f, 0.2f, ()=> {
+                    TweenControl.GetInstance().Scale(letterTextNor.gameObject, Vector3.one, 0.2f, OnMoveToComplete);
+                });
         });
         //TweenControl.GetInstance().Scale(letterText.gameObject,Vector3.one,0.3f);
     }

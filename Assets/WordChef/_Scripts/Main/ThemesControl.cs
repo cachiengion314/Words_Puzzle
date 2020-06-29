@@ -41,7 +41,7 @@ public class ThemesControl : MonoBehaviour
         cellPfb.letterTextNor.font = currTheme.fontData.fontNormal;
         cellPfb.letterTextNor.GetComponent<ContentSizeFitter>().enabled = currTheme.fontData.fontScale;
         if (!currTheme.fontData.fontScale)
-            cellPfb.letterTextNor.fontSize = currTheme.fontData.fontSize;
+            cellPfb.letterTextNor.resizeTextMaxSize = currTheme.fontData.fontSizeMax;
         cellPfb.letterTextNor.color = currTheme.fontData.colorCell;
         letterTextPfb.font = currTheme.fontData.fontNormal;
         letterTextPfb.color = currTheme.fontData.colorLetter;
@@ -68,6 +68,11 @@ public class ThemesControl : MonoBehaviour
             wordRegion.iconSetting.sprite = currTheme.uiData.iconSetting;
             wordRegion.iconDictionary.sprite = currTheme.uiData.iconDictionary;
             wordRegion.imageGround.sprite = currTheme.uiData.imgGround;
+
+            wordRegion.textPreview.backgroundImg.sprite = currTheme.uiData.imgBgTextPreview;
+            wordRegion.textPreview.textPrefab.bgCell.sprite = currTheme.uiData.imgBgCellPreview;
+            wordRegion.textPreview.textPrefab.text.font = currTheme.fontData.fontNormal;
+            wordRegion.textPreview.textPrefab.text.color = currTheme.fontData.colorCell;
 
             wordRegion.imgNumHint.sprite = currTheme.uiData.numBooster;
             wordRegion.imgNumMultipleHint.sprite = currTheme.uiData.numBooster;
