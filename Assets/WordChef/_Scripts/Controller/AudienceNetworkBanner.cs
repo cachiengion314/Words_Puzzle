@@ -4,11 +4,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using AudienceNetwork.Utility;
 using System.Collections;
+using Superpow;
 
 public class AudienceNetworkBanner : MonoBehaviour
 {
     public static AudienceNetworkBanner instance;
 
+    public int currlevel;
+    public GameData gameData;
     private AdView adView;
     private AdPosition currentAdViewPosition;
     private ScreenOrientation currentScreenOrientation;
@@ -18,38 +21,34 @@ public class AudienceNetworkBanner : MonoBehaviour
         // Dispose of banner ad when the scene is destroyed
         DisposeAllBannerAd();
     }
-    bool hasLoadMainScene;
+
     private void Awake()
     {
         //AudienceNetworkAds.Initialize();
         instance = this;
 
+        var world = Prefs.unlockedWorld;
+        var subWorld = Prefs.unlockedSubWorld;
+        var level = Prefs.unlockedLevel;
+        var numlevels = Utils.GetNumLevels(world, subWorld);
+        // int chapter = Prefs.unlockedSubWorld + Prefs.unlockedWorld * gameData.words[0].subWords.Count;
+        currlevel = (level + numlevels * subWorld + world * gameData.words[0].subWords.Count * numlevels) + 1;
+
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
     int nextSceneName;
-    private IEnumerator ReLoadFacebookBanner()
-    {
-        while (nextSceneName == 3)
-        {           
-            yield return new WaitForSeconds(5);
-            DisposeAllBannerAd();
-            LoadBanner();
-        }
-        DisposeAllBannerAd();
-    }
+    bool hasLoadMainScene;
     private void ChangedActiveScene(Scene current, Scene next)
     {
         nextSceneName = next.buildIndex;
 
-        if (nextSceneName == 3)
+        if (nextSceneName == 3 )
         {
             if (CUtils.IsAdsRemoved()) return;
 
-            if (!hasLoadMainScene)
+            if (currlevel > 16)
             {
-#if UNITY_ANDROID && !UNITY_EDITOR
-            StartCoroutine(ReLoadFacebookBanner());
-#endif
+                LoadBanner();
             }
             hasLoadMainScene = true;
         }
@@ -68,12 +67,14 @@ public class AudienceNetworkBanner : MonoBehaviour
 
         if (AdmobController.instance.bannerView != null)
         {
-            AdmobController.instance.bannerView.Destroy();
+            AdmobController.instance.bannerView.Hide();
         }
     }
-
-    // Load Banner button
     public void LoadBanner()
+    {
+        ShowAdmobBanner();
+    }
+    public void LoadAudienceNetworkBanner()
     {
         if (adView)
         {
@@ -99,9 +100,9 @@ public class AudienceNetworkBanner : MonoBehaviour
         };
         adView.AdViewDidFailWithError = delegate (string error)
         {
-            // admob controller show
-            ShowAdmobBanner();
-            //statusLabel.text = "Banner failed to load with error: " + error;
+
+
+            // "Banner failed to load with error: " + error;
         };
         adView.AdViewWillLogImpression = delegate ()
         {

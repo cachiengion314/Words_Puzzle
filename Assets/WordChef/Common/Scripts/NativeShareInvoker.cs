@@ -4,10 +4,12 @@ using UnityEngine;
 using Facebook.Unity;
 using System;
 using System.Collections.Generic;
+using Superpow;
 
 public class NativeShareInvoker : MonoBehaviour
 {
     public static NativeShareInvoker instance;
+    public GameData gameData;
     private void Awake()
     {
         if (instance == null)
@@ -91,7 +93,7 @@ public class NativeShareInvoker : MonoBehaviour
         //       File.WriteAllBytes(path, imageBytes);
         //   }).Start();
 
-        string filePath = Path.Combine(Application.temporaryCachePath, "WordPuzzle-Level-" + (GameState.currentLevel + 1) + ".png");
+        string filePath = Path.Combine(Application.temporaryCachePath, "WordPuzzle-Level-" + AudienceNetworkBanner.instance.currlevel + ".png");
         File.WriteAllBytes(filePath, imageBytes);
         Destroy(screenImage);
 

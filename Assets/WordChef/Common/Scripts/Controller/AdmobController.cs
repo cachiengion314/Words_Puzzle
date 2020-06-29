@@ -21,12 +21,14 @@ public class AdmobController : MonoBehaviour, IAds
         {
             //RequestBanner();
             //RequestInterstitial();
+
+            RequestAdaptiveBanner();
         }
 
         InitRewardedVideo();
         RequestRewardBasedVideo();
 
-        // ShowBanner(); // working
+         //ShowBanner(); // working
         // ShowAdaptiveBanner(); not working yet
     }
 
@@ -44,7 +46,45 @@ public class AdmobController : MonoBehaviour, IAds
         this.rewardBasedVideo.OnAdClosed += this.HandleRewardBasedVideoClosed;
         this.rewardBasedVideo.OnAdLeavingApplication += this.HandleRewardBasedVideoLeftApplication;
     }
+    public void RequestAdaptiveBanner()
+    {
+        // These ad units are configured to always serve test ads.
+#if UNITY_EDITOR
+        string adUnitId = "unused";
+#elif UNITY_ANDROID
+            string adUnitId = "ca-app-pub-3212738706492790/6113697308";
+#elif UNITY_IPHONE
+            string adUnitId = "ca-app-pub-3212738706492790/5381898163";
+#else
+            string adUnitId = "unexpected_platform";
+#endif
 
+        // Clean up banner ad before creating a new one.
+        if (this.bannerView != null)
+        {
+            this.bannerView.Destroy();
+        }
+
+        AdSize adaptiveSize =
+                AdSize.GetPortraitAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+
+        this.bannerView = new BannerView(adUnitId, adaptiveSize, AdPosition.Bottom);
+
+        // Register for ad events.
+        this.bannerView.OnAdLoaded += this.HandleAdLoaded;
+        this.bannerView.OnAdFailedToLoad += this.HandleAdFailedToLoad;
+        this.bannerView.OnAdOpening += this.HandleAdOpened;
+        this.bannerView.OnAdClosed += this.HandleAdClosed;
+        this.bannerView.OnAdLeavingApplication += this.HandleAdLeftApplication;
+
+        AdRequest adRequest = new AdRequest.Builder()
+            .AddTestDevice(AdRequest.TestDeviceSimulator)
+            .AddTestDevice("0123456789ABCDEF0123456789ABCDEF")
+            .Build();
+
+        // Load a banner ad.
+        this.bannerView.LoadAd(adRequest);
+    }
     public void RequestBanner()
     {
         // These ad units are configured to always serve test ads.
@@ -143,7 +183,7 @@ public class AdmobController : MonoBehaviour, IAds
         }
         else
         {
-            RequestBanner();
+            RequestBanner();        
         }
     }
 
@@ -354,45 +394,7 @@ public class AdmobController : MonoBehaviour, IAds
         GUI.Label(textOutputRect, "Adaptive Banner Example");
     }
 
-    public void RequestAdaptiveBanner()
-    {
-        // These ad units are configured to always serve test ads.
-#if UNITY_EDITOR
-        string adUnitId = "unused";
-#elif UNITY_ANDROID
-            string adUnitId = "ca-app-pub-3212738706492790/6113697308";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3212738706492790/5381898163";
-#else
-            string adUnitId = "unexpected_platform";
-#endif
-
-        // Clean up banner ad before creating a new one.
-        if (this.bannerView != null)
-        {
-            this.bannerView.Destroy();
-        }
-
-        AdSize adaptiveSize =
-                AdSize.GetPortraitAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
-
-        this.bannerView = new BannerView(adUnitId, adaptiveSize, AdPosition.Bottom);
-
-        // Register for ad events.
-        this.bannerView.OnAdLoaded += this.HandleAdLoaded;
-        this.bannerView.OnAdFailedToLoad += this.HandleAdFailedToLoad;
-        this.bannerView.OnAdOpening += this.HandleAdOpened;
-        this.bannerView.OnAdClosed += this.HandleAdClosed;
-        this.bannerView.OnAdLeavingApplication += this.HandleAdLeftApplication;
-
-        AdRequest adRequest = new AdRequest.Builder()
-            .AddTestDevice(AdRequest.TestDeviceSimulator)
-            .AddTestDevice("0123456789ABCDEF0123456789ABCDEF")
-            .Build();
-
-        // Load a banner ad.
-        this.bannerView.LoadAd(adRequest);
-    }
+   
     public void ShowAdaptiveBanner()
     {
         if (CUtils.IsAdsRemoved()) return;

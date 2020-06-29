@@ -4,6 +4,8 @@ using UnityEngine;
 using Firebase.Database;
 using TMPro;
 using System;
+using Superpow;
+
 public class MissingWordsFeedback : Dialog
 {
     public TMP_InputField inputfield;
@@ -13,11 +15,14 @@ public class MissingWordsFeedback : Dialog
     public static DatabaseReference _dataWordsRef;
     public static Dictionary<string, object> childUpdates = new Dictionary<string, object>();
 
+    public int currlevel;
     // test data
     private int _count = 0;
     protected override void Awake()
     {
         base.Awake();
+        var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
+        currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * GameState.currentWorld) + 1;
         submitEvent = new TMP_InputField.SubmitEvent();
         submitEvent.AddListener(typingCall);
         inputfield.onEndEdit = submitEvent;
@@ -52,7 +57,7 @@ public class MissingWordsFeedback : Dialog
             ["results"] = missingWord,
             ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
             ["status"] = "open",
-            ["level"] = (GameState.currentLevel + 1)
+            ["level"] = currlevel
         };
         // push information
         string key = _dataWordsRef.Push().Key;

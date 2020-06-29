@@ -55,7 +55,7 @@ public class MainController : BaseController
     protected override void Start()
     {
         base.Start();
-        CUtils.CloseBannerAd();
+        //CUtils.CloseBannerAd();
         world = GameState.currentWorld;
         subWorld = GameState.currentSubWorld;
         level = GameState.currentLevel;

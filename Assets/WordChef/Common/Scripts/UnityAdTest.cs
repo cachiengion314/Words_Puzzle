@@ -20,7 +20,6 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     }
     private void Start()
     {
-        //////////////////////////////////////////////
         Advertisement.Initialize(androidGameId, testMode);
         Advertisement.AddListener(this);
 

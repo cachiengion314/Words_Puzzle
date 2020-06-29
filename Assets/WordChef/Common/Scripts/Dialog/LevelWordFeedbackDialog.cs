@@ -1,4 +1,5 @@
 ﻿using Firebase.Database;
+using Superpow;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ public class LevelWordFeedbackDialog : Dialog
     private List<RectTransform> textTransformPosList = new List<RectTransform>();
     public RectTransform textBackgroundPrefab;
     public RectTransform wordDoneByPlayerPrefab;
+    public int currlevel;
     protected override void Awake()
     {
         base.Awake();
@@ -24,6 +26,9 @@ public class LevelWordFeedbackDialog : Dialog
     protected override void Start()
     {
         base.Start();
+        var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
+        currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * GameState.currentWorld) + 1;
+
         WordsCorrectDoneByPlayer();
         foreach (RectTransform child in textBackgroundPrefab)
         {
@@ -63,7 +68,7 @@ public class LevelWordFeedbackDialog : Dialog
             ["results"] = longText,
             ["date"] = DateTime.Now.ToString("MM/dd/yyyy"),
             ["status"] = "open",
-            ["level"] = (GameState.currentLevel + 1)
+            ["level"] = currlevel
         };
         // Push information
         MissingWordsFeedback.childUpdates["/" + key] = infoDic;      

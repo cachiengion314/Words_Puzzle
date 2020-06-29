@@ -336,4 +336,8 @@ public class ShopDialog : Dialog
         yield return new WaitForSeconds(item.GetComponent<DOTweenAnimation>().duration);
         item.GetComponent<SimpleTMPButton>().enabled = true;
     }
+    public void LoadAllBannerWhenClose()
+    {
+        AudienceNetworkBanner.instance.LoadBanner();
+    }
 }

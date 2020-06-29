@@ -33,7 +33,7 @@ public class HomeController : BaseController
     protected override void Start()
     {
         base.Start();
-        CUtils.CloseBannerAd();
+        //CUtils.CloseBannerAd();
         var sceneAnimate = SceneAnimate.Instance;
         sceneAnimate._btnPlay.interactable = true;
         sceneAnimate._spineAnimEgg.gameObject.SetActive(true);

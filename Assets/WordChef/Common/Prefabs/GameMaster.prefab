@@ -3026,6 +3026,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoaded: 0
+  didClose: 0
+  isIntersLoaded: 0
+  didIntersClose: 0
   statusLabel: {fileID: 4139744167760160446}
 --- !u!1 &4139744168417561070
 GameObject:
@@ -3192,7 +3195,7 @@ GameObject:
   - component: {fileID: 8143336261846906846}
   - component: {fileID: 8143336261846906845}
   m_Layer: 0
-  m_Name: FacebookAdBanner
+  m_Name: AdsBannerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3224,6 +3227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8533809f8a0723439c33272fce0850f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: f6ef998fa1cd4b84e9273b5d8d3d087d, type: 2}
   statusLabel: {fileID: 0}
 --- !u!1 &8348229885255490934
 GameObject:
