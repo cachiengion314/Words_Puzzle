@@ -7,12 +7,12 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
 {
     public static UnityAdTest instance;
     public Action UpdateProgress;
-    private string androidGameId = "3645143"; // this string is a constant value and cannot be changed
-    private bool testMode = true;
+    private string androidGameId = "3685957"; // this string is a constant value and cannot be changed
+    private bool testMode = false;
 
-    private string myPlacementId = "rewardedVideo"; // this string is a constant value and cannot be changed
-
-    public string bannerPlacementId = "bannerPlacement"; // this string is a constant value and cannot be changed
+    public string myPlacementId = "rewardedVideo"; 
+    public string myInterstitialId = "myInterstitialId";
+    public string bannerPlacementId = "bannerPlacement"; 
 
     private void Awake()
     {
@@ -33,14 +33,13 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
 
     public bool IsLoadedInterstitial()
     {
-        return Advertisement.IsReady();
+        return Advertisement.IsReady(myInterstitialId);
     }
 
     public void ReloadVideoAds()
     {
         Advertisement.Load(myPlacementId);
     }
-
     private IEnumerator ShowBannerWhenReady()
     {
         while (!Advertisement.IsReady(bannerPlacementId))

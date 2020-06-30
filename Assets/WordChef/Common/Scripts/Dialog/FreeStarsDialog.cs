@@ -44,7 +44,9 @@ public class FreeStarsDialog : Dialog
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
-        Debug.Log("Change id succsesss");
+        UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
+
+        Debug.Log("Change FreeStarsDialog_FreeStars id succsesss");
         AdsManager.instance.ShowVideoAds();
         //AdmobController.instance.ShowRewardBasedVideo();
 

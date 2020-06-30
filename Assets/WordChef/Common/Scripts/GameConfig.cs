@@ -5,6 +5,7 @@ using System;
 public class GameConfig
 {
     public GameParameters gameParameters;
+    public UnityAdsId unityAdsId;
     public FacebookAdsId facebookAdsId;
     public Admob admob;
 
@@ -38,6 +39,19 @@ public class Admob
     public string androidRewarded;
     public string iosRewarded;
 }
+[System.Serializable]
+public class UnityAdsId
+{
+    public string interstitialLevel = "levelTransition";
+
+    public string rewardedChapter = "chapterClear";
+    public string rewardedLevel = "levelClear";
+    public string rewardedBonusBox = "bonusBox";
+    public string rewardedFreeLetter = "freeLetter";
+    public string rewardedFreeStars = "freeStars";
+    public string rewardedFreeBoosters = "freeBoosters";
+}
+
 [System.Serializable]
 public class FacebookAdsId
 {
