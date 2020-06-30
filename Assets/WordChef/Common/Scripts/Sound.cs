@@ -6,7 +6,7 @@ public class Sound : MonoBehaviour
 {
     public AudioSource audioSource, loopAudioSource;
     public enum Button { Default, Hint, MultipleHint, Shuffe, Beehive };
-    public enum Others { Match, Win, PopupOpen, PopupClose, WordInvalid, WordAlready };
+    public enum Others { PopupOpen, PopupClose, WordInvalid, WordAlready };
     public enum Collects { CoinCollect, CoinKeep, LevelClose, LevelOpen, LevelShow };
     public enum Scenes { CurtainClose, CurtainOpen, HomeButton, LevelClear, ChapterClear };
 
