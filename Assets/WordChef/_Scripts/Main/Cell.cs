@@ -92,7 +92,7 @@ public class Cell : MonoBehaviour
             //    });
             //}, EaseType.OutBack);
             //Sound.instance.Play(Sound.Collects.CoinCollect);
-            MonoUtils.instance.ShowEffect(ConfigController.instance.config.gameParameters.rewardedBeeAmount, null, null, transform, WordRegion.instance.starCollectPfb, -450);
+            MonoUtils.instance.ShowEffect(ConfigController.instance.config.gameParameters.rewardedBeeAmount, null, null, transform, WordRegion.instance.starCollectPfb, -500);
             MonoUtils.instance.ShowTotalStarCollect(WordRegion.instance.numStarCollect, MonoUtils.instance.textCollectDefault, 0.3f);
         }
     }

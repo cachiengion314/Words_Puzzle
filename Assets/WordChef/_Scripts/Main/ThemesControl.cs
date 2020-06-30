@@ -107,6 +107,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion._textLevel.fontSizeMax = currTheme.fontData.fontSizeMax;
             wordRegion.textNumberStar.font = currTheme.fontData.fontAsset;
             wordRegion.textNumberStar.color = currTheme.fontData.colorTextHeader;
+            wordRegion.textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
             wordRegion.textNumHint.font = currTheme.fontData.fontAsset;
             wordRegion.textNumMultipleHint.font = currTheme.fontData.fontAsset;
             wordRegion.textNumSelectedHint.font = currTheme.fontData.fontAsset;

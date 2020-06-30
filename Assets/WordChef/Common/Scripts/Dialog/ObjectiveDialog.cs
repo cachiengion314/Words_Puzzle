@@ -72,6 +72,8 @@ public class ObjectiveDialog : Dialog
         _bgCurrency.SetNativeSize();
 
         _textNumberStar.font = currTheme.fontData.fontAsset;
+        _textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
+        _textNumberStar.color = currTheme.fontData.colorTextNumStar;
     }
 
     public void OnDailyOpen()

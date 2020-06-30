@@ -336,7 +336,7 @@ public class WordRegion : MonoBehaviour
             line.numLetters = word.Length;
             line.answers = words;
             line.cellSize = cellSize;
-            line.name = line.name + lineIndex + "_" + (GameState.currentSubWorld + 1) + (GameState.currentLevel + 1);
+            line.name = line.name + lineIndex + "_" + _currLevel;
             line.Build(ConfigController.Config.isWordRightToLeft);
 
             if (useProgress)
