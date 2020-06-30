@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "Cmk4hdPRlAXxQ1KJLHmOr7FtpHo",
+	"hash": "clc4EV0xPq9+DxLd6xTGFHEVy9o",
 	"spine": "3.8.95",
-	"x": -486.5,
-	"y": -150.19,
-	"width": 973,
-	"height": 457.89,
+	"x": -450,
+	"y": -156.13,
+	"width": 900,
+	"height": 461.52,
 	"images": "",
 	"audio": ""
 },
@@ -23,7 +23,9 @@
 	{ "name": "Great 1", "parent": "root" },
 	{ "name": "Awesome 3", "parent": "root" },
 	{ "name": "Amazing 3", "parent": "root" },
-	{ "name": "Excellent 3", "parent": "root", "x": 10.25 }
+	{ "name": "Excellent 3", "parent": "root", "x": 10.25 },
+	{ "name": "FX", "parent": "root" },
+	{ "name": "FX2", "parent": "root" }
 ],
 "slots": [
 	{ "name": "Amazing 3", "bone": "Amazing 3", "attachment": "Amazing 3" },
@@ -281,6 +283,11 @@
 				"shear": [
 					{}
 				]
+			},
+			"FX2": {
+				"translate": [
+					{ "x": -9.91, "y": 222.03 }
+				]
 			}
 		},
 		"events": [
@@ -433,6 +440,11 @@
 				],
 				"shear": [
 					{}
+				]
+			},
+			"FX2": {
+				"translate": [
+					{ "x": -5.95, "y": 214.1 }
 				]
 			}
 		},
@@ -587,11 +599,25 @@
 				"scale": [
 					{ "x": 0 }
 				]
+			},
+			"FX2": {
+				"translate": [
+					{ "y": 194.28 }
+				]
 			}
 		},
 		"events": [
 			{ "time": 0.3, "name": "EF", "string": "EF" }
 		]
+	},
+	"FX": {
+		"bones": {
+			"FX2": {
+				"translate": [
+					{ "y": 134.8 }
+				]
+			}
+		}
 	},
 	"Good": {
 		"slots": {
@@ -713,6 +739,11 @@
 			"Excellent 3": {
 				"scale": [
 					{ "x": 0 }
+				]
+			},
+			"FX2": {
+				"translate": [
+					{ "y": 103.08 }
 				]
 			}
 		},
@@ -840,6 +871,11 @@
 			"Excellent 3": {
 				"scale": [
 					{ "x": 0 }
+				]
+			},
+			"FX2": {
+				"translate": [
+					{ "y": 109.03 }
 				]
 			}
 		},

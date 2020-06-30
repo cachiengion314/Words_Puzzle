@@ -2,6 +2,7 @@
 using System.Collections;
 using Spine;
 using System;
+using Spine.Unity;
 
 public class Compliment : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Compliment : MonoBehaviour
     [Space]
     [SerializeField] private bool _useSpine;
     [SerializeField] private SpineControl _animCompliment;
+    [SerializeField] private BoneFollowerGraphic _boneFollowFx;
     [SerializeField] private string[] nameAnim;
     //[Space]
     //[SerializeField] private SpineControl _animTree;
@@ -55,6 +57,8 @@ public class Compliment : MonoBehaviour
     {
         if (_particle != null)
             Destroy(_particle.gameObject);
+        _boneFollowFx.boneName = ThemesControl.instance.CurrTheme.animData.boneFx;
+        _boneFollowFx.SetBone(ThemesControl.instance.CurrTheme.animData.boneFx);
         _particle = Instantiate(particleSystems[type], rootParticle);
         _particle.gameObject.SetActive(false);
         //if (type > 0)

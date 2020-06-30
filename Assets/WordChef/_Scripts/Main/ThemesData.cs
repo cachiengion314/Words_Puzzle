@@ -62,4 +62,5 @@ public class UIData
 public class AnimData
 {
     public string skinAnim;
+    public string boneFx;
 }
