@@ -183,7 +183,8 @@ public class WinDialog : Dialog
             TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
             {
                 ShowTitleChapterClear(true);
-                Sound.instance.Play(Sound.Scenes.ChapterClear);
+                //Sound.instance.Play(Sound.Scenes.ChapterClear);
+                Sound.instance.Play(Sound.Scenes.LevelClear);
                 ShowEffectTitle(0.84f);
                 _animChapterClear.SetAnimation(showLevelClearAnim, false, () =>
                 {
@@ -447,6 +448,8 @@ public class WinDialog : Dialog
     {
         if (eventData.Data.Name == "EGG_CHAP" || eventData.Data.Name == "EGG_LEVEL")
         {
+            if (eventData.Data.Name == "EGG_CHAP")
+                Sound.instance.Play(Sound.Scenes.ChapterClear);
             StarsGrid.gameObject.SetActive(true);
             for (int i = 0; i < numLevels; i++)
             {
@@ -708,10 +711,10 @@ public class WinDialog : Dialog
         {
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
-                    //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
-                    StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
-                    //Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
-                });
+                //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
+                StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
+                //Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
+            });
 
         }
         TweenControl.GetInstance().DelayCall(transform, 2.5f, () =>

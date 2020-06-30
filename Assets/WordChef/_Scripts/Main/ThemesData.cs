@@ -21,6 +21,7 @@ public class FontData
     public Font fontNormal;
     public int fontSize;
     public int fontSizeMax = 44;
+    public int fontSizeMaxCell = 44;
     public int fontSizeMaxNumStar = 36;
     public Color colorLetter;
     public Color colorCell;
