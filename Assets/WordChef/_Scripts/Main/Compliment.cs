@@ -64,6 +64,7 @@ public class Compliment : MonoBehaviour
         if (_useSpine)
         {
             _animCompliment.gameObject.SetActive(true);
+            _animCompliment.thisSkeletonControl.initialSkinName = ThemesControl.instance.CurrTheme.animData.skinAnim;
             _animCompliment.SetSkin(ThemesControl.instance.CurrTheme.animData.skinAnim);
             _animCompliment.SetAnimation(nameAnim[type], false);
         }

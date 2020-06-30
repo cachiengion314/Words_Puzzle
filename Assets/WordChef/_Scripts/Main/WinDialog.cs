@@ -79,6 +79,15 @@ public class WinDialog : Dialog
     [SerializeField] private GameObject _btnAdsDisable;
     [SerializeField] private Color _colorDisable;
     [SerializeField] private Color _colorNormal;
+    [Header("UI THEME")]
+    [SerializeField] private Button _btnDictionary;
+    [SerializeField] private Image _iconStar;
+    [SerializeField] private Image _iconAdd;
+    [SerializeField] private Image _bgCurrency;
+    [SerializeField] private Image _iconDictionary;
+    [SerializeField] private TextMeshProUGUI _textNumberStar;
+    [SerializeField] private SpineControl _animIconBee;
+
 
     private GameObject _fxEffect;
     private List<GameObject> _stars;
@@ -92,6 +101,7 @@ public class WinDialog : Dialog
             instance = this;
         _animEggChapterClear.onEventAction = ShowStarsEffect;
         _animEggLevelClear.onEventAction = ShowStarsEffect;
+        CheckTheme();
     }
 
     protected override void Start()
@@ -110,6 +120,27 @@ public class WinDialog : Dialog
             AdsManager.instance.LoadDataAds();
         CheckShowAdsButton();
         isSound = false;
+    }
+
+    private void CheckTheme()
+    {
+        var currTheme = ThemesControl.instance.CurrTheme;
+
+        _btnDictionary.image.sprite = currTheme.uiData.btnDictionary;
+        _btnDictionary.image.SetNativeSize();
+
+        _iconStar.sprite = currTheme.uiData.iconStar;
+        _iconAdd.sprite = currTheme.uiData.iconAdd;
+        _bgCurrency.sprite = currTheme.uiData.bgCurrency;
+        _iconDictionary.sprite = currTheme.uiData.iconDictionary;
+
+        _iconStar.SetNativeSize();
+        _iconAdd.SetNativeSize();
+        _bgCurrency.SetNativeSize();
+        _iconDictionary.SetNativeSize();
+
+        _textNumberStar.font = currTheme.fontData.fontAsset;
+        _textNumberStar.color = currTheme.fontData.colorTextHeader;
     }
 
     private void ShowStars()
@@ -290,7 +321,11 @@ public class WinDialog : Dialog
                 var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
                 var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
                 if (currlevel > 40 || CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0)
+                {
                     _btnBee.gameObject.SetActive(true);
+                    _animIconBee.thisSkeletonControl.initialSkinName = ThemesControl.instance.CurrTheme.animData.skinAnim;
+                    _animIconBee.SetSkin(ThemesControl.instance.CurrTheme.animData.skinAnim);
+                }
                 else
                     _btnBee.gameObject.SetActive(false);
                 var posTarget = _btnBee.transform.localPosition.x / 2;

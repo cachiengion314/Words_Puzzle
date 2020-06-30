@@ -54,6 +54,8 @@ public class UIData
     public Sprite bgLetter;
     public Sprite numBooster;
     public Sprite priceBooster;
+    public Sprite frameFxExist;
+    public Sprite bgToast;
 }
 
 [Serializable]

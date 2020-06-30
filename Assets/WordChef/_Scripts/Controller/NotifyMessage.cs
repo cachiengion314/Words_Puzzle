@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NotifyMessage : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class NotifyMessage : MonoBehaviour
 
     public string WORD_EXIST = "You found this word already";
     public string WORD_LENGTH_REQUIREMENT = "Let's seek for the words meeting the word length requirement!";
-
+    public Image bgToast;
     private bool isShowMess;
 
     void Awake()
@@ -29,6 +30,7 @@ public class NotifyMessage : MonoBehaviour
             return;
         isShowMess = true;
         _textContent.text = content;
+        bgToast.sprite = ThemesControl.instance.CurrTheme.uiData.bgToast;
         _panelMessage.SetActive(true);
         TweenControl.GetInstance().DelayCall(transform, _timeShow, () =>
         {

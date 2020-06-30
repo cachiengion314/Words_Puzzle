@@ -105,8 +105,8 @@ public class TextPreview : MonoBehaviour
             text.gameObject.SetActive(true);
             if(!ThemesControl.instance.CurrTheme.fontData.fontScale)
             {
-                text.transform.localPosition = Vector3.zero;
-                text.transform.localScale = Vector3.one;
+                text.text.transform.localPosition = Vector3.zero;
+                text.text.transform.localScale = Vector3.one;
                 text.text.fontSize = ThemesControl.instance.CurrTheme.fontData.fontSize;
             }
         }

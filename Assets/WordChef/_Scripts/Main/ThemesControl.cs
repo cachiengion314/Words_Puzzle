@@ -111,6 +111,16 @@ public class ThemesControl : MonoBehaviour
             wordRegion.textNumMultipleHint.font = currTheme.fontData.fontAsset;
             wordRegion.textNumSelectedHint.font = currTheme.fontData.fontAsset;
 
+            wordRegion.animBtnBonusBox.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnHint.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnHintTarget.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnMultipleHint.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnShuffle.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnRewardAds.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnHelp.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnHelpShadow.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            wordRegion.animBtnBonusBoxShadow.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+
             wordRegion.animBtnBonusBox.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHint.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHintTarget.SetSkin(currTheme.animData.skinAnim);

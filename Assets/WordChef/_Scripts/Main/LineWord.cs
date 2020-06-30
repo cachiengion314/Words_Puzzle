@@ -128,6 +128,7 @@ public class LineWord : MonoBehaviour
         if (_fxAnswerDuplicate != null)
         {
             _fxAnswerDuplicate.gameObject.SetActive(true);
+            _fxAnswerDuplicate.sprite = ThemesControl.instance.CurrTheme.uiData.frameFxExist;
             TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject, Vector3.one * 1.1f, 0.3f, () =>
             {
                 TweenControl.GetInstance().Scale(_fxAnswerDuplicate.gameObject, Vector3.one, 0.3f, () =>
