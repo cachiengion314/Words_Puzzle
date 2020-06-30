@@ -85,7 +85,9 @@ public class WinDialog : Dialog
     [SerializeField] private Image _iconAdd;
     [SerializeField] private Image _bgCurrency;
     [SerializeField] private Image _iconDictionary;
+    [SerializeField] private Image _imgNumBee;
     [SerializeField] private TextMeshProUGUI _textNumberStar;
+    [SerializeField] private TextMeshProUGUI _textNumBee;
     [SerializeField] private SpineControl _animIconBee;
 
 
@@ -133,15 +135,19 @@ public class WinDialog : Dialog
         _iconAdd.sprite = currTheme.uiData.iconAdd;
         _bgCurrency.sprite = currTheme.uiData.bgCurrency;
         _iconDictionary.sprite = currTheme.uiData.iconDictionary;
+        _imgNumBee.sprite = currTheme.uiData.numBooster;
 
         _iconStar.SetNativeSize();
         _iconAdd.SetNativeSize();
         _bgCurrency.SetNativeSize();
         _iconDictionary.SetNativeSize();
+        _imgNumBee.SetNativeSize();
 
         _textNumberStar.font = currTheme.fontData.fontAsset;
         _textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
         _textNumberStar.color = currTheme.fontData.colorTextNumStar;
+
+        _textNumBee.font = currTheme.fontData.fontAsset;
     }
 
     private void ShowStars()
