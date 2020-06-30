@@ -30,7 +30,11 @@ public class NotifyMessage : MonoBehaviour
             return;
         isShowMess = true;
         _textContent.text = content;
-        bgToast.sprite = ThemesControl.instance.CurrTheme.uiData.bgToast;
+        if (MainController.instance != null)
+        {
+            _textContent.color = ThemesControl.instance.CurrTheme.fontData.colorLetter;
+            bgToast.sprite = ThemesControl.instance.CurrTheme.uiData.bgToast;
+        }
         _panelMessage.SetActive(true);
         TweenControl.GetInstance().DelayCall(transform, _timeShow, () =>
         {
