@@ -112,7 +112,7 @@ public class TextPreview : MonoBehaviour
                 text.text.fontSize = ThemesControl.instance.CurrTheme.fontData.fontSize;
             }
         }
-        backgroundRT.sizeDelta = new Vector2(sb.Length * 80 + 200, backgroundRT.sizeDelta.y);
+        backgroundRT.sizeDelta = new Vector2(sb.Length * 80 + ThemesControl.instance.CurrTheme.sizeTextPreviewSpacing, backgroundRT.sizeDelta.y);
     }
 
     public void SetActive(bool isActive)

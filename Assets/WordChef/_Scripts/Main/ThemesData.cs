@@ -8,6 +8,7 @@ using UnityEngine;
 public class ThemesData : ScriptableObject
 {
     public bool showAnsScale;
+    public float sizeTextPreviewSpacing = 200f;
     public FontData fontData;
     public UIData uiData;
     public AnimData animData;
@@ -27,6 +28,7 @@ public class FontData
     public Color colorCell;
     public Color colorTextHeader;
     public Color colorTextNumStar;
+    public Color colorNotify;
 }
 
 [Serializable]

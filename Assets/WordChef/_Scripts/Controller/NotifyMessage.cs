@@ -32,7 +32,7 @@ public class NotifyMessage : MonoBehaviour
         _textContent.text = content;
         if (MainController.instance != null)
         {
-            _textContent.color = ThemesControl.instance.CurrTheme.fontData.colorLetter;
+            _textContent.color = ThemesControl.instance.CurrTheme.fontData.colorNotify;
             bgToast.sprite = ThemesControl.instance.CurrTheme.uiData.bgToast;
         }
         _panelMessage.SetActive(true);
