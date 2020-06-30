@@ -27,6 +27,11 @@ public class ObjectiveDialog : Dialog
     [Space]
     [SerializeField] private List<Quest> _dailys;
     [SerializeField] private List<Quest> _achievements;
+    [Header("UI THEME")]
+    [SerializeField] private Image _iconStar;
+    [SerializeField] private Image _iconAdd;
+    [SerializeField] private Image _bgCurrency;
+    [SerializeField] private TextMeshProUGUI _textNumberStar;
 
     HomeController homecontroller;
 
@@ -34,7 +39,10 @@ public class ObjectiveDialog : Dialog
     {
         base.Start();
         if (MainController.instance != null)
+        {
             MainController.instance.canvasCollect.gameObject.SetActive(true);
+            CheckTheme();
+        }
         if (HomeController.instance != null)
             homecontroller = HomeController.instance;
         CheckTaskComplete();
@@ -49,6 +57,21 @@ public class ObjectiveDialog : Dialog
     private void Update()
     {
         CheckTaskComplete();
+    }
+
+    private void CheckTheme()
+    {
+        var currTheme = ThemesControl.instance.CurrTheme;
+
+        _iconStar.sprite = currTheme.uiData.iconStar;
+        _iconAdd.sprite = currTheme.uiData.iconAdd;
+        _bgCurrency.sprite = currTheme.uiData.bgCurrency;
+
+        _iconStar.SetNativeSize();
+        _iconAdd.SetNativeSize();
+        _bgCurrency.SetNativeSize();
+
+        _textNumberStar.font = currTheme.fontData.fontAsset;
     }
 
     public void OnDailyOpen()

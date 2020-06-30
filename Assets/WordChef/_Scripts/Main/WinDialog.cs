@@ -140,7 +140,6 @@ public class WinDialog : Dialog
         _iconDictionary.SetNativeSize();
 
         _textNumberStar.font = currTheme.fontData.fontAsset;
-        _textNumberStar.color = currTheme.fontData.colorTextHeader;
     }
 
     private void ShowStars()
