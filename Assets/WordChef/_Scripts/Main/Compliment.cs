@@ -57,8 +57,6 @@ public class Compliment : MonoBehaviour
     {
         if (_particle != null)
             Destroy(_particle.gameObject);
-        _boneFollowFx.boneName = ThemesControl.instance.CurrTheme.animData.boneFx;
-        _boneFollowFx.SetBone(ThemesControl.instance.CurrTheme.animData.boneFx);
         _particle = Instantiate(particleSystems[type], rootParticle);
         _particle.gameObject.SetActive(false);
         //if (type > 0)
@@ -68,6 +66,8 @@ public class Compliment : MonoBehaviour
         if (_useSpine)
         {
             _animCompliment.gameObject.SetActive(true);
+            _boneFollowFx.boneName = ThemesControl.instance.CurrTheme.animData.boneFx;
+            _boneFollowFx.SetBone(ThemesControl.instance.CurrTheme.animData.boneFx);
             _animCompliment.thisSkeletonControl.initialSkinName = ThemesControl.instance.CurrTheme.animData.skinAnim;
             _animCompliment.SetSkin(ThemesControl.instance.CurrTheme.animData.skinAnim);
             _animCompliment.SetAnimation(nameAnim[type], false);
