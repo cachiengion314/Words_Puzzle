@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AdsManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class AdsManager : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+
+        SceneManager.activeSceneChanged += ChangedActiveScene;
     }
 
     void Start()
@@ -49,7 +52,11 @@ public class AdsManager : MonoBehaviour
         }
 
     }
-
+    private void ChangedActiveScene(Scene current, Scene next)
+    {
+        LoadDataAds();
+        Debug.Log("LoadDataAd succsesss");
+    }
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         yield return new WaitForSeconds(0.1f);

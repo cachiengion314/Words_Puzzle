@@ -5,6 +5,7 @@ using System;
 public class GameConfig
 {
     public GameParameters gameParameters;
+    public FacebookAdsId facebookAdsId;
     public Admob admob;
 
     [Header("")]
@@ -36,6 +37,18 @@ public class Admob
     [Header("RewardedVideo")]
     public string androidRewarded;
     public string iosRewarded;
+}
+[System.Serializable]
+public class FacebookAdsId
+{
+    public string intersititial = "670089180215126_670102936880417";
+
+    public string rewardedBonusBox = "670089180215126_670109416879769";
+    public string rewardedChapterClear = "670089180215126_670109660213078";
+    public string rewardedLevelClear = "670089180215126_670109563546421";
+    public string rewardedFreeBoosters = "670089180215126_670106246880086";
+    public string rewardedFreeStars = "670089180215126_670103063547071";
+    public string rewardedFreeLetter = "670089180215126_670089596881751";
 }
 
 [System.Serializable]

@@ -595,6 +595,17 @@ public class WinDialog : Dialog
             Sound.instance.Play(Sound.Others.PopupOpen);
             //AdmobController.instance.ShowRewardBasedVideo();
             //AdsManager.instance._adsController = AudienceNetworkFbAd.instance;
+
+            if (level == numLevels - 1)
+            {
+                AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedChapterClear;
+                Debug.Log("Change chapter id succsesss");
+            }
+            else
+            {
+                AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedLevelClear;
+                Debug.Log("Change level id succsesss");
+            }
             AdsManager.instance.ShowVideoAds(true, CheckShowAdsButton, CheckShowAdsButton);
 
 #if UNITY_EDITOR

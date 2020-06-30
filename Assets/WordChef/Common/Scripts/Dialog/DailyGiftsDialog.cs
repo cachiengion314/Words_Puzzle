@@ -187,6 +187,8 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickReward()
     {
+        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters;
+        Debug.Log("Change id succsesss");
         AdsManager.instance.ShowVideoAds();
 
         // AdmobController.instance.ShowRewardBasedVideo();

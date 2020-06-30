@@ -112,7 +112,11 @@ public class AnimEvent : MonoBehaviour
                     if (WinDialog.instance != null)
                     {
                         if (/*IsShowAds() && */WordRegion.instance.CurLevel > 17)
+                        {
+                            AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial;
+                            Debug.Log("Change id succsesss");
                             AdsManager.instance.ShowInterstitialAds();
+                        }
                         TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>
                         {
                             WinDialog.instance.ShowLevelChapterClear();

@@ -43,6 +43,8 @@ public class FreeStarsDialog : Dialog
         _rewardControl.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
+        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
+        Debug.Log("Change id succsesss");
         AdsManager.instance.ShowVideoAds();
         //AdmobController.instance.ShowRewardBasedVideo();
 

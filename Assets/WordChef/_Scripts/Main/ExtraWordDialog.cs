@@ -83,6 +83,9 @@ public class ExtraWordDialog : Dialog
     {
         _rewardController.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
+
+        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedBonusBox;
+        Debug.Log("Change id succsesss");
         AdsManager.instance.ShowVideoAds();
         // AdmobController.instance.ShowRewardBasedVideo();
 

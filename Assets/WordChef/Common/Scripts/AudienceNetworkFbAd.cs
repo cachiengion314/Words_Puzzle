@@ -8,6 +8,9 @@ using System;
 
 public class AudienceNetworkFbAd : MonoBehaviour, IAds
 {
+    public string rewardIdFaceAds = "583616318955925_583618328955724";
+    public string intersititialIdFaceAds = "583616318955925_583618328955724";
+
     public static AudienceNetworkFbAd instance;
     public RewardedVideoAd rewardedVideoAd;
     public bool isLoaded;
@@ -31,14 +34,13 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         AudienceNetworkAds.Initialize();
 #endif
     }
-    // Load button
     public void LoadInterstitial()
     {
         statusLabel.text = "Loading interstitial ad...";
 
         // Create the interstitial unit with a placement ID (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
-        interstitialAd = new InterstitialAd("583616318955925_583618328955724");
+        interstitialAd = new InterstitialAd(intersititialIdFaceAds);
 
         interstitialAd.Register(gameObject);
 
@@ -174,7 +176,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
         // Create the rewarded video unit with a placement ID (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
-        rewardedVideoAd = new RewardedVideoAd("583616318955925_583618328955724");
+        rewardedVideoAd = new RewardedVideoAd(rewardIdFaceAds);
 
         // For S2S validation you can create the rewarded video ad with the reward data
         // Refer to documentation here:
@@ -186,7 +188,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             Currency = "REWARD_ID"
         };
 #pragma warning disable 0219
-        RewardedVideoAd s2sRewardedVideoAd = new RewardedVideoAd("583616318955925_583618328955724", rewardData);
+        RewardedVideoAd s2sRewardedVideoAd = new RewardedVideoAd(rewardIdFaceAds, rewardData);
 #pragma warning restore 0219
 
         rewardedVideoAd.Register(gameObject);
@@ -199,6 +201,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             didClose = false;
             string isAdValid = rewardedVideoAd.IsValid() ? "valid" : "invalid";
             //Debug.Log("Ad loaded and is " + isAdValid + ". Click show to present!");
+
+            Debug.Log("FacebookAds isLoad: " + isLoaded);
         };
         rewardedVideoAd.RewardedVideoAdDidFailWithError = delegate (string error)
         {
@@ -236,7 +240,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             didClose = true;
             if (rewardedVideoAd != null)
             {
-                rewardedVideoAd.Dispose();
+                rewardedVideoAd.Dispose(); 
             }
         };
 
@@ -259,6 +263,6 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 #endif
 
         // Initiate the request to load the ad.
-        rewardedVideoAd.LoadAd();
+        rewardedVideoAd.LoadAd(); 
     }
 }
