@@ -32,6 +32,7 @@ public class RewardController : MonoBehaviour
         {
             _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
         }
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
     private void CheckShowAgain()
@@ -63,6 +64,7 @@ public class RewardController : MonoBehaviour
     private void OnCompleteVideo()
     {
         _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         //overLay.SetActive(true);
         if (_boardFreeWatch.transform.localScale == Vector3.one)
             _boardFreeWatch.transform.localScale = Vector3.zero;
@@ -80,6 +82,7 @@ public class RewardController : MonoBehaviour
     public void OnWatchClick()
     {
         _rewardVideoControl.onRewardedCallback += OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
         //overLay.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -103,6 +106,7 @@ public class RewardController : MonoBehaviour
     public void OnClose(GameObject obj)
     {
         _rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         if (ExtraWord.instance != null)
             ExtraWord.instance.OnClaimed();
         
