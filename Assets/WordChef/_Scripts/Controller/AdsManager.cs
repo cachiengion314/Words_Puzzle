@@ -18,6 +18,8 @@ public class AdsManager : MonoBehaviour
 
     public IAds _adsController;
 
+    private bool _isLoading;
+
     void Awake()
     {
         if (instance == null)
@@ -33,6 +35,8 @@ public class AdsManager : MonoBehaviour
 
     public void LoadDataAds()
     {
+        if (_isLoading)
+            return;
         if (AudienceNetworkFbAd.instance != null)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -50,12 +54,12 @@ public class AdsManager : MonoBehaviour
         {
             UnityAdTest.instance.ReloadVideoAds();
         }
-
+        _isLoading = true;
     }
     private void ChangedActiveScene(Scene current, Scene next)
     {
         LoadDataAds();
-        Debug.Log("LoadDataAd succsesss");
+        //Debug.Log("LoadDataAd succsesss");
     }
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
@@ -89,6 +93,7 @@ public class AdsManager : MonoBehaviour
                         {
                             if (showToast)
                                 Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
+                            _isLoading = false;
                             LoadDataAds();
                             adsNotReadyYetCallback?.Invoke();
                         }
