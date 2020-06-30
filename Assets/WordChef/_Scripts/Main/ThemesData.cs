@@ -32,6 +32,7 @@ public class UIData
     public bool showShadow = true;
     public bool showLeaf = true;
     public bool showIconLevelTitle = true;
+    public bool boardTextPreviewCenter;
     public Sprite background;
     public Sprite boardWordRegion;
     public Sprite header;

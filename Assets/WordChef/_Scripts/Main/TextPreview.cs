@@ -75,6 +75,8 @@ public class TextPreview : MonoBehaviour
 
     public void SetIndexes(List<int> indexes)
     {
+        if (ThemesControl.instance.CurrTheme.uiData.boardTextPreviewCenter)
+            textGrid.localPosition = Vector3.zero;
         StringBuilder sb = new StringBuilder();
 
         if (!ConfigController.Config.isWordRightToLeft)
