@@ -20,7 +20,12 @@ public class RemoteConfigFirebase : MonoBehaviour
         instance = this;
         notifyIngameCall += () =>
         {
-            if (!notifyIngameOn) return;
+            if (!notifyIngameOn)
+            {
+                if (HomeController.instance != null)
+                    HomeController.instance.CheckShowFreeBooster();
+                return;
+            }
 
             bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tittle;
 
