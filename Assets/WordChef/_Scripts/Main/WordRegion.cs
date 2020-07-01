@@ -305,7 +305,7 @@ public class WordRegion : MonoBehaviour
         }
         if (!CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL"))
             btnMultipleHint.gameObject.SetActive(false);
-        if (_currLevel < 11)
+        if (_currLevel < 17)
             btnRewardAds.gameObject.SetActive(false);
     }
 

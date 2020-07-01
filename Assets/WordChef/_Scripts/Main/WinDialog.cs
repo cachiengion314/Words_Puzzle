@@ -278,11 +278,15 @@ public class WinDialog : Dialog
         }
 
         var tweenControl = TweenControl.GetInstance();
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
+        var currStarBank = ChickenBankController.instance.CurrStarChicken;
+
         GroupButton.SetActive(show);
         _starReward.SetActive(true);
         _starReward.transform.localScale = Vector3.zero;
-        var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
-        var currStarBank = ChickenBankController.instance.CurrStarChicken;
+
         if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
         {
             _chickenBank.SetActive(false);
@@ -327,8 +331,7 @@ public class WinDialog : Dialog
             }
             else
             {
-                var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
-                var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+
                 if (currlevel > 40 || CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0)
                 {
                     _btnBee.gameObject.SetActive(true);
@@ -357,6 +360,10 @@ public class WinDialog : Dialog
                 });
             }
         }
+        if (currlevel > 17)
+            RewardButton.SetActive(true);
+        else
+            RewardButton.SetActive(false);
     }
 
     public void HidenTut()

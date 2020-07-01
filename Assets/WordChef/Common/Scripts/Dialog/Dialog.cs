@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using Superpow;
 
 public class Dialog : MonoBehaviour
 {
@@ -158,7 +159,10 @@ public class Dialog : MonoBehaviour
     {
         Destroy(gameObject);
         if (onDialogCompleteClosed != null) onDialogCompleteClosed();
-        if (showDialogReward)
+        var gameData = Resources.Load<GameData>("GameData");
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        if (showDialogReward && currlevel > 16)
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.FreeStars, DialogShow.STACK_DONT_HIDEN);
