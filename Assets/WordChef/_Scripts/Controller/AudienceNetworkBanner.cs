@@ -72,7 +72,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     }
     public void LoadBanner()
     {
-        ShowAdmobBanner();
+        AdmobController.instance.ShowBanner();
     }
     public void LoadAudienceNetworkBanner()
     {
@@ -164,19 +164,6 @@ public class AudienceNetworkBanner : MonoBehaviour
                 adView.Show(100);
                 currentAdViewPosition = AdPosition.CUSTOM;
                 break;
-        }
-    }
-
-    public void ShowAdmobBanner()
-    {
-        if (CUtils.IsAdsRemoved()) return;
-        if (AdmobController.instance.bannerView != null)
-        {
-            AdmobController.instance.bannerView.Show();
-        }
-        else
-        {
-            AdmobController.instance.RequestAdaptiveBanner();
         }
     }
 }

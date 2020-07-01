@@ -19,19 +19,13 @@ public class AdmobController : MonoBehaviour, IAds
     {
         if (!CUtils.IsAdsRemoved())
         {
-            //RequestBanner();
             //RequestInterstitial();
 
-            RequestAdaptiveBanner();
+            InitRewardedVideo();
+            RequestRewardBasedVideo();
+            RequestBanner();
         }
-
-        InitRewardedVideo();
-        RequestRewardBasedVideo();
-
-         //ShowBanner(); // working
-        // ShowAdaptiveBanner(); not working yet
     }
-
     private void InitRewardedVideo()
     {
         // Get singleton reward based video ad reference.
@@ -46,45 +40,7 @@ public class AdmobController : MonoBehaviour, IAds
         this.rewardBasedVideo.OnAdClosed += this.HandleRewardBasedVideoClosed;
         this.rewardBasedVideo.OnAdLeavingApplication += this.HandleRewardBasedVideoLeftApplication;
     }
-    public void RequestAdaptiveBanner()
-    {
-        // These ad units are configured to always serve test ads.
-#if UNITY_EDITOR
-        string adUnitId = "unused";
-#elif UNITY_ANDROID
-            string adUnitId = "ca-app-pub-3212738706492790/6113697308";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3212738706492790/5381898163";
-#else
-            string adUnitId = "unexpected_platform";
-#endif
 
-        // Clean up banner ad before creating a new one.
-        if (this.bannerView != null)
-        {
-            this.bannerView.Destroy();
-        }
-
-        AdSize adaptiveSize =
-                AdSize.GetPortraitAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
-
-        this.bannerView = new BannerView(adUnitId, adaptiveSize, AdPosition.Bottom);
-
-        // Register for ad events.
-        this.bannerView.OnAdLoaded += this.HandleAdLoaded;
-        this.bannerView.OnAdFailedToLoad += this.HandleAdFailedToLoad;
-        this.bannerView.OnAdOpening += this.HandleAdOpened;
-        this.bannerView.OnAdClosed += this.HandleAdClosed;
-        this.bannerView.OnAdLeavingApplication += this.HandleAdLeftApplication;
-
-        AdRequest adRequest = new AdRequest.Builder()
-            .AddTestDevice(AdRequest.TestDeviceSimulator)
-            .AddTestDevice("0123456789ABCDEF0123456789ABCDEF")
-            .Build();
-
-        // Load a banner ad.
-        this.bannerView.LoadAd(adRequest);
-    }
     public void RequestBanner()
     {
         // These ad units are configured to always serve test ads.
@@ -97,9 +53,17 @@ public class AdmobController : MonoBehaviour, IAds
 #else
         string adUnitId = "unexpected_platform";
 #endif
+        //Create a adaptive banner at the buttom of the screen.
+#if UNITY_ANDROID && !UNITY_EDITOR
+        int mobileScale = (int)MobileAds.Utils.GetDeviceScale();
+        int width = Screen.width;
+        int adWidth = width / mobileScale;
+        int height = Screen.height;
+        int adHeight = height / mobileScale;
+        AdSize bannerAdSize = new AdSize(adWidth, 50);
+        bannerAdSize = AdSize.GetPortraitAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
 
-        // Create a 320x50 banner at the top of the screen.
-        this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        this.bannerView = new BannerView(adUnitId, bannerAdSize, AdPosition.Bottom);
 
         // Register for ad events.
         this.bannerView.OnAdLoaded += this.HandleAdLoaded;
@@ -110,6 +74,7 @@ public class AdmobController : MonoBehaviour, IAds
 
         // Load a banner ad.
         this.bannerView.LoadAd(this.CreateAdRequest());
+#endif
     }
 
     public void RequestInterstitial()
@@ -183,7 +148,7 @@ public class AdmobController : MonoBehaviour, IAds
         }
         else
         {
-            RequestBanner();        
+            RequestBanner();
         }
     }
 
@@ -233,14 +198,17 @@ public class AdmobController : MonoBehaviour, IAds
             });
         }
     }
-    #region Banner callback handlers
+#region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
         MonoBehaviour.print("HandleAdLoaded event received");
-        MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}",
+        MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}, ad HeightDp: {2}, ad WidthDp: {3}",
             this.bannerView.GetHeightInPixels(),
-            this.bannerView.GetWidthInPixels()));
+            this.bannerView.GetWidthInPixels(),
+            Screen.height / (int)MobileAds.Utils.GetDeviceScale(),
+            Screen.width / (int)MobileAds.Utils.GetDeviceScale()
+            ));
     }
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
@@ -263,10 +231,10 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleAdLeftApplication event received");
     }
 
-    #endregion
+#endregion
 
 
-    #region Interstitial callback handlers
+#region Interstitial callback handlers
 
     public void HandleInterstitialLoaded(object sender, EventArgs args)
     {
@@ -294,9 +262,9 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleInterstitialLeftApplication event received");
     }
 
-    #endregion
+#endregion
 
-    #region RewardBasedVideo callback handlers
+#region RewardBasedVideo callback handlers
 
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
     {
@@ -338,7 +306,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
     }
-    #endregion
+#endregion
 
     /// <summary>
     /// Implement Interface
@@ -392,19 +360,5 @@ public class AdmobController : MonoBehaviour, IAds
           0.7f * Screen.width,
           0.3f * Screen.height);
         GUI.Label(textOutputRect, "Adaptive Banner Example");
-    }
-
-   
-    public void ShowAdaptiveBanner()
-    {
-        if (CUtils.IsAdsRemoved()) return;
-        if (bannerView != null)
-        {
-            bannerView.Show();
-        }
-        else
-        {
-            RequestAdaptiveBanner();
-        }
     }
 }
