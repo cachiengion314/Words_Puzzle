@@ -38,12 +38,12 @@ public class DailyGiftsDialog : Dialog
     private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
     private const string TIME_REWARD_KEY = "TIME_REWARD";
-    private const string DAY_KEY = "DAY";
+    private const string NEXT_DAY_KEY = "NEXTDAY";
+    private const string TIME_NEXT_DAY_KEY = "TIME_NEXTDAY";
     private int _currProgressValue;
     private double _timeValue;
     private bool _isReward;
-    private double _sumTime;
-    private double _timeTarget;
+    private DateTime nextDay;
 
     private List<int> listRandomMultiple = new List<int>();
     private List<int> listRandomSelected = new List<int>();
@@ -71,8 +71,6 @@ public class DailyGiftsDialog : Dialog
 
     private void InitProgress()
     {
-        _timeTarget = _valueTimeGift * 3600;
-
         _rewardedVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardedVideoControl == null)
             _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
@@ -169,13 +167,7 @@ public class DailyGiftsDialog : Dialog
 
     private void InitTimeCountDown()
     {
-        if (!CPlayerPrefs.HasKey(DAY_KEY))
-        {
-            _sumTime = _timeTarget;
-            CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
-        }
-        else
-            _sumTime = CPlayerPrefs.GetDouble(DAY_KEY);
+        UpdateNextDay();
         UpdateTimeValue();
     }
 
@@ -190,7 +182,6 @@ public class DailyGiftsDialog : Dialog
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters;
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeBoosters;
 
-        Debug.Log("Change DailyGiftsDialog_FreeBooster id succsesss");
         AdsManager.instance.ShowVideoAds();
 
         // AdmobController.instance.ShowRewardBasedVideo();
@@ -229,13 +220,11 @@ public class DailyGiftsDialog : Dialog
         CurrencyController.CreditHintFree(/*ConfigController.Config.gameParameters.rewardHintDaily*/hintRandomAmount);
         CurrencyController.CreditMultipleHintFree(/*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/multipleHintRandomAmount);
         CurrencyController.CreditSelectedHintFree(/*ConfigController.Config.gameParameters.rewardMultipleHintDaily*/selectedHintRandomAmount);
-        var timeRate = _valueTimeGift * 3600;
-        var valueTarget = DateTime.Today.TimeOfDay.TotalSeconds + timeRate;
-        _timeTarget = valueTarget;
-        CPlayerPrefs.SetDouble(DAY_KEY, _timeTarget);
         InitTimeCountDown();
         _isReward = false;
         CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
+        if (DateTime.Compare(DateTime.Now, nextDay) < 0)
+            CPlayerPrefs.SetBool(NEXT_DAY_KEY, false);
         if (HomeController.instance != null)
             HomeController.instance.ShowIconNoti();
         _animChest.onEventAction = OpenChestEvent;
@@ -313,10 +302,12 @@ public class DailyGiftsDialog : Dialog
 
     private void CheckTimeReward()
     {
+        UpdateNextDay();
         if (CPlayerPrefs.HasKey(TIME_REWARD_KEY))
         {
             _isReward = CPlayerPrefs.GetBool(TIME_REWARD_KEY, false);
-            if (!_isReward)
+            var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
+            if (!_isReward && !isNextDay)
                 StartCoroutine(CountDownTime());
             else
                 ShowReward();
@@ -382,12 +373,41 @@ public class DailyGiftsDialog : Dialog
         }
     }
 
+    void UpdateNextDay()
+    {
+        var isRefresh = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
+        var timeRefresh = DateTime.Today + TimeSpan.FromSeconds(_valueTimeGift * 3600);
+        if (CPlayerPrefs.HasKey(NEXT_DAY_KEY))
+        {
+            var time = CPlayerPrefs.GetLong(TIME_NEXT_DAY_KEY);
+            nextDay = DateTime.FromBinary(time);
+            Debug.Log("NextDay: " + nextDay);
+        }
+        else
+        {
+            nextDay = DateTime.FromBinary(timeRefresh.Ticks);
+            CPlayerPrefs.SetLong(TIME_NEXT_DAY_KEY, timeRefresh.Ticks);
+            Debug.Log("NextDay New: " + nextDay);
+        }
+        if (DateTime.Compare(DateTime.Now, nextDay) > 0 && !isRefresh)
+        {
+            CPlayerPrefs.SetBool(NEXT_DAY_KEY, true);
+            nextDay = DateTime.Now.Date.AddDays(1) + TimeSpan.FromSeconds(_valueTimeGift * 3600);
+            Debug.Log("NextDay New Refresh: " + nextDay);
+            CPlayerPrefs.SetLong(TIME_NEXT_DAY_KEY, nextDay.Ticks);
+        }
+    }
+
     private void UpdateTimeValue()
     {
-        var timeNow = DateTime.Now.TimeOfDay.TotalSeconds;
-        _timeValue = (int)(_sumTime - timeNow); // _timeValue = (int)(_sumTime - timeNow);
+        var timeNow = DateTime.Now;
+        var result = nextDay - timeNow;
+        _timeValue = (int)result.TotalSeconds; // _timeValue = (int)(_sumTime - timeNow);
         if (_timeValue <= 0)
+        {
             _timeValue = 0;
+            UpdateNextDay();
+        }
     }
 
     private void OnDestroy()
