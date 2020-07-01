@@ -8,6 +8,7 @@ public class PanelCollectItem : MonoBehaviour
 {
     [SerializeField] private int _priceAgain = 100;
     [SerializeField] private Image _imageItem;
+    [SerializeField] private Image _overlay;
     [SerializeField] private TextMeshProUGUI _textItem;
     [SerializeField] private TextMeshProUGUI _textPrice;
 
@@ -16,6 +17,14 @@ public class PanelCollectItem : MonoBehaviour
         get
         {
             return _imageItem;
+        }
+    }
+
+    public Image Overlay
+    {
+        get
+        {
+            return _overlay;
         }
     }
 

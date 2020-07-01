@@ -121,12 +121,19 @@ public class LoginBonusController : MonoBehaviour
         _root.transform.localScale = Vector3.zero;
         switch (_dataItems[_currAngle].itemType)
         {
+            case ItemType.HINT:
+                ShowItemCollect();
+                break;
+            case ItemType.HINT_RANDOM:
+                ShowItemCollect();
+                break;
+            case ItemType.HINT_SELECT:
+                ShowItemCollect();
+                break;
             case ItemType.CURRENCY_BALANCE:
                 StartCoroutine(ShowEffectCollect(itemValue));
                 break;
         }
-        RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
-        onCollectSpinCallback?.Invoke();
     }
 
     private void Spin(Action callback = null)
@@ -168,6 +175,8 @@ public class LoginBonusController : MonoBehaviour
 
     private IEnumerator ShowEffectCollect(int value)
     {
+        RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
+        onCollectSpinCallback?.Invoke();
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
@@ -177,6 +186,21 @@ public class LoginBonusController : MonoBehaviour
             yield return new WaitForSeconds(0.06f);
         }
 
+    }
+
+    private void ShowItemCollect()
+    {
+        _panelCollect.Overlay.gameObject.SetActive(true);
+        TweenControl.GetInstance().MoveRectY(_panelCollect.ImageItem.transform as RectTransform, 100f, 1);
+        TweenControl.GetInstance().FadeAnfa(_panelCollect.ImageItem, 1, 0.3f, () =>
+        {
+            TweenControl.GetInstance().FadeAnfa(_panelCollect.ImageItem, 0, 0.7f, () =>
+            {
+                _panelCollect.Overlay.gameObject.SetActive(false);
+                RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
+                onCollectSpinCallback?.Invoke();
+            });
+        });
     }
 }
 
