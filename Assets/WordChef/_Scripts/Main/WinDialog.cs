@@ -45,7 +45,7 @@ public class WinDialog : Dialog
     private GameObject EggChapterClear;
 
     [SerializeField]
-    private TextMeshProUGUI txtReward;
+    private Text txtReward;
     [SerializeField]
     private TextMeshProUGUI txtRewardByAds;
     [SerializeField]
@@ -279,7 +279,8 @@ public class WinDialog : Dialog
 
         var tweenControl = TweenControl.GetInstance();
         GroupButton.SetActive(show);
-
+        _starReward.SetActive(true);
+        _starReward.transform.localScale = Vector3.zero;
         var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
         var currStarBank = ChickenBankController.instance.CurrStarChicken;
         if (currStarBank < valueShow && !CPlayerPrefs.HasKey("OPEN_CHICKEN"))
@@ -341,8 +342,6 @@ public class WinDialog : Dialog
                 {
                     tweenControl.MoveRectX(_btnBee.transform as RectTransform, posTarget, 0.3f, () =>
                     {
-                        _starReward.SetActive(true);
-                        _starReward.transform.localScale = Vector3.zero;
                         tweenControl.Scale(_starReward, Vector3.one * 1.35f, 0.3f, () =>
                         {
                             tweenControl.Scale(_starReward, Vector3.one, 0.8f);
