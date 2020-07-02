@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ThemesDialog : Dialog
 {
     [SerializeField] private List<ThemeItem> _themes;
+    private bool _themeExits;
 
     protected override void Start()
     {
@@ -15,16 +16,27 @@ public class ThemesDialog : Dialog
 
     public void SelectThemes(ThemeItem theme)
     {
+        var isCloseFirstTheme = CPlayerPrefs.GetBool("CLOSE_THEME_DIALOG", false);
         GetComponent<GraphicRaycaster>().enabled = false;
         ClearItem();
+        var iddthem = CPlayerPrefs.GetInt("CURR_THEMES", 0);
+        if (_themes[iddthem] != theme)
+            _themeExits = false;
+        else
+            _themeExits = true;
         CPlayerPrefs.SetInt("CURR_THEMES", theme.idTheme);
         theme.iconSelected.gameObject.SetActive(true);
         theme.btnTheme.interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
-            CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
-            Close();
-            CUtils.LoadScene(Const.SCENE_MAIN, true);
+            if (!isCloseFirstTheme || !_themeExits)
+            {
+                CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
+                Close();
+                CUtils.LoadScene(Const.SCENE_MAIN, true);
+            }
+            else
+                Close();
         });
     }
 
