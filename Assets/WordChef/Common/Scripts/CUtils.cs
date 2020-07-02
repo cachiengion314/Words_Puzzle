@@ -591,14 +591,14 @@ public class CUtils
         }
     }
 
-    public static void RequestBannerAd()
-    {
-        if (IsAdsRemoved()) return;
+//    public static void RequestBannerAd()
+//    {
+//        if (IsAdsRemoved()) return;
 
-#if UNITY_ANDROID || UNITY_IPHONE
-        AdmobController.instance.RequestBanner();
-#endif
-    }
+//#if UNITY_ANDROID || UNITY_IPHONE
+//        AdmobController.instance.RequestBanner();
+//#endif
+//    }
 
     public static void ShowBannerAd()
     {
@@ -612,20 +612,20 @@ public class CUtils
 */
     }
 
-    public static void CloseBannerAd()
-    {
-#if UNITY_ANDROID || UNITY_IPHONE
-        AdmobController.instance.HideBanner();
-#else
-        if (JobWorker.instance.onCloseBanner != null) JobWorker.instance.onCloseBanner();
-#endif
-    }
+//    public static void CloseBannerAd()
+//    {
+//#if UNITY_ANDROID || UNITY_IPHONE
+//        AdmobController.instance.HideBanner();
+//#else
+//        if (JobWorker.instance.onCloseBanner != null) JobWorker.instance.onCloseBanner();
+//#endif
+//    }
 
-    public static void ShowFixedBannerAd()
-    {
-        if (IsAdsRemoved()) return;
-        if (JobWorker.instance.onShowFixedBanner != null) JobWorker.instance.onShowFixedBanner();
-    }
+//    public static void ShowFixedBannerAd()
+//    {
+//        if (IsAdsRemoved()) return;
+//        if (JobWorker.instance.onShowFixedBanner != null) JobWorker.instance.onShowFixedBanner();
+//    }
 
     public static void SetAutoSigninGPS(int value)
     {

@@ -24,6 +24,7 @@ public class AdmobController : MonoBehaviour, IAds
             InitRewardedVideo();
             RequestRewardBasedVideo();
             RequestBanner();
+            HideBanner();
         }
     }
     private void InitRewardedVideo()
@@ -145,6 +146,7 @@ public class AdmobController : MonoBehaviour, IAds
         if (bannerView != null)
         {
             bannerView.Show();
+            Debug.Log("Banner is show by ShowBanner");
         }
         else
         {
@@ -198,7 +200,7 @@ public class AdmobController : MonoBehaviour, IAds
             });
         }
     }
-#region Banner callback handlers
+    #region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
@@ -231,10 +233,10 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleAdLeftApplication event received");
     }
 
-#endregion
+    #endregion
 
 
-#region Interstitial callback handlers
+    #region Interstitial callback handlers
 
     public void HandleInterstitialLoaded(object sender, EventArgs args)
     {
@@ -262,9 +264,9 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleInterstitialLeftApplication event received");
     }
 
-#endregion
+    #endregion
 
-#region RewardBasedVideo callback handlers
+    #region RewardBasedVideo callback handlers
 
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
     {
@@ -306,7 +308,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
     }
-#endregion
+    #endregion
 
     /// <summary>
     /// Implement Interface
@@ -349,16 +351,5 @@ public class AdmobController : MonoBehaviour, IAds
     public void ShowInterstitialAds()
     {
         CUtils.ShowInterstitialAd();
-    }
-    // Adaptive banner
-    public void OnGUIq()
-    {
-        GUI.skin.label.fontSize = 60;
-        Rect textOutputRect = new Rect(
-          0.15f * Screen.width,
-          0.25f * Screen.height,
-          0.7f * Screen.width,
-          0.3f * Screen.height);
-        GUI.Label(textOutputRect, "Adaptive Banner Example");
     }
 }

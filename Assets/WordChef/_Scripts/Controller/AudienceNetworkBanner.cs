@@ -45,7 +45,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         if (nextSceneName == 3 )
         {
             if (CUtils.IsAdsRemoved()) return;
-
+         
             if (currlevel > 16)
             {
                 LoadBanner();
