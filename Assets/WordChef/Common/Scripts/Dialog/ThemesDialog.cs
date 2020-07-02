@@ -20,7 +20,9 @@ public class ThemesDialog : Dialog
         CPlayerPrefs.SetInt("CURR_THEMES", theme.idTheme);
         theme.iconSelected.gameObject.SetActive(true);
         theme.btnTheme.interactable = false;
-        TweenControl.GetInstance().DelayCall(transform, 0.5f,()=> {
+        TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+        {
+            CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
             Close();
             CUtils.LoadScene(Const.SCENE_MAIN, true);
         });
@@ -41,5 +43,16 @@ public class ThemesDialog : Dialog
         var iddthem = CPlayerPrefs.GetInt("CURR_THEMES", 0);
         _themes[iddthem].iconSelected.gameObject.SetActive(true);
         _themes[iddthem].btnTheme.interactable = false;
+    }
+
+    public override void Close()
+    {
+        var isCloseFirstTheme = CPlayerPrefs.GetBool("CLOSE_THEME_DIALOG", false);
+        base.Close();
+        if (!isCloseFirstTheme)
+        {
+            CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
+            CUtils.LoadScene(Const.SCENE_MAIN, true);
+        }
     }
 }
