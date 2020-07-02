@@ -236,6 +236,7 @@ public class TutorialController : MonoBehaviour
         var canvas = LineTarget.GetComponent<Canvas>();
         canvas.overrideSorting = true;
         canvas.sortingLayerName = "UI";
+        LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
         LineTarget.lineTutorialBG.gameObject.SetActive(true);
 
         foreach (var cellTut in _lineTarget.cells)
@@ -348,7 +349,7 @@ public class TutorialController : MonoBehaviour
         _overlay.SetActive(true);
         _popCellAds.SetActive(true);
         _textTutorialCellAds.text = contentCellAds;
-        
+
     }
 
     public void HidenPopTut()
