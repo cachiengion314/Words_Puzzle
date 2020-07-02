@@ -77,7 +77,15 @@ public class MainController : BaseController
 
         levelNameText.text = "LEVEL " + (currlevel + 1);
 
-        onLoadDataComplete?.Invoke();
+        var isFirstTheme = CPlayerPrefs.GetBool("THEME_DIALOG", false);
+        if (!isFirstTheme)
+        {
+            CPlayerPrefs.SetBool("THEME_DIALOG", true);
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.REPLACE_CURRENT);
+        }
+        else
+            onLoadDataComplete?.Invoke();
     }
 
     public void OnComplete()

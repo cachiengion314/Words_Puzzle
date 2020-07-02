@@ -91,8 +91,8 @@ public class ScreenFader : MonoBehaviour
 
         if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
         {
-            if (scene.name != Const.SCENE_MAIN)
-                FadeIn(null);
+            //if (scene.name != Const.SCENE_MAIN)
+            FadeIn(null);
         }
         else if (SceneAnimate.Instance.animatorScene.gameObject.activeInHierarchy
             && SceneAnimate.Instance.animatorScene.GetCurrentAnimatorStateInfo(0).IsName("SceneLoading"))

@@ -23,6 +23,7 @@ public class AnimEvent : MonoBehaviour
         {
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
             BlockScreen.instance.Block(false);
+            
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0)
             {
                 //Timer.Schedule(this, 1f, () =>
@@ -131,7 +132,7 @@ public class AnimEvent : MonoBehaviour
 
     private List<bool> InitListRandom()
     {
-        var rateShow  = new List<bool>();
+        var rateShow = new List<bool>();
         int num = 100;
         var rate1 = (int)(0.5f * num);
         var rate2 = (int)(0.5f * num);

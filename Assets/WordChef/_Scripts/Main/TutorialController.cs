@@ -92,6 +92,8 @@ public class TutorialController : MonoBehaviour
         {
             WordRegion.instance.BtnADS._btnAds.interactable = false;
         }
+        if (BlockScreen.instance != null)
+            BlockScreen.instance.Block(true);
         isShowTut = true;
         _overlay.SetActive(true);
         _overlay.GetComponent<Canvas>().sortingOrder = 0;
@@ -103,6 +105,7 @@ public class TutorialController : MonoBehaviour
                 if (!line.isShown)
                 {
                     _lineTarget = line;
+                    LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
                     _answerTarget = line.answers[indexAnser];
                     line.SetDataLetter(line.answers[indexAnser]);
                     _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
@@ -119,6 +122,7 @@ public class TutorialController : MonoBehaviour
                 if (line.isShown && line.answers.Count > 1)
                 {
                     _lineTarget = line;
+                    LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
                     var otherAnswers = line.answers.FindAll(ans => ans != _lineTarget.answer);
                     var index = 0;
                     _answerTarget = "";
