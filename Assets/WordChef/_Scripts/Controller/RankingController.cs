@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class RankingController : MonoBehaviour
@@ -20,12 +21,12 @@ public class RankingController : MonoBehaviour
     {
         if (sprite != null)
         {
-            _iconPlayer.color = new Color(1,1,1,1);
+            _iconPlayer.color = new Color(1, 1, 1, 1);
             _iconPlayer.sprite = sprite;
             _iconPlayer.SetNativeSize();
         }
         else
-            _iconPlayer.color = new Color(1,1,1,0);
+            _iconPlayer.color = new Color(1, 1, 1, 0);
 
         _playerName.text = name;
         _playerValue.text = value.ToString();
@@ -36,9 +37,10 @@ public class RankingController : MonoBehaviour
 
     private IEnumerator ShowAvatar(string urlAvatar)
     {
-        WWW www = new WWW(urlAvatar);
-        yield return www;
-        _avatarPlayer.photo.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(urlAvatar);
+        yield return www.SendWebRequest();
+        var texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+        _avatarPlayer.photo.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         _avatarPlayer.photo.color = Color.white;
     }
 }
