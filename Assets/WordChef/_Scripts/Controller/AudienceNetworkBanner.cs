@@ -27,12 +27,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         //AudienceNetworkAds.Initialize();
         instance = this;
 
-        var world = Prefs.unlockedWorld;
-        var subWorld = Prefs.unlockedSubWorld;
-        var level = Prefs.unlockedLevel;
-        var numlevels = Utils.GetNumLevels(world, subWorld);
-        // int chapter = Prefs.unlockedSubWorld + Prefs.unlockedWorld * gameData.words[0].subWords.Count;
-        currlevel = (level + numlevels * subWorld + world * gameData.words[0].subWords.Count * numlevels) + 1;
+        CheckCurrentLevel();
 
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
@@ -41,11 +36,11 @@ public class AudienceNetworkBanner : MonoBehaviour
     private void ChangedActiveScene(Scene current, Scene next)
     {
         nextSceneName = next.buildIndex;
-
-        if (nextSceneName == 3 )
+        CheckCurrentLevel();
+        if (nextSceneName == 3)
         {
             if (CUtils.IsAdsRemoved()) return;
-         
+
             if (currlevel > 16)
             {
                 LoadBanner();
@@ -72,7 +67,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     }
     public void LoadBanner()
     {
-        AdmobController.instance.ShowBanner();
+        StartCoroutine(LoadBannerWithDelay());
     }
     public void LoadAudienceNetworkBanner()
     {
@@ -117,7 +112,6 @@ public class AudienceNetworkBanner : MonoBehaviour
         // Initiate a request to load an ad.
         adView.LoadAd();
     }
-
     // Change button
     // Change the position of the ad view when button is clicked
     // ad view is at top: move it to bottom
@@ -147,7 +141,6 @@ public class AudienceNetworkBanner : MonoBehaviour
             currentScreenOrientation = Screen.orientation;
         }
     }
-
     private void SetAdViewPosition(AdPosition adPosition)
     {
         switch (adPosition)
@@ -165,5 +158,21 @@ public class AudienceNetworkBanner : MonoBehaviour
                 currentAdViewPosition = AdPosition.CUSTOM;
                 break;
         }
+    }
+
+    private IEnumerator LoadBannerWithDelay()
+    {
+        yield return new WaitForSeconds(1.2f);
+
+        AdmobController.instance.ShowBanner();
+    }
+    private void CheckCurrentLevel()
+    {
+        var world = Prefs.unlockedWorld;
+        var subWorld = Prefs.unlockedSubWorld;
+        var level = Prefs.unlockedLevel;
+        var numlevels = Utils.GetNumLevels(world, subWorld);
+        // int chapter = Prefs.unlockedSubWorld + Prefs.unlockedWorld * gameData.words[0].subWords.Count;
+        currlevel = (level + numlevels * subWorld + world * gameData.words[0].subWords.Count * numlevels) + 1;
     }
 }
