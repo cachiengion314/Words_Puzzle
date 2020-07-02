@@ -105,12 +105,11 @@ public class TextPreview : MonoBehaviour
             var text = GameObject.Instantiate<TextInImg>(textPrefab, textGrid);
             text.text.text = sb[i].ToString();
             text.gameObject.SetActive(true);
-            if(!ThemesControl.instance.CurrTheme.fontData.fontScale)
-            {
-                text.text.transform.localPosition = Vector3.zero;
-                text.text.transform.localScale = Vector3.one;
+
+            text.text.transform.localPosition = ThemesControl.instance.CurrTheme.uiData.posTextPreview;
+            text.text.transform.localScale = ThemesControl.instance.CurrTheme.uiData.scaleTextPreview;
+            if (!ThemesControl.instance.CurrTheme.fontData.fontScale)
                 text.text.fontSize = ThemesControl.instance.CurrTheme.fontData.fontSize;
-            }
         }
         backgroundRT.sizeDelta = new Vector2(sb.Length * 80 + ThemesControl.instance.CurrTheme.sizeTextPreviewSpacing, backgroundRT.sizeDelta.y);
     }

@@ -38,6 +38,8 @@ public class UIData
     public bool showLeaf = true;
     public bool showIconLevelTitle = true;
     public bool boardTextPreviewCenter;
+    public Vector3 scaleTextPreview;
+    public Vector3 posTextPreview;
     public Sprite background;
     public Sprite boardWordRegion;
     public Sprite header;
