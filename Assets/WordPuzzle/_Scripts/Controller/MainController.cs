@@ -86,6 +86,18 @@ public class MainController : BaseController
         }
         else
             onLoadDataComplete?.Invoke();
+        ThemeCallEventFirebase(currTheme);
+    }
+
+    private void ThemeCallEventFirebase(int indexTheme)
+    {
+        // Log an event with multiple parameters, passed as an array:
+        var parameters = new Firebase.Analytics.Parameter[]
+        {
+            new Firebase.Analytics.Parameter("theme_name", indexTheme),
+        };
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("theme_used", parameters);
     }
 
     public void OnComplete()

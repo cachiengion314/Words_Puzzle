@@ -165,6 +165,17 @@ public class WordRegion : MonoBehaviour
         Firebase.Analytics.FirebaseAnalytics.LogEvent("curr_Level_start", parameters);
     }
 
+    public void UserItemCallEventFirebase(string nameItem)
+    {
+        var parameters = new Firebase.Analytics.Parameter[]
+        {
+            new Firebase.Analytics.Parameter("item_name", nameItem),
+            new Firebase.Analytics.Parameter("level", _currLevel),
+        };
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("items_used", parameters);
+    }
+
     private List<string> GetExtraWordRandom(List<string> words)
     {
         var wordLengthEqual = new List<string>();
@@ -959,6 +970,7 @@ public class WordRegion : MonoBehaviour
             li.HidenOverlayOfCell();
         }
         line.ShowHintCelltarget(cell);
+        UserItemCallEventFirebase("UserSelectedHint");
     }
 
     public void BeeClick()
@@ -1002,6 +1014,7 @@ public class WordRegion : MonoBehaviour
                 count += 1;
             }
         }
+        UserItemCallEventFirebase("UserBee");
     }
 
     public void CheckShowBonusBoxTut()
@@ -1183,6 +1196,7 @@ public class WordRegion : MonoBehaviour
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
+                UserItemCallEventFirebase("UserHint");
             });
             if (hintFree > 0)
             {
@@ -1259,6 +1273,7 @@ public class WordRegion : MonoBehaviour
             SetupNumMultiplehintFree();
             Prefs.countBooster += 1;
             Prefs.countBoosterDaily += 1;
+            UserItemCallEventFirebase("UserMultipleHint");
         }
         else
         {

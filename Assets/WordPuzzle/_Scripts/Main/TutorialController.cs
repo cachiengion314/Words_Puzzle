@@ -414,6 +414,15 @@ public class TutorialController : MonoBehaviour
         if (_popCellAds != null) _popCellAds.SetActive(false);
         if (_overlay != null) _overlay.SetActive(false);
         if (_textTutorial != null) _textTutorial.text = "";
+
+
+        if (CPlayerPrefs.HasKey("BEE_TUTORIAL"))
+        {
+            var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
+            var currlevel = WordRegion.instance.CurLevel;
+            if (currlevel >= 40)
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(Firebase.Analytics.FirebaseAnalytics.EventTutorialComplete);
+        }
     }
 
     public void CheckAndShowTutorial()

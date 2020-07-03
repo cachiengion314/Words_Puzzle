@@ -150,6 +150,13 @@ public class Quest : MonoBehaviour
         ObjectiveManager.instance.CheckTaskComplete();
         if (PauseDialog.instance != null)
             PauseDialog.instance.CheckShowIconTaskComplete();
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+          Firebase.Analytics.FirebaseAnalytics.EventUnlockAchievement,
+          new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterAchievementId, idQuest),
+          }
+        );
     }
 
     private IEnumerator ShowEffectCollect(int value)

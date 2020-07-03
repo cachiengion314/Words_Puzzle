@@ -187,6 +187,7 @@ public class Pan : MonoBehaviour
             i++;
         }
         Sound.instance.PlayButton(Sound.Button.Shuffe);
+        WordRegion.instance.UserItemCallEventFirebase("UserShuffle");
     }
 
     public void ScaleWord(Vector3 letterPos, Action callback = null)

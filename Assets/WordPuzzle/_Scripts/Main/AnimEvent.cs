@@ -30,7 +30,10 @@ public class AnimEvent : MonoBehaviour
                 //{
                 //DialogController.instance.ShowDialog(DialogType.HowtoPlay);
                 if (!isTut)
+                {
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation);
+                    Firebase.Analytics.FirebaseAnalytics.LogEvent(Firebase.Analytics.FirebaseAnalytics.EventTutorialBegin);
+                }
                 //});
             }
             //TutorialController.instance.CheckAndShowTutorial();
