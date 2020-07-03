@@ -20,6 +20,14 @@ public class PanelCollectItem : MonoBehaviour
         }
     }
 
+    public TextMeshProUGUI TextItem
+    {
+        get
+        {
+            return _textItem;
+        }
+    }
+
     public Image Overlay
     {
         get
@@ -36,7 +44,7 @@ public class PanelCollectItem : MonoBehaviour
             _imageItem.sprite = sprite;
             _imageItem.SetNativeSize();
         }
-        _textItem.text = value.ToString();
+        _textItem.text = "X" + value;
     }
 
 }

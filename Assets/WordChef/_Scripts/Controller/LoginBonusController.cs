@@ -67,7 +67,7 @@ public class LoginBonusController : MonoBehaviour
         var currDate = DateTime.Now.Date;
         var showBonus = (DateTime.Compare(currDate, oldDate) > 0) ? true : false;
         BlockScreen.instance.Block(true);
-        if (showBonus || firstPlay)
+        if ((showBonus || firstPlay) && CPlayerPrefs.HasKey("FREEBOOSTERS_TUTORIAL"))
         {
             isShowLoginbonus = true;
             TweenControl.GetInstance().DelayCall(transform, 2f, () =>
@@ -89,6 +89,8 @@ public class LoginBonusController : MonoBehaviour
         {
             isShowLoginbonus = false;
             BlockScreen.instance.Block(false);
+            //RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
+            //onCollectSpinCallback?.Invoke();
         }
     }
 
@@ -175,8 +177,6 @@ public class LoginBonusController : MonoBehaviour
 
     private IEnumerator ShowEffectCollect(int value)
     {
-        RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
-        onCollectSpinCallback?.Invoke();
         for (int i = 0; i < value; i++)
         {
             if (i < 5)
@@ -197,9 +197,11 @@ public class LoginBonusController : MonoBehaviour
             TweenControl.GetInstance().FadeAnfa(_panelCollect.ImageItem, 0, 0.7f, () =>
             {
                 _panelCollect.Overlay.gameObject.SetActive(false);
-                RemoteConfigFirebase.instance.notifyIngameCall?.Invoke();
-                onCollectSpinCallback?.Invoke();
             });
+        });
+        TweenControl.GetInstance().FadeAnfa(_panelCollect.TextItem, 1, 0.3f, () =>
+        {
+            TweenControl.GetInstance().FadeAnfa(_panelCollect.TextItem, 0, 0.7f);
         });
     }
 }
