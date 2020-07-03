@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using Superpow;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PauseDialog : Dialog
 {
@@ -66,6 +67,8 @@ public class PauseDialog : Dialog
         Sound.instance.Play(Sound.Others.PopupOpen);
         //DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, "Themes", "This feature is coming soon. Please try again later!");
         DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.STACK_DONT_HIDEN);
+
+       AdmobController.instance.HideBanner();
     }
 
     public void OnTaskClick()

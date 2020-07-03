@@ -39,10 +39,11 @@ public class WordRegion : MonoBehaviour
     public Button btnShuffle;
     public Button btnRewardAds;
     public Button btnBonusBox;
+    public Button btnHelp;
+
+    public Button btnSetting;
     public GameObject shadowBonuxbox;
     public GameObject shadowHelp;
-    public Button btnSetting;
-    public Button btnHelp;
     public GameObject starCollectPfb;
 
     private List<LineWord> lines = new List<LineWord>();

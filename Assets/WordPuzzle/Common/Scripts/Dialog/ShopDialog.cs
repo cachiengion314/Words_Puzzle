@@ -8,6 +8,7 @@ using TMPro;
 using System;
 using System.Collections;
 using Utilities.Components;
+using UnityEngine.SceneManagement;
 
 public class ShopDialog : Dialog
 {

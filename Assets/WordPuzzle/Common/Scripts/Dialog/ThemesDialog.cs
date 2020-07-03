@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ThemesDialog : Dialog
@@ -66,5 +67,7 @@ public class ThemesDialog : Dialog
             CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
             CUtils.LoadScene(Const.SCENE_MAIN, true);
         }
+
+        AudienceNetworkBanner.instance.LoadBanner();
     }
 }

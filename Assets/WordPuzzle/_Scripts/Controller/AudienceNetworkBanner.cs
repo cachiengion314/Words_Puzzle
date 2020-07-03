@@ -16,6 +16,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     private AdPosition currentAdViewPosition;
     private ScreenOrientation currentScreenOrientation;
     public Text statusLabel;
+    [HideInInspector] public readonly int MaxLevelToLoadBanner = 16;
     void OnDestroy()
     {
         // Dispose of banner ad when the scene is destroyed
@@ -36,12 +37,13 @@ public class AudienceNetworkBanner : MonoBehaviour
     private void ChangedActiveSceneToLoadBanner(Scene current, Scene next)
     {
         nextSceneName = next.buildIndex;
+
         CheckCurrentLevel();
         if (nextSceneName == 3)
         {
             if (CUtils.IsAdsRemoved()) return;
 
-            if (currlevel > 16)
+            if (currlevel > MaxLevelToLoadBanner)
             {
                 LoadBanner();
             }
@@ -60,14 +62,16 @@ public class AudienceNetworkBanner : MonoBehaviour
         }
         //Debug.Log("AdViewTest was destroyed!");
 
-        if (AdmobController.instance.bannerView != null)
-        {
-            AdmobController.instance.bannerView.Hide();
-        }
+        AdmobController.instance.HideBanner();
     }
     public void LoadBanner()
     {
-        StartCoroutine(LoadBannerWithDelay());
+        CheckCurrentLevel();
+
+        if (currlevel > MaxLevelToLoadBanner && MainController.instance != null)
+        {
+            StartCoroutine(LoadBannerWithDelay());
+        }
     }
     public void LoadAudienceNetworkBanner()
     {
@@ -166,7 +170,7 @@ public class AudienceNetworkBanner : MonoBehaviour
 
         AdmobController.instance.ShowBanner();
     }
-    private void CheckCurrentLevel()
+    public void CheckCurrentLevel()
     {
         var world = Prefs.unlockedWorld;
         var subWorld = Prefs.unlockedSubWorld;

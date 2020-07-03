@@ -323,6 +323,7 @@ Transform:
   - {fileID: 6400847209191359795}
   - {fileID: 8617159523206541904}
   - {fileID: 1413878306}
+  - {fileID: 1314882152686104066}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -358,6 +359,14 @@ MonoBehaviour:
       minBank: 720
       rewardMultipleHintDaily: 2
       rewardHintDaily: 5
+    unityAdsId:
+      interstitialLevel: levelTransition
+      rewardedChapter: chapterClear
+      rewardedLevel: levelClear
+      rewardedBonusBox: bonusBox
+      rewardedFreeLetter: freeLetter
+      rewardedFreeStars: freeStars
+      rewardedFreeBoosters: freeBoosters
     facebookAdsId:
       intersititial: 670089180215126_670102936880417
       rewardedBonusBox: 670089180215126_670109416879769
@@ -3018,6 +3027,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c69e85cfebf50b498c03e6d453191a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPlacementId: rewardedVideo
+  myInterstitialId: myInterstitialId
   bannerPlacementId: bannerPlacement
 --- !u!114 &4139744168166431516
 MonoBehaviour:
@@ -3192,6 +3203,56 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: show facebook
+--- !u!1 &7801551341898356364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1314882152686104066}
+  - component: {fileID: 5408394236552014084}
+  m_Layer: 0
+  m_Name: UIScaleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1314882152686104066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801551341898356364}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 499218}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5408394236552014084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801551341898356364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a088907f556e9543af3e4ecaba9f553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnHintTarget: {fileID: 0}
+  btnHint: {fileID: 0}
+  btnMultipleHint: {fileID: 0}
+  btnShuffle: {fileID: 0}
+  btnRewardAds: {fileID: 0}
+  btnBonusBox: {fileID: 0}
+  btnHelp: {fileID: 0}
 --- !u!1 &8143336261846906844
 GameObject:
   m_ObjectHideFlags: 0

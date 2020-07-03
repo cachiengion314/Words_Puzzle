@@ -14,8 +14,6 @@ public class AdmobController : MonoBehaviour, IAds
     private void Awake()
     {
         instance = this;
-
-        SceneManager.activeSceneChanged += ChangedActiveSceneToHideBanner;
     }
 
     private void Start()
@@ -26,16 +24,8 @@ public class AdmobController : MonoBehaviour, IAds
 
             InitRewardedVideo();
             RequestRewardBasedVideo();
-            RequestBanner();
-            HideBanner();
+
         }
-    }
-    private static int nextSceneName;
-    private static int currentSceneName;
-    private void ChangedActiveSceneToHideBanner(Scene current, Scene next)
-    {
-        currentSceneName = current.buildIndex;
-        nextSceneName = next.buildIndex;
     }
     private void InitRewardedVideo()
     {
@@ -209,12 +199,10 @@ public class AdmobController : MonoBehaviour, IAds
             });
         }
     }
-#region Banner callback handlers
+    #region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
-        if (nextSceneName != 3) { HideBanner();  return; }
-
         MonoBehaviour.print("HandleAdLoaded event received");
         MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}, ad HeightDp: {2}, ad WidthDp: {3}",
             this.bannerView.GetHeightInPixels(),
@@ -244,10 +232,10 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleAdLeftApplication event received");
     }
 
-#endregion
+    #endregion
 
 
-#region Interstitial callback handlers
+    #region Interstitial callback handlers
 
     public void HandleInterstitialLoaded(object sender, EventArgs args)
     {
@@ -275,9 +263,9 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleInterstitialLeftApplication event received");
     }
 
-#endregion
+    #endregion
 
-#region RewardBasedVideo callback handlers
+    #region RewardBasedVideo callback handlers
 
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
     {
@@ -319,7 +307,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
     }
-#endregion
+    #endregion
 
     /// <summary>
     /// Implement Interface
