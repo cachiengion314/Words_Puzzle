@@ -488,7 +488,24 @@ public class WinDialog : Dialog
         }
     }
 
+    private void LevelUpCallEventFirebase()
+    {
+        var unlockWord = Prefs.unlockedWorld;
+        var unlockedSubWorld = Prefs.unlockedSubWorld;
+        var unlockedLevel = Prefs.unlockedLevel;
+        var numLevelInChap = Utils.GetNumLevels(unlockWord, unlockedSubWorld);
+        var currlevel = (unlockedLevel + numLevelInChap * unlockedSubWorld + unlockWord * MainController.instance.gameData.words[0].subWords.Count * numLevelInChap);
 
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+          Firebase.Analytics.FirebaseAnalytics.EventLevelUp,
+          new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterCharacter, SystemInfo.deviceName + " (Level Up)"),
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterLevel, currlevel),
+          }
+        );
+    }
 
     private void CheckUnlock()
     {
@@ -513,6 +530,7 @@ public class WinDialog : Dialog
             FacebookController.instance.user.levelProgress = new string[] { "0" };
             FacebookController.instance.user.answerProgress = new string[] { "0" };
         }
+        LevelUpCallEventFirebase();
     }
 
     private IEnumerator IEShowButtonLevelClear()

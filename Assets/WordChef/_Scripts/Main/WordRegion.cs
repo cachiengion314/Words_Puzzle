@@ -153,6 +153,18 @@ public class WordRegion : MonoBehaviour
         FacebookController.instance.GetUserData();
     }
 
+    private void LevelStartCallEventFirebase()
+    {
+        // Log an event with multiple parameters, passed as an array:
+        var parameters = new Firebase.Analytics.Parameter[]
+        {
+            new Firebase.Analytics.Parameter("device", SystemInfo.deviceName),
+            new Firebase.Analytics.Parameter("level", _currLevel),
+        };
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("curr_Level_start", parameters);
+    }
+
     private List<string> GetExtraWordRandom(List<string> words)
     {
         var wordLengthEqual = new List<string>();
@@ -186,6 +198,7 @@ public class WordRegion : MonoBehaviour
         _currLevel = level + 1;
         this.gameLevel = gameLevel;
         _extraWord = gameLevel.numExtra;
+        LevelStartCallEventFirebase();
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
         //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
         //wordList = wordList.Count <= 4 ? wordList : GetExtraWordRandom(wordList);
