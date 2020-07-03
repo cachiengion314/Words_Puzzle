@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using GoogleMobileAds.Api;
+using UnityEngine.SceneManagement;
 
 public class AdmobController : MonoBehaviour, IAds
 {
@@ -13,6 +14,8 @@ public class AdmobController : MonoBehaviour, IAds
     private void Awake()
     {
         instance = this;
+
+        SceneManager.activeSceneChanged += ChangedActiveSceneToHideBanner;
     }
 
     private void Start()
@@ -26,6 +29,13 @@ public class AdmobController : MonoBehaviour, IAds
             RequestBanner();
             HideBanner();
         }
+    }
+    private static int nextSceneName;
+    private static int currentSceneName;
+    private void ChangedActiveSceneToHideBanner(Scene current, Scene next)
+    {
+        currentSceneName = current.buildIndex;
+        nextSceneName = next.buildIndex;
     }
     private void InitRewardedVideo()
     {
@@ -55,7 +65,7 @@ public class AdmobController : MonoBehaviour, IAds
         string adUnitId = "unexpected_platform";
 #endif
         //Create a adaptive banner at the buttom of the screen.
-#if UNITY_ANDROID && !UNITY_EDITOR
+
         int mobileScale = (int)MobileAds.Utils.GetDeviceScale();
         int width = Screen.width;
         int adWidth = width / mobileScale;
@@ -75,7 +85,7 @@ public class AdmobController : MonoBehaviour, IAds
 
         // Load a banner ad.
         this.bannerView.LoadAd(this.CreateAdRequest());
-#endif
+
     }
 
     public void RequestInterstitial()
@@ -146,7 +156,6 @@ public class AdmobController : MonoBehaviour, IAds
         if (bannerView != null)
         {
             bannerView.Show();
-            Debug.Log("Banner is show by ShowBanner");
         }
         else
         {
@@ -204,6 +213,8 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
+        if (nextSceneName != 3) { HideBanner();  return; }
+
         MonoBehaviour.print("HandleAdLoaded event received");
         MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}, ad HeightDp: {2}, ad WidthDp: {3}",
             this.bannerView.GetHeightInPixels(),

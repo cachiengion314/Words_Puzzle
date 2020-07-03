@@ -29,11 +29,11 @@ public class AudienceNetworkBanner : MonoBehaviour
 
         CheckCurrentLevel();
 
-        SceneManager.activeSceneChanged += ChangedActiveScene;
+        SceneManager.activeSceneChanged += ChangedActiveSceneToLoadBanner;
     }
     int nextSceneName;
     bool hasLoadMainScene;
-    private void ChangedActiveScene(Scene current, Scene next)
+    private void ChangedActiveSceneToLoadBanner(Scene current, Scene next)
     {
         nextSceneName = next.buildIndex;
         CheckCurrentLevel();
