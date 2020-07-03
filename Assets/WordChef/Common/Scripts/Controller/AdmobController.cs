@@ -65,7 +65,7 @@ public class AdmobController : MonoBehaviour, IAds
         string adUnitId = "unexpected_platform";
 #endif
         //Create a adaptive banner at the buttom of the screen.
-
+#if UNITY_ANDROID && !UNITY_EDITOR
         int mobileScale = (int)MobileAds.Utils.GetDeviceScale();
         int width = Screen.width;
         int adWidth = width / mobileScale;
@@ -85,7 +85,7 @@ public class AdmobController : MonoBehaviour, IAds
 
         // Load a banner ad.
         this.bannerView.LoadAd(this.CreateAdRequest());
-
+#endif
     }
 
     public void RequestInterstitial()
@@ -209,7 +209,7 @@ public class AdmobController : MonoBehaviour, IAds
             });
         }
     }
-    #region Banner callback handlers
+#region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
@@ -244,10 +244,10 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleAdLeftApplication event received");
     }
 
-    #endregion
+#endregion
 
 
-    #region Interstitial callback handlers
+#region Interstitial callback handlers
 
     public void HandleInterstitialLoaded(object sender, EventArgs args)
     {
@@ -275,9 +275,9 @@ public class AdmobController : MonoBehaviour, IAds
         print("HandleInterstitialLeftApplication event received");
     }
 
-    #endregion
+#endregion
 
-    #region RewardBasedVideo callback handlers
+#region RewardBasedVideo callback handlers
 
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
     {
@@ -319,7 +319,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
     }
-    #endregion
+#endregion
 
     /// <summary>
     /// Implement Interface
