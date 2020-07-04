@@ -163,7 +163,7 @@ public class WordRegion : MonoBehaviour
             new Firebase.Analytics.Parameter("level", _currLevel),
         };
 
-        Firebase.Analytics.FirebaseAnalytics.LogEvent("curr_Level_start", parameters);
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("curr_level_start", parameters);
     }
 
     public void UserItemCallEventFirebase(string nameItem)

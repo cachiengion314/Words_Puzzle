@@ -35,6 +35,7 @@ public class Dialog : MonoBehaviour
         var canvas = GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
         canvas.sortingLayerName = "UI2";
+        DialogCallEventFirebase(dialogType.ToString());
     }
 
     private void Update()
@@ -203,5 +204,15 @@ public class Dialog : MonoBehaviour
     public void PlayButton()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
+    }
+
+    public void DialogCallEventFirebase(string nameDialog)
+    {
+        var parameters = new Firebase.Analytics.Parameter[]
+        {
+            new Firebase.Analytics.Parameter("dialog_name", nameDialog)
+        };
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("dialog_used", parameters);
     }
 }

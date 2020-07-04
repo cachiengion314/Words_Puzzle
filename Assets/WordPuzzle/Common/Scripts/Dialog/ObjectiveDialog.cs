@@ -82,6 +82,7 @@ public class ObjectiveDialog : Dialog
         SetTabActive(achievement, achieveBtn, false);
         TurnOnIconTask(_iconTaskDaily, true);
         TurnOnIconTask(_iconTaskAchie, false);
+        DialogCallEventFirebase("DailyTab");
     }
     public void OnAchiveveOpen()
     {
@@ -89,6 +90,7 @@ public class ObjectiveDialog : Dialog
         SetTabActive(achievement, achieveBtn, true);
         TurnOnIconTask(_iconTaskAchie, true);
         TurnOnIconTask(_iconTaskDaily, false);
+        DialogCallEventFirebase("AchiveveTab");
     }
 
     public void OnAcceptClick()
