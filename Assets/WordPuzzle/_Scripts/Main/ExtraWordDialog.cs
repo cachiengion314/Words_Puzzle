@@ -67,7 +67,7 @@ public class ExtraWordDialog : Dialog
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterValue, _reward),
             new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_bonus_box_ads"),
+              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "bonus_box"),
           }
         );
     }

@@ -96,7 +96,7 @@ public class FreeStarsPlayDialog : Dialog
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterValue, 20),
             new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_free_star_play"),
+              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "free_stars_main"),
           }
         );
     }

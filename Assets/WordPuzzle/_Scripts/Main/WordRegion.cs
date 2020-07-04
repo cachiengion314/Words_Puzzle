@@ -177,6 +177,21 @@ public class WordRegion : MonoBehaviour
         Firebase.Analytics.FirebaseAnalytics.LogEvent("items_used", parameters);
     }
 
+    public void SpendStarItemCallEventFirebase(string nameItem, int value)
+    {
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventSpendVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterItemName, nameItem),
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterValue, value),
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, nameItem),
+              }
+            );
+    }
+
     private List<string> GetExtraWordRandom(List<string> words)
     {
         var wordLengthEqual = new List<string>();
@@ -971,7 +986,7 @@ public class WordRegion : MonoBehaviour
             li.HidenOverlayOfCell();
         }
         line.ShowHintCelltarget(cell);
-        UserItemCallEventFirebase("UserSelectedHint");
+        UserItemCallEventFirebase("item_targeted_hint");
     }
 
     public void BeeClick()
@@ -1015,7 +1030,7 @@ public class WordRegion : MonoBehaviour
                 count += 1;
             }
         }
-        UserItemCallEventFirebase("UserBee");
+        UserItemCallEventFirebase("item_beehive");
     }
 
     public void CheckShowBonusBoxTut()
@@ -1197,7 +1212,7 @@ public class WordRegion : MonoBehaviour
                 CheckGameComplete();
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
-                UserItemCallEventFirebase("UserHint");
+                UserItemCallEventFirebase("item_hint");
             });
             if (hintFree > 0)
             {
@@ -1206,6 +1221,7 @@ public class WordRegion : MonoBehaviour
             else
             {
                 CurrencyController.DebitBalance(Const.HINT_COST);
+                SpendStarItemCallEventFirebase("item_hint", Const.HINT_COST);
             }
         }
     }
@@ -1270,11 +1286,12 @@ public class WordRegion : MonoBehaviour
             else
             {
                 CurrencyController.DebitBalance(Const.HINT_RANDOM_COST);
+                SpendStarItemCallEventFirebase("item_multiple_hint", Const.HINT_RANDOM_COST);
             }
             SetupNumMultiplehintFree();
             Prefs.countBooster += 1;
             Prefs.countBoosterDaily += 1;
-            UserItemCallEventFirebase("UserMultipleHint");
+            UserItemCallEventFirebase("item_multiple_hint");
         }
         else
         {

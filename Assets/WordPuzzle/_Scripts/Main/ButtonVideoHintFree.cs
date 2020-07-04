@@ -93,6 +93,15 @@ public class ButtonVideoHintFree : MonoBehaviour
         });
         //_rewardController.gameObject.SetActive(true);
         CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+          new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterValue, 0),
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "free_letter"),
+          }
+        );
     }
 
     void OnAdsClosed()

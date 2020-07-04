@@ -746,7 +746,7 @@ public class WinDialog : Dialog
                 new Firebase.Analytics.Parameter(
                   Firebase.Analytics.FirebaseAnalytics.ParameterValue, Const.REWARD_ADS_CHAPTER_CLEAR),
                 new Firebase.Analytics.Parameter(
-                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_chapter_clear"),
+                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "chapter_clear"),
               }
             );
         }
@@ -764,7 +764,7 @@ public class WinDialog : Dialog
                 new Firebase.Analytics.Parameter(
                   Firebase.Analytics.FirebaseAnalytics.ParameterValue, Const.REWARD_ADS_LEVEL_CLEAR),
                 new Firebase.Analytics.Parameter(
-                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_level_clear"),
+                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "level_clear"),
               }
             );
         }

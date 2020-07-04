@@ -337,6 +337,7 @@ public class LineWord : MonoBehaviour
         else
         {
             CurrencyController.DebitBalance(Const.HINT_TARGET_COST);
+            WordRegion.instance.SpendStarItemCallEventFirebase("item_targeted_hint", Const.HINT_TARGET_COST);
         }
     }
 

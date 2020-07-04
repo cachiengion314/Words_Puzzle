@@ -9,6 +9,7 @@ using Utilities.Components;
 public class Quest : MonoBehaviour
 {
     public int idQuest;
+    public string nameTask;
     public TaskType taskType;
     [Space]
     public QuestGoal goal;
@@ -81,6 +82,7 @@ public class Quest : MonoBehaviour
         ClearTaskAchievementByKey();
         ShowQuestAchie();
         ObjectiveManager.instance.ResetupAchie(idQuest, goal.requiredAmount);
+        nameTask = nameTask + goal.requiredAmount;
     }
 
     void Update()
@@ -154,7 +156,7 @@ public class Quest : MonoBehaviour
           Firebase.Analytics.FirebaseAnalytics.EventUnlockAchievement,
           new Firebase.Analytics.Parameter[] {
             new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterAchievementId, idQuest),
+              Firebase.Analytics.FirebaseAnalytics.ParameterAchievementId, nameTask),
           }
         );
     }
@@ -246,7 +248,10 @@ public class Quest : MonoBehaviour
     {
         //gameObject.GetComponent<SimpleTMPButton>().labelTMP.SetText("X" + goal.requiredAmount);
         if (taskType == TaskType.ACHIEVEMENT)
+        {
             goal.requiredAmount = CPlayerPrefs.GetInt("Completed_" + idQuest, goal.requiredAmount);
+            nameTask = nameTask + goal.requiredAmount;
+        }
         _fillProgress.maxValue = goal.requiredAmount;
         if (_fillProgress.value < _fillProgress.maxValue)
         {

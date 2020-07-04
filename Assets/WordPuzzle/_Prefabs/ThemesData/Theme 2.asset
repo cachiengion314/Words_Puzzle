@@ -12,20 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951d0a76b5b1de14c945426262a38793, type: 3}
   m_Name: Theme 2
   m_EditorClassIdentifier: 
+  nameTheme: theme_woody
   showAnsScale: 0
+  sizeTextPreviewSpacing: 200
   fontData:
     fontScale: 1
     fontAsset: {fileID: 11400000, guid: d7ddf40b41871b543977d673ede6543b, type: 2}
     fontNormal: {fileID: 12800000, guid: 20ee7d91ad1cd48d1a0992bb56adacbc, type: 2}
     fontSize: 0
     fontSizeMax: 44
+    fontSizeMaxCell: 44
+    fontSizeMaxNumStar: 36
     colorLetter: {r: 0, g: 0, b: 0, a: 0}
     colorCell: {r: 0, g: 0, b: 0, a: 0}
     colorTextHeader: {r: 1, g: 0.7294118, b: 0.46666667, a: 1}
+    colorTextNumStar: {r: 0, g: 0, b: 0, a: 0}
+    colorNotify: {r: 0, g: 0, b: 0, a: 0}
   uiData:
     showShadow: 1
     showLeaf: 1
     showIconLevelTitle: 1
+    boardTextPreviewCenter: 0
+    scaleTextPreview: {x: 0, y: 0, z: 0}
+    posTextPreview: {x: 0, y: 0, z: 0}
     background: {fileID: 21300000, guid: 1e3bae422df63844d903e815a3a56230, type: 3}
     boardWordRegion: {fileID: 21300000, guid: 40d22dc56c695b84c8d3feecb41e26c4, type: 3}
     header: {fileID: 21300000, guid: 92bb3702ba1271c458abf5d6135952d7, type: 3}
@@ -36,6 +45,8 @@ MonoBehaviour:
     btnDictionary: {fileID: 21300000, guid: efebd23d3c5990e478ade6cec859fbae, type: 3}
     iconDictionary: {fileID: 21300000, guid: c2fc011eeb47d9a4abcb7802004185bf, type: 3}
     imgGround: {fileID: 0}
+    imgBgTextPreview: {fileID: 0}
+    imgBgCellPreview: {fileID: 0}
     btnSetting: {fileID: 21300000, guid: efebd23d3c5990e478ade6cec859fbae, type: 3}
     iconSetting: {fileID: 21300000, guid: 14c508a7bc7f0d449b30b5714ee039be, type: 3}
     iconCoinCell: {fileID: 21300000, guid: fefd0c1883ba04a40b772127ba6b84f5, type: 3}
@@ -44,5 +55,11 @@ MonoBehaviour:
     bgCellDone: {fileID: 21300000, guid: 0db83434b3613e349b4c1075e1eae8af, type: 3}
     imgPedestal: {fileID: 21300000, guid: 17f22abcb3150834d87f4ba84b9e1190, type: 3}
     bgLetter: {fileID: 21300000, guid: de21469e333bc3944bb6784257cf26ba, type: 3}
+    numBooster: {fileID: 0}
+    priceBooster: {fileID: 0}
+    frameFxExist: {fileID: 0}
+    bgToast: {fileID: 0}
+    bgTutorialLine: {fileID: 0}
   animData:
     skinAnim: 1
+    boneFx: 
