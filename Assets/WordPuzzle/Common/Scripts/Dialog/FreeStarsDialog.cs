@@ -82,6 +82,15 @@ public class FreeStarsDialog : Dialog
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.RewardedVideo, DialogShow.REPLACE_CURRENT);
         });
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+          new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterValue, 20),
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_free_star_shop"),
+          }
+        );
     }
 
 }

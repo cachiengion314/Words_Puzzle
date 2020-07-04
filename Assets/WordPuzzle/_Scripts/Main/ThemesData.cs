@@ -7,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "Create Themes", order = 1)]
 public class ThemesData : ScriptableObject
 {
+    public string nameTheme = "Woody";
     public bool showAnsScale;
     public float sizeTextPreviewSpacing = 200f;
     public FontData fontData;

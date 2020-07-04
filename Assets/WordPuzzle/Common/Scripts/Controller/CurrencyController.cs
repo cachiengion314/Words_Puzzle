@@ -72,16 +72,6 @@ public class CurrencyController
             if (onBalanceChanged != null) onBalanceChanged(true);
             if (onBallanceIncreased != null) onBallanceIncreased(value);
         }
-
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(
-          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
-          new Firebase.Analytics.Parameter[] {
-            new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterValue, value),
-            new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "StarCredit"),
-          }
-        );
     }
 
     public static bool DebitBalance(int value)
@@ -110,18 +100,6 @@ public class CurrencyController
             SetBalance(current - value);
             if (onBalanceChanged != null) onBalanceChanged(true);
         }
-
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(
-          Firebase.Analytics.FirebaseAnalytics.EventSpendVirtualCurrency,
-          new Firebase.Analytics.Parameter[] {
-            new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterItemName, "Star"),
-            new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterValue, value),
-            new Firebase.Analytics.Parameter(
-              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "StarDebit"),
-          }
-        );
         return true;
     }
     #endregion

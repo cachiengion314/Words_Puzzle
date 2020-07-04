@@ -740,6 +740,15 @@ public class WinDialog : Dialog
             {
                 StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_CHAPTER_CLEAR));
             });
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterValue, Const.REWARD_ADS_CHAPTER_CLEAR),
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_chapter_clear"),
+              }
+            );
         }
         else
         {
@@ -749,7 +758,15 @@ public class WinDialog : Dialog
                 StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
                 //Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
             });
-
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterValue, Const.REWARD_ADS_LEVEL_CLEAR),
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_level_clear"),
+              }
+            );
         }
         TweenControl.GetInstance().DelayCall(transform, 2.5f, () =>
         {

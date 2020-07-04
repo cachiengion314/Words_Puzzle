@@ -61,6 +61,15 @@ public class ExtraWordDialog : Dialog
             StartCoroutine(ShowEffectCollect(_reward, rewardButton.transform));
             Collect();
         });
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+          new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterValue, _reward),
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_bonus_box_ads"),
+          }
+        );
     }
 
     private IEnumerator ShowEffectCollect(int value, Transform posStart)
@@ -138,6 +147,15 @@ public class ExtraWordDialog : Dialog
             claimQuantity = (int)extraProgress.target / _amountWordTarget * _amountWordTarget;
             UpdateUI();
         }
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+          new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterValue, claimQuantity),
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_bonus_box"),
+          }
+        );
     }
 
     private void Collect()

@@ -234,6 +234,15 @@ public class DailyGiftsDialog : Dialog
         });
         CPlayerPrefs.SetInt(PROGRESS_KEY, _currProgressValue);
         UpdateProgress();
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(
+          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+          new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterValue, "Hint: " + hintRandomAmount + "| MultipleHint: " + multipleHintRandomAmount + "| SelectedHint: " + selectedHintRandomAmount),
+            new Firebase.Analytics.Parameter(
+              Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_freeboosters"),
+          }
+        );
     }
 
     void OpenChestEvent(Spine.Event eventData)

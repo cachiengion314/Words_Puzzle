@@ -94,6 +94,16 @@ public class Cell : MonoBehaviour
             //Sound.instance.Play(Sound.Collects.CoinCollect);
             MonoUtils.instance.ShowEffect(ConfigController.instance.config.gameParameters.rewardedBeeAmount, null, null, transform, WordRegion.instance.starCollectPfb, -500);
             MonoUtils.instance.ShowTotalStarCollect(WordRegion.instance.numStarCollect, MonoUtils.instance.textCollectDefault, 0.3f);
+            
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterValue, ConfigController.instance.config.gameParameters.rewardedBeeAmount),
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "collect_beehive"),
+              }
+            );
         }
     }
 

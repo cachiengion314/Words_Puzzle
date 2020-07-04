@@ -111,6 +111,17 @@ public class BeeDialog : Dialog
                     }
                 }
             }
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventSpendVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterItemName, item.productID),
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterValue, item.value),
+                new Firebase.Analytics.Parameter(
+                  Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, item.productID),
+              }
+            );
         }
         // Or ... a non-consumable product has been purchased by this user.
         else if (item.productType == ProductType.NonConsumable)
