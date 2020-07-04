@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "Google.Android.PerformanceTuner";
+
+enum LoadingState {
+    LOADINGSTATE_INVALID = 0;
+    LOADINGSTATE_NOT_LOADING = 1;
+    LOADINGSTATE_LOADING = 2;
+}
+
+enum Scene {
+    SCENE_INVALID = 0;
+    SCENE_ASSETSWORDPUZZLE_SCENESLOADING = 1;
+    SCENE_ASSETSWORDPUZZLE_SCENESHOME = 2;
+    SCENE_ASSETSWORDPUZZLE_SCENESSELECTWORLD = 3;
+    SCENE_ASSETSWORDPUZZLE_SCENESMAIN = 4;
+}
+
+enum Difficulty {
+    DIFFICULTY_INVALID = 0;
+    DIFFICULTY_EASY = 1;
+    DIFFICULTY_MEDIUM = 2;
+    DIFFICULTY_HARD = 3;
+}
+
+enum ShadowQualtity {
+    SHADOWQUALTITY_INVALID = 0;
+    SHADOWQUALTITY_LOW = 1;
+    SHADOWQUALTITY_MEDIUM = 2;
+    SHADOWQUALTITY_HIGH = 3;
+}
+
+message Annotation {
+    LoadingState loading_state = 1;
+    Scene scene = 2;
+    Difficulty difficulty = 3;
+}
+
+message FidelityParams {
+    int32 texture_resolution = 1;
+    ShadowQualtity shadow_qualtity = 2;
+    float particle_details = 3;
+}
