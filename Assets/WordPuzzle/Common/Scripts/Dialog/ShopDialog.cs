@@ -89,8 +89,17 @@ public class ShopDialog : Dialog
                     Purchaser.instance.iapItems[i].value = (int)resultValue;
                     Purchaser.instance.iapItems[i].txtValue = resultValue.ToString();
                 }
-                var priceLocalize = Purchaser.instance.GetLocalizePrice(Purchaser.instance.iapItems[i].productID);
                 numRubyTexts[i].text = Purchaser.instance.iapItems[i].txtValue;
+                var priceLocalize = "";
+                try
+                {
+                    priceLocalize = Purchaser.instance.GetLocalizePrice(Purchaser.instance.iapItems[i].productID);
+                    priceTexts[i].text = (priceLocalize == "" || priceLocalize == null) ? Purchaser.instance.iapItems[i].price + "$" : priceLocalize;
+                }
+                catch (Exception)
+                {
+                    Debug.Log("GetLocalizePrice Error");
+                }
                 priceTexts[i].text = (priceLocalize == "" || priceLocalize == null) ? Purchaser.instance.iapItems[i].price + "$" : priceLocalize;
 
                 if (_numBeehiveTexts[i] != null) _numBeehiveTexts[i].text = "" + Purchaser.instance.iapItems[i].valueBeehive;
