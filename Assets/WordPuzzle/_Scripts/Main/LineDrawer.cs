@@ -21,6 +21,13 @@ public class LineDrawer : MonoBehaviour
     private bool isDragging;
     private float RADIUS = 1.0f;
 
+    public LineRenderer LineRenderer
+    {
+        get
+        {
+            return lineRenderer;
+        }
+    }
 
     private void Awake()
     {
@@ -42,6 +49,7 @@ public class LineDrawer : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             textPreview.ClearText();
+            TutorialController.instance.HidenHandConnectWord();
         }
 
         if (Input.GetMouseButton(0))

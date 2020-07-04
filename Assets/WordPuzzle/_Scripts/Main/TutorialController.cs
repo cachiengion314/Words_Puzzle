@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TutorialController : MonoBehaviour
 {
@@ -61,9 +62,12 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialCellAds;
     [Space]
     [SerializeField] private GameObject _handCellAdsTut;
+    [SerializeField] private Image _handConnectTut;
 
     private LineWord _lineTarget;
     private string _answerTarget;
+    private Vector3 mousePoint;
+    private float RADIUS = 1.0f;
 
     public LineWord LineTarget
     {
@@ -98,6 +102,8 @@ public class TutorialController : MonoBehaviour
         _overlay.SetActive(true);
         _overlay.GetComponent<Canvas>().sortingOrder = 0;
         _popText.SetActive(true);
+        var answerTargetRandom = "";
+        var letterOrders = new List<Text>();
         if (lineNotShown)
         {
             foreach (var line in WordRegion.instance.Lines)
@@ -107,6 +113,7 @@ public class TutorialController : MonoBehaviour
                     _lineTarget = line;
                     LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
                     _answerTarget = line.answers[indexAnser];
+                    answerTargetRandom = _answerTarget;
                     line.SetDataLetter(line.answers[indexAnser]);
                     _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
                     LineTarget.GetComponent<Canvas>().overrideSorting = true;
@@ -124,6 +131,7 @@ public class TutorialController : MonoBehaviour
                     _lineTarget = line;
                     LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
                     var otherAnswers = line.answers.FindAll(ans => ans != _lineTarget.answer);
+                    answerTargetRandom = otherAnswers[Random.Range(0, otherAnswers.Count)];
                     var index = 0;
                     _answerTarget = "";
                     foreach (var ans in otherAnswers)
@@ -141,7 +149,125 @@ public class TutorialController : MonoBehaviour
                 }
             }
         }
+        PlayHandConnectWordTut(answerTargetRandom, letterOrders);
     }
+
+    #region Hand Connect Word tutorial
+    private void PlayHandConnectWordTut(string answerTargetRandom, List<Text> letterOrders)
+    {
+        if (Pan.instance != null)
+        {
+            var count = 0;
+            var letters = Pan.instance.LetterTexts;
+            for (int i = 0; i < answerTargetRandom.Length; i++)
+            {
+                var letterText = letters.Find(lt => lt.text == answerTargetRandom[i].ToString());
+                letterOrders.Add(letterText);
+            }
+            MoveHandConnectWord(letterOrders, count);
+        }
+    }
+
+    private void MoveHandConnectWord(List<Text> letterOrders, int count)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        _handConnectTut.transform.position = letterOrders[count].transform.position;
+        _handConnectTut.gameObject.SetActive(true);
+        count += 1;
+        if (count < letterOrders.Count)
+        {
+            tweenControl.Move(_handConnectTut.transform, letterOrders[count].transform.position, 1f, () =>
+            {
+                MoveHandConnectWord(letterOrders, count);
+            }, EaseType.Linear, ShowLineDraw);
+        }
+        else
+        {
+            tweenControl.DelayCall(_handConnectTut.transform, 2f, () =>
+            {
+                HidenHandConnectWord(false);
+                count = 0;
+                tweenControl.DelayCall(_handConnectTut.transform, 3f, () =>
+                {
+                    MoveHandConnectWord(letterOrders, count);
+                });
+            });
+        }
+    }
+
+    private void ShowLineDraw()
+    {
+        if (LineDrawer.instance != null)
+        {
+            mousePoint = _handConnectTut.transform.position;
+            mousePoint.z = 90;
+            int nearest = GetNearestPosition(mousePoint, LineDrawer.instance.letterPositions);
+
+            Vector3 letterPosition = LineDrawer.instance.letterPositions[nearest];
+            if (Vector3.Distance(letterPosition, mousePoint) < RADIUS)
+            {
+                if (LineDrawer.instance.currentIndexes.Count >= 2 && LineDrawer.instance.currentIndexes[LineDrawer.instance.currentIndexes.Count - 2] == nearest)
+                {
+                    LineDrawer.instance.currentIndexes.RemoveAt(LineDrawer.instance.currentIndexes.Count - 1);
+                }
+                else if (!LineDrawer.instance.currentIndexes.Contains(nearest))
+                {
+                    LineDrawer.instance.currentIndexes.Add(nearest);
+                }
+            }
+            BuildPoints();
+
+            if (LineDrawer.instance.points.Count >= 2)
+            {
+                LineDrawer.instance.positions = iTween.GetSmoothPoints(LineDrawer.instance.points.ToArray(), 8);
+                LineDrawer.instance.LineRenderer.positionCount = LineDrawer.instance.positions.Count;
+                LineDrawer.instance.LineRenderer.SetPositions(LineDrawer.instance.positions.ToArray());
+            }
+        }
+    }
+
+    private void BuildPoints()
+    {
+        LineDrawer.instance.points.Clear();
+        foreach (var i in LineDrawer.instance.currentIndexes) LineDrawer.instance.points.Add(LineDrawer.instance.letterPositions[i]);
+
+        if (LineDrawer.instance.currentIndexes.Count == 1 || LineDrawer.instance.points.Count >= 1 && Vector3.Distance(mousePoint, LineDrawer.instance.points[LineDrawer.instance.points.Count - 1]) >= RADIUS)
+        {
+            LineDrawer.instance.points.Add(mousePoint);
+        }
+    }
+
+    private int GetNearestPosition(Vector3 point, List<Vector3> letters)
+    {
+        float min = float.MaxValue;
+        int index = -1;
+        for (int i = 0; i < letters.Count; i++)
+        {
+            float distant = Vector3.Distance(point, letters[i]);
+            if (distant < min)
+            {
+                min = distant;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public void HidenHandConnectWord(bool killTween = true)
+    {
+        if (isShowTut && _handConnectTut.gameObject.activeInHierarchy)
+        {
+            LineDrawer.instance.LineRenderer.positionCount = 0;
+            LineDrawer.instance.currentIndexes.Clear();
+            _handConnectTut.gameObject.SetActive(false);
+            if (killTween)
+            {
+                TweenControl.GetInstance().KillDelayCall(_handConnectTut.transform);
+                TweenControl.GetInstance().KillTweener(transform);
+            }
+        }
+    }
+    #endregion
 
     public void ShowPopHintFreeTut()
     {

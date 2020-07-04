@@ -408,9 +408,9 @@ public class TweenControl : MonoBehaviour
         var tweener = rect.DOAnchorPos(new Vector2(targetPoi.x, targetPoi.y), time).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(rect.transform)).SetDelay(delay);
         AddTweener(rect.gameObject.transform, tweener);
     }
-    public void Move(Transform trans, Vector3 targetPoi, float time, TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, float delay = 0)
+    public void Move(Transform trans, Vector3 targetPoi, float time, TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, TweenCallback onUpdateCallback = null, float delay = 0)
     {
-        var tweener = trans.DOMove(targetPoi, time).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(trans)).SetDelay(delay);
+        var tweener = trans.DOMove(targetPoi, time).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnUpdate(onUpdateCallback).OnComplete(onComplete).OnKill(() => OnKillFuntion(trans)).SetDelay(delay);
 
         AddTweener(trans, tweener);
     }
