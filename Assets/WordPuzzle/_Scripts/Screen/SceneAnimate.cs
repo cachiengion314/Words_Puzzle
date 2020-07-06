@@ -35,6 +35,7 @@ public class SceneAnimate : MonoBehaviour
     [SerializeField] private Image _bgLoading;
     [SerializeField] private Image _imgTip;
     [SerializeField] private Text _textTip;
+    [SerializeField] private Color _colorNor;
     [SerializeField] private List<TipData> _tipDatas;
 
     private const int PLAY = 0;
@@ -183,7 +184,7 @@ public class SceneAnimate : MonoBehaviour
             _textTip.text = tipRandom.contentTip;
             _imgTip.sprite = tipRandom.iconTip;
             _imgTip.SetNativeSize();
-            tweenControl.FadeAnfaText(_textTip, 1, 0);
+            _textTip.color = _colorNor;
             _imgTip.color = new Color(1, 1, 1, 1);
             _bgLoading.color = new Color(1, 1, 1, 1);
             _bgLoading.gameObject.SetActive(true);
