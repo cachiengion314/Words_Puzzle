@@ -263,7 +263,7 @@ public class TutorialController : MonoBehaviour
             if (killTween)
             {
                 TweenControl.GetInstance().KillDelayCall(_handConnectTut.transform);
-                TweenControl.GetInstance().KillTweener(transform);
+                TweenControl.GetInstance().KillTweener(_handConnectTut.transform);
             }
         }
     }
