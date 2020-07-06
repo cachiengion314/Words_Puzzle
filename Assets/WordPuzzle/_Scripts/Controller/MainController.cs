@@ -174,9 +174,13 @@ public class MainController : BaseController
 
     private void OpenSceneWithAnim(float timeDelay = 0.7f)
     {
-        SceneAnimate.Instance.SceneOpen();
-        ScreenFader.instance.DelayCall(timeDelay, () =>
-        {
+        //SceneAnimate.Instance.SceneOpen();
+        //ScreenFader.instance.DelayCall(timeDelay, () =>
+        //{
+        //    animatorScene.enabled = true;
+        //    animatorScene.SetBool("PlayAnimScene", true);
+        //});
+        SceneAnimate.Instance.ShowTip(false, () => {
             animatorScene.enabled = true;
             animatorScene.SetBool("PlayAnimScene", true);
         });

@@ -891,7 +891,8 @@ public class WordRegion : MonoBehaviour
 
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
-                MainController.instance.animatorScene.SetBool("LevelComplete", true);
+                //MainController.instance.animatorScene.SetBool("LevelComplete", true);
+                SceneAnimate.Instance.animEvent.LevelClearCallback();
             });
         }
         else

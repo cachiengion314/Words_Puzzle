@@ -11,6 +11,7 @@ public class SceneAnimate : MonoBehaviour
     public static SceneAnimate Instance { get; private set; }
 
     public GameObject donotDestroyOnLoad;
+    public AnimEvent animEvent;
     [Space]
     [SerializeField] private string _closeScene;
     public Animator animatorScene;
@@ -30,6 +31,11 @@ public class SceneAnimate : MonoBehaviour
     public string showgiado = "animation2";
     public string idleEgg = "Không Anim";
     public string idleEggShadow = "Không Anim Shadow";
+    [Space]
+    [SerializeField] private Image _bgLoading;
+    [SerializeField] private Image _imgTip;
+    [SerializeField] private Text _textTip;
+    [SerializeField] private List<TipData> _tipDatas;
 
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
@@ -56,7 +62,7 @@ public class SceneAnimate : MonoBehaviour
         if (Instance == null) Instance = this;
         else if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        animatorScene.gameObject.SetActive(false);
+        //animatorScene.gameObject.SetActive(false);
         _loadingScreen.gameObject.SetActive(false);
         _textProgress.text = "";
     }
@@ -105,11 +111,13 @@ public class SceneAnimate : MonoBehaviour
     public void SceneClose(Action callback)
     {
         Sound.instance.Play(Sound.Scenes.CurtainClose);
-        animatorScene.gameObject.SetActive(true);
-        animatorScene.SetBool(_closeScene, true);
+        //animatorScene.gameObject.SetActive(true);
+        //animatorScene.SetBool(_closeScene, true);
+        ShowTip(true);
         ScreenFader.instance.DelayCall(1.8f, () =>
         {
             ShowTitleHome(false);
+            animEvent.EventAnimCallback();
             callback?.Invoke();
         });
     }
@@ -166,6 +174,32 @@ public class SceneAnimate : MonoBehaviour
         }
     }
 
+    public void ShowTip(bool show, Action callback = null)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        if (show)
+        {
+            var tipRandom = _tipDatas[UnityEngine.Random.Range(0, _tipDatas.Count)];
+            _textTip.text = tipRandom.contentTip;
+            _imgTip.sprite = tipRandom.iconTip;
+            _imgTip.SetNativeSize();
+            tweenControl.FadeAnfaText(_textTip, 1, 0);
+            _imgTip.color = new Color(1, 1, 1, 1);
+            _bgLoading.color = new Color(1, 1, 1, 1);
+            _bgLoading.gameObject.SetActive(true);
+        }
+        else
+        {
+            tweenControl.FadeAnfaText(_textTip, 0, 0.5f);
+            tweenControl.FadeAnfa(_imgTip, 0, 0.5f);
+            tweenControl.FadeAnfa(_bgLoading, 0, 0.5f, () =>
+            {
+                _bgLoading.gameObject.SetActive(false);
+                callback?.Invoke();
+            });
+        }
+    }
+
     //private void OnApplicationQuit()
     //{
     //    CPlayerPrefs.SetBool("First_Load", false);
@@ -195,4 +229,11 @@ public class SceneAnimate : MonoBehaviour
             tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x + rectTransform.sizeDelta.x, 0.3f);
     }
     //===
+}
+
+[Serializable]
+public class TipData
+{
+    public Sprite iconTip;
+    public string contentTip;
 }

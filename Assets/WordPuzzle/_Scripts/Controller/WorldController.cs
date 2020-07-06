@@ -76,6 +76,7 @@ public class WorldController : BaseController
                 {
                     _scroll.content.anchoredPosition = result;
                     worldItems[target].OnButtonClick();
+                    SceneAnimate.Instance.ShowTip(false);
                 });
             });
         }
@@ -84,6 +85,7 @@ public class WorldController : BaseController
             TweenControl.GetInstance().DelayCall(transform, 1f, () =>
             {
                 worldItems[0].OnButtonClick();
+                SceneAnimate.Instance.ShowTip(false);
             });
         }
     }

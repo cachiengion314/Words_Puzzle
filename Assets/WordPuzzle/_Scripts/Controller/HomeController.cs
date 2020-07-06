@@ -106,6 +106,7 @@ public class HomeController : BaseController
         var tweenControl = TweenControl.GetInstance();
         var sceneAnimate = SceneAnimate.Instance;
         yield return new WaitForSeconds(1f);
+        SceneAnimate.Instance.ShowTip(false);
         sceneAnimate._spineAnimEgg.gameObject.SetActive(true);
         sceneAnimate._spineAnimShadow.gameObject.SetActive(true);
         _spineAnimGia.gameObject.SetActive(true);
@@ -209,10 +210,5 @@ public class HomeController : BaseController
         {
             DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.REPLACE_CURRENT, "Beehive", "Complete Level 40 to unlock this feature!");
         }
-    }
-
-    private void LoadTheme(int indexTheme)
-    {
-
     }
 }

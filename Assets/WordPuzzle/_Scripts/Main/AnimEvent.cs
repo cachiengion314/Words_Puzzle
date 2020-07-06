@@ -48,7 +48,8 @@ public class AnimEvent : MonoBehaviour
 
     public void SceneLoaded()
     {
-        SceneAnimate.Instance.animatorScene.gameObject.SetActive(false);
+        //SceneAnimate.Instance.animatorScene.gameObject.SetActive(false);
+        SceneAnimate.Instance.ShowTip(false);
     }
 
     public void OnShowSceneCallback()
