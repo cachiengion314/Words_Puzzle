@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using GoogleMobileAds.Api;
-using UnityEngine.SceneManagement;
+using System;
 
 public class AdmobController : MonoBehaviour, IAds
 {
@@ -10,6 +10,8 @@ public class AdmobController : MonoBehaviour, IAds
     public RewardBasedVideoAd rewardBasedVideo;
 
     public static AdmobController instance;
+    public Action bannerLoadedCallback;
+    public float bannerHeight;
 
     private void Awake()
     {
@@ -203,13 +205,18 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdLoaded event received");
+        // HandleAdLoaded event received
+
         MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}, ad HeightDp: {2}, ad WidthDp: {3}",
             this.bannerView.GetHeightInPixels(),
             this.bannerView.GetWidthInPixels(),
             Screen.height / (int)MobileAds.Utils.GetDeviceScale(),
             Screen.width / (int)MobileAds.Utils.GetDeviceScale()
             ));
+        bannerHeight = this.bannerView.GetHeightInPixels();
+
+        bannerLoadedCallback?.Invoke();
+
     }
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)

@@ -8,12 +8,29 @@ public class RemoteConfigFirebase : MonoBehaviour
     //public TextMeshProUGUI textPrefab;
     public static RemoteConfigFirebase instance;
     public Action notifyIngameCall;
+
     private string tittle;
     private string contain;
     private bool notifyIngameOn;
     [HideInInspector] public bool isShowNoti;
 
     private bool isNeedToFetch = true;
+    // Audience NetWork Id ads
+    public string fan_level_clear;
+    public string fan_chapter_clear;
+    public string fan_bonus_box;
+    public string fan_free_boosters;
+    public string fan_free_stars;
+    public string fan_free_letter;
+    public string fan_level_transition;
+    // Unity Id ads
+    public string unity_level_clear;
+    public string unity_chapter_clear;
+    public string unity_bonus_box;
+    public string unity_free_boosters;
+    public string unity_free_stars;
+    public string unity_free_letter;
+    public string unity_level_transition;
 
     private void Awake()
     {
@@ -50,8 +67,10 @@ public class RemoteConfigFirebase : MonoBehaviour
 
         FetchFireBase();
 
-        Invoke("ShowData", 1.9f);
+        Invoke("ShowIngameNotify", 1.9f);
+        Invoke("GetAllIdAvertisement", 2f);
     }
+
     public void FetchFireBase()
     {
         FetchDataAsync();
@@ -67,7 +86,52 @@ public class RemoteConfigFirebase : MonoBehaviour
 
         return firebasestr;
     }
-    public void ShowData()
+    public void GetAllIdAvertisement()
+    {
+        // Facebook Audience Network
+        fan_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_level_clear").StringValue);
+        fan_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_chapter_clear").StringValue);
+        fan_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_bonus_box").StringValue);
+        fan_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_boosters").StringValue);
+        fan_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_stars").StringValue);
+        fan_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_letter").StringValue);
+        fan_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_level_transition").StringValue);
+        // UnityAd
+        unity_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_clear").StringValue);
+        unity_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_chapter_clear").StringValue);
+        unity_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_bonus_box").StringValue);
+        unity_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_boosters").StringValue);
+        unity_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_stars").StringValue);
+        unity_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_letter").StringValue);
+        unity_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_transition").StringValue);
+        // Implement id advertisement
+        // Facebook Audience Network
+        ConfigController.instance.config.facebookAdsId.rewardedLevelClear = fan_level_clear;
+        ConfigController.instance.config.facebookAdsId.rewardedChapterClear = fan_chapter_clear;
+        ConfigController.instance.config.facebookAdsId.rewardedBonusBox = fan_bonus_box;
+        ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters = fan_free_boosters;
+        ConfigController.instance.config.facebookAdsId.rewardedFreeStars = fan_free_stars;
+        ConfigController.instance.config.facebookAdsId.rewardedFreeLetter = fan_free_letter;
+        ConfigController.instance.config.facebookAdsId.intersititial = fan_level_transition;
+        // UnityAd
+        ConfigController.instance.config.unityAdsId.rewardedLevel = unity_level_clear;
+        ConfigController.instance.config.unityAdsId.rewardedChapter = unity_chapter_clear;
+        ConfigController.instance.config.unityAdsId.rewardedBonusBox = unity_bonus_box;
+        ConfigController.instance.config.unityAdsId.rewardedFreeBoosters = unity_free_boosters;
+        ConfigController.instance.config.unityAdsId.rewardedFreeStars = unity_free_stars;
+        ConfigController.instance.config.unityAdsId.rewardedFreeLetter = unity_free_letter;
+        ConfigController.instance.config.unityAdsId.interstitialLevel = unity_level_transition;
+
+        if (fan_level_clear != null)
+        {
+            Debug.Log("Fetch and implement idAds succsess");
+        }
+        else
+        {
+            Debug.Log("Fetch and implement idAds fail");
+        }
+    }
+    public void ShowIngameNotify()
     {
         if (!notifyIngameOn) return;
 
