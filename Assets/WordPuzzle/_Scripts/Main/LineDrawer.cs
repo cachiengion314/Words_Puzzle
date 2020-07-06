@@ -49,11 +49,12 @@ public class LineDrawer : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             textPreview.ClearText();
-            TutorialController.instance.HidenHandConnectWord();
+            TutorialController.instance.HidenHandConnectWord(true);
         }
 
         if (Input.GetMouseButton(0))
         {
+            TutorialController.instance.HidenHandConnectWord(true);
             isDragging = true;
             //textPreview.SetActive(true);
 
