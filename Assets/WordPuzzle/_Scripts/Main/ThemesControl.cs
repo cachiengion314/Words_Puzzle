@@ -9,6 +9,7 @@ public class ThemesControl : MonoBehaviour
     [SerializeField] private ThemesData[] _themesDatas;
     [SerializeField] private Cell cellPfb;
     [SerializeField] private Text letterTextPfb;
+    [SerializeField] private List<Dialog> _dialogPfb;
 
     private ThemesData _currTheme;
 
@@ -131,6 +132,65 @@ public class ThemesControl : MonoBehaviour
             wordRegion.animBtnHelp.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHelpShadow.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnBonusBoxShadow.SetSkin(currTheme.animData.skinAnim);
+        }
+    }
+
+    public void LoadThemeDataHome(int indexTheme)
+    {
+        CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
+        var currTheme = _themesDatas[indexTheme];
+        _currTheme = currTheme;
+        if (HomeController.instance != null)
+        {
+            var homeControl = HomeController.instance;
+            homeControl.BG.sprite = currTheme.uiData.bgHome;
+            homeControl.imageStar.sprite = currTheme.uiData.iconStar;
+            homeControl.imageAdd.sprite = currTheme.uiData.iconAdd;
+            homeControl.shadowCurrency.sprite = currTheme.uiData.shadowCurrencyHome;
+
+            homeControl.imageStar.SetNativeSize();
+            homeControl.imageAdd.SetNativeSize();
+            homeControl.shadowCurrency.SetNativeSize();
+
+            homeControl.FreeBoostersShadow.SetActive(currTheme.uiData.showShadowHome);
+            homeControl.shadowCurrency.gameObject.SetActive(currTheme.uiData.showShadowHome);
+
+            //homeControl.FreeBoostersShadow.GetComponent<SpineControl>().thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            //homeControl.animChickenbank.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            //homeControl.animFreebooster.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+
+            //homeControl.animChickenbank.SetSkin(currTheme.animData.skinAnim);
+            //homeControl.animFreebooster.SetSkin(currTheme.animData.skinAnim);
+        }
+    }
+
+    public void LoadThemeDataDialog(int indexTheme)
+    {
+        PlayerPrefs.SetInt("CURR_THEMES", indexTheme);
+        var currTheme = _themesDatas[indexTheme];
+        _currTheme = currTheme;
+
+        if (_dialogPfb.Count > 0)
+        {
+            foreach (var dialog in _dialogPfb)
+            {
+                if (!dialog.isCustomTheme)
+                {
+                    if (dialog.bgBoard != null)
+                    {
+                        dialog.bgBoard.sprite = currTheme.uiData.bgBoardDialog;
+                    }
+                    if (dialog.imageTitle != null)
+                    {
+                        dialog.imageTitle.sprite = currTheme.uiData.imageTitleDialog;
+                    }
+                    if (dialog.btnClose != null)
+                    {
+                        dialog.btnClose.sprite = currTheme.uiData.btnCloseDialog;
+                        dialog.btnClose.SetNativeSize();
+                    }
+                }
+            }
         }
     }
 }

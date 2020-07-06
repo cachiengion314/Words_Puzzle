@@ -3,6 +3,7 @@ using System;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class HomeController : BaseController
 {
@@ -23,6 +24,16 @@ public class HomeController : BaseController
     [SerializeField] private GameObject _btnPlayShadow;
     [SerializeField] private SpineControl _spineAnimGia;
     [SerializeField] private string _showgiado = "animation2";
+    [Header("THEME UI")]
+    public Image BG;
+    public Image imageStar;
+    public Image imageAdd;
+    public Image bgCurrency;
+    public Image shadowCurrency;
+    public TextMeshProUGUI txtStar;
+    public SpineControl animChickenbank;
+    public SpineControl animFreebooster;
+
 
     protected override void Awake()
     {
@@ -33,6 +44,9 @@ public class HomeController : BaseController
     protected override void Start()
     {
         base.Start();
+        var currTheme = CPlayerPrefs.GetInt("CURR_THEMES", 0);
+        ThemesControl.instance.LoadThemeDataHome(currTheme);
+        ThemesControl.instance.LoadThemeDataDialog(currTheme);
         //CUtils.CloseBannerAd();
         var sceneAnimate = SceneAnimate.Instance;
         sceneAnimate._btnPlay.interactable = true;
@@ -195,5 +209,10 @@ public class HomeController : BaseController
         {
             DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.REPLACE_CURRENT, "Beehive", "Complete Level 40 to unlock this feature!");
         }
+    }
+
+    private void LoadTheme(int indexTheme)
+    {
+
     }
 }

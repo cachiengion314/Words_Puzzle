@@ -68,6 +68,8 @@ public class MainController : BaseController
         //save level pass;
         var currTheme = CPlayerPrefs.GetInt("CURR_THEMES", 0);
         ThemesControl.instance.LoadThemeData(currTheme);
+        ThemesControl.instance.LoadThemeDataDialog(currTheme);
+
         gameLevel = Utils.Load(world, subWorld, level);
         Pan.instance.Load(gameLevel);
         WordRegion.instance.Load(gameLevel, currlevel);

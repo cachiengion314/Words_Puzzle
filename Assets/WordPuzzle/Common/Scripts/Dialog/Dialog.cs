@@ -6,6 +6,12 @@ using Superpow;
 
 public class Dialog : MonoBehaviour
 {
+    [Header("UI Theme Change")]
+    public bool isCustomTheme;
+    public Image bgBoard;
+    public Image imageTitle;
+    public Image btnClose;
+    [Header("UI Setup")]
     public Animator anim;
     public AnimationClip hidingAnimation;
     public GameObject title, message;
@@ -19,6 +25,7 @@ public class Dialog : MonoBehaviour
     public bool enableEscape = true;
     public bool scaleDialog = false;
     public bool resestAnim = true;
+    
 
     private AnimatorStateInfo info;
     private bool isShowing;

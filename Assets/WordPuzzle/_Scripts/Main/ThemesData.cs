@@ -35,6 +35,7 @@ public class FontData
 [Serializable]
 public class UIData
 {
+    [Header("Play")]
     public bool showShadow = true;
     public bool showLeaf = true;
     public bool showIconLevelTitle = true;
@@ -66,6 +67,14 @@ public class UIData
     public Sprite frameFxExist;
     public Sprite bgToast;
     public Sprite bgTutorialLine;
+    [Header("Home")]
+    public bool showShadowHome = true;
+    public Sprite bgHome;
+    public Sprite shadowCurrencyHome;
+    [Header("Dialog")]
+    public Sprite bgBoardDialog;
+    public Sprite imageTitleDialog;
+    public Sprite btnCloseDialog;
 }
 
 [Serializable]
