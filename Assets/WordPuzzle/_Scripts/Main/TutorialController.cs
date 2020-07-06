@@ -176,7 +176,7 @@ public class TutorialController : MonoBehaviour
         count += 1;
         if (count < letterOrders.Count)
         {
-            tweenControl.Move(_handConnectTut.transform, letterOrders[count].transform.position, 1f, () =>
+            tweenControl.Move(_handConnectTut.transform, letterOrders[count].transform.position, 0.75f, () =>
             {
                 MoveHandConnectWord(letterOrders, count);
             }, EaseType.Linear, ShowLineDraw);
@@ -187,7 +187,7 @@ public class TutorialController : MonoBehaviour
             {
                 HidenHandConnectWord(false);
                 count = 0;
-                tweenControl.DelayCall(_handConnectTut.transform, 3f, () =>
+                tweenControl.DelayCall(_handConnectTut.transform, 2f, () =>
                 {
                     MoveHandConnectWord(letterOrders, count);
                 });
