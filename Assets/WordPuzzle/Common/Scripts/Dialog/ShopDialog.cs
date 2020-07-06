@@ -327,7 +327,8 @@ public class ShopDialog : Dialog
                     CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
             }
 
-
+            var openBundle = !CPlayerPrefs.HasKey("HINT_TUTORIAL") && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL");
+            var openBeehive = CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0;
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
             var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
             if (i > 0)
@@ -339,6 +340,18 @@ public class ShopDialog : Dialog
                         shopItemObject[i].gameObject.SetActive(true);
                     else
                         shopItemObject[i].gameObject.SetActive(false);
+                }
+                else
+                {
+                    if (Purchaser.instance.iapItems[itemShop].isSpecial && !Purchaser.instance.iapItems[itemShop].isBeehive &&!openBundle)
+                    {
+                        shopItemObject[i].gameObject.SetActive(false);
+                    }
+
+                    if (Purchaser.instance.iapItems[itemShop].isBeehive && !openBeehive)
+                    {
+                        shopItemObject[i].gameObject.SetActive(false);
+                    }
                 }
 
                 if (shopItemObject[i].activeInHierarchy)

@@ -14,6 +14,7 @@ public class IAPItem
     public bool isBonus;
     public int value;
     public bool isSpecial;
+    public bool isBeehive;
     public int valueHint;
     public int valueMultipleHint;
     public int valueSelectedHint;
