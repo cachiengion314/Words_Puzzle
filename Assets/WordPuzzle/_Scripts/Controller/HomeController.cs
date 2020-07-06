@@ -183,4 +183,17 @@ public class HomeController : BaseController
             notiOpenFreeBoosters.SetActive(true);
         }
     }
+
+    public void OnClickBeehiveButton()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        if (CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0)
+        {
+            DialogController.instance.ShowDialog(DialogType.Bee, DialogShow.REPLACE_CURRENT);
+        }
+        else
+        {
+            DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.REPLACE_CURRENT, "Beehive", "Complete Level 40 to unlock this feature!");
+        }
+    }
 }

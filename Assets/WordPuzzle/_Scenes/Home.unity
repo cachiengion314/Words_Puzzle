@@ -831,6 +831,7 @@ MonoBehaviour:
   _textTutorialFreeBoosters: {fileID: 266053574}
   _textTutorialCellAds: {fileID: 0}
   _handCellAdsTut: {fileID: 0}
+  _handConnectTut: {fileID: 0}
 --- !u!1 &140000884
 GameObject:
   m_ObjectHideFlags: 0
@@ -5577,6 +5578,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShowNoti: 0
+  fan_level_clear: 
+  fan_chapter_clear: 
+  fan_bonus_box: 
+  fan_free_boosters: 
+  fan_free_stars: 
+  fan_free_letter: 
+  fan_level_transition: 
+  unity_level_clear: 
+  unity_chapter_clear: 
+  unity_bonus_box: 
+  unity_free_boosters: 
+  unity_free_stars: 
+  unity_free_letter: 
+  unity_level_transition: 
 --- !u!4 &856758388
 Transform:
   m_ObjectHideFlags: 0
@@ -14728,7 +14743,6 @@ GameObject:
   - component: {fileID: 1701972742}
   - component: {fileID: 1701972740}
   - component: {fileID: 1701972741}
-  - component: {fileID: 1701972744}
   - component: {fileID: 1701972743}
   m_Layer: 5
   m_Name: Bee
@@ -14882,24 +14896,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1701972742}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1701972744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1701972737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19e881b731da5ec4b9e91b902dfafe8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isObjectives: 0
-  contentTitle: 
-  contentMesage: 
-  dialogType: 17
-  dialogShow: 1
+      m_Calls:
+      - m_Target: {fileID: 1833317276}
+        m_MethodName: OnClickBeehiveButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1718229851
 GameObject:
   m_ObjectHideFlags: 0
