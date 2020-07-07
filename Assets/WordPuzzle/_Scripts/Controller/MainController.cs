@@ -84,8 +84,8 @@ public class MainController : BaseController
         {
             CPlayerPrefs.SetBool("THEME_DIALOG", true);
             Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.REPLACE_CURRENT);          
-            AdmobController.instance.HideBanner();            
+            DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.REPLACE_CURRENT);
+            AdmobController.instance.HideBanner();
         }
         else
             onLoadDataComplete?.Invoke();
@@ -180,7 +180,8 @@ public class MainController : BaseController
         //    animatorScene.enabled = true;
         //    animatorScene.SetBool("PlayAnimScene", true);
         //});
-        SceneAnimate.Instance.ShowTip(false, () => {
+        SceneAnimate.Instance.ShowTip(false, () =>
+        {
             animatorScene.enabled = true;
             animatorScene.SetBool("PlayAnimScene", true);
         });
@@ -210,15 +211,18 @@ public class MainController : BaseController
                 {
                     Pan.instance.centerPoint.gameObject.SetActive(true);
                     BlockScreen.instance.Block(true);
-                    animatorScene.enabled = true;
-                    animatorScene.SetBool("PlayAnimScene", true);
+                    //animatorScene.enabled = true;
+                    //animatorScene.SetBool("PlayAnimScene", true);
+                    OpenSceneWithAnim();
                 });
             }
         }
         else
         {
+            Pan.instance.centerPoint.gameObject.SetActive(false);
             if (ScreenFader.instance.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("ScreenFader_Out"))
             {
+                Pan.instance.centerPoint.gameObject.SetActive(true);
                 animatorScene.enabled = true;
                 animatorScene.SetBool("PlayAnimScene", true);
                 ScreenFader.instance.FadeIn(null);

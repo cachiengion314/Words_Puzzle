@@ -99,9 +99,9 @@ public class ThemesControl : MonoBehaviour
 
             wordRegion.shadowBonuxbox.SetActive(currTheme.uiData.showShadow);
             wordRegion.shadowHelp.SetActive(currTheme.uiData.showShadow);
-            wordRegion.imgLeafTopLeft.gameObject.SetActive(currTheme.uiData.showLeaf);
-            wordRegion.imgLeafTopRight.gameObject.SetActive(currTheme.uiData.showLeaf);
-            wordRegion.imgLeafBoardWordRegion.SetActive(currTheme.uiData.showLeaf);
+            //wordRegion.imgLeafTopLeft.gameObject.SetActive(currTheme.uiData.showLeaf);
+            //wordRegion.imgLeafTopRight.gameObject.SetActive(currTheme.uiData.showLeaf);
+            //wordRegion.imgLeafBoardWordRegion.SetActive(currTheme.uiData.showLeaf);
             wordRegion.iconLevelTitle.SetActive(currTheme.uiData.showIconLevelTitle);
             wordRegion._textLevel.font = currTheme.fontData.fontAsset;
             wordRegion._textLevel.color = currTheme.fontData.colorTextHeader;

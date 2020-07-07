@@ -62,7 +62,7 @@ public class CUtils
 #if UNITY_EDITOR || UNITY_ANDROID
         Application.OpenURL("https://play.google.com/store/apps/details?id=" + ConfigController.Config.androidPackageID);
 #elif ANDROID_NATIVE && UNITY_ANDROID
-		obj_Activity.Call("linkGooglePlay");
+		obj_Activity.Call("https://play.google.com/store/apps/details?id=" + ConfigController.Config.androidPackageID);
 #elif UNITY_IPHONE
 		Application.OpenURL("https://itunes.apple.com/app/id" + ConfigController.Config.iosAppID);
 #elif UNITY_BLACKBERRY

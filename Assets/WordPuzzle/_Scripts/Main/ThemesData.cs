@@ -37,7 +37,7 @@ public class UIData
 {
     [Header("Play")]
     public bool showShadow = true;
-    public bool showLeaf = true;
+    //public bool showLeaf = true;
     public bool showIconLevelTitle = true;
     public bool boardTextPreviewCenter;
     public Vector3 scaleTextPreview;
