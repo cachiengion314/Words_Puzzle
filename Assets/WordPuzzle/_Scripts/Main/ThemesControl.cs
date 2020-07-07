@@ -29,7 +29,7 @@ public class ThemesControl : MonoBehaviour
 
     public void LoadThemeData(int indexTheme)
     {
-        CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
+        //CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
         var currTheme = _themesDatas[indexTheme];
         _currTheme = currTheme;
         cellPfb.imageCell.sprite = currTheme.uiData.imgCell;
@@ -137,7 +137,7 @@ public class ThemesControl : MonoBehaviour
 
     public void LoadThemeDataHome(int indexTheme)
     {
-        CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
+        //CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
         var currTheme = _themesDatas[indexTheme];
         _currTheme = currTheme;
         if (HomeController.instance != null)
@@ -166,7 +166,7 @@ public class ThemesControl : MonoBehaviour
 
     public void LoadThemeDataDialog(int indexTheme)
     {
-        PlayerPrefs.SetInt("CURR_THEMES", indexTheme);
+        //PlayerPrefs.SetInt("CURR_THEMES", indexTheme);
         var currTheme = _themesDatas[indexTheme];
         _currTheme = currTheme;
 
