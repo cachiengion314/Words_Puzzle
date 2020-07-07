@@ -275,7 +275,7 @@ public class WordRegion : MonoBehaviour
             }
         }
 
-        if (cellSize > 130f) cellSize = 130f;
+        if (cellSize > 200f) cellSize = 200f;
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         CheckShowButton(isTut);
 

@@ -165,6 +165,8 @@ public class AnimEvent : MonoBehaviour
             for (int i = 0; i < Pan.instance.LetterTexts.Count; i++)
             {
                 var letter = Pan.instance.LetterTexts[i];
+                if (Pan.instance.LetterTexts.Count < 4 && !ThemesControl.instance.CurrTheme.fontData.fontScale)
+                    letter.fontSize += 30;
                 letter.transform.localScale = Vector3.zero;
                 var canvasGroup = letter.GetComponent<CanvasGroup>();
                 canvasGroup.alpha = 0;
