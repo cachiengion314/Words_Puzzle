@@ -118,7 +118,6 @@ public class SceneAnimate : MonoBehaviour
         ScreenFader.instance.DelayCall(1.8f, () =>
         {
             ShowTitleHome(false);
-            animEvent.EventAnimCallback();
             callback?.Invoke();
         });
     }

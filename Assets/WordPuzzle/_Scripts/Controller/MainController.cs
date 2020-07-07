@@ -229,6 +229,7 @@ public class MainController : BaseController
             }
             else
             {
+                Pan.instance.centerPoint.gameObject.SetActive(true);
                 OpenSceneWithAnim();
             }
         }
