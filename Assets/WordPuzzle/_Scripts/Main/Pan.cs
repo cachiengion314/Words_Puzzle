@@ -196,12 +196,12 @@ public class Pan : MonoBehaviour
         TweenControl.GetInstance().KillTweener(textPreview.transform);
         textPreview.transform.localPosition = new Vector3(0, textPreview.transform.localPosition.y, 0);
         var letterTarget = letterTexts.Single(let => Vector3.Distance(letterPos, let.transform.position) < 1);
-        if (letterTarget.transform.localScale == Vector3.one)
+        if (letterTarget.transform.localScale == ((LetterTexts.Count < 4 && ThemesControl.instance.CurrTheme.fontData.fontScale) ? Vector3.one * 1.2f : Vector3.one))
         {
             Sound.instance.Play(Sound.instance.lettersTouch[soundIndex]);
             soundIndex++;
             if (soundIndex > Sound.instance.lettersTouch.Length - 1) { soundIndex = Sound.instance.lettersTouch.Length - 1; }
-            TweenControl.GetInstance().Scale(letterTarget.gameObject, Vector3.one * 1.2f, 0.3f, () =>
+            TweenControl.GetInstance().Scale(letterTarget.gameObject, (LetterTexts.Count < 4 && ThemesControl.instance.CurrTheme.fontData.fontScale) ? Vector3.one * 1.3f : Vector3.one * 1.2f, 0.3f, () =>
             {
                 callback?.Invoke();
             });
@@ -213,7 +213,7 @@ public class Pan : MonoBehaviour
         soundIndex = 0;
         foreach (var word in letterTexts)
         {
-            TweenControl.GetInstance().Scale(word.gameObject, Vector3.one, 0.3f, () =>
+            TweenControl.GetInstance().Scale(word.gameObject, (LetterTexts.Count < 4 && ThemesControl.instance.CurrTheme.fontData.fontScale) ? Vector3.one * 1.2f : Vector3.one, 0.3f, () =>
             {
                 callback?.Invoke();
             });
