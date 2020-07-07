@@ -85,7 +85,7 @@ public class MainController : BaseController
             CPlayerPrefs.SetBool("THEME_DIALOG", true);
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.REPLACE_CURRENT);
-            AdmobController.instance.HideBanner();
+            AudienceNetworkBanner.instance.DisposeAllBannerAd();
         }
         else
             onLoadDataComplete?.Invoke();
@@ -121,6 +121,8 @@ public class MainController : BaseController
         Timer.Schedule(this, 0.2f, () =>
         {
             DialogController.instance.ShowDialog(DialogType.Win);
+
+            HoneyPointsController.instance.ShowHoneyPoints(WinDialog.instance.gameObject);
         });
     }
 

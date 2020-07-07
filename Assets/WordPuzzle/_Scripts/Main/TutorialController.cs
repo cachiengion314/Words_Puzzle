@@ -64,6 +64,13 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _handCellAdsTut;
     [SerializeField] private Image _handConnectTut;
 
+    public GameObject _handPanelPopHint;
+    public GameObject _handPanelPopShuffle;
+    public GameObject _handPanelPopSelectedHint;
+    public GameObject _handPanelMultipleHint;
+    public GameObject _handPanelPopHelp;
+    public GameObject _handPanelPopBonusBox;
+
     private LineWord _lineTarget;
     private string _answerTarget;
     private Vector3 mousePoint;

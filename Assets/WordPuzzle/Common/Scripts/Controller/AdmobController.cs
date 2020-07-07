@@ -10,7 +10,7 @@ public class AdmobController : MonoBehaviour, IAds
     public RewardBasedVideoAd rewardBasedVideo;
 
     public static AdmobController instance;
-    public Action bannerLoadedCallback;
+
     public float bannerHeight;
 
     private void Awake()
@@ -215,13 +215,14 @@ public class AdmobController : MonoBehaviour, IAds
             ));
         bannerHeight = this.bannerView.GetHeightInPixels();
 
-        bannerLoadedCallback?.Invoke();
+        UIScaleController.instance.BannerShowAndScaleEvent();
 
     }
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         print("HandleFailedToReceiveAd event received with message: " + args.Message);
+        UIScaleController.instance.BannerHideAndScaleEvent();
     }
 
     public void HandleAdOpened(object sender, EventArgs args)

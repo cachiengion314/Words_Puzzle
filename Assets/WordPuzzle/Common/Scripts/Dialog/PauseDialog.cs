@@ -68,7 +68,7 @@ public class PauseDialog : Dialog
         //DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, "Themes", "This feature is coming soon. Please try again later!");
         DialogController.instance.ShowDialog(DialogType.Themes, DialogShow.STACK_DONT_HIDEN);
 
-       AdmobController.instance.HideBanner();
+        AudienceNetworkBanner.instance.DisposeAllBannerAd();
     }
 
     public void OnTaskClick()

@@ -48,6 +48,56 @@ public class FacebookController : MonoBehaviour
         {
             CurrencyController.UpdateBalanceAndHintFree();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            foreach (var item in newWordOpenInLevel)
+            {
+                Debug.Log("newWordOpenInLevel: " + item);
+            }
+            foreach (var item in existWord)
+            {
+                Debug.Log("existWord: " + item);
+            }
+            foreach (var item in ExtraWord.instance.extraWords)
+            {
+                Debug.Log("extraWords: " + item);
+            }
+            foreach (var item in WordRegion.instance.listWordCorrect)
+            {
+                Debug.Log("listWordCorrect: " + item);
+            }
+            Debug.Log("numLevels: " + Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld)));
+
+            Debug.Log("TotalLineIndex: " + HoneyPointsController.instance.LineIndex);
+
+            foreach (var item in WordRegion.instance.listWordInLevel)
+            {
+                Debug.Log("listWordInLevel: " + item);
+            }
+        }
+    }
+    [HideInInspector] public int HoneyPoints { get; set; }
+    public void UpdateStaticsUser()
+    {
+        if (PlayFabClientAPI.IsClientLoggedIn())
+        {
+            int numLevels = Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld));
+            var request = new UpdatePlayerStatisticsRequest();
+            var staticUpdate = new List<StatisticUpdate>();
+            //var currlevel = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + _gameData.words.Count * Int32.Parse(user.unlockedWorld));
+            foreach (var item in _keysStatic)
+            {
+                staticUpdate.Add(new StatisticUpdate
+                {
+                    StatisticName = item,
+                    Value = bestScore + HoneyPoints
+                });
+            }
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = staticUpdate
+            }, null, null);
+        }
     }
 
     public List<string> KeysStatic
@@ -143,29 +193,6 @@ public class FacebookController : MonoBehaviour
             PlayFabClientAPI.UpdateAvatarUrl(new UpdateAvatarUrlRequest
             {
                 ImageUrl = photoURL
-            }, null, null);
-        }
-    }
-
-    public void UpdateStaticsUser()
-    {
-        if (PlayFabClientAPI.IsClientLoggedIn())
-        {
-            int numLevels = Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld));
-            var request = new UpdatePlayerStatisticsRequest();
-            var staticUpdate = new List<StatisticUpdate>();
-            //var currlevel = Int32.Parse(user.unlockedLevel) + numLevels * (Int32.Parse(user.unlockedSubWorld) + _gameData.words.Count * Int32.Parse(user.unlockedWorld));
-            foreach (var item in _keysStatic)
-            {
-                staticUpdate.Add(new StatisticUpdate
-                {
-                    StatisticName = item,
-                    Value = bestScore + (newWordOpenInLevel.Count * 2 + existWord.Count + bonusNewLevel)
-                });
-            }
-            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
-            {
-                Statistics = staticUpdate
             }, null, null);
         }
     }

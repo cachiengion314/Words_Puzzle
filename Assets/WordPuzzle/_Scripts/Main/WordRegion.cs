@@ -47,6 +47,14 @@ public class WordRegion : MonoBehaviour
     public GameObject starCollectPfb;
 
     private List<LineWord> lines = new List<LineWord>();
+    public List<LineWord> WordRegionLines
+    {
+        get
+        {
+            return lines;
+        }
+    }
+
     private List<string> validWords = new List<string>();
     private int _extraWord;
 
@@ -704,7 +712,10 @@ public class WordRegion : MonoBehaviour
         gameObject.GetComponent<Canvas>().overrideSorting = false;
         compliment.Show(lineIndex);
         Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
+
         lineIndex++;
+        if (HoneyPointsController.instance != null) { HoneyPointsController.instance.LineIndex++; };
+
         if (lineIndex > compliment.sprites.Length - 1)
         {
             lineIndex = compliment.sprites.Length - 1;
@@ -856,7 +867,10 @@ public class WordRegion : MonoBehaviour
                 });
             }
             textPreview.SetWrongColor();
+
             lineIndex = 0;
+            if (HoneyPointsController.instance != null) { HoneyPointsController.instance.LineIndex = 0; };
+
             compliment.ResetAnimTree();
         }
     }

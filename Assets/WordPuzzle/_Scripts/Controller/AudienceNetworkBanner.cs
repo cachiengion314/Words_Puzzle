@@ -17,7 +17,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     private ScreenOrientation currentScreenOrientation;
     public Text statusLabel;
 
-    [HideInInspector] public readonly int MaxLevelToLoadBanner = 1;
+    [HideInInspector] public readonly int MinLevelToLoadBanner = 1;
     void OnDestroy()
     {
         // Dispose of banner ad when the scene is destroyed
@@ -44,7 +44,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         {
             if (CUtils.IsAdsRemoved()) return;
 
-            if (currlevel > MaxLevelToLoadBanner)
+            if (currlevel > MinLevelToLoadBanner)
             {
                 LoadBanner();
             }
@@ -69,7 +69,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     {
         CheckCurrentLevel();
 
-        if (currlevel > MaxLevelToLoadBanner && MainController.instance != null)
+        if (currlevel > MinLevelToLoadBanner && MainController.instance != null)
         {
             StartCoroutine(LoadBannerWithDelay());
         }
@@ -170,6 +170,8 @@ public class AudienceNetworkBanner : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
 
         AdmobController.instance.ShowBanner();
+
+        UIScaleController.instance.BannerShowAndScaleEvent();
     }
     public int CheckCurrentLevel()
     {

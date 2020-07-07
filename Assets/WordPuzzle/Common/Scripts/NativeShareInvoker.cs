@@ -100,13 +100,13 @@ public class NativeShareInvoker : MonoBehaviour
         if (androidPackageName != null)
         {
             new NativeShare().AddFile(filePath).SetSubject("LOOKING FOR HELP! Nearly made it!")
-                .SetText("Hey guys, please help me complete this level. I nearly break the record!")
+                .SetText("Hey guys, please help me complete this level. I nearly break the record! Download this game here: https://bit.ly/2VoI7xF")
          .SetTarget(androidPackageName).Share();
         }
         else
         {
             new NativeShare().AddFile(filePath).SetSubject("LOOKING FOR HELP! Nearly made it!")
-                .SetText("Hey guys, please help me complete this level. I nearly break the record!").Share();
+                .SetText("Hey guys, please help me complete this level. I nearly break the record! Download this game here: https://bit.ly/2VoI7xF").Share();
         }
     }
     private void NativeShareGalleryMethod(byte[] imageBytes)
