@@ -12,6 +12,7 @@ public class Pan : MonoBehaviour
     private string word, panWord;
     private GameLevel gameLevel;
     private const float RADIUS = 250;
+    private const float SIZE_LETTER = 0.06f;
     private List<Vector3> letterPositions = new List<Vector3>();
     private List<Vector3> letterLocalPositions = new List<Vector3>();
     private List<Text> letterTexts = new List<Text>();
@@ -196,15 +197,16 @@ public class Pan : MonoBehaviour
         TweenControl.GetInstance().KillTweener(textPreview.transform);
         textPreview.transform.localPosition = new Vector3(0, textPreview.transform.localPosition.y, 0);
         var letterTarget = letterTexts.Single(let => Vector3.Distance(letterPos, let.transform.position) < 1);
-        if (letterTarget.transform.localScale == Vector3.one)
+        var ratioScale = GetValueScaleLetter(letterTarget.transform);
+        if (letterTarget.transform.localScale == Vector3.one * ratioScale)
         {
             Sound.instance.Play(Sound.instance.lettersTouch[soundIndex]);
             soundIndex++;
             if (soundIndex > Sound.instance.lettersTouch.Length - 1) { soundIndex = Sound.instance.lettersTouch.Length - 1; }
-            TweenControl.GetInstance().Scale(letterTarget.gameObject, Vector3.one * 1.2f, 0.3f, () =>
-            {
-                callback?.Invoke();
-            });
+            TweenControl.GetInstance().Scale(letterTarget.gameObject, Vector3.one * (ratioScale + 0.2f), 0.3f, () =>
+             {
+                 callback?.Invoke();
+             });
         }
     }
 
@@ -213,10 +215,19 @@ public class Pan : MonoBehaviour
         soundIndex = 0;
         foreach (var word in letterTexts)
         {
-            TweenControl.GetInstance().Scale(word.gameObject, Vector3.one, 0.3f, () =>
+            var ratioScale = GetValueScaleLetter(word.transform);
+            TweenControl.GetInstance().Scale(word.gameObject, Vector3.one * ratioScale, 0.3f, () =>
             {
                 callback?.Invoke();
             });
         }
+    }
+
+    public float GetValueScaleLetter(Transform letter)
+    {
+        var bgLetter = letter.GetComponentInChildren<Image>().rectTransform.sizeDelta;
+        var ratioScale = ((1 / (bgLetter.x / bgLetter.y) + 0.1f) / letterTexts.Count + 1) - (SIZE_LETTER * LetterTexts.Count);
+        Debug.Log("RatioScale Letter: "+((1 / (bgLetter.x / bgLetter.y)) / letterTexts.Count + 1));
+        return ratioScale;
     }
 }

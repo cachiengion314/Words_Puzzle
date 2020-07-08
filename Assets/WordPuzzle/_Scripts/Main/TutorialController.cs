@@ -549,7 +549,7 @@ public class TutorialController : MonoBehaviour
         if (_textTutorial != null) _textTutorial.text = "";
 
 
-        if (CPlayerPrefs.HasKey("BEE_TUTORIAL"))
+        if (CPlayerPrefs.HasKey("BEE_TUTORIAL") && WordRegion.instance != null)
         {
             var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
             var currlevel = WordRegion.instance.CurLevel;
