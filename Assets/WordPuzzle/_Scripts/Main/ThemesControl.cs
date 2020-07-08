@@ -82,7 +82,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion.imgPriceMultipleHint.sprite = currTheme.uiData.priceBooster;
             wordRegion.imgPriceSelectedHint.sprite = currTheme.uiData.priceBooster;
 
-            wordRegion.board.SetNativeSize();
+            //wordRegion.board.SetNativeSize();
             wordRegion.iconStar.SetNativeSize();
             wordRegion.iconAdd.SetNativeSize();
             wordRegion.bgCurrency.SetNativeSize();

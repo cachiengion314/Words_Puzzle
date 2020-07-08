@@ -171,9 +171,9 @@ public class AnimEvent : MonoBehaviour
                 var canvasGroup = letter.GetComponent<CanvasGroup>();
                 canvasGroup.alpha = 0;
                 TweenControl.GetInstance().FadeAnfa(canvasGroup, 1, 0.3f);
-                TweenControl.GetInstance().Scale(letter.gameObject, (Pan.instance.LetterTexts.Count < 4 && ThemesControl.instance.CurrTheme.fontData.fontScale) ? Vector3.one * 1.3f : Vector3.one * 1.1f, 0.3f, () =>
+                TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one * 1.1f, 0.3f, () =>
                 {
-                    TweenControl.GetInstance().Scale(letter.gameObject, (Pan.instance.LetterTexts.Count < 4 && ThemesControl.instance.CurrTheme.fontData.fontScale) ? Vector3.one * 1.2f : Vector3.one, 0.2f, null, EaseType.InQuad);
+                    TweenControl.GetInstance().Scale(letter.gameObject, Vector3.one, 0.2f, null, EaseType.InQuad);
                 });
             }
         }

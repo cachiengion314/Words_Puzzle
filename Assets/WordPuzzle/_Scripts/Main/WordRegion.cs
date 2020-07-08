@@ -167,6 +167,7 @@ public class WordRegion : MonoBehaviour
         FacebookController.instance.newWordOpenInLevel = new List<string>();
         FacebookController.instance.existWord = new List<string>();
         FacebookController.instance.GetUserData();
+        CalculateScaleSizeBoardRegionAndPan();
     }
 
     private void LevelStartCallEventFirebase()
@@ -234,6 +235,26 @@ public class WordRegion : MonoBehaviour
         return words;
     }
 
+    private void CalculateScaleSizeBoardRegionAndPan()
+    {
+        var ratio = (float)Screen.width / (float)Screen.height;
+        var ratio916 = 9f / 16f;
+        var resultRatio = ratio916 / ratio;
+        Debug.Log("resultRatio: " + resultRatio);
+        var ratioBoard = resultRatio + Mathf.Abs(ratio916 - ratio);
+        var ratioPan = resultRatio;
+        //var ratioScreenBoard = 1 + ratioBoard / resultRatio;
+        //var ratioScreenPan = 1 + ratioPan / resultRatio;
+        //Debug.Log("ratioScreenBoard: " + ratioScreenBoard);
+        //Debug.Log("ratioScreenPan: " + ratioScreenPan);
+        var boardSizeX = board.rectTransform.sizeDelta.x;
+        var boardSizeY = board.rectTransform.sizeDelta.y * ratioBoard;
+        var panSizeX = imageGround.rectTransform.sizeDelta.x;
+        var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
+        board.rectTransform.sizeDelta = new Vector2(boardSizeX, boardSizeY);
+        imageGround.rectTransform.sizeDelta = new Vector2(panSizeX, panSizeY);
+    }
+
     public void Load(GameLevel gameLevel, int level)
     {
         keyLevel = level.ToString();
@@ -293,7 +314,7 @@ public class WordRegion : MonoBehaviour
             }
         }
 
-        if (cellSize > 200f) cellSize = 200f;
+        //if (cellSize > 250f) cellSize = 250f;
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         CheckShowButton(isTut);
 
@@ -861,7 +882,7 @@ public class WordRegion : MonoBehaviour
             CPlayerPrefs.SetBool("LevelMisspelling", false);
             //boardHighlight.gameObject.SetActive(false);
             board.sprite = _spriteNormal;
-            board.SetNativeSize();
+            //board.SetNativeSize();
             Sound.instance.Play(Sound.Others.WordInvalid);
             if (_currLevel > 1 && !TutorialController.instance.isShowTut)
             {
