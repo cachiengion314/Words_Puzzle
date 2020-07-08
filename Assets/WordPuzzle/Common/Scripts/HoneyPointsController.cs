@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Google.Protobuf;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -16,8 +18,11 @@ public class HoneyPointsController : MonoBehaviour
     public TextMeshProUGUI wordCountPointsTxt;
     public TextMeshProUGUI timePointsTxt;
 
+    public GameObject honeyFrame;
+    public TextMeshProUGUI honeyTxt;
+
     private int totalTitlePoints;
-    private int[] linePointsIndexs = new int[12] { 0, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4 };
+    private int[] titlePointsArray = new int[12] { 0, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4 };
     private int lineIndex;
     public int LineIndex
     {
@@ -29,15 +34,52 @@ public class HoneyPointsController : MonoBehaviour
         set
         {
             lineIndex = value;
+            if (lineIndex > 1)
+            {
+                totalTitlePoints = TotalTitlePoint(lineIndex, titlePointsArray);
+                honeyTxt.text = "+" + totalTitlePoints.ToString();
+                TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .2f,
+            () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .2f); });
+            }
+            else if (lineIndex == 1)
+            {
+                honeyTxt.text = "+0";
+            }
+            else if (lineIndex == 0)
+            {
+                honeyTxt.text = "+0";
+                TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .1f,
+            () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .1f); });
+            }
+
         }
     }
-    private float timeLeft;
+
+    private float timeLeft = 20f;
     private float timeGameplay = 20f;
+    private int numberOfWordsInLevelWithoutExtra;
+    public int NumberOfWordsInLevelWithoutExtra
+    {
+        get
+        {
+            return numberOfWordsInLevelWithoutExtra;
+        }
+        set
+        {
+            numberOfWordsInLevelWithoutExtra = value;
+          
+            if (numberOfWordsInLevelWithoutExtra <= 3) { timeLeft = 60f; }
+            else
+            {
+                int deltaNumber = numberOfWordsInLevelWithoutExtra - 3;
+                timeLeft = 60f + deltaNumber * 30f;
+            }
+            timeGameplay = timeLeft;
+        }
+    }
     private void Awake()
     {
         instance = this;
-
-        timeLeft = timeGameplay;
     }
     void Update()
     {
@@ -67,14 +109,7 @@ public class HoneyPointsController : MonoBehaviour
         if (Prefs.IsSaveLevelProgress())
         {
             // Winning newest level
-            for (int i = 0; i < linePointsIndexs.Length; i++)
-            {
-                totalTitlePoints += linePointsIndexs[i];
-                if (LineIndex == i || LineIndex >= linePointsIndexs.Length)
-                {
-                    break;
-                }
-            }
+            totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
             honeyPoints = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
             honeyPointsTxt.text = "Honey: " + honeyPoints.ToString();
             titlePointsTxt.text = "TitlePts: " + totalTitlePoints.ToString();
@@ -88,9 +123,22 @@ public class HoneyPointsController : MonoBehaviour
             // Winning old level
             honeyPoints = 0;
             honeyPointsTxt.text = "Honey: " + honeyPoints.ToString();
-            Debug.Log("Honey Points: " + honeyPoints);
+            FacebookController.instance.HoneyPoints += honeyPoints;
         }
         isGameplayEnd = true;
+    }
+    private int TotalTitlePoint(int lineIndex, int[] titlePointsArray)
+    {
+        int total = 0;
+        for (int i = 0; i < titlePointsArray.Length; i++)
+        {
+            total += titlePointsArray[i];
+            if (lineIndex == i || lineIndex >= titlePointsArray.Length)
+            {
+                break;
+            }
+        }
+        return total;
     }
     private void SetupTextUI(GameObject winDialog)
     {

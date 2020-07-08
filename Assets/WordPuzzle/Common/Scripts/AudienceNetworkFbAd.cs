@@ -94,39 +94,24 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             }
         };
 #endif
-
         // Initiate the request to load the ad.
         interstitialAd.LoadAd();
     }
-    private void ShowInterstitial()
-    {
-        if (isIntersLoaded)
-        {
-            interstitialAd.Show();
-            isIntersLoaded = false;
-            statusLabel.text = "";
-        }
-        else
-        {
-            statusLabel.text = "Ad not loaded. Click load to request an ad.";
-        }
-    }
+    //public void ShowRewardedVideo()
+    //{
+    //    if (rewardIdFaceAds == null) return;
 
-    // Show button
-    public void ShowRewardedVideo()
-    {
-        if (isLoaded)
-        {
-            rewardedVideoAd.Show();
-            isLoaded = false;
-            statusLabel.text = "";
-        }
-        else
-        {
-            statusLabel.text = "Ad not loaded. Click load to request an ad.";
-        }
-    }
-
+    //    if (isLoaded)
+    //    {
+    //        rewardedVideoAd.Show();
+    //        isLoaded = false;
+    //        statusLabel.text = "";
+    //    }
+    //    else
+    //    {
+    //        statusLabel.text = "Ad not loaded. Click load to request an ad.";
+    //    }
+    //}
     void OnDestroy()
     {
         // Dispose of rewardedVideo ad when the scene is destroyed
@@ -143,33 +128,39 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         }
         Debug.Log("InterstitialAdTest was destroyed!");
     }
-
+    private void ShowInterstitial()
+    {
+        if (isIntersLoaded)
+        {
+            interstitialAd.Show();
+            isIntersLoaded = false;
+            //statusLabel.text = "";
+        }
+        else
+        {
+            //statusLabel.text = "Ad not loaded. Click load to request an ad.";
+        }
+    }
     /// <summary>
     /// Implement Interface
     /// </summary>
-    void LoadAndShowVideoDelay(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
+    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        //LoadVideoAds();
-        //yield return new WaitForSeconds(1.3f);
-        // ad is loaded
+        if (rewardIdFaceAds == null) { isLoaded = false; return; }
+
         rewardedVideoAd.Show();
         isLoaded = false;
     }
-    public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
-    {
-        /*StartCoroutine(*/LoadAndShowVideoDelay(adsNotReadyYetCallback, noInternetCallback)/*)*/;
-    }
-
     public void ShowBannerAds()
     {
 
     }
-
     public void ShowInterstitialAds()
     {
+        if (intersititialIdFaceAds == null) { isIntersLoaded = false; return; }
+
         ShowInterstitial();
     }
-
     public void LoadVideoAds()
     {
         //Debug.Log("Loading rewardedVideo ad...");

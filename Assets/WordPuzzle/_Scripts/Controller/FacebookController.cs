@@ -74,6 +74,8 @@ public class FacebookController : MonoBehaviour
             {
                 Debug.Log("listWordInLevel: " + item);
             }
+
+            Debug.Log("NumWords: " + WordRegion.instance.NumWords);
         }
     }
     [HideInInspector] public int HoneyPoints { get; set; }

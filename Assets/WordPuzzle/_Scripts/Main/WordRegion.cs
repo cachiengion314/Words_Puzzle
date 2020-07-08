@@ -62,6 +62,13 @@ public class WordRegion : MonoBehaviour
     private int _countShowAdsHintFreeOldLevel;
     private GameLevel gameLevel;
     private int numWords, numCol, numRow;
+    public int NumWords
+    {
+        get
+        {
+            return numWords;
+        }
+    }
     private float cellSize, startFirstColX = 0f;
     private bool hasLongLine;
 
@@ -237,7 +244,10 @@ public class WordRegion : MonoBehaviour
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
         //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
         //wordList = wordList.Count <= 4 ? wordList : GetExtraWordRandom(wordList);
+
         numWords = wordList.Count - _extraWord;
+        HoneyPointsController.instance.NumberOfWordsInLevelWithoutExtra = numWords;
+
         var wordInLevel = wordList.GetRange(0, numWords);
         wordInLevel = wordInLevel.OrderBy(word => word.Length).ToList();
 

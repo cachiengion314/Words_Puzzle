@@ -121,7 +121,7 @@ public class AnimEvent : MonoBehaviour
                             AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial;
                             UnityAdTest.instance.myInterstitialId = ConfigController.instance.config.unityAdsId.interstitialLevel;
 
-                            Debug.Log("Change AnimEvent id succsesss");
+                       
                             AdsManager.instance.ShowInterstitialAds();
                         }
                         TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>

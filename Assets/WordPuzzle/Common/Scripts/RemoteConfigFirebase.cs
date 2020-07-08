@@ -104,6 +104,7 @@ public class RemoteConfigFirebase : MonoBehaviour
         unity_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_stars").StringValue);
         unity_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_letter").StringValue);
         unity_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_transition").StringValue);
+
         // Implement id advertisement
         // Facebook Audience Network
         ConfigController.instance.config.facebookAdsId.rewardedLevelClear = fan_level_clear;
@@ -121,15 +122,6 @@ public class RemoteConfigFirebase : MonoBehaviour
         ConfigController.instance.config.unityAdsId.rewardedFreeStars = unity_free_stars;
         ConfigController.instance.config.unityAdsId.rewardedFreeLetter = unity_free_letter;
         ConfigController.instance.config.unityAdsId.interstitialLevel = unity_level_transition;
-
-        if (fan_level_clear != null)
-        {
-            Debug.Log("Fetch and implement idAds succsess");
-        }
-        else
-        {
-            Debug.Log("Fetch and implement idAds fail");
-        }
     }
     public void ShowIngameNotify()
     {

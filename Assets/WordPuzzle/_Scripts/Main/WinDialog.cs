@@ -668,16 +668,12 @@ public class WinDialog : Dialog
             if (level == numLevels - 1)
             {
                 AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedChapterClear;
-                UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedChapter;
-
-                Debug.Log("Change WinDialog_rewardedChapter id succsesss");
+                UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedChapter; 
             }
             else
             {
                 AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedLevelClear;
                 UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedLevel;
-
-                Debug.Log("Change WinDialog_rewardedLevel id succsesss");
             }
             AdsManager.instance.ShowVideoAds(true, CheckShowAdsButton, CheckShowAdsButton);
 
