@@ -262,7 +262,7 @@ public class TutorialController : MonoBehaviour
 
     public void HidenHandConnectWord(bool killTween = true)
     {
-        if (isShowTut && _handConnectTut.gameObject.activeInHierarchy)
+        if (_handConnectTut.gameObject.activeInHierarchy)
         {
             LineDrawer.instance.LineRenderer.positionCount = 0;
             LineDrawer.instance.currentIndexes.Clear();
