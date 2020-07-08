@@ -241,7 +241,7 @@ public class WordRegion : MonoBehaviour
         var ratio916 = 9f / 16f;
         var resultRatio = ratio916 / ratio;
         Debug.Log("resultRatio: " + resultRatio);
-        var ratioBoard = resultRatio + Mathf.Abs(ratio916 - ratio);
+        var ratioBoard = resultRatio /*+ Mathf.Abs(ratio916 - ratio)*/;
         var ratioPan = resultRatio;
         //var ratioScreenBoard = 1 + ratioBoard / resultRatio;
         //var ratioScreenPan = 1 + ratioPan / resultRatio;
