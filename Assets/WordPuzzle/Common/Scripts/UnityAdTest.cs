@@ -10,9 +10,9 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     private string androidGameId = "3685957"; // this string is a constant value and cannot be changed
     private bool testMode = false;
 
-    public string myPlacementId = "rewardedVideo"; 
+    public string myPlacementId = "rewardedVideo";
     public string myInterstitialId = "myInterstitialId";
-    public string bannerPlacementId = "bannerPlacement"; 
+    public string bannerPlacementId = "bannerPlacement";
 
     private void Awake()
     {
@@ -25,34 +25,37 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
 
         //StartCoroutine(ShowBannerWhenReady());
     }
-
+    //private IEnumerator ShowBannerWhenReady()
+    //{
+    //    while (!Advertisement.IsReady(bannerPlacementId))
+    //    {
+    //        yield return new WaitForSeconds(.5f);
+    //    }
+    //    Advertisement.Banner.Load();
+    //    Advertisement.Banner.Show(bannerPlacementId);
+    //    Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+    //}
     public bool IsLoaded()
     {
-        return Advertisement.IsReady(myPlacementId);
+        if (myPlacementId == null) return false;
+        else
+            return Advertisement.IsReady(myPlacementId);
     }
 
     public bool IsLoadedInterstitial()
     {
-        return Advertisement.IsReady(myInterstitialId);
+        if (myInterstitialId == null) return false;
+        else
+            return Advertisement.IsReady(myInterstitialId);
     }
 
     public void ReloadVideoAds()
     {
         Advertisement.Load(myPlacementId);
     }
-    private IEnumerator ShowBannerWhenReady()
-    {
-        while (!Advertisement.IsReady(bannerPlacementId))
-        {
-            yield return new WaitForSeconds(.5f);
-        }
-        Advertisement.Banner.Load();
-        Advertisement.Banner.Show(bannerPlacementId);
-        Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
-    }
     public void DisplayInterstitialAds()
     {
-        Advertisement.Show();
+        Advertisement.Show(myInterstitialId);
     }
     public void DisplayVideoAds()
     {
@@ -97,7 +100,6 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     public void OnUnityAdsDidStart(string placementId)
     {
         // Optional actions to take when the end-users triggers an ad.
-
     }
 
     /// <summary>

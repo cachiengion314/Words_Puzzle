@@ -8,7 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
+[Serializable]
+public struct FlagItem
+{
+    public Sprite flagImage;
+    public string flagName;
+}
 public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
@@ -79,6 +86,7 @@ public class FacebookController : MonoBehaviour
         }
     }
     [HideInInspector] public int HoneyPoints { get; set; }
+    public List<FlagItem> flagItemList;
     public void UpdateStaticsUser()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())

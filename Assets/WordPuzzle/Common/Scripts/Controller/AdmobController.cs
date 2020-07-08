@@ -26,7 +26,6 @@ public class AdmobController : MonoBehaviour, IAds
 
             InitRewardedVideo();
             RequestRewardBasedVideo();
-
         }
     }
     private void InitRewardedVideo()

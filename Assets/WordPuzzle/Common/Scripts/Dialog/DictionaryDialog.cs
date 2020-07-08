@@ -15,6 +15,10 @@ using PlayFab;
 
 public class DictionaryDialog : Dialog
 {
+    public GameObject flagTab;
+    public GameObject flagTabScrollViewContent;
+    public GameObject flagItemPrefab;
+    [Space]
     public GameObject buttonWord;
     public GameObject groupWord;
     public GameObject noInternet;
@@ -45,8 +49,6 @@ public class DictionaryDialog : Dialog
     [HideInInspector]
     public static string wordPassed;
 
-
-
     protected override void Awake()
     {
         if (instance == null)
@@ -59,6 +61,8 @@ public class DictionaryDialog : Dialog
             groupWordDiction.Add(key.ToString().ToUpper(), defaultValue);
         }
         GetWordPassed();
+
+        flagTab.gameObject.SetActive(false);
     }
 
     protected override void Start()
@@ -67,8 +71,23 @@ public class DictionaryDialog : Dialog
         if (listWordPassed != null)
             CloneListGroupWord();
         numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
+        
+        // Instantiate the flag tab
+        for (int i = 0; i < FacebookController.instance.flagItemList.Count; i++)
+        {
+            FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
+            flagItem.flagImage = FacebookController.instance.flagItemList[i].flagImage;
+            flagItem.flagName = FacebookController.instance.flagItemList[i].flagName;
+        }
     }
-
+    public void OnClickFlagTab()
+    {
+        flagTab.gameObject.SetActive(true);
+    }
+    public void OnClickVocabularyTab()
+    {
+        flagTab.gameObject.SetActive(false);
+    }
     public void GetWordPassed()
     {
         wordPassed = CPlayerPrefs.GetString("WordLevelSave");
@@ -98,10 +117,6 @@ public class DictionaryDialog : Dialog
             }
         }
     }
-
-
-
-
     public void CloneListGroupWord()
     {
         ListGroupWord listGroupWordClone;
