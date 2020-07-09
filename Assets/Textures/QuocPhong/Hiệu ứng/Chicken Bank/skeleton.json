@@ -1,23 +1,24 @@
 {
 "skeleton": {
-	"hash": "Fh21tHqhu8riaPYU8yYHgFofq5s",
+	"hash": "VcvAzZtHkdTfqa8QmNxDWg1q0F0",
 	"spine": "3.8.95",
-	"x": -238.3,
-	"y": -91.32,
-	"width": 513.17,
-	"height": 497.96,
+	"x": -251.4,
+	"y": -122.31,
+	"width": 541.4,
+	"height": 525.35,
 	"images": "../Chicken Bank/",
 	"audio": ""
 },
 "bones": [
 	{ "name": "root" },
-	{ "name": "bone", "parent": "root", "y": 166.61 }
+	{ "name": "bone2", "parent": "root", "y": -25.97, "scaleX": 1.055, "scaleY": 1.055 },
+	{ "name": "bone", "parent": "bone2", "y": 166.61 }
 ],
 "slots": [
-	{ "name": "root", "bone": "root", "attachment": "root" },
+	{ "name": "root", "bone": "bone2", "attachment": "root" },
 	{ "name": "Layer 1570", "bone": "bone", "attachment": "Layer 1570" },
-	{ "name": "Layer 1594", "bone": "root", "attachment": "Layer 1594" },
-	{ "name": "Layer 1572 copy 5 (merged)", "bone": "root", "attachment": "Layer 1572 copy 5 (merged)" }
+	{ "name": "Layer 1594", "bone": "bone2", "attachment": "Layer 1594" },
+	{ "name": "Layer 1572 copy 5 (merged)", "bone": "bone2", "attachment": "Layer 1572 copy 5 (merged)" }
 ],
 "skins": [
 	{
