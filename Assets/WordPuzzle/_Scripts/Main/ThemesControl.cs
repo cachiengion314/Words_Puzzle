@@ -9,6 +9,7 @@ public class ThemesControl : MonoBehaviour
     [SerializeField] private ThemesData[] _themesDatas;
     [SerializeField] private Cell cellPfb;
     [SerializeField] private Text letterTextPfb;
+    [SerializeField] private Image starPfb;
     [SerializeField] private List<Dialog> _dialogPfb;
 
     private ThemesData _currTheme;
@@ -49,6 +50,8 @@ public class ThemesControl : MonoBehaviour
         var bgLetter = letterTextPfb.GetComponentInChildren<Image>();
         bgLetter.sprite = currTheme.uiData.bgLetter;
         bgLetter.SetNativeSize();
+        starPfb.sprite = currTheme.uiData.iconStarFly;
+        starPfb.SetNativeSize();
 
         if (WordRegion.instance != null)
         {

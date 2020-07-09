@@ -35,6 +35,7 @@ public class FontData
 [Serializable]
 public class UIData
 {
+    public Sprite iconStarFly;
     [Header("Play")]
     public bool showShadow = true;
     //public bool showLeaf = true;
