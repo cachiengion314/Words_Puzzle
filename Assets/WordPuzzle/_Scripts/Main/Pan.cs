@@ -112,7 +112,7 @@ public class Pan : MonoBehaviour
             }
         });
     }
-    public void method()
+    public void ReloadLetterPositionPoints()
     {
         numLetters = gameLevel.word.Trim().Length;
         if (numLetters <= 3) transform.localPosition += new Vector3(0f, 40f, 0f);
@@ -152,14 +152,6 @@ public class Pan : MonoBehaviour
         }
 
         GetPanWord();
-
-        Timer.Schedule(this, 0, () =>
-        {
-            for (int i = 0; i < numLetters; i++)
-            {
-                letterTexts[i].transform.localPosition = letterLocalPositions[indexes.IndexOf(i)];
-            }
-        });
     }
     private void GetShuffeWord()
     {

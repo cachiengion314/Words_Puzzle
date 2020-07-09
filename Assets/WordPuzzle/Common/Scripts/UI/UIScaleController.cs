@@ -51,7 +51,7 @@ public class UIScaleController : MonoBehaviour
         //}
         float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
         rootUI.transform.localPosition = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
-        Pan.instance.method();
+        Pan.instance.ReloadLetterPositionPoints();
     }
     public void BannerHideAndScaleEvent()
     {

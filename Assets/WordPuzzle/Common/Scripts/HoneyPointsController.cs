@@ -107,7 +107,7 @@ public class HoneyPointsController : MonoBehaviour
     }
     public void ShowHoneyPoints(GameObject winDialog)
     {
-        SetupTextUI(winDialog);
+        //SetupTextUI(winDialog);
         int honeyPoints;
 
         if (Prefs.IsSaveLevelProgress())
