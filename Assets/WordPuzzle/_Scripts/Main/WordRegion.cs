@@ -45,6 +45,9 @@ public class WordRegion : MonoBehaviour
     public GameObject shadowBonuxbox;
     public GameObject shadowHelp;
     public GameObject starCollectPfb;
+    [Space]
+    [SerializeField] private RectTransform _headerBlock;
+    [SerializeField] private RectTransform _centerBlock;
 
     private List<LineWord> lines = new List<LineWord>();
     public List<LineWord> WordRegionLines
@@ -237,20 +240,21 @@ public class WordRegion : MonoBehaviour
 
     private void CalculateScaleSizeBoardRegionAndPan()
     {
-        var ratio = (float)Screen.width / (float)Screen.height;
-        var ratio916 = 9f / 16f;
-        var resultRatio = ratio916 / ratio;
-        //Debug.Log("resultRatio: " + resultRatio);
-        var ratioBoard = resultRatio /*+ Mathf.Abs(ratio916 - ratio)*/;
-        var ratioPan = resultRatio;
-        //var ratioScreenBoard = 1 + ratioBoard / resultRatio;
-        //var ratioScreenPan = 1 + ratioPan / resultRatio;
-        //Debug.Log("ratioScreenBoard: " + ratioScreenBoard);
-        //Debug.Log("ratioScreenPan: " + ratioScreenPan);
+        //var ratio = (float)Screen.width / (float)Screen.height;
+        //var ratio916 = 9f / 16f;
+        //var resultRatio = ratio916 / ratio;
+        ////Debug.Log("resultRatio: " + resultRatio);
+        //var ratioBoard = resultRatio;
+        //var ratioPan = resultRatio;
+        //var boardSizeX = board.rectTransform.sizeDelta.x;
+        //var boardSizeY = board.rectTransform.sizeDelta.y * ratioBoard;
+        //var panSizeX = imageGround.rectTransform.sizeDelta.x;
+        //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
-        var boardSizeY = board.rectTransform.sizeDelta.y * ratioBoard;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
+        var boardSizeY = Screen.height / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height / 2 - 60f;
+        var panSizeY = Screen.height / 2 - _centerBlock.rect.height / 2;
+
         board.rectTransform.sizeDelta = new Vector2(boardSizeX, boardSizeY);
         imageGround.rectTransform.sizeDelta = new Vector2(panSizeX, panSizeY);
     }
