@@ -9,6 +9,7 @@ using UnityEngine;
 public class HoneyPointsController : MonoBehaviour
 {
     public static HoneyPointsController instance;
+    public Action onChangedHoneyPoints;
 
     private bool isGameplayEnd;
     private int timePoints;
@@ -34,23 +35,26 @@ public class HoneyPointsController : MonoBehaviour
         set
         {
             lineIndex = value;
-            if (lineIndex > 1)
+            if (lineIndex > 1 && Prefs.IsSaveLevelProgress())
             {
                 totalTitlePoints = TotalTitlePoint(lineIndex, titlePointsArray);
-                honeyTxt.text = "+" + totalTitlePoints.ToString();
+                var point = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
+                FacebookController.instance.HoneyPoints += point;
+                FacebookController.instance.SaveDataGame();
+                onChangedHoneyPoints?.Invoke();
                 TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .2f,
             () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .2f); });
             }
-            else if (lineIndex == 1)
-            {
-                honeyTxt.text = "+0";
-            }
-            else if (lineIndex == 0)
-            {
-                honeyTxt.text = "+0";
-                TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .1f,
-            () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .1f); });
-            }
+            //else if (lineIndex == 1)
+            //{
+            //    honeyTxt.text = "0";
+            //}
+            //else if (lineIndex == 0)
+            //{
+            //    honeyTxt.text = "0";
+            //    TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .1f,
+            //() => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .1f); });
+            //}
 
         }
     }
@@ -116,14 +120,14 @@ public class HoneyPointsController : MonoBehaviour
             wordCountPointsTxt.text = "WordPts: " + WordRegion.instance.listWordCorrect.Count.ToString();
             timePointsTxt.text = "TimePts: " + timePoints;
 
-            FacebookController.instance.HoneyPoints += honeyPoints;
+            //FacebookController.instance.HoneyPoints += honeyPoints;
         }
         else
         {
             // Winning old level
             honeyPoints = 0;
             honeyPointsTxt.text = "Honey: " + honeyPoints.ToString();
-            FacebookController.instance.HoneyPoints += honeyPoints;
+            //FacebookController.instance.HoneyPoints += honeyPoints;
         }
         isGameplayEnd = true;
     }

@@ -227,7 +227,7 @@ public class Pan : MonoBehaviour
     {
         var bgLetter = letter.GetComponentInChildren<Image>().rectTransform.sizeDelta;
         var ratioScale = ((1 / (bgLetter.x / bgLetter.y) + 0.1f) / letterTexts.Count + 1) - (SIZE_LETTER * LetterTexts.Count);
-        Debug.Log("RatioScale Letter: "+((1 / (bgLetter.x / bgLetter.y)) / letterTexts.Count + 1));
+        //Debug.Log("RatioScale Letter: "+((1 / (bgLetter.x / bgLetter.y)) / letterTexts.Count + 1));
         return ratioScale;
     }
 }

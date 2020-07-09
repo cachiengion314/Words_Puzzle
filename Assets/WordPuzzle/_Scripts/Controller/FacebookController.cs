@@ -85,7 +85,16 @@ public class FacebookController : MonoBehaviour
             Debug.Log("NumWords: " + WordRegion.instance.NumWords);
         }
     }
-    [HideInInspector] public int HoneyPoints { get; set; }
+    [HideInInspector] public double HoneyPoints {
+        get
+        {
+            return user.honeyPoint;
+        }
+        set
+        {
+            user.honeyPoint = value;
+        }
+    }
     public List<FlagItem> flagItemList;
     public void UpdateStaticsUser()
     {
@@ -100,7 +109,7 @@ public class FacebookController : MonoBehaviour
                 staticUpdate.Add(new StatisticUpdate
                 {
                     StatisticName = item,
-                    Value = bestScore + HoneyPoints
+                    Value = bestScore + (int)HoneyPoints
                 });
             }
             PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
@@ -237,6 +246,7 @@ public class FacebookController : MonoBehaviour
         userDefault.maxbank = 800;
         userDefault.currBank = 720;
         userDefault.remainBank = 0;
+        userDefault.honeyPoint = 0;
         userDefault.unlockedSubWorld = "0";
         userDefault.unlockedLevel = "0";
         userDefault.unlockedWorld = "0";
@@ -316,6 +326,7 @@ public class FacebookController : MonoBehaviour
         us.maxbank = jsonData.maxbank;
         us.currBank = jsonData.currBank;
         us.remainBank = jsonData.remainBank;
+        us.honeyPoint = jsonData.honeyPoint;
         us.unlockedSubWorld = jsonData.unlockedSubWorld;
         us.unlockedLevel = jsonData.unlockedLevel;
         us.unlockedWorld = jsonData.unlockedWorld;
@@ -343,6 +354,7 @@ public struct User
     public double maxbank;
     public double currBank;
     public double remainBank;
+    public double honeyPoint;
 
     public string unlockedWorld;
     public string unlockedSubWorld;
