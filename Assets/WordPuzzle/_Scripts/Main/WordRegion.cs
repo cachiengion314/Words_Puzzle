@@ -48,6 +48,7 @@ public class WordRegion : MonoBehaviour
     [Space]
     [SerializeField] private RectTransform _headerBlock;
     [SerializeField] private RectTransform _centerBlock;
+    [SerializeField] private RectTransform _rectCanvas;
 
     private List<LineWord> lines = new List<LineWord>();
     public List<LineWord> WordRegionLines
@@ -252,8 +253,8 @@ public class WordRegion : MonoBehaviour
         //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var boardSizeY = Screen.height / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height - 30f;
-        var panSizeY = Screen.height / 2 - _centerBlock.rect.height / 2;
+        var boardSizeY = _rectCanvas.rect.height / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height - 30f;
+        var panSizeY = _rectCanvas.rect.height / 2 - _centerBlock.rect.height / 2;
 
         board.rectTransform.sizeDelta = new Vector2(boardSizeX, boardSizeY);
         imageGround.rectTransform.sizeDelta = new Vector2(panSizeX, panSizeY);
