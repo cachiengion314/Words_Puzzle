@@ -29,6 +29,7 @@ public class UIScaleController : MonoBehaviour
 
     public GameObject rootUI;
     public Vector3 rootUIOriginPos;
+    public Vector3 rootUINewPos;
 
     private void Awake()
     {
@@ -50,7 +51,9 @@ public class UIScaleController : MonoBehaviour
         //        mainCamera);
         //}
         float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
-        rootUI.transform.localPosition = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
+        bannerScale += 1f / 3f * bannerScale;
+        rootUINewPos = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
+        rootUI.transform.localPosition = rootUINewPos;
         Pan.instance.ReloadLetterPositionPoints();
     }
     public void BannerHideAndScaleEvent()
@@ -66,6 +69,7 @@ public class UIScaleController : MonoBehaviour
         //        mainCamera);
         //}
         rootUI.transform.localPosition = rootUIOriginPos;
+        Pan.instance.ReloadLetterPositionPoints();
     }
     private void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -105,6 +109,12 @@ public class UIScaleController : MonoBehaviour
             //}
             rootUI = RootController.instance.gameObject;
             rootUIOriginPos = rootUI.transform.localPosition;
+
+            if (AdmobController.instance.bannerHeight > 0)
+            {
+                rootUI.transform.localPosition = rootUINewPos;
+                Pan.instance.ReloadLetterPositionPoints();
+            }
         }
     }
     private void ArrangeUIElementWithScaleValue(float newScaleValue, GameObject uiElement, Camera mainCamera)
