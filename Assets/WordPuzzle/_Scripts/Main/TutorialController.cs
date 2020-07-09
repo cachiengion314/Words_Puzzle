@@ -556,6 +556,7 @@ public class TutorialController : MonoBehaviour
             if (currlevel >= 40)
                 Firebase.Analytics.FirebaseAnalytics.LogEvent(Firebase.Analytics.FirebaseAnalytics.EventTutorialComplete);
         }
+        HidenHandConnectWord(true);
     }
 
     public void CheckAndShowTutorial()

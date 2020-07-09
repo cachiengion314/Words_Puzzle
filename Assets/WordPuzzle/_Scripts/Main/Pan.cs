@@ -144,14 +144,6 @@ public class Pan : MonoBehaviour
         //    Debug.Log("index: " + i);
         //}
 
-        if (indexes.Count != numLetters)
-        {
-            indexes = Enumerable.Range(0, numLetters).ToList();
-            indexes.Shuffle(level);
-            Prefs.SetPanWordIndexes(world, subWorld, level, indexes.ToArray());
-        }
-
-        GetPanWord();
     }
     private void GetShuffeWord()
     {
