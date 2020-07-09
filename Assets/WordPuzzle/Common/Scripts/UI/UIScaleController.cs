@@ -53,11 +53,11 @@ public class UIScaleController : MonoBehaviour
         //        mainCamera);
         //}
         float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
-        bannerScale += 1f / 3f * bannerScale;
-        rootUINewPos = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
+       
+        //rootUINewPos = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
 
         var rectRoot = rootUI.GetComponent<RectTransform>();
-        newSize = new Vector2(rectRoot.sizeDelta.x, rectRoot.sizeDelta.y - bannerScale * Screen.height);
+        newSize = new Vector2(originSize.x, originSize.y - bannerScale * Screen.height);
         rectRoot.sizeDelta = newSize;
         //rootUI.transform.localPosition = rootUINewPos;
         Pan.instance.ReloadLetterPositionPoints();
@@ -122,11 +122,7 @@ public class UIScaleController : MonoBehaviour
             originSize = rectRoot.sizeDelta;
 
             if (AdmobController.instance.bannerHeight > 0)
-            {
-                float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
-                bannerScale += 1f / 3f * bannerScale;
-                rectRoot = rootUI.GetComponent<RectTransform>();
-                newSize = new Vector2(rectRoot.sizeDelta.x, rectRoot.sizeDelta.y - bannerScale * Screen.height);
+            {              
                 rectRoot.sizeDelta = newSize;
                 //rootUI.transform.localPosition = rootUINewPos;
                 Pan.instance.ReloadLetterPositionPoints();
