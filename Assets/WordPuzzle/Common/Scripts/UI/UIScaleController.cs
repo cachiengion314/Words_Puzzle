@@ -31,6 +31,8 @@ public class UIScaleController : MonoBehaviour
     public Vector3 rootUIOriginPos;
     public Vector3 rootUINewPos;
 
+    public Vector2 originSize;
+    public Vector2 newSize;
     private void Awake()
     {
         instance = this;
@@ -53,7 +55,11 @@ public class UIScaleController : MonoBehaviour
         float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
         bannerScale += 1f / 3f * bannerScale;
         rootUINewPos = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
-        rootUI.transform.localPosition = rootUINewPos;
+
+        var rectRoot = rootUI.GetComponent<RectTransform>();
+        newSize = new Vector2(rectRoot.sizeDelta.x, rectRoot.sizeDelta.y - bannerScale * Screen.height);
+        rectRoot.sizeDelta = newSize;
+        //rootUI.transform.localPosition = rootUINewPos;
         Pan.instance.ReloadLetterPositionPoints();
     }
     public void BannerHideAndScaleEvent()
@@ -68,7 +74,10 @@ public class UIScaleController : MonoBehaviour
         //        scaleAndUIElementAfterSortList[i].uiElement,
         //        mainCamera);
         //}
-        rootUI.transform.localPosition = rootUIOriginPos;
+        //rootUI.transform.localPosition = rootUIOriginPos;
+
+        var rectRoot = rootUI.GetComponent<RectTransform>();       
+        rectRoot.sizeDelta = originSize;
         Pan.instance.ReloadLetterPositionPoints();
     }
     private void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
@@ -108,11 +117,18 @@ public class UIScaleController : MonoBehaviour
             //    });
             //}
             rootUI = RootController.instance.gameObject;
-            rootUIOriginPos = rootUI.transform.localPosition;
+            //rootUIOriginPos = rootUI.transform.localPosition;
+            var rectRoot = rootUI.GetComponent<RectTransform>();
+            originSize = rectRoot.sizeDelta;
 
             if (AdmobController.instance.bannerHeight > 0)
             {
-                rootUI.transform.localPosition = rootUINewPos;
+                float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
+                bannerScale += 1f / 3f * bannerScale;
+                rectRoot = rootUI.GetComponent<RectTransform>();
+                newSize = new Vector2(rectRoot.sizeDelta.x, rectRoot.sizeDelta.y - bannerScale * Screen.height);
+                rectRoot.sizeDelta = newSize;
+                //rootUI.transform.localPosition = rootUINewPos;
                 Pan.instance.ReloadLetterPositionPoints();
             }
         }
