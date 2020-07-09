@@ -252,7 +252,7 @@ public class WordRegion : MonoBehaviour
         //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var boardSizeY = Screen.height / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height / 2 - 60f;
+        var boardSizeY = Screen.height / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height - 30f;
         var panSizeY = Screen.height / 2 - _centerBlock.rect.height / 2;
 
         board.rectTransform.sizeDelta = new Vector2(boardSizeX, boardSizeY);
