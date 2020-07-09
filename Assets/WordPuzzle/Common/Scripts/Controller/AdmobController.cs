@@ -10,8 +10,11 @@ public class AdmobController : MonoBehaviour, IAds
     public RewardBasedVideoAd rewardBasedVideo;
 
     public static AdmobController instance;
-
     public float bannerHeight;
+
+    public string videoAdsId;
+    public string interstitialAdsId;
+    public string bannerAdsId;
 
     private void Awake()
     {
@@ -49,11 +52,7 @@ public class AdmobController : MonoBehaviour, IAds
 #if UNITY_EDITOR
         string adUnitId = "unused";
 #elif UNITY_ANDROID
-        string adUnitId = ConfigController.Config.admob.androidBanner.Trim();
-#elif UNITY_IPHONE
-        string adUnitId = ConfigController.Config.admob.iosBanner.Trim();
-#else
-        string adUnitId = "unexpected_platform";
+        string adUnitId = bannerAdsId;
 #endif
         //Create a adaptive banner at the buttom of the screen.
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -85,11 +84,7 @@ public class AdmobController : MonoBehaviour, IAds
 #if UNITY_EDITOR
         string adUnitId = "unused";
 #elif UNITY_ANDROID
-        string adUnitId = ConfigController.Config.admob.androidInterstitial.Trim();
-#elif UNITY_IPHONE
-        string adUnitId = ConfigController.Config.admob.iosInterstitial.Trim();
-#else
-        string adUnitId = "unexpected_platform";
+        string adUnitId = interstitialAdsId;
 #endif
 
         // Create an interstitial.
@@ -111,11 +106,7 @@ public class AdmobController : MonoBehaviour, IAds
 #if UNITY_EDITOR
         string adUnitId = "unused";
 #elif UNITY_ANDROID
-        string adUnitId = ConfigController.Config.admob.androidRewarded.Trim();
-#elif UNITY_IPHONE
-        string adUnitId = ConfigController.Config.admob.iosRewarded.Trim();
-#else
-        string adUnitId = "unexpected_platform";
+        string adUnitId = videoAdsId;
 #endif
 
         this.rewardBasedVideo.LoadAd(this.CreateAdRequest(), adUnitId);
@@ -143,7 +134,8 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowBanner()
     {
-        if (CUtils.IsAdsRemoved()) return;
+        if (CUtils.IsAdsRemoved() || bannerAdsId == null) return;
+
         if (bannerView != null)
         {
             bannerView.Show();
@@ -326,6 +318,9 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
+        if (videoAdsId == null) return;
+
+
         if (this.rewardBasedVideo.IsLoaded())
         {
             this.rewardBasedVideo.Show();
@@ -356,6 +351,8 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowInterstitialAds()
     {
+        if (interstitialAdsId == null) return;
+
         CUtils.ShowInterstitialAd();
     }
 }

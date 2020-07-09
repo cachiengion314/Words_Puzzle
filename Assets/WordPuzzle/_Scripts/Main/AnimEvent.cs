@@ -118,10 +118,10 @@ public class AnimEvent : MonoBehaviour
                     {
                         if (/*IsShowAds() && */WordRegion.instance.CurLevel > 17)
                         {
-                            AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial;
+                            AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial;
                             UnityAdTest.instance.myInterstitialId = ConfigController.instance.config.unityAdsId.interstitialLevel;
+                            AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.interstitialLevel;
 
-                       
                             AdsManager.instance.ShowInterstitialAds();
                         }
                         TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>

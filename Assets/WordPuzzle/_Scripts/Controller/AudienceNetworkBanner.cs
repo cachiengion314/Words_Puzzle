@@ -169,6 +169,8 @@ public class AudienceNetworkBanner : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
 
+        AdmobController.instance.bannerAdsId = ConfigController.instance.config.admob.bannerLevel;
+
         AdmobController.instance.ShowBanner();
 
         UIScaleController.instance.BannerShowAndScaleEvent();

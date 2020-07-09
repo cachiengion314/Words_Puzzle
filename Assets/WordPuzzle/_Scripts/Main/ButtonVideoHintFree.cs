@@ -56,8 +56,8 @@ public class ButtonVideoHintFree : MonoBehaviour
 
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeLetter;
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeLetter;
+        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeLetter;
 
-        Debug.Log("Change ButtonVideoHintFree_FreeLetter id succsesss");
         AdsManager.instance.ShowVideoAds();
 
         Sound.instance.Play(Sound.Others.PopupOpen);

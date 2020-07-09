@@ -112,7 +112,55 @@ public class Pan : MonoBehaviour
             }
         });
     }
+    public void method()
+    {
+        numLetters = gameLevel.word.Trim().Length;
+        if (numLetters <= 3) transform.localPosition += new Vector3(0f, 40f, 0f);
 
+        float delta = 360f / numLetters;
+
+        float angle = 150;
+        letterLocalPositions = new List<Vector3>();
+        letterPositions = new List<Vector3>();
+        for (int i = 0; i < numLetters; i++)
+        {
+            float angleRadian = angle * Mathf.PI / 180f;
+            float x = Mathf.Cos(angleRadian);
+            float y = Mathf.Sin(angleRadian);
+            Vector3 position = RADIUS * new Vector3(x, y, 0);
+
+            letterLocalPositions.Add(position);
+            letterPositions.Add(centerPoint.TransformPoint(position));
+
+            //Debug.Log(centerPoint.position);
+
+            angle += delta;
+        }
+        LineDrawer.instance.letterPositions = new List<Vector3>();
+        LineDrawer.instance.letterPositions = letterPositions;
+
+        //foreach(int i in indexes)
+        //{
+        //    Debug.Log("index: " + i);
+        //}
+
+        if (indexes.Count != numLetters)
+        {
+            indexes = Enumerable.Range(0, numLetters).ToList();
+            indexes.Shuffle(level);
+            Prefs.SetPanWordIndexes(world, subWorld, level, indexes.ToArray());
+        }
+
+        GetPanWord();
+
+        Timer.Schedule(this, 0, () =>
+        {
+            for (int i = 0; i < numLetters; i++)
+            {
+                letterTexts[i].transform.localPosition = letterLocalPositions[indexes.IndexOf(i)];
+            }
+        });
+    }
     private void GetShuffeWord()
     {
         List<int> origin = new List<int>();

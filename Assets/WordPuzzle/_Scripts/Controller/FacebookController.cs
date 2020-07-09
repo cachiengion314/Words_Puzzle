@@ -83,6 +83,7 @@ public class FacebookController : MonoBehaviour
             }
 
             Debug.Log("NumWords: " + WordRegion.instance.NumWords);
+            Debug.Log("Best score: " + FacebookController.instance.bestScore);
         }
     }
     [HideInInspector] public double HoneyPoints {

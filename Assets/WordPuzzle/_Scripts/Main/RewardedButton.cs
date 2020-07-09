@@ -56,7 +56,7 @@ public class RewardedButton : MonoBehaviour
 
     public void OnClick()
     {
-        AdmobController.instance.ShowRewardBasedVideo();
+        //AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
         onRewarded?.Invoke();

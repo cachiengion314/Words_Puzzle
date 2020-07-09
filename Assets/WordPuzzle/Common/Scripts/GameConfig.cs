@@ -29,15 +29,14 @@ public class GameConfig
 [System.Serializable]
 public class Admob
 {
-    [Header("Banner")]
-    public string androidBanner;
-    public string iosBanner;
-    [Header("Interstitial")]
-    public string androidInterstitial;
-    public string iosInterstitial;
-    [Header("RewardedVideo")]
-    public string androidRewarded;
-    public string iosRewarded;
+    public string rewardedLevel;
+    public string rewardedChapter;
+    public string rewardedBonusBox;
+    public string rewardedFreeBoosters;
+    public string rewardedFreeStars;
+    public string rewardedFreeLetter;
+    public string interstitialLevel;
+    public string bannerLevel;
 }
 [System.Serializable]
 public class UnityAdsId

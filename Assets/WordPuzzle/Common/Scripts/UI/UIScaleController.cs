@@ -27,6 +27,9 @@ public class UIScaleController : MonoBehaviour
     public Button btnBonusBox;
     public Button btnHelp;
 
+    public GameObject rootUI;
+    public Vector3 rootUIOriginPos;
+
     private void Awake()
     {
         instance = this;
@@ -46,6 +49,9 @@ public class UIScaleController : MonoBehaviour
         //        scaleAndUIElementAfterSortList[i].uiElement,
         //        mainCamera);
         //}
+        float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
+        rootUI.transform.localPosition = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
+        Pan.instance.method();
     }
     public void BannerHideAndScaleEvent()
     {
@@ -59,44 +65,47 @@ public class UIScaleController : MonoBehaviour
         //        scaleAndUIElementAfterSortList[i].uiElement,
         //        mainCamera);
         //}
+        rootUI.transform.localPosition = rootUIOriginPos;
     }
     private void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
     {
-        //if (scene.buildIndex == 3)
-        //{
-        //    Camera mainCamera = Camera.main;
-        //    uiElementList.Clear();
-        //    scaleAndUIElementAfterSortList.Clear();
+        if (scene.buildIndex == 3)
+        {
+            //Camera mainCamera = Camera.main;
+            //uiElementList.Clear();
+            //scaleAndUIElementAfterSortList.Clear();
 
-        //    btnHint = WordRegion.instance.btnHint;
-        //    btnHintTarget = WordRegion.instance.btnHintTarget;
-        //    btnMultipleHint = WordRegion.instance.btnMultipleHint;
-        //    btnShuffle = WordRegion.instance.btnShuffle;
-        //    btnRewardAds = WordRegion.instance.btnRewardAds;
-        //    btnBonusBox = WordRegion.instance.btnBonusBox;
-        //    btnHelp = WordRegion.instance.btnHelp;
+            //btnHint = WordRegion.instance.btnHint;
+            //btnHintTarget = WordRegion.instance.btnHintTarget;
+            //btnMultipleHint = WordRegion.instance.btnMultipleHint;
+            //btnShuffle = WordRegion.instance.btnShuffle;
+            //btnRewardAds = WordRegion.instance.btnRewardAds;
+            //btnBonusBox = WordRegion.instance.btnBonusBox;
+            //btnHelp = WordRegion.instance.btnHelp;
 
-        //    uiElementList.Add(btnHintTarget.gameObject);
-        //    uiElementList.Add(btnHint.gameObject);
-        //    uiElementList.Add(btnMultipleHint.gameObject);
-        //    uiElementList.Add(btnShuffle.gameObject);
-        //    uiElementList.Add(btnRewardAds.gameObject);
-        //    uiElementList.Add(btnBonusBox.gameObject);
-        //    uiElementList.Add(btnHelp.gameObject);
+            //uiElementList.Add(btnHintTarget.gameObject);
+            //uiElementList.Add(btnHint.gameObject);
+            //uiElementList.Add(btnMultipleHint.gameObject);
+            //uiElementList.Add(btnShuffle.gameObject);
+            //uiElementList.Add(btnRewardAds.gameObject);
+            //uiElementList.Add(btnBonusBox.gameObject);
+            //uiElementList.Add(btnHelp.gameObject);
 
-        //    scaleAndUIElemenOrigintList = SortList(uiElementList, mainCamera);
+            //scaleAndUIElemenOrigintList = SortList(uiElementList, mainCamera);
 
-        //    for (int i = 0; i < scaleAndUIElemenOrigintList.Count; i++)
-        //    {
-        //        float newScaleValue = scaleAndUIElemenOrigintList[i].scaleValue - deltaScale;
-        //        ArrangeUIElementWithScaleValue(newScaleValue, scaleAndUIElemenOrigintList[i].uiElement, mainCamera);
-        //        scaleAndUIElementAfterSortList.Add(new ScaleAndUIElement()
-        //        {
-        //            scaleValue = newScaleValue,
-        //            uiElement = scaleAndUIElemenOrigintList[i].uiElement
-        //        });
-        //    }
-        //}
+            //for (int i = 0; i < scaleAndUIElemenOrigintList.Count; i++)
+            //{
+            //    float newScaleValue = scaleAndUIElemenOrigintList[i].scaleValue - deltaScale;
+            //    ArrangeUIElementWithScaleValue(newScaleValue, scaleAndUIElemenOrigintList[i].uiElement, mainCamera);
+            //    scaleAndUIElementAfterSortList.Add(new ScaleAndUIElement()
+            //    {
+            //        scaleValue = newScaleValue,
+            //        uiElement = scaleAndUIElemenOrigintList[i].uiElement
+            //    });
+            //}
+            rootUI = RootController.instance.gameObject;
+            rootUIOriginPos = rootUI.transform.localPosition;
+        }
     }
     private void ArrangeUIElementWithScaleValue(float newScaleValue, GameObject uiElement, Camera mainCamera)
     {

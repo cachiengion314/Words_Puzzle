@@ -89,8 +89,8 @@ public class RewardController : MonoBehaviour
 
             AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
             UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
-
-            Debug.Log("Change RewardController_FreeStars id succsesss");
+            AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeStars;
+           
             AdsManager.instance.ShowVideoAds();
 
             Sound.instance.Play(Sound.Others.PopupOpen);

@@ -95,8 +95,8 @@ public class ExtraWordDialog : Dialog
 
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedBonusBox;
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedBonusBox;
-
-        Debug.Log("Change extraWordDialog_BonusBox id succsesss");
+        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedBonusBox;
+     
         AdsManager.instance.ShowVideoAds();
         // AdmobController.instance.ShowRewardBasedVideo();
 

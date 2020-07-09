@@ -31,7 +31,15 @@ public class RemoteConfigFirebase : MonoBehaviour
     public string unity_free_stars;
     public string unity_free_letter;
     public string unity_level_transition;
-
+    // Google id ads
+    public string admob_level_clear;
+    public string admob_chapter_clear;
+    public string admob_bonus_box;
+    public string admob_free_boosters;
+    public string admob_free_stars;
+    public string admob_free_letter;
+    public string admob_level_transition;
+    public string admob_banner;
     private void Awake()
     {
         instance = this;
@@ -104,7 +112,15 @@ public class RemoteConfigFirebase : MonoBehaviour
         unity_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_stars").StringValue);
         unity_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_letter").StringValue);
         unity_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_transition").StringValue);
-
+        // Admob google
+        admob_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_level_clear").StringValue);
+        admob_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_chapter_clear").StringValue);
+        admob_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_bonus_box").StringValue);
+        admob_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_boosters").StringValue);
+        admob_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_stars").StringValue);
+        admob_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_letter").StringValue);
+        admob_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_level_transition").StringValue);
+        admob_banner = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_banner").StringValue);
         // Implement id advertisement
         // Facebook Audience Network
         ConfigController.instance.config.facebookAdsId.rewardedLevelClear = fan_level_clear;
@@ -122,6 +138,15 @@ public class RemoteConfigFirebase : MonoBehaviour
         ConfigController.instance.config.unityAdsId.rewardedFreeStars = unity_free_stars;
         ConfigController.instance.config.unityAdsId.rewardedFreeLetter = unity_free_letter;
         ConfigController.instance.config.unityAdsId.interstitialLevel = unity_level_transition;
+        // Admob google
+        ConfigController.instance.config.admob.rewardedLevel = admob_level_clear;
+        ConfigController.instance.config.admob.rewardedChapter = admob_chapter_clear;
+        ConfigController.instance.config.admob.rewardedBonusBox = admob_bonus_box;
+        ConfigController.instance.config.admob.rewardedFreeBoosters = admob_free_boosters;
+        ConfigController.instance.config.admob.rewardedFreeStars = admob_free_stars;
+        ConfigController.instance.config.admob.rewardedFreeLetter = admob_free_letter;
+        ConfigController.instance.config.admob.interstitialLevel = admob_level_transition;
+        ConfigController.instance.config.admob.bannerLevel = admob_banner;
     }
     public void ShowIngameNotify()
     {
