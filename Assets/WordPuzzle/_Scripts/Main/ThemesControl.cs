@@ -84,6 +84,8 @@ public class ThemesControl : MonoBehaviour
             wordRegion.imgPriceHint.sprite = currTheme.uiData.priceBooster;
             wordRegion.imgPriceMultipleHint.sprite = currTheme.uiData.priceBooster;
             wordRegion.imgPriceSelectedHint.sprite = currTheme.uiData.priceBooster;
+            var starFly = wordRegion.starCollectPfb.GetComponent<Image>();
+            starFly.sprite = currTheme.uiData.iconStarFly;
 
             //wordRegion.board.SetNativeSize();
             wordRegion.iconStar.SetNativeSize();
@@ -99,6 +101,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion.imgPriceHint.SetNativeSize();
             wordRegion.imgPriceMultipleHint.SetNativeSize();
             wordRegion.imgPriceSelectedHint.SetNativeSize();
+            starFly.SetNativeSize();
 
             wordRegion.shadowBonuxbox.SetActive(currTheme.uiData.showShadow);
             wordRegion.shadowHelp.SetActive(currTheme.uiData.showShadow);
