@@ -109,6 +109,8 @@ public class ThemesControl : MonoBehaviour
             //wordRegion.imgLeafTopRight.gameObject.SetActive(currTheme.uiData.showLeaf);
             //wordRegion.imgLeafBoardWordRegion.SetActive(currTheme.uiData.showLeaf);
             wordRegion.iconLevelTitle.SetActive(currTheme.uiData.showIconLevelTitle);
+            if (currTheme.uiData.levelTitleCenter)
+                wordRegion._textLevel.transform.localPosition = Vector3.zero;
             wordRegion._textLevel.font = currTheme.fontData.fontAsset;
             wordRegion._textLevel.color = currTheme.fontData.colorTextHeader;
             wordRegion._textLevel.fontSizeMax = currTheme.fontData.fontSizeMax;

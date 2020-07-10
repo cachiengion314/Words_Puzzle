@@ -38,6 +38,7 @@ public class UIData
     public Sprite iconStarFly;
     [Header("Play")]
     public bool showShadow = true;
+    public bool levelTitleCenter = false;
     //public bool showLeaf = true;
     public bool showIconLevelTitle = true;
     public bool boardTextPreviewCenter;
