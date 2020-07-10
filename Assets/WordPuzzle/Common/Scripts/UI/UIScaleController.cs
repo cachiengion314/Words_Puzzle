@@ -62,8 +62,8 @@ public class UIScaleController : MonoBehaviour
         Pan.instance.ReloadLetterPositionPoints();
 #endif
 #if UNITY_EDITOR
-        float bannerScale = 112 / Screen.height;
-        newSize = new Vector2(originSize.x, originSize.y - bannerScale * Screen.height);
+     
+        newSize = new Vector2(originSize.x, originSize.y - 112f);
         rectRoot.sizeDelta = newSize;
 
         Pan.instance.ReloadLetterPositionPoints();
@@ -128,7 +128,7 @@ public class UIScaleController : MonoBehaviour
             originSize = rectRoot.sizeDelta;
             Debug.Log("originSizeData"+ originSize);
 
-            if (AdmobController.instance.bannerHeight > 0 || true)
+            if (AdmobController.instance.bannerHeight > 0)
             {
                 BannerShowAndScaleEvent();
                 Debug.Log("newSizeData" + newSize);

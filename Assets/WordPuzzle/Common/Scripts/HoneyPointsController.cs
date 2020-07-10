@@ -14,11 +14,6 @@ public class HoneyPointsController : MonoBehaviour
 
     private bool isGameplayEnd;
     private int timePoints;
-    public TextMeshProUGUI timeTxt;
-    public TextMeshProUGUI honeyPointsTxt;
-    public TextMeshProUGUI titlePointsTxt;
-    public TextMeshProUGUI wordCountPointsTxt;
-    public TextMeshProUGUI timePointsTxt;
 
     public GameObject honeyFrame;
     public TextMeshProUGUI honeyTxt;
@@ -100,7 +95,7 @@ public class HoneyPointsController : MonoBehaviour
         if (isGameplayEnd) return;
 
         timeLeft -= Time.deltaTime;
-        timeTxt.text = "TimeLeft: " + timeLeft.ToString("0");
+        //timeTxt.text = "TimeLeft: " + timeLeft.ToString("0");
 
         if (timeLeft < timeGameplay && timeLeft > 0)
         {
@@ -117,9 +112,7 @@ public class HoneyPointsController : MonoBehaviour
     }
     public void ShowHoneyPoints()
     {
-        //SetupTextUI(winDialog);
         int honeyPoints;
-
         if (Prefs.IsSaveLevelProgress())
         {
             // Winning newest level
@@ -135,8 +128,6 @@ public class HoneyPointsController : MonoBehaviour
         else
         {
             // Winning old level
-
-
         }
         isGameplayEnd = true;
     }
@@ -155,31 +146,31 @@ public class HoneyPointsController : MonoBehaviour
     }
     private void SetupTextUI(GameObject winDialog)
     {
-        honeyPointsTxt.transform.SetParent(winDialog.transform);
-        timeTxt.transform.SetParent(winDialog.transform);
-        titlePointsTxt.transform.SetParent(winDialog.transform);
-        wordCountPointsTxt.transform.SetParent(winDialog.transform);
-        timePointsTxt.transform.SetParent(winDialog.transform);
+        //honeyPointsTxt.transform.SetParent(winDialog.transform);
+        //timeTxt.transform.SetParent(winDialog.transform);
+        //titlePointsTxt.transform.SetParent(winDialog.transform);
+        //wordCountPointsTxt.transform.SetParent(winDialog.transform);
+        //timePointsTxt.transform.SetParent(winDialog.transform);
 
-        honeyPointsTxt.transform.localScale = Vector3.one;
-        timeTxt.transform.localScale = Vector3.one;
-        titlePointsTxt.transform.localScale = Vector3.one;
-        wordCountPointsTxt.transform.localScale = Vector3.one;
-        timePointsTxt.transform.localScale = Vector3.one;
+        //honeyPointsTxt.transform.localScale = Vector3.one;
+        //timeTxt.transform.localScale = Vector3.one;
+        //titlePointsTxt.transform.localScale = Vector3.one;
+        //wordCountPointsTxt.transform.localScale = Vector3.one;
+        //timePointsTxt.transform.localScale = Vector3.one;
 
-        honeyPointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        timeTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        titlePointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        wordCountPointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        timePointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
+        //honeyPointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
+        //timeTxt.rectTransform.sizeDelta = new Vector2(400, 200);
+        //titlePointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
+        //wordCountPointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
+        //timePointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
 
-        Vector3 offset = new Vector3(0, 200, 0);
+        //Vector3 offset = new Vector3(0, 200, 0);
 
-        honeyPointsTxt.rectTransform.localPosition = new Vector3(365, -732) + offset;
-        timeTxt.rectTransform.localPosition = new Vector3(349, -824) + offset;
-        titlePointsTxt.rectTransform.localPosition = new Vector3(-400, -830) + offset;
-        wordCountPointsTxt.rectTransform.localPosition = new Vector3(-407, -920) + offset;
-        timePointsTxt.rectTransform.localPosition = new Vector3(347, -915) + offset;
+        //honeyPointsTxt.rectTransform.localPosition = new Vector3(365, -732) + offset;
+        //timeTxt.rectTransform.localPosition = new Vector3(349, -824) + offset;
+        //titlePointsTxt.rectTransform.localPosition = new Vector3(-400, -830) + offset;
+        //wordCountPointsTxt.rectTransform.localPosition = new Vector3(-407, -920) + offset;
+        //timePointsTxt.rectTransform.localPosition = new Vector3(347, -915) + offset;
     }
     public void ShowAndFade(int value, TextMeshProUGUI textCollect, float duration = 0.5f)
     {
