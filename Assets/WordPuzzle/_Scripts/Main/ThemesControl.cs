@@ -44,6 +44,8 @@ public class ThemesControl : MonoBehaviour
         cellPfb.letterTextNor.GetComponent<ContentSizeFitter>().enabled = currTheme.fontData.fontScale;
         if (!currTheme.fontData.fontScale)
             cellPfb.letterTextNor.resizeTextMaxSize = currTheme.fontData.fontSizeMaxCell;
+        else
+            cellPfb.letterTextNor.resizeTextForBestFit = false;
         cellPfb.letterTextNor.color = currTheme.fontData.colorCell;
         letterTextPfb.font = currTheme.fontData.fontNormal;
         letterTextPfb.color = currTheme.fontData.colorLetter;
