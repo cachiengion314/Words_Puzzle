@@ -87,8 +87,11 @@ public class WinDialog : Dialog
     [SerializeField] private Image _iconAdd;
     [SerializeField] private Image _bgCurrency;
     [SerializeField] private Image _iconDictionary;
+    [SerializeField] private Image _iconHoney;
+    [SerializeField] private Image _bgHoney;
     [SerializeField] private Image _imgNumBee;
     [SerializeField] private TextMeshProUGUI _textNumberStar;
+    [SerializeField] private TextMeshProUGUI _textHoney;
     [SerializeField] private TextMeshProUGUI _textNumBee;
     [SerializeField] private SpineControl _animIconBee;
 
@@ -139,23 +142,24 @@ public class WinDialog : Dialog
         _iconAdd.sprite = currTheme.uiData.iconAdd;
         _bgCurrency.sprite = currTheme.uiData.bgCurrency;
         _iconDictionary.sprite = currTheme.uiData.iconDictionary;
+        _bgHoney.sprite = currTheme.uiData.bgHoney;
+        _iconHoney.sprite = currTheme.uiData.iconHoney;
         _imgNumBee.sprite = currTheme.uiData.numBooster;
 
         _iconStar.SetNativeSize();
         _iconAdd.SetNativeSize();
         _bgCurrency.SetNativeSize();
         _iconDictionary.SetNativeSize();
+        _bgHoney.SetNativeSize();
+        _iconHoney.SetNativeSize();
         _imgNumBee.SetNativeSize();
 
         _textNumberStar.font = currTheme.fontData.fontAsset;
         _textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
         _textNumberStar.color = currTheme.fontData.colorTextNumStar;
 
-        if (HoneyPointsController.instance != null)
-        {
-            HoneyPointsController.instance.honeyTxt.font = currTheme.fontData.fontAsset;
-            HoneyPointsController.instance.honeyTxt.color = currTheme.fontData.colorTextNumStar;
-        }
+        _textHoney.font = currTheme.fontData.fontAsset;
+        _textHoney.color = currTheme.fontData.colorTextNumStar;
 
         _textNumBee.font = currTheme.fontData.fontAsset;
     }
@@ -340,7 +344,7 @@ public class WinDialog : Dialog
                     tweenControl.Scale(button, Vector3.one, 0.3f, () =>
                     {
                         Invoke("ShowHoneyPointInThisLevel", .1f);
-                       
+
                     }, EaseType.InQuad);
                 });
             }
