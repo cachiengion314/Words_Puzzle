@@ -74,11 +74,14 @@ public class ThemesControl : MonoBehaviour
             wordRegion.iconSetting.sprite = currTheme.uiData.iconSetting;
             wordRegion.iconDictionary.sprite = currTheme.uiData.iconDictionary;
             wordRegion.imageGround.sprite = currTheme.uiData.imgGround;
+            wordRegion.iconHoney.sprite = currTheme.uiData.iconHoney;
+            wordRegion.bgHoney.sprite = currTheme.uiData.bgHoney;
 
             wordRegion.textPreview.backgroundImg.sprite = currTheme.uiData.imgBgTextPreview;
             wordRegion.textPreview.textPrefab.bgCell.sprite = currTheme.uiData.imgBgCellPreview;
             wordRegion.textPreview.textPrefab.text.font = currTheme.fontData.fontNormal;
             wordRegion.textPreview.textPrefab.text.color = currTheme.fontData.colorCell;
+            
 
             wordRegion.imgNumHint.sprite = currTheme.uiData.numBooster;
             wordRegion.imgNumMultipleHint.sprite = currTheme.uiData.numBooster;
@@ -95,7 +98,9 @@ public class ThemesControl : MonoBehaviour
             wordRegion.bgCurrency.SetNativeSize();
             wordRegion.bgLevelTitle.SetNativeSize();
             wordRegion.iconSetting.SetNativeSize();
-            wordRegion.iconDictionary.SetNativeSize();
+            wordRegion.iconDictionary.SetNativeSize(); 
+            wordRegion.iconHoney.SetNativeSize();
+            wordRegion.bgHoney.SetNativeSize();
 
             wordRegion.imgNumHint.SetNativeSize();
             wordRegion.imgNumMultipleHint.SetNativeSize();
@@ -122,6 +127,11 @@ public class ThemesControl : MonoBehaviour
             wordRegion.textNumHint.font = currTheme.fontData.fontAsset;
             wordRegion.textNumMultipleHint.font = currTheme.fontData.fontAsset;
             wordRegion.textNumSelectedHint.font = currTheme.fontData.fontAsset;
+            if (HoneyPointsController.instance != null)
+            {
+                HoneyPointsController.instance.honeyTxt.font = currTheme.fontData.fontAsset;
+                HoneyPointsController.instance.honeyTxt.color = currTheme.fontData.colorTextHeader;
+            }
 
             wordRegion.animBtnBonusBox.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnHint.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;

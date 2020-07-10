@@ -95,6 +95,8 @@ public class WordRegion : MonoBehaviour
     public Image bgLevelTitle;
     public Image iconSetting;
     public Image iconDictionary;
+    public Image iconHoney;
+    public Image bgHoney;
     public Image imageGround;
     [Space]
     public Image imgLeafTopLeft;

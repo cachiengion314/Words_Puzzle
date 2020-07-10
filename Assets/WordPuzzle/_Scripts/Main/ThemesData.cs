@@ -69,6 +69,8 @@ public class UIData
     public Sprite frameFxExist;
     public Sprite bgToast;
     public Sprite bgTutorialLine;
+    public Sprite iconHoney;
+    public Sprite bgHoney;
     [Header("Home")]
     public bool showShadowHome = true;
     public Sprite bgHome;

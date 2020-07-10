@@ -151,6 +151,12 @@ public class WinDialog : Dialog
         _textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
         _textNumberStar.color = currTheme.fontData.colorTextNumStar;
 
+        if (HoneyPointsController.instance != null)
+        {
+            HoneyPointsController.instance.honeyTxt.font = currTheme.fontData.fontAsset;
+            HoneyPointsController.instance.honeyTxt.color = currTheme.fontData.colorTextNumStar;
+        }
+
         _textNumBee.font = currTheme.fontData.fontAsset;
     }
 
