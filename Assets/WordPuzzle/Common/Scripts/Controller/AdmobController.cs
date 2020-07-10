@@ -139,6 +139,7 @@ public class AdmobController : MonoBehaviour, IAds
         if (bannerView != null)
         {
             bannerView.Show();
+            UIScaleController.instance.BannerShowAndScaleEvent();
         }
         else
         {
@@ -203,11 +204,9 @@ public class AdmobController : MonoBehaviour, IAds
             this.bannerView.GetWidthInPixels(),
             Screen.height / (int)MobileAds.Utils.GetDeviceScale(),
             Screen.width / (int)MobileAds.Utils.GetDeviceScale()
-            ));
+            )); 
         bannerHeight = this.bannerView.GetHeightInPixels();
-
         UIScaleController.instance.BannerShowAndScaleEvent();
-
     }
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)

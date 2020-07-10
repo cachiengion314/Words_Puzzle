@@ -114,10 +114,13 @@ public class Pan : MonoBehaviour
     }
     public void ReloadLetterPositionPoints()
     {
-        numLetters = gameLevel.word.Trim().Length;
+        if (MainController.instance.GameLevel == null) return;
+
+        numLetters = MainController.instance.GameLevel.word.Trim().Length;
+        Debug.Log("numLetter: " + numLetters);
         if (numLetters <= 3) transform.localPosition += new Vector3(0f, 40f, 0f);
 
-        float delta = 360f / numLetters;
+        float delta = 360f / (int)numLetters;
 
         float angle = 150;
         letterLocalPositions = new List<Vector3>();

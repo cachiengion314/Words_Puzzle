@@ -377,12 +377,14 @@ MonoBehaviour:
       rewardedFreeStars: 670089180215126_670103063547071
       rewardedFreeLetter: 670089180215126_670089596881751
     admob:
-      androidBanner: ca-app-pub-3940256099942544/6300978111
-      iosBanner: ca-app-pub-3940256099942544/2934735716
-      androidInterstitial: ca-app-pub-3940256099942544/1033173712
-      iosInterstitial: ca-app-pub-3940256099942544/4411468910
-      androidRewarded: ca-app-pub-3940256099942544/5224354917
-      iosRewarded: ca-app-pub-3940256099942544/1712485313
+      rewardedLevel: 
+      rewardedChapter: 
+      rewardedBonusBox: 
+      rewardedFreeBoosters: 
+      rewardedFreeStars: 
+      rewardedFreeLetter: 
+      interstitialLevel: 
+      bannerLevel: 
     adPeriod: 70
     rewardedVideoPeriod: 60
     rewardedVideoAmount: 2
@@ -1713,6 +1715,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bannerHeight: 0
+  videoAdsId: 
+  interstitialAdsId: 
+  bannerAdsId: 
 --- !u!114 &114267630047507976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3343,6 +3348,12 @@ MonoBehaviour:
   btnRewardAds: {fileID: 0}
   btnBonusBox: {fileID: 0}
   btnHelp: {fileID: 0}
+  rootUI: {fileID: 0}
+  rootUIOriginPos: {x: 0, y: 0, z: 0}
+  rootUINewPos: {x: 0, y: 0, z: 0}
+  originSize: {x: 0, y: 0}
+  newSize: {x: 0, y: 0}
+  rectRoot: {fileID: 0}
 --- !u!1 &8143336261846906844
 GameObject:
   m_ObjectHideFlags: 0

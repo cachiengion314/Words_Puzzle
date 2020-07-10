@@ -14,6 +14,8 @@ public class WinDialog : Dialog
     private int subWorld, level;
     private bool _isWatchAds;
 
+    public TextMeshProUGUI visualHoneyPointsTxt;
+    public int honeyPointsInThisLevel;
     [SerializeField]
     private GameObject explosiveFxPref;
     [SerializeField]
@@ -328,7 +330,12 @@ public class WinDialog : Dialog
                 button.transform.localScale = Vector3.zero;
                 tweenControl.Scale(button, Vector3.one * 1.3f, 0.3f, () =>
                 {
-                    tweenControl.Scale(button, Vector3.one, 0.3f, null, EaseType.InQuad);
+
+                    tweenControl.Scale(button, Vector3.one, 0.3f, () =>
+                    {
+                        Invoke("ShowHoneyPointInThisLevel", .1f);
+                       
+                    }, EaseType.InQuad);
                 });
             }
             else
@@ -367,7 +374,13 @@ public class WinDialog : Dialog
         else
             RewardButton.SetActive(false);
     }
+    public void ShowHoneyPointInThisLevel()
+    {
+        (visualHoneyPointsTxt).text = "X" + honeyPointsInThisLevel;
+        TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one * 1.2f, .3f,
+        () => { TweenControl.GetInstance().FadeAnfaText(visualHoneyPointsTxt, 0, 0.3f); });
 
+    }
     public void HidenTut()
     {
         TutorialController.instance.HidenPopTut();

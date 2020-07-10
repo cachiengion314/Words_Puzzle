@@ -10,6 +10,7 @@ public class HoneyPointsController : MonoBehaviour
 {
     public static HoneyPointsController instance;
     public Action onChangedHoneyPoints;
+    public Action showHoneyPointsInThisLevel;
 
     private bool isGameplayEnd;
     private int timePoints;
@@ -21,6 +22,7 @@ public class HoneyPointsController : MonoBehaviour
 
     public GameObject honeyFrame;
     public TextMeshProUGUI honeyTxt;
+    public TextMeshProUGUI visualHoneyPointsTxt;
 
     private int totalTitlePoints;
     private int[] titlePointsArray = new int[12] { 0, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4 };
@@ -40,6 +42,12 @@ public class HoneyPointsController : MonoBehaviour
                 totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
                 honeyTxt.text = (FacebookController.instance.HoneyPoints + totalTitlePoints).ToString();
 
+                visualHoneyPointsTxt.text = totalTitlePoints.ToString();
+                ShowAndFade(totalTitlePoints, visualHoneyPointsTxt);
+
+                TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one * 2f, .2f,
+         () => { TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one, .2f); });
+
                 TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .2f,
             () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .2f); });
             }
@@ -47,6 +55,12 @@ public class HoneyPointsController : MonoBehaviour
             {
                 totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
                 honeyTxt.text = (FacebookController.instance.HoneyPoints + totalTitlePoints).ToString();
+
+                visualHoneyPointsTxt.text = totalTitlePoints.ToString();
+                ShowAndFade(totalTitlePoints, visualHoneyPointsTxt);
+
+                TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one * 2f, .2f,
+         () => { TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one, .2f); });
 
                 TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .1f,
             () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .1f); });
@@ -66,7 +80,7 @@ public class HoneyPointsController : MonoBehaviour
         set
         {
             numberOfWordsInLevelWithoutExtra = value;
-          
+
             if (numberOfWordsInLevelWithoutExtra <= 3) { timeLeft = 60f; }
             else
             {
@@ -79,6 +93,7 @@ public class HoneyPointsController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        visualHoneyPointsTxt.transform.localScale = Vector3.zero;
     }
     void Update()
     {
@@ -100,7 +115,7 @@ public class HoneyPointsController : MonoBehaviour
             timePoints = 0;
         }
     }
-    public void ShowHoneyPoints(GameObject winDialog)
+    public void ShowHoneyPoints()
     {
         //SetupTextUI(winDialog);
         int honeyPoints;
@@ -111,6 +126,8 @@ public class HoneyPointsController : MonoBehaviour
             totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
             honeyPoints = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
 
+            WinDialog.instance.honeyPointsInThisLevel = honeyPoints;
+
             FacebookController.instance.HoneyPoints += honeyPoints;
             FacebookController.instance.SaveDataGame();
             onChangedHoneyPoints?.Invoke();
@@ -118,9 +135,8 @@ public class HoneyPointsController : MonoBehaviour
         else
         {
             // Winning old level
-            honeyPoints = 0;
-            honeyPointsTxt.text = "Honey: " + honeyPoints.ToString();
-        
+
+
         }
         isGameplayEnd = true;
     }
@@ -164,5 +180,11 @@ public class HoneyPointsController : MonoBehaviour
         titlePointsTxt.rectTransform.localPosition = new Vector3(-400, -830) + offset;
         wordCountPointsTxt.rectTransform.localPosition = new Vector3(-407, -920) + offset;
         timePointsTxt.rectTransform.localPosition = new Vector3(347, -915) + offset;
+    }
+    public void ShowAndFade(int value, TextMeshProUGUI textCollect, float duration = 0.5f)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        (textCollect).text = "X" + value;
+        tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
     }
 }

@@ -24,7 +24,10 @@ public class MainController : BaseController
     private bool _isGameComplete;
     private bool _isLevelClear;
     private GameLevel gameLevel;
-
+    public GameLevel GameLevel
+    {
+        get { return gameLevel; }
+    }
     public static MainController instance;
 
     [HideInInspector] public bool isBeePlay;
@@ -122,7 +125,7 @@ public class MainController : BaseController
         {
             DialogController.instance.ShowDialog(DialogType.Win);
 
-            HoneyPointsController.instance.ShowHoneyPoints(WinDialog.instance.gameObject);
+            HoneyPointsController.instance.ShowHoneyPoints();
         });
     }
 

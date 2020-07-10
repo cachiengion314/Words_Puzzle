@@ -39,15 +39,12 @@ public class AudienceNetworkBanner : MonoBehaviour
     {
         nextSceneName = next.buildIndex;
 
-        CheckCurrentLevel();
         if (nextSceneName == 3)
         {
             if (CUtils.IsAdsRemoved()) return;
 
-            if (currlevel > MinLevelToLoadBanner)
-            {
-                LoadBanner();
-            }
+            LoadBanner();
+
             hasLoadMainScene = true;
         }
         else if (nextSceneName != 3)
@@ -167,13 +164,11 @@ public class AudienceNetworkBanner : MonoBehaviour
 
     private IEnumerator LoadBannerWithDelay()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0.5f);
 
         AdmobController.instance.bannerAdsId = ConfigController.instance.config.admob.bannerLevel;
 
         AdmobController.instance.ShowBanner();
-
-        UIScaleController.instance.BannerShowAndScaleEvent();
     }
     public int CheckCurrentLevel()
     {

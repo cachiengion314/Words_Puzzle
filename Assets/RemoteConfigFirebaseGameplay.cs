@@ -2,19 +2,9 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using Firebase.RemoteConfig;
-using TMPro;
-public class RemoteConfigFirebase : MonoBehaviour
+public class RemoteConfigFirebaseGameplay : MonoBehaviour
 {
-    //public TextMeshProUGUI textPrefab;
-    public static RemoteConfigFirebase instance;
-    public Action notifyIngameCall;
-
-    private string tittle;
-    private string contain;
-    private bool notifyIngameOn;
-    [HideInInspector] public bool isShowNoti;
-
-    private bool isNeedToFetch = true;
+    private static RemoteConfigFirebaseGameplay instance;
     // Audience NetWork Id ads
     public string fan_level_clear;
     public string fan_chapter_clear;
@@ -50,44 +40,16 @@ public class RemoteConfigFirebase : MonoBehaviour
         {
             instance = this;
         }
-        DontDestroyOnLoad(gameObject);       
-     
-        notifyIngameCall += () =>
-        {
-            if (!notifyIngameOn)
-            {
-                if (HomeController.instance != null)
-                    HomeController.instance.CheckShowFreeBooster();
-                return;
-            }
 
-            bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tittle;
-
-            if (!NotifyMailDialogData.instance.IsShowBefore && !CPlayerPrefs.GetBool("FIRST")
-           || isNeedToNotify && !CPlayerPrefs.GetBool("FIRST"))
-            {
-                MailDialog.CreateNewNotify(tittle, contain);
-                DialogController.instance.ShowDialog(DialogType.Mail, DialogShow.STACK_DONT_HIDEN);
-                isShowNoti = true;
-            }
-            else
-            {
-                if (HomeController.instance != null)
-                    HomeController.instance.CheckShowFreeBooster();
-            }
-        };
+        DontDestroyOnLoad(gameObject);
     }
-    private void Update()
+    private void Start()
     {
-        if (!isNeedToFetch) return;
-        isNeedToFetch = false;
+        if (RemoteConfigFirebase.instance != null) return;
 
         FetchFireBase();
-
-        Invoke("ShowIngameNotify", 1.7f);
         Invoke("GetAllIdAvertisement", 1.7f);
     }
-
     public void FetchFireBase()
     {
         FetchDataAsync();
@@ -157,23 +119,6 @@ public class RemoteConfigFirebase : MonoBehaviour
         ConfigController.instance.config.admob.interstitialLevel = admob_level_transition;
         ConfigController.instance.config.admob.bannerLevel = admob_banner;
     }
-    public void ShowIngameNotify()
-    {
-        if (!notifyIngameOn) return;
-
-        tittle = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("TittleMail").StringValue);
-        contain = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("ContainMail").StringValue);
-
-        bool isNeedToNotify = NotifyMailDialogData.instance.Tittle != tittle;
-
-        if (!NotifyMailDialogData.instance.IsShowBefore && CPlayerPrefs.GetBool("FIRST")
-            || isNeedToNotify && CPlayerPrefs.GetBool("FIRST"))
-        {
-            MailDialog.CreateNewNotify(tittle, contain);
-            DialogController.instance.ShowDialog(DialogType.Mail, DialogShow.STACK_DONT_HIDEN);
-        }
-    }
-
     // Start a fetch request.
     public Task FetchDataAsync()
     {

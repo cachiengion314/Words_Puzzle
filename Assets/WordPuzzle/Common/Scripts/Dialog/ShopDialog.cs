@@ -372,6 +372,7 @@ public class ShopDialog : Dialog
     }
     public void LoadAllBannerWhenClose()
     {
+        if (ThemesDialog.instance != null) return;
         AudienceNetworkBanner.instance.LoadBanner();
     }
 }

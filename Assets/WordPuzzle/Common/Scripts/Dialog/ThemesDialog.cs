@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class ThemesDialog : Dialog
 {
+    public static ThemesDialog instance;
     [SerializeField] private List<ThemeItem> _themes;
     private bool _themeExits;
 
     protected override void Start()
     {
         base.Start();
+        instance = this;
         CheckShowSelectedTheme();
     }
 

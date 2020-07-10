@@ -13,11 +13,11 @@ public struct ScaleAndUIElement
 public class UIScaleController : MonoBehaviour
 {
     public static UIScaleController instance;
-    private readonly float deltaScale = 0.06f;
+    //private readonly float deltaScale = 0.06f;
 
-    List<GameObject> uiElementList = new List<GameObject>();
-    List<ScaleAndUIElement> scaleAndUIElemenOrigintList = new List<ScaleAndUIElement>();
-    List<ScaleAndUIElement> scaleAndUIElementAfterSortList = new List<ScaleAndUIElement>();
+    //List<GameObject> uiElementList = new List<GameObject>();
+    //List<ScaleAndUIElement> scaleAndUIElemenOrigintList = new List<ScaleAndUIElement>();
+    //List<ScaleAndUIElement> scaleAndUIElementAfterSortList = new List<ScaleAndUIElement>();
 
     public Button btnHintTarget;
     public Button btnHint;
@@ -33,10 +33,12 @@ public class UIScaleController : MonoBehaviour
 
     public Vector2 originSize;
     public Vector2 newSize;
+    [SerializeField] private RectTransform rectRoot;   // this object will be destroy when load new scene
     private void Awake()
     {
         instance = this;
         SceneManager.sceneLoaded += OnSceneWasLoaded;
+
     }
     public void BannerShowAndScaleEvent() // invoke in request and load banner
     {
@@ -52,15 +54,20 @@ public class UIScaleController : MonoBehaviour
         //        scaleAndUIElementAfterSortList[i].uiElement,
         //        mainCamera);
         //}
+#if UNITY_ANDROID && !UNITY_EDITOR
         float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
-       
-        //rootUINewPos = new Vector3(rootUIOriginPos.x, rootUIOriginPos.y + bannerScale * Screen.height, rootUIOriginPos.z);
-
-        var rectRoot = rootUI.GetComponent<RectTransform>();
         newSize = new Vector2(originSize.x, originSize.y - bannerScale * Screen.height);
         rectRoot.sizeDelta = newSize;
-        //rootUI.transform.localPosition = rootUINewPos;
+
         Pan.instance.ReloadLetterPositionPoints();
+#endif
+#if UNITY_EDITOR
+        float bannerScale = 112 / Screen.height;
+        newSize = new Vector2(originSize.x, originSize.y - bannerScale * Screen.height);
+        rectRoot.sizeDelta = newSize;
+
+        Pan.instance.ReloadLetterPositionPoints();
+#endif
     }
     public void BannerHideAndScaleEvent()
     {
@@ -76,7 +83,6 @@ public class UIScaleController : MonoBehaviour
         //}
         //rootUI.transform.localPosition = rootUIOriginPos;
 
-        var rectRoot = rootUI.GetComponent<RectTransform>();       
         rectRoot.sizeDelta = originSize;
         Pan.instance.ReloadLetterPositionPoints();
     }
@@ -116,16 +122,16 @@ public class UIScaleController : MonoBehaviour
             //        uiElement = scaleAndUIElemenOrigintList[i].uiElement
             //    });
             //}
-            rootUI = RootController.instance.gameObject;
-            //rootUIOriginPos = rootUI.transform.localPosition;
-            var rectRoot = rootUI.GetComponent<RectTransform>();
-            originSize = rectRoot.sizeDelta;
 
-            if (AdmobController.instance.bannerHeight > 0)
-            {              
-                rectRoot.sizeDelta = newSize;
-                //rootUI.transform.localPosition = rootUINewPos;
-                Pan.instance.ReloadLetterPositionPoints();
+            rootUI = RootController.instance.gameObject;
+            rectRoot = rootUI.GetComponent<RectTransform>();
+            originSize = rectRoot.sizeDelta;
+            Debug.Log("originSizeData"+ originSize);
+
+            if (AdmobController.instance.bannerHeight > 0 || true)
+            {
+                BannerShowAndScaleEvent();
+                Debug.Log("newSizeData" + newSize);
             }
         }
     }
