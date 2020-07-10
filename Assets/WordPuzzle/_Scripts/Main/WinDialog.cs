@@ -122,6 +122,8 @@ public class WinDialog : Dialog
             AdsManager.instance.LoadDataAds();
         CheckShowAdsButton();
         isSound = false;
+        _btnBee.transform.position = new Vector3(_btnBee.transform.position.x, WordRegion.instance.animBtnHintTarget.transform.position.y);
+        _chickenBank.transform.position = new Vector3(_chickenBank.transform.position.x, _btnBee.transform.position.y);
     }
 
     private void CheckTheme()

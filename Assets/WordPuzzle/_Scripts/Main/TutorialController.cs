@@ -264,16 +264,19 @@ public class TutorialController : MonoBehaviour
 
     public void HidenHandConnectWord(bool killTween = true)
     {
-        if (_handConnectTut.gameObject.activeInHierarchy)
+        if (_handConnectTut != null)
         {
-            LineDrawer.instance.LineRenderer.positionCount = 0;
-            LineDrawer.instance.currentIndexes.Clear();
-            _handConnectTut.gameObject.SetActive(false);
-        }
-        if (killTween)
-        {
-            TweenControl.GetInstance().KillDelayCall(_handConnectTut.transform);
-            TweenControl.GetInstance().KillTweener(_handConnectTut.transform);
+            if (_handConnectTut.gameObject.activeInHierarchy)
+            {
+                LineDrawer.instance.LineRenderer.positionCount = 0;
+                LineDrawer.instance.currentIndexes.Clear();
+                _handConnectTut.gameObject.SetActive(false);
+            }
+            if (killTween)
+            {
+                TweenControl.GetInstance().KillDelayCall(_handConnectTut.transform);
+                TweenControl.GetInstance().KillTweener(_handConnectTut.transform);
+            }
         }
     }
     #endregion
