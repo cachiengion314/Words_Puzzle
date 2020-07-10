@@ -107,7 +107,7 @@ public class TutorialController : MonoBehaviour
             BlockScreen.instance.Block(true);
         isShowTut = true;
         _overlay.SetActive(true);
-        _overlay.GetComponent<Canvas>().sortingOrder = 0;
+        _overlay.GetComponent<Canvas>().sortingOrder = 1;
         _popText.SetActive(true);
         var answerTargetRandom = "";
         var letterOrders = new List<Text>();
@@ -267,11 +267,11 @@ public class TutorialController : MonoBehaviour
             LineDrawer.instance.LineRenderer.positionCount = 0;
             LineDrawer.instance.currentIndexes.Clear();
             _handConnectTut.gameObject.SetActive(false);
-            if (killTween)
-            {
-                TweenControl.GetInstance().KillDelayCall(_handConnectTut.transform);
-                TweenControl.GetInstance().KillTweener(_handConnectTut.transform);
-            }
+        }
+        if (killTween)
+        {
+            TweenControl.GetInstance().KillDelayCall(_handConnectTut.transform);
+            TweenControl.GetInstance().KillTweener(_handConnectTut.transform);
         }
     }
     #endregion
