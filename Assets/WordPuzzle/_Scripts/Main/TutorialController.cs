@@ -97,7 +97,7 @@ public class TutorialController : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void ShowPopWordTut(string contentPop, int indexAnser = 0, bool lineNotShown = true, string contentAfter = "")
+    public void ShowPopWordTut(string contentPop, int indexAnser = 0, bool lineNotShown = true, string contentAfter = "", bool hidenTextContent = false)
     {
         if (WordRegion.instance.BtnADS != null)
         {
@@ -122,7 +122,8 @@ public class TutorialController : MonoBehaviour
                     _answerTarget = line.answers[indexAnser];
                     answerTargetRandom = _answerTarget;
                     line.SetDataLetter(line.answers[indexAnser]);
-                    _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
+                    if (!hidenTextContent)
+                        _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
                     LineTarget.GetComponent<Canvas>().overrideSorting = true;
                     LineTarget.lineTutorialBG.gameObject.SetActive(true);
                     break;
@@ -149,7 +150,8 @@ public class TutorialController : MonoBehaviour
                             _answerTarget += ans;
                         index++;
                     }
-                    _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
+                    if (!hidenTextContent)
+                        _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
                     LineTarget.GetComponent<Canvas>().overrideSorting = true;
                     LineTarget.lineTutorialBG.gameObject.SetActive(true);
                     break;

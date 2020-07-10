@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LineDrawer : MonoBehaviour
@@ -104,9 +105,13 @@ public class LineDrawer : MonoBehaviour
                 lineParticle.SetActive(false);
                 if (textPreview.GetText().Length > 1)
                     WordRegion.instance.CheckAnswer(textPreview.GetText());
-                else
+                else 
                     WordRegion.instance.textPreview.ClearText();
                 pan.ResetScaleWord();
+            }
+            if (WordRegion.instance.CurLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && WordRegion.instance.Lines.Any(li => li.isShown))
+            {
+                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", true);
             }
         }
 
