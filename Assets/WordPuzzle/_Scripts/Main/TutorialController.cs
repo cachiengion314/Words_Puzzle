@@ -97,7 +97,7 @@ public class TutorialController : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void ShowPopWordTut(string contentPop, int indexAnser = 0, bool lineNotShown = true, string contentAfter = "", bool hidenTextContent = false)
+    public void ShowPopWordTut(string contentPop, int indexAnser = 0, bool lineNotShown = true, string contentAfter = "", bool hidenTextContent = false, LineWord lineCheck = null)
     {
         if (WordRegion.instance.BtnADS != null)
         {
@@ -132,31 +132,33 @@ public class TutorialController : MonoBehaviour
         }
         else
         {
-            foreach (var line in WordRegion.instance.Lines)
-            {
-                if (line.isShown && line.answers.Count > 1)
+            //foreach (var line in WordRegion.instance.Lines)
+            //{
+            //    if (line.isShown && line.answers.Count > 1)
+            //    {
+            
+                _lineTarget = lineCheck != null ? lineCheck : WordRegion.instance.Lines.Find(line => line.isShown && line.answers.Count > 1);
+                LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
+                var otherAnswers = _lineTarget.answers.FindAll(ans => ans != _lineTarget.answer);
+                answerTargetRandom = otherAnswers[Random.Range(0, otherAnswers.Count)];
+                var index = 0;
+                _answerTarget = "";
+                foreach (var ans in otherAnswers)
                 {
-                    _lineTarget = line;
-                    LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
-                    var otherAnswers = line.answers.FindAll(ans => ans != _lineTarget.answer);
-                    answerTargetRandom = otherAnswers[Random.Range(0, otherAnswers.Count)];
-                    var index = 0;
-                    _answerTarget = "";
-                    foreach (var ans in otherAnswers)
-                    {
-                        if (index < otherAnswers.Count - 1)
-                            _answerTarget += ans + ", ";
-                        else
-                            _answerTarget += ans;
-                        index++;
-                    }
-                    if (!hidenTextContent)
-                        _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
-                    LineTarget.GetComponent<Canvas>().overrideSorting = true;
-                    LineTarget.lineTutorialBG.gameObject.SetActive(true);
-                    break;
+                    if (index < otherAnswers.Count - 1)
+                        _answerTarget += ans + ", ";
+                    else
+                        _answerTarget += ans;
+                    index++;
                 }
-            }
+                if (!hidenTextContent)
+                    _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
+                LineTarget.GetComponent<Canvas>().overrideSorting = true;
+                LineTarget.lineTutorialBG.gameObject.SetActive(true);
+                //break;
+            
+            //    }
+            //}
         }
         PlayHandConnectWordTut(answerTargetRandom, letterOrders);
     }
@@ -561,7 +563,6 @@ public class TutorialController : MonoBehaviour
             if (currlevel >= 40)
                 Firebase.Analytics.FirebaseAnalytics.LogEvent(Firebase.Analytics.FirebaseAnalytics.EventTutorialComplete);
         }
-        HidenHandConnectWord(true);
     }
 
     public void CheckAndShowTutorial()
