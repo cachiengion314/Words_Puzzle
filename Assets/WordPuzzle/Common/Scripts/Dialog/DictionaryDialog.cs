@@ -71,7 +71,11 @@ public class DictionaryDialog : Dialog
         if (listWordPassed != null)
             CloneListGroupWord();
         numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
-        
+
+        InstantiateFlags();
+    }
+    public void InstantiateFlags()
+    {
         // Instantiate the flag tab
         for (int i = 0; i < FacebookController.instance.flagItemList.Count; i++)
         {
@@ -79,7 +83,7 @@ public class DictionaryDialog : Dialog
             flagItem.flagImage = FacebookController.instance.flagItemList[i].flagImage;
             flagItem.flagName = FacebookController.instance.flagItemList[i].flagName;
         }
-    }
+    } 
     public void OnClickFlagTab()
     {
         flagTab.gameObject.SetActive(true);

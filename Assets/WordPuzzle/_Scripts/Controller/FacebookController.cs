@@ -5,6 +5,7 @@ using PlayFab.ClientModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,6 +20,7 @@ public struct FlagItem
 public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
+    public List<string> AllWords = new List<string>();
     [HideInInspector] public bool newLevel = false;
 
     public PlayFab.ClientModels.LoginResult result;
@@ -56,38 +58,37 @@ public class FacebookController : MonoBehaviour
             CurrencyController.UpdateBalanceAndHintFree();
         }
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            foreach (var item in newWordOpenInLevel)
-            {
-                Debug.Log("newWordOpenInLevel: " + item);
-            }
-            foreach (var item in existWord)
-            {
-                Debug.Log("existWord: " + item);
-            }
-            foreach (var item in ExtraWord.instance.extraWords)
-            {
-                Debug.Log("extraWords: " + item);
-            }
-            foreach (var item in WordRegion.instance.listWordCorrect)
-            {
-                Debug.Log("listWordCorrect: " + item);
-            }
-            Debug.Log("numLevels: " + Superpow.Utils.GetNumLevels(Int32.Parse(user.unlockedWorld), Int32.Parse(user.unlockedSubWorld)));
-
-            Debug.Log("TotalLineIndex: " + HoneyPointsController.instance.LineIndex);
-
-            foreach (var item in WordRegion.instance.listWordInLevel)
-            {
-                Debug.Log("listWordInLevel: " + item);
-            }
-
+        {    
             Debug.Log("NumWords: " + WordRegion.instance.NumWords);
             Debug.Log("Best score: " + FacebookController.instance.bestScore);
             Debug.Log("HoneyPoints: " + FacebookController.instance.HoneyPoints);
+            string allWords = null;
+            for (int i = 0; i < _gameData.words.Count; i++)
+            {
+                for (int ii = 0; ii < _gameData.words[i].subWords.Count; ii++)
+                {
+                    for (int iii = 0; iii < _gameData.words[i].subWords[ii].gameLevels.Count; iii++)
+                    {
+                        allWords += "|" + _gameData.words[i].subWords[ii].gameLevels[iii].answers;
+                    }
+                }
+            }
+            GetAllWordsList(allWords);
         }
     }
-    [HideInInspector] public double HoneyPoints {
+    public void GetAllWordsList(string allWords)
+    {
+        AllWords.Clear();
+        List<string> allWordsList;
+        allWordsList = allWords.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        allWordsList.Sort();
+        allWordsList = allWordsList.Distinct().ToList();
+
+        AllWords.AddRange(allWordsList);
+    }
+    [HideInInspector]
+    public double HoneyPoints
+    {
         get
         {
             return user.honeyPoint;

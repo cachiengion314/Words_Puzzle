@@ -33,7 +33,7 @@ public class UIScaleController : MonoBehaviour
 
     public Vector2 originSize;
     public Vector2 newSize;
-    [SerializeField] private RectTransform rectRoot;   // this object will be destroy when load new scene
+    [SerializeField] private RectTransform rectRoot;   // this object will be destroyed when load new scene
     private void Awake()
     {
         instance = this;
@@ -61,7 +61,7 @@ public class UIScaleController : MonoBehaviour
 
         Pan.instance.ReloadLetterPositionPoints();
 #endif
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ! !UNITY_ANDROID
      
         newSize = new Vector2(originSize.x, originSize.y - 112f);
         rectRoot.sizeDelta = newSize;
@@ -126,12 +126,10 @@ public class UIScaleController : MonoBehaviour
             rootUI = RootController.instance.gameObject;
             rectRoot = rootUI.GetComponent<RectTransform>();
             originSize = rectRoot.sizeDelta;
-            Debug.Log("originSizeData"+ originSize);
-
+         
             if (AdmobController.instance.bannerHeight > 0)
             {
                 BannerShowAndScaleEvent();
-                Debug.Log("newSizeData" + newSize);
             }
         }
     }

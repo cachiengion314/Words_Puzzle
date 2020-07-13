@@ -37,28 +37,15 @@ public class HoneyPointsController : MonoBehaviour
                 totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
                 honeyTxt.text = (FacebookController.instance.HoneyPoints + totalTitlePoints).ToString();
 
-                visualHoneyPointsTxt.text = totalTitlePoints.ToString();
-                ShowAndFade(totalTitlePoints, visualHoneyPointsTxt);
+                ShowAndFade(totalTitlePoints, 0, visualHoneyPointsTxt);
 
-                TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one * 2f, .2f,
-         () => { TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one, .2f); });
-
-                TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .2f,
-            () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .2f); });
+                TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 1.2f, .3f,
+            () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .3f); });
             }
-            else if (lineIndex == 0)
+            else if (lineIndex == 0 && Prefs.IsSaveLevelProgress())
             {
                 totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
                 honeyTxt.text = (FacebookController.instance.HoneyPoints + totalTitlePoints).ToString();
-
-                visualHoneyPointsTxt.text = totalTitlePoints.ToString();
-                ShowAndFade(totalTitlePoints, visualHoneyPointsTxt);
-
-                TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one * 2f, .2f,
-         () => { TweenControl.GetInstance().Scale(visualHoneyPointsTxt.gameObject, Vector3.one, .2f); });
-
-                TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 2f, .1f,
-            () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .1f); });
             }
         }
     }
@@ -88,7 +75,7 @@ public class HoneyPointsController : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        visualHoneyPointsTxt.transform.localScale = Vector3.zero;
+
     }
     void Update()
     {
@@ -119,7 +106,7 @@ public class HoneyPointsController : MonoBehaviour
             totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
             honeyPoints = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
 
-            WinDialog.instance.honeyPointsInThisLevel = honeyPoints;
+            StartCoroutine(ShowAndFadeDelay(honeyPoints, visualHoneyPointsTxt));
 
             FacebookController.instance.HoneyPoints += honeyPoints;
             FacebookController.instance.SaveDataGame();
@@ -144,38 +131,25 @@ public class HoneyPointsController : MonoBehaviour
         }
         return total;
     }
-    private void SetupTextUI(GameObject winDialog)
+    private IEnumerator ShowAndFadeDelay(int value, TextMeshProUGUI textCollect, float duration = 0.5f)
     {
-        //honeyPointsTxt.transform.SetParent(winDialog.transform);
-        //timeTxt.transform.SetParent(winDialog.transform);
-        //titlePointsTxt.transform.SetParent(winDialog.transform);
-        //wordCountPointsTxt.transform.SetParent(winDialog.transform);
-        //timePointsTxt.transform.SetParent(winDialog.transform);
-
-        //honeyPointsTxt.transform.localScale = Vector3.one;
-        //timeTxt.transform.localScale = Vector3.one;
-        //titlePointsTxt.transform.localScale = Vector3.one;
-        //wordCountPointsTxt.transform.localScale = Vector3.one;
-        //timePointsTxt.transform.localScale = Vector3.one;
-
-        //honeyPointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        //timeTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        //titlePointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        //wordCountPointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-        //timePointsTxt.rectTransform.sizeDelta = new Vector2(400, 200);
-
-        //Vector3 offset = new Vector3(0, 200, 0);
-
-        //honeyPointsTxt.rectTransform.localPosition = new Vector3(365, -732) + offset;
-        //timeTxt.rectTransform.localPosition = new Vector3(349, -824) + offset;
-        //titlePointsTxt.rectTransform.localPosition = new Vector3(-400, -830) + offset;
-        //wordCountPointsTxt.rectTransform.localPosition = new Vector3(-407, -920) + offset;
-        //timePointsTxt.rectTransform.localPosition = new Vector3(347, -915) + offset;
-    }
-    public void ShowAndFade(int value, TextMeshProUGUI textCollect, float duration = 0.5f)
-    {
+        yield return new WaitForSeconds(.5f);
         var tweenControl = TweenControl.GetInstance();
         (textCollect).text = "X" + value;
         tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
+    }
+    public void ShowAndFade(int value, float delay, TextMeshProUGUI textCollect, float duration = 0.5f)
+    {
+        var tweenControl = TweenControl.GetInstance();
+        (textCollect).text = "X" + value;
+
+        tweenControl.DelayCall(textCollect.transform, delay,
+            () =>
+            {
+                tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
+            }
+
+            );
+
     }
 }
