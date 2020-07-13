@@ -46,18 +46,18 @@ public class RewardController : MonoBehaviour
         _rewardVideoControl = FindObjectOfType<RewardVideoController>();
         if (_rewardVideoControl == null)
             _rewardVideoControl = Instantiate(_rewardVideoPfb);
-        if (_showAgain.isOn)
-        {
-            OnWatchClick();
-        }
-        else
-        {
+        //if (_showAgain.isOn)
+        //{
+        //    OnWatchClick();
+        //}
+        //else
+        //{
             //overLay.SetActive(true);
             //Sound.instance.Play(Sound.Others.PopupOpen);
             //TweenControl.GetInstance().ScaleFromZero(_boardFreeWatch, 0.3f);
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.FreeStarsPlay, DialogShow.REPLACE_CURRENT);
-        }
+        //}
     }
 
 

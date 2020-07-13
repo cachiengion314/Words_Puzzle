@@ -1,12 +1,12 @@
 {
 "skeleton": {
-	"hash": "/LKmtu4JD9XnkiQIXwxzvdU1LpY",
-	"spine": "3.8.93",
-	"x": -237,
-	"y": -106.94,
-	"width": 480.63,
-	"height": 311.26,
-	"images": "./FreeStar confirm pet/",
+	"hash": "BQ4Z5NXeUsavMPHM/4a6TrH2Abo",
+	"spine": "3.8.95",
+	"x": -575.6,
+	"y": -918.08,
+	"width": 1077,
+	"height": 1920,
+	"images": "../FreeStar confirm pet/",
 	"audio": ""
 },
 "bones": [
@@ -74,10 +74,11 @@
 	{ "name": "keo", "parent": "root", "x": 24.18, "y": -89.32, "color": "e9ff00ff" },
 	{ "name": "mieng 2", "parent": "than", "rotation": -157.73, "x": 69.32, "y": -50.1 },
 	{ "name": "tai", "parent": "bone3", "rotation": 143.92, "x": 49.04, "y": 117.92 },
-	{ "name": "sang bat", "parent": "root", "x": 103.14, "y": -50.3 }
+	{ "name": "sang bat", "parent": "root", "x": 103.14, "y": -50.3 },
+	{ "name": "Skin NewSpaper", "parent": "root" }
 ],
 "slots": [
-	{ "name": "BG", "bone": "root" },
+	{ "name": "BG", "bone": "root", "attachment": "BG" },
 	{ "name": "SD", "bone": "root", "attachment": "SD" },
 	{ "name": "chan duoi", "bone": "bone4", "attachment": "chan duoi" },
 	{ "name": "tay trên", "bone": "chuong", "attachment": "tay trên" },
@@ -92,11 +93,21 @@
 	{ "name": "mieng 2", "bone": "than", "attachment": "mieng 2" },
 	{ "name": "Bat", "bone": "root", "attachment": "Bat" },
 	{ "name": "sang bat scp", "bone": "root", "attachment": "sang bat scp" },
-	{ "name": "sang bat", "bone": "sang bat", "attachment": "sang bat" }
+	{ "name": "sang bat", "bone": "sang bat", "attachment": "sang bat" },
+	{ "name": "Skin", "bone": "Skin NewSpaper", "attachment": "Skin" },
+	{ "name": "hop", "bone": "root" }
 ],
 "skins": [
 	{
-		"name": "default",
+		"name": "Newspaper",
+		"attachments": {
+			"Skin": {
+				"Skin": { "name": "hop", "x": 5.5, "y": -11.96, "width": 272, "height": 256 }
+			}
+		}
+	},
+	{
+		"name": "Woody",
 		"attachments": {
 			"Bat": {
 				"Bat": { "x": 185.53, "y": -87.96, "scaleX": 0.6, "scaleY": 0.6, "width": 319, "height": 203 }
@@ -430,10 +441,44 @@
 					{ "time": 1.8, "curve": 0.25, "c3": 0.75 },
 					{ "time": 2.6, "x": 1.694 }
 				]
+			},
+			"Skin NewSpaper": {
+				"rotate": [
+					{ "time": 1.8 },
+					{ "time": 1.9, "angle": -10 },
+					{ "time": 2, "angle": 10 },
+					{ "time": 2.1, "angle": -10 },
+					{ "time": 2.2, "angle": 10 },
+					{ "time": 2.3 }
+				],
+				"translate": [
+					{ "x": 1.15, "y": 62.9, "curve": 0.25, "c3": 0, "c4": 0.99 },
+					{ "time": 0.3333, "x": 1.15, "y": 49.58, "curve": 0.446, "c2": 0.69, "c3": 0.75 },
+					{ "time": 0.7333, "x": 1.15, "y": 123.15, "curve": 0.42, "c3": 0.776, "c4": 0.51 },
+					{ "time": 1.1333, "x": 1.15, "y": 49.58, "curve": 0.554, "c3": 0.307 },
+					{ "time": 1.2333, "x": 1.15, "y": 62.9 }
+				],
+				"scale": [
+					{ "curve": 0.25, "c3": 0, "c4": 0.99 },
+					{
+						"time": 0.3333,
+						"x": 1.12,
+						"y": 0.876,
+						"curve": 0.342,
+						"c2": 0.35,
+						"c3": 0.675,
+						"c4": 0.68
+					},
+					{ "time": 0.4, "x": 0.893, "y": 1.057, "curve": 0.435, "c2": 0.69, "c3": 0.743 },
+					{ "time": 0.7333, "curve": 0.42, "c3": 0.776, "c4": 0.51 },
+					{ "time": 1.0667, "x": 0.893, "y": 1.057, "curve": 0.435, "c2": 0.69, "c3": 0.743 },
+					{ "time": 1.1333, "x": 1.12, "y": 0.876, "curve": 0.554, "c3": 0.307 },
+					{ "time": 1.2333 }
+				]
 			}
 		},
 		"deform": {
-			"default": {
+			"Woody": {
 				"SD": {
 					"SD": [
 						{
