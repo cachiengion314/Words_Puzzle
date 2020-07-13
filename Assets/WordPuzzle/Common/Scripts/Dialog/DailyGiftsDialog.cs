@@ -320,7 +320,14 @@ public class DailyGiftsDialog : Dialog
             if (!_isReward && !isNextDay)
                 StartCoroutine(CountDownTime());
             else
+            {
+                if (isNextDay)
+                {
+                    CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
+                    _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
+                }
                 ShowReward();
+            }
         }
         else
         {
