@@ -50,12 +50,10 @@ public class LineDrawer : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             textPreview.ClearText();
-            TutorialController.instance.HidenHandConnectWord(true);
         }
 
         if (Input.GetMouseButton(0))
         {
-            TutorialController.instance.HidenHandConnectWord(true);
             isDragging = true;
             //textPreview.SetActive(true);
 
@@ -74,6 +72,7 @@ public class LineDrawer : MonoBehaviour
 
             Vector3 letterPosition = letterPositions[nearest];
 
+            TutorialController.instance.HidenHandConnectWord(true);
             if (Vector3.Distance(letterPosition, mousePoint) < RADIUS)
             {
                 pan.ScaleWord(letterPosition);
@@ -97,21 +96,25 @@ public class LineDrawer : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            isDragging = false;
             if (textPreview.GetText() != "")
             {
-                isDragging = false;
                 currentIndexes.Clear();
                 lineRenderer.positionCount = 0;
                 lineParticle.SetActive(false);
                 if (textPreview.GetText().Length > 1)
                     WordRegion.instance.CheckAnswer(textPreview.GetText());
-                else 
+                else
                     WordRegion.instance.textPreview.ClearText();
                 pan.ResetScaleWord();
             }
             if (WordRegion.instance.CurLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && WordRegion.instance.Lines.Any(li => li.isShown))
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", true);
+            }
+            else if (WordRegion.instance.CurLevel == 1 && !CPlayerPrefs.GetBool("TUTORIAL", false))
+            {
+                TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain);
             }
         }
 

@@ -136,27 +136,27 @@ public class TutorialController : MonoBehaviour
             //{
             //    if (line.isShown && line.answers.Count > 1)
             //    {
-            
-                _lineTarget = lineCheck != null ? lineCheck : WordRegion.instance.Lines.Find(line => line.isShown && line.answers.Count > 1);
-                LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
-                var otherAnswers = _lineTarget.answers.FindAll(ans => ans != _lineTarget.answer);
-                answerTargetRandom = otherAnswers[Random.Range(0, otherAnswers.Count)];
-                var index = 0;
-                _answerTarget = "";
-                foreach (var ans in otherAnswers)
-                {
-                    if (index < otherAnswers.Count - 1)
-                        _answerTarget += ans + ", ";
-                    else
-                        _answerTarget += ans;
-                    index++;
-                }
-                if (!hidenTextContent)
-                    _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
-                LineTarget.GetComponent<Canvas>().overrideSorting = true;
-                LineTarget.lineTutorialBG.gameObject.SetActive(true);
-                //break;
-            
+
+            _lineTarget = lineCheck != null ? lineCheck : WordRegion.instance.Lines.Find(line => line.isShown && line.answers.Count > 1);
+            LineTarget.lineTutorialBG.sprite = ThemesControl.instance.CurrTheme.uiData.bgTutorialLine;
+            var otherAnswers = _lineTarget.answers.FindAll(ans => ans != _lineTarget.answer);
+            answerTargetRandom = otherAnswers[Random.Range(0, otherAnswers.Count)];
+            var index = 0;
+            _answerTarget = "";
+            foreach (var ans in otherAnswers)
+            {
+                if (index < otherAnswers.Count - 1)
+                    _answerTarget += ans + ", ";
+                else
+                    _answerTarget += ans;
+                index++;
+            }
+            if (!hidenTextContent)
+                _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
+            LineTarget.GetComponent<Canvas>().overrideSorting = true;
+            LineTarget.lineTutorialBG.gameObject.SetActive(true);
+            //break;
+
             //    }
             //}
         }
@@ -196,7 +196,7 @@ public class TutorialController : MonoBehaviour
         {
             tweenControl.DelayCall(_handConnectTut.transform, 2f, () =>
             {
-                HidenHandConnectWord(false);
+                HidenHandConnectWord(true);
                 count = 0;
                 tweenControl.DelayCall(_handConnectTut.transform, 2f, () =>
                 {
@@ -208,7 +208,7 @@ public class TutorialController : MonoBehaviour
 
     private void ShowLineDraw()
     {
-        if (LineDrawer.instance != null)
+        if (LineDrawer.instance != null && _handConnectTut.gameObject.activeInHierarchy)
         {
             mousePoint = _handConnectTut.transform.position;
             mousePoint.z = 90;
@@ -268,16 +268,19 @@ public class TutorialController : MonoBehaviour
     {
         if (_handConnectTut != null)
         {
-            if (_handConnectTut.gameObject.activeInHierarchy)
-            {
-                LineDrawer.instance.LineRenderer.positionCount = 0;
-                LineDrawer.instance.currentIndexes.Clear();
-                _handConnectTut.gameObject.SetActive(false);
-            }
             if (killTween)
             {
                 TweenControl.GetInstance().KillDelayCall(_handConnectTut.transform);
                 TweenControl.GetInstance().KillTweener(_handConnectTut.transform);
+                TweenControl.GetInstance().KillTween(_handConnectTut.transform);
+            }
+            if (_handConnectTut.gameObject.activeInHierarchy)
+            {
+                LineDrawer.instance.positions.Clear();
+                LineDrawer.instance.LineRenderer.positionCount = 0;
+                LineDrawer.instance.currentIndexes.Clear();
+                LineDrawer.instance.lineParticle.SetActive(false);
+                _handConnectTut.gameObject.SetActive(false);
             }
         }
     }
