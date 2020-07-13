@@ -758,7 +758,13 @@ public class WordRegion : MonoBehaviour
         Sound.instance.Play(Sound.instance.complimentSounds[lineIndex]);
 
         lineIndex++;
-        if (HoneyPointsController.instance != null) { HoneyPointsController.instance.LineIndex++; };
+
+        var isComplete = lines.All(x => x.isShown);
+        if (HoneyPointsController.instance != null) 
+        {
+            HoneyPointsController.instance.isLevelComplete = isComplete;
+            HoneyPointsController.instance.LineIndex++; 
+        };
 
         if (lineIndex > compliment.sprites.Length - 1)
         {
@@ -921,6 +927,7 @@ public class WordRegion : MonoBehaviour
     public void CheckGameComplete()
     {
         var isComplete = lines.All(x => x.isShown);
+
         var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
         if (isComplete)
         {

@@ -26,6 +26,7 @@ public class DictionaryDialog : Dialog
     public Transform content;
     public static DictionaryDialog instance;
     public TextMeshProUGUI numWordPassedText;
+    public List<string> listWordPassed;
 
     [HideInInspector] public ListGroupWord currListWord;
     //string wordValid;
@@ -36,7 +37,7 @@ public class DictionaryDialog : Dialog
     Dictionary<string, List<string>> dataGroupWordDiction = new Dictionary<string, List<string>>();
     char[] keys;
     List<string> defaultValue = new List<string>();
-    List<string> listWordPassed;
+
     [HideInInspector] public List<ListGroupWord> groupWords = new List<ListGroupWord>();
     HomeController homecontroller;
 
@@ -77,11 +78,11 @@ public class DictionaryDialog : Dialog
     public void InstantiateFlags()
     {
         // Instantiate the flag tab
-        for (int i = 0; i < FacebookController.instance.flagItemList.Count; i++)
+        for (int i = 0; i < FlagTabController.instance.flagItemList.Count; i++)
         {
             FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
-            flagItem.flagImage = FacebookController.instance.flagItemList[i].flagImage;
-            flagItem.flagName = FacebookController.instance.flagItemList[i].flagName;
+            flagItem.flagImage = FlagTabController.instance.flagItemList[i].flagImage;
+            flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
         }
     } 
     public void OnClickFlagTab()

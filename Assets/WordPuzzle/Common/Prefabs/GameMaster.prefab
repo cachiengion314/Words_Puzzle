@@ -325,6 +325,7 @@ Transform:
   - {fileID: 1413878306}
   - {fileID: 1314882152686104066}
   - {fileID: 707917360890320960}
+  - {fileID: 6289227931543833548}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2317,6 +2318,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fee789de554df4498917cccbf5bcfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3416268642060071960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6289227931543833548}
+  - component: {fileID: 738845059506928269}
+  m_Layer: 0
+  m_Name: FlagTabController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6289227931543833548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3416268642060071960}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 499218}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &738845059506928269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3416268642060071960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14384f51ad295b74aacd510bc5803d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagItemList:
+  - flagImage: {fileID: 21300000, guid: aeb50d17937d947438862831a5406be1, type: 3}
+    flagName: ITALIA
+    isLocked: 1
+  - flagImage: {fileID: 21300000, guid: 727361156eb12cc46bcb93f67efbb686, type: 3}
+    flagName: VIETNAM
+    isLocked: 0
+  - flagImage: {fileID: 21300000, guid: aeb50d17937d947438862831a5406be1, type: 3}
+    flagName: AMERICA
+    isLocked: 1
+  - flagImage: {fileID: 21300000, guid: f66fc9114b64b3f40ad134f3a359edc2, type: 3}
+    flagName: HANOI
+    isLocked: 0
+  - flagImage: {fileID: 21300000, guid: 103254b22114353469f497e8f550993d, type: 3}
+    flagName: NEWYORK
+    isLocked: 1
+  allWordsList: []
+  gameData: {fileID: 11400000, guid: f6ef998fa1cd4b84e9273b5d8d3d087d, type: 2}
 --- !u!1 &4139744167246040404
 GameObject:
   m_ObjectHideFlags: 0

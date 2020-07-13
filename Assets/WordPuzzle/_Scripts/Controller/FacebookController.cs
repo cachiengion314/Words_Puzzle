@@ -11,16 +11,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-[Serializable]
-public struct FlagItem
-{
-    public Sprite flagImage;
-    public string flagName;
-}
+
 public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
-    public List<string> AllWords = new List<string>();
+
     [HideInInspector] public bool newLevel = false;
 
     public PlayFab.ClientModels.LoginResult result;
@@ -58,34 +53,25 @@ public class FacebookController : MonoBehaviour
             CurrencyController.UpdateBalanceAndHintFree();
         }
         if (Input.GetKeyDown(KeyCode.Space))
-        {    
+        {
             Debug.Log("NumWords: " + WordRegion.instance.NumWords);
             Debug.Log("Best score: " + FacebookController.instance.bestScore);
             Debug.Log("HoneyPoints: " + FacebookController.instance.HoneyPoints);
-            string allWords = null;
+            string allWordsString = null;
             for (int i = 0; i < _gameData.words.Count; i++)
             {
                 for (int ii = 0; ii < _gameData.words[i].subWords.Count; ii++)
                 {
                     for (int iii = 0; iii < _gameData.words[i].subWords[ii].gameLevels.Count; iii++)
                     {
-                        allWords += "|" + _gameData.words[i].subWords[ii].gameLevels[iii].answers;
+                        allWordsString += "|" + _gameData.words[i].subWords[ii].gameLevels[iii].answers;
                     }
                 }
             }
-            GetAllWordsList(allWords);
+            FlagTabController.instance.GetAllWordsList(allWordsString);
         }
     }
-    public void GetAllWordsList(string allWords)
-    {
-        AllWords.Clear();
-        List<string> tempAllWordsList;
-        tempAllWordsList = allWords.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        tempAllWordsList.Sort();
-        tempAllWordsList = tempAllWordsList.Distinct().ToList();
 
-        AllWords.AddRange(tempAllWordsList);
-    }
     [HideInInspector]
     public double HoneyPoints
     {
@@ -98,7 +84,6 @@ public class FacebookController : MonoBehaviour
             user.honeyPoint = value;
         }
     }
-    public List<FlagItem> flagItemList;
     public void UpdateStaticsUser()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())

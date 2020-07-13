@@ -11,6 +11,7 @@ public class HoneyPointsController : MonoBehaviour
     public static HoneyPointsController instance;
     public Action onChangedHoneyPoints;
     public Action showHoneyPointsInThisLevel;
+    public bool isLevelComplete;
 
     private bool isGameplayEnd;
     private int timePoints;
@@ -32,7 +33,7 @@ public class HoneyPointsController : MonoBehaviour
         set
         {
             lineIndex = value;
-            if (lineIndex > 1 && Prefs.IsSaveLevelProgress())
+            if (lineIndex > 1 && Prefs.IsSaveLevelProgress() && !isLevelComplete)
             {
                 int titlePoints = titlePointsArray[lineIndex];
                 totalTitlePoints = TotalTitlePoint(lineIndex, titlePointsArray);
@@ -106,7 +107,7 @@ public class HoneyPointsController : MonoBehaviour
             // Winning newest level
             totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
             honeyPoints = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
-            int honeyWithoutTitlePoints = honeyPoints - totalTitlePoints;
+            int honeyWithoutTitlePoints = honeyPoints - totalTitlePoints + titlePointsArray[lineIndex];
 
             WinDialog.instance.honeyPoints = honeyPoints;
             StartCoroutine(ShowAndFadeDelay(honeyWithoutTitlePoints, visualHoneyPointsTxt));
@@ -135,12 +136,16 @@ public class HoneyPointsController : MonoBehaviour
     }
     private IEnumerator ShowAndFadeDelay(int value, TextMeshProUGUI textCollect, float duration = 0.5f)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(0f);
 
         onChangedHoneyPoints?.Invoke();
 
         var tweenControl = TweenControl.GetInstance();
-        (textCollect).text = "X" + value;
+        textCollect.text = "X" + value;
+
+        TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 1.2f, .3f,
+      () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .3f); });
+
         tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
     }
     public void ShowAndFade(int value, float delay, TextMeshProUGUI textCollect, float duration = 0.5f)
