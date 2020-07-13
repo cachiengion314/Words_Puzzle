@@ -108,11 +108,11 @@ public class LineDrawer : MonoBehaviour
                     WordRegion.instance.textPreview.ClearText();
                 pan.ResetScaleWord();
             }
-            if (WordRegion.instance.CurLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && WordRegion.instance.Lines.Any(li => li.isShown))
+            if (WordRegion.instance.CurLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && WordRegion.instance.Lines.Any(li => li.isShown) && TutorialController.instance.isShowTut)
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", true);
             }
-            else if (WordRegion.instance.CurLevel == 1 && !CPlayerPrefs.GetBool("TUTORIAL", false))
+            else if (WordRegion.instance.CurLevel == 1 && !CPlayerPrefs.GetBool("TUTORIAL", false) && TutorialController.instance.isShowTut)
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain);
             }

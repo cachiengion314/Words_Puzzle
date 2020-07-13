@@ -959,6 +959,7 @@ public class WordRegion : MonoBehaviour
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
             {
                 TutorialController.instance.HidenPopTut();
+                TutorialController.instance.HidenHandConnectWord(true);
                 BlockScreen.instance.Block(true);
                 TutorialController.instance.isBlockSwipe = true;
                 TweenControl.GetInstance().DelayCall(transform, 2f, () =>
