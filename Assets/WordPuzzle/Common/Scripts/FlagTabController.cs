@@ -22,7 +22,7 @@ public class FlagTabController : MonoBehaviour
     {
         instance = this;
     }
-    public void GetAllWordsList(string allWords)
+    public void GetAllWordsList()
     {
         string allWordsString = null;
         for (int i = 0; i < gameData.words.Count; i++)
@@ -37,7 +37,7 @@ public class FlagTabController : MonoBehaviour
         }
         allWordsList.Clear();
         List<string> tempAllWordsList;
-        tempAllWordsList = allWords.Split(new string[1] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        tempAllWordsList = allWordsString.Split(new string[1] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
         tempAllWordsList.Sort();
         tempAllWordsList = tempAllWordsList.Distinct().ToList();
 

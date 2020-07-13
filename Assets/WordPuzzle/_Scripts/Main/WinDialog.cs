@@ -344,8 +344,12 @@ public class WinDialog : Dialog
                     tweenControl.Scale(button, Vector3.one, 0.3f,
                         () =>
                         {
-                            honeyPointsTxt.text = "X" + honeyPoints.ToString();
-                            TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 1, .5f, () => { tweenControl.FadeAnfaText(honeyPointsTxt, 0, .5f); });
+                            Timer.Schedule(this, .3f,
+                             () =>
+                             {
+                                 honeyPointsTxt.text = "X" + honeyPoints.ToString();
+                                 TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 1, .5f, () => { tweenControl.FadeAnfaText(honeyPointsTxt, 0, .5f); });
+                             });
                         }
                         , EaseType.InQuad);
                 });
@@ -744,7 +748,6 @@ public class WinDialog : Dialog
     {
         _rewardControl.onRewardedCallback -= OnCompleteReward;
         AdsManager.instance.onAdsRewarded -= OnCompleteReward;
-        Debug.Log("OnCompleteReward invoked");
 
         //RewardButton.GetComponent<Button>().interactable = false;
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;

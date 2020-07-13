@@ -57,18 +57,8 @@ public class FacebookController : MonoBehaviour
             Debug.Log("NumWords: " + WordRegion.instance.NumWords);
             Debug.Log("Best score: " + FacebookController.instance.bestScore);
             Debug.Log("HoneyPoints: " + FacebookController.instance.HoneyPoints);
-            string allWordsString = null;
-            for (int i = 0; i < _gameData.words.Count; i++)
-            {
-                for (int ii = 0; ii < _gameData.words[i].subWords.Count; ii++)
-                {
-                    for (int iii = 0; iii < _gameData.words[i].subWords[ii].gameLevels.Count; iii++)
-                    {
-                        allWordsString += "|" + _gameData.words[i].subWords[ii].gameLevels[iii].answers;
-                    }
-                }
-            }
-            FlagTabController.instance.GetAllWordsList(allWordsString);
+          
+            FlagTabController.instance.GetAllWordsList();
         }
     }
 
