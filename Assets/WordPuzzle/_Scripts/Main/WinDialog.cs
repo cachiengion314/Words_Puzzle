@@ -14,6 +14,9 @@ public class WinDialog : Dialog
     private int subWorld, level;
     private bool _isWatchAds;
 
+    public int honeyPoints;
+    public TextMeshProUGUI honeyPointsTxt;
+
     [SerializeField]
     private GameObject explosiveFxPref;
     [SerializeField]
@@ -338,7 +341,13 @@ public class WinDialog : Dialog
                 button.transform.localScale = Vector3.zero;
                 tweenControl.Scale(button, Vector3.one * 1.3f, 0.3f, () =>
                 {
-                    tweenControl.Scale(button, Vector3.one, 0.3f, null, EaseType.InQuad);
+                    tweenControl.Scale(button, Vector3.one, 0.3f,
+                        () =>
+                        {
+                            honeyPointsTxt.text = "X" + honeyPoints.ToString();
+                            TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 1, .5f, () => { tweenControl.FadeAnfaText(honeyPointsTxt, 0, .5f); });
+                        }
+                        , EaseType.InQuad);
                 });
             }
             else

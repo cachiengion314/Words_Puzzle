@@ -34,10 +34,11 @@ public class HoneyPointsController : MonoBehaviour
             lineIndex = value;
             if (lineIndex > 1 && Prefs.IsSaveLevelProgress())
             {
-                totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
+                int titlePoints = titlePointsArray[lineIndex];
+                totalTitlePoints = TotalTitlePoint(lineIndex, titlePointsArray);
                 honeyTxt.text = (FacebookController.instance.HoneyPoints + totalTitlePoints).ToString();
 
-                ShowAndFade(totalTitlePoints, 0, visualHoneyPointsTxt);
+                ShowAndFade(titlePoints, 0, visualHoneyPointsTxt);
 
                 TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 1.2f, .3f,
             () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .3f); });
@@ -105,12 +106,13 @@ public class HoneyPointsController : MonoBehaviour
             // Winning newest level
             totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
             honeyPoints = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
+            int honeyWithoutTitlePoints = honeyPoints - totalTitlePoints;
 
-            StartCoroutine(ShowAndFadeDelay(honeyPoints, visualHoneyPointsTxt));
+            WinDialog.instance.honeyPoints = honeyPoints;
+            StartCoroutine(ShowAndFadeDelay(honeyWithoutTitlePoints, visualHoneyPointsTxt));
 
             FacebookController.instance.HoneyPoints += honeyPoints;
             FacebookController.instance.SaveDataGame();
-            onChangedHoneyPoints?.Invoke();
         }
         else
         {
@@ -134,6 +136,9 @@ public class HoneyPointsController : MonoBehaviour
     private IEnumerator ShowAndFadeDelay(int value, TextMeshProUGUI textCollect, float duration = 0.5f)
     {
         yield return new WaitForSeconds(.5f);
+
+        onChangedHoneyPoints?.Invoke();
+
         var tweenControl = TweenControl.GetInstance();
         (textCollect).text = "X" + value;
         tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
@@ -148,7 +153,6 @@ public class HoneyPointsController : MonoBehaviour
             {
                 tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
             }
-
             );
 
     }

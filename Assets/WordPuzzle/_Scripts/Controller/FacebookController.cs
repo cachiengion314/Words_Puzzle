@@ -79,12 +79,12 @@ public class FacebookController : MonoBehaviour
     public void GetAllWordsList(string allWords)
     {
         AllWords.Clear();
-        List<string> allWordsList;
-        allWordsList = allWords.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        allWordsList.Sort();
-        allWordsList = allWordsList.Distinct().ToList();
+        List<string> tempAllWordsList;
+        tempAllWordsList = allWords.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        tempAllWordsList.Sort();
+        tempAllWordsList = tempAllWordsList.Distinct().ToList();
 
-        AllWords.AddRange(allWordsList);
+        AllWords.AddRange(tempAllWordsList);
     }
     [HideInInspector]
     public double HoneyPoints
