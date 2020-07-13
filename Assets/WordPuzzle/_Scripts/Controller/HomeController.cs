@@ -12,6 +12,7 @@ public class HomeController : BaseController
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
     private const string TIME_REWARD_KEY = "TIME_REWARD";
+    private const int THEME_WOODY = 0;
     public Button btnChickenBank;
     public Button btnFreeBoosters;
     public GameObject FreeBoostersShadow;
@@ -44,9 +45,9 @@ public class HomeController : BaseController
     protected override void Start()
     {
         base.Start();
-        var currTheme = CPlayerPrefs.GetInt("CURR_THEMES", 0);
-        ThemesControl.instance.LoadThemeDataHome(currTheme);
-        ThemesControl.instance.LoadThemeDataDialog(currTheme);
+        //var currTheme = CPlayerPrefs.GetInt("CURR_THEMES", 0);
+        //ThemesControl.instance.LoadThemeDataHome(currTheme);
+        ThemesControl.instance.LoadThemeDataDialog(THEME_WOODY);
         //CUtils.CloseBannerAd();
         var sceneAnimate = SceneAnimate.Instance;
         sceneAnimate._btnPlay.interactable = true;
