@@ -347,6 +347,8 @@ public class WinDialog : Dialog
                             Timer.Schedule(this, .3f,
                              () =>
                              {
+                                 honeyPointsTxt.font = ThemesControl.instance.CurrTheme.fontData.fontAsset;
+
                                  honeyPointsTxt.text = "X" + honeyPoints.ToString();
                                  TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 1, .5f, () => { tweenControl.FadeAnfaText(honeyPointsTxt, 0, .5f); });
                              });
@@ -390,6 +392,7 @@ public class WinDialog : Dialog
         else
             RewardButton.SetActive(false);
     }
+   public ThemesData currentTheme;
     public void HidenTut()
     {
         TutorialController.instance.HidenPopTut();

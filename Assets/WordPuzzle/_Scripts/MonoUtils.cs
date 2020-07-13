@@ -60,6 +60,7 @@ public class MonoUtils : MonoBehaviour
 
     public void ShowTotalStarCollect(int value, TextMeshProUGUI textCollect, float timeDelay = 1.6f)
     {
+        textCollectDefault.font = ThemesControl.instance.CurrTheme.fontData.fontAsset;
         if (showCollect)
             return;
         var tweenControl = TweenControl.GetInstance();
@@ -69,7 +70,8 @@ public class MonoUtils : MonoBehaviour
             showCollect = true;
             tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 1, 0.5f, () =>
             {
-                tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 0, 0.3f,()=> {
+                tweenControl.FadeAnfaText(textCollect != null ? textCollect : textCollectDefault, 0, 0.3f, () =>
+                {
                     showCollect = false;
                 });
             });
