@@ -32,8 +32,21 @@ public class ObjectiveDialog : Dialog
     [SerializeField] private Image _iconAdd;
     [SerializeField] private Image _bgCurrency;
     [SerializeField] private TextMeshProUGUI _textNumberStar;
+    [SerializeField] private Image _foreGround;
+    [SerializeField] private Image _btnDailyOn;
+    [SerializeField] private Image _iconDailyOn;
+    [SerializeField] private Image _iconDailyOff;
+    [SerializeField] private Image _btnAchiveOn;
+    [SerializeField] private Image _iconAchiveOn;
+    [SerializeField] private Image _iconAchiveOff;
 
     HomeController homecontroller;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        CheckTheme();
+    }
 
     protected override void Start()
     {
@@ -41,7 +54,6 @@ public class ObjectiveDialog : Dialog
         if (MainController.instance != null)
         {
             MainController.instance.canvasCollect.gameObject.SetActive(true);
-            CheckTheme();
         }
         if (HomeController.instance != null)
             homecontroller = HomeController.instance;
@@ -74,6 +86,54 @@ public class ObjectiveDialog : Dialog
         _textNumberStar.font = currTheme.fontData.fontAsset;
         _textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
         _textNumberStar.color = currTheme.fontData.colorTextNumStar;
+
+        _foreGround.sprite = currTheme.uiData.objectivesData.foreGround;
+        _btnDailyOn.sprite = currTheme.uiData.objectivesData.btnDailyOn;
+        _iconDailyOn.sprite = currTheme.uiData.objectivesData.iconDailyOn;
+        _iconDailyOff.sprite = currTheme.uiData.objectivesData.iconDailyOff;
+
+        _btnAchiveOn.sprite = currTheme.uiData.objectivesData.btnAchiveOn;
+        _iconAchiveOn.sprite = currTheme.uiData.objectivesData.iconAchiveOn;
+        _iconAchiveOff.sprite = currTheme.uiData.objectivesData.iconAchiveOff;
+
+        foreach (var task in _dailys)
+        {
+            task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestDaily;
+            task.LoadThemeData();
+            CheckIconTask(task, currTheme);
+        }
+        foreach (var task in _achievements)
+        {
+            task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestAchive;
+            task.LoadThemeData();
+            CheckIconTask(task, currTheme);
+        }
+    }
+
+    private void CheckIconTask(Quest task, ThemesData currTheme)
+    {
+        if (task.goal.goalType == GoalType.Spelling)
+            task.SpriteTask = currTheme.uiData.objectivesData.spelling;
+        else if (task.goal.goalType == GoalType.LevelClear)
+            task.SpriteTask = currTheme.uiData.objectivesData.levelClear;
+        else if (task.goal.goalType == GoalType.ChappterClear)
+            task.SpriteTask = currTheme.uiData.objectivesData.chappterClear;
+        else if (task.goal.goalType == GoalType.Booster)
+            task.SpriteTask = currTheme.uiData.objectivesData.booster;
+        else if (task.goal.goalType == GoalType.ExtraWord)
+            task.SpriteTask = currTheme.uiData.objectivesData.extraWord;
+        else if (task.goal.goalType == GoalType.LevelMisspelling)
+            task.SpriteTask = currTheme.uiData.objectivesData.levelMisspelling;
+        else if (task.goal.goalType == GoalType.Combos && task.combo == ComboType.good)
+            task.SpriteTask = currTheme.uiData.objectivesData.good;
+        else if (task.goal.goalType == GoalType.Combos && task.combo == ComboType.great)
+            task.SpriteTask = currTheme.uiData.objectivesData.great;
+        else if (task.goal.goalType == GoalType.Combos && task.combo == ComboType.amazing)
+            task.SpriteTask = currTheme.uiData.objectivesData.amazing;
+        else if (task.goal.goalType == GoalType.Combos && task.combo == ComboType.awesome)
+            task.SpriteTask = currTheme.uiData.objectivesData.awesome;
+        else if (task.goal.goalType == GoalType.Combos && task.combo == ComboType.excelent)
+            task.SpriteTask = currTheme.uiData.objectivesData.excelent;
     }
 
     public void OnDailyOpen()

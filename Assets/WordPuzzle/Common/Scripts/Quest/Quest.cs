@@ -10,6 +10,7 @@ public class Quest : MonoBehaviour
 {
     public int idQuest;
     public string nameTask;
+    public Image bgQuest;
     public TaskType taskType;
     [Space]
     public QuestGoal goal;
@@ -23,9 +24,12 @@ public class Quest : MonoBehaviour
 
     [SerializeField] private Slider _fillProgress;
     [SerializeField] private Image _progressMask;
+    [SerializeField] private Image _imageProgress;
     [SerializeField] private Button _btnGo;
     [SerializeField] private Button _btnReward;
     [SerializeField] private Image _iconComplete;
+    [SerializeField] private Image _iconVComplete;
+    [SerializeField] private Image _iconStar;
     [SerializeField] private Image _iconTask;
     [SerializeField] private TextMeshProUGUI _textProgress;
 
@@ -33,6 +37,18 @@ public class Quest : MonoBehaviour
     [HideInInspector] public bool taskCollected;
     RectTransform rt;
     float maxWidth;
+
+    public Sprite SpriteTask
+    {
+        get
+        {
+            return _spriteTask;
+        }
+        set
+        {
+            _spriteTask = value;
+        }
+    }
 
     void Awake()
     {
@@ -71,6 +87,17 @@ public class Quest : MonoBehaviour
         ClearTaskDailyByKey();
         ClearTask((taskType == TaskType.DAILY ? "Completed_Daily_" : "Completed_") + idQuest);
         ShowQuestDaily();
+    }
+
+    public void LoadThemeData()
+    {
+        var currTheme = ThemesControl.instance.CurrTheme;
+        _btnGo.image.sprite = currTheme.uiData.objectivesData.btnGo;
+        _btnReward.image.sprite = currTheme.uiData.objectivesData.btnReward;
+        _iconVComplete.sprite = currTheme.uiData.objectivesData.iconComplete;
+        _iconStar.sprite = currTheme.uiData.objectivesData.iconStar;
+        _imageProgress.sprite = currTheme.uiData.objectivesData.imageProgress;
+        _progressMask.sprite = currTheme.uiData.objectivesData.progressMask;
     }
 
     private void ResetupAchie()

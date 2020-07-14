@@ -79,6 +79,7 @@ public class UIData
     public Sprite bgBoardDialog;
     public Sprite imageTitleDialog;
     public Sprite btnCloseDialog;
+    public ObjectivesData objectivesData;
 }
 
 [Serializable]
@@ -86,4 +87,36 @@ public class AnimData
 {
     public string skinAnim;
     public string boneFx;
+}
+
+[Serializable]
+public class ObjectivesData
+{
+    public Sprite foreGround;
+    public Sprite btnDailyOn;
+    public Sprite iconDailyOn;
+    public Sprite iconDailyOff;
+    public Sprite btnAchiveOn;
+    public Sprite iconAchiveOn;
+    public Sprite iconAchiveOff;
+    public Sprite bgQuestDaily;
+    public Sprite bgQuestAchive;
+    public Sprite progressMask;
+    public Sprite imageProgress;
+    public Sprite btnGo;
+    public Sprite btnReward;
+    public Sprite iconComplete;
+    public Sprite iconStar;
+    [Space]
+    public Sprite spelling;
+    public Sprite levelClear;
+    public Sprite chappterClear;
+    public Sprite extraWord;
+    public Sprite booster;
+    public Sprite levelMisspelling;
+    public Sprite amazing;
+    public Sprite awesome;
+    public Sprite excelent;
+    public Sprite good;
+    public Sprite great;
 }
