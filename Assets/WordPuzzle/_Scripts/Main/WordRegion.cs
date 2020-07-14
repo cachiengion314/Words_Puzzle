@@ -751,7 +751,7 @@ public class WordRegion : MonoBehaviour
     {
         if (MainController.instance != null)
         {
-            MainController.instance.canvasFx.gameObject.SetActive(true);
+            MainController.instance.canvasFx.gameObject.SetActive(EffectController.instance.IsEffectOn);
         }
         gameObject.GetComponent<Canvas>().overrideSorting = false;
         compliment.Show(lineIndex);

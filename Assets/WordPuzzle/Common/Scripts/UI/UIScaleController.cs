@@ -13,12 +13,7 @@ public struct ScaleAndUIElement
 public class UIScaleController : MonoBehaviour
 {
     public static UIScaleController instance;
-    //private readonly float deltaScale = 0.06f;
-
-    //List<GameObject> uiElementList = new List<GameObject>();
-    //List<ScaleAndUIElement> scaleAndUIElemenOrigintList = new List<ScaleAndUIElement>();
-    //List<ScaleAndUIElement> scaleAndUIElementAfterSortList = new List<ScaleAndUIElement>();
-
+ 
     public Button btnHintTarget;
     public Button btnHint;
     public Button btnMultipleHint;
@@ -38,22 +33,9 @@ public class UIScaleController : MonoBehaviour
     {
         instance = this;
         SceneManager.sceneLoaded += OnSceneWasLoaded;
-
     }
     public void BannerShowAndScaleEvent() // invoke in request and load banner
     {
-        //if (scaleAndUIElementAfterSortList.Count < 1) return;
-
-        //Camera mainCamera = Camera.main;
-
-        //float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
-
-        //for (int i = 0; i < scaleAndUIElementAfterSortList.Count; i++)
-        //{
-        //    ArrangeUIElementWithScaleValue(scaleAndUIElementAfterSortList[i].scaleValue + bannerScale,
-        //        scaleAndUIElementAfterSortList[i].uiElement,
-        //        mainCamera);
-        //}
 #if UNITY_ANDROID && !UNITY_EDITOR
         float bannerScale = AdmobController.instance.bannerHeight / Screen.height;
         newSize = new Vector2(originSize.x, originSize.y - bannerScale * Screen.height);
@@ -69,60 +51,10 @@ public class UIScaleController : MonoBehaviour
         Pan.instance.ReloadLetterPositionPoints();
 #endif
     }
-    public void BannerHideAndScaleEvent()
-    {
-        //if (scaleAndUIElementAfterSortList.Count < 1) return;
-
-        //Camera mainCamera = Camera.main;
-
-        //for (int i = 0; i < scaleAndUIElementAfterSortList.Count; i++)
-        //{
-        //    ArrangeUIElementWithScaleValue(scaleAndUIElementAfterSortList[i].scaleValue,
-        //        scaleAndUIElementAfterSortList[i].uiElement,
-        //        mainCamera);
-        //}
-        //rootUI.transform.localPosition = rootUIOriginPos;
-
-        rectRoot.sizeDelta = originSize;
-        Pan.instance.ReloadLetterPositionPoints();
-    }
     private void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == 3)
         {
-            //Camera mainCamera = Camera.main;
-            //uiElementList.Clear();
-            //scaleAndUIElementAfterSortList.Clear();
-
-            //btnHint = WordRegion.instance.btnHint;
-            //btnHintTarget = WordRegion.instance.btnHintTarget;
-            //btnMultipleHint = WordRegion.instance.btnMultipleHint;
-            //btnShuffle = WordRegion.instance.btnShuffle;
-            //btnRewardAds = WordRegion.instance.btnRewardAds;
-            //btnBonusBox = WordRegion.instance.btnBonusBox;
-            //btnHelp = WordRegion.instance.btnHelp;
-
-            //uiElementList.Add(btnHintTarget.gameObject);
-            //uiElementList.Add(btnHint.gameObject);
-            //uiElementList.Add(btnMultipleHint.gameObject);
-            //uiElementList.Add(btnShuffle.gameObject);
-            //uiElementList.Add(btnRewardAds.gameObject);
-            //uiElementList.Add(btnBonusBox.gameObject);
-            //uiElementList.Add(btnHelp.gameObject);
-
-            //scaleAndUIElemenOrigintList = SortList(uiElementList, mainCamera);
-
-            //for (int i = 0; i < scaleAndUIElemenOrigintList.Count; i++)
-            //{
-            //    float newScaleValue = scaleAndUIElemenOrigintList[i].scaleValue - deltaScale;
-            //    ArrangeUIElementWithScaleValue(newScaleValue, scaleAndUIElemenOrigintList[i].uiElement, mainCamera);
-            //    scaleAndUIElementAfterSortList.Add(new ScaleAndUIElement()
-            //    {
-            //        scaleValue = newScaleValue,
-            //        uiElement = scaleAndUIElemenOrigintList[i].uiElement
-            //    });
-            //}
-
             rootUI = RootController.instance.gameObject;
             rectRoot = rootUI.GetComponent<RectTransform>();
             originSize = rectRoot.sizeDelta;

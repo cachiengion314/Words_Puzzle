@@ -72,7 +72,7 @@ public class Cell : MonoBehaviour
         {
             if (MainController.instance != null)
             {
-                MainController.instance.canvasFx.gameObject.SetActive(true);
+                MainController.instance.canvasFx.gameObject.SetActive(EffectController.instance.IsEffectOn);
                 MainController.instance.canvasCollect.gameObject.SetActive(true);
             }
             if (WordRegion.instance.CurLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
@@ -121,7 +121,12 @@ public class Cell : MonoBehaviour
         SetBgLetter(_spriteLetterDone);
         bg.transform.SetParent(transform);
         bg.transform.localPosition = Vector3.zero;
-        fxExplode.gameObject.SetActive(true);
+
+        if (EffectController.instance.IsEffectOn)
+        {
+            fxExplode.gameObject.SetActive(true);
+        }
+      
         Mask.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.15f, OnScaleUpComplete);
     }

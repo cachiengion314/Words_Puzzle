@@ -11,9 +11,11 @@ public class SettingDialog : Dialog
     GameObject soundButton;
     [SerializeField]
     GameObject musicButton;
-    [SerializeField]
-    GameObject notiButton;
-    private GameObject notiBttOff;
+
+    [SerializeField] private GameObject notiBttOff;
+
+    [SerializeField] private GameObject effectBttOff;
+
 
     [SerializeField] private Slider _sliderSound;
     [SerializeField] private Slider _sliderMusic;
@@ -31,7 +33,15 @@ public class SettingDialog : Dialog
     {
         base.Start();
 
-        notiBttOff = notiButton.transform.Find("Off").gameObject;
+        if (EffectController.instance.IsEffectOn)
+        {
+            effectBttOff.gameObject.SetActive(false);
+        }
+        else
+        {
+            effectBttOff.gameObject.SetActive(true);
+        }
+
         if (NotificationController.instance.IsNotificationOn)
         {
             notiBttOff.gameObject.SetActive(false);
@@ -94,6 +104,21 @@ public class SettingDialog : Dialog
         {
             soundButton.transform.Find("Off").gameObject.SetActive(false);
             soundButton.transform.Find("On").gameObject.SetActive(true);
+        }
+    }
+    public void OnEffectClick()
+    {
+        if (!effectBttOff.gameObject.activeInHierarchy)
+        {
+            // effect off
+            effectBttOff.gameObject.SetActive(true);
+            EffectController.instance.IsEffectOn = false;
+        }
+        else
+        {
+            // effect on
+            effectBttOff.gameObject.SetActive(false);
+            EffectController.instance.IsEffectOn = true;
         }
     }
     public void OnNativeNotificationClick()

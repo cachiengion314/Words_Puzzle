@@ -61,7 +61,7 @@ public class LineDrawer : MonoBehaviour
             mousePoint.z = 90;
 
             //Line Particle
-            if (currentIndexes.Count != 0)
+            if (currentIndexes.Count != 0 && EffectController.instance.IsEffectOn)
             {
                 lineParticle.SetActive(true);
                 lineParticle.transform.position = new Vector3(mousePoint.x, mousePoint.y, lineParticle.transform.position.z);

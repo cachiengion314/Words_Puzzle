@@ -154,7 +154,7 @@ public class Quest : MonoBehaviour
     {
         if (MainController.instance != null)
         {
-            MainController.instance.canvasFx.gameObject.SetActive(true);
+            MainController.instance.canvasFx.gameObject.SetActive(EffectController.instance.IsEffectOn);
             MainController.instance.canvasCollect.gameObject.SetActive(true);
         }
         if (GetComponent<Canvas>() != null)

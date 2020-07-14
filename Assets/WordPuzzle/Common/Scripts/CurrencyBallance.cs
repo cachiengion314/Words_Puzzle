@@ -25,7 +25,7 @@ public class CurrencyBallance : MonoBehaviour
         UpdateBalance();
         if (showFx)
         {
-            if (_fxLight != null)
+            if (_fxLight != null && EffectController.instance.IsEffectOn)
                 _fxLight.Play();
             if (_iconStar != null)
             {

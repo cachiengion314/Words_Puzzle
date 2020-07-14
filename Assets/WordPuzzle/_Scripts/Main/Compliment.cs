@@ -36,6 +36,8 @@ public class Compliment : MonoBehaviour
 
     public void PlayParticle()
     {
+        if (!EffectController.instance.IsEffectOn) return;
+
         if (_particle != null)
         {
             if (_particle.GetComponent<Canvas>() != null)

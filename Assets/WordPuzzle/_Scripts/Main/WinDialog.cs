@@ -231,6 +231,7 @@ public class WinDialog : Dialog
             });
         }
     }
+    string explosiveEffect = "ExplosiveEffect";
     private void ExplosiveEffect()
     {
         GameObject explosive = Instantiate(explosiveFxPref, _panelDialog.transform);
@@ -243,8 +244,10 @@ public class WinDialog : Dialog
             ShowEggChapterClear(true);
             TweenControl.GetInstance().DelayCall(transform, 1.2f, () =>
             {
-                Invoke("ExplosiveEffect", 1.7f);
-
+                if (EffectController.instance.IsEffectOn)
+                {
+                    Invoke(explosiveEffect, 1.7f);
+                }
                 _animEggChapterClear.gameObject.SetActive(true);
                 _animCandyChapterClear.SetAnimation(candyChapterAnim, false, () =>
                 {
@@ -484,7 +487,11 @@ public class WinDialog : Dialog
                 ChickenBankController.instance.AddtoBank();
             var result = GetChickenbankNonReward();
             _txtCollectChickenBank.text = "X" + (result > FacebookController.instance.user.maxbank ? FacebookController.instance.user.maxbank : result);
-            _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
+
+            if (EffectController.instance.IsEffectOn)
+            {
+                _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
+            }          
         });
     }
 
@@ -700,7 +707,7 @@ public class WinDialog : Dialog
     {
         if (MainController.instance != null)
         {
-            MainController.instance.canvasFx.gameObject.SetActive(true);
+            MainController.instance.canvasFx.gameObject.SetActive(EffectController.instance.IsEffectOn);
             MainController.instance.canvasCollect.gameObject.SetActive(true);
         }
         _isWatchAds = true;

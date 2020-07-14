@@ -33,7 +33,7 @@ public class RewardedVideoDialog : Dialog
     {
         if (MainController.instance != null)
         {
-            MainController.instance.canvasFx.gameObject.SetActive(true);
+            MainController.instance.canvasFx.gameObject.SetActive(EffectController.instance.IsEffectOn);
             MainController.instance.canvasCollect.gameObject.SetActive(true);
         }
         _btnReward.interactable = false;

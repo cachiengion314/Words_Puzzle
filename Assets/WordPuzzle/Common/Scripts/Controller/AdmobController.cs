@@ -198,7 +198,6 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleAdLoaded(object sender, EventArgs args)
     {
         // HandleAdLoaded event received
-
         MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}, ad HeightDp: {2}, ad WidthDp: {3}",
             this.bannerView.GetHeightInPixels(),
             this.bannerView.GetWidthInPixels(),
@@ -208,11 +207,9 @@ public class AdmobController : MonoBehaviour, IAds
         bannerHeight = this.bannerView.GetHeightInPixels();
         UIScaleController.instance.BannerShowAndScaleEvent();
     }
-
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         print("HandleFailedToReceiveAd event received with message: " + args.Message);
-        UIScaleController.instance.BannerHideAndScaleEvent();
     }
 
     public void HandleAdOpened(object sender, EventArgs args)

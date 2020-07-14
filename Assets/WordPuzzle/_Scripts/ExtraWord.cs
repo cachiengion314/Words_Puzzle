@@ -162,11 +162,13 @@ public class ExtraWord : MonoBehaviour
     private void OnTextMoveToComplete()
     {
         UpdateUI();
-
-        effectLight.gameObject.SetActive(true);
-        effectLight.Play();
-        TweenControl.GetInstance().DelayCall(effectLight.transform, 2, OnLightRotateComplete);
-
+        if (EffectController.instance.IsEffectOn)
+        {
+            effectLight.gameObject.SetActive(true);
+            effectLight.Play();
+            TweenControl.GetInstance().DelayCall(effectLight.transform, 2, OnLightRotateComplete);
+        }
+        
         //if (!lightOpenEffect.activeSelf)
         //{
         //    lightEffect.SetActive(true);

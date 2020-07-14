@@ -250,8 +250,11 @@ public class DailyGiftsDialog : Dialog
     {
         if (eventData.Data.Name == "ket thuc collect")
         {
-            _fxEffect = Instantiate(_fxLightPfb, transform);
-            _fxEffect.transform.position = _posChest.position;
+            if (EffectController.instance.IsEffectOn)
+            {
+                _fxEffect = Instantiate(_fxLightPfb, transform);
+                _fxEffect.transform.position = _posChest.position;
+            }           
             _textNotifyTitle.text = OPEN_CHEST;
             _textNotifyCollect.gameObject.SetActive(false);
             TweenControl.GetInstance().ScaleFromZero(_textHintCollect.gameObject, 0.3f);
