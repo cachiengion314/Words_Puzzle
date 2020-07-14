@@ -99,6 +99,7 @@ public class ObjectivesData
     public Sprite btnAchiveOn;
     public Sprite iconAchiveOn;
     public Sprite iconAchiveOff;
+    public Sprite bgNote;
     public Sprite bgQuestDaily;
     public Sprite bgQuestAchive;
     public Sprite progressMask;

@@ -39,6 +39,7 @@ public class ObjectiveDialog : Dialog
     [SerializeField] private Image _btnAchiveOn;
     [SerializeField] private Image _iconAchiveOn;
     [SerializeField] private Image _iconAchiveOff;
+    [SerializeField] private Image _bgNote;
 
     HomeController homecontroller;
 
@@ -74,7 +75,7 @@ public class ObjectiveDialog : Dialog
     private void CheckTheme()
     {
         var currTheme = ThemesControl.instance.CurrTheme;
-
+        _colorOff = currTheme.fontData.colorTextHeader;
         _iconStar.sprite = currTheme.uiData.iconStar;
         _iconAdd.sprite = currTheme.uiData.iconAdd;
         _bgCurrency.sprite = currTheme.uiData.bgCurrency;
@@ -95,6 +96,7 @@ public class ObjectiveDialog : Dialog
         _btnAchiveOn.sprite = currTheme.uiData.objectivesData.btnAchiveOn;
         _iconAchiveOn.sprite = currTheme.uiData.objectivesData.iconAchiveOn;
         _iconAchiveOff.sprite = currTheme.uiData.objectivesData.iconAchiveOff;
+        _bgNote.sprite = currTheme.uiData.objectivesData.bgNote;
 
         foreach (var task in _dailys)
         {
