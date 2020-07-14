@@ -313,27 +313,26 @@ public class DailyGiftsDialog : Dialog
     private void CheckTimeReward()
     {
         UpdateNextDay();
+        var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
+        if (isNextDay)
+        {
+            CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
+            _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
+        }
         if (CPlayerPrefs.HasKey(TIME_REWARD_KEY))
         {
             _isReward = CPlayerPrefs.GetBool(TIME_REWARD_KEY, false);
-            var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
             if (!_isReward && !isNextDay)
                 StartCoroutine(CountDownTime());
             else
-            {
-                if (isNextDay)
-                {
-                    CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
-                    _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
-                }
                 ShowReward();
-            }
         }
         else
         {
             ShowReward();
             //_timeCountdown.text = _contentReward;
         }
+        UpdateProgress();
     }
 
     private void ShowReward()
