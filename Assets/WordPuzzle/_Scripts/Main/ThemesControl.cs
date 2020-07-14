@@ -32,7 +32,7 @@ public class ThemesControl : MonoBehaviour
     {
         //CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
         var currTheme = _themesDatas[indexTheme];
-      
+
         _currTheme = currTheme;
         cellPfb.imageCell.sprite = currTheme.uiData.imgCell;
         cellPfb.imageCell.SetNativeSize();
@@ -80,12 +80,12 @@ public class ThemesControl : MonoBehaviour
             wordRegion.imageGround.sprite = currTheme.uiData.imgGround;
             wordRegion.iconHoney.sprite = currTheme.uiData.iconHoney;
             wordRegion.bgHoney.sprite = currTheme.uiData.bgHoney;
-            
+
             wordRegion.textPreview.backgroundImg.sprite = currTheme.uiData.imgBgTextPreview;
             wordRegion.textPreview.textPrefab.bgCell.sprite = currTheme.uiData.imgBgCellPreview;
             wordRegion.textPreview.textPrefab.text.font = currTheme.fontData.fontNormal;
             wordRegion.textPreview.textPrefab.text.color = currTheme.fontData.colorCell;
-            
+
 
             wordRegion.imgNumHint.sprite = currTheme.uiData.numBooster;
             wordRegion.imgNumMultipleHint.sprite = currTheme.uiData.numBooster;
@@ -102,7 +102,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion.bgCurrency.SetNativeSize();
             wordRegion.bgLevelTitle.SetNativeSize();
             wordRegion.iconSetting.SetNativeSize();
-            wordRegion.iconDictionary.SetNativeSize(); 
+            wordRegion.iconDictionary.SetNativeSize();
             wordRegion.iconHoney.SetNativeSize();
             wordRegion.bgHoney.SetNativeSize();
 
@@ -136,6 +136,10 @@ public class ThemesControl : MonoBehaviour
                 HoneyPointsController.instance.honeyTxt.font = currTheme.fontData.fontAsset;
                 HoneyPointsController.instance.honeyTxt.color = currTheme.fontData.colorTextHeader;
                 HoneyPointsController.instance.visualHoneyPointsTxt.font = currTheme.fontData.fontAsset;
+            }
+            if (MonoUtils.instance != null)
+            {
+                MonoUtils.instance.textCollectDefault.font = currTheme.fontData.fontAsset;
             }
 
             wordRegion.animBtnBonusBox.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;

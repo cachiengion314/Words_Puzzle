@@ -33,7 +33,7 @@ public class HoneyPointsController : MonoBehaviour
         set
         {
             lineIndex = value;
-            if (lineIndex > 1 && Prefs.IsSaveLevelProgress() && !isLevelComplete)
+            if (lineIndex > 1 && Prefs.IsSaveLevelProgress())
             {
                 int titlePoints = titlePointsArray[lineIndex];
                 totalTitlePoints = TotalTitlePoint(lineIndex, titlePointsArray);
@@ -107,13 +107,14 @@ public class HoneyPointsController : MonoBehaviour
             // Winning newest level
             totalTitlePoints = TotalTitlePoint(LineIndex, titlePointsArray);
             honeyPoints = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
-            int honeyWithoutTitlePoints = honeyPoints - totalTitlePoints + titlePointsArray[lineIndex];
+            //int honeyWithoutTitlePoints = honeyPoints - totalTitlePoints + titlePointsArray[lineIndex];
 
-            WinDialog.instance.honeyPoints = honeyPoints;
-            StartCoroutine(ShowAndFadeDelay(honeyWithoutTitlePoints, visualHoneyPointsTxt));
+            WinDialog.instance.honeyPoints = honeyPoints;          
+            //StartCoroutine(ShowAndFadeDelay(honeyWithoutTitlePoints, visualHoneyPointsTxt));
 
             FacebookController.instance.HoneyPoints += honeyPoints;
             FacebookController.instance.SaveDataGame();
+            onChangedHoneyPoints?.Invoke();
         }
         else
         {
@@ -137,8 +138,6 @@ public class HoneyPointsController : MonoBehaviour
     private IEnumerator ShowAndFadeDelay(int value, TextMeshProUGUI textCollect, float duration = 0.5f)
     {
         yield return new WaitForSeconds(0f);
-
-        onChangedHoneyPoints?.Invoke();
 
         var tweenControl = TweenControl.GetInstance();
         textCollect.text = "X" + value;

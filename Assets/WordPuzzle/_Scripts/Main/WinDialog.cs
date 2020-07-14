@@ -344,14 +344,8 @@ public class WinDialog : Dialog
                     tweenControl.Scale(button, Vector3.one, 0.3f,
                         () =>
                         {
-                            Timer.Schedule(this, .3f,
-                             () =>
-                             {
-                                 honeyPointsTxt.font = ThemesControl.instance.CurrTheme.fontData.fontAsset;
-
-                                 honeyPointsTxt.text = "X" + honeyPoints.ToString();
-                                 TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 1, .5f, () => { tweenControl.FadeAnfaText(honeyPointsTxt, 0, .5f); });
-                             });
+                            //TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 1, .5f, () => { TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 0, .5f); });
+                            if (!isColorFade) this.StartCoroutine(ColorFade());
                         }
                         , EaseType.InQuad);
                 });
@@ -392,7 +386,34 @@ public class WinDialog : Dialog
         else
             RewardButton.SetActive(false);
     }
-   public ThemesData currentTheme;
+    bool isColorFade;
+    public IEnumerator ColorFade()
+    {
+        isColorFade = true;
+
+        honeyPointsTxt.font = ThemesControl.instance.CurrTheme.fontData.fontAsset;
+        honeyPointsTxt.text = "X" + honeyPoints.ToString();
+
+        float alphaValue = 0;
+        Color currentColor = new Color(honeyPointsTxt.color.r, honeyPointsTxt.color.g, honeyPointsTxt.color.b, 0);
+        honeyPointsTxt.color = currentColor;
+        yield return new WaitForSeconds(.2f);
+        while (alphaValue <= 1)
+        {
+            alphaValue += .05f;
+            honeyPointsTxt.color = new Color(currentColor.r, currentColor.g, currentColor.b, alphaValue);
+            yield return null;
+        }
+        yield return null;
+      
+        while (alphaValue >= 0)
+        {
+            alphaValue -= .05f;
+            honeyPointsTxt.color = new Color(currentColor.r, currentColor.g, currentColor.b, alphaValue);
+            yield return null;
+        }
+        isColorFade = false;
+    }
     public void HidenTut()
     {
         TutorialController.instance.HidenPopTut();

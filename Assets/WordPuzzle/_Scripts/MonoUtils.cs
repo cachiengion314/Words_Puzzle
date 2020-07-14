@@ -60,7 +60,7 @@ public class MonoUtils : MonoBehaviour
 
     public void ShowTotalStarCollect(int value, TextMeshProUGUI textCollect, float timeDelay = 1.6f)
     {
-        textCollectDefault.font = ThemesControl.instance.CurrTheme.fontData.fontAsset;
+     
         if (showCollect)
             return;
         var tweenControl = TweenControl.GetInstance();
