@@ -392,6 +392,7 @@ public class WinDialog : Dialog
         isColorFade = true;
 
         honeyPointsTxt.font = ThemesControl.instance.CurrTheme.fontData.fontAsset;
+        honeyPointsTxt.color = ThemesControl.instance.CurrTheme.fontData.colorTextNumStar;
         honeyPointsTxt.text = "X" + honeyPoints.ToString();
 
         float alphaValue = 0;
