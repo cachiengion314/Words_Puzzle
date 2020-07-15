@@ -40,6 +40,7 @@ public class ObjectiveDialog : Dialog
     [SerializeField] private Image _iconAchiveOn;
     [SerializeField] private Image _iconAchiveOff;
     [SerializeField] private Image _bgNote;
+    [SerializeField] private Image _bgNoteAchie;
     [SerializeField] private TextMeshProUGUI _textTimeNote;
     [SerializeField] private TextMeshProUGUI _textRefreshNote;
 
@@ -101,16 +102,22 @@ public class ObjectiveDialog : Dialog
         _iconAchiveOn.sprite = currTheme.uiData.objectivesData.iconAchiveOn;
         _iconAchiveOff.sprite = currTheme.uiData.objectivesData.iconAchiveOff;
         _bgNote.sprite = currTheme.uiData.objectivesData.bgNote;
+        _bgNoteAchie.sprite = currTheme.uiData.objectivesData.bgNote;
+
+        _bgNote.SetNativeSize();
+        _bgNoteAchie.SetNativeSize();
 
         foreach (var task in _dailys)
         {
             task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestDaily;
+            task.bgQuest.SetNativeSize();
             task.LoadThemeData();
             CheckIconTask(task, currTheme);
         }
         foreach (var task in _achievements)
         {
             task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestAchive;
+            task.bgQuest.SetNativeSize();
             task.LoadThemeData();
             CheckIconTask(task, currTheme);
         }
