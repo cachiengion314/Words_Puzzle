@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using GoogleMobileAds.Api;
-using System;
 
 public class AdmobController : MonoBehaviour, IAds
 {

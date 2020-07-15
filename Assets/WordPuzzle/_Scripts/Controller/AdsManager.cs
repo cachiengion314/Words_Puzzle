@@ -17,6 +17,8 @@ public class AdsManager : MonoBehaviour
     public Action onAdsStarted;
 
     public IAds _adsController;
+    [HideInInspector] public int MinLevelToLoadRewardVideo;
+    [HideInInspector] public int PercentToloadInterstitial;
 
     private bool _isLoading;
 
@@ -63,6 +65,7 @@ public class AdsManager : MonoBehaviour
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         yield return new WaitForSeconds(0.1f);
+
         if (AudienceNetworkFbAd.instance.isLoaded)
         {
             _adsController = AudienceNetworkFbAd.instance;
@@ -165,7 +168,15 @@ public class AdsManager : MonoBehaviour
     #region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
+        int currentLevel = AudienceNetworkBanner.instance.CheckCurrentLevel();
+        if (currentLevel >= MinLevelToLoadRewardVideo)
+        {
+            StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
+        }
+        else
+        {
+            Toast.instance.ShowMessage("Rewarded video is not ready");
+        }
     }
 
     public void ShowBannerAds()
@@ -175,7 +186,12 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAds()
     {
-        ShowInterstitial();
+        float percent = PercentToloadInterstitial / 100;
+        float randomNumber = UnityEngine.Random.Range(0f, 1f);
+        if (randomNumber <= percent)
+        {
+            ShowInterstitial();
+        }
     }
     #endregion
 

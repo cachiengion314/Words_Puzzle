@@ -118,6 +118,15 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
         ConfigController.instance.config.admob.rewardedFreeLetter = admob_free_letter;
         ConfigController.instance.config.admob.interstitialLevel = admob_level_transition;
         ConfigController.instance.config.admob.bannerLevel = admob_banner;
+        // Min Level to load banner
+        AudienceNetworkBanner.instance.MinLevelToLoadBanner = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
+        Debug.Log("Remoteconfig gameplay load active_banner_level: " + AudienceNetworkBanner.instance.MinLevelToLoadBanner);
+        // Min level to load rewarded video ads
+        AdsManager.instance.MinLevelToLoadRewardVideo = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
+        Debug.Log("Remoteconfig gameplay load active_rewarded_level: " + AdsManager.instance.MinLevelToLoadRewardVideo);
+        // Percent to load interstitial ads
+        AdsManager.instance.PercentToloadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
+        Debug.Log("Remoteconfig gameplay load interstitial_showing_ratio: " + AdsManager.instance.MinLevelToLoadRewardVideo);
     }
     // Start a fetch request.
     public Task FetchDataAsync()

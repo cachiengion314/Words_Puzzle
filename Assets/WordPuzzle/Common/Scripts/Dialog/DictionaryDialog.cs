@@ -18,6 +18,11 @@ public class DictionaryDialog : Dialog
     public GameObject flagTab;
     public GameObject flagTabScrollViewContent;
     public GameObject flagItemPrefab;
+    public GameObject FlagBtn;
+    [Space]
+    public GameObject vocabularyTab;
+    public GameObject vocabularyBtn;
+
     [Space]
     public GameObject buttonWord;
     public GameObject groupWord;
@@ -84,14 +89,32 @@ public class DictionaryDialog : Dialog
             flagItem.flagImage = FlagTabController.instance.flagItemList[i].flagImage;
             flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
         }
-    } 
+    }
+    void SetTabActive(GameObject tab, GameObject tabBtn, bool status)
+    {
+        tab.SetActive(status);
+        tabBtn.transform.Find("IconBtnOn").gameObject.SetActive(status);
+        tabBtn.transform.Find("IconOn").gameObject.SetActive(status);
+        tabBtn.transform.Find("IconOff").gameObject.SetActive(!status);
+        if (status)
+        {
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = Color.white;
+
+        }
+        else
+        {
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = Color.black;
+        }
+    }
     public void OnClickFlagTab()
     {
-        flagTab.gameObject.SetActive(true);
+        SetTabActive(flagTab, FlagBtn, true);
+        SetTabActive(vocabularyTab, vocabularyBtn, false);
     }
     public void OnClickVocabularyTab()
     {
-        flagTab.gameObject.SetActive(false);
+        SetTabActive(flagTab, FlagBtn, false);
+        SetTabActive(vocabularyTab, vocabularyBtn, true);
     }
     public void GetWordPassed()
     {

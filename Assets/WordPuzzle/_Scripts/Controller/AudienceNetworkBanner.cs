@@ -17,7 +17,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     private ScreenOrientation currentScreenOrientation;
     public Text statusLabel;
 
-    [HideInInspector] public readonly int MinLevelToLoadBanner = 1;
+    [HideInInspector] public int MinLevelToLoadBanner = 2;
     void OnDestroy()
     {
         // Dispose of banner ad when the scene is destroyed
@@ -66,7 +66,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     {
         CheckCurrentLevel();
 
-        if (currlevel > MinLevelToLoadBanner && MainController.instance != null)
+        if (currlevel >= MinLevelToLoadBanner && MainController.instance != null)
         {
             StartCoroutine(LoadBannerWithDelay());
         }

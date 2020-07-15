@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Firebase.RemoteConfig;
 using TMPro;
+using UnityScript.Steps;
+
 public class RemoteConfigFirebase : MonoBehaviour
 {
     //public TextMeshProUGUI textPrefab;
@@ -50,8 +52,8 @@ public class RemoteConfigFirebase : MonoBehaviour
         {
             instance = this;
         }
-        DontDestroyOnLoad(gameObject);       
-     
+        DontDestroyOnLoad(gameObject);
+
         notifyIngameCall += () =>
         {
             if (!notifyIngameOn)
@@ -156,6 +158,12 @@ public class RemoteConfigFirebase : MonoBehaviour
         ConfigController.instance.config.admob.rewardedFreeLetter = admob_free_letter;
         ConfigController.instance.config.admob.interstitialLevel = admob_level_transition;
         ConfigController.instance.config.admob.bannerLevel = admob_banner;
+        // Min Level to load banner
+        AudienceNetworkBanner.instance.MinLevelToLoadBanner = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
+        // Min level to load rewarded video ads
+        AdsManager.instance.MinLevelToLoadRewardVideo = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
+        // Percent to load interstitial ads
+        AdsManager.instance.PercentToloadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
     }
     public void ShowIngameNotify()
     {

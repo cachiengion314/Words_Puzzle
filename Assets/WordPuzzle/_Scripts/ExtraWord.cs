@@ -61,7 +61,7 @@ public class ExtraWord : MonoBehaviour
         if (effectLightLoop != null && DialogController.instance.current == null)
         {
             if (lightOpenEffect != null) lightOpenEffect.SetActive(Prefs.extraProgress >= Prefs.extraTarget);
-            if (Prefs.extraProgress >= Prefs.extraTarget)
+            if (Prefs.extraProgress >= Prefs.extraTarget && EffectController.instance.IsEffectOn)
                 effectLightLoop.gameObject.SetActive(true);
             else
                 effectLightLoop.gameObject.SetActive(false);
