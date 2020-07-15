@@ -43,6 +43,7 @@ public class ObjectiveDialog : Dialog
     [SerializeField] private Image _bgNoteAchie;
     [SerializeField] private TextMeshProUGUI _textTimeNote;
     [SerializeField] private TextMeshProUGUI _textRefreshNote;
+    [SerializeField] private TextMeshProUGUI _textRefreshNoteAchie;
 
     HomeController homecontroller;
 
@@ -92,6 +93,7 @@ public class ObjectiveDialog : Dialog
         _textNumberStar.color = currTheme.fontData.colorTextNumStar;
         _textRefreshNote.color = currTheme.fontData.colorContentDialog;
         _textTimeNote.color = currTheme.fontData.colorContentDialog;
+        _textRefreshNoteAchie.color = currTheme.fontData.colorContentDialog;
 
         _foreGround.sprite = currTheme.uiData.objectivesData.foreGround;
         _btnDailyOn.sprite = currTheme.uiData.objectivesData.btnDailyOn;
