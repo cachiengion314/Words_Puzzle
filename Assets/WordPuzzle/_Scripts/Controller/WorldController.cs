@@ -67,7 +67,7 @@ public class WorldController : BaseController
         if (target > 0)
         {
             var sizeDeltaYItem = (worldItems[target].transform as RectTransform).sizeDelta.y;
-            var contentY = mainUI.anchoredPosition.y + (sizeDeltaYItem - 20) * target;
+            var contentY = mainUI.anchoredPosition.y + (sizeDeltaYItem +30) * target;
             var result = new Vector2(_scroll.content.anchoredPosition.x, contentY);
             TweenControl.GetInstance().DelayCall(transform, 1f, () =>
             {
