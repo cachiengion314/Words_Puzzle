@@ -105,7 +105,7 @@ public class Quest : MonoBehaviour
         titleText.GetComponent<TextMeshProUGUI>().color = currTheme.fontData.colorContentDialog;
 
         _imageProgress.SetNativeSize();
-        _imageProgress.SetNativeSize();
+        _progressMask.SetNativeSize();
         _bgProgress.SetNativeSize();
     }
 
