@@ -61,10 +61,11 @@ public class AdmobController : MonoBehaviour, IAds
         int adWidth = width / mobileScale;
         int height = Screen.height;
         int adHeight = height / mobileScale;
+
         AdSize bannerAdSize = new AdSize(adWidth, 50);
         bannerAdSize = AdSize.GetPortraitAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
 
-        this.bannerView = new BannerView(adUnitId, bannerAdSize, AdPosition.Bottom);
+         this.bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
 
         // Register for ad events.
         this.bannerView.OnAdLoaded += this.HandleAdLoaded;
@@ -75,7 +76,7 @@ public class AdmobController : MonoBehaviour, IAds
 
         // Load a banner ad.
         this.bannerView.LoadAd(this.CreateAdRequest());
-#endif
+#endif       
     }
 
     public void RequestInterstitial()
@@ -164,46 +165,29 @@ public class AdmobController : MonoBehaviour, IAds
         }
         return false;
     }
-
-    public void ShowRewardBasedVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
-    {
-        if (this.rewardBasedVideo.IsLoaded())
-        {
-            this.rewardBasedVideo.Show();
-        }
-        else
-        {
-            //MonoBehaviour.print("Reward based video ad is not ready yet");
-
-            CUtils.CheckConnection(this, (result) =>
-            {
-                if (result == 0)
-                {
-                    if (showToast)
-                        Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
-                    RequestRewardBasedVideo();
-                    adsNotReadyYetCallback?.Invoke();
-                }
-                else
-                {
-                    if (showToast)
-                        Toast.instance.ShowMessage("No Internet Connection");
-                    noInternetCallback?.Invoke();
-                }
-            });
-        }
-    }
     #region Banner callback handlers
 
     public void HandleAdLoaded(object sender, EventArgs args)
     {
         // HandleAdLoaded event received
-        MonoBehaviour.print(String.Format("Ad Height: {0}, width: {1}, ad HeightDp: {2}, ad WidthDp: {3}",
+        MonoBehaviour.print(String.Format("Banner Height: {0}, Banner width: {1}, " +
+            "Device HeightDp: {2}, Device WidthDp: {3}, " +
+            "Device Heigh: {4}, Device Width: {5}, " +
+            "SafeAreana Height: {6}, SafeArena Width: {7}, " +
+            "WordRegion.instance.RectCanvas.rect.height: {8}, WordRegion.instance.RectCanvas.rect.width: {9}",
+
             this.bannerView.GetHeightInPixels(),
             this.bannerView.GetWidthInPixels(),
             Screen.height / (int)MobileAds.Utils.GetDeviceScale(),
-            Screen.width / (int)MobileAds.Utils.GetDeviceScale()
-            )); 
+            Screen.width / (int)MobileAds.Utils.GetDeviceScale(),
+            Screen.height,
+            Screen.width,
+            Screen.safeArea.height,
+            Screen.safeArea.width,
+            WordRegion.instance.RectCanvas.rect.height,
+            WordRegion.instance.RectCanvas.rect.width
+            ));
+
         bannerHeight = this.bannerView.GetHeightInPixels();
         UIScaleController.instance.BannerShowAndScaleEvent();
     }

@@ -59,7 +59,6 @@ public class AdsManager : MonoBehaviour
     private void ChangedActiveScene(Scene current, Scene next)
     {
         LoadDataAds();
-        //Debug.Log("LoadDataAd succsesss");
     }
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
@@ -92,7 +91,7 @@ public class AdsManager : MonoBehaviour
                         if (result == 0)
                         {
                             if (showToast)
-                                Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
+                                Toast.instance.ShowMessage("Rewarded video is not ready");
                             _isLoading = false;
                             LoadDataAds();
                             adsNotReadyYetCallback?.Invoke();

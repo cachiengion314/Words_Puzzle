@@ -49,6 +49,13 @@ public class WordRegion : MonoBehaviour
     [SerializeField] private RectTransform _headerBlock;
     [SerializeField] private RectTransform _centerBlock;
     [SerializeField] private RectTransform _rectCanvas;
+    public RectTransform RectCanvas
+    {
+        get
+        {
+            return _rectCanvas;
+        }
+    }
 
     private List<LineWord> lines = new List<LineWord>();
     public List<LineWord> WordRegionLines
@@ -255,8 +262,8 @@ public class WordRegion : MonoBehaviour
         //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var boardSizeY = (Screen.safeArea.height < 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height;
-        var panSizeY = (Screen.safeArea.height < 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2  - _centerBlock.rect.height / 2;
+        var boardSizeY = ((int)(_rectCanvas.rect.height)) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height;
+        var panSizeY = ((int)(_rectCanvas.rect.height)) / 2 - _centerBlock.rect.height / 2;
         //Debug.Log("Screen.safeArea.height: " + Screen.safeArea.height);
         //Debug.Log("_rectCanvas.rect.height / 2: " + _rectCanvas.rect.height / 2);
         //Debug.Log("_centerBlock.rect.height / 2: " + _centerBlock.rect.height / 2);
@@ -760,10 +767,10 @@ public class WordRegion : MonoBehaviour
         lineIndex++;
 
         var isComplete = lines.All(x => x.isShown);
-        if (HoneyPointsController.instance != null) 
+        if (HoneyPointsController.instance != null)
         {
             HoneyPointsController.instance.isLevelComplete = isComplete;
-            HoneyPointsController.instance.LineIndex++; 
+            HoneyPointsController.instance.LineIndex++;
         };
 
         if (lineIndex > compliment.sprites.Length - 1)
