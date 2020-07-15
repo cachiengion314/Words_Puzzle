@@ -2276,6 +2276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 102a08a274b4f094dac99d6a69ca1c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinLevelToLoadRewardVideo: 0
+  PercentToloadInterstitial: 0
 --- !u!1 &2096942157775826733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2365,16 +2367,16 @@ MonoBehaviour:
   flagItemList:
   - flagImage: {fileID: 21300000, guid: aeb50d17937d947438862831a5406be1, type: 3}
     flagName: ITALIA
-    isLocked: 1
+    isLocked: 0
   - flagImage: {fileID: 21300000, guid: 727361156eb12cc46bcb93f67efbb686, type: 3}
     flagName: VIETNAM
     isLocked: 0
   - flagImage: {fileID: 21300000, guid: aeb50d17937d947438862831a5406be1, type: 3}
     flagName: AMERICA
-    isLocked: 1
+    isLocked: 0
   - flagImage: {fileID: 21300000, guid: f66fc9114b64b3f40ad134f3a359edc2, type: 3}
     flagName: HANOI
-    isLocked: 0
+    isLocked: 1
   - flagImage: {fileID: 21300000, guid: 103254b22114353469f497e8f550993d, type: 3}
     flagName: NEWYORK
     isLocked: 1
@@ -3506,6 +3508,7 @@ MonoBehaviour:
   currlevel: 0
   gameData: {fileID: 11400000, guid: f6ef998fa1cd4b84e9273b5d8d3d087d, type: 2}
   statusLabel: {fileID: 0}
+  MinLevelToLoadBanner: 2
 --- !u!1 &8348229885255490934
 GameObject:
   m_ObjectHideFlags: 0

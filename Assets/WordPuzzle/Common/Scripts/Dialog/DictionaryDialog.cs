@@ -15,6 +15,9 @@ using PlayFab;
 
 public class DictionaryDialog : Dialog
 {
+    public Color colorOn;
+    public Color colorOff;
+    [Space]
     public GameObject flagTab;
     public GameObject flagTabScrollViewContent;
     public GameObject flagItemPrefab;
@@ -79,6 +82,15 @@ public class DictionaryDialog : Dialog
         numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
 
         InstantiateFlags();
+
+        //if (HoneyFrameBtt.instance != null)
+        //{
+        //    if (HoneyFrameBtt.instance.isClickOnThis)
+        //    {
+        //        OnClickFlagTab();
+        //    }
+        //}
+
     }
     public void InstantiateFlags()
     {
@@ -98,12 +110,12 @@ public class DictionaryDialog : Dialog
         tabBtn.transform.Find("IconOff").gameObject.SetActive(!status);
         if (status)
         {
-            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = Color.white;
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = colorOn;
 
         }
         else
         {
-            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = Color.black;
+            tabBtn.transform.Find("Text").GetComponent<TextMeshProUGUI>().color = colorOff;
         }
     }
     public void OnClickFlagTab()
