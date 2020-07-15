@@ -25,6 +25,7 @@ public class Quest : MonoBehaviour
     [SerializeField] private Slider _fillProgress;
     [SerializeField] private Image _progressMask;
     [SerializeField] private Image _imageProgress;
+    [SerializeField] private Image _bgProgress;
     [SerializeField] private Button _btnGo;
     [SerializeField] private Button _btnReward;
     [SerializeField] private Image _iconComplete;
@@ -96,8 +97,16 @@ public class Quest : MonoBehaviour
         _btnReward.image.sprite = currTheme.uiData.objectivesData.btnReward;
         _iconVComplete.sprite = currTheme.uiData.objectivesData.iconComplete;
         _iconStar.sprite = currTheme.uiData.objectivesData.iconStar;
+        _bgProgress.sprite = currTheme.uiData.objectivesData.bgProgress;
         _imageProgress.sprite = currTheme.uiData.objectivesData.imageProgress;
         _progressMask.sprite = currTheme.uiData.objectivesData.progressMask;
+        _textProgress.color = currTheme.uiData.objectivesData.colorTextProgress;
+        rewardText.GetComponent<TextMeshProUGUI>().color = currTheme.fontData.colorContentDialog;
+        titleText.GetComponent<TextMeshProUGUI>().color = currTheme.fontData.colorContentDialog;
+
+        _imageProgress.SetNativeSize();
+        _imageProgress.SetNativeSize();
+        _bgProgress.SetNativeSize();
     }
 
     private void ResetupAchie()

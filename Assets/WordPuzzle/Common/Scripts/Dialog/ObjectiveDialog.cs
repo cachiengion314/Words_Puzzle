@@ -40,6 +40,8 @@ public class ObjectiveDialog : Dialog
     [SerializeField] private Image _iconAchiveOn;
     [SerializeField] private Image _iconAchiveOff;
     [SerializeField] private Image _bgNote;
+    [SerializeField] private TextMeshProUGUI _textTimeNote;
+    [SerializeField] private TextMeshProUGUI _textRefreshNote;
 
     HomeController homecontroller;
 
@@ -75,7 +77,7 @@ public class ObjectiveDialog : Dialog
     private void CheckTheme()
     {
         var currTheme = ThemesControl.instance.CurrTheme;
-        _colorOff = currTheme.fontData.colorTextHeader;
+        _colorOff = currTheme.fontData.colorContentDialog;
         _iconStar.sprite = currTheme.uiData.iconStar;
         _iconAdd.sprite = currTheme.uiData.iconAdd;
         _bgCurrency.sprite = currTheme.uiData.bgCurrency;
@@ -87,6 +89,8 @@ public class ObjectiveDialog : Dialog
         _textNumberStar.font = currTheme.fontData.fontAsset;
         _textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
         _textNumberStar.color = currTheme.fontData.colorTextNumStar;
+        _textRefreshNote.color = currTheme.fontData.colorContentDialog;
+        _textTimeNote.color = currTheme.fontData.colorContentDialog;
 
         _foreGround.sprite = currTheme.uiData.objectivesData.foreGround;
         _btnDailyOn.sprite = currTheme.uiData.objectivesData.btnDailyOn;

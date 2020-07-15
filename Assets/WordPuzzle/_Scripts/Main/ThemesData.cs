@@ -30,6 +30,7 @@ public class FontData
     public Color colorTextHeader;
     public Color colorTextNumStar;
     public Color colorNotify;
+    public Color colorContentDialog;
 }
 
 [Serializable]
@@ -104,6 +105,7 @@ public class ObjectivesData
     public Sprite bgQuestAchive;
     public Sprite progressMask;
     public Sprite imageProgress;
+    public Sprite bgProgress;
     public Sprite btnGo;
     public Sprite btnReward;
     public Sprite iconComplete;
@@ -120,4 +122,6 @@ public class ObjectivesData
     public Sprite excelent;
     public Sprite good;
     public Sprite great;
+    [Space]
+    public Color colorTextProgress;
 }
