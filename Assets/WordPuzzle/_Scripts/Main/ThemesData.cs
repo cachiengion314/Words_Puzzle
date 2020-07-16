@@ -82,6 +82,7 @@ public class UIData
     public Sprite btnCloseDialog;
     public ObjectivesData objectivesData;
     public MenuData menuData;
+    public FreestarData freestarData;
 }
 
 [Serializable]
@@ -103,6 +104,16 @@ public class MenuData
     public Sprite iconObjective;
     public Sprite iconFeedback;
     public Sprite iconHelp;
+}
+
+[Serializable]
+public class FreestarData
+{
+    public Sprite btnWatch;
+    public Sprite iconAds;
+    public Sprite iconStar;
+    [Space]
+    public Color colorTextBtn;
 }
 
 [Serializable]
