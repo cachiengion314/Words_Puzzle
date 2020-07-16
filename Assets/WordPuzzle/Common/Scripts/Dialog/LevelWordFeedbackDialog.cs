@@ -73,7 +73,6 @@ public class LevelWordFeedbackDialog : Dialog
             wordToggle.wordNormal.sprite = currTheme.uiData.levelWordData.wordNormal;
             wordToggle.wordDone.sprite = currTheme.uiData.levelWordData.wordDone;
             wordToggle.wordNormal.SetNativeSize();
-            wordToggle.wordDone.SetNativeSize();
 
             wordToggle.txtWord.color = currTheme.uiData.levelWordData.colorTextWordPfb;
         }
