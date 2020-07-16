@@ -65,6 +65,13 @@ public class PauseDialog : Dialog
             _iconFeedback.sprite = currTheme.uiData.menuData.iconFeedback;
             _iconHelp.sprite = currTheme.uiData.menuData.iconHelp;
 
+            _iconHome.SetNativeSize();
+            _iconTheme.SetNativeSize();
+            _iconSetting.SetNativeSize();
+            _iconObjective.SetNativeSize();
+            _iconFeedback.SetNativeSize();
+            _iconHelp.SetNativeSize();
+
             _txtHome.color = _txtTheme.color = _txtSetting.color = _txtObjective.color = _txtFeedback.color = _txtHelp.color = currTheme.fontData.colorContentDialog;
         }
     }
