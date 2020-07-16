@@ -1,9 +1,9 @@
 {
 "skeleton": {
-	"hash": "BQ4Z5NXeUsavMPHM/4a6TrH2Abo",
+	"hash": "4mVe3pnkPg962soIUDms50QBIH8",
 	"spine": "3.8.95",
-	"x": -575.6,
-	"y": -918.08,
+	"x": -538.5,
+	"y": -960,
 	"width": 1077,
 	"height": 1920,
 	"images": "../FreeStar confirm pet/",
@@ -75,7 +75,7 @@
 	{ "name": "mieng 2", "parent": "than", "rotation": -157.73, "x": 69.32, "y": -50.1 },
 	{ "name": "tai", "parent": "bone3", "rotation": 143.92, "x": 49.04, "y": 117.92 },
 	{ "name": "sang bat", "parent": "root", "x": 103.14, "y": -50.3 },
-	{ "name": "Skin NewSpaper", "parent": "root" }
+	{ "name": "Skin NewSpaper", "parent": "root", "y": -124.64 }
 ],
 "slots": [
 	{ "name": "BG", "bone": "root", "attachment": "BG" },
@@ -101,8 +101,70 @@
 	{
 		"name": "Newspaper",
 		"attachments": {
-			"Skin": {
-				"Skin": { "name": "hop", "x": 5.5, "y": -11.96, "width": 272, "height": 256 }
+			"Bat": {
+				"Bat": { "x": 185.53, "y": -87.96, "scaleX": 0.6, "scaleY": 0.6, "width": 319, "height": 203 }
+			},
+			"Mieng": {
+				"Mieng": { "type": "linkedmesh", "skin": "Woody", "parent": "Mieng", "width": 71, "height": 100 }
+			},
+			"SD": {
+				"SD": { "type": "linkedmesh", "skin": "Woody", "parent": "SD", "width": 526, "height": 138 }
+			},
+			"chan duoi": {
+				"chan duoi": { "type": "linkedmesh", "skin": "Woody", "parent": "chan duoi", "width": 123, "height": 72 }
+			},
+			"chan tren": {
+				"chan tren": { "type": "linkedmesh", "skin": "Woody", "parent": "chan tren", "width": 86, "height": 151 }
+			},
+			"chuong 2": {
+				"chuong 2": {
+					"x": 85.79,
+					"y": -2.64,
+					"scaleX": 0.6,
+					"scaleY": 0.6,
+					"rotation": -11.1,
+					"width": 49,
+					"height": 49
+				}
+			},
+			"chuong scp": {
+				"chuong scp": {
+					"type": "clipping",
+					"end": "chuong 2",
+					"vertexCount": 25,
+					"vertices": [ 65.61, -58, 63.01, -55.81, 57.48, -54.3, 52.17, -53.82, 47, -53.48, 40.07, -53.62, 32.68, -54.01, 25.38, -55.41, 19.95, -56.8, 13.58, -59.42, 9.22, -62.17, 7.25, -65.79, 7.66, -68.42, 10.39, -70.9, 14.87, -72.92, 21.97, -74.82, 29.82, -76.04, 35.59, -76.13, 41.56, -75.36, 48.15, -73.76, 55.2, -71.9, 59.82, -69.6, 63.74, -66.97, 66.55, -63.69, 66.92, -60.1 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"keo": {
+				"keo": { "x": 0.36, "y": 2.81, "scaleX": 0.6, "scaleY": 0.6, "width": 120, "height": 120 }
+			},
+			"mat": {
+				"mat": { "type": "linkedmesh", "skin": "Woody", "parent": "mat", "width": 153, "height": 190 }
+			},
+			"mieng 2": {
+				"mieng 2": { "type": "linkedmesh", "skin": "Woody", "parent": "mieng 2", "width": 74, "height": 73 }
+			},
+			"sang bat": {
+				"sang bat": { "x": 6.57, "y": 2.66, "scaleX": 0.6, "scaleY": 0.6, "width": 129, "height": 142 }
+			},
+			"sang bat scp": {
+				"sang bat scp": {
+					"type": "clipping",
+					"end": "sang bat",
+					"vertexCount": 43,
+					"vertices": [ 131.16, -60.95, 134.4, -63.4, 138.61, -64.77, 145.57, -66.54, 152.82, -67.32, 160.37, -67.71, 169.09, -68.59, 179.57, -68.79, 188.69, -68.79, 196.72, -68.79, 206.33, -68.59, 215.15, -68.01, 224.56, -66.93, 231.51, -65.26, 238.18, -62.62, 240.24, -61.54, 240.04, -55.36, 238.86, -50.86, 236.81, -45.76, 233.96, -41.84, 229.85, -37.53, 225.54, -35.08, 219.95, -33.02, 214.36, -32.14, 209.56, -32.43, 204.27, -33.9, 199.27, -36.45, 195.65, -38.61, 194.47, -39.68, 191.24, -36.25, 185.65, -32.43, 179.38, -29.49, 173.8, -27.68, 168.31, -26.8, 163.41, -26.9, 157.33, -27.98, 151.16, -30.33, 146.06, -33.76, 140.57, -38.07, 136.65, -42.87, 134.2, -47.58, 132.15, -52.87, 130.97, -58.16 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"tay duoi": {
+				"tay duoi": { "type": "linkedmesh", "skin": "Woody", "parent": "tay duoi", "width": 48, "height": 78 }
+			},
+			"tay trên": {
+				"tay trên": { "type": "linkedmesh", "skin": "Woody", "parent": "tay trên", "width": 180, "height": 186 }
+			},
+			"than": {
+				"than": { "type": "linkedmesh", "skin": "Woody", "parent": "than", "width": 477, "height": 380 }
 			}
 		}
 	},
@@ -454,7 +516,7 @@
 				"translate": [
 					{ "x": 1.15, "y": 62.9, "curve": 0.25, "c3": 0, "c4": 0.99 },
 					{ "time": 0.3333, "x": 1.15, "y": 49.58, "curve": 0.446, "c2": 0.69, "c3": 0.75 },
-					{ "time": 0.7333, "x": 1.15, "y": 123.15, "curve": 0.42, "c3": 0.776, "c4": 0.51 },
+					{ "time": 0.7333, "x": 1.15, "y": 177.6, "curve": 0.42, "c3": 0.776, "c4": 0.51 },
 					{ "time": 1.1333, "x": 1.15, "y": 49.58, "curve": 0.554, "c3": 0.307 },
 					{ "time": 1.2333, "x": 1.15, "y": 62.9 }
 				],
