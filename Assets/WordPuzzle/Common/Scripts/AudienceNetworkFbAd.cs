@@ -18,15 +18,11 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     public bool didClose;
 #pragma warning restore 0414
 
-
     public InterstitialAd interstitialAd;
     public bool isIntersLoaded;
 #pragma warning disable 0414
     public bool didIntersClose;
 #pragma warning restore 0414
-    // UI elements in scene
-    public Text statusLabel;
-
     private void Awake()
     {
         instance = this;
@@ -36,7 +32,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     }
     public void LoadInterstitial()
     {
-        statusLabel.text = "Loading interstitial ad...";
+        //statusLabel.text = "Loading interstitial ad...";
 
         // Create the interstitial unit with a placement ID (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
@@ -51,12 +47,12 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             isIntersLoaded = true;
             didIntersClose = false;
             string isAdValid = interstitialAd.IsValid() ? "valid" : "invalid";
-            statusLabel.text = "Ad loaded and is " + isAdValid + ". Click show to present!";
+            //statusLabel.text = "Ad loaded and is " + isAdValid + ". Click show to present!";
         };
         interstitialAd.InterstitialAdDidFailWithError = delegate (string error)
         {
             Debug.Log("Interstitial ad failed to load with error: " + error);
-            statusLabel.text = "Interstitial ad failed to load. Check console for details.";
+            //statusLabel.text = "Interstitial ad failed to load. Check console for details.";
         };
         interstitialAd.InterstitialAdWillLogImpression = delegate ()
         {
@@ -126,7 +122,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             interstitialAd.Dispose();
         }
-        Debug.Log("InterstitialAdTest was destroyed!");
+        Debug.Log("Interstitial audience ad AdTest was destroyed!");
     }
     private void ShowInterstitial()
     {

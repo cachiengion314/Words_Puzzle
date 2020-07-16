@@ -57,8 +57,12 @@ public class FacebookController : MonoBehaviour
             Debug.Log("NumWords: " + WordRegion.instance.NumWords);
             Debug.Log("Best score: " + FacebookController.instance.bestScore);
             Debug.Log("HoneyPoints: " + FacebookController.instance.HoneyPoints);
-          
+
             FlagTabController.instance.GetAllWordsList();
+            foreach (var item in WordRegion.instance.listWordInLevel)
+            {
+                Debug.Log(item);
+            }
         }
     }
 

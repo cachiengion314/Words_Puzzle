@@ -41,21 +41,19 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         else
             return Advertisement.IsReady(myPlacementId);
     }
-
     public bool IsLoadedInterstitial()
     {
         if (myInterstitialId == null) return false;
         else
             return Advertisement.IsReady(myInterstitialId);
     }
-
-    public void ReloadVideoAds()
-    {
-        Advertisement.Load(myPlacementId);
-    }
     public void DisplayInterstitialAds()
     {
         Advertisement.Show(myInterstitialId);
+    }
+    public void ReloadVideoAds()
+    {
+        Advertisement.Load(myPlacementId);
     }
     public void DisplayVideoAds()
     {
