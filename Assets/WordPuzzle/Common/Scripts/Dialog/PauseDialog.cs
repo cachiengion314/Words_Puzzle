@@ -5,23 +5,68 @@ using UnityEngine.Networking;
 using Superpow;
 using System;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PauseDialog : Dialog
 {
     [SerializeField] private GameObject _iconTask;
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _iconBtnHome;
+    [SerializeField] private Image _iconBtnTheme;
+    [SerializeField] private Image _iconBtnSetting;
+    [SerializeField] private Image _iconBtnTask;
+    [SerializeField] private Image _iconBtnFeddback;
+    [SerializeField] private Image _iconBtnHelp;
+    [SerializeField] private Image _iconHome;
+    [SerializeField] private Image _iconTheme;
+    [SerializeField] private Image _iconSetting;
+    [SerializeField] private Image _iconObjective;
+    [SerializeField] private Image _iconFeedback;
+    [SerializeField] private Image _iconHelp;
+    [SerializeField] private TextMeshProUGUI _txtHome;
+    [SerializeField] private TextMeshProUGUI _txtTheme;
+    [SerializeField] private TextMeshProUGUI _txtSetting;
+    [SerializeField] private TextMeshProUGUI _txtObjective;
+    [SerializeField] private TextMeshProUGUI _txtFeedback;
+    [SerializeField] private TextMeshProUGUI _txtHelp;
 
     public static PauseDialog instance;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if (instance == null)
             instance = this;
+        CheckTheme();
     }
 
     protected override void Start()
     {
         base.Start();
+        CheckTheme();
         CheckShowIconTaskComplete();
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _iconBtnHome.sprite = currTheme.uiData.menuData.iconBtnNormal;
+            _iconBtnTheme.sprite = currTheme.uiData.menuData.iconBtnNormal;
+            _iconBtnSetting.sprite = currTheme.uiData.menuData.iconBtnNormal;
+            _iconBtnTask.sprite = currTheme.uiData.menuData.iconBtnTask;
+            _iconBtnFeddback.sprite = currTheme.uiData.menuData.iconBtnHelpFeddback;
+            _iconBtnHelp.sprite = currTheme.uiData.menuData.iconBtnHelpFeddback;
+            _iconHome.sprite = currTheme.uiData.menuData.iconHome;
+            _iconTheme.sprite = currTheme.uiData.menuData.iconTheme;
+            _iconSetting.sprite = currTheme.uiData.menuData.iconSetting;
+            _iconObjective.sprite = currTheme.uiData.menuData.iconObjective;
+            _iconFeedback.sprite = currTheme.uiData.menuData.iconFeedback;
+            _iconHelp.sprite = currTheme.uiData.menuData.iconHelp;
+
+            _txtHome.color = _txtTheme.color = _txtSetting.color = _txtObjective.color = _txtFeedback.color = _txtHelp.color = currTheme.fontData.colorContentDialog;
+        }
     }
 
     public void CheckShowIconTaskComplete()

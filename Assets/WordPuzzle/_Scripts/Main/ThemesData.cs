@@ -81,6 +81,7 @@ public class UIData
     public Sprite imageTitleDialog;
     public Sprite btnCloseDialog;
     public ObjectivesData objectivesData;
+    public MenuData menuData;
 }
 
 [Serializable]
@@ -88,6 +89,20 @@ public class AnimData
 {
     public string skinAnim;
     public string boneFx;
+}
+
+[Serializable]
+public class MenuData
+{
+    public Sprite iconBtnNormal;
+    public Sprite iconBtnTask;
+    public Sprite iconBtnHelpFeddback;
+    public Sprite iconHome;
+    public Sprite iconTheme;
+    public Sprite iconSetting;
+    public Sprite iconObjective;
+    public Sprite iconFeedback;
+    public Sprite iconHelp;
 }
 
 [Serializable]
