@@ -83,14 +83,8 @@ public class DictionaryDialog : Dialog
 
         InstantiateFlags();
 
-        //if (HoneyFrameBtt.instance != null)
-        //{
-        //    if (HoneyFrameBtt.instance.isClickOnThis)
-        //    {
-        //        OnClickFlagTab();
-        //    }
-        //}
-
+        if (HoneyFrameHomeScene.isClickOnThis || HoneyFrameMainScene.isClickOnThis)
+            OnClickFlagTab();
     }
     public void InstantiateFlags()
     {

@@ -52215,7 +52215,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1726894433}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1726894437}
+        m_MethodName: HoneyFrameMainSceneClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   mPivotForFX: 6
   mEnabledFX: 1
   mImg: {fileID: 1726894433}
@@ -52231,10 +52242,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1726894431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b955b54c214977d41bc26850852ee15d, type: 3}
+  m_Script: {fileID: 11500000, guid: ab03092db31c21043887e63f9a3a4d9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isClickOnThis: 0
 --- !u!222 &1737567014
 CanvasRenderer:
   m_ObjectHideFlags: 0
