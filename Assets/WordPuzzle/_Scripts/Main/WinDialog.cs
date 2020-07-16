@@ -384,7 +384,7 @@ public class WinDialog : Dialog
                 });
             }
         }
-        if (currlevel > 17)
+        if (currlevel > AdsManager.instance.MinLevelToLoadRewardVideo)
             RewardButton.SetActive(true);
         else
             RewardButton.SetActive(false);

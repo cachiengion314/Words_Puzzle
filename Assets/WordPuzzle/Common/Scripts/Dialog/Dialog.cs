@@ -170,7 +170,7 @@ public class Dialog : MonoBehaviour
         var gameData = Resources.Load<GameData>("GameData");
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
         var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
-        if (showDialogReward && currlevel > 16)
+        if (showDialogReward && currlevel >= AdsManager.instance.MinLevelToLoadRewardVideo)
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
             DialogController.instance.ShowDialog(DialogType.FreeStars, DialogShow.STACK_DONT_HIDEN);

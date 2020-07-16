@@ -126,7 +126,10 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
         Debug.Log("Remoteconfig gameplay load active_rewarded_level: " + AdsManager.instance.MinLevelToLoadRewardVideo);
         // Percent to load interstitial ads
         AdsManager.instance.PercentToloadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
-        Debug.Log("Remoteconfig gameplay load interstitial_showing_ratio: " + AdsManager.instance.MinLevelToLoadRewardVideo);
+        Debug.Log("Remoteconfig gameplay load interstitial_showing_ratio: " + AdsManager.instance.PercentToloadInterstitial);
+        // Min level to load interstitial ads
+        AdsManager.instance.MinLevelToLoadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
+        Debug.Log("Remoteconfig gameplay load active_interstitial_level: " + AdsManager.instance.MinLevelToLoadInterstitial);
     }
     // Start a fetch request.
     public Task FetchDataAsync()

@@ -120,7 +120,7 @@ public class AnimEvent : MonoBehaviour
                 {
                     if (WinDialog.instance != null)
                     {
-                        if (/*IsShowAds() && */WordRegion.instance.CurLevel > 17)
+                        if (/*IsShowAds() && */WordRegion.instance.CurLevel >= AdsManager.instance.MinLevelToLoadInterstitial)
                         {
                             AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial;
                             UnityAdTest.instance.myInterstitialId = ConfigController.instance.config.unityAdsId.interstitialLevel;

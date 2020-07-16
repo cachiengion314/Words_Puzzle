@@ -164,6 +164,8 @@ public class RemoteConfigFirebase : MonoBehaviour
         AdsManager.instance.MinLevelToLoadRewardVideo = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
         // Percent to load interstitial ads
         AdsManager.instance.PercentToloadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
+        // Min level to load interstitial ads
+        AdsManager.instance.MinLevelToLoadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
     }
     public void ShowIngameNotify()
     {

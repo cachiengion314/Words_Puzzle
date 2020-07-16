@@ -64,7 +64,7 @@ public class AdmobController : MonoBehaviour, IAds
         AdSize bannerAdSize = new AdSize(adWidth, 50);
         bannerAdSize = AdSize.GetPortraitAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
 
-         this.bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
+        this.bannerView = new BannerView(adUnitId, bannerAdSize, AdPosition.Bottom);
 
         // Register for ad events.
         this.bannerView.OnAdLoaded += this.HandleAdLoaded;
@@ -75,9 +75,8 @@ public class AdmobController : MonoBehaviour, IAds
 
         // Load a banner ad.
         this.bannerView.LoadAd(this.CreateAdRequest());
-#endif       
+#endif
     }
-
     public void RequestInterstitial()
     {
         // These ad units are configured to always serve test ads.
