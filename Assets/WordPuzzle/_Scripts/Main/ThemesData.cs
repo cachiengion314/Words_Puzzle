@@ -84,6 +84,7 @@ public class UIData
     public MenuData menuData;
     public FreestarData freestarData;
     public ComingSoonData comingSoonData;
+    public HelpData helpData;
 }
 
 [Serializable]
@@ -123,6 +124,19 @@ public class ComingSoonData
     public Sprite message;
     public Sprite btnClose;
     public Color colorTextBtn;
+}
+
+[Serializable]
+public class HelpData
+{
+    public Sprite btnNomal;
+    public Sprite btnFb;
+    public Sprite btnMessager;
+    public Sprite btnMail;
+    public Sprite iconOther;
+    public Sprite iconFb;
+    public Sprite iconMessager;
+    public Sprite iconMail;
 }
 
 [Serializable]

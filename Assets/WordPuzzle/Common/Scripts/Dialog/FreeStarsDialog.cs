@@ -65,7 +65,8 @@ public class FreeStarsDialog : Dialog
             _iconAds.SetNativeSize();
             _iconStar.SetNativeSize();
 
-            _txtReward.color = _txtMessage .color = currTheme.uiData.freestarData.colorTextBtn;
+            _txtReward.color = currTheme.uiData.freestarData.colorTextBtn;
+            _txtMessage.color = currTheme.fontData.colorContentDialog;
 
             _animCharacter.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             _animCharacter.SetSkin(currTheme.animData.skinAnim);
