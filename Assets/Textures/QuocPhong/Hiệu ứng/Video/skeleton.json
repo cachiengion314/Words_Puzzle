@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "TT+FHJCQN6KvEYwc2yw/TORUfRg",
+	"hash": "Rqv20EG4fIcpSyCAZmTAogIQwLw",
 	"spine": "3.8.95",
 	"x": -163.38,
 	"y": -2.16,
@@ -12,18 +12,43 @@
 "bones": [
 	{ "name": "root" },
 	{ "name": "bone", "parent": "root" },
-	{ "name": "keo", "parent": "root", "x": 41.48, "y": 67.35 }
+	{ "name": "keo", "parent": "root", "x": 41.48, "y": 67.35 },
+	{ "name": "keo2", "parent": "root", "x": 41.48, "y": 57.79 }
 ],
 "slots": [
 	{ "name": "Layer 79 (merged)", "bone": "root", "attachment": "Layer 79 (merged)" },
 	{ "name": "hi", "bone": "root", "attachment": "hi" },
 	{ "name": "Layer 1189", "bone": "bone", "attachment": "Layer 1189" },
 	{ "name": "Layer 81", "bone": "keo", "attachment": "Layer 81" },
+	{ "name": "Layer 82", "bone": "keo2", "attachment": "Layer 81" },
 	{ "name": "Video", "bone": "root", "attachment": "Video" }
 ],
 "skins": [
 	{
-		"name": "default",
+		"name": "Newspaper",
+		"attachments": {
+			"Layer 79 (merged)": {
+				"Layer 79 (merged)": { "name": "Newspaper", "x": 37.62, "y": 58.34, "width": 402, "height": 121 }
+			},
+			"Layer 82": {
+				"Layer 81": { "name": "Layer 104", "x": 1.99, "y": -0.04, "width": 90, "height": 76 }
+			},
+			"Video": {
+				"Video": { "name": "Rounded Rectangle 2", "x": -65.54, "y": 58.02, "width": 73, "height": 76 }
+			},
+			"hi": {
+				"hi": {
+					"type": "clipping",
+					"end": "Layer 1189",
+					"vertexCount": 32,
+					"vertices": [ -158.46, 87.85, -156.63, 92.87, -154.58, 97.66, -151.72, 101.74, -148.01, 104.96, -144.16, 108.25, -140.59, 110.07, -137.51, 111.47, -134.64, 112.38, 209.57, 112.34, 216.61, 110.07, 222.03, 106.14, 225.88, 102.52, 229.27, 98.65, 231.33, 94.53, 233.39, 90.3, 233.75, 87.88, 233.77, 27.27, 232.3, 23.31, 230.04, 18.68, 227.44, 14.73, 221.68, 9.87, 218.51, 7.72, 213.32, 5.57, 209.13, 3.88, -133.55, 4.33, -139.37, 6.11, -145.6, 9.39, -151.84, 14.8, -155.44, 20.71, -157.58, 26.28, -158.23, 30.05 ],
+					"color": "ce3a3aff"
+				}
+			}
+		}
+	},
+	{
+		"name": "Woody",
 		"attachments": {
 			"Layer 79 (merged)": {
 				"Layer 79 (merged)": { "x": 37.62, "y": 58.34, "width": 402, "height": 121 }
@@ -61,6 +86,23 @@
 				]
 			},
 			"keo": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.1667 },
+					{ "time": 0.2667, "angle": -13.17 },
+					{ "time": 0.3667, "angle": 17.53 },
+					{ "time": 0.4667, "angle": -13.17 },
+					{ "time": 0.5667, "angle": 17.53 },
+					{ "time": 0.6667 },
+					{ "time": 2.1667, "angle": -0.35 },
+					{ "time": 2.2667, "angle": -13.17 },
+					{ "time": 2.3667, "angle": 17.53 },
+					{ "time": 2.4667, "angle": -13.17 },
+					{ "time": 2.5667, "angle": 17.53 },
+					{ "time": 2.6667 }
+				]
+			},
+			"keo2": {
 				"rotate": [
 					{ "curve": "stepped" },
 					{ "time": 0.1667 },
