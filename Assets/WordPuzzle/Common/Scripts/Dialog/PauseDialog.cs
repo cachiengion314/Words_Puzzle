@@ -65,6 +65,12 @@ public class PauseDialog : Dialog
             _iconFeedback.sprite = currTheme.uiData.menuData.iconFeedback;
             _iconHelp.sprite = currTheme.uiData.menuData.iconHelp;
 
+            _iconBtnHome.SetNativeSize();
+            _iconBtnTheme.SetNativeSize();
+            _iconBtnSetting.SetNativeSize();
+            _iconBtnTask.SetNativeSize();
+            _iconBtnFeddback.SetNativeSize();
+            _iconBtnHelp.SetNativeSize();
             _iconHome.SetNativeSize();
             _iconTheme.SetNativeSize();
             _iconSetting.SetNativeSize();
