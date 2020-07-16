@@ -83,6 +83,7 @@ public class UIData
     public ObjectivesData objectivesData;
     public MenuData menuData;
     public FreestarData freestarData;
+    public ComingSoonData comingSoonData;
 }
 
 [Serializable]
@@ -113,6 +114,14 @@ public class FreestarData
     public Sprite iconAds;
     public Sprite iconStar;
     [Space]
+    public Color colorTextBtn;
+}
+
+[Serializable]
+public class ComingSoonData
+{
+    public Sprite message;
+    public Sprite btnClose;
     public Color colorTextBtn;
 }
 
