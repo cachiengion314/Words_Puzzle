@@ -5,6 +5,7 @@ using Firebase.Database;
 using TMPro;
 using System;
 using Superpow;
+using UnityEngine.UI;
 
 public class MissingWordsFeedback : Dialog
 {
@@ -16,6 +17,13 @@ public class MissingWordsFeedback : Dialog
     public static Dictionary<string, object> childUpdates = new Dictionary<string, object>();
 
     public int currlevel;
+
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _boardMissingWord;
+    [SerializeField] private Image _btnSend;
+    [SerializeField] private TextMeshProUGUI _txtSend;
+    [SerializeField] private TextMeshProUGUI _txtTitle;
+
     // test data
     private int _count = 0;
     protected override void Awake()
@@ -34,6 +42,30 @@ public class MissingWordsFeedback : Dialog
         // _dataWordsRef.ValueChanged += OnCountUpdated;
 
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        CheckTheme();
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _boardMissingWord.sprite = currTheme.uiData.missingWordData.boardMissingWord;
+            _btnSend.sprite = currTheme.uiData.missingWordData.btnSend;
+
+            _boardMissingWord.SetNativeSize();
+            _btnSend.SetNativeSize();
+
+            _txtSend.color = currTheme.uiData.missingWordData.colorTextBtn;
+            _txtTitle.color = currTheme.fontData.colorContentDialog;
+            inputfield.textComponent.color = inputfield.placeholder.color = currTheme.uiData.missingWordData.colorTextFiel;
+        }
+    }
+
     private void OnDestroy()
     {
         _dataWordsRef.ValueChanged -= OnCountUpdated;

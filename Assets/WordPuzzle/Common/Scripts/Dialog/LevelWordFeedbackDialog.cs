@@ -16,6 +16,12 @@ public class LevelWordFeedbackDialog : Dialog
     public RectTransform textBackgroundPrefab;
     public RectTransform wordDoneByPlayerPrefab;
     public int currlevel;
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _btnSend;
+    [SerializeField] private Image _boardWord;
+    [SerializeField] private TextMeshProUGUI _txtTitle;
+    [SerializeField] private TextMeshProUGUI _txtSend;
+
     protected override void Awake()
     {
         base.Awake();
@@ -26,6 +32,7 @@ public class LevelWordFeedbackDialog : Dialog
     protected override void Start()
     {
         base.Start();
+        CheckTheme();
         var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
         currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * GameState.currentWorld) + 1;
 
@@ -48,6 +55,30 @@ public class LevelWordFeedbackDialog : Dialog
             }
         }
     }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _btnSend.sprite = currTheme.uiData.levelWordData.btnSend;
+            _boardWord.sprite = currTheme.uiData.levelWordData.boardWord;
+
+            _boardWord.SetNativeSize();
+
+            _txtTitle.color = currTheme.fontData.colorContentDialog;
+            _txtSend.color = currTheme.uiData.levelWordData.colorTextBtn;
+
+            var wordToggle = wordDoneByPlayerPrefab.GetComponent<WordDoneByPlayerToggle>();
+            wordToggle.wordNormal.sprite = currTheme.uiData.levelWordData.wordNormal;
+            wordToggle.wordDone.sprite = currTheme.uiData.levelWordData.wordDone;
+            wordToggle.wordNormal.SetNativeSize();
+            wordToggle.wordDone.SetNativeSize();
+
+            wordToggle.txtWord.color = currTheme.uiData.levelWordData.colorTextWordPfb;
+        }
+    }
+
     public void OnSendIrrelevantWords()
     {
         string longText = null;

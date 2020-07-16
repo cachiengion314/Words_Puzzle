@@ -85,6 +85,10 @@ public class UIData
     public FreestarData freestarData;
     public ComingSoonData comingSoonData;
     public HelpData helpData;
+    public FeedbackData feedbackData;
+    public MissingWordData missingWordData;
+    public LevelWordData levelWordData;
+    public ContactData contactData;
 }
 
 [Serializable]
@@ -137,6 +141,47 @@ public class HelpData
     public Sprite iconFb;
     public Sprite iconMessager;
     public Sprite iconMail;
+}
+
+[Serializable]
+public class FeedbackData
+{
+    public Sprite bgOption;
+    public Sprite btnMissingWord;
+    public Sprite btnLevelWord;
+    public Sprite btnContact;
+    public Sprite iconMissingWord;
+    public Sprite iconLevelWord;
+    public Sprite iconContact;
+}
+
+[Serializable]
+public class MissingWordData
+{
+    public Sprite boardMissingWord;
+    public Sprite btnSend;
+    public Color colorTextBtn;
+    public Color colorTextFiel;
+}
+
+[Serializable]
+public class LevelWordData
+{
+    public Sprite btnSend;
+    public Sprite boardWord;
+    public Color colorTextBtn;
+    public Sprite wordNormal;
+    public Sprite wordDone;
+    public Color colorTextWordPfb;
+}
+
+[Serializable]
+public class ContactData
+{
+    public Sprite boardContact;
+    public Sprite btnSend;
+    public Color colorTextBtn;
+    public Color colorTextFiel;
 }
 
 [Serializable]

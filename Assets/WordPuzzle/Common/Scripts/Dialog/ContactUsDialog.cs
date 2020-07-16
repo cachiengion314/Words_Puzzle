@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Firebase.Database;
+using UnityEngine.UI;
+
 public class ContactUsDialog : Dialog
 {
     private TMP_InputField.SubmitEvent submitBodyEvent;
@@ -10,6 +12,10 @@ public class ContactUsDialog : Dialog
 
     public TMP_InputField inputFieldYourEmail;
     public TMP_InputField inputFieldBody;
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _boardContact;
+    [SerializeField] private Image _btnSend;
+    [SerializeField] private TextMeshProUGUI _txtSend;
 
     private string email;
     private string emailBody;
@@ -28,6 +34,29 @@ public class ContactUsDialog : Dialog
         submitEmailEvent.AddListener(EndEditinputFieldYourEmailCallback);
         inputFieldYourEmail.onEndEdit = submitEmailEvent;
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        CheckTheme();
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _boardContact.sprite = currTheme.uiData.contactData.boardContact;
+            _btnSend.sprite = currTheme.uiData.contactData.btnSend;
+            _boardContact.SetNativeSize();
+            _btnSend.SetNativeSize();
+
+            _txtSend.color = currTheme.uiData.contactData.colorTextBtn;
+            inputFieldYourEmail.textComponent.color = inputFieldBody.textComponent.color = inputFieldYourEmail.placeholder.color = inputFieldBody.placeholder.color =
+                currTheme.uiData.contactData.colorTextFiel;
+        }
+    }
+
     public void EndEditInputFieldBodyCallback(string arg)
     {
         emailBody = arg;

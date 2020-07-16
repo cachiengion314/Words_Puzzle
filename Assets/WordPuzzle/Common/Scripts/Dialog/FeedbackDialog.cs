@@ -6,15 +6,61 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using UnityEngine.UI;
 
 public class FeedbackDialog : Dialog
 {
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _bgOption;
+    [SerializeField] private Image _btnMissingWord;
+    [SerializeField] private Image _btnLevelWord;
+    [SerializeField] private Image _btnContact;
+    [SerializeField] private Image _iconMissingWord;
+    [SerializeField] private Image _iconLevelWord;
+    [SerializeField] private Image _iconContact;
+    [SerializeField] private Text _txtMissingWord;
+    [SerializeField] private Text _txtLevelWord;
+    [SerializeField] private Text _txtContact;
+
+
     private string fromEmail = "goofyart314@gmail.com"; // your Gmail Account From Where You Want To Send Email
     private string toEmail = "cachiengion314@gmail.com";
     private string subject = "SubjectName";
     private string body = "Body of the email";
 
     private string password = "null"; // YourGmailAccountPassword
+
+
+    protected override void Start()
+    {
+        base.Start();
+        CheckTheme();
+    }
+
+    private void CheckTheme()
+    {
+        if (MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _bgOption.sprite = currTheme.uiData.feedbackData.bgOption;
+            _btnMissingWord.sprite = currTheme.uiData.feedbackData.btnMissingWord;
+            _btnLevelWord.sprite = currTheme.uiData.feedbackData.btnLevelWord;
+            _btnContact.sprite = currTheme.uiData.feedbackData.btnContact;
+            _iconMissingWord.sprite = currTheme.uiData.feedbackData.iconMissingWord;
+            _iconLevelWord.sprite = currTheme.uiData.feedbackData.iconLevelWord;
+            _iconContact.sprite = currTheme.uiData.feedbackData.iconContact;
+
+            _bgOption.SetNativeSize();
+            _btnMissingWord.SetNativeSize();
+            _btnLevelWord.SetNativeSize();
+            _btnContact.SetNativeSize();
+            _iconMissingWord.SetNativeSize();
+            _iconLevelWord.SetNativeSize();
+            _iconContact.SetNativeSize();
+
+            _txtMissingWord.color = _txtLevelWord.color = _txtContact.color = currTheme.fontData.colorContentDialog;
+        }
+    }
 
     public void OnContactUsClick()
     {
