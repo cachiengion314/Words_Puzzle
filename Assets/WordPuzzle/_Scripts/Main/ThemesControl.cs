@@ -156,11 +156,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion.animBtnHelp.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnHelpShadow.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnBonusBoxShadow.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBeehive1.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBeehive2.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBeehive3.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            wordRegion.animBeehive4.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-
+            
             wordRegion.animBtnBonusBox.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHint.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHintTarget.SetSkin(currTheme.animData.skinAnim);
@@ -170,12 +166,6 @@ public class ThemesControl : MonoBehaviour
             wordRegion.animBtnHelp.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHelpShadow.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnBonusBoxShadow.SetSkin(currTheme.animData.skinAnim);
-            wordRegion.animBeehive1.SetSkin(currTheme.animData.skinAnim);
-            wordRegion.animBeehive2.SetSkin(currTheme.animData.skinAnim);
-            wordRegion.animBeehive3.SetSkin(currTheme.animData.skinAnim);
-            wordRegion.animBeehive4.SetSkin(currTheme.animData.skinAnim);
-
-
         }
     }
 

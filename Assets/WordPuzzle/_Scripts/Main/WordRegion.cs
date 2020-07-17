@@ -1071,7 +1071,18 @@ public class WordRegion : MonoBehaviour
     public void BeeClick()
     {
         if (MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
             MainController.instance.canvasPopup.gameObject.SetActive(true);
+            animBeehive1.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            animBeehive2.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            animBeehive3.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            animBeehive4.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            animBeehive1.SetSkin(currTheme.animData.skinAnim);
+            animBeehive2.SetSkin(currTheme.animData.skinAnim);
+            animBeehive3.SetSkin(currTheme.animData.skinAnim);
+            animBeehive4.SetSkin(currTheme.animData.skinAnim);
+        }
         BlockScreen.instance.Block(true);
         int count = 0;
         var lineNotShow = lines.FindAll(x => !x.isShown);
