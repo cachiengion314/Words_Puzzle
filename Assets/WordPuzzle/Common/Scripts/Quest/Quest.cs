@@ -33,6 +33,8 @@ public class Quest : MonoBehaviour
     [SerializeField] private Image _iconStar;
     [SerializeField] private Image _iconTask;
     [SerializeField] private TextMeshProUGUI _textProgress;
+    [SerializeField] private TextMeshProUGUI _textPlay;
+    [SerializeField] private TextMeshProUGUI _textCollect;
 
     [HideInInspector] public bool taskComplete;
     [HideInInspector] public bool taskCollected;
@@ -103,6 +105,7 @@ public class Quest : MonoBehaviour
         _textProgress.color = currTheme.uiData.objectivesData.colorTextProgress;
         rewardText.GetComponent<TextMeshProUGUI>().color = currTheme.fontData.colorContentDialog;
         titleText.GetComponent<TextMeshProUGUI>().color = currTheme.fontData.colorContentDialog;
+        _textPlay.color = _textCollect.color = currTheme.fontData.colorContentDialog;
 
         _imageProgress.SetNativeSize();
         _progressMask.SetNativeSize();

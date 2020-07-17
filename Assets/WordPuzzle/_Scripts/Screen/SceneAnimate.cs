@@ -32,6 +32,8 @@ public class SceneAnimate : MonoBehaviour
     public string idleEgg = "Không Anim";
     public string idleEggShadow = "Không Anim Shadow";
     [Space]
+    [SerializeField] private Image _overlayPauseGame;
+    [Space]
     [SerializeField] private Image _bgLoading;
     [SerializeField] private Image _imgTip;
     [SerializeField] private Text _textTip;
@@ -65,6 +67,7 @@ public class SceneAnimate : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         //animatorScene.gameObject.SetActive(false);
         _loadingScreen.gameObject.SetActive(false);
+        _overlayPauseGame.gameObject.SetActive(false);
         _textProgress.text = "";
     }
 
@@ -229,6 +232,11 @@ public class SceneAnimate : MonoBehaviour
             tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x + rectTransform.sizeDelta.x, 0.3f);
     }
     //===
+
+    private void OnApplicationPause(bool pause)
+    {
+        _overlayPauseGame.gameObject.SetActive(pause);
+    }
 }
 
 [Serializable]

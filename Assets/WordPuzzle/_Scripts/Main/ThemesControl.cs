@@ -135,6 +135,7 @@ public class ThemesControl : MonoBehaviour
             {
                 HoneyPointsController.instance.honeyTxt.font = currTheme.fontData.fontAsset;
                 HoneyPointsController.instance.honeyTxt.color = currTheme.fontData.colorTextHeader;
+                HoneyPointsController.instance.honeyTxt.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
                 HoneyPointsController.instance.visualHoneyPointsTxt.font = currTheme.fontData.fontAsset;
                 Color currentColor = currTheme.fontData.colorTextHeader;
                 HoneyPointsController.instance.visualHoneyPointsTxt.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0);

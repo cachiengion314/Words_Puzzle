@@ -161,6 +161,7 @@ public class WinDialog : Dialog
 
         _textHoney.font = currTheme.fontData.fontAsset;
         _textHoney.color = currTheme.fontData.colorTextNumStar;
+        _textHoney.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
 
         _textNumBee.font = currTheme.fontData.fontAsset;
     }
