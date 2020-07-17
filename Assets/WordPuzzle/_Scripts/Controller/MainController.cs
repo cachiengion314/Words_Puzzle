@@ -69,6 +69,7 @@ public class MainController : BaseController
         //level = 4;
         //Debug.Log(world + ", " + subWorld + ", " + level);
         //save level pass;
+        canvasPopup.gameObject.SetActive(true);
         var currTheme = CPlayerPrefs.GetInt("CURR_THEMES", 0);
         ThemesControl.instance.LoadThemeData(currTheme);
         ThemesControl.instance.LoadThemeDataDialog(currTheme);
