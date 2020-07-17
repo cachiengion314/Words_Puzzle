@@ -147,7 +147,7 @@ public class ThemesControl : MonoBehaviour
                 MonoUtils.instance.textCollectDefault.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0);
             }
 
-            wordRegion.animBtnBonusBox.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            /*wordRegion.animBtnBonusBox.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnHint.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnHintTarget.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnMultipleHint.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
@@ -165,7 +165,13 @@ public class ThemesControl : MonoBehaviour
             wordRegion.animBtnRewardAds.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHelp.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHelpShadow.SetSkin(currTheme.animData.skinAnim);
-            wordRegion.animBtnBonusBoxShadow.SetSkin(currTheme.animData.skinAnim);
+            wordRegion.animBtnBonusBoxShadow.SetSkin(currTheme.animData.skinAnim);*/
+
+            foreach (var anim in wordRegion.anims)
+            {
+                anim.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+                anim.SetSkin(currTheme.animData.skinAnim);
+            }
         }
     }
 

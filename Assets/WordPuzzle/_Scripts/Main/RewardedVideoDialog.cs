@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,11 +11,29 @@ public class RewardedVideoDialog : Dialog
     [SerializeField] private int _amount = 20;
     public TextMeshProUGUI amountText;
     public Text messageText;
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private TextMeshProUGUI _txtCollect;
+    [SerializeField] private SpineControl _animStar;
 
     protected override void Start()
     {
         base.Start();
         SetAmount(_amount);
+        CheckTheme();
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _btnReward.image.sprite = currTheme.uiData.rewardDialogData.btnCollect;
+            amountText.color = currTheme.fontData.colorContentDialog;
+            _txtCollect.color = currTheme.uiData.rewardDialogData.colorBtn;
+
+            _animStar.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            _animStar.SetSkin(currTheme.animData.skinAnim);
+        }
     }
 
     public void SetAmount(int amount)

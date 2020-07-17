@@ -755,6 +755,8 @@ MonoBehaviour:
   _amount: 25
   amountText: {fileID: 8016002681239121876}
   messageText: {fileID: 114600004057647044}
+  _txtCollect: {fileID: 6176921597947826781}
+  _animStar: {fileID: 6062528710958939396}
 --- !u!222 &6163443747966552189
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -957,6 +959,7 @@ GameObject:
   - component: {fileID: 4663084258797444836}
   - component: {fileID: 1535012212491894399}
   - component: {fileID: 5252902396969317172}
+  - component: {fileID: 6062528710958939396}
   m_Layer: 8
   m_Name: Anim
   m_TagString: Untagged
@@ -1010,7 +1013,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   skeletonDataAsset: {fileID: 11400000, guid: b8717fef10da7b6438b29cd316612a6d, type: 2}
-  initialSkinName: 
+  initialSkinName: Woody
   initialFlipX: 0
   initialFlipY: 0
   startingAnimation: animation
@@ -1027,6 +1030,19 @@ MonoBehaviour:
       calculateTangents: 0
       addNormals: 0
       immutableTriangles: 0
+--- !u!114 &6062528710958939396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3067862102463844595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412bf654c3145db408bf8506206100df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ske: {fileID: 0}
 --- !u!1 &4814065759385550259
 GameObject:
   m_ObjectHideFlags: 0

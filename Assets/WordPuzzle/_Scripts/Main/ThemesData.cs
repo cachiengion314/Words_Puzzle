@@ -90,6 +90,7 @@ public class UIData
     public LevelWordData levelWordData;
     public ContactData contactData;
     public MeanWordData meanWordData;
+    public RewardDialogData rewardDialogData;
 }
 
 [Serializable]
@@ -193,6 +194,13 @@ public class MeanWordData
     public Sprite arrowRight;
     public Sprite selectedPanigation;
     public Sprite disablePanigation;
+}
+
+[Serializable]
+public class RewardDialogData
+{
+    public Sprite btnCollect;
+    public Color colorBtn;
 }
 
 [Serializable]
