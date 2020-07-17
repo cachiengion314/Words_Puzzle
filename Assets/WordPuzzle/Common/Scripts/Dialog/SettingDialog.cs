@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -29,10 +31,40 @@ public class SettingDialog : Dialog
     [SerializeField] private GameObject _panelExit;
     [SerializeField] private GameObject _panelOverlay;
 
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _iconSound;
+    [SerializeField] private Image _iconMusic;
+    [SerializeField] private Image _iconEffect;
+    [SerializeField] private Image _iconEffectOn;
+    [SerializeField] private Image _iconEffectOff;
+    [SerializeField] private Image _iconNotification;
+    [SerializeField] private Image _iconNotificationOn;
+    [SerializeField] private Image _iconNotificationOff;
+    [SerializeField] private Image _iconArrow;
+    [SerializeField] private Image _iconArrow2;
+    [SerializeField] private Image _iconArrow3;
+    [SerializeField] private Image _handleSound;
+    [SerializeField] private Image _bgProgressSound;
+    [SerializeField] private Image _fillProgressSound;
+    [SerializeField] private Image _fillSound;
+    [SerializeField] private Image _frameMaskSound;
+    [SerializeField] private Image _handleMusic;
+    [SerializeField] private Image _bgProgressMusic;
+    [SerializeField] private Image _fillProgressMusic;
+    [SerializeField] private Image _fillMusic;
+    [SerializeField] private Image _frameMaskMusic;
+    [SerializeField] private Image _line;
+    [SerializeField] private Image _line2;
+    [SerializeField] private Image _btnFeedback;
+    [SerializeField] private Image _btnRate;
+    [SerializeField] private List<Text> _textContents;
+    [SerializeField] private TextMeshProUGUI _textFeedback;
+    [SerializeField] private TextMeshProUGUI _textRate;
+
     protected override void Start()
     {
         base.Start();
-
+        CheckTheme();
         if (EffectController.instance.IsEffectOn)
         {
             effectBttOff.gameObject.SetActive(false);
@@ -65,19 +97,57 @@ public class SettingDialog : Dialog
         }
         CheckLogin();
     }
-    /*private void Update()
-    {
-        if (soundController.IsMuted())
-            soundButton.transform.Find("On").gameObject.SetActive(false);
-        else
-            soundButton.transform.Find("On").gameObject.SetActive(true);
 
-        //music
-        if (musicController.IsMuted())
-            musicButton.transform.Find("On").gameObject.SetActive(false);
-        else
-            musicButton.transform.Find("On").gameObject.SetActive(true);
-    }*/
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _iconSound.sprite = currTheme.uiData.settingData.iconSound;
+            _iconMusic.sprite = currTheme.uiData.settingData.iconMusic;
+            _iconEffect.sprite = currTheme.uiData.settingData.iconEffect;
+            _iconNotification.sprite = currTheme.uiData.settingData.iconNotification;
+
+            _iconEffectOn.sprite = currTheme.uiData.settingData.iconOn;
+            _iconEffectOff.sprite = currTheme.uiData.settingData.iconOff;
+            _iconNotificationOn.sprite = currTheme.uiData.settingData.iconOn;
+            _iconNotificationOff.sprite = currTheme.uiData.settingData.iconOff;
+
+            _iconArrow.sprite = _iconArrow2.sprite = _iconArrow3.sprite = currTheme.uiData.settingData.iconArrow;
+            _handleSound.sprite = _handleMusic.sprite = currTheme.uiData.settingData.handle;
+            _frameMaskSound.sprite = _frameMaskMusic.sprite = currTheme.uiData.settingData.frameMask;
+            _bgProgressSound.sprite = _bgProgressMusic.sprite = currTheme.uiData.settingData.bgProgress;
+            _fillProgressSound.sprite = _fillProgressMusic.sprite = currTheme.uiData.settingData.fillProgress;
+            _fillSound.sprite = _fillMusic.sprite = currTheme.uiData.settingData.fillProgress;
+
+            _line.sprite = currTheme.uiData.settingData.line;
+            _line2.sprite = currTheme.uiData.settingData.line2;
+            _btnFeedback.sprite = currTheme.uiData.settingData.btnFeedback;
+            _btnRate.sprite = currTheme.uiData.settingData.btnRate;
+
+            _textFeedback.color = currTheme.uiData.settingData.colorTextBtnFeedback;
+            _textRate.color = currTheme.uiData.settingData.colorTextBtnRate;
+
+            foreach (var text in _textContents)
+            {
+                text.color = currTheme.fontData.colorContentDialog;
+            }
+        }
+    }
+
+    /*private void Update()
+{
+   if (soundController.IsMuted())
+       soundButton.transform.Find("On").gameObject.SetActive(false);
+   else
+       soundButton.transform.Find("On").gameObject.SetActive(true);
+
+   //music
+   if (musicController.IsMuted())
+       musicButton.transform.Find("On").gameObject.SetActive(false);
+   else
+       musicButton.transform.Find("On").gameObject.SetActive(true);
+}*/
 
     private void ShowButtonMusic(bool status)
     {

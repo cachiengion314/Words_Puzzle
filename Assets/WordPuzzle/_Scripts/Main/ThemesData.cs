@@ -91,6 +91,7 @@ public class UIData
     public ContactData contactData;
     public MeanWordData meanWordData;
     public RewardDialogData rewardDialogData;
+    public SettingData settingData;
 }
 
 [Serializable]
@@ -237,4 +238,26 @@ public class ObjectivesData
     public Sprite great;
     [Space]
     public Color colorTextProgress;
+}
+
+[Serializable]
+public class SettingData
+{
+    public Sprite iconSound;
+    public Sprite iconMusic;
+    public Sprite iconEffect;
+    public Sprite iconNotification;
+    public Sprite iconOn;
+    public Sprite iconOff;
+    public Sprite iconArrow;
+    public Sprite handle;
+    public Sprite bgProgress;
+    public Sprite fillProgress;
+    public Sprite frameMask;
+    public Sprite line;
+    public Sprite line2;
+    public Sprite btnFeedback;
+    public Sprite btnRate;
+    public Color colorTextBtnFeedback;
+    public Color colorTextBtnRate;
 }
