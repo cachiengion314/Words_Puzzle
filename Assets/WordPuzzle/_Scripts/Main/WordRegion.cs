@@ -134,7 +134,11 @@ public class WordRegion : MonoBehaviour
     public SpineControl animBtnRewardAds;
     public SpineControl animBtnBonusBoxShadow;
     public SpineControl animBtnHelpShadow;
-    public List<SpineControl> anims;
+    [Space]
+    public SpineControl animBeehive1;
+    public SpineControl animBeehive2;
+    public SpineControl animBeehive3;
+    public SpineControl animBeehive4;
 
     public ButtonVideoHintFree BtnADS
     {
