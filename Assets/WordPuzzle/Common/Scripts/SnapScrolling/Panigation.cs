@@ -13,6 +13,17 @@ public class Panigation : MonoBehaviour
     void Awake()
     {
         image = GetComponent<Image>();
+        CheckTheme();
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            selectedSprite = currTheme.uiData.meanWordData.selectedPanigation;
+            unSelectSprite = currTheme.uiData.meanWordData.disablePanigation;
+        }
     }
     
     public void SetSprite(bool selected)

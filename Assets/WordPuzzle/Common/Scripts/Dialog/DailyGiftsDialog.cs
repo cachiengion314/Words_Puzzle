@@ -320,7 +320,7 @@ public class DailyGiftsDialog : Dialog
         if (isNextDay)
         {
             CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
-            _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
+            _currProgressValue = 0;
         }
         if (CPlayerPrefs.HasKey(TIME_REWARD_KEY))
         {

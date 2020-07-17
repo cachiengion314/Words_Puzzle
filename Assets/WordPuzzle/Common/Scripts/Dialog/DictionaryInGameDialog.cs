@@ -32,6 +32,11 @@ public class DictionaryInGameDialog : Dialog
     public List<string> listWordInLevel;
     public Dictionary<string, MeanItemDictionary> listMeanItemObject = new Dictionary<string, MeanItemDictionary>();
 
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _board;
+    [SerializeField] private Image _arrowLeft;
+    [SerializeField] private Image _arrowRight;
+
     protected override void Awake()
     {
         instance = this;
@@ -49,12 +54,29 @@ public class DictionaryInGameDialog : Dialog
         noInternet.SetActive(false);
         snapScrolling.Init(itemPrefab.GetComponent<RectTransform>().sizeDelta.x);
         CheckHaveWords();
+        CheckTheme();
     }
 
     void Update()
     {
         SetArrowObject();
         SetWordNameText();
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _board.sprite = currTheme.uiData.meanWordData.board;
+            _arrowLeft.sprite = currTheme.uiData.meanWordData.arrowLeft;
+            _arrowRight.sprite = currTheme.uiData.meanWordData.arrowRight;
+
+            _arrowLeft.SetNativeSize();
+            _arrowRight.SetNativeSize();
+
+            wordNameText.color = currTheme.fontData.colorContentDialog;
+        }
     }
 
     void SetArrowObject()
