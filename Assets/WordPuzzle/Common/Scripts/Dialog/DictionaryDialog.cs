@@ -88,7 +88,9 @@ public class DictionaryDialog : Dialog
             OnClickFlagTab();
             HoneyFrameHomeScene.isClickOnThis = false;
             HoneyFrameMainScene.isClickOnThis = false;
-        }           
+        }
+        else
+            OnClickVocabularyTab();
     }
     public void InstantiateFlags()
     {
