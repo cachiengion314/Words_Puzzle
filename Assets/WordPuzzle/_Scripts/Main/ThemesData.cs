@@ -93,6 +93,7 @@ public class UIData
     public RewardDialogData rewardDialogData;
     public SettingData settingData;
     public FreestarPlayData freestarPlayData;
+    public BonusBoxData bonusBoxData;
 }
 
 [Serializable]
@@ -273,5 +274,20 @@ public class FreestarPlayData
     public Sprite iconMultipleHint;
     public Sprite iconAds;
     public Sprite btnWatch;
+    public Color colorTextBtn;
+}
+
+[Serializable]
+public class BonusBoxData
+{
+    public Sprite btnHtpl;
+    public Sprite board;
+    public Sprite boardTitle;
+    public Sprite iconStar;
+    public Sprite bgProgress;
+    public Sprite progressBar;
+    public Sprite circleProgress;
+    public Sprite btnCollect;
+    public Color colorTextBoardTitle;
     public Color colorTextBtn;
 }

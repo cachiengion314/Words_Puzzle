@@ -25,6 +25,20 @@ public class ExtraWordDialog : Dialog
     [SerializeField] private int _amountWordTarget = 2;
     [SerializeField] private Transform _currBanlancePos;
     [SerializeField] private GameObject _btnAdsDisable;
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _btnHtpl;
+    [SerializeField] private Image _board;
+    [SerializeField] private Image _boardTitle;
+    [SerializeField] private Image _iconStar;
+    [SerializeField] private Image _bgProgress;
+    [SerializeField] private Image _progressMask;
+    [SerializeField] private Image _progressBar;
+    [SerializeField] private Image _circleProgress;
+    [SerializeField] private Image _btnCollect;
+    [SerializeField] private TextMeshProUGUI _txtBoardTitle;
+    [SerializeField] private TextMeshProUGUI _txtTotalProgress;
+    [SerializeField] private TextMeshProUGUI _txtBtnCollect;
+    [SerializeField] private SpineControl _animBtnAdsReward;
 
     private RewardVideoController _rewardController;
     private int numWords, claimQuantity;
@@ -32,6 +46,7 @@ public class ExtraWordDialog : Dialog
     protected override void Start()
     {
         base.Start();
+        CheckTheme();
         if (MainController.instance != null)
             MainController.instance.canvasCollect.gameObject.SetActive(true);
         _rewardController = FindObjectOfType<RewardVideoController>();
@@ -48,6 +63,40 @@ public class ExtraWordDialog : Dialog
 
         UpdateUI();
         ShowPanelCurrLevel();
+    }
+
+    private void CheckTheme()
+    {
+        if (MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _btnHtpl.sprite = currTheme.uiData.bonusBoxData.btnHtpl;
+            _board.sprite = currTheme.uiData.bonusBoxData.board;
+            _boardTitle.sprite = currTheme.uiData.bonusBoxData.boardTitle;
+            _iconStar.sprite = currTheme.uiData.bonusBoxData.iconStar;
+            _bgProgress.sprite = currTheme.uiData.bonusBoxData.bgProgress;
+            _progressMask.sprite = currTheme.uiData.bonusBoxData.progressBar;
+            _progressBar.sprite = currTheme.uiData.bonusBoxData.progressBar;
+            _circleProgress.sprite = currTheme.uiData.bonusBoxData.circleProgress;
+            _btnCollect.sprite = currTheme.uiData.bonusBoxData.btnCollect;
+
+            _btnHtpl.SetNativeSize();
+            _board.SetNativeSize();
+            _boardTitle.SetNativeSize();
+            _iconStar.SetNativeSize();
+            _bgProgress.SetNativeSize();
+            _progressMask.SetNativeSize();
+            _progressBar.SetNativeSize();
+            _circleProgress.SetNativeSize();
+            _btnCollect.SetNativeSize();
+
+            _txtBoardTitle.color = currTheme.uiData.bonusBoxData.colorTextBoardTitle;
+            _txtBtnCollect.color = currTheme.uiData.bonusBoxData.colorTextBtn;
+            _txtTotalProgress.color = _textCollectEnough.color = _bonusWordPfb.color = currTheme.fontData.colorContentDialog;
+
+            //_animBtnAdsReward.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            //_animBtnAdsReward.SetSkin(currTheme.animData.skinAnim);
+        }
     }
 
     void OnCompleteVideo()
@@ -96,7 +145,7 @@ public class ExtraWordDialog : Dialog
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedBonusBox;
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedBonusBox;
         AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedBonusBox;
-     
+
         AdsManager.instance.ShowVideoAds();
         // AdmobController.instance.ShowRewardBasedVideo();
 
