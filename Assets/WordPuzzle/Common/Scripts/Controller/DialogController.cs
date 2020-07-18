@@ -40,7 +40,8 @@ public enum DialogType
     MissingWordsFeedbackDialog,
     LevelWordsFeedbackDialog,
     ContactUsDialog,
-    Themes
+    Themes,
+    CollectFreestarPlay
 };
 
 public enum DialogShow

@@ -171,6 +171,8 @@ public class FreeStarsPlayDialog : Dialog
     {
         var resultRandom = RandomSingle(listRandom);
         var itemTarget = _itemsCollect[resultRandom];
+        MainController.instance.itemType = itemTarget.itemType;
+        MainController.instance.itemValue = itemTarget.value;
         MainController.instance.textItem.text = "X" + itemTarget.value;
         MainController.instance.imageItem.sprite = itemTarget.iconItem;
         MainController.instance.imageItem.SetNativeSize();
@@ -181,28 +183,8 @@ public class FreeStarsPlayDialog : Dialog
         _panelWatch.transform.localScale = Vector3.zero;
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
-            //Sound.instance.Play(Sound.Others.PopupOpen);
-            //DialogController.instance.ShowDialog(DialogType.RewardedVideo, DialogShow.REPLACE_CURRENT);
-            switch (itemTarget.itemType)
-            {
-                case ItemType.HINT:
-                    CurrencyController.CreditHintFree(itemTarget.value);
-                    MainController.instance.ShowItemCollect();
-                    break;
-                case ItemType.HINT_RANDOM:
-                    CurrencyController.CreditMultipleHintFree(itemTarget.value);
-                    MainController.instance.ShowItemCollect();
-                    break;
-                case ItemType.HINT_SELECT:
-                    CurrencyController.CreditSelectedHintFree(itemTarget.value);
-                    MainController.instance.ShowItemCollect();
-                    break;
-                case ItemType.CURRENCY_BALANCE:
-                    MainController.instance.overlay.gameObject.SetActive(false);
-                    StartCoroutine(MainController.instance.ShowEffectCollect(itemTarget.value));
-                    break;
-            }
-            Close();
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            DialogController.instance.ShowDialog(DialogType.CollectFreestarPlay, DialogShow.REPLACE_CURRENT);
         });
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(

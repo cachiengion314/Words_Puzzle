@@ -24,6 +24,10 @@ public class MainController : BaseController
     public Image overlay;
     public Image imageItem;
     public TextMeshProUGUI textItem;
+    public ItemType itemType;
+
+    [HideInInspector]
+    public int itemValue;
 
     private int world, subWorld, level;
     private bool _isGameComplete;
@@ -279,7 +283,9 @@ public class MainController : BaseController
         });
         TweenControl.GetInstance().FadeAnfa(textItem, 1, 0.3f, () =>
         {
-            TweenControl.GetInstance().FadeAnfa(textItem, 0, 0.7f);
+            TweenControl.GetInstance().FadeAnfa(textItem, 0, 0.7f, ()=> {
+                //overlay.gameObject.SetActive(false);
+            });
         });
     }
 }
