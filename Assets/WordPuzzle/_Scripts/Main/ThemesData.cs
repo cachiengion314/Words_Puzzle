@@ -92,6 +92,7 @@ public class UIData
     public MeanWordData meanWordData;
     public RewardDialogData rewardDialogData;
     public SettingData settingData;
+    public FreestarPlayData freestarPlayData;
 }
 
 [Serializable]
@@ -260,4 +261,17 @@ public class SettingData
     public Sprite btnRate;
     public Color colorTextBtnFeedback;
     public Color colorTextBtnRate;
+}
+
+[Serializable]
+public class FreestarPlayData
+{
+    public Sprite iconGift;
+    public Sprite iconStar;
+    public Sprite iconHint;
+    public Sprite iconSelectedHint;
+    public Sprite iconMultipleHint;
+    public Sprite iconAds;
+    public Sprite btnWatch;
+    public Color colorTextBtn;
 }
