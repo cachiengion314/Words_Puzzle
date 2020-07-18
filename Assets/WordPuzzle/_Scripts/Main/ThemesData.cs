@@ -95,6 +95,7 @@ public class UIData
     public FreestarPlayData freestarPlayData;
     public CollectFreestarPlayData collectFreestarPlayData;
     public BonusBoxData bonusBoxData;
+    public HowtoplayData howtoplayData;
 }
 
 [Serializable]
@@ -285,6 +286,13 @@ public class CollectFreestarPlayData
     public Sprite iconStar;
     public Sprite btnCollect;
     public Color colorTextBtn;
+}
+
+[Serializable]
+public class HowtoplayData
+{
+    public Sprite arrowLeft;
+    public Sprite arrowRight;
 }
 
 [Serializable]

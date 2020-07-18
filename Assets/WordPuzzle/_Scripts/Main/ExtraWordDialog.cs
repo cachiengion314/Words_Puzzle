@@ -94,8 +94,8 @@ public class ExtraWordDialog : Dialog
             _txtBtnCollect.color = currTheme.uiData.bonusBoxData.colorTextBtn;
             _txtTotalProgress.color = _textCollectEnough.color = _bonusWordPfb.color = currTheme.fontData.colorContentDialog;
 
-            //_animBtnAdsReward.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            //_animBtnAdsReward.SetSkin(currTheme.animData.skinAnim);
+            _animBtnAdsReward.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            _animBtnAdsReward.SetSkin(currTheme.animData.skinAnim);
         }
     }
 

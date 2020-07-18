@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HowToPlayDialog : Dialog
 {
@@ -10,6 +13,9 @@ public class HowToPlayDialog : Dialog
     public GameObject arrowRightObject;
     [Header("Other Object")] public GameObject item;
     [Header("Other Object")] public List<GameObject> items;
+    [Header("THEME UI CHANGE")]
+    [SerializeField] private List<Text> _textTitles;
+    [SerializeField] private List<TextMeshProUGUI> _textContent;
 
     private void Awake()
     {
@@ -20,10 +26,37 @@ public class HowToPlayDialog : Dialog
     void Start()
     {
         base.Start();
+        CheckTheme();
         snapScrolling.Init(item.GetComponent<RectTransform>().sizeDelta.x);
         for (int i = 0; i < items.Count; i++)
         {
             snapScrolling.AddItemToList(items[i]);
+        }
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            var arrowLeft = arrowLeftObject.GetComponent<Image>();
+            var arrowRight = arrowRightObject.GetComponent<Image>();
+
+            arrowLeft.sprite = currTheme.uiData.howtoplayData.arrowLeft;
+            arrowRight.sprite = currTheme.uiData.howtoplayData.arrowRight;
+
+            arrowLeft.SetNativeSize();
+            arrowRight.SetNativeSize();
+
+            foreach (var text in _textTitles)
+            {
+                text.color = currTheme.fontData.colorContentDialog;
+            }
+
+            foreach (var text in _textContent)
+            {
+                text.color = currTheme.fontData.colorContentDialog;
+            }
         }
     }
 
