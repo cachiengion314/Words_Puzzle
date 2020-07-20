@@ -9,7 +9,8 @@ public class ThemesDialog : Dialog
     public static ThemesDialog instance;
     [SerializeField] private List<ThemeItem> _themes;
     [SerializeField] Button _btnShop;
-    [SerializeField] Button _btnBack;
+    [SerializeField] GameObject _btnBack;
+    [SerializeField] GameObject _btnHoney;
     private bool _themeExits;
 
     protected override void Start()
@@ -25,7 +26,9 @@ public class ThemesDialog : Dialog
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         if (!isTut && GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0)
         {
-            _btnShop.enabled = _btnBack.enabled  =  false;            
+            _btnShop.gameObject.SetActive(false);
+            _btnBack.gameObject.SetActive(false);
+            _btnHoney.gameObject.SetActive(false);
         }
     }
 
