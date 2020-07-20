@@ -14,8 +14,10 @@ public class HowToPlayDialog : Dialog
     [Header("Other Object")] public GameObject item;
     [Header("Other Object")] public List<GameObject> items;
     [Header("THEME UI CHANGE")]
+    [SerializeField] private Image _hand;
     [SerializeField] private List<Text> _textTitles;
     [SerializeField] private List<TextMeshProUGUI> _textContent;
+    [SerializeField] private List<Image> _imageCenter;
 
     private void Awake()
     {
@@ -42,9 +44,11 @@ public class HowToPlayDialog : Dialog
             var arrowLeft = arrowLeftObject.GetComponent<Image>();
             var arrowRight = arrowRightObject.GetComponent<Image>();
 
+            _hand.sprite = currTheme.uiData.howtoplayData.hand;
             arrowLeft.sprite = currTheme.uiData.howtoplayData.arrowLeft;
             arrowRight.sprite = currTheme.uiData.howtoplayData.arrowRight;
 
+            _hand.SetNativeSize();
             arrowLeft.SetNativeSize();
             arrowRight.SetNativeSize();
 
@@ -56,6 +60,14 @@ public class HowToPlayDialog : Dialog
             foreach (var text in _textContent)
             {
                 text.color = currTheme.fontData.colorContentDialog;
+            }
+
+            var indexItem = 0;
+            foreach (var image in _imageCenter)
+            {
+                image.sprite = currTheme.uiData.howtoplayData.imagesCenter[indexItem];
+                image.SetNativeSize();
+                indexItem++;
             }
         }
     }

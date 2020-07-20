@@ -734,6 +734,8 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            var lineCheckBonus = lines.FindAll(li => _lineIsChecking != null && li.cells.Count == _lineIsChecking.cells.Count);
+            var isShowBonusbox = lineCheckBonus.All(li => li.isShown);
             LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown && !TutorialController.instance.isShowTut);
             if (lineExist != null && lineExist.answer == checkWord)
             {
@@ -743,7 +745,7 @@ public class WordRegion : MonoBehaviour
                 textPreview.SetExistColor();
                 if (textPreview.useFX)
                     textPreview.ClearText();
-                if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(li => li.isShown))
+                if (_currLevel >= TutorialController.instance.bonusBoxLevel && isShowBonusbox && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(li => li.isShown) && _lineIsChecking.answers.Count > 1)
                 {
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", false, _lineIsChecking);
                 }
@@ -906,7 +908,9 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown))
+            var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
+            var isShowBonusbox = lineCheckBonus.All(line => line.isShown);
+            if (_currLevel >= TutorialController.instance.bonusBoxLevel && isShowBonusbox && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown) && _lineIsChecking.answers.Count > 1)
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", false, _lineIsChecking);
             }
@@ -974,6 +978,8 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
+            var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
+            var isShowBonusbox = lineCheckBonus.All(line => line.isShown);
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
             {
@@ -988,7 +994,7 @@ public class WordRegion : MonoBehaviour
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
                 });
             }
-            else if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
+            else if (_currLevel >= TutorialController.instance.bonusBoxLevel && isShowBonusbox && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
             {
                 CPlayerPrefs.SetBool("TUTORIAL", false);
                 BlockScreen.instance.Block(true);

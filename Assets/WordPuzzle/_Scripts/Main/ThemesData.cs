@@ -293,6 +293,8 @@ public class HowtoplayData
 {
     public Sprite arrowLeft;
     public Sprite arrowRight;
+    public Sprite hand;
+    public List<Sprite> imagesCenter;
 }
 
 [Serializable]

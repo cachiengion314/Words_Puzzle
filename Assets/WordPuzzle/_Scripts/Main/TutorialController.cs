@@ -136,6 +136,7 @@ public class TutorialController : MonoBehaviour
                     if (!hidenTextContent)
                         _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>";
                     LineTarget.GetComponent<Canvas>().overrideSorting = true;
+                    LineTarget.GetComponent<Canvas>().sortingOrder = 1;
                     LineTarget.lineTutorialBG.gameObject.SetActive(true);
                     break;
                 }
@@ -165,6 +166,7 @@ public class TutorialController : MonoBehaviour
             if (!hidenTextContent)
                 _textTutorial.text = contentPop + " <color=green>" + _answerTarget + "</color>" + contentAfter;
             LineTarget.GetComponent<Canvas>().overrideSorting = true;
+            LineTarget.GetComponent<Canvas>().sortingOrder = 1;
             LineTarget.lineTutorialBG.gameObject.SetActive(true);
             //break;
 
