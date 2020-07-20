@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Superpow;
 
 public class SceneAnimate : MonoBehaviour
 {
@@ -182,7 +183,8 @@ public class SceneAnimate : MonoBehaviour
         var tweenControl = TweenControl.GetInstance();
         if (show)
         {
-            var tipRandom = _tipDatas[UnityEngine.Random.Range(0, _tipDatas.Count)];
+            var randomTemp = CheckTip();
+            var tipRandom = _tipDatas[UnityEngine.Random.Range(0, randomTemp.Count)];
             _textTip.text = tipRandom.contentTip;
             _imgTip.sprite = tipRandom.iconTip;
             _imgTip.SetNativeSize();
@@ -201,6 +203,30 @@ public class SceneAnimate : MonoBehaviour
                 callback?.Invoke();
             });
         }
+    }
+
+    private List<TipData> CheckTip()
+    {
+        var results = new List<TipData>();
+        var gameData = Resources.Load<GameData>("GameData");
+        var world = GameState.currentWorld;
+        var subWorld = GameState.currentSubWorld;
+        var level = GameState.currentLevel;
+        var numlevels = Utils.GetNumLevels(world, subWorld);
+        var currlevel = (level + numlevels * subWorld + world * gameData.words[0].subWords.Count * numlevels);
+
+        foreach (var tipItem in _tipDatas)
+        {
+            if (tipItem.tipType == TipType.SELECTED_HINT && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && currlevel < 23)
+                results.Add(tipItem);
+            else if (tipItem.tipType == TipType.SELECTED_HINT && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") && currlevel < 30)
+                results.Add(tipItem);
+            else if (tipItem.tipType == TipType.SELECTED_HINT && !CPlayerPrefs.HasKey("BEE_TUTORIAL") && currlevel < 39)
+                results.Add(tipItem);
+            else if (tipItem.tipType == TipType.NORMAL)
+                results.Add(tipItem);
+        }
+        return results;
     }
 
     //private void OnApplicationQuit()
@@ -242,6 +268,15 @@ public class SceneAnimate : MonoBehaviour
 [Serializable]
 public class TipData
 {
+    public TipType tipType;
     public Sprite iconTip;
     public string contentTip;
+}
+
+public enum TipType
+{
+    NORMAL,
+    SELECTED_HINT,
+    MULTIPLE_HINT,
+    BEEHIVE
 }

@@ -454,16 +454,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 3c6cad73ed20bad4f8b16db5e0101770, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 70
+    m_BestFit: 1
+    m_MinSize: 30
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Unlock all flags to expand your knowledge of countries around the world.
 --- !u!222 &64477492
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -486,10 +486,10 @@ RectTransform:
   m_Father: {fileID: 1278732075}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 289}
-  m_SizeDelta: {x: 1088, y: 100}
+  m_SizeDelta: {x: -60, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &82366922
 GameObject:
@@ -1347,8 +1347,61 @@ MonoBehaviour:
   _textTip: {fileID: 64477491}
   _colorNor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   _tipDatas:
-  - iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
     contentTip: Complete Level 40 to unlock this feature!
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Update new levels every week.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Turn off effects in Settings to reduce game lag.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Go to Themes in Menu to change the theme.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Collect Honey to unlock game features and expand your knowledge.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Selected Hint helps to open any letter you want.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Multiple Hints helps to open one random letter of every word.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Beehive will automatically open the first letter of the longest word.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Collect extra words for more stars.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Share your level screenshot with your friends by Help feature.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Improve your vocabulary in Collections.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Unlock all flags to expand your knowledge of countries around the
+      world.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Login every day for extra bonuses.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Complete objectives for more stars.
+  - tipType: 0
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Watch rewarded videos for extra stars.
+  - tipType: 1
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Unlock Selected Hint in Level 23.
+  - tipType: 2
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Unlock Multiple Hints in Level 30.
+  - tipType: 3
+    iconTip: {fileID: 21300000, guid: 45136133f048b73428193b7ff8ae46c8, type: 3}
+    contentTip: Unlock Beehive in Level 39.
 --- !u!114 &293527945
 MonoBehaviour:
   m_ObjectHideFlags: 0
