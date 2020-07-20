@@ -308,6 +308,10 @@ public class BonusBoxData
     public Sprite progressBar;
     public Sprite circleProgress;
     public Sprite btnCollect;
+    public Sprite btnReward;
+    public Sprite iconCandyStar;
+    public Sprite iconAds;
     public Color colorTextBoardTitle;
     public Color colorTextBtn;
+    public Color colorTextBtnReward;
 }

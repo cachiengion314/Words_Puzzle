@@ -35,10 +35,14 @@ public class ExtraWordDialog : Dialog
     [SerializeField] private Image _progressBar;
     [SerializeField] private Image _circleProgress;
     [SerializeField] private Image _btnCollect;
+    [SerializeField] private Image _btnReward;
+    [SerializeField] private Image _iconCandyStar;
+    [SerializeField] private Image _iconAds;
     [SerializeField] private TextMeshProUGUI _txtBoardTitle;
     [SerializeField] private TextMeshProUGUI _txtTotalProgress;
     [SerializeField] private TextMeshProUGUI _txtBtnCollect;
-    [SerializeField] private SpineControl _animBtnAdsReward;
+    [SerializeField] private TextMeshProUGUI _txtBtnReward;
+    //[SerializeField] private SpineControl _animBtnAdsReward;
 
     private RewardVideoController _rewardController;
     private int numWords, claimQuantity;
@@ -79,6 +83,9 @@ public class ExtraWordDialog : Dialog
             _progressBar.sprite = currTheme.uiData.bonusBoxData.progressBar;
             _circleProgress.sprite = currTheme.uiData.bonusBoxData.circleProgress;
             _btnCollect.sprite = currTheme.uiData.bonusBoxData.btnCollect;
+            _btnReward.sprite = currTheme.uiData.bonusBoxData.btnReward;
+            _iconCandyStar.sprite = currTheme.uiData.bonusBoxData.iconCandyStar;
+            _iconAds.sprite = currTheme.uiData.bonusBoxData.iconAds;
 
             _btnHtpl.SetNativeSize();
             _board.SetNativeSize();
@@ -89,13 +96,17 @@ public class ExtraWordDialog : Dialog
             _progressBar.SetNativeSize();
             _circleProgress.SetNativeSize();
             _btnCollect.SetNativeSize();
+            _btnReward.SetNativeSize();
+            _iconCandyStar.SetNativeSize();
+            _iconAds.SetNativeSize();
 
             _txtBoardTitle.color = currTheme.uiData.bonusBoxData.colorTextBoardTitle;
             _txtBtnCollect.color = currTheme.uiData.bonusBoxData.colorTextBtn;
+            _txtBtnReward.color = currTheme.uiData.bonusBoxData.colorTextBtnReward;
             _txtTotalProgress.color = _textCollectEnough.color = _bonusWordPfb.color = currTheme.fontData.colorContentDialog;
 
-            _animBtnAdsReward.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            _animBtnAdsReward.SetSkin(currTheme.animData.skinAnim);
+            //_animBtnAdsReward.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            //_animBtnAdsReward.SetSkin(currTheme.animData.skinAnim);
         }
     }
 
