@@ -173,7 +173,7 @@ public class FreeStarsPlayDialog : Dialog
         var itemTarget = _itemsCollect[resultRandom];
         MainController.instance.itemType = itemTarget.itemType;
         MainController.instance.itemValue = itemTarget.value;
-        MainController.instance.textItem.text = "X" + itemTarget.value;
+        MainController.instance.textItem.text = itemTarget.value.ToString();
         MainController.instance.imageItem.sprite = itemTarget.iconItem;
         MainController.instance.imageItem.SetNativeSize();
         //Debug.Log("OnCompleteVideo freestar invoke");

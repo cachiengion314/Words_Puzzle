@@ -71,6 +71,17 @@ public class TutorialController : MonoBehaviour
     public GameObject _handPanelPopHelp;
     public GameObject _handPanelPopBonusBox;
 
+    [Header("LEVEL SETUP")]
+    public int beehiveLevel = 40;
+    public int objectiveLevel = 11;
+    public int bonusBoxLevel = 10;
+    public int hintLevel = 2;
+    public int selectedHintLevel = 23;
+    public int multipleHintLevel = 30;
+    public int shuffleLevel = 5;
+    public int cellStarLevel = 8;
+    public int helpLevel = 16;
+
     private LineWord _lineTarget;
     private string _answerTarget;
     private Vector3 mousePoint;
@@ -563,7 +574,7 @@ public class TutorialController : MonoBehaviour
         {
             var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
             var currlevel = WordRegion.instance.CurLevel;
-            if (currlevel >= 40)
+            if (currlevel >= beehiveLevel)
                 Firebase.Analytics.FirebaseAnalytics.LogEvent(Firebase.Analytics.FirebaseAnalytics.EventTutorialComplete);
         }
     }
@@ -574,42 +585,42 @@ public class TutorialController : MonoBehaviour
         var currlevel = WordRegion.instance.CurLevel;
         if (!CPlayerPrefs.HasKey("LEVEL " + currlevel) && !isShowTut)
         {
-            if ((currlevel >= 40 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
+            if ((currlevel >= beehiveLevel && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
                 BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();
             }
-            else if ((currlevel >= 2 && !CPlayerPrefs.HasKey("HINT_TUTORIAL")) || (CurrencyController.GetHintFree() > 0 && !CPlayerPrefs.HasKey("HINT_TUTORIAL")))
+            else if ((currlevel >= hintLevel && !CPlayerPrefs.HasKey("HINT_TUTORIAL")) || (CurrencyController.GetHintFree() > 0 && !CPlayerPrefs.HasKey("HINT_TUTORIAL")))
             {
                 CurrencyController.CreditHintFree(2);
                 ShowPopHintFreeTut();
                 CPlayerPrefs.SetBool("HINT_TUTORIAL", true);
             }
-            else if ((currlevel >= 11 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 10 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
+            else if ((currlevel >= objectiveLevel && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 10 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
             {
                 ShowPopSettingTut();
             }
-            else if ((currlevel >= 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
+            else if ((currlevel >= selectedHintLevel && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (CurrencyController.GetSelectedHintFree() > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditSelectedHintFree(2);
                 ShowPopSelectedHintTut();
             }
-            else if ((currlevel >= 30 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetMultipleHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
+            else if ((currlevel >= multipleHintLevel && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")) || (CurrencyController.GetMultipleHintFree() > 0 && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL")))
             {
                 CurrencyController.CreditMultipleHintFree(1);
                 ShowPopMultipleTut();
             }
-            else if (currlevel >= 5 && !CPlayerPrefs.HasKey("SHUFFLE_TUTORIAL"))
+            else if (currlevel >= shuffleLevel && !CPlayerPrefs.HasKey("SHUFFLE_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("SHUFFLE_TUTORIAL", true);
                 ShowPopShuffleTut();
             }
-            else if (currlevel >= 8 && !CPlayerPrefs.HasKey("CELL_STAR_TUTORIAL"))
+            else if (currlevel >= cellStarLevel && !CPlayerPrefs.HasKey("CELL_STAR_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("CELL_STAR_TUTORIAL", true);
                 ShowPopCellStarTut();
             }
-            else if (currlevel >= 16 && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))
+            else if (currlevel >= helpLevel && !CPlayerPrefs.HasKey("HELP_TUTORIAL"))
             {
                 CPlayerPrefs.SetBool("HELP_TUTORIAL", true);
                 ShowPopHelpTut();

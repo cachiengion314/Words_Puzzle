@@ -1,4 +1,5 @@
 ﻿using Superpow;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class WorldController : BaseController
     public int target;
     [SerializeField] private RectTransform posFirst;
     [SerializeField] private RectTransform posLast;
+    [SerializeField] private int countChapterMax = 650;
 
     private int countItem = 0;
     private int countChapter;
@@ -41,7 +43,7 @@ public class WorldController : BaseController
     {
         base.Start();
         //CUtils.ShowBannerAd();
-
+        //SetlayoutItem();
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
         float screenAspect = screenWidth * 1.0f / screenHeight;
@@ -62,12 +64,12 @@ public class WorldController : BaseController
             SetPosScroll();
     }
 
-    private void SetPosScroll()
+    private void SetPosScroll(Action callback = null)
     {
         if (target > 0)
         {
             var sizeDeltaYItem = (worldItems[target].transform as RectTransform).sizeDelta.y;
-            var contentY = mainUI.anchoredPosition.y + (sizeDeltaYItem +30) * target;
+            var contentY = mainUI.anchoredPosition.y + (sizeDeltaYItem + 30) * target;
             var result = new Vector2(_scroll.content.anchoredPosition.x, contentY);
             TweenControl.GetInstance().DelayCall(transform, 1f, () =>
             {
@@ -77,6 +79,7 @@ public class WorldController : BaseController
                     _scroll.content.anchoredPosition = result;
                     worldItems[target].OnButtonClick();
                     SceneAnimate.Instance.ShowTip(false);
+                    callback?.Invoke();
                 });
             });
         }
@@ -86,27 +89,16 @@ public class WorldController : BaseController
             {
                 worldItems[0].OnButtonClick();
                 SceneAnimate.Instance.ShowTip(false);
+                callback?.Invoke();
             });
         }
     }
+
 
     void ScrollRectCallBack(Vector2 value)
     {
         if (value.y <= 0.1f)
         {
-            //var wordItem = Instantiate(_wordItemPfb, _root);
-            //wordItem.worldController = this;
-            //wordItem.itemTemp = true;
-            //wordItem.scroll = _scroll;
-            //wordItem.world = wordNew;
-            //wordItem.subWorld = countChapter;
-            //worldItems.Add(wordItem);
-            //countChapter++;
-            //if (countChapter >= _data.words[0].subWords.Count - 1)
-            //{
-            //    wordNew += 1;
-            //    countChapter = 0;
-            //}
             foreach (var item in worldItems)
             {
                 if (!item.gameObject.activeInHierarchy)
@@ -123,11 +115,21 @@ public class WorldController : BaseController
     {
         foreach (var item in worldItems)
         {
-            if (item.transform.position.y < posLast.position.y)
+            if (item.transform.position.y < posLast.position.y /*|| item.transform.position.y > posFirst.position.y*/)
                 item.gameObject.SetActive(false);
             else
                 item.gameObject.SetActive(true);
         }
+    }
+
+    private void SetlayoutItem()
+    {
+        foreach (var item in worldItems)
+        {
+            item.gameObject.SetActive(true);
+            item.gameObject.SetActive(false);
+        }
+        CheckShowItem();
     }
 
     private void FirstCreateWord()
@@ -153,6 +155,24 @@ public class WorldController : BaseController
                 worldItems.Add(wordItem);
                 countItem++;
                 indexSub++;
+            }
+        }
+        var remainChapter = countChapterMax - worldItems.Count;
+        for (int i = 0; i < remainChapter; i++)
+        {
+            var wordItem = Instantiate(_wordItemPfb, _root);
+            wordItem.worldController = this;
+            wordItem.itemTemp = true;
+            wordItem.scroll = _scroll;
+            wordItem.world = wordNew;
+            wordItem.subWorld = countChapter;
+            wordItem.gameObject.SetActive(false);
+            worldItems.Add(wordItem);
+            countChapter++;
+            if (countChapter >= _data.words[0].subWords.Count - 1)
+            {
+                wordNew += 1;
+                countChapter = 0;
             }
         }
     }

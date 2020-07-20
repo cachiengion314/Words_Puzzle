@@ -109,7 +109,8 @@ public class WorldItem : MonoBehaviour {
 
     public void OnButtonClick()
     {
-
+        //worldController.scrollContent.GetComponent<VerticalLayoutGroup>().enabled = true;
+        //worldController.scrollContent.GetComponent<ContentSizeFitter>().enabled = true;
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
         {
             
@@ -125,6 +126,10 @@ public class WorldItem : MonoBehaviour {
                 if (scroll.verticalNormalizedPosition <= 0.05f) scroll.DOVerticalNormalizedPos(0f, 0.5f);
             }
             Sound.instance.Play(Sound.Others.PopupOpen);
+            //TweenControl.GetInstance().DelayCall(transform, 0.1f,()=> {
+            //    worldController.scrollContent.GetComponent<VerticalLayoutGroup>().enabled = false;
+            //    worldController.scrollContent.GetComponent<ContentSizeFitter>().enabled = false;
+            //});
         }
     }
 }

@@ -377,7 +377,7 @@ public class WordRegion : MonoBehaviour
         //FacebookController.instance.user.answerProgress = answerProgress;
         //FacebookController.instance.SaveDataGame();
         //CheckGameComplete();
-        if (_currLevel >= 8 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
+        if (_currLevel >= TutorialController.instance.cellStarLevel && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
         {
             foreach (var cellTut in lines[lines.Count - 1].cells)
             {
@@ -409,7 +409,7 @@ public class WordRegion : MonoBehaviour
         }
         if (!CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL"))
             btnMultipleHint.gameObject.SetActive(false);
-        if (_currLevel < AdsManager.instance.MinLevelToLoadRewardVideo)
+        if (/*_currLevel < AdsManager.instance.MinLevelToLoadRewardVideo &&*/ !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") || !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") || !CPlayerPrefs.HasKey("HINT_TUTORIAL"))
             btnRewardAds.gameObject.SetActive(false);
     }
 
@@ -743,7 +743,7 @@ public class WordRegion : MonoBehaviour
                 textPreview.SetExistColor();
                 if (textPreview.useFX)
                     textPreview.ClearText();
-                if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(li => li.isShown))
+                if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(li => li.isShown))
                 {
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", false, _lineIsChecking);
                 }
@@ -891,11 +891,11 @@ public class WordRegion : MonoBehaviour
     {
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
         var noMoreLine = lines.Find(li => li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count && !TutorialController.instance.isShowTut);
-        if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
+        if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
             noMoreLine = lines.Find(li => li == TutorialController.instance.LineTarget && li.answers.Contains(checkWord) && li.answer != checkWord && checkWord.Length == li.cells.Count);
         if (/*validWords.Contains(checkWord.ToLower())*/noMoreLine != null)
         {
-            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
+            if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && !isTut)
             {
                 CPlayerPrefs.SetBool("TUTORIAL", true);
                 TutorialController.instance.HidenPopTut();
@@ -906,7 +906,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown))
+            if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown))
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", false, _lineIsChecking);
             }
@@ -988,7 +988,7 @@ public class WordRegion : MonoBehaviour
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentNext);
                 });
             }
-            else if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
+            else if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
             {
                 CPlayerPrefs.SetBool("TUTORIAL", false);
                 BlockScreen.instance.Block(true);
@@ -1009,7 +1009,7 @@ public class WordRegion : MonoBehaviour
         int ballance = CurrencyController.GetBalance();
         var selectedhintFree = CurrencyController.GetSelectedHintFree();
         TutorialController.instance.HidenPopTut();
-        if ((_currLevel >= 23 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (selectedhintFree > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
+        if ((_currLevel >= TutorialController.instance.selectedHintLevel && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")) || (selectedhintFree > 0 && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL")))
         {
             TutorialController.instance.ShowPopSelectedHint2Tut();
             CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
@@ -1128,7 +1128,7 @@ public class WordRegion : MonoBehaviour
         var lastLineIsShown = lines.FindAll(li => li.isShown);
         if (lastLineIsShown.Count > 0)
             _lineIsChecking = lastLineIsShown[lastLineIsShown.Count - 1];
-        if (_currLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking != null && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
+        if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking != null && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
         {
             CPlayerPrefs.SetBool("TUTORIAL", false);
             BlockScreen.instance.Block(true);

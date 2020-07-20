@@ -70,6 +70,7 @@ public class CollectFreestarPlayDialog : Dialog
             case ItemType.CURRENCY_BALANCE:
                 MainController.instance.overlay.gameObject.SetActive(false);
                 StartCoroutine(MainController.instance.ShowEffectCollect(itemValue));
+                MonoUtils.instance.ShowTotalStarCollect(itemValue, MonoUtils.instance.textCollectDefault, 1.33f);
                 break;
         }
         Close();
