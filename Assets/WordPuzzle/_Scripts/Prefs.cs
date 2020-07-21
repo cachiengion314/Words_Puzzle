@@ -371,16 +371,25 @@ public static class Prefs
                 GameState.currentLevel > unlockedLevel;
     }
 
+    public static bool IsLevelEnd
+    {
+        get
+        {
+            return GameState.isLastLevel;
+        }
+        set { GameState.isLastLevel = value; }
+    }
+
     public static bool IsSaveLevelProgress()
     {
-        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
-        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
-        var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
-        var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
-
-        return GameState.currentWorld >= unlockedWorld &&
+        //var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+        //var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        //var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
+        //var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
+        var newLevel = GameState.currentWorld >= unlockedWorld &&
             GameState.currentSubWorld >= unlockedSubWorld &&
-            GameState.currentLevel >= unlockedLevel || currlevel > lastLevel.level;
+            GameState.currentLevel >= unlockedLevel;
+        return newLevel && !IsLevelEnd;
     }
 
     public static void SetExtraWords(int world, int subWorld, int level, string[] extraWords)

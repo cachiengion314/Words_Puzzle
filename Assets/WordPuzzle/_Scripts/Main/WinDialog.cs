@@ -581,7 +581,10 @@ public class WinDialog : Dialog
         var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
 
         if (currlevel >= lastLevel.level)
+        {
+            Prefs.IsLevelEnd = true;
             return;
+        }
         GameState.currentLevel = (level + 1) % numLevels;
         if (level == numLevels - 1)
         {
@@ -865,6 +868,16 @@ public class WinDialog : Dialog
 
     private void SaveProgressComplete()
     {
+        if (level == numLevels - 1)
+        {
+            txtRewardByAds.text = "x" + Const.REWARD_ADS_CHAPTER_CLEAR;
+            txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
+        }
+        else
+        {
+            txtRewardByAds.text = "x" + Const.REWARD_ADS_LEVEL_CLEAR + "";
+            txtReward.text = "x" + Const.REWARD_CHAPTER_CLEAR + "";
+        };
         if (Prefs.IsLastLevel())
         {
             FacebookController.instance.newLevel = true;
