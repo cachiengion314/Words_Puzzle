@@ -26,6 +26,8 @@ public class WinDialog : Dialog
     [SerializeField]
     private Button _nextButton;
     [SerializeField]
+    private Button _homeButton;
+    [SerializeField]
     private GameObject GroupButton;
     [SerializeField]
     private Transform StarsGrid;
@@ -301,6 +303,8 @@ public class WinDialog : Dialog
         var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
         var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
         var currStarBank = ChickenBankController.instance.CurrStarChicken;
+        var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
+        var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
 
         GroupButton.SetActive(show);
         _starReward.SetActive(true);
@@ -342,6 +346,11 @@ public class WinDialog : Dialog
             var button = GroupButton.transform.GetChild(i).gameObject;
             if (button != _btnBee && button != _chickenBank)
             {
+                if (currlevel >= lastLevel.level)
+                {
+                    _homeButton.gameObject.SetActive(true);
+                    _nextButton.gameObject.SetActive(false);
+                }
                 button.transform.localScale = Vector3.zero;
                 tweenControl.Scale(button, Vector3.one * 1.3f, 0.3f, () =>
                 {
@@ -410,7 +419,7 @@ public class WinDialog : Dialog
             yield return null;
         }
         yield return null;
-      
+
         while (alphaValue >= 0)
         {
             alphaValue -= .05f;
@@ -492,7 +501,7 @@ public class WinDialog : Dialog
             if (EffectController.instance.IsEffectOn)
             {
                 _fxEffect = Instantiate(WordRegion.instance.compliment.fxLevelClear.gameObject, transform);
-            }          
+            }
         });
     }
 
@@ -633,6 +642,10 @@ public class WinDialog : Dialog
 
     public void NextClick()
     {
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
+        var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
         //CheckUnlock();
         if (level == numLevels - 1)
         {
@@ -668,12 +681,19 @@ public class WinDialog : Dialog
              if (level == numLevels - 1)
                  CPlayerPrefs.SetBool("Received", true);
              Close();
-             CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
+             if (currlevel >= lastLevel.level)
+                 CUtils.LoadScene(Const.SCENE_HOME, true);
+             else
+                 CUtils.LoadScene(Const.SCENE_MAIN, true);
          });
     }
 
     public void NextClickReward()
     {
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
+        var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
         if (_fxEffect != null)
             Destroy(_fxEffect);
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
@@ -699,7 +719,10 @@ public class WinDialog : Dialog
             if (level == numLevels - 1)
                 CPlayerPrefs.SetBool("Received", true);
             Close();
-            CUtils.LoadScene(/*level == numLevels - 1 ? 1 :*/ 3, true);
+            if (currlevel >= lastLevel.level)
+                CUtils.LoadScene(Const.SCENE_HOME, true);
+            else
+                CUtils.LoadScene(Const.SCENE_MAIN, true);
         });
     }
 

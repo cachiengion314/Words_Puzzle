@@ -174,6 +174,8 @@ public class ThemesControl : MonoBehaviour
         //CPlayerPrefs.SetInt("CURR_THEMES", indexTheme);
         var currTheme = _themesDatas[indexTheme];
         _currTheme = currTheme;
+        starPfb.sprite = currTheme.uiData.iconStarFly;
+        starPfb.SetNativeSize();
         if (HomeController.instance != null)
         {
             var homeControl = HomeController.instance;

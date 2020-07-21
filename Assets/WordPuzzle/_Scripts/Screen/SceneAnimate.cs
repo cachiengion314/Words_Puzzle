@@ -40,6 +40,8 @@ public class SceneAnimate : MonoBehaviour
     [SerializeField] private Text _textTip;
     [SerializeField] private Color _colorNor;
     [SerializeField] private List<TipData> _tipDatas;
+    [Header("UI TEST")]
+    [SerializeField] private Dropdown _levels;
 
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
@@ -77,6 +79,8 @@ public class SceneAnimate : MonoBehaviour
         if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
             Instantiate(donotDestroyOnLoad);
         LoadScenHomeWithProgress();
+        LoadOptionData();
+        _levels.onValueChanged.AddListener(OnUnlockLevel);
     }
 
     public void OnClick(int index)
@@ -256,6 +260,47 @@ public class SceneAnimate : MonoBehaviour
             tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x - rectTransform.sizeDelta.x, 0.3f);
         else
             tweenControl.MoveRectX(rectTransform, rectTransform.anchoredPosition.x + rectTransform.sizeDelta.x, 0.3f);
+    }
+
+    public void OnUnlockLevel(int value)
+    {
+        var data = _levels.options[value].text.Split(new string[] { "|" },StringSplitOptions.RemoveEmptyEntries);
+        Prefs.unlockedLevel = GameState.unlockedLevel = Int32.Parse(data[0]);
+        Prefs.unlockedSubWorld = GameState.unlockedSubWord = Int32.Parse(data[1]);
+        Prefs.unlockedWorld = GameState.unlockedWorld = Int32.Parse(data[2]);
+
+        FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
+        FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
+        FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+        FacebookController.instance.SaveDataGame();
+    }
+
+    private void LoadOptionData()
+    {
+        _levels.ClearOptions();
+        var gameData = Resources.Load<GameData>("GameData");
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+
+        var optData = new List<Dropdown.OptionData>();
+        var indexWord = 0;
+        foreach (var word in gameData.words)
+        {
+            var indexChapter = 0;
+            foreach (var chapter in word.subWords)
+            {
+                var indexLevel = 0;
+                foreach (var level in chapter.gameLevels)
+                {
+                    var currlevel = (indexLevel + numlevels * indexChapter + word.subWords.Count * numlevels * indexWord) + 1;
+                    var optionData = new Dropdown.OptionData(indexLevel + "|" + indexChapter + "|" + indexWord + "|" + currlevel);
+                    optData.Add(optionData);
+                    indexLevel++;
+                }
+                indexChapter++;
+            }
+            indexWord++;
+        }
+        _levels.AddOptions(optData);
     }
     //===
 
