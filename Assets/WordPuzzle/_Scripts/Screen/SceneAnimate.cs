@@ -43,6 +43,7 @@ public class SceneAnimate : MonoBehaviour
     [Header("UI TEST")]
     [SerializeField] private Dropdown _levels;
 
+    private List<LevelData> _levelDatas;
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
     private bool isShowBtnTest;
@@ -264,10 +265,10 @@ public class SceneAnimate : MonoBehaviour
 
     public void OnUnlockLevel(int value)
     {
-        var data = _levels.options[value].text.Split(new string[] { "|" },StringSplitOptions.RemoveEmptyEntries);
-        Prefs.unlockedLevel = GameState.unlockedLevel = Int32.Parse(data[0]);
-        Prefs.unlockedSubWorld = GameState.unlockedSubWord = Int32.Parse(data[1]);
-        Prefs.unlockedWorld = GameState.unlockedWorld = Int32.Parse(data[2]);
+        var data = _levelDatas[value];
+        Prefs.unlockedLevel = GameState.unlockedLevel = data.level;
+        Prefs.unlockedSubWorld = GameState.unlockedSubWord = data.chapter;
+        Prefs.unlockedWorld = GameState.unlockedWorld = data.word;
 
         FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
         FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
@@ -277,6 +278,7 @@ public class SceneAnimate : MonoBehaviour
 
     private void LoadOptionData()
     {
+        _levelDatas = new List<LevelData>();
         _levels.ClearOptions();
         var gameData = Resources.Load<GameData>("GameData");
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
@@ -292,8 +294,13 @@ public class SceneAnimate : MonoBehaviour
                 foreach (var level in chapter.gameLevels)
                 {
                     var currlevel = (indexLevel + numlevels * indexChapter + word.subWords.Count * numlevels * indexWord) + 1;
-                    var optionData = new Dropdown.OptionData(indexLevel + "|" + indexChapter + "|" + indexWord + "|" + currlevel);
+                    var levelData = new LevelData();
+                    levelData.level = indexLevel;
+                    levelData.chapter = indexChapter;
+                    levelData.word = indexWord;
+                    var optionData = new Dropdown.OptionData("Level " + currlevel);
                     optData.Add(optionData);
+                    _levelDatas.Add(levelData);
                     indexLevel++;
                 }
                 indexChapter++;
@@ -307,6 +314,14 @@ public class SceneAnimate : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         _overlayPauseGame.gameObject.SetActive(pause);
+    }
+
+    [Serializable]
+    public class LevelData
+    {
+        public int level;
+        public int chapter;
+        public int word;
     }
 }
 
