@@ -280,6 +280,8 @@ public class SceneAnimate : MonoBehaviour
         FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
         FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();
         FacebookController.instance.user.unlockedSubWorld = Prefs.unlockedSubWorld.ToString();
+        FacebookController.instance.user.levelProgress = new string[] { "0" };
+        FacebookController.instance.user.answerProgress = new string[] { "0" };
         FacebookController.instance.SaveDataGame();
     }
 
