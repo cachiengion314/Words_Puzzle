@@ -16,6 +16,8 @@ public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
 
+    [HideInInspector] public Action debugLogAction;
+
     [HideInInspector] public bool newLevel = false;
 
     public PlayFab.ClientModels.LoginResult result;
@@ -68,6 +70,7 @@ public class FacebookController : MonoBehaviour
             {
                 Debug.Log(item);
             }
+            debugLogAction?.Invoke();
         }
     }
 

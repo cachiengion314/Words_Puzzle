@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilites;
@@ -75,29 +76,95 @@ public class LineWord : MonoBehaviour
 
     public void SetDataLetter(string word)
     {
+        LogController.Debug(transform.name + "_SetDataLetter");
         var lines = WordRegion.instance.Lines;
-        if (answer != "")
+        if (answer != string.Empty)
         {
+            LogController.Debug(transform.name + "_SetDataLetter_IfAnswer!=string.Empty: " + answer);
             foreach (var line in lines)
             {
                 if (!line.answers.Contains(answer) && line.cells.Count == answer.Length)
-                    line.answers.Add(answer);
+                {                   
+                    LineWord tempLine = WordRegion.instance.Lines.Find(lineWord => lineWord.isShown && lineWord.answer == answer);          // fix bug here
+                    if (!tempLine)                                                                                                          // fix bug here
+                    {
+                        LogController.Debug(transform.name + '_' + line.name + "_SetDataLetter_line_answer_add(answer) " + answer);
+                        line.answers.Add(answer);
+                    }
+                }
             }
         }
         answer = word;
+        LogController.Debug(transform.name + "_SetDataLetter_answer: " + "word(or)answer: " + word);
+
         CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
 
         for (int i = 0; i < cells.Count; i++)
         {
-            int index = i;
-            cells[index].letter = word[index].ToString();
+            cells[i].letter = word[i].ToString();
         }
     }
+    public List<string> wordWithTheSameLetterPositionList = new List<string>();
+    public void CheckSetDataAnswer(string answerWord = null)                                                                        // fix bug here
+    {
+        LogController.Debug(transform.name + "_CheckSetDataAnswer(word): " + answerWord);
+        wordWithTheSameLetterPositionList.Clear();
 
+        for (int i = 0; i < answers.Count; i++)
+        {
+            for (int ii = 0; ii < cells.Count; ii++)
+            {
+                if (!cells[ii].isShown) continue;
+
+                if (cells[ii].letter == answers[i][ii].ToString())
+                {
+                    wordWithTheSameLetterPositionList.Add(answers[i]);
+                }
+                else
+                {
+                    RemoveDublicateItemInList(wordWithTheSameLetterPositionList);
+                    wordWithTheSameLetterPositionList.Remove(answers[i]);
+                    break;
+                }
+            }
+        }
+     
+        RemoveDublicateItemInList(wordWithTheSameLetterPositionList);
+
+        if (wordWithTheSameLetterPositionList.Count == 1)
+        {
+            answer = wordWithTheSameLetterPositionList[0]; // Now, this is an unique answer or final answer in this line
+          
+            foreach (var line in WordRegion.instance.Lines)
+            {
+                if (line != this)
+                {
+                    line.answers.Remove(answer);
+                    LogController.Debug(transform.name + "_" + line.name + "_CheckSetDataAnswer_line_answers_Remove(answer) " + answer);
+                }
+            }
+        }
+    }
+    private List<string> RemoveDublicateItemInList(List<string> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            for (int ii = i + 1; ii < list.Count; ii++)
+            {
+                if (list[i] == list[ii])
+                {
+                    list.RemoveAt(ii);
+                    ii--;
+                }
+            }
+        }
+        return list;
+    }
     public void SetProgress(string progress, string progressAnswer)
     {
+        LogController.Debug("SetProgress: " + transform.name);
         answer = progressAnswer;
-        if (answer != "")
+        if (answer != string.Empty)
         {
             SetDataLetter(answer);
         }
@@ -141,6 +208,7 @@ public class LineWord : MonoBehaviour
 
     public void ShowAnswer()
     {
+        LogController.Debug(transform.name + "_ShowAnswer");
         if (isAds)
         {
             CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
@@ -161,32 +229,37 @@ public class LineWord : MonoBehaviour
         ShowBtnMeanByWord();
         StartCoroutine(IEShowAnswer());
     }
-
-    private void ResetAnswer(LineWord line, string ansRight)
+    private void ResetAnswer(LineWord line, string ansRight) // line is the line != this.line, ansRight is the word != this.answer
     {
+        LogController.Debug(transform.name + "_ResetAnswer_line_ansRight " + line.name + " " + ansRight);
         for (int i = 0; i < ansRight.Length; i++)
         {
-            var ans = ansRight[i];
-            var countAnsRight = line.answers.FindAll(a => a[i].ToString() == ans.ToString() && a != answer);
-            if (line.cells[i].isShown && line.cells[i].letter == ans.ToString())
+            var countAnsRight = line.answers.FindAll(a => a[i].ToString() == ansRight[i].ToString() && a != answer);
+            if (line.cells[i].isShown && line.cells[i].letter == ansRight[i].ToString())
             {
+                LogController.Debug(transform.name + "_ResetAnswer: " + line.name + "_SetdataLetter " + ansRight);
                 line.SetDataLetter(ansRight);
                 if (countAnsRight.Count < 2)
                 {
                     foreach (var li in WordRegion.instance.Lines)
                         if (li != line)
+                        {
                             li.answers.Remove(ansRight);
+                            LogController.Debug(transform.name + "_ResetAnswer: " + li.name + "_line.answers.Remove(ansRight) " + ansRight);
+                        }
+
                 }
                 _isResetDataAnswer = true;
                 break;
             }
             else
-                line.answer = "";
+                line.answer = string.Empty;
         }
     }
 
     private void FilterAnswers()
     {
+        LogController.Debug(transform.name + "_FilterAnswers");
         foreach (var line in WordRegion.instance.Lines)
         {
             if (line != this)
@@ -199,12 +272,16 @@ public class LineWord : MonoBehaviour
                         if (an != answer)
                         {
                             if (!_isResetDataAnswer)
+                            {
                                 ResetAnswer(line, an);
+                                LogController.Debug(transform.name + "_" + line.name + "_ResetAnswer(line, an) " + line.name + an.ToString());
+                            }                                
                             else
                                 break;
                         }
                     }
                 }
+                LogController.Debug(transform.name + "_FilterAnswers: " + line.name + "_answers.Remove(answer) " + answer);
                 line.answers.Remove(answer);
             }
         }
@@ -212,6 +289,7 @@ public class LineWord : MonoBehaviour
 
     public void FilterSuitableAnswers(LineWord line)
     {
+        LogController.Debug(transform.name + "_FilterSuitableAnswers: ");
         _isResetDataAnswer = false;
         foreach (var an in line.answers)
         {
@@ -227,6 +305,7 @@ public class LineWord : MonoBehaviour
 
     public IEnumerator IEShowAnswer()
     {
+        LogController.Debug(transform.name + "_IEShowAnswer");
         var cellStar = cells.FindAll(cell => cell.iconCoin.transform.localScale == Vector3.one);
         WordRegion.instance.numStarCollect = cellStar.Count;
         foreach (var cell in cellStar)
@@ -256,6 +335,7 @@ public class LineWord : MonoBehaviour
 
     private void ShowFxShowHint(Transform objStart, Cell cell, System.Action callback = null)
     {
+        LogController.Debug(transform.name + "_ShowFxShowHint");
         BlockScreen.instance.Block(true);
         TutorialController.instance.isBlockSwipe = true;
         var tweenControl = TweenControl.GetInstance();
@@ -273,6 +353,7 @@ public class LineWord : MonoBehaviour
 
     private void ShowCellTarget(bool active)
     {
+        LogController.Debug(transform.name + "_ShowCellTarget: ");
         foreach (var cell in cells)
         {
             if (!cell.isShown)
@@ -298,24 +379,27 @@ public class LineWord : MonoBehaviour
             cell.btnCellTarget.gameObject.SetActive(false);
         }
     }
-
-
     public void HighlightCellNotShown()
     {
         ShowCellTarget(true);
     }
-
     public void ShowHintCelltarget(Cell cellTarget)
     {
+        LogController.Debug(transform.name + "_ShowHintCelltarget");
         var selectedhintFree = CurrencyController.GetSelectedHintFree();
-        if (answer == "")
+        if (answer == string.Empty)
         {
-            var tempAnswers = answers;
+            List<string> tempAnswers = new List<string>();                                                                              // fix bug
+            tempAnswers.AddRange(answers);                                                                                              // fix bug
+
             for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
             {
                 var line = WordRegion.instance.Lines[i];
-                if (line != this && !line.isShown && line.answer != "")
+                if (line != this && !line.isShown && line.answer != string.Empty)
+                {
+                    LogController.Debug(transform.name + "_ShowHintCelltarget_tempAnswers.Remove(line.answer) " + line.name);
                     tempAnswers.Remove(line.answer);
+                }
             }
             SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
         }
@@ -324,7 +408,7 @@ public class LineWord : MonoBehaviour
             WordRegion.instance.numStarCollect = cellTarget.iconCoin.transform.localScale == Vector3.one ? 1 : 0;
             cellTarget.ShowHint();
             Sound.instance.PlayButton(Sound.Button.Hint);
-            CheckSetDataAnswer(answer);
+            CheckSetDataAnswer();
             CheckLineDone();
             WordRegion.instance.SaveLevelProgress();
             WordRegion.instance.CheckGameComplete();
@@ -357,6 +441,7 @@ public class LineWord : MonoBehaviour
 
     private void ShowDoneAllCell()
     {
+        LogController.Debug(transform.name + "_ShowDoneAllCell");
         if (WordRegion.instance.CurLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
             CPlayerPrefs.SetBool("SHOW_TUT_CELL_STAR", true);
         Prefs.countSpell += 1;
@@ -377,11 +462,12 @@ public class LineWord : MonoBehaviour
 
     public void ShowHint(System.Action callback = null)
     {
-        if (answer == "")
+        LogController.Debug(transform.name + "_ShowHint");
+        if (answer == string.Empty)
         {
-            //answer = answers[Random.Range(0, answers.Count)];
-            //SetDataLetter(answer);
-            var tempAnswers = answers;
+            List<string> tempAnswers = new List<string>();                                                                      // fix bug
+            tempAnswers.AddRange(answers);                                                                                      // fix bug
+
             for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
             {
                 var line = WordRegion.instance.Lines[i];
@@ -447,17 +533,21 @@ public class LineWord : MonoBehaviour
 
     public void ShowHintRandom(System.Action callback = null)
     {
-        if (answer == "")
+        LogController.Debug(transform.name + "_ShowHintRandom");
+        if (answer == string.Empty)
         {
-            //answer = answers[Random.Range(0, answers.Count)];
-            //SetDataLetter(answer);
-            var tempAnswers = answers;
+            List<string> tempAnswers = new List<string>();                                                              // fix bug 
+            tempAnswers.AddRange(answers);                                                                              // fix bug
+
             for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
             {
                 var line = WordRegion.instance.Lines[i];
-                if (line != this && !line.isShown && line.answer != "")
+                if (line != this && !line.isShown && line.answer != string.Empty)
+                {
                     tempAnswers.Remove(line.answer);
-            }
+                    LogController.Debug(transform.name + "_" + line.name + "_tempAnswers_Remove(line_answer) " + line.answer);       
+                }                  
+            }         
             SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
         }
         var cellNotShow = cells.FindAll(cell => !cell.isShown);
@@ -481,20 +571,23 @@ public class LineWord : MonoBehaviour
 
     public void ShowCellUseBee(System.Action callback = null)
     {
+        LogController.Debug(transform.name + "_ShowCellUseBee");
         if (!CPlayerPrefs.GetBool(gameObject.name))
         {
             Prefs.countBooster += 1;
             Prefs.countBoosterDaily += 1;
-            if (answer == "")
+            if (answer == string.Empty)
             {
-                //answer = answers[Random.Range(0, answers.Count)];
-                //SetDataLetter(answer);
-                var tempAnswers = answers;
+                List<string> tempAnswers = new List<string>();                                                                      // fix bug
+                tempAnswers.AddRange(answers);                                                                                      // fix bug
+
                 for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
                 {
                     var line = WordRegion.instance.Lines[i];
-                    if (line != this && !line.isShown && line.answer != "")
+                    if (line != this && !line.isShown && line.answer != string.Empty)
+                    {
                         tempAnswers.Remove(line.answer);
+                    }
                 }
                 SetDataLetter(tempAnswers[Random.Range(0, tempAnswers.Count)]);
             }
@@ -524,37 +617,6 @@ public class LineWord : MonoBehaviour
     //        yield return new WaitForSeconds(0.2f);
     //    }
     //}
-
-    public void CheckSetDataAnswer(string word)
-    {
-        var lines = WordRegion.instance.Lines;
-        var numOfwordsTheSameCharacter = new List<string>();
-        for (int i = 0; i < answers.Count; i++)
-        {
-            var isRight = false;
-            var indexCell = 0;
-            foreach (var cell in cells)
-            {
-                if (cell.isShown && cell.letter == answers[i][indexCell].ToString())
-                    isRight = true;
-                else if(cell.isShown && cell.letter != answers[i][indexCell].ToString())
-                    isRight = false;
-                indexCell++;
-            }
-            if (isRight)
-                numOfwordsTheSameCharacter.Add(answers[i]);
-        }
-
-        if (numOfwordsTheSameCharacter.Count < 2)
-        {
-            foreach (var line in lines)
-            {
-                if (line != this)
-                    line.answers.Remove(word);
-            }
-        }
-    }
-
     private void ClearAds()
     {
         if (isAds)
@@ -568,6 +630,7 @@ public class LineWord : MonoBehaviour
 
     private void UpdateAnswers()
     {
+        LogController.Debug("_UpdateAnswers");
         foreach (var line in WordRegion.instance.Lines)
         {
             if (line != this)
@@ -576,9 +639,10 @@ public class LineWord : MonoBehaviour
     }
     private Cell GetRandomCell(List<Cell> cells)
     {
-        var indexAnswer = answer.Length - cells.Count;
+        LogController.Debug(transform.name + "_GetRandomCell(cells)");
+       
         var index = Random.Range(0, cells.Count - 1);
-        //cells[index].letter = answer[index + indexAnswer].ToString();
+      
         return cells[index];
     }
 }

@@ -24,7 +24,7 @@ public class MainController : BaseController
     private int world, subWorld, level;
     private bool _isGameComplete;
     private bool _isLevelClear;
-    private GameLevel gameLevel;
+    [SerializeField] private GameLevel gameLevel;
     public GameLevel GameLevel
     {
         get { return gameLevel; }
