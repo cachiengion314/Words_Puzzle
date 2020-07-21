@@ -20,14 +20,6 @@ public class MainController : BaseController
     public Canvas canvasPopup;
     public Canvas canvasFx;
     public Canvas canvasCollect;
-    [Space]
-    public Image overlay;
-    public Image imageItem;
-    public TextMeshProUGUI textItem;
-    public ItemType itemType;
-
-    [HideInInspector]
-    public int itemValue;
 
     private int world, subWorld, level;
     private bool _isGameComplete;
@@ -254,38 +246,5 @@ public class MainController : BaseController
     {
         animatorScene.enabled = true;
         animatorScene.SetBool("PlayAnimScene", true);
-    }
-
-    public IEnumerator ShowEffectCollect(int value)
-    {
-        canvasCollect.gameObject.SetActive(true);
-        for (int i = 0; i < value; i++)
-        {
-            if (i < 5)
-            {
-                MonoUtils.instance.ShowEffect(value / 5);
-            }
-            yield return new WaitForSeconds(0.06f);
-        }
-
-    }
-
-    public void ShowItemCollect()
-    {
-        overlay.gameObject.SetActive(true);
-        TweenControl.GetInstance().MoveRectY(imageItem.transform as RectTransform, 100f, 1);
-        TweenControl.GetInstance().FadeAnfa(imageItem, 1, 0.3f, () =>
-        {
-            TweenControl.GetInstance().FadeAnfa(imageItem, 0, 0.7f, () =>
-            {
-                overlay.gameObject.SetActive(false);
-            });
-        });
-        TweenControl.GetInstance().FadeAnfa(textItem, 1, 0.3f, () =>
-        {
-            TweenControl.GetInstance().FadeAnfa(textItem, 0, 0.7f, ()=> {
-                //overlay.gameObject.SetActive(false);
-            });
-        });
     }
 }

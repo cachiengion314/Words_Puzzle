@@ -36,6 +36,7 @@ public class ShopDialog : Dialog
     public GameObject contentItemShop;
     public GameObject[] shopItemObject;
     public GameObject chickenBank;
+    public GameObject specialGift;
 
     protected override void Start()
     {
@@ -318,46 +319,49 @@ public class ShopDialog : Dialog
         //btnMore.transform.localScale = Vector3.zero;
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
         {
-            if (currStarBank < valueShow)
-                chickenBank.SetActive(false);
-            else
+            if (contentItemShop.transform.GetChild(i).gameObject != specialGift)
             {
-                chickenBank.SetActive(true);
-                if (!CPlayerPrefs.HasKey("OPEN_CHICKEN"))
-                    CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
-            }
-
-            var openBundle = CPlayerPrefs.HasKey("HINT_TUTORIAL") && CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL");
-            var openBeehive = CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0;
-            shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
-            var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
-            if (i > 0)
-            {
-                shopItemObject[i].transform.localScale = Vector3.zero;
-                if (ConfigController.instance.isShopHint)
-                {
-                    if (Purchaser.instance.iapItems[itemShop].valueHint > 0 || Purchaser.instance.iapItems[itemShop].valueMultipleHint > 0 || Purchaser.instance.iapItems[itemShop].valueSelectedHint > 0)
-                        shopItemObject[i].gameObject.SetActive(true);
-                    else
-                        shopItemObject[i].gameObject.SetActive(false);
-                }
+                if (currStarBank < valueShow)
+                    chickenBank.SetActive(false);
                 else
                 {
-                    if (Purchaser.instance.iapItems[itemShop].isSpecial && !Purchaser.instance.iapItems[itemShop].isBeehive &&!openBundle)
-                    {
-                        shopItemObject[i].gameObject.SetActive(false);
-                    }
-
-                    if (Purchaser.instance.iapItems[itemShop].isBeehive && !openBeehive)
-                    {
-                        shopItemObject[i].gameObject.SetActive(false);
-                    }
+                    chickenBank.SetActive(true);
+                    if (!CPlayerPrefs.HasKey("OPEN_CHICKEN"))
+                        CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
                 }
 
-                if (shopItemObject[i].activeInHierarchy)
+                var openBundle = CPlayerPrefs.HasKey("HINT_TUTORIAL") && CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL");
+                var openBeehive = CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0;
+                shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
+                var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
+                if (i > 0)
                 {
-                    StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
-                    count++;
+                    shopItemObject[i].transform.localScale = Vector3.zero;
+                    if (ConfigController.instance.isShopHint)
+                    {
+                        if (Purchaser.instance.iapItems[itemShop].valueHint > 0 || Purchaser.instance.iapItems[itemShop].valueMultipleHint > 0 || Purchaser.instance.iapItems[itemShop].valueSelectedHint > 0)
+                            shopItemObject[i].gameObject.SetActive(true);
+                        else
+                            shopItemObject[i].gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        if (Purchaser.instance.iapItems[itemShop].isSpecial && !Purchaser.instance.iapItems[itemShop].isBeehive && !openBundle)
+                        {
+                            shopItemObject[i].gameObject.SetActive(false);
+                        }
+
+                        if (Purchaser.instance.iapItems[itemShop].isBeehive && !openBeehive)
+                        {
+                            shopItemObject[i].gameObject.SetActive(false);
+                        }
+                    }
+
+                    if (shopItemObject[i].activeInHierarchy)
+                    {
+                        StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
+                        count++;
+                    }
                 }
             }
         }

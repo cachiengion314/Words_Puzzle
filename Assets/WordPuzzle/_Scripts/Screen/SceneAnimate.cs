@@ -40,8 +40,15 @@ public class SceneAnimate : MonoBehaviour
     [SerializeField] private Text _textTip;
     [SerializeField] private Color _colorNor;
     [SerializeField] private List<TipData> _tipDatas;
+    [Space]
+    public Image overlay;
+    public Image imageItem;
+    public TextMeshProUGUI textItem;
+    [HideInInspector] public ItemType itemType;
+    [HideInInspector] public int itemValue;
     [Header("UI TEST")]
     [SerializeField] private Dropdown _levels;
+
 
     private List<LevelData> _levelDatas;
     private const int PLAY = 0;
@@ -314,6 +321,41 @@ public class SceneAnimate : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         _overlayPauseGame.gameObject.SetActive(pause);
+    }
+
+    public IEnumerator ShowEffectCollect(int value, Transform btnTarget = null)
+    {
+        if (MainController.instance != null)
+            MainController.instance.canvasCollect.gameObject.SetActive(true);
+        var result = value / 5;
+        for (int i = 0; i < value; i++)
+        {
+            if (i < 5)
+            {
+                MonoUtils.instance.ShowEffect(result, null, null, btnTarget);
+            }
+            yield return new WaitForSeconds(0.06f);
+        }
+    }
+
+    public void ShowItemCollect()
+    {
+        overlay.gameObject.SetActive(true);
+        TweenControl.GetInstance().MoveRectY(imageItem.transform as RectTransform, 100f, 1);
+        TweenControl.GetInstance().FadeAnfa(imageItem, 1, 0.3f, () =>
+        {
+            TweenControl.GetInstance().FadeAnfa(imageItem, 0, 0.7f, () =>
+            {
+                overlay.gameObject.SetActive(false);
+            });
+        });
+        TweenControl.GetInstance().FadeAnfa(textItem, 1, 0.3f, () =>
+        {
+            TweenControl.GetInstance().FadeAnfa(textItem, 0, 0.7f, () =>
+            {
+                //overlay.gameObject.SetActive(false);
+            });
+        });
     }
 
     [Serializable]

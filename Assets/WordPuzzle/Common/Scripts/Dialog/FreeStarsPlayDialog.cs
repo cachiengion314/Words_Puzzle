@@ -171,11 +171,11 @@ public class FreeStarsPlayDialog : Dialog
     {
         var resultRandom = RandomSingle(listRandom);
         var itemTarget = _itemsCollect[resultRandom];
-        MainController.instance.itemType = itemTarget.itemType;
-        MainController.instance.itemValue = itemTarget.value;
-        MainController.instance.textItem.text = itemTarget.value.ToString();
-        MainController.instance.imageItem.sprite = itemTarget.iconItem;
-        MainController.instance.imageItem.SetNativeSize();
+        SceneAnimate.Instance.itemType = itemTarget.itemType;
+        SceneAnimate.Instance.itemValue = itemTarget.value;
+        SceneAnimate.Instance.textItem.text = itemTarget.value.ToString();
+        SceneAnimate.Instance.imageItem.sprite = itemTarget.iconItem;
+        SceneAnimate.Instance.imageItem.SetNativeSize();
         //Debug.Log("OnCompleteVideo freestar invoke");
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         _rewardControl.onRewardedCallback -= OnCompleteVideo;

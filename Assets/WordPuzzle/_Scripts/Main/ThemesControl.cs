@@ -22,6 +22,14 @@ public class ThemesControl : MonoBehaviour
         }
     }
 
+    public ThemesData[] ThemesDatas
+    {
+        get
+        {
+            return _themesDatas;
+        }
+    }
+
     private void Awake()
     {
         if (instance == null)
