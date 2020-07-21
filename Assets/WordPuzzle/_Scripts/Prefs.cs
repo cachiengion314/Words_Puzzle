@@ -380,7 +380,7 @@ public static class Prefs
 
         return GameState.currentWorld >= unlockedWorld &&
             GameState.currentSubWorld >= unlockedSubWorld &&
-            GameState.currentLevel >= unlockedLevel && currlevel > lastLevel.level;
+            GameState.currentLevel >= unlockedLevel || currlevel > lastLevel.level;
     }
 
     public static void SetExtraWords(int world, int subWorld, int level, string[] extraWords)
