@@ -327,7 +327,7 @@ public class ShopDialog : Dialog
                     CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
             }
 
-            var openBundle = !CPlayerPrefs.HasKey("HINT_TUTORIAL") && !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL");
+            var openBundle = CPlayerPrefs.HasKey("HINT_TUTORIAL") && CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL");
             var openBeehive = CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0;
             shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
             var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;

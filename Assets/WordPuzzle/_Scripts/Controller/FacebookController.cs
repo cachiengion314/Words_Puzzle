@@ -44,8 +44,13 @@ public class FacebookController : MonoBehaviour
         if (instance == null) instance = this;
         else if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
         GetUserData();
     }
+
     void Update()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())
@@ -225,7 +230,7 @@ public class FacebookController : MonoBehaviour
         userDefault.name = "";
         userDefault.email = "";
         userDefault.wordPassed = "";
-        userDefault.maxbank = 800;
+        userDefault.maxbank = 1440;
         userDefault.currBank = 720;
         userDefault.remainBank = 0;
         userDefault.honeyPoint = 0;
