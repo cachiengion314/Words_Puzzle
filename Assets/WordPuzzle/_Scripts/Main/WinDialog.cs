@@ -579,6 +579,7 @@ public class WinDialog : Dialog
         var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
         var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
         var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
+
         if (currlevel >= lastLevel.level)
             return;
         GameState.currentLevel = (level + 1) % numLevels;

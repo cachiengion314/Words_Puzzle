@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Superpow;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Prefs {
+public static class Prefs
+{
 
     public static int unlockedWorld
     {
@@ -364,16 +366,21 @@ public static class Prefs {
 
     public static bool IsLastLevel()
     {
-        return  GameState.currentWorld > unlockedWorld &&
-                GameState.currentSubWorld > unlockedSubWorld && 
+        return GameState.currentWorld > unlockedWorld &&
+                GameState.currentSubWorld > unlockedSubWorld &&
                 GameState.currentLevel > unlockedLevel;
     }
 
     public static bool IsSaveLevelProgress()
     {
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
+        var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
+
         return GameState.currentWorld >= unlockedWorld &&
-                GameState.currentSubWorld >= unlockedSubWorld &&
-                GameState.currentLevel >= unlockedLevel;
+            GameState.currentSubWorld >= unlockedSubWorld &&
+            GameState.currentLevel >= unlockedLevel && currlevel > lastLevel.level;
     }
 
     public static void SetExtraWords(int world, int subWorld, int level, string[] extraWords)
