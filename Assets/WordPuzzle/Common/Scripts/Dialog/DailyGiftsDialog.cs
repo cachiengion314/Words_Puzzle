@@ -80,6 +80,12 @@ public class DailyGiftsDialog : Dialog
         AdsManager.instance.onAdsRewarded -= OnRewarded;
         AdsManager.instance.onAdsRewarded += OnRewarded;
 
+        var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
+        if (isNextDay)
+        {
+            CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
+            _currProgressValue = 0;
+        }
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -254,7 +260,7 @@ public class DailyGiftsDialog : Dialog
             {
                 _fxEffect = Instantiate(_fxLightPfb, transform);
                 _fxEffect.transform.position = _posChest.position;
-            }           
+            }
             _textNotifyTitle.text = OPEN_CHEST;
             _textNotifyCollect.gameObject.SetActive(false);
             TweenControl.GetInstance().ScaleFromZero(_textHintCollect.gameObject, 0.3f);
