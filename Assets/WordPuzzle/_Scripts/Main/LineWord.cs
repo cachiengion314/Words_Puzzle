@@ -410,6 +410,7 @@ public class LineWord : MonoBehaviour
         }
         WordRegion.instance.ShowComplimentFX();
         WordRegion.instance.ShowBtnDictionaryInGamePlay();
+        ShowBtnMeanByWord();
     }
 
     public void ShowHint(System.Action callback = null)
