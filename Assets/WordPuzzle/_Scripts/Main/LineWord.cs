@@ -162,22 +162,53 @@ public class LineWord : MonoBehaviour
         StartCoroutine(IEShowAnswer());
     }
 
+    private bool CheckResetAnswer(LineWord line, string ansRight)
+    {
+        var isReset = true;
+        for (int i = 0; i < ansRight.Length; i++)
+        {
+            var ans = ansRight[i];
+            if (line.cells[i].isShown && line.cells[i].letter != ans.ToString())
+            {
+                isReset = false;
+                break;
+            }
+        }
+        return isReset;
+    }
+
+    private bool CheckNumberAnswerValid(LineWord line, string ansRight)
+    {
+        var isValid = false;
+        for (int i = 0; i < ansRight.Length; i++)
+        {
+            var ans = ansRight[i];
+            if (line.answers[i].ToString() == ans.ToString() && line.answers[i].ToString() != answer)
+            {
+                isValid = true;
+            }
+            else
+            {
+                isValid = false;
+                break;
+            }
+        }
+        return isValid;
+    }
+
     private void ResetAnswer(LineWord line, string ansRight)
     {
-        var countAnsRight = new List<string>();
+        var countAnsRight = 0;
+        var ansIsValid = CheckNumberAnswerValid(line, ansRight);
+        if (ansIsValid)
+            countAnsRight++;
         for (int i = 0; i < ansRight.Length; i++)
         {
-            var ans = ansRight[i];
-            countAnsRight = line.answers.FindAll(a => a[i].ToString() == ans.ToString() && a != answer);
-        }
-
-        for (int i = 0; i < ansRight.Length; i++)
-        {
-            var ans = ansRight[i];
-            if (line.cells[i].isShown && line.cells[i].letter == ans.ToString())
+            var isReset = CheckResetAnswer(line, ansRight);
+            if (isReset)
             {
                 line.SetDataLetter(ansRight);
-                if (countAnsRight.Count < 2)
+                if (countAnsRight < 2)
                 {
                     foreach (var li in WordRegion.instance.Lines)
                         if (li != line)
@@ -543,7 +574,7 @@ public class LineWord : MonoBehaviour
             {
                 if (cell.isShown && cell.letter == answers[i][indexCell].ToString())
                     isRight = true;
-                else if(cell.isShown && cell.letter != answers[i][indexCell].ToString())
+                else if (cell.isShown && cell.letter != answers[i][indexCell].ToString())
                     isRight = false;
                 indexCell++;
             }

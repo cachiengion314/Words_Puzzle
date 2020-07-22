@@ -16,6 +16,8 @@ public class ButtonVideoHintFree : MonoBehaviour
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     private RewardVideoController _rewardController;
 
+    [SerializeField] private SpineControl _animAds;
+
     public Cell Cell
     {
         get
@@ -35,6 +37,17 @@ public class ButtonVideoHintFree : MonoBehaviour
             _rewardController = Instantiate(_rewardVideoPfb);
         _rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+        CheckTheme();
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _animAds.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            _animAds.SetSkin(currTheme.animData.skinAnim);
+        }
     }
 
     private void OnDisable()

@@ -289,7 +289,7 @@ public class WinDialog : Dialog
             if (!AdsManager.instance.AdsIsLoaded())
             {
                 _btnAdsDisable.SetActive(true);
-                txtRewardByAds.color = _colorDisable;
+                //txtRewardByAds.color = _colorDisable;
             }
             else
             {
