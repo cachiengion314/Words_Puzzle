@@ -1158,6 +1158,39 @@ public class WordRegion : MonoBehaviour
                 TutorialController.instance.ShowPopBonusBoxTut();
             });
         }
+        else
+            CheckShowDontLikeAdsDialog();
+    }
+
+    private List<bool> InitListRandom()
+    {
+        var rateShow = new List<bool>();
+        int num = 100;
+        var rate1 = (int)(0.02f * num);
+        for (int i = 0; i < num; i++)
+        {
+            if (i <= rate1)
+                rateShow.Add(true);
+            else
+                rateShow.Add(false);
+        }
+        return rateShow;
+    }
+
+    private bool IsShowAds()
+    {
+        var randomList = InitListRandom();
+        var result = Random.Range(0, randomList.Count);
+        return randomList[result];
+    }
+
+    private void CheckShowDontLikeAdsDialog()
+    {
+        if (!CUtils.IsAdsRemoved() && _currLevel > AdsManager.instance.MinLevelToLoadInterstitial && !TutorialController.instance.isShowTut && IsShowAds())
+        {
+            Sound.instance.Play(Sound.Others.PopupOpen);
+            DialogController.instance.ShowDialog(DialogType.DontLikeAds, DialogShow.STACK_DONT_HIDEN);
+        }
     }
 
     private void BeeFly(LineWord line, Transform beeTarget, Vector3 posTarget, System.Action callback = null, System.Action completeFly = null)

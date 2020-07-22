@@ -41,7 +41,8 @@ public enum DialogType
     LevelWordsFeedbackDialog,
     ContactUsDialog,
     Themes,
-    CollectFreestarPlay
+    CollectFreestarPlay,
+    DontLikeAds
 };
 
 public enum DialogShow

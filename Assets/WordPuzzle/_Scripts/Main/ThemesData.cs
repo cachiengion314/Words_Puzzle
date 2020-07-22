@@ -96,6 +96,7 @@ public class UIData
     public CollectFreestarPlayData collectFreestarPlayData;
     public BonusBoxData bonusBoxData;
     public HowtoplayData howtoplayData;
+    public DontLikeAdsData dontLikeAdsData;
 }
 
 [Serializable]
@@ -314,4 +315,17 @@ public class BonusBoxData
     public Color colorTextBoardTitle;
     public Color colorTextBtn;
     public Color colorTextBtnReward;
+}
+
+[Serializable]
+public class DontLikeAdsData
+{
+    public Sprite itemTop;
+    public Sprite bgItemSmall;
+    public Sprite iconStar;
+    public Sprite iconHint;
+    public Sprite btnPrice;
+    public Sprite btnMore;
+    public Color colorTextBtn;
+    public List<Sprite> iconsNoAds;
 }
