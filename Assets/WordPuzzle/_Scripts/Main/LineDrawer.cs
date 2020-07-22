@@ -108,7 +108,7 @@ public class LineDrawer : MonoBehaviour
                     WordRegion.instance.textPreview.ClearText();
                 pan.ResetScaleWord();
             }
-            if (WordRegion.instance.CurLevel >= 10 && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && WordRegion.instance.Lines.Any(li => li.isShown) && TutorialController.instance.isShowTut && WordRegion.instance.Lines.Find(lineWord => lineWord.answers.Count > 1) != null)
+            if (WordRegion.instance.CurLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && WordRegion.instance.Lines.Any(li => li.isShown) && TutorialController.instance.isShowTut && WordRegion.instance.Lines.Find(lineWord => lineWord.answers.Count > 1) != null)
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", true);
             }
