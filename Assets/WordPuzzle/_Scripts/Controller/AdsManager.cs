@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AdsManager : MonoBehaviour
 {
@@ -158,7 +160,7 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    public bool AdsIsLoaded(bool showToast = true)
+    public bool AdsIsLoaded(bool showToast = true, Text textNoti = null, TextMeshProUGUI textMeshNoti = null)
     {
         if (AudienceNetworkFbAd.instance.isLoaded || AdmobController.instance.rewardBasedVideo.IsLoaded() || UnityAdTest.instance.IsLoaded())
             return true;
@@ -170,6 +172,10 @@ public class AdsManager : MonoBehaviour
                 {
                     if (showToast)
                         Toast.instance.ShowMessage("Rewarded video is not ready");
+                    if (textNoti != null)
+                        textNoti.text = "Rewarded video is not ready";
+                    if (textMeshNoti != null)
+                        textMeshNoti.text = "Rewarded video is not ready";
                     _isLoading = false;
                     LoadDataAds();
                 }
@@ -177,6 +183,10 @@ public class AdsManager : MonoBehaviour
                 {
                     if (showToast)
                         Toast.instance.ShowMessage("No Internet Connection");
+                    if (textNoti != null)
+                        textNoti.text = "No Internet Connection";
+                    if (textMeshNoti != null)
+                        textMeshNoti.text = "No Internet Connection";
                 }
             });
             return false;

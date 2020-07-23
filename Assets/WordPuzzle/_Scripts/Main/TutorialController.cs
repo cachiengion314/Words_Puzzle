@@ -598,7 +598,7 @@ public class TutorialController : MonoBehaviour
                 ShowPopHintFreeTut();
                 CPlayerPrefs.SetBool("HINT_TUTORIAL", true);
             }
-            else if ((currlevel >= objectiveLevel && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")) || (Prefs.countLevelDaily >= 10 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL")))
+            else if ((currlevel >= objectiveLevel && !CPlayerPrefs.HasKey("OBJ_TUTORIAL") && ObjectiveManager.instance.Icon.activeInHierarchy) /*|| (Prefs.countLevelDaily >= 10 && !CPlayerPrefs.HasKey("OBJ_TUTORIAL"))*/)
             {
                 ShowPopSettingTut();
             }

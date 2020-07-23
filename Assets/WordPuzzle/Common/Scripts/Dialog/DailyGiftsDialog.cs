@@ -16,6 +16,7 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private Text _startrogress;
     [SerializeField] private Text _endProgress;
     [SerializeField] private Text _timeCountdown;
+    [SerializeField] private Text _notifiCheckAds;
 
     [SerializeField] private Slider _sliderProgress;
     [SerializeField] private int _maxProgress;
@@ -61,7 +62,7 @@ public class DailyGiftsDialog : Dialog
     void Start()
     {
         base.Start();
-        if (!AdsManager.instance.AdsIsLoaded())
+        if (!AdsManager.instance.AdsIsLoaded(false))
             AdsManager.instance.LoadDataAds();
         InitListRandomMultipleHint();
         InitListRandomSelectedHint();
@@ -80,6 +81,7 @@ public class DailyGiftsDialog : Dialog
         AdsManager.instance.onAdsRewarded -= OnRewarded;
         AdsManager.instance.onAdsRewarded += OnRewarded;
 
+        _notifiCheckAds.text = "";
         UpdateNextDay();
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
@@ -347,7 +349,7 @@ public class DailyGiftsDialog : Dialog
             ShowBtnWatch(true);
             if (AdsManager.instance != null)
             {
-                if (!AdsManager.instance.AdsIsLoaded())
+                if (!AdsManager.instance.AdsIsLoaded(false, _notifiCheckAds))
                     //_btnAdsDisable.SetActive(true);
                     _btnWatch.gameObject.SetActive(false);
                 else
