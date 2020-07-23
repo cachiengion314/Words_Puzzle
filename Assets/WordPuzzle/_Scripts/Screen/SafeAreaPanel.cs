@@ -16,10 +16,17 @@ public class SafeAreaPanel : MonoBehaviour
         RefreshSafe(_safeArea);
     }
 
+    public RectTransform ThisRect
+    {
+        get
+        {
+            return _rectTransform;
+        }
+    }
     //void Update()
     //{
-        //if(_safeArea != Screen.safeArea)
-        //    RefreshSafe(Screen.safeArea);
+    //if(_safeArea != Screen.safeArea)
+    //    RefreshSafe(Screen.safeArea);
     //}
 
     private void RefreshSafe(Rect safeArea)

@@ -49,6 +49,7 @@ public class WordRegion : MonoBehaviour
     [SerializeField] private RectTransform _headerBlock;
     [SerializeField] private RectTransform _centerBlock;
     [SerializeField] private RectTransform _rectCanvas;
+    [SerializeField] private SafeAreaPanel _canvasSafeArea;
     public RectTransform RectCanvas
     {
         get
@@ -267,10 +268,13 @@ public class WordRegion : MonoBehaviour
         //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var boardSizeY = (Screen.safeArea.height != 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height;
-        var panSizeY = (Screen.safeArea.height != 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2;
-        Debug.Log("Screen.safeArea.height: " + Screen.safeArea.height);
-        Debug.Log("_rectCanvas.rect.height: " + _rectCanvas.rect.height);
+        var sizeOutSafeArea = Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? ((int)(_rectCanvas.rect.height) - Screen.safeArea.height) / 2 : 
+            Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? (Screen.safeArea.height - (int)(_rectCanvas.rect.height)) / 2 : 0;
+        var boardSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height - (Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? -sizeOutSafeArea :
+            (Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? sizeOutSafeArea : 0));
+        var panSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2;
+        //Debug.Log("Screen.safeArea.height: " + Screen.safeArea.height);
+        //Debug.Log("_rectCanvas.rect.height: " + _rectCanvas.rect.height);
         //Debug.Log("_centerBlock.rect.height / 2: " + _centerBlock.rect.height / 2);
         //Debug.Log("_headerBlock.rect.height: " + _headerBlock.rect.height);
         //Debug.Log("boardSizeY: " + boardSizeY);
