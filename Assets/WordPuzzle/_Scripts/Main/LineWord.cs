@@ -177,35 +177,16 @@ public class LineWord : MonoBehaviour
         return isReset;
     }
 
-    private bool CheckNumberAnswerValid(LineWord line, string ansRight)
-    {
-        var isValid = false;
-        for (int i = 0; i < ansRight.Length; i++)
-        {
-            var ans = ansRight[i];
-            if (line.answers[i].ToString() == ans.ToString() && line.answers[i].ToString() != answer)
-            {
-                isValid = true;
-            }
-            else
-            {
-                isValid = false;
-                break;
-            }
-        }
-        return isValid;
-    }
-
     private void ResetAnswer(LineWord line, string ansRight)
     {
+        var lineEmpty = line.cells.All(cell => !cell.isShown);
         var countAnsRight = 0;
-        var ansIsValid = CheckNumberAnswerValid(line, ansRight);
-        if (ansIsValid)
+        var isReset = CheckResetAnswer(line, ansRight);
+        if (isReset)
             countAnsRight++;
         for (int i = 0; i < ansRight.Length; i++)
         {
-            var isReset = CheckResetAnswer(line, ansRight);
-            if (isReset)
+            if (isReset && !lineEmpty)
             {
                 line.SetDataLetter(ansRight);
                 if (countAnsRight < 2)
