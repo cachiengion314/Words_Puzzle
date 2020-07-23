@@ -80,12 +80,7 @@ public class DailyGiftsDialog : Dialog
         AdsManager.instance.onAdsRewarded -= OnRewarded;
         AdsManager.instance.onAdsRewarded += OnRewarded;
 
-        var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
-        if (isNextDay)
-        {
-            CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
-            _currProgressValue = 0;
-        }
+        UpdateNextDay();
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
         UpdateProgress();
@@ -321,8 +316,7 @@ public class DailyGiftsDialog : Dialog
 
     private void CheckTimeReward()
     {
-        UpdateNextDay();
-        var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
+        var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY);
         if (isNextDay)
         {
             CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
