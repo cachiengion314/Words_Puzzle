@@ -220,6 +220,15 @@ public class DictionaryDialog : Dialog
     {
         meanDialog.wordMean = text;
     }
+    public void OnClickCloseDictionaryDialog()
+    {
+        if (MainController.instance != null)
+        {
+            AudienceNetworkBanner.instance.LoadBanner();
+        }
+        Close();
+    }
+
 }
 
 

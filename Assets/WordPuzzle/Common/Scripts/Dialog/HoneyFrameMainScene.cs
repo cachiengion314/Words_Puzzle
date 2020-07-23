@@ -8,5 +8,6 @@ public class HoneyFrameMainScene : MonoBehaviour
     public void HoneyFrameMainSceneClick()
     {
         isClickOnThis = true;
+        AudienceNetworkBanner.instance.DisposeAllBannerAd();
     }
 }
