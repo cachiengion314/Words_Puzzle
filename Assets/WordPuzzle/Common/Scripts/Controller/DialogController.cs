@@ -42,7 +42,8 @@ public enum DialogType
     ContactUsDialog,
     Themes,
     CollectFreestarPlay,
-    DontLikeAds
+    DontLikeAds,
+    FlagMean
 };
 
 public enum DialogShow

@@ -39,7 +39,7 @@ public class HoneyPointsController : MonoBehaviour
                 totalTitlePoints = TotalTitlePoint(lineIndex, titlePointsArray);
                 honeyTxt.text = (FacebookController.instance.HoneyPoints + totalTitlePoints).ToString();
 
-                ShowAndFade(titlePoints, 0, visualHoneyPointsTxt);
+                ShowAndFade("X", titlePoints, 0, visualHoneyPointsTxt);
 
                 TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one * 1.2f, .3f,
             () => { TweenControl.GetInstance().Scale(honeyTxt.gameObject, Vector3.one, .3f); });
@@ -147,10 +147,10 @@ public class HoneyPointsController : MonoBehaviour
 
         tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
     }
-    public void ShowAndFade(int value, float delay, TextMeshProUGUI textCollect, float duration = 0.5f)
+    public static void ShowAndFade(string xValue, int value, float delay, TextMeshProUGUI textCollect, float duration = 0.5f)
     {
         var tweenControl = TweenControl.GetInstance();
-        (textCollect).text = "X" + value;
+        (textCollect).text = xValue + value;
 
         tweenControl.DelayCall(textCollect.transform, delay,
             () =>

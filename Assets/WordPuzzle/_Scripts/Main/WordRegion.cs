@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro;
 using Superpow;
 using Spine.Unity;
+using PlayFab.Internal;
 
 public class WordRegion : MonoBehaviour
 {
@@ -951,34 +952,41 @@ public class WordRegion : MonoBehaviour
         var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
         if (isComplete)
         {
-            if (isLevelMisspelling)
+            LogController.Debug("If word that match flag'name do something");
+       
+           
+            TweenControl.GetInstance().DelayCall(transform, 0f, () =>
             {
-                Prefs.countLevelMisspelling += 1;
-                Prefs.countLevelMisspellingDaily += 1;
-            }
+                if (isLevelMisspelling)
+                {
+                    Prefs.countLevelMisspelling += 1;
+                    Prefs.countLevelMisspellingDaily += 1;
+                }
 
-            if (TutorialController.instance.isShowTut)
-            {
-                TutorialController.instance.HidenPopTut();
-                TutorialController.instance.isShowTut = false;
-                CPlayerPrefs.SetBool("TUTORIAL", true);
-            }
+                if (TutorialController.instance.isShowTut)
+                {
+                    TutorialController.instance.HidenPopTut();
+                    TutorialController.instance.isShowTut = false;
+                    CPlayerPrefs.SetBool("TUTORIAL", true);
+                }
 
-            SaveLevelProgress();
-            BlockScreen.instance.Block(true);
-            MainController.instance.IsLevelClear = true;
-            ClearLevelProgress();
-            MainController.instance.OnComplete();
-            //if (lines.Count >= 6)
-            //{
-            //    compliment.ShowRandom();
-            //}
+                SaveLevelProgress();
+                BlockScreen.instance.Block(true);
+                MainController.instance.IsLevelClear = true;
+                ClearLevelProgress();
+                MainController.instance.OnComplete();
+                //if (lines.Count >= 6)
+                //{
+                //    compliment.ShowRandom();
+                //}
 
-            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
-            {
-                MainController.instance.animatorScene.SetBool("LevelComplete", true);
-                //SceneAnimate.Instance.animEvent.LevelClearCallback();
+                TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+                {
+                    MainController.instance.animatorScene.SetBool("LevelComplete", true);
+                    //SceneAnimate.Instance.animEvent.LevelClearCallback();
+                });
             });
+         
         }
         else
         {

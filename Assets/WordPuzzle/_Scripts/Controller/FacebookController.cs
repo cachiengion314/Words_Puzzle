@@ -61,14 +61,14 @@ public class FacebookController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("NumWords: " + WordRegion.instance.NumWords);
-            Debug.Log("Best score: " + FacebookController.instance.bestScore);
-            Debug.Log("HoneyPoints: " + FacebookController.instance.HoneyPoints);
+            LogController.Debug("NumWords: " + WordRegion.instance.NumWords);
+            LogController.Debug("Best score: " + FacebookController.instance.bestScore);
+            LogController.Debug("HoneyPoints: " + FacebookController.instance.HoneyPoints);
 
             FlagTabController.instance.GetAllWordsList();
             foreach (var item in WordRegion.instance.listWordInLevel)
             {
-                Debug.Log(item);
+                LogController.Debug(item);
             }
             debugLogAction?.Invoke();
         }
@@ -242,6 +242,7 @@ public class FacebookController : MonoBehaviour
         userDefault.unlockedWorld = "0";
         userDefault.levelProgress = new string[] { "0" };
         userDefault.answerProgress = new string[] { "0" };
+        userDefault.flags = new List<string>() { "0" };
         return userDefault;
     }
     private void GetFriendList()
@@ -345,10 +346,11 @@ public struct User
     public double currBank;
     public double remainBank;
     public double honeyPoint;
-
     public string unlockedWorld;
     public string unlockedSubWorld;
     public string unlockedLevel;
     public string[] levelProgress;
     public string[] answerProgress;
+
+    public List<string> flags;
 }

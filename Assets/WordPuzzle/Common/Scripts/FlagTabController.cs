@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public struct FlagItem
+public class FlagItem
 {
     public Sprite flagImage;
     public string flagName;
@@ -18,6 +18,9 @@ public class FlagTabController : MonoBehaviour
     public List<FlagItem> flagItemList;
     public List<string> allWordsList = new List<string>();
     public GameData gameData;
+
+    public Action foundWordThatMathchFlagAction; 
+    [HideInInspector] public readonly int priceToUnlockFlag = 20;
     private void Awake()
     {
         instance = this;

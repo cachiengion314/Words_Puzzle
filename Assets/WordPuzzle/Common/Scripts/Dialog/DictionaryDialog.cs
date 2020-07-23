@@ -22,6 +22,9 @@ public class DictionaryDialog : Dialog
     public GameObject flagTabScrollViewContent;
     public GameObject flagItemPrefab;
     public GameObject FlagBtn;
+    public TextMeshProUGUI visualHoneyTxt;
+    public TextMeshProUGUI honeyTxt;
+    public GameObject flagMeanDialog;
     [Space]
     public GameObject vocabularyTab;
     public GameObject vocabularyBtn;
@@ -100,6 +103,7 @@ public class DictionaryDialog : Dialog
             FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
             flagItem.flagImage = FlagTabController.instance.flagItemList[i].flagImage;
             flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
+            flagItem.isLocked = FlagTabController.instance.flagItemList[i].isLocked;
         }
     }
     void SetTabActive(GameObject tab, GameObject tabBtn, bool status)
@@ -133,7 +137,7 @@ public class DictionaryDialog : Dialog
         wordPassed = CPlayerPrefs.GetString("WordLevelSave");
         if (PlayFabClientAPI.IsClientLoggedIn())
             wordPassed = FacebookController.instance.user.wordPassed != null ? FacebookController.instance.user.wordPassed : "";
-        Debug.Log(wordPassed);
+        LogController.Debug(wordPassed);
         if (wordPassed != null)
         {
             listWordPassed = wordPassed.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries).ToList();
