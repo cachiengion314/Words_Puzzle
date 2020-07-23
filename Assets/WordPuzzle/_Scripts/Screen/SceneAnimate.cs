@@ -281,10 +281,26 @@ public class SceneAnimate : MonoBehaviour
 
     public void OnUnlockLevel(int value)
     {
+        var gameData = Resources.Load<GameData>("GameData");
+        var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
+        var currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + gameData.words[0].subWords.Count * numlevels * GameState.currentWorld) + 1;
+        var lastWord = gameData.words[gameData.words.Count - 1];
+        var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
+
         var data = _levelDatas[value];
+        for (int j = 0; j < lastLevel.level; j++)
+        {
+            var level = j + 1;
+            for (int i = 0; i < 10; i++)
+            {
+                var lineindex = i;
+                CPlayerPrefs.DeleteKey("LineWord(Clone)" + lineindex + "_" + level);
+            }
+        }
         Prefs.unlockedLevel = GameState.unlockedLevel = data.level;
         Prefs.unlockedSubWorld = GameState.unlockedSubWord = data.chapter;
         Prefs.unlockedWorld = GameState.unlockedWorld = data.word;
+        Prefs.IsLevelEnd = false;
 
         FacebookController.instance.user.unlockedLevel = Prefs.unlockedLevel.ToString();
         FacebookController.instance.user.unlockedWorld = Prefs.unlockedWorld.ToString();

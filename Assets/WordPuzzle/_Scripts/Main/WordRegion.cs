@@ -453,7 +453,7 @@ public class WordRegion : MonoBehaviour
             line.transform.SetParent(transform);
             line.transform.localScale = Vector3.one;
             line.transform.localPosition = Vector3.zero;
-            line.usedBee = CPlayerPrefs.GetBool(line.name);
+            line.usedBee = CPlayerPrefs.GetBool(line.name, false);
             line.isAds = CPlayerPrefs.GetBool(line.name + "_ADS", false);
             if (!line.isShown)
             {

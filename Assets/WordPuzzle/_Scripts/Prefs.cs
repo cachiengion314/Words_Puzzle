@@ -375,9 +375,10 @@ public static class Prefs
     {
         get
         {
+            GameState.isLastLevel = CPlayerPrefs.GetBool("end_level", false);
             return GameState.isLastLevel;
         }
-        set { GameState.isLastLevel = value; }
+        set { CPlayerPrefs.SetBool("end_level", value); GameState.isLastLevel = value; }
     }
 
     public static bool IsSaveLevelProgress()

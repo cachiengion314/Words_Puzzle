@@ -576,7 +576,7 @@ public class WinDialog : Dialog
     private void CheckUnlock()
     {
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
-        var currlevel = Int32.Parse(MainController.instance.levelNameText.text.Replace("LEVEL ",""));
+        var currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * GameState.currentWorld) + 1;
         var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
         var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
 
