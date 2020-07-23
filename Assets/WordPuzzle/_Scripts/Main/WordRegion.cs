@@ -267,10 +267,10 @@ public class WordRegion : MonoBehaviour
         //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var boardSizeY = (Screen.safeArea.height < 2160f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height;
-        var panSizeY = (Screen.safeArea.height < 2160f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2;
-        //Debug.Log("Screen.safeArea.height: " + Screen.safeArea.height);
-        //Debug.Log("_rectCanvas.rect.height / 2: " + _rectCanvas.rect.height / 2);
+        var boardSizeY = (Screen.safeArea.height != 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height;
+        var panSizeY = (Screen.safeArea.height != 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2;
+        Debug.Log("Screen.safeArea.height: " + Screen.safeArea.height);
+        Debug.Log("_rectCanvas.rect.height: " + _rectCanvas.rect.height);
         //Debug.Log("_centerBlock.rect.height / 2: " + _centerBlock.rect.height / 2);
         //Debug.Log("_headerBlock.rect.height: " + _headerBlock.rect.height);
         //Debug.Log("boardSizeY: " + boardSizeY);
