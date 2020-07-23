@@ -300,7 +300,7 @@ public class WinDialog : Dialog
 
         var tweenControl = TweenControl.GetInstance();
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
-        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var currlevel = Int32.Parse(MainController.instance.levelNameText.text.Replace("LEVEL ", ""));
         var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
         var currStarBank = ChickenBankController.instance.CurrStarChicken;
         var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
@@ -576,7 +576,7 @@ public class WinDialog : Dialog
     private void CheckUnlock()
     {
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
-        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var currlevel = Int32.Parse(MainController.instance.levelNameText.text.Replace("LEVEL ",""));
         var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
         var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
 
@@ -653,7 +653,7 @@ public class WinDialog : Dialog
     public void NextClick()
     {
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
-        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var currlevel = Int32.Parse(MainController.instance.levelNameText.text.Replace("LEVEL ", ""));
         var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
         var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
         //CheckUnlock();
@@ -701,7 +701,7 @@ public class WinDialog : Dialog
     public void NextClickReward()
     {
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
-        var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + MainController.instance.gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        var currlevel = Int32.Parse(MainController.instance.levelNameText.text.Replace("LEVEL ", ""));
         var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];
         var lastLevel = lastWord.subWords[lastWord.subWords.Count - 1].gameLevels[lastWord.subWords[lastWord.subWords.Count - 1].gameLevels.Count - 1];
         if (_fxEffect != null)

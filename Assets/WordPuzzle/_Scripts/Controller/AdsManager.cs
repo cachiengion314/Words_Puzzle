@@ -158,12 +158,29 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    public bool AdsIsLoaded()
+    public bool AdsIsLoaded(bool showToast = true)
     {
         if (AudienceNetworkFbAd.instance.isLoaded || AdmobController.instance.rewardBasedVideo.IsLoaded() || UnityAdTest.instance.IsLoaded())
             return true;
         else
+        {
+            CUtils.CheckConnection(this, (result) =>
+            {
+                if (result == 0)
+                {
+                    if (showToast)
+                        Toast.instance.ShowMessage("Rewarded video is not ready");
+                    _isLoading = false;
+                    LoadDataAds();
+                }
+                else
+                {
+                    if (showToast)
+                        Toast.instance.ShowMessage("No Internet Connection");
+                }
+            });
             return false;
+        }
     }
 
     #region Show Ads Handle

@@ -47,6 +47,7 @@ public class SceneAnimate : MonoBehaviour
     [HideInInspector] public ItemType itemType;
     [HideInInspector] public int itemValue;
     [Header("UI TEST")]
+    [SerializeField] private bool isShowTest;
     [SerializeField] private Dropdown _levels;
 
 
@@ -87,8 +88,16 @@ public class SceneAnimate : MonoBehaviour
         if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
             Instantiate(donotDestroyOnLoad);
         LoadScenHomeWithProgress();
-        LoadOptionData();
-        _levels.onValueChanged.AddListener(OnUnlockLevel);
+        if (isShowTest)
+        {
+            btnTest.gameObject.SetActive(true);
+            LoadOptionData();
+            _levels.onValueChanged.AddListener(OnUnlockLevel);
+        }
+        else
+        {
+            btnTest.gameObject.SetActive(false);
+        }
     }
 
     public void OnClick(int index)
