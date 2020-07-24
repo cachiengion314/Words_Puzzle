@@ -32,10 +32,10 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void Start()
     {
-        _rewardController = FindObjectOfType<RewardVideoController>();
-        if (_rewardController == null)
-            _rewardController = Instantiate(_rewardVideoPfb);
-        _rewardController.onRewardedCallback -= OnCompleteVideo;
+        //_rewardController = FindObjectOfType<RewardVideoController>();
+        //if (_rewardController == null)
+        //    _rewardController = Instantiate(_rewardVideoPfb);
+        //_rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         CheckTheme();
     }
@@ -52,8 +52,8 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_rewardController != null)
-            _rewardController.onRewardedCallback -= OnCompleteVideo;
+        //if (_rewardController != null)
+            //_rewardController.onRewardedCallback -= OnCompleteVideo;
         if (AdsManager.instance != null)
             AdsManager.instance.onAdsClose -= OnAdsClosed;
     }
@@ -62,7 +62,7 @@ public class ButtonVideoHintFree : MonoBehaviour
     {
         TutorialController.instance.HidenPopTut();
         _btnAds.interactable = false;
-        _rewardController.onRewardedCallback += OnCompleteVideo;
+        //_rewardController.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
         AdsManager.instance.onAdsClose += OnAdsClosed;
         //AdmobController.instance.ShowRewardBasedVideo();
@@ -82,7 +82,7 @@ public class ButtonVideoHintFree : MonoBehaviour
     private void OnCompleteVideo()
     {
         _btnAds.interactable = true;
-        _rewardController.onRewardedCallback -= OnCompleteVideo;
+        //_rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
 
         gameObject.SetActive(false);

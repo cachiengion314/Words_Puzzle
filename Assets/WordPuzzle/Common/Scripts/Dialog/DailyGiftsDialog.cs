@@ -36,7 +36,7 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private Transform _posChest;
 
     private GameObject _fxEffect;
-    private RewardVideoController _rewardedVideoControl;
+    //private RewardVideoController _rewardedVideoControl;
     private const string PROGRESS_KEY = "PROGRESS";
     private const string TIME_REWARD_KEY = "TIME_REWARD";
     private const string NEXT_DAY_KEY = "NEXTDAY";
@@ -72,11 +72,11 @@ public class DailyGiftsDialog : Dialog
 
     private void InitProgress()
     {
-        _rewardedVideoControl = FindObjectOfType<RewardVideoController>();
-        if (_rewardedVideoControl == null)
-            _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
-        _rewardedVideoControl.onRewardedCallback -= OnRewarded;
-        _rewardedVideoControl.onRewardedCallback += OnRewarded;
+        //_rewardedVideoControl = FindObjectOfType<RewardVideoController>();
+        //if (_rewardedVideoControl == null)
+        //    _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
+        //_rewardedVideoControl.onRewardedCallback -= OnRewarded;
+        //_rewardedVideoControl.onRewardedCallback += OnRewarded;
 
         AdsManager.instance.onAdsRewarded -= OnRewarded;
         AdsManager.instance.onAdsRewarded += OnRewarded;
@@ -436,7 +436,7 @@ public class DailyGiftsDialog : Dialog
         if (_fxEffect != null)
             Destroy(_fxEffect);
 
-        _rewardedVideoControl.onRewardedCallback -= OnRewarded;
+        //_rewardedVideoControl.onRewardedCallback -= OnRewarded;
         AdsManager.instance.onAdsRewarded -= OnRewarded;
     }
 
@@ -451,7 +451,7 @@ public class DailyGiftsDialog : Dialog
             _timeCountdown.transform.localScale = Vector3.zero;
             _isReward = true;
             CPlayerPrefs.SetBool(TIME_REWARD_KEY, _isReward);
-            _rewardedVideoControl.gameObject.SetActive(true);
+            //_rewardedVideoControl.gameObject.SetActive(true);
         }
     }
     //==

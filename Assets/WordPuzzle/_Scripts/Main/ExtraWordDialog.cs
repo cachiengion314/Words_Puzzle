@@ -53,10 +53,10 @@ public class ExtraWordDialog : Dialog
         CheckTheme();
         if (MainController.instance != null)
             MainController.instance.canvasCollect.gameObject.SetActive(true);
-        _rewardController = FindObjectOfType<RewardVideoController>();
-        if (_rewardController == null)
-            _rewardController = Instantiate(_rewardVideoPfb);
-        _rewardController.onRewardedCallback -= OnCompleteVideo;
+        //_rewardController = FindObjectOfType<RewardVideoController>();
+        //if (_rewardController == null)
+        //    _rewardController = Instantiate(_rewardVideoPfb);
+        //_rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         if (!AdsManager.instance.AdsIsLoaded())
             AdsManager.instance.LoadDataAds();
@@ -112,7 +112,7 @@ public class ExtraWordDialog : Dialog
 
     void OnCompleteVideo()
     {
-        _rewardController.onRewardedCallback -= OnCompleteVideo;
+        //_rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
 
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
@@ -150,7 +150,7 @@ public class ExtraWordDialog : Dialog
 
     public void OnClickShowVideoAds()
     {
-        _rewardController.onRewardedCallback += OnCompleteVideo;
+        //_rewardController.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedBonusBox;

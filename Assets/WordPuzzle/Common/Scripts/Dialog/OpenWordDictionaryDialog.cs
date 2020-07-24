@@ -13,7 +13,7 @@ public class OpenWordDictionaryDialog : Dialog
     [SerializeField] private RewardVideoController _rewardVideoPfb;
     [SerializeField] private TextMeshProUGUI _textTitle;
     [SerializeField] private GameObject _panelWatch;
-    private RewardVideoController _rewardControl;
+    //private RewardVideoController _rewardControl;
 
     private const string CONTENT_DEFAULT = "You need to watch a rewarded ad to see the list of words founded.";
     private const string CONTENT_NO_INTERNET = "You need internet connection to see the list of words founded.";
@@ -21,11 +21,11 @@ public class OpenWordDictionaryDialog : Dialog
 
     private void OnEnable()
     {
-        _rewardControl = FindObjectOfType<RewardVideoController>();
-        if (_rewardControl == null)
-            _rewardControl = Instantiate(_rewardVideoPfb);
-        _rewardControl.onRewardedCallback -= OnCompleteVideo;
-        _rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
+        //_rewardControl = FindObjectOfType<RewardVideoController>();
+        //if (_rewardControl == null)
+        //    _rewardControl = Instantiate(_rewardVideoPfb);
+        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //_rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
 
         CheckShowTextTitle();
@@ -55,17 +55,17 @@ public class OpenWordDictionaryDialog : Dialog
 
     private void OnDestroy()
     {
-        if (_rewardControl != null)
-        {
-            _rewardControl.onRewardedCallback -= OnCompleteVideo;
-            _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        }
+        //if (_rewardControl != null)
+        //{
+        //    _rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //    _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        //}
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
     public void OnClickOpen()
     {
-        _rewardControl.onRewardedCallback += OnCompleteVideo;
+        //_rewardControl.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
         AdsManager.instance.ShowVideoAds(false,LoadAdsFailed, NoInterNet);
@@ -100,10 +100,10 @@ public class OpenWordDictionaryDialog : Dialog
 
     private void OnCompleteVideo()
     {
-        _rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
 
-        _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        //_rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _panelWatch.transform.localScale = Vector3.zero;
         GetComponent<Image>().enabled = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>

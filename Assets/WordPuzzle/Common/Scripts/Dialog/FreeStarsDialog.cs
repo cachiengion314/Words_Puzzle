@@ -17,7 +17,7 @@ public class FreeStarsDialog : Dialog
     [SerializeField] private TextMeshProUGUI _txtMessage;
     [SerializeField] private SpineControl _animCharacter;
 
-    private RewardVideoController _rewardControl;
+    //private RewardVideoController _rewardControl;
 
     protected override void Start()
     {
@@ -27,12 +27,12 @@ public class FreeStarsDialog : Dialog
 
     private void OnEnable()
     {
-        _rewardControl = FindObjectOfType<RewardVideoController>();
-        if (_rewardControl == null)
-            _rewardControl = Instantiate(_rewardVideoPfb);
+        //_rewardControl = FindObjectOfType<RewardVideoController>();
+        //if (_rewardControl == null)
+        //    _rewardControl = Instantiate(_rewardVideoPfb);
 
-        _rewardControl.onRewardedCallback -= OnCompleteVideo;
-        _rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
+        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //_rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
 
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
@@ -44,11 +44,11 @@ public class FreeStarsDialog : Dialog
 
     private void OnDestroy()
     {
-        if (_rewardControl != null)
-        {
-            _rewardControl.onRewardedCallback -= OnCompleteVideo;
-            _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        }
+        //if (_rewardControl != null)
+        //{
+        //    _rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //    _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        //}
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
@@ -75,7 +75,7 @@ public class FreeStarsDialog : Dialog
 
     public void OnClickOpen()
     {
-        _rewardControl.onRewardedCallback += OnCompleteVideo;
+        //_rewardControl.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
@@ -109,8 +109,8 @@ public class FreeStarsDialog : Dialog
     {
         Debug.Log("OnCompleteVideo freestar invoke");
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-        _rewardControl.onRewardedCallback -= OnCompleteVideo;
-        _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //_rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _panelWatch.transform.localScale = Vector3.zero;
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {

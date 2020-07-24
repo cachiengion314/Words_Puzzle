@@ -101,7 +101,7 @@ public class WinDialog : Dialog
 
     private GameObject _fxEffect;
     private List<GameObject> _stars;
-    private RewardVideoController _rewardControl;
+    //private RewardVideoController _rewardControl;
 
     public static WinDialog instance;
 
@@ -120,11 +120,11 @@ public class WinDialog : Dialog
         ShowStars();
         CheckUnlock();
         SaveProgressComplete();
-        _rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
-        if (_rewardControl == null)
-            _rewardControl = Instantiate(_rewardVideoPfb, transform);
+        //_rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
+        //if (_rewardControl == null)
+        //    _rewardControl = Instantiate(_rewardVideoPfb, transform);
 
-        _rewardControl.onRewardedCallback -= OnCompleteReward;
+        //_rewardControl.onRewardedCallback -= OnCompleteReward;
         AdsManager.instance.onAdsRewarded -= OnCompleteReward;
         if (!AdsManager.instance.AdsIsLoaded())
             AdsManager.instance.LoadDataAds();
@@ -746,7 +746,7 @@ public class WinDialog : Dialog
         }
         _isWatchAds = true;
         _nextButton.interactable = false;
-        _rewardControl.onRewardedCallback += OnCompleteReward;
+        //_rewardControl.onRewardedCallback += OnCompleteReward;
         AdsManager.instance.onAdsRewarded += OnCompleteReward;
 
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
@@ -812,7 +812,7 @@ public class WinDialog : Dialog
 
     void OnCompleteReward()
     {
-        _rewardControl.onRewardedCallback -= OnCompleteReward;
+        //_rewardControl.onRewardedCallback -= OnCompleteReward;
         AdsManager.instance.onAdsRewarded -= OnCompleteReward;
 
         //RewardButton.GetComponent<Button>().interactable = false;
