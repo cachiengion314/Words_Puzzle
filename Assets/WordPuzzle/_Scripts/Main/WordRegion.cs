@@ -648,9 +648,9 @@ public class WordRegion : MonoBehaviour
 
     private void CalculateRatioScaleBtnAds(Cell cell)
     {
-        var ratioScale = cell.GetComponent<RectTransform>().rect.width / _btnHintADS.GetComponentInChildren<Image>().rectTransform.rect.width;
+        var ratioScale = cell.GetComponent<RectTransform>().rect.width / _btnHintADS._btnAds.img.rectTransform.rect.width;
         _btnHintADS.Cell = cell;
-        _btnHintADS.animbutton.rectTransform.localScale = _btnHintADS.animbutton.rectTransform.localScale * ratioScale;
+        _btnHintADS._btnAds.img.rectTransform.localScale = _btnHintADS._btnAds.img.rectTransform.localScale * ratioScale;
     }
 
     private Cell CheckCellTarget(List<Cell> cells)
@@ -821,6 +821,8 @@ public class WordRegion : MonoBehaviour
             else
             {
                 var lineNotShown = lines.FindAll(l => !l.isShown && !l.usedBee);
+                if (lineNotShown == null || lineNotShown.Count <= 0)
+                    return;
                 var lineRandom = lineNotShown[Random.Range(0, lineNotShown.Count)];
                 var indexAnswer = Random.Range(0, lineRandom.answers.Count);
                 var cellNotShown = lineRandom.cells.FindAll(cell => !cell.isShown && !cell.isAds);

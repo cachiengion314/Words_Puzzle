@@ -73,10 +73,39 @@ public class LineWord : MonoBehaviour
         rt.sizeDelta = new Vector2(lineWidth, cellSize);
     }
 
+    private int GetCountAnswersRightForLine()
+    {
+        var count = 0;
+        foreach (var ans in answers)
+        {
+            var isValid = CheckAnswerValid(ans);
+            if (isValid)
+                count++;
+        }
+        return count;
+    }
+
+    private bool CheckAnswerValid(string ans)
+    {
+        var isValid = true;
+        var indexAns = 0;
+        foreach (var cell in cells)
+        {
+            if (cell.isShown && cell.letter != ans[indexAns].ToString())
+            {
+                isValid = false;
+                break;
+            }
+            indexAns++;
+        }
+        return isValid;
+    }
+
     public void SetDataLetter(string word)
     {
         var lines = WordRegion.instance.Lines;
-        if (answer != "")
+        var numberAnswerRightForLine = GetCountAnswersRightForLine();
+        if (answer != "" && numberAnswerRightForLine > 1)
         {
             foreach (var line in lines)
             {
@@ -84,7 +113,8 @@ public class LineWord : MonoBehaviour
                     line.answers.Add(answer);
             }
         }
-        answer = word;
+        if (answer == "" || numberAnswerRightForLine > 1)
+            answer = word;
         CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
 
         for (int i = 0; i < cells.Count; i++)
