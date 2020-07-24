@@ -79,7 +79,7 @@ public class RemoteConfigFirebase : MonoBehaviour
             }
         };
     }
-    private void Update()
+    private void Start()
     {
         if (!isNeedToFetch) return;
         isNeedToFetch = false;
