@@ -18,13 +18,16 @@ public class DictionaryDialog : Dialog
     public Color colorOn;
     public Color colorOff;
     [Space]
+    //public List<string> countryWordDoneByPlayer = new List<string>();
     public GameObject flagTab;
+    public List<FlagItemController> flagList = new List<FlagItemController>();
     public GameObject flagTabScrollViewContent;
     public GameObject flagItemPrefab;
     public GameObject FlagBtn;
     public TextMeshProUGUI visualHoneyTxt;
     public TextMeshProUGUI honeyTxt;
-    public GameObject flagMeanDialog;
+    public FlagMeanDialog flagMeanDialog;
+    public GameObject unlockTheFlagDialog;
     [Space]
     public GameObject vocabularyTab;
     public GameObject vocabularyBtn;
@@ -95,6 +98,19 @@ public class DictionaryDialog : Dialog
         else
             OnClickVocabularyTab();
     }
+    public void GetCountryWordDoneByPlayer()
+    {       
+        //for (int i = 0; i < listWordPassed.Count; i++)
+        //{
+        //    for (int ii = 0; ii < FlagTabController.instance.flagItemList.Count; ii++)
+        //    {
+        //        if (listWordPassed[i] == FlagTabController.instance.flagItemList[ii].flagName.ToUpper())
+        //        {
+        //            countryWordDoneByPlayer.Add(listWordPassed[i]);
+        //        }
+        //    }
+        //}
+    }
     public void InstantiateFlags()
     {
         // Instantiate the flag tab
@@ -104,6 +120,8 @@ public class DictionaryDialog : Dialog
             flagItem.flagImage = FlagTabController.instance.flagItemList[i].flagImage;
             flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
             flagItem.isLocked = FlagTabController.instance.flagItemList[i].isLocked;
+            flagItem.indexOfFlag = i;
+            flagList.Add(flagItem);
         }
     }
     void SetTabActive(GameObject tab, GameObject tabBtn, bool status)
@@ -124,6 +142,7 @@ public class DictionaryDialog : Dialog
     }
     public void OnClickFlagTab()
     {
+       
         SetTabActive(flagTab, FlagBtn, true);
         SetTabActive(vocabularyTab, vocabularyBtn, false);
     }

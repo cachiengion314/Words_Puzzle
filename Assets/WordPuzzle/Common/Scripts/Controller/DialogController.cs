@@ -43,7 +43,8 @@ public enum DialogType
     Themes,
     CollectFreestarPlay,
     DontLikeAds,
-    FlagMean
+    FlagMean,
+    UnlockTheFlag
 };
 
 public enum DialogShow

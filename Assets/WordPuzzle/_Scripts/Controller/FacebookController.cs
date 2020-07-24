@@ -16,7 +16,7 @@ public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
 
-    [HideInInspector] public Action debugLogAction;
+    public Action debugLogAction;
 
     [HideInInspector] public bool newLevel = false;
 
