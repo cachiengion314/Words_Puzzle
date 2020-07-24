@@ -66,9 +66,16 @@ public class ThemesControl : MonoBehaviour
         bgLetter.SetNativeSize();
         starPfb.sprite = currTheme.uiData.iconStarFly;
         starPfb.SetNativeSize();
-
         if (WordRegion.instance != null)
         {
+            if (LineDrawer.instance != null)
+            {
+                var lineDrawer = LineDrawer.instance;
+                lineDrawer.LineRenderer.colorGradient = currTheme.uiData.colorLinerender;
+                var particale = lineDrawer.lineParticle.GetComponent<ParticleSystem>();
+                var main = particale.main;
+                main.startColor = new ParticleSystem.MinMaxGradient(currTheme.uiData.colorParticle, currTheme.uiData.colorParticle2);
+            }
             var wordRegion = WordRegion.instance;
             wordRegion.btnDictionary.image.sprite = currTheme.uiData.btnDictionary;
             wordRegion.btnSetting.image.sprite = currTheme.uiData.btnSetting;
@@ -164,7 +171,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion.animBtnHelp.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnHelpShadow.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             wordRegion.animBtnBonusBoxShadow.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            
+
             wordRegion.animBtnBonusBox.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHint.SetSkin(currTheme.animData.skinAnim);
             wordRegion.animBtnHintTarget.SetSkin(currTheme.animData.skinAnim);

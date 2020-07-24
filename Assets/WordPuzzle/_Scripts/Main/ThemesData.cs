@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Create Themes", order = 1)]
 public class ThemesData : ScriptableObject
@@ -72,6 +73,9 @@ public class UIData
     public Sprite bgTutorialLine;
     public Sprite iconHoney;
     public Sprite bgHoney;
+    public Gradient colorLinerender;
+    public Color colorParticle;
+    public Color colorParticle2;
     [Header("Home")]
     public bool showShadowHome = true;
     public Sprite bgHome;
