@@ -11,6 +11,8 @@ public class FlagMeanDialog : Dialog
     public TextMeshProUGUI areaTxt;
     public TextMeshProUGUI populationTxt;
     public Image flagImg;
+    [Header("Default image wil show when the loading is not finish")]
+    public Sprite defaultImage;
 
     private readonly string COUNTRY_NAME = "name";
     private readonly string SUB_REGION = "subregion";
@@ -21,7 +23,7 @@ public class FlagMeanDialog : Dialog
     {
         TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f);
         Sound.instance.Play(Sound.Others.PopupOpen);
-        flagImg.sprite = null;
+        flagImg.sprite = defaultImage;
         countryNameTxt.text = "Loading... ";
         subRegionTxt.text = "Loading... ";
         capitalTxt.text = "Loading... ";
@@ -39,10 +41,6 @@ public class FlagMeanDialog : Dialog
             capitalTxt.text = "Capital: " + FlagTabController.instance.countryInfo[CAPITAL].ToString();
             areaTxt.text = "Area: " + FlagTabController.instance.countryInfo[AREA].ToString() + " m2";
             populationTxt.text = "Population: " + FlagTabController.instance.countryInfo[POPULATION].ToString() + " people";
-        }
-        else
-        {
-            Toast.instance.ShowMessage("No internet conection");
         }
     }
     public void OnClickCloseFlagMeanDialog()

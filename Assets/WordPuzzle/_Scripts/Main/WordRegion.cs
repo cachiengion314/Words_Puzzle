@@ -269,7 +269,7 @@ public class WordRegion : MonoBehaviour
         //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var sizeOutSafeArea = Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? ((int)(_rectCanvas.rect.height) - Screen.safeArea.height) / 2 : 
+        var sizeOutSafeArea = Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? ((int)(_rectCanvas.rect.height) - Screen.safeArea.height) / 2 :
             Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? (Screen.safeArea.height - (int)(_rectCanvas.rect.height)) / 2 : 0;
         var boardSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height - (Screen.safeArea.height < 1920f ? 0 : (Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? sizeOutSafeArea : (Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? -sizeOutSafeArea : 0)));
         var panSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2 - (Screen.safeArea.height < 1920f ? 0 : (Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? sizeOutSafeArea : (Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? -sizeOutSafeArea : 0)));
@@ -958,8 +958,8 @@ public class WordRegion : MonoBehaviour
         if (isComplete)
         {
             LogController.Debug("If word that match flag'name do something");
-       
-           
+          
+
             TweenControl.GetInstance().DelayCall(transform, 0f, () =>
             {
                 if (isLevelMisspelling)
@@ -991,10 +991,12 @@ public class WordRegion : MonoBehaviour
                     //SceneAnimate.Instance.animEvent.LevelClearCallback();
                 });
             });
-         
+
         }
         else
         {
+            LogController.Debug("If word that match flag'name do something");
+
             var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
             var isShowBonusbox = lineCheckBonus.All(line => line.isShown);
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);

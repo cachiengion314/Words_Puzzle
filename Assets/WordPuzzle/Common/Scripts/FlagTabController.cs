@@ -11,6 +11,7 @@ public class FlagItem
 {
     public Sprite flagImage;
     public string flagName;
+    public string flagUnlockWord;
     public bool isLocked;
 }
 public class FlagTabController : MonoBehaviour
@@ -27,6 +28,19 @@ public class FlagTabController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    public void CheckUnlockWord()
+    {
+        for (int i = 0; i < flagItemList.Count; i++)
+        {
+            bool isUnlockWordFound = WordRegion.instance.Lines.All(lineWord => lineWord.answer == flagItemList[i].flagUnlockWord);
+            if (isUnlockWordFound)
+            {
+                LogController.Debug("Player have found the suitable country word");
+
+            }
+        }
+
     }
     public void GetAllWordsList()
     {
