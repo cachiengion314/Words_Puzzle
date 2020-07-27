@@ -74,6 +74,7 @@ public class AdsManager : MonoBehaviour
         {
             _adsController = AudienceNetworkFbAd.instance;
             _adsController.ShowVideoAds();
+            Debug.Log("Show Ads FB");
         }
         else
         {
@@ -81,6 +82,7 @@ public class AdsManager : MonoBehaviour
             {
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowVideoAds();
+                Debug.Log("Show Ads UNITY ADS");
             }
             else
             {
@@ -88,6 +90,7 @@ public class AdsManager : MonoBehaviour
                 {
                     _adsController = AdmobController.instance;
                     _adsController.ShowVideoAds();
+                    Debug.Log("Show Ads Admob");
                 }
                 else
                 {

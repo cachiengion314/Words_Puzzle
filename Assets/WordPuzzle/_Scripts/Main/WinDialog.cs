@@ -794,6 +794,8 @@ public class WinDialog : Dialog
         //        txtRewardByAds.color = _colorNormal;
         //    }
         //}
+        Debug.Log("Show Ads Faild");
+        Debug.Log("_nextButton.interactable: " + _nextButton.interactable);
     }
 
     private IEnumerator ShowEffectCollect(int value, Transform posCollect = null)

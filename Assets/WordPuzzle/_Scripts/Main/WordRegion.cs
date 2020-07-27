@@ -957,7 +957,7 @@ public class WordRegion : MonoBehaviour
         var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
         if (isComplete)
         {
-            LogController.Debug("If word that match flag'name do something");
+            //LogController.Debug("If word that match flag'name do something");
           
 
             TweenControl.GetInstance().DelayCall(transform, 0f, () =>
@@ -995,7 +995,7 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            LogController.Debug("If word that match flag'name do something");
+            //LogController.Debug("If word that match flag'name do something");
 
             var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
             var isShowBonusbox = lineCheckBonus.All(line => line.isShown);
