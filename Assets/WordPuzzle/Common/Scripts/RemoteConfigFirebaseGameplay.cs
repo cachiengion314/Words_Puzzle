@@ -98,30 +98,30 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
                 admob_banner = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_banner").StringValue);
                 // Implement id advertisement
                 // Facebook Audience Network
-                ConfigController.instance.config.facebookAdsId.rewardedLevelClear = fan_level_clear;
-                ConfigController.instance.config.facebookAdsId.rewardedChapterClear = fan_chapter_clear;
-                ConfigController.instance.config.facebookAdsId.rewardedBonusBox = fan_bonus_box;
-                ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters = fan_free_boosters;
-                ConfigController.instance.config.facebookAdsId.rewardedFreeStars = fan_free_stars;
-                ConfigController.instance.config.facebookAdsId.rewardedFreeLetter = fan_free_letter;
-                ConfigController.instance.config.facebookAdsId.intersititial = fan_level_transition;
+                ConfigController.instance.config.facebookAdsId.rewardedLevelClear = CheckNull(fan_level_clear, AudienceNetworkFbAd.instance.rewardIdFaceAds);
+                ConfigController.instance.config.facebookAdsId.rewardedChapterClear = CheckNull(fan_chapter_clear, AudienceNetworkFbAd.instance.rewardIdFaceAds);
+                ConfigController.instance.config.facebookAdsId.rewardedBonusBox = CheckNull(fan_bonus_box, AudienceNetworkFbAd.instance.rewardIdFaceAds);
+                ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters = CheckNull(fan_free_boosters, AudienceNetworkFbAd.instance.rewardIdFaceAds);
+                ConfigController.instance.config.facebookAdsId.rewardedFreeStars = CheckNull(fan_free_stars, AudienceNetworkFbAd.instance.rewardIdFaceAds);
+                ConfigController.instance.config.facebookAdsId.rewardedFreeLetter = CheckNull(fan_free_letter, AudienceNetworkFbAd.instance.rewardIdFaceAds);
+                ConfigController.instance.config.facebookAdsId.intersititial = CheckNull(fan_level_transition, AudienceNetworkFbAd.instance.intersititialIdFaceAds);
                 // UnityAd
-                ConfigController.instance.config.unityAdsId.rewardedLevel = unity_level_clear;
-                ConfigController.instance.config.unityAdsId.rewardedChapter = unity_chapter_clear;
-                ConfigController.instance.config.unityAdsId.rewardedBonusBox = unity_bonus_box;
-                ConfigController.instance.config.unityAdsId.rewardedFreeBoosters = unity_free_boosters;
-                ConfigController.instance.config.unityAdsId.rewardedFreeStars = unity_free_stars;
-                ConfigController.instance.config.unityAdsId.rewardedFreeLetter = unity_free_letter;
-                ConfigController.instance.config.unityAdsId.interstitialLevel = unity_level_transition;
+                ConfigController.instance.config.unityAdsId.rewardedLevel = CheckNull(unity_level_clear, UnityAdTest.instance.myPlacementId);
+                ConfigController.instance.config.unityAdsId.rewardedChapter = CheckNull(unity_chapter_clear, UnityAdTest.instance.myPlacementId);
+                ConfigController.instance.config.unityAdsId.rewardedBonusBox = CheckNull(unity_bonus_box, UnityAdTest.instance.myPlacementId);
+                ConfigController.instance.config.unityAdsId.rewardedFreeBoosters = CheckNull(unity_free_boosters, UnityAdTest.instance.myPlacementId);
+                ConfigController.instance.config.unityAdsId.rewardedFreeStars = CheckNull(unity_free_stars, UnityAdTest.instance.myPlacementId);
+                ConfigController.instance.config.unityAdsId.rewardedFreeLetter = CheckNull(unity_free_letter, UnityAdTest.instance.myPlacementId);
+                ConfigController.instance.config.unityAdsId.interstitialLevel = CheckNull(unity_level_transition, UnityAdTest.instance.myInterstitialId);
                 // Admob google
-                ConfigController.instance.config.admob.rewardedLevel = admob_level_clear;
-                ConfigController.instance.config.admob.rewardedChapter = admob_chapter_clear;
-                ConfigController.instance.config.admob.rewardedBonusBox = admob_bonus_box;
-                ConfigController.instance.config.admob.rewardedFreeBoosters = admob_free_boosters;
-                ConfigController.instance.config.admob.rewardedFreeStars = admob_free_stars;
-                ConfigController.instance.config.admob.rewardedFreeLetter = admob_free_letter;
-                ConfigController.instance.config.admob.interstitialLevel = admob_level_transition;
-                ConfigController.instance.config.admob.bannerLevel = admob_banner;
+                ConfigController.instance.config.admob.rewardedLevel = CheckNull(admob_level_clear, AdmobController.instance.videoAdsId);
+                ConfigController.instance.config.admob.rewardedChapter = CheckNull(admob_chapter_clear, AdmobController.instance.videoAdsId);
+                ConfigController.instance.config.admob.rewardedBonusBox = CheckNull(admob_bonus_box, AdmobController.instance.videoAdsId);
+                ConfigController.instance.config.admob.rewardedFreeBoosters = CheckNull(admob_free_boosters, AdmobController.instance.videoAdsId);
+                ConfigController.instance.config.admob.rewardedFreeStars = CheckNull(admob_free_stars, AdmobController.instance.videoAdsId);
+                ConfigController.instance.config.admob.rewardedFreeLetter = CheckNull(admob_free_letter, AdmobController.instance.videoAdsId);
+                ConfigController.instance.config.admob.interstitialLevel = CheckNull(admob_level_transition, AdmobController.instance.interstitialAdsId);
+                ConfigController.instance.config.admob.bannerLevel = CheckNull(admob_banner, AdmobController.instance.bannerAdsId);
                 // Min Level to load banner
                 AdsManager.instance.MinLevelToLoadBanner = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
                 LogController.Debug("Remoteconfig gameplay load active_banner_level: " + AdsManager.instance.MinLevelToLoadBanner);
@@ -144,6 +144,17 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
                 AdsManager.instance.MinLevelToLoadInterstitial = 10;
             }
         });      
+    }
+    public string CheckNull(string idAds, string idAds2)
+    {
+        if (idAds == null)
+        {
+            return idAds2;
+        }
+        else
+        {
+            return idAds;
+        }
     }
     // Start a fetch request.
     public Task FetchDataAsync()
