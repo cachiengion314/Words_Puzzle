@@ -78,7 +78,7 @@ public class ThemesDialog : Dialog
     public override void Close()
     {
         var isCloseFirstTheme = CPlayerPrefs.GetBool("CLOSE_THEME_DIALOG", false);
-        if (!isCloseFirstTheme)
+        if (!isCloseFirstTheme || !_themeExits)
         {
             CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
             CUtils.LoadScene(Const.SCENE_MAIN, true);
