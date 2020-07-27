@@ -107,65 +107,80 @@ public class RemoteConfigFirebase : MonoBehaviour
     }
     public void GetAllIdAvertisement()
     {
-        // Facebook Audience Network
-        fan_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_level_clear").StringValue);
-        fan_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_chapter_clear").StringValue);
-        fan_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_bonus_box").StringValue);
-        fan_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_boosters").StringValue);
-        fan_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_stars").StringValue);
-        fan_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_letter").StringValue);
-        fan_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_level_transition").StringValue);
-        // UnityAd
-        unity_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_clear").StringValue);
-        unity_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_chapter_clear").StringValue);
-        unity_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_bonus_box").StringValue);
-        unity_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_boosters").StringValue);
-        unity_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_stars").StringValue);
-        unity_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_letter").StringValue);
-        unity_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_transition").StringValue);
-        // Admob google
-        admob_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_level_clear").StringValue);
-        admob_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_chapter_clear").StringValue);
-        admob_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_bonus_box").StringValue);
-        admob_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_boosters").StringValue);
-        admob_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_stars").StringValue);
-        admob_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_letter").StringValue);
-        admob_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_level_transition").StringValue);
-        admob_banner = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_banner").StringValue);
-        // Implement id advertisement
-        // Facebook Audience Network
-        ConfigController.instance.config.facebookAdsId.rewardedLevelClear = fan_level_clear;
-        ConfigController.instance.config.facebookAdsId.rewardedChapterClear = fan_chapter_clear;
-        ConfigController.instance.config.facebookAdsId.rewardedBonusBox = fan_bonus_box;
-        ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters = fan_free_boosters;
-        ConfigController.instance.config.facebookAdsId.rewardedFreeStars = fan_free_stars;
-        ConfigController.instance.config.facebookAdsId.rewardedFreeLetter = fan_free_letter;
-        ConfigController.instance.config.facebookAdsId.intersititial = fan_level_transition;
-        // UnityAd
-        ConfigController.instance.config.unityAdsId.rewardedLevel = unity_level_clear;
-        ConfigController.instance.config.unityAdsId.rewardedChapter = unity_chapter_clear;
-        ConfigController.instance.config.unityAdsId.rewardedBonusBox = unity_bonus_box;
-        ConfigController.instance.config.unityAdsId.rewardedFreeBoosters = unity_free_boosters;
-        ConfigController.instance.config.unityAdsId.rewardedFreeStars = unity_free_stars;
-        ConfigController.instance.config.unityAdsId.rewardedFreeLetter = unity_free_letter;
-        ConfigController.instance.config.unityAdsId.interstitialLevel = unity_level_transition;
-        // Admob google
-        ConfigController.instance.config.admob.rewardedLevel = admob_level_clear;
-        ConfigController.instance.config.admob.rewardedChapter = admob_chapter_clear;
-        ConfigController.instance.config.admob.rewardedBonusBox = admob_bonus_box;
-        ConfigController.instance.config.admob.rewardedFreeBoosters = admob_free_boosters;
-        ConfigController.instance.config.admob.rewardedFreeStars = admob_free_stars;
-        ConfigController.instance.config.admob.rewardedFreeLetter = admob_free_letter;
-        ConfigController.instance.config.admob.interstitialLevel = admob_level_transition;
-        ConfigController.instance.config.admob.bannerLevel = admob_banner;
-        // Min Level to load banner
-        AudienceNetworkBanner.instance.MinLevelToLoadBanner = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
-        // Min level to load rewarded video ads
-        AdsManager.instance.MinLevelToLoadRewardVideo = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
-        // Percent to load interstitial ads
-        AdsManager.instance.PercentToloadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
-        // Min level to load interstitial ads
-        AdsManager.instance.MinLevelToLoadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
+        CUtils.CheckConnection(this, (result) =>
+        {
+            if (result == 0)
+            {
+                // Facebook Audience Network
+                fan_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_level_clear").StringValue);
+                fan_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_chapter_clear").StringValue);
+                fan_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_bonus_box").StringValue);
+                fan_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_boosters").StringValue);
+                fan_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_stars").StringValue);
+                fan_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_free_letter").StringValue);
+                fan_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("fan_level_transition").StringValue);
+                // UnityAd
+                unity_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_clear").StringValue);
+                unity_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_chapter_clear").StringValue);
+                unity_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_bonus_box").StringValue);
+                unity_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_boosters").StringValue);
+                unity_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_stars").StringValue);
+                unity_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_free_letter").StringValue);
+                unity_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("unity_level_transition").StringValue);
+                // Admob google
+                admob_level_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_level_clear").StringValue);
+                admob_chapter_clear = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_chapter_clear").StringValue);
+                admob_bonus_box = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_bonus_box").StringValue);
+                admob_free_boosters = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_boosters").StringValue);
+                admob_free_stars = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_stars").StringValue);
+                admob_free_letter = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_free_letter").StringValue);
+                admob_level_transition = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_level_transition").StringValue);
+                admob_banner = ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("admob_banner").StringValue);
+                // Implement id advertisement
+                // Facebook Audience Network
+                ConfigController.instance.config.facebookAdsId.rewardedLevelClear = fan_level_clear;
+                ConfigController.instance.config.facebookAdsId.rewardedChapterClear = fan_chapter_clear;
+                ConfigController.instance.config.facebookAdsId.rewardedBonusBox = fan_bonus_box;
+                ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters = fan_free_boosters;
+                ConfigController.instance.config.facebookAdsId.rewardedFreeStars = fan_free_stars;
+                ConfigController.instance.config.facebookAdsId.rewardedFreeLetter = fan_free_letter;
+                ConfigController.instance.config.facebookAdsId.intersititial = fan_level_transition;
+                // UnityAd
+                ConfigController.instance.config.unityAdsId.rewardedLevel = unity_level_clear;
+                ConfigController.instance.config.unityAdsId.rewardedChapter = unity_chapter_clear;
+                ConfigController.instance.config.unityAdsId.rewardedBonusBox = unity_bonus_box;
+                ConfigController.instance.config.unityAdsId.rewardedFreeBoosters = unity_free_boosters;
+                ConfigController.instance.config.unityAdsId.rewardedFreeStars = unity_free_stars;
+                ConfigController.instance.config.unityAdsId.rewardedFreeLetter = unity_free_letter;
+                ConfigController.instance.config.unityAdsId.interstitialLevel = unity_level_transition;
+                // Admob google
+                ConfigController.instance.config.admob.rewardedLevel = admob_level_clear;
+                ConfigController.instance.config.admob.rewardedChapter = admob_chapter_clear;
+                ConfigController.instance.config.admob.rewardedBonusBox = admob_bonus_box;
+                ConfigController.instance.config.admob.rewardedFreeBoosters = admob_free_boosters;
+                ConfigController.instance.config.admob.rewardedFreeStars = admob_free_stars;
+                ConfigController.instance.config.admob.rewardedFreeLetter = admob_free_letter;
+                ConfigController.instance.config.admob.interstitialLevel = admob_level_transition;
+                ConfigController.instance.config.admob.bannerLevel = admob_banner;
+                // Min Level to load banner
+                AdsManager.instance.MinLevelToLoadBanner = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
+                // Min level to load rewarded video ads
+                AdsManager.instance.MinLevelToLoadRewardVideo = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
+                // Percent to load interstitial ads
+                AdsManager.instance.PercentToloadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
+                // Min level to load interstitial ads
+                AdsManager.instance.MinLevelToLoadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
+            }
+            else
+            {
+                // no internet conection
+                AdsManager.instance.MinLevelToLoadBanner = 10;
+                AdsManager.instance.MinLevelToLoadRewardVideo = 10;
+                AdsManager.instance.PercentToloadInterstitial = 50;
+                AdsManager.instance.MinLevelToLoadInterstitial = 10;
+            }
+        });
+       
     }
     public void ShowIngameNotify()
     {

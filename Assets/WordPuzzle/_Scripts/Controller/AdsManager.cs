@@ -19,6 +19,7 @@ public class AdsManager : MonoBehaviour
     public Action onAdsStarted;
 
     public IAds _adsController;
+    [HideInInspector] public int MinLevelToLoadBanner;
     [HideInInspector] public int MinLevelToLoadRewardVideo;
     [HideInInspector] public int PercentToloadInterstitial;
     [HideInInspector] public int MinLevelToLoadInterstitial;
