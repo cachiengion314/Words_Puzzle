@@ -47,13 +47,13 @@ public class ThemesDialog : Dialog
         theme.btnTheme.interactable = false;
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
-            if (!isCloseFirstTheme || !_themeExits)
-            {
-                CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
-                Close();
-                CUtils.LoadScene(Const.SCENE_MAIN, true);
-            }
-            else
+            //if (!isCloseFirstTheme || !_themeExits)
+            //{
+            //    CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
+            //    Close();
+            //    CUtils.LoadScene(Const.SCENE_MAIN, true);
+            //}
+            //else
                 Close();
         });
     }
@@ -78,13 +78,12 @@ public class ThemesDialog : Dialog
     public override void Close()
     {
         var isCloseFirstTheme = CPlayerPrefs.GetBool("CLOSE_THEME_DIALOG", false);
-        base.Close();
         if (!isCloseFirstTheme)
         {
             CPlayerPrefs.SetBool("CLOSE_THEME_DIALOG", true);
             CUtils.LoadScene(Const.SCENE_MAIN, true);
         }
-
+        base.Close();
         AudienceNetworkBanner.instance.LoadBanner();
     }
 }

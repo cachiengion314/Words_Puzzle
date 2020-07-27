@@ -25,7 +25,7 @@ public class Dialog : MonoBehaviour
     public bool enableEscape = true;
     public bool scaleDialog = false;
     public bool resestAnim = true;
-    
+
 
     private AnimatorStateInfo info;
     private bool isShowing;
@@ -165,11 +165,12 @@ public class Dialog : MonoBehaviour
 
     private void DoClose()
     {
-        Destroy(gameObject);
-        if (onDialogCompleteClosed != null) onDialogCompleteClosed();
         var gameData = Resources.Load<GameData>("GameData");
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
         var currlevel = (Prefs.unlockedLevel + numlevels * Prefs.unlockedSubWorld + gameData.words[0].subWords.Count * numlevels * Prefs.unlockedWorld) + 1;
+        if (this != null)
+            Destroy(gameObject);
+        if (onDialogCompleteClosed != null) onDialogCompleteClosed();
         if (showDialogReward && currlevel >= AdsManager.instance.MinLevelToLoadRewardVideo)
         {
             Sound.instance.Play(Sound.Others.PopupOpen);

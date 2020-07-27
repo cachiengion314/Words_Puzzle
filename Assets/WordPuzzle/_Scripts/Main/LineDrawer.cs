@@ -112,7 +112,7 @@ public class LineDrawer : MonoBehaviour
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", true);
             }
-            else if (WordRegion.instance.CurLevel == 1 && !CPlayerPrefs.GetBool("TUTORIAL", false) && TutorialController.instance.isShowTut)
+            else if (WordRegion.instance.CurLevel == 1 && !CPlayerPrefs.GetBool("TUTORIAL", false) && TutorialController.instance.isShowTut && WordRegion.instance.Lines.Any(li => !li.isShown))
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain);
             }

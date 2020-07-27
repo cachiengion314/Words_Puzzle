@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Superpow;
+using Spine.Unity;
 
 public class SceneAnimate : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class SceneAnimate : MonoBehaviour
     [Space]
     [SerializeField] private Image _bgLoading;
     [SerializeField] private Image _imgTip;
+    [SerializeField] private SkeletonGraphic _animTip;
     [SerializeField] private Text _textTip;
     [SerializeField] private Color _colorNor;
     [SerializeField] private List<TipData> _tipDatas;
@@ -207,17 +209,18 @@ public class SceneAnimate : MonoBehaviour
             var randomTemp = CheckTip();
             var tipRandom = _tipDatas[UnityEngine.Random.Range(0, randomTemp.Count)];
             _textTip.text = tipRandom.contentTip;
-            _imgTip.sprite = tipRandom.iconTip;
-            _imgTip.SetNativeSize();
+            //_imgTip.sprite = tipRandom.iconTip;
+            //_imgTip.SetNativeSize();
             _textTip.color = _colorNor;
-            _imgTip.color = new Color(1, 1, 1, 1);
+            //_imgTip.color = new Color(1, 1, 1, 1);
+            _animTip.color = new Color(1, 1, 1, 1);
             _bgLoading.color = new Color(1, 1, 1, 1);
             _bgLoading.gameObject.SetActive(true);
         }
         else
         {
             tweenControl.FadeAnfaText(_textTip, 0, 0.5f);
-            tweenControl.FadeAnfa(_imgTip, 0, 0.5f);
+            tweenControl.FadeAnfa(_animTip, 0, 0.5f);
             tweenControl.FadeAnfa(_bgLoading, 0, 0.5f, () =>
             {
                 _bgLoading.gameObject.SetActive(false);
