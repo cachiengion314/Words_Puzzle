@@ -92,7 +92,13 @@ public class RemoteConfigFirebase : MonoBehaviour
 
     public void FetchFireBase()
     {
-        FetchDataAsync();
+        CUtils.CheckConnection(this, (result) =>
+        {
+            if (result == 0)
+            {
+                FetchDataAsync();
+            }
+        });
     }
     private string ConvertFirebaseStringToNormal(string firebasestr)
     {
@@ -180,7 +186,7 @@ public class RemoteConfigFirebase : MonoBehaviour
                 AdsManager.instance.MinLevelToLoadInterstitial = 10;
             }
         });
-       
+
     }
     public void ShowIngameNotify()
     {

@@ -98,7 +98,7 @@ public class WinDialog : Dialog
     [SerializeField] private TextMeshProUGUI _textNumBee;
     [SerializeField] private SpineControl _animIconBee;
 
-
+    private bool isAdsLoaed;
     private GameObject _fxEffect;
     private List<GameObject> _stars;
     //private RewardVideoController _rewardControl;
@@ -126,7 +126,8 @@ public class WinDialog : Dialog
 
         //_rewardControl.onRewardedCallback -= OnCompleteReward;
         AdsManager.instance.onAdsRewarded -= OnCompleteReward;
-        if (!AdsManager.instance.AdsIsLoaded())
+        isAdsLoaed = AdsManager.instance.AdsIsLoaded();
+        if (!isAdsLoaed)
             AdsManager.instance.LoadDataAds();
         CheckShowAdsButton();
         isSound = false;
@@ -284,19 +285,19 @@ public class WinDialog : Dialog
         //{
         //    WordRegion.instance.listWordCorrect.Add(line.answer);
         //}
-        if (AdsManager.instance != null)
-        {
-            if (!AdsManager.instance.AdsIsLoaded())
-            {
-                _btnAdsDisable.SetActive(true);
-                //txtRewardByAds.color = _colorDisable;
-            }
-            else
-            {
-                _btnAdsDisable.SetActive(false);
-                txtRewardByAds.color = _colorNormal;
-            }
-        }
+        //if (AdsManager.instance != null)
+        //{
+        //    if (!)
+        //    {
+        //        RewardButton.SetActive(false);
+        //        //txtRewardByAds.color = _colorDisable;
+        //    }
+        //    else
+        //    {
+        //        RewardButton.SetActive(true);
+        txtRewardByAds.color = _colorNormal;
+        //    }
+        //}
 
         var tweenControl = TweenControl.GetInstance();
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
@@ -394,7 +395,7 @@ public class WinDialog : Dialog
                 });
             }
         }
-        if (currlevel > AdsManager.instance.MinLevelToLoadRewardVideo)
+        if (currlevel > AdsManager.instance.MinLevelToLoadRewardVideo && isAdsLoaed)
             RewardButton.SetActive(true);
         else
             RewardButton.SetActive(false);
@@ -778,21 +779,21 @@ public class WinDialog : Dialog
 
     private void CheckShowAdsButton()
     {
-        if (AdsManager.instance != null)
-        {
-            if (!AdsManager.instance.AdsIsLoaded())
-            {
-                //_btnAdsDisable.SetActive(true);
-                RewardButton.gameObject.SetActive(false);
-                //txtRewardByAds.color = _colorDisable;
-                _nextButton.interactable = true;
-            }
-            else
-            {
-                //_btnAdsDisable.SetActive(false);
-                txtRewardByAds.color = _colorNormal;
-            }
-        }
+        //if (AdsManager.instance != null)
+        //{
+        //    if (!AdsManager.instance.AdsIsLoaded())
+        //    {
+        //        //_btnAdsDisable.SetActive(true);
+        RewardButton.gameObject.SetActive(false);
+        //        //txtRewardByAds.color = _colorDisable;
+        _nextButton.interactable = true;
+        //    }
+        //    else
+        //    {
+        //        //_btnAdsDisable.SetActive(false);
+        //        txtRewardByAds.color = _colorNormal;
+        //    }
+        //}
     }
 
     private IEnumerator ShowEffectCollect(int value, Transform posCollect = null)

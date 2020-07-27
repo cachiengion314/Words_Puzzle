@@ -161,7 +161,7 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    public bool AdsIsLoaded(bool showToast = true, Text textNoti = null, TextMeshProUGUI textMeshNoti = null)
+    public bool AdsIsLoaded(bool showToast = false, Text textNoti = null, TextMeshProUGUI textMeshNoti = null, Action checkComplete = null)
     {
         if (AudienceNetworkFbAd.instance.isLoaded || AdmobController.instance.rewardBasedVideo.IsLoaded() || UnityAdTest.instance.IsLoaded())
             return true;
@@ -179,6 +179,7 @@ public class AdsManager : MonoBehaviour
                         textMeshNoti.text = "Rewarded video is not ready";
                     _isLoading = false;
                     LoadDataAds();
+                    checkComplete?.Invoke();
                 }
                 else
                 {
@@ -188,6 +189,7 @@ public class AdsManager : MonoBehaviour
                         textNoti.text = "No Internet Connection";
                     if (textMeshNoti != null)
                         textMeshNoti.text = "No Internet Connection";
+                    checkComplete?.Invoke();
                 }
             });
             return false;
@@ -197,8 +199,7 @@ public class AdsManager : MonoBehaviour
     #region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        if (AdsIsLoaded())
-            StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
+        StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
     }
 
     public void ShowBannerAds()
@@ -208,14 +209,20 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAds()
     {
-        float percent = (float)PercentToloadInterstitial / 100f;
-        float randomNumber = UnityEngine.Random.Range(0f, 1f);
-        Debug.Log("RandomNumber: " + randomNumber);
-        Debug.Log("percent: " + percent);
-        if (randomNumber <= percent)
+        CUtils.CheckConnection(this, (result) =>
         {
-            ShowInterstitial();
-        }
+            if (result == 0)
+            {
+                float percent = (float)PercentToloadInterstitial / 100f;
+                float randomNumber = UnityEngine.Random.Range(0f, 1f);
+                Debug.Log("RandomNumber: " + randomNumber);
+                Debug.Log("percent: " + percent);
+                if (randomNumber <= percent)
+                {
+                    ShowInterstitial();
+                }
+            }
+        });
     }
     #endregion
 

@@ -66,7 +66,13 @@ public class AudienceNetworkBanner : MonoBehaviour
 
         if (currlevel >= AdsManager.instance.MinLevelToLoadBanner && MainController.instance != null)
         {
-            StartCoroutine(LoadBannerWithDelay());
+            CUtils.CheckConnection(this, (result) =>
+            {
+                if (result == 0)
+                {
+                    StartCoroutine(LoadBannerWithDelay());
+                }
+            });
         }
     }
     public void LoadAudienceNetworkBanner()
