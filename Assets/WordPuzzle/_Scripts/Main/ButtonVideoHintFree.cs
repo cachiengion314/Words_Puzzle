@@ -81,6 +81,7 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnCompleteVideo()
     {
+        Debug.Log("Cell: " + Cell.gameObject.name);
         _btnAds.interactable = true;
         //_rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
@@ -103,18 +104,19 @@ public class ButtonVideoHintFree : MonoBehaviour
             line.CheckLineDone();
             WordRegion.instance.SaveLevelProgress();
             WordRegion.instance.CheckGameComplete();
-        });
-        //_rewardController.gameObject.SetActive(true);
-        CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(
-          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
-          new Firebase.Analytics.Parameter[] {
+
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterValue, 0),
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "free_letter"),
-          }
-        );
+              }
+            );
+        });
+        //_rewardController.gameObject.SetActive(true);
+        CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
     }
 
     void OnAdsClosed()
