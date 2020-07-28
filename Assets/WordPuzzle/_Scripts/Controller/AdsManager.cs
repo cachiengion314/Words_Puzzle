@@ -75,14 +75,16 @@ public class AdsManager : MonoBehaviour
             _adsController = AudienceNetworkFbAd.instance;
             _adsController.ShowVideoAds();
             Debug.Log("Show Ads FB");
+            SceneAnimate.Instance.ShowOverLayPauseGame(true);
         }
         else
         {
-            if (UnityAdTest.instance.IsLoaded())
+            if (UnityAdTest.instance.IsInitialized() && UnityAdTest.instance.IsLoaded())
             {
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowVideoAds();
                 Debug.Log("Show Ads UNITY ADS");
+                SceneAnimate.Instance.ShowOverLayPauseGame(true);
             }
             else
             {
@@ -91,6 +93,7 @@ public class AdsManager : MonoBehaviour
                     _adsController = AdmobController.instance;
                     _adsController.ShowVideoAds();
                     Debug.Log("Show Ads Admob");
+                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 }
                 else
                 {
@@ -126,13 +129,17 @@ public class AdsManager : MonoBehaviour
         {
             _adsController = AudienceNetworkFbAd.instance;
             _adsController.ShowInterstitialAds();
+            SceneAnimate.Instance.ShowOverLayPauseGame(true);
+            Debug.Log("Show Interstitial Ads FB");
         }
         else
         {
-            if (UnityAdTest.instance.IsLoadedInterstitial())
+            if (UnityAdTest.instance.IsInitialized() && UnityAdTest.instance.IsLoadedInterstitial())
             {
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowInterstitialAds();
+                SceneAnimate.Instance.ShowOverLayPauseGame(true);
+                Debug.Log("Show Interstitial Ads UNITY ADS");
             }
             else
             {
@@ -140,6 +147,8 @@ public class AdsManager : MonoBehaviour
                 {
                     _adsController = AdmobController.instance;
                     _adsController.ShowInterstitialAds();
+                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
+                    Debug.Log("Show Interstitial Ads Admob");
                 }
                 else
                 {

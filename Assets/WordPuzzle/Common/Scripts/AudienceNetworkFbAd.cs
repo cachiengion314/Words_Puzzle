@@ -53,6 +53,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("Interstitial ad failed to load with error: " + error);
             //statusLabel.text = "Interstitial ad failed to load. Check console for details.";
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
         interstitialAd.InterstitialAdWillLogImpression = delegate ()
         {
@@ -66,6 +67,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("Interstitial ad did close.");
             AdsManager.instance.onAdsRewarded?.Invoke();
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
+
             didIntersClose = true;
             if (interstitialAd != null)
             {
@@ -82,7 +85,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
          * app with launchMode:singleTask (such as a Unity game) goes to
          * background and is then relaunched by tapping the icon.
          */
-        interstitialAd.interstitialAdActivityDestroyed = delegate () {
+        interstitialAd.interstitialAdActivityDestroyed = delegate ()
+        {
             if (!didIntersClose)
             {
                 Debug.Log("Interstitial activity destroyed without being closed first.");
@@ -195,6 +199,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             //Debug.Log("RewardedVideo ad failed to load with error: " + error);
             //Debug.Log("RewardedVideo ad failed to load. Check console for details.");
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
         rewardedVideoAd.RewardedVideoAdWillLogImpression = delegate ()
         {
@@ -217,6 +222,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         rewardedVideoAd.RewardedVideoAdDidFail = delegate ()
         {
             //Debug.Log("Rewarded video ad not validated, or no response from server");
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
 
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
@@ -224,10 +230,11 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             //Debug.Log("Rewarded video ad did close.");
 
             AdsManager.instance.onAdsRewarded?.Invoke();
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
             didClose = true;
             if (rewardedVideoAd != null)
             {
-                rewardedVideoAd.Dispose(); 
+                rewardedVideoAd.Dispose();
             }
         };
 
@@ -250,6 +257,6 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 #endif
 
         // Initiate the request to load the ad.
-        rewardedVideoAd.LoadAd(); 
+        rewardedVideoAd.LoadAd();
     }
 }

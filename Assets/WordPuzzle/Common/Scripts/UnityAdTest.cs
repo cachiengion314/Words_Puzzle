@@ -41,6 +41,15 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         else
             return Advertisement.IsReady(myPlacementId);
     }
+    public bool IsInitialized()
+    {
+        return Advertisement.isInitialized;
+    }
+    public bool IsShowing()
+    {
+        return Advertisement.isShowing;
+    }
+
     public bool IsLoadedInterstitial()
     {
         if (myInterstitialId == null) return false;
@@ -68,16 +77,19 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
         {
             // Reward the user for watching the ad to completion.
             AdsManager.instance.onAdsRewarded?.Invoke();
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
             //Debug.Log("You get a Reward!!!");
         }
         else if (showResult == ShowResult.Skipped)
         {
             // Do not reward the user for skipping the ad.
             //Debug.Log("You don't get a Reward!!");
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
         }
         else if (showResult == ShowResult.Failed)
         {
             //Debug.LogWarning("The ad did not finish due to an error.");
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
         }
     }
 

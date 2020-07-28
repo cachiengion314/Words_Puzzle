@@ -355,6 +355,11 @@ public class SceneAnimate : MonoBehaviour
         _overlayPauseGame.gameObject.SetActive(pause);
     }
 
+    public void ShowOverLayPauseGame(bool show)
+    {
+        _overlayPauseGame.gameObject.SetActive(show);
+    }
+
     public IEnumerator ShowEffectCollect(int value, Transform btnTarget = null)
     {
         if (MainController.instance != null)

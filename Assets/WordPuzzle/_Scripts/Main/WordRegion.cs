@@ -996,9 +996,8 @@ public class WordRegion : MonoBehaviour
         else
         {
             //LogController.Debug("If word that match flag'name do something");
-
             var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
-            var isShowBonusbox = lineCheckBonus.All(line => line.isShown);
+            var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(line => line.isShown) : false;
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut)
             {

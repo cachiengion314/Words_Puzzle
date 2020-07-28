@@ -653,6 +653,7 @@ public class WinDialog : Dialog
 
     public void NextClick()
     {
+        TweenControl.GetInstance().KillAll();
         var numlevels = Utils.GetNumLevels(Prefs.unlockedWorld, Prefs.unlockedSubWorld);
         var currlevel = Int32.Parse(MainController.instance.levelNameText.text.Replace("LEVEL ", ""));
         var lastWord = MainController.instance.gameData.words[MainController.instance.gameData.words.Count - 1];

@@ -8,12 +8,13 @@ public class SafeAreaPanel : MonoBehaviour
     public SafeAreaDetect areaDetect;
     [SerializeField] private RectTransform _rectTransform;
 
-    private Rect _safeArea;
+    private Rect _safeArea = new Rect(0, 0, 0, 0);
 
     void Awake()
     {
-        _safeArea = Screen.safeArea;
-        RefreshSafe(_safeArea);
+        var safeArea = Screen.safeArea;
+        if (safeArea != _safeArea)
+            RefreshSafe(safeArea);
     }
 
     public RectTransform ThisRect
@@ -23,16 +24,13 @@ public class SafeAreaPanel : MonoBehaviour
             return _rectTransform;
         }
     }
-    //void Update()
-    //{
-    //if(_safeArea != Screen.safeArea)
-    //    RefreshSafe(Screen.safeArea);
-    //}
 
     private void RefreshSafe(Rect safeArea)
     {
+        _safeArea = safeArea;
+
         Vector2 anchorMin = safeArea.position;
-        Vector2 anchorMax = safeArea.position + safeArea.size;
+        Vector2 anchorMax = anchorMin + safeArea.size;
 
         anchorMin.x /= Screen.width;
         anchorMin.y /= Screen.height;

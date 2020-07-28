@@ -326,7 +326,7 @@ public class TweenControl : MonoBehaviour
                 var tweener = target.transform.DOShakePosition(time, strength, vibrato, randomness, snapping, fadeOut).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(target.transform)).SetDelay(delay);
                 AddTweener(target.gameObject.transform, tweener);
                 return tweener;
-            
+
             case ShakeType.ShakeTypeRotate:
                 var tweenerRotate = target.transform.DOShakeRotation(time, strength, vibrato, randomness, fadeOut).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(target.transform)).SetDelay(delay);
                 AddTweener(target.gameObject.transform, tweenerRotate);
@@ -390,7 +390,7 @@ public class TweenControl : MonoBehaviour
         return tweener;
     }
 
-    public TweenerCore<Vector3, Path, PathOptions> MovePath(Transform trans, Vector3[] waypoint, float duration, PathType pathType = PathType.Linear, PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null,TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, float delay = 0)
+    public TweenerCore<Vector3, Path, PathOptions> MovePath(Transform trans, Vector3[] waypoint, float duration, PathType pathType = PathType.Linear, PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null, TweenCallback onComplete = null, EaseType easeType = EaseType.Linear, float delay = 0)
     {
         var tweener = trans.DOPath(waypoint, duration, pathType, pathMode, resolution, gizmoColor).SetEase((Ease)Enum.Parse(typeof(Ease), easeType.ToString())).OnComplete(onComplete).OnKill(() => OnKillFuntion(trans)).SetDelay(delay);
         AddTweenerCore(trans, tweener);
@@ -689,7 +689,7 @@ public class TweenControl : MonoBehaviour
     // Di chuyển GameObject theo đường cong có điểm đỉnh.
     public void MoveFollowBenzier(GameObject go, Vector3 mounthPos, Vector3 endPos, float timeMoveUp = 2.5f, float timeMoveDown = 1.5f, System.Action callback = null)
     {
-        TweenControl.GetInstance().MoveRectX(go.GetComponent<RectTransform>(), endPos.x, timeMoveUp + timeMoveDown, null, null,EaseType.Linear);
+        TweenControl.GetInstance().MoveRectX(go.GetComponent<RectTransform>(), endPos.x, timeMoveUp + timeMoveDown, null, null, EaseType.Linear);
 
         TweenControl.GetInstance().MoveRectY(go.GetComponent<RectTransform>(), mounthPos.y, timeMoveUp, () =>
         {
@@ -709,7 +709,7 @@ public class TweenControl : MonoBehaviour
             TweenControl.GetInstance().MoveRectX(go.GetComponent<RectTransform>(), endPos.x, timeMoveDown, () =>
             {
                 callback?.Invoke();
-            }, null,EaseType.InQuad);
+            }, null, EaseType.InQuad);
         }, null, EaseType.OutQuad);
     }
 }

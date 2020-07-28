@@ -233,6 +233,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         print("HandleInterstitialClosed event received");
         RequestInterstitial();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
     public void HandleInterstitialLeftApplication(object sender, EventArgs args)
@@ -270,6 +271,7 @@ public class AdmobController : MonoBehaviour, IAds
         RequestRewardBasedVideo();
         //MonoBehaviour.print("HandleRewardBasedVideoClosed event received");
         AdsManager.instance.onAdsClose?.Invoke();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
@@ -278,6 +280,8 @@ public class AdmobController : MonoBehaviour, IAds
         double amount = args.Amount;
         //MonoBehaviour.print(
         //    "HandleRewardBasedVideoRewarded event received for " + amount.ToString() + " " + type);
+        AdsManager.instance.onAdsRewarded?.Invoke();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
     public void HandleRewardBasedVideoLeftApplication(object sender, EventArgs args)
