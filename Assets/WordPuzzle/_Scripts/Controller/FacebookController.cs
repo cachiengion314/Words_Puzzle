@@ -71,6 +71,13 @@ public class FacebookController : MonoBehaviour
                 LogController.Debug(item);
             }
             debugLogAction?.Invoke();
+            HoneyPoints += 5000;
+            FlagTabController.instance.AddToUnlockedWordDictionary("Albania");
+            FlagTabController.instance.SaveUnlockedWordData();
+            foreach (var pair in user.unlockedFlagWords)
+            {
+                LogController.Debug(pair.Value);
+            }
         }
     }
 
@@ -242,7 +249,7 @@ public class FacebookController : MonoBehaviour
         userDefault.unlockedWorld = "0";
         userDefault.levelProgress = new string[] { "0" };
         userDefault.answerProgress = new string[] { "0" };
-        userDefault.flags = new List<string>() { "0" };
+        userDefault.unlockedFlagWords = new Dictionary<string, string>();
         return userDefault;
     }
     private void GetFriendList()
@@ -323,6 +330,7 @@ public class FacebookController : MonoBehaviour
         us.unlockedWorld = jsonData.unlockedWorld;
         us.levelProgress = jsonData.levelProgress;
         us.answerProgress = jsonData.answerProgress;
+        us.unlockedFlagWords = jsonData.unlockedFlagWords;
         user = us;
     }
     private void SetValueUser()
@@ -352,5 +360,5 @@ public struct User
     public string[] levelProgress;
     public string[] answerProgress;
 
-    public List<string> flags;
+    public Dictionary<string, string> unlockedFlagWords;
 }

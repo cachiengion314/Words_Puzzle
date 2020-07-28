@@ -8,10 +8,11 @@ public class FlagItemController : MonoBehaviour
 {
     public int indexOfFlag;
     public string flagName;
+    public string flagUnlockWord;
     public bool isLocked;
+    public Sprite defaultFlagImage;
 
     [HideInInspector] public Sprite flagImage;
-
     [SerializeField] private Image flagImg;
     [SerializeField] private GameObject LockBgImg;
     [SerializeField] private TextMeshProUGUI nameTxt;
@@ -20,7 +21,14 @@ public class FlagItemController : MonoBehaviour
 
     private void Start()
     {
-        flagImg.sprite = flagImage;
+        if(flagImage != null)
+        {
+            flagImg.sprite = flagImage;
+        }
+        else
+        {
+            flagImg.sprite = defaultFlagImage;
+        }      
         nameTxt.text = flagName;
         if (isLocked)
         {
@@ -35,9 +43,10 @@ public class FlagItemController : MonoBehaviour
     {
         if (isLocked)
         {
-            LogController.Debug("Try to unlock the flag");
+            LogController.Debug("Open unlock flag dialog");
 
             UnLockTheFlagDialog.indexOfFlagWhenClick = indexOfFlag;
+            DictionaryDialog.instance.unlockTheFlagDialog.CheckUnlockByPlayingOnOff();
 
             TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f);
             Sound.instance.Play(Sound.Others.PopupOpen);

@@ -18,7 +18,6 @@ public class DictionaryDialog : Dialog
     public Color colorOn;
     public Color colorOff;
     [Space]
-    //public List<string> countryWordDoneByPlayer = new List<string>();
     public GameObject flagTab;
     public List<FlagItemController> flagList = new List<FlagItemController>();
     public GameObject flagTabScrollViewContent;
@@ -27,7 +26,7 @@ public class DictionaryDialog : Dialog
     public TextMeshProUGUI visualHoneyTxt;
     public TextMeshProUGUI honeyTxt;
     public FlagMeanDialog flagMeanDialog;
-    public GameObject unlockTheFlagDialog;
+    public UnLockTheFlagDialog unlockTheFlagDialog;
     [Space]
     public GameObject vocabularyTab;
     public GameObject vocabularyBtn;
@@ -54,6 +53,13 @@ public class DictionaryDialog : Dialog
 
     [HideInInspector] public List<ListGroupWord> groupWords = new List<ListGroupWord>();
     HomeController homecontroller;
+    public HomeController HomeControllerGetter
+    {
+        get
+        {
+            return homecontroller;
+        }
+    }
 
     public MeanDialog meanDialog;
 
@@ -98,19 +104,6 @@ public class DictionaryDialog : Dialog
         else
             OnClickVocabularyTab();
     }
-    public void GetCountryWordDoneByPlayer()
-    {       
-        //for (int i = 0; i < listWordPassed.Count; i++)
-        //{
-        //    for (int ii = 0; ii < FlagTabController.instance.flagItemList.Count; ii++)
-        //    {
-        //        if (listWordPassed[i] == FlagTabController.instance.flagItemList[ii].flagName.ToUpper())
-        //        {
-        //            countryWordDoneByPlayer.Add(listWordPassed[i]);
-        //        }
-        //    }
-        //}
-    }
     public void InstantiateFlags()
     {
         // Instantiate the flag tab
@@ -119,7 +112,18 @@ public class DictionaryDialog : Dialog
             FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
             flagItem.flagImage = FlagTabController.instance.flagItemList[i].flagImage;
             flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
-            flagItem.isLocked = FlagTabController.instance.flagItemList[i].isLocked;
+            flagItem.flagUnlockWord = FlagTabController.instance.flagItemList[i].flagUnlockWord;
+
+            string checkWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;
+            if (FlagTabController.instance.unlockedWordHashset.Contains(checkWord))
+            {
+                flagItem.isLocked = false;
+            }
+            else
+            {
+                flagItem.isLocked = true;
+            }
+
             flagItem.indexOfFlag = i;
             flagList.Add(flagItem);
         }
@@ -142,7 +146,7 @@ public class DictionaryDialog : Dialog
     }
     public void OnClickFlagTab()
     {
-       
+
         SetTabActive(flagTab, FlagBtn, true);
         SetTabActive(vocabularyTab, vocabularyBtn, false);
     }

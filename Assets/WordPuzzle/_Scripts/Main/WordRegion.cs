@@ -959,7 +959,7 @@ public class WordRegion : MonoBehaviour
         if (isComplete)
         {
             //LogController.Debug("If word that match flag'name do something");
-
+            FlagTabController.instance.CheckAndSaveCountrykWord(_lineIsChecking.answer);
 
             TweenControl.GetInstance().DelayCall(transform, 0f, () =>
             {
@@ -997,7 +997,7 @@ public class WordRegion : MonoBehaviour
         else
         {
             //LogController.Debug("If word that match flag'name do something");
-
+            FlagTabController.instance.CheckAndSaveCountrykWord(_lineIsChecking.answer);
             //if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.flags.Count > 0)
             //{
             //    TutorialController.instance.ShowPopHoneyHeaderTut();

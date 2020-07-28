@@ -11,7 +11,7 @@ public class FlagMeanDialog : Dialog
     public TextMeshProUGUI areaTxt;
     public TextMeshProUGUI populationTxt;
     public Image flagImg;
-    [Header("Default image wil show when the loading is not finish")]
+    [Header("Default image when loading is not finish yet")]
     public Sprite defaultImage;
 
     private readonly string COUNTRY_NAME = "name";
@@ -32,16 +32,14 @@ public class FlagMeanDialog : Dialog
 
         yield return new WaitUntil(() => FlagTabController.instance.isGetCountryRequestDone);
 
-        if (FlagTabController.instance.isGetCountryRequestDone)
-        {
-            flagImg.sprite = flagSprite;
+        flagImg.sprite = flagSprite;
 
-            countryNameTxt.text = "Name: " + FlagTabController.instance.countryInfo[COUNTRY_NAME].ToString();
-            subRegionTxt.text = "Subregion: " + FlagTabController.instance.countryInfo[SUB_REGION].ToString();
-            capitalTxt.text = "Capital: " + FlagTabController.instance.countryInfo[CAPITAL].ToString();
-            areaTxt.text = "Area: " + FlagTabController.instance.countryInfo[AREA].ToString() + " m2";
-            populationTxt.text = "Population: " + FlagTabController.instance.countryInfo[POPULATION].ToString() + " people";
-        }
+        countryNameTxt.text = FlagTabController.instance.countryInfo[COUNTRY_NAME].ToString();
+        subRegionTxt.text = FlagTabController.instance.countryInfo[SUB_REGION].ToString();
+        capitalTxt.text = FlagTabController.instance.countryInfo[CAPITAL].ToString();
+        areaTxt.text = FlagTabController.instance.countryInfo[AREA].ToString() + " m2";
+        populationTxt.text = FlagTabController.instance.countryInfo[POPULATION].ToString() + " people";
+
     }
     public void OnClickCloseFlagMeanDialog()
     {

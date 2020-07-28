@@ -1,10 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using DG.Tweening.Plugins.Core.PathCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PlayFab.Internal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class FlagItem
@@ -12,7 +17,6 @@ public class FlagItem
     public Sprite flagImage;
     public string flagName;
     public string flagUnlockWord;
-    public bool isLocked;
 }
 public class FlagTabController : MonoBehaviour
 {
@@ -24,23 +28,39 @@ public class FlagTabController : MonoBehaviour
     public GameData gameData;
 
     public Action foundWordThatMathchFlagAction;
-    [HideInInspector] public readonly int priceToUnlockFlag = 3;
+    [HideInInspector] public readonly int priceToUnlockFlag = 500;
+
+    // Hashset to speedup searching
+    public HashSet<string> flagItemWordHashset = new HashSet<string>();
+    public HashSet<string> unlockedWordHashset = new HashSet<string>();
     private void Awake()
     {
-        instance = this;
-    }
-    public void CheckUnlockWord()
-    {
-        for (int i = 0; i < flagItemList.Count; i++)
+        if (instance != null)
         {
-            bool isUnlockWordFound = WordRegion.instance.Lines.All(lineWord => lineWord.answer == flagItemList[i].flagUnlockWord);
-            if (isUnlockWordFound)
-            {
-                LogController.Debug("Player have found the suitable country word");
-
-            }
+            Destroy(gameObject);
         }
+        else
+        {
+            instance = this;
+        }
+        DontDestroyOnLoad(gameObject);
 
+        SceneManager.sceneLoaded += OnSceneWasLoaded;
+    }
+
+    private void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 0) return;
+
+        LoadHashsetData();
+    }
+    public void CheckAndSaveCountrykWord(string wordIsChecking)
+    {
+        if (!flagItemWordHashset.Contains(wordIsChecking)) return;
+
+        LogController.Debug("Player have found the suitable country word");
+        AddToUnlockedWordDictionary(wordIsChecking);
+        SaveUnlockedWordData();
     }
     public void GetAllWordsList()
     {
@@ -63,7 +83,7 @@ public class FlagTabController : MonoBehaviour
 
         allWordsList.AddRange(tempAllWordsList);
     }
-    public bool isGetCountryRequestDone;
+    [HideInInspector] public bool isGetCountryRequestDone;
     public IEnumerator GetCountryInfo(string countryName)
     {
         isGetCountryRequestDone = false;
@@ -75,17 +95,46 @@ public class FlagTabController : MonoBehaviour
             isGetCountryRequestDone = true;
             byte[] result = request.downloadHandler.data;
             string countryJSON = System.Text.Encoding.Default.GetString(result);
-            countryJSON = countryJSON.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });           
+            countryJSON = countryJSON.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
             JObject jsonObject = JObject.Parse(countryJSON);
             countryInfo.Clear();
             countryInfo = jsonObject.ToObject<Dictionary<string, object>>();
-
-            LogController.Debug("name: " + countryInfo["name"]);
-            LogController.Debug("subregion: " + countryInfo["subregion"]);
-            LogController.Debug("capital: " + countryInfo["capital"]);
-            LogController.Debug("area: " + countryInfo["area"]);
-            LogController.Debug("population: " + countryInfo["population"]);
-
+        }
+    }
+    public void AddToUnlockedWordDictionary(string wordIsChecking)
+    {
+        if (unlockedWordHashset.Add(wordIsChecking))
+        {
+            FacebookController.instance.user.unlockedFlagWords.Add(wordIsChecking, wordIsChecking);
+        }
+        else
+        {
+            Debug.Log("Cannot add due to dublicate word");
+        }
+    }
+    public void SaveUnlockedWordData()
+    {
+        //FacebookController.instance.user.unlockedFlagWords = new Dictionary<string, string>();
+        //Dictionary<string, string> merged = FacebookController.instance.user.unlockedFlagWords
+        //    .Concat(unlockedWordDic)
+        //    .ToDictionary(x => x.Key, y => y.Value);
+        //FacebookController.instance.user.unlockedFlagWords = merged;
+        //foreach (var pair in FacebookController.instance.user.unlockedFlagWords)
+        //{
+        //    LogController.Debug("pairFlag: " + pair.Value);
+        //}
+        FacebookController.instance.SaveDataGame();
+    }
+    private void LoadHashsetData()
+    {
+        foreach (var pair in FacebookController.instance.user.unlockedFlagWords)
+        {
+            unlockedWordHashset.Add(pair.Value);
+            LogController.Debug("UnlockedWordDic: " + pair);
+        }
+        foreach (var item in flagItemList)
+        {
+            flagItemWordHashset.Add(item.flagUnlockWord);
         }
     }
 }

@@ -7,8 +7,8 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
 {
     public static UnityAdTest instance;
     public Action UpdateProgress;
-    private string androidGameId = "3685957"; // this string is a constant value and cannot be changed
-    private bool testMode = false;
+    private readonly string androidGameId = "3685957"; // this string is a constant value and cannot be changed
+    private readonly bool testMode = false;
 
     public string myPlacementId = "rewardedVideo";
     public string myInterstitialId = "myInterstitialId";
@@ -22,19 +22,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     {
         Advertisement.Initialize(androidGameId, testMode);
         Advertisement.AddListener(this);
-
-        //StartCoroutine(ShowBannerWhenReady());
     }
-    //private IEnumerator ShowBannerWhenReady()
-    //{
-    //    while (!Advertisement.IsReady(bannerPlacementId))
-    //    {
-    //        yield return new WaitForSeconds(.5f);
-    //    }
-    //    Advertisement.Banner.Load();
-    //    Advertisement.Banner.Show(bannerPlacementId);
-    //    Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
-    //}
     public bool IsLoaded()
     {
         if (myPlacementId == null) return false;

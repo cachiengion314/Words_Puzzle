@@ -2370,6 +2370,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &695208869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695208871}
+  - component: {fileID: 695208870}
+  m_Layer: 0
+  m_Name: ExecuteInEdit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &695208870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695208869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 384f26043eb002440a1554031ab0f5af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagTabController: {fileID: 1140420074}
+--- !u!4 &695208871
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695208869}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697483267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3376,6 +3420,641 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121231274}
   m_CullTransparentMesh: 0
+--- !u!1 &1140420073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140420075}
+  - component: {fileID: 1140420074}
+  m_Layer: 0
+  m_Name: FlagTabController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1140420074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140420073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14384f51ad295b74aacd510bc5803d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagItemList:
+  - flagImage: {fileID: 21300000, guid: 5954c85301fad9f4ebb6e2ee63266b78, type: 3}
+    flagName: Afghanistan
+    flagUnlockWord: Afghan
+  - flagImage: {fileID: 21300000, guid: 8377f3b6ec5e9bb4d83a1f733046119c, type: 3}
+    flagName: Albania
+    flagUnlockWord: Albania
+  - flagImage: {fileID: 21300000, guid: fb0c495d36d958f4f91eab5bf489f4e6, type: 3}
+    flagName: Algeria
+    flagUnlockWord: Algeria
+  - flagImage: {fileID: 21300000, guid: 9c05d49032a108b408dadbad031ade77, type: 3}
+    flagName: Andorra
+    flagUnlockWord: Andorra
+  - flagImage: {fileID: 21300000, guid: c0cdea1f36d44b04f8c05a9b0c9b04c6, type: 3}
+    flagName: Angola
+    flagUnlockWord: Angola
+  - flagImage: {fileID: 21300000, guid: b5e73fd0cdebda14ea43a17224dfa4cf, type: 3}
+    flagName: Antigua and Barbuda
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: eaf070a5718021c40830835e25271c15, type: 3}
+    flagName: Argentina
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 9f16a8fd18c306341a9763bc5b46e6d1, type: 3}
+    flagName: Armenia
+    flagUnlockWord: Armenia
+  - flagImage: {fileID: 21300000, guid: 2c8099015ecbe5b42a22a0ff3e94d453, type: 3}
+    flagName: Australia
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 75e7c5f013629a7419faa314239ebca2, type: 3}
+    flagName: Austria
+    flagUnlockWord: Austria
+  - flagImage: {fileID: 21300000, guid: a447a9539a6bb7b45a099d4b27cc1b54, type: 3}
+    flagName: Azerbaijan
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 00ff9a5e093e7a44a9eb685e2dd46ce5, type: 3}
+    flagName: Bahamas
+    flagUnlockWord: Bahamas
+  - flagImage: {fileID: 21300000, guid: 8224b2ec53540ff45ac3a180d8e94873, type: 3}
+    flagName: Bahrain
+    flagUnlockWord: Bahrain
+  - flagImage: {fileID: 21300000, guid: 91cbd99978729ab41b8773a2f111d453, type: 3}
+    flagName: Bangladesh
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 2bba1543d4628e245a088c3dec294494, type: 3}
+    flagName: Barbados
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 3332b05c3f1356544965a99007be68b3, type: 3}
+    flagName: Belarus
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: dc60dbec249da5c4ab9ecc9f97b7b9fe, type: 3}
+    flagName: Belgium
+    flagUnlockWord: Belgium
+  - flagImage: {fileID: 21300000, guid: a18718c6fc7033548bad8750731f598d, type: 3}
+    flagName: Belize
+    flagUnlockWord: Belize
+  - flagImage: {fileID: 21300000, guid: 2fb9e43d82f5fb64994be215959d8a75, type: 3}
+    flagName: Benin
+    flagUnlockWord: Benin
+  - flagImage: {fileID: 21300000, guid: 5a5e51526fa55ca488929024bc2288c0, type: 3}
+    flagName: Bhutan
+    flagUnlockWord: Bhutan
+  - flagImage: {fileID: 21300000, guid: 393e69d47a85d304f9b5655d9b181423, type: 3}
+    flagName: Bolivia
+    flagUnlockWord: Bolivia
+  - flagImage: {fileID: 21300000, guid: 7ace9ef2499853444954a791ad912757, type: 3}
+    flagName: Bosnia and Herzegovina
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: f680b78c66f34c249ae7f8e57642548d, type: 3}
+    flagName: Botswana
+    flagUnlockWord: Botswana
+  - flagImage: {fileID: 21300000, guid: 8e8d469f93757b64cb6e0294b6e76d19, type: 3}
+    flagName: Brazil
+    flagUnlockWord: Brazil
+  - flagImage: {fileID: 21300000, guid: a953ba09ba6fc6a429ded25f9e194ab3, type: 3}
+    flagName: Brunei
+    flagUnlockWord: Brunei
+  - flagImage: {fileID: 21300000, guid: 14e75a6fc5f72584c8a00fd7a849586b, type: 3}
+    flagName: Bulgaria
+    flagUnlockWord: Bulgaria
+  - flagImage: {fileID: 21300000, guid: e7a68607704cd3c478ad7fba6b26f943, type: 3}
+    flagName: Burkina Faso
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: bb0832e213c611b4d90fa509e0fcc0ba, type: 3}
+    flagName: Burundi
+    flagUnlockWord: Burundi
+  - flagImage: {fileID: 21300000, guid: cf4926c5ff082294aa27292259a89b39, type: 3}
+    flagName: Cape Verde
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: f21281d6bf977d2459bdd9df723661c5, type: 3}
+    flagName: Cambodia
+    flagUnlockWord: Cambodia
+  - flagImage: {fileID: 21300000, guid: 03b652dcc02067444813ebf5b0a8ad86, type: 3}
+    flagName: Cameroon
+    flagUnlockWord: Cameroon
+  - flagImage: {fileID: 21300000, guid: c6895f36dc5e5224a88eaf6b0169f4e1, type: 3}
+    flagName: Canada
+    flagUnlockWord: Canada
+  - flagImage: {fileID: 21300000, guid: 6ea0e47bb5272b14da16af676bb79acc, type: 3}
+    flagName: Central African Republic
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 19a5bd0e46e3f02499c40b0303e1e311, type: 3}
+    flagName: Chad
+    flagUnlockWord: Chad
+  - flagImage: {fileID: 21300000, guid: 3b23ef05fd290c24db3492ae0e6a052b, type: 3}
+    flagName: Chile
+    flagUnlockWord: Chile
+  - flagImage: {fileID: 21300000, guid: a9fca9747f90ff94986829162193ff39, type: 3}
+    flagName: China
+    flagUnlockWord: China
+  - flagImage: {fileID: 21300000, guid: b3b2e9d67a043454eb802ab575af3121, type: 3}
+    flagName: Colombia
+    flagUnlockWord: Colombia
+  - flagImage: {fileID: 21300000, guid: 7b42d4582e95f1541919d4c58fccf40b, type: 3}
+    flagName: Comoros
+    flagUnlockWord: Comoros
+  - flagImage: {fileID: 21300000, guid: ddc6ed6046dc05843a9a03d2781027c3, type: 3}
+    flagName: Republic of the Congo
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 9c81551b05a367b4f9df6ed96e2f9d29, type: 3}
+    flagName: Costa Rica
+    flagUnlockWord: 
+  - flagImage: {fileID: 0}
+    flagName: Ivory Coast
+    flagUnlockWord: Ivorian
+  - flagImage: {fileID: 21300000, guid: 4ba163fd0d0538f4da5ec719968aa5cf, type: 3}
+    flagName: Croatia
+    flagUnlockWord: Croatia
+  - flagImage: {fileID: 21300000, guid: 82c7237b3d3fdb843a55f57eeed45319, type: 3}
+    flagName: Cuba
+    flagUnlockWord: Cuba
+  - flagImage: {fileID: 21300000, guid: eab7c741e04c7d046bb853e8ab2545de, type: 3}
+    flagName: Cyprus
+    flagUnlockWord: Cyprus
+  - flagImage: {fileID: 21300000, guid: 22d9b6476c0a2394ab18db8e502f5af9, type: 3}
+    flagName: Czechia
+    flagUnlockWord: Czechia
+  - flagImage: {fileID: 21300000, guid: db71957f7f7099949a1ccbb44aacbdef, type: 3}
+    flagName: Denmark
+    flagUnlockWord: Denmark
+  - flagImage: {fileID: 21300000, guid: 5389469dbc8f38c44b19ab62eb43a664, type: 3}
+    flagName: Djibouti
+    flagUnlockWord: Djibouti
+  - flagImage: {fileID: 21300000, guid: dec5bc2e278613b4aa0b3114386507c2, type: 3}
+    flagName: Dominica
+    flagUnlockWord: Dominica
+  - flagImage: {fileID: 21300000, guid: eae92aaf0cac45e40900610dd97fd910, type: 3}
+    flagName: Dominican Republic
+    flagUnlockWord: 
+  - flagImage: {fileID: 0}
+    flagName: Democratic Republic of the Congo
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: aa88f268a4a767e459f6db2bbc2e102f, type: 3}
+    flagName: Ecuador
+    flagUnlockWord: Ecuador
+  - flagImage: {fileID: 21300000, guid: 7719a18530de5914db8e33dc0901a811, type: 3}
+    flagName: Egypt
+    flagUnlockWord: Egypt
+  - flagImage: {fileID: 21300000, guid: 6e371e6cca556c349b1f029f01a07880, type: 3}
+    flagName: El Salvador
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 12ec3684aa939c54b92ee87a7e390845, type: 3}
+    flagName: Equatorial Guinea
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: d168fda2094e07542ae6c530fb3281d6, type: 3}
+    flagName: Eritrea
+    flagUnlockWord: Eritrea
+  - flagImage: {fileID: 21300000, guid: 0c6eefb88b5a0e7428afe71777551956, type: 3}
+    flagName: Estonia
+    flagUnlockWord: Estonia
+  - flagImage: {fileID: 21300000, guid: cab1c47b3e8d3114baec6701b31c86b1, type: 3}
+    flagName: Eswatini
+    flagUnlockWord: Eswatini
+  - flagImage: {fileID: 21300000, guid: 3f1a20a8506efb24c8fa1cd7f0e3c709, type: 3}
+    flagName: Ethiopia
+    flagUnlockWord: Ethiopia
+  - flagImage: {fileID: 21300000, guid: c85984c28b0d14d459b215e3c1ee3b2e, type: 3}
+    flagName: Fiji
+    flagUnlockWord: Fiji
+  - flagImage: {fileID: 21300000, guid: bfeef36e1f9027e478570ffa144885fd, type: 3}
+    flagName: Finland
+    flagUnlockWord: Finland
+  - flagImage: {fileID: 21300000, guid: f4acf0df3fbc995478463fbf67d66db2, type: 3}
+    flagName: France
+    flagUnlockWord: France
+  - flagImage: {fileID: 21300000, guid: 56359ff9504b87f4db664a6fde79a253, type: 3}
+    flagName: Gabon
+    flagUnlockWord: Gabon
+  - flagImage: {fileID: 21300000, guid: 418b308e8bfbd124380c1495f1f0aee4, type: 3}
+    flagName: Gambia
+    flagUnlockWord: Gambia
+  - flagImage: {fileID: 21300000, guid: a9c48ff9783391d43a019d8b81dbd605, type: 3}
+    flagName: Georgia
+    flagUnlockWord: Georgia
+  - flagImage: {fileID: 21300000, guid: c1118bebe9f99744182666b63ebd7ff9, type: 3}
+    flagName: Germany
+    flagUnlockWord: Germany
+  - flagImage: {fileID: 21300000, guid: 352db4ffa65ec344d9dded3cccd586d1, type: 3}
+    flagName: Ghana
+    flagUnlockWord: Ghana
+  - flagImage: {fileID: 21300000, guid: 1417946f21a68274e9b52f02a51ed970, type: 3}
+    flagName: Greece
+    flagUnlockWord: Greece
+  - flagImage: {fileID: 21300000, guid: 8a077af20ff40ca4ba7b5d0232b26604, type: 3}
+    flagName: Grenada
+    flagUnlockWord: Grenada
+  - flagImage: {fileID: 21300000, guid: c8e35c5fb4d3a3d4b905d04acfb0ee1d, type: 3}
+    flagName: Guatemala
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 5c383621d19b1fe47b20ed661ead2790, type: 3}
+    flagName: Guinea
+    flagUnlockWord: Guinea
+  - flagImage: {fileID: 0}
+    flagName: Republic of Guinea-Bissau
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 8cadcbbbe141d964c941c6220a8adcb1, type: 3}
+    flagName: Guyana
+    flagUnlockWord: Guyana
+  - flagImage: {fileID: 21300000, guid: 1c4d0124d79cd1d4c952d1d54118e4ff, type: 3}
+    flagName: Haiti
+    flagUnlockWord: Haiti
+  - flagImage: {fileID: 21300000, guid: d6ed8e3d6706c634ca649e49753c3733, type: 3}
+    flagName: Honduras
+    flagUnlockWord: Honduras
+  - flagImage: {fileID: 21300000, guid: bd1843520819534428450162c6c340af, type: 3}
+    flagName: Hungary
+    flagUnlockWord: Hungary
+  - flagImage: {fileID: 21300000, guid: f753cb5b93d47a642996b7c0b22f20bd, type: 3}
+    flagName: Iceland
+    flagUnlockWord: Iceland
+  - flagImage: {fileID: 21300000, guid: 00d83881e1373244d9751100918c2b63, type: 3}
+    flagName: India
+    flagUnlockWord: India
+  - flagImage: {fileID: 21300000, guid: a2a509f7125cf9b4e9c91578858b82de, type: 3}
+    flagName: Indonesia
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: f12af1f01a4b1854a90baf6447c8533f, type: 3}
+    flagName: Iran
+    flagUnlockWord: Iran
+  - flagImage: {fileID: 21300000, guid: e7339283faf342a4ca4704b6f58d94c7, type: 3}
+    flagName: Iraq
+    flagUnlockWord: Iraq
+  - flagImage: {fileID: 21300000, guid: 7eff6d758e922f54586e10678dfe6f65, type: 3}
+    flagName: Ireland
+    flagUnlockWord: Ireland
+  - flagImage: {fileID: 21300000, guid: b068fd62bc0eff44ba06be55a7d69718, type: 3}
+    flagName: Israel
+    flagUnlockWord: Israel
+  - flagImage: {fileID: 21300000, guid: 2a9bda286ca623244bc5411fc5f7db16, type: 3}
+    flagName: Italy
+    flagUnlockWord: Italy
+  - flagImage: {fileID: 21300000, guid: 5b6005a46dd947849acf3f5f5dbf6432, type: 3}
+    flagName: Jamaica
+    flagUnlockWord: Jamaica
+  - flagImage: {fileID: 21300000, guid: 7f420f407eecafc4980339121733ba59, type: 3}
+    flagName: Japan
+    flagUnlockWord: Japan
+  - flagImage: {fileID: 21300000, guid: b99e55d41f73ad442b02f662091659f8, type: 3}
+    flagName: Jordan
+    flagUnlockWord: Jordan
+  - flagImage: {fileID: 21300000, guid: 88c09bdb183e0d449abf600501b763e9, type: 3}
+    flagName: Kazakhstan
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 8f5bc665245ee9f4b8cef709a250bd9a, type: 3}
+    flagName: Kenya
+    flagUnlockWord: Kenya
+  - flagImage: {fileID: 21300000, guid: ff8627f9166e0ed4e883cdafceebe1e2, type: 3}
+    flagName: Kiribati
+    flagUnlockWord: Kiribati
+  - flagImage: {fileID: 21300000, guid: d6bb5cfb6f544774e8234ff279449892, type: 3}
+    flagName: Kuwait
+    flagUnlockWord: Kuwait
+  - flagImage: {fileID: 21300000, guid: 9ac7fc8cf8f433545950bdb0eb7725e6, type: 3}
+    flagName: Kyrgyzstan
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 1e78d9ad201ab414ea8da846f89f0aa1, type: 3}
+    flagName: Laos
+    flagUnlockWord: Laos
+  - flagImage: {fileID: 21300000, guid: ee732d87973d38e49b141d1a6a6df1d7, type: 3}
+    flagName: Latvia
+    flagUnlockWord: Latvia
+  - flagImage: {fileID: 21300000, guid: 99403dc84b647e64ba33dad1b9cfdcb2, type: 3}
+    flagName: Lebanon
+    flagUnlockWord: Lebanon
+  - flagImage: {fileID: 21300000, guid: 2cb0d34bb61c99349b83dc3a9a4bc425, type: 3}
+    flagName: Lesotho
+    flagUnlockWord: Lesotho
+  - flagImage: {fileID: 21300000, guid: 9b9f7bde57f95d6458696d4eef29ecdf, type: 3}
+    flagName: Liberia
+    flagUnlockWord: Liberia
+  - flagImage: {fileID: 21300000, guid: 193f852e4532d9041ae3cc3761b849fd, type: 3}
+    flagName: Libya
+    flagUnlockWord: Libya
+  - flagImage: {fileID: 21300000, guid: 1bf2e5cd818416b44bcffca6180e6bda, type: 3}
+    flagName: Liechtenstein
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 86d0322c67723eb4c9b5adad685c4de7, type: 3}
+    flagName: Lithuania
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 5e001865e02908e4fadf57b9dea14f87, type: 3}
+    flagName: Luxembourg
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: fbda740c89007324ca5bf94897a7d844, type: 3}
+    flagName: Madagascar
+    flagUnlockWord: Malagasy
+  - flagImage: {fileID: 21300000, guid: d29ec8b5ebf412946a30fd2bb3ed3b90, type: 3}
+    flagName: Malawi
+    flagUnlockWord: Malawi
+  - flagImage: {fileID: 21300000, guid: 2467fadcd62ed6f418c758a7f9563f1d, type: 3}
+    flagName: Malaysia
+    flagUnlockWord: Malaysia
+  - flagImage: {fileID: 21300000, guid: 9a112f8eae7a4274b81047cae0889f62, type: 3}
+    flagName: Maldives
+    flagUnlockWord: Maldives
+  - flagImage: {fileID: 21300000, guid: 4f772138450a4f44aa895f522569f079, type: 3}
+    flagName: Mali
+    flagUnlockWord: Mali
+  - flagImage: {fileID: 21300000, guid: 7f34beca6f498d54b8a8de4f7c4cf615, type: 3}
+    flagName: Malta
+    flagUnlockWord: Malta
+  - flagImage: {fileID: 21300000, guid: 7b07062d774a7b544a4396549e490d24, type: 3}
+    flagName: Marshall Islands
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 6e07f9eee0a438541a1f05d6d9d811c8, type: 3}
+    flagName: Mauritania
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 2696ac5c163e894498b19579a7d6b35a, type: 3}
+    flagName: Mauritius
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 7d56fdd476aa8ab42939b81bb6b6632a, type: 3}
+    flagName: Mexico
+    flagUnlockWord: Mexico
+  - flagImage: {fileID: 0}
+    flagName: Federated States of Micronesia
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 0573dbd10cc1b8040876a4246bbb3826, type: 3}
+    flagName: Moldova
+    flagUnlockWord: Moldova
+  - flagImage: {fileID: 21300000, guid: f58a32e33f236d043ac9a6e0b5389a01, type: 3}
+    flagName: Monaco
+    flagUnlockWord: Monaco
+  - flagImage: {fileID: 21300000, guid: d9ea58d90c3310f4999d245e080de0bb, type: 3}
+    flagName: Mongolia
+    flagUnlockWord: Mongolia
+  - flagImage: {fileID: 21300000, guid: 6f9f59826028c2b4b8c1669831832ff2, type: 3}
+    flagName: Montenegro
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 4d6728b0845b08d429326a32cc1a52c0, type: 3}
+    flagName: Morocco
+    flagUnlockWord: Morocco
+  - flagImage: {fileID: 21300000, guid: dfe4363d3b45df24a97de0e27ac9b6bc, type: 3}
+    flagName: Mozambique
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 10b6dcc248e83894193d692cdeeff65b, type: 3}
+    flagName: Myanmar
+    flagUnlockWord: Myanmar
+  - flagImage: {fileID: 21300000, guid: 75297102dce6b4842a0184c17cb553b0, type: 3}
+    flagName: Namibia
+    flagUnlockWord: Namibia
+  - flagImage: {fileID: 21300000, guid: ddaf03306fbb01945b40fd28ba2c69ae, type: 3}
+    flagName: Nauru
+    flagUnlockWord: Nauru
+  - flagImage: {fileID: 21300000, guid: c7be9c6a273d61b48bdf9c10413e9209, type: 3}
+    flagName: Nepal
+    flagUnlockWord: Nepal
+  - flagImage: {fileID: 21300000, guid: e4ee130c676ce97479afd752b58cab8c, type: 3}
+    flagName: Netherlands
+    flagUnlockWord: Dutch
+  - flagImage: {fileID: 21300000, guid: 8baed19973139f642b8a9f0424c9de92, type: 3}
+    flagName: New Zealand
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: e45f9b09327041f41ae8c9514c36fa6f, type: 3}
+    flagName: Nicaragua
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 7b92a3311beb27b419262e06328a2272, type: 3}
+    flagName: Niger
+    flagUnlockWord: Niger
+  - flagImage: {fileID: 21300000, guid: f6d7b39e467934841868801b35084651, type: 3}
+    flagName: Nigeria
+    flagUnlockWord: Nigeria
+  - flagImage: {fileID: 21300000, guid: 182d8a19a64d3cd419530e06d06cc03e, type: 3}
+    flagName: North Korea
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 465750ff81070324ea4aca46cb28b0b6, type: 3}
+    flagName: North Macedonia
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: c0a1c0d427b9a3a4abd81a3288ab9311, type: 3}
+    flagName: Norway
+    flagUnlockWord: Norway
+  - flagImage: {fileID: 21300000, guid: d039341dc3b767f45a49356a7d8ab742, type: 3}
+    flagName: Oman
+    flagUnlockWord: Oman
+  - flagImage: {fileID: 21300000, guid: cff2e615fe5be1c489a8c190151d8320, type: 3}
+    flagName: Pakistan
+    flagUnlockWord: Pakistan
+  - flagImage: {fileID: 0}
+    flagName: Republic of Palau
+    flagUnlockWord: Palauan
+  - flagImage: {fileID: 21300000, guid: e6fcc96fb6f187042a90794d9d24168a, type: 3}
+    flagName: Panama
+    flagUnlockWord: Panama
+  - flagImage: {fileID: 21300000, guid: 3d4cb77a659f41942b1cb99901d0cf7e, type: 3}
+    flagName: Papua New Guinea
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 2fa2fc438d502344397d161b2e97be0a, type: 3}
+    flagName: Paraguay
+    flagUnlockWord: Paraguay
+  - flagImage: {fileID: 21300000, guid: e60128b41c5256142941b4d4b8b0c8bc, type: 3}
+    flagName: Peru
+    flagUnlockWord: Peru
+  - flagImage: {fileID: 21300000, guid: 938219c3e95a4d841b6eca5a605c8a57, type: 3}
+    flagName: Philippines
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: d4dce9718da9c13489dd2c82f3a921ab, type: 3}
+    flagName: Poland
+    flagUnlockWord: Poland
+  - flagImage: {fileID: 21300000, guid: ffe90e7417c482a498026272344fd8f6, type: 3}
+    flagName: Portugal
+    flagUnlockWord: Portugal
+  - flagImage: {fileID: 21300000, guid: b754adc398689eb4da9eb8539bc92746, type: 3}
+    flagName: Qatar
+    flagUnlockWord: Qatar
+  - flagImage: {fileID: 21300000, guid: aeec9b1bc84803343969d52470dfcf50, type: 3}
+    flagName: Romania
+    flagUnlockWord: Romania
+  - flagImage: {fileID: 21300000, guid: fcd7977da8aec224a9ee00477b5a7700, type: 3}
+    flagName: Russia
+    flagUnlockWord: Russia
+  - flagImage: {fileID: 21300000, guid: 2079a8960cf25014c8c0187fef557ff0, type: 3}
+    flagName: Rwanda
+    flagUnlockWord: Rwanda
+  - flagImage: {fileID: 0}
+    flagName: Saint Kitts & Nevis
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 73c6cab05f8bbe44887838586a863928, type: 3}
+    flagName: Saint Lucia
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: a0bf5ec86978a3e46a9a79b68ebd8a36, type: 3}
+    flagName: Saint Vincent and the Grenadines
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 25859a4bedc2dcd4d8261ad0b408cf10, type: 3}
+    flagName: Samoa
+    flagUnlockWord: Samoa
+  - flagImage: {fileID: 21300000, guid: 9716b14c651701f4796e3b57b4cb6294, type: 3}
+    flagName: San Marino
+    flagUnlockWord: 
+  - flagImage: {fileID: 0}
+    flagName: Sao Tome & Principe
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: ca798315b6761a34d801caef7dd2639a, type: 3}
+    flagName: Saudi Arabia
+    flagUnlockWord: Saudi
+  - flagImage: {fileID: 21300000, guid: 854aa795c49fc564aa23ac624a69b269, type: 3}
+    flagName: Senegal
+    flagUnlockWord: Senegal
+  - flagImage: {fileID: 21300000, guid: 634d7f9e66a6d924d897b95a2f0d7ae2, type: 3}
+    flagName: Serbia
+    flagUnlockWord: Serbia
+  - flagImage: {fileID: 21300000, guid: cae65cac72719fd4da14fe4ca402f2f4, type: 3}
+    flagName: Seychelles
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 30e71e7cfc10a5348b300101eac4b214, type: 3}
+    flagName: Sierra Leone
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 5a32a216aaf3aa741bd92031b9b7c846, type: 3}
+    flagName: Singapore
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 989ecdffe30c59f418730849fa581501, type: 3}
+    flagName: Slovakia
+    flagUnlockWord: Slovakia
+  - flagImage: {fileID: 21300000, guid: c0d3216a9c1399b4ead5d037c6dff596, type: 3}
+    flagName: Slovenia
+    flagUnlockWord: Slovenia
+  - flagImage: {fileID: 21300000, guid: 27c0f222c2cc47c488a09cfbf38cee71, type: 3}
+    flagName: Solomon Islands
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: b952bc9f39e764941939eee38269275c, type: 3}
+    flagName: Somalia
+    flagUnlockWord: Somalia
+  - flagImage: {fileID: 21300000, guid: b4967e57097de4840ad17660a935cb33, type: 3}
+    flagName: South Africa
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: f854da9c651392f449e5b2b4eda847bd, type: 3}
+    flagName: South Korea
+    flagUnlockWord: Korean
+  - flagImage: {fileID: 21300000, guid: 3a37d75316ece93498b423d63d76511f, type: 3}
+    flagName: South Sudan
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 1eeb50946a51e3d4ea886bf894b4a48f, type: 3}
+    flagName: Spain
+    flagUnlockWord: Spain
+  - flagImage: {fileID: 21300000, guid: 6ec67382b148f124f82d810e2d524a8f, type: 3}
+    flagName: Sri Lanka
+    flagUnlockWord: 
+  - flagImage: {fileID: 0}
+    flagName: State of Palestine
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 3fb11c535b4d21044bea119dec4f4703, type: 3}
+    flagName: Sudan
+    flagUnlockWord: Sudan
+  - flagImage: {fileID: 21300000, guid: 06c8486780026c544a6808d807c226b4, type: 3}
+    flagName: Suriname
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 834ded9a2db2fd24a99df0f0513405f0, type: 3}
+    flagName: Sweden
+    flagUnlockWord: Sweden
+  - flagImage: {fileID: 21300000, guid: a8ad44a6ac72e2546900f1a28b10970f, type: 3}
+    flagName: Switzerland
+    flagUnlockWord: Swiss
+  - flagImage: {fileID: 21300000, guid: b70a2122d7149bf4dbfa6dd13b27cfd5, type: 3}
+    flagName: Syria
+    flagUnlockWord: Syria
+  - flagImage: {fileID: 21300000, guid: 67e5987fc193b31409c18cdefc06f556, type: 3}
+    flagName: Tajikistan
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: ea479ace1a5a1284891a3a3870cb1054, type: 3}
+    flagName: Tanzania
+    flagUnlockWord: Tanzania
+  - flagImage: {fileID: 21300000, guid: 83e6aff3d6fbe924c87fa53bca30ccb5, type: 3}
+    flagName: Thailand
+    flagUnlockWord: Thai
+  - flagImage: {fileID: 21300000, guid: 74984c5d982717441ae9e1d226502437, type: 3}
+    flagName: Timor-Leste
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: ac94d85bedc6c8b44b99af3c9549f235, type: 3}
+    flagName: Togo
+    flagUnlockWord: Togo
+  - flagImage: {fileID: 21300000, guid: 791e641252807cb42a578e631169d77d, type: 3}
+    flagName: Tonga
+    flagUnlockWord: Tonga
+  - flagImage: {fileID: 21300000, guid: da4fa3565f4726847a415b2957f6806e, type: 3}
+    flagName: Trinidad and Tobago
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 523f1c97a70ad3649b98d24d31cc30ee, type: 3}
+    flagName: Tunisia
+    flagUnlockWord: Tunisia
+  - flagImage: {fileID: 21300000, guid: 77f6e74576567f94dabfa700d4838a7c, type: 3}
+    flagName: Turkey
+    flagUnlockWord: Turkey
+  - flagImage: {fileID: 21300000, guid: 5c85edddd94d3534d8fdaf07040fda22, type: 3}
+    flagName: Turkmenistan
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 6d6b72abbf0f7524eb32d80a2474951a, type: 3}
+    flagName: Tuvalu
+    flagUnlockWord: Tuvalu
+  - flagImage: {fileID: 21300000, guid: b520b80638f7e0842812dd025b469835, type: 3}
+    flagName: Uganda
+    flagUnlockWord: Uganda
+  - flagImage: {fileID: 21300000, guid: 15a8552740084b4418dfba6f7623f086, type: 3}
+    flagName: Ukraine
+    flagUnlockWord: Ukraine
+  - flagImage: {fileID: 21300000, guid: 27650f3c4c59bf94b84f3fb2b537bf31, type: 3}
+    flagName: United Arab Emirates
+    flagUnlockWord: Emirati
+  - flagImage: {fileID: 21300000, guid: c92b3abf0083a084492f5c253cbcc974, type: 3}
+    flagName: United Kingdom
+    flagUnlockWord: British
+  - flagImage: {fileID: 21300000, guid: e15a4d6a4910b554c8f45aad5c3a7475, type: 3}
+    flagName: United States
+    flagUnlockWord: American
+  - flagImage: {fileID: 21300000, guid: bce00d935fc47184da4f759114a6a1f9, type: 3}
+    flagName: Uruguay
+    flagUnlockWord: Uruguay
+  - flagImage: {fileID: 21300000, guid: 4e9384f47945fe64bb0ebaa3bce03eab, type: 3}
+    flagName: Uzbekistan
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: ba1252577f5494e43b3310e81bfab23a, type: 3}
+    flagName: Vanuatu
+    flagUnlockWord: Vanuatu
+  - flagImage: {fileID: 0}
+    flagName: Vatican City State (Holy See)
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: 27f6ec674ac34534faebf13ae986544f, type: 3}
+    flagName: Venezuela
+    flagUnlockWord: 
+  - flagImage: {fileID: 21300000, guid: b16f12a6b607faa4c93980ed2642e612, type: 3}
+    flagName: Vietnam
+    flagUnlockWord: Vietnam
+  - flagImage: {fileID: 21300000, guid: eb345f4701164fa4b81a5994f173ae1c, type: 3}
+    flagName: Wales
+    flagUnlockWord: Wales
+  - flagImage: {fileID: 21300000, guid: e29670da713eea4498c117c7ca64e223, type: 3}
+    flagName: Yemen
+    flagUnlockWord: Yemen
+  - flagImage: {fileID: 21300000, guid: 411e8e5a4164035419ad2057a2d8c247, type: 3}
+    flagName: Zambia
+    flagUnlockWord: Zambia
+  - flagImage: {fileID: 21300000, guid: 432992896f61b4942b23f6c55bd899f3, type: 3}
+    flagName: Zimbabwe
+    flagUnlockWord: 
+  allWordsList: []
+  gameData: {fileID: 11400000, guid: f6ef998fa1cd4b84e9273b5d8d3d087d, type: 2}
+  isGetCountryRequestDone: 0
+--- !u!4 &1140420075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140420073}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1149979342
 GameObject:
   m_ObjectHideFlags: 0
@@ -4807,7 +5486,7 @@ RectTransform:
   m_Children:
   - {fileID: 1466854017}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6537,7 +7216,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2123331832
 GameObject:
@@ -6772,7 +7451,6 @@ MonoBehaviour:
     unlockedLevel: 
     levelProgress: []
     answerProgress: []
-    flags: []
   bestScore: 0
   bonusNewLevel: 0
   newWordOpenInLevel: []
@@ -6794,7 +7472,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2135939157
 GameObject:

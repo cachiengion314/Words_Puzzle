@@ -1,9 +1,16 @@
 ﻿using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
 public class UnLockTheFlagDialog : Dialog
 {
     public static int indexOfFlagWhenClick;
+
     public TextMeshProUGUI priceTxt;
-    public TextMeshProUGUI useHoneyToUnlockTxt; 
+    public TextMeshProUGUI useHoneyToUnlockTxt;
+    [Space]
+    public TextMeshProUGUI unlockByPlayingTxt;
+    public Button unlockByPlayingBtt;
     private new void Start()
     {
         base.Start();
@@ -11,13 +18,32 @@ public class UnLockTheFlagDialog : Dialog
         priceTxt.text = FlagTabController.instance.priceToUnlockFlag.ToString();
         useHoneyToUnlockTxt.text = "Use " + FlagTabController.instance.priceToUnlockFlag.ToString() + " honey points to unlock the flag";
     }
+    public void OnClickPlayTheGame()
+    {
+        if (DictionaryDialog.instance.HomeControllerGetter != null)
+            DictionaryDialog.instance.HomeControllerGetter.OnClick(0);
+        OnClickCloseUnLockTheFlagDialog();
+        DictionaryDialog.instance.Close();
+    }
     public void OnClickUnlockWithHoneyPoint()
     {
+        // Success buying flag
         if (FacebookController.instance.HoneyPoints >= FlagTabController.instance.priceToUnlockFlag)
         {
-            DictionaryDialog.instance.flagList[indexOfFlagWhenClick].UnlockSuccess();
+            FlagItemController flagItemWhenClick = DictionaryDialog.instance.flagList[indexOfFlagWhenClick];
+            flagItemWhenClick.UnlockSuccess();
+            if (flagItemWhenClick.flagUnlockWord != string.Empty)
+            {
+                FlagTabController.instance.AddToUnlockedWordDictionary(flagItemWhenClick.flagUnlockWord);
+            }
+            else
+            {
+                FlagTabController.instance.AddToUnlockedWordDictionary(flagItemWhenClick.flagName);
+            }
+            FlagTabController.instance.SaveUnlockedWordData();
             OnClickCloseUnLockTheFlagDialog();
         }
+        // Buying flag failed
         else
         {
             DictionaryDialog.instance.flagList[indexOfFlagWhenClick].UnlockFailed();
@@ -26,5 +52,19 @@ public class UnLockTheFlagDialog : Dialog
     public void OnClickCloseUnLockTheFlagDialog()
     {
         TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f);
+    }
+    public void CheckUnlockByPlayingOnOff()
+    {
+        if (DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagUnlockWord == null
+            || DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagUnlockWord == string.Empty)
+        {
+            unlockByPlayingBtt.gameObject.SetActive(false);
+            unlockByPlayingTxt.gameObject.SetActive(false);
+        }
+        else
+        {
+            unlockByPlayingBtt.gameObject.SetActive(true);
+            unlockByPlayingTxt.gameObject.SetActive(true);
+        }
     }
 }
