@@ -30,6 +30,7 @@ public class TutorialController : MonoBehaviour
     public string contentChickenBank;
     public string contentFreeBoosters;
     public string contentCellAds;
+    public string contentHoneyHeader;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
@@ -45,6 +46,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popChickenBank;
     [SerializeField] private GameObject _popFreeBoosters;
     [SerializeField] private GameObject _popCellAds;
+    [SerializeField] private GameObject _popHoneyHeader;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
@@ -60,9 +62,11 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialChickenBank;
     [SerializeField] private TextMeshProUGUI _textTutorialFreeBoosters;
     [SerializeField] private TextMeshProUGUI _textTutorialCellAds;
+    [SerializeField] private TextMeshProUGUI _textTutorialHoneyHeader;
     [Space]
     [SerializeField] private GameObject _handCellAdsTut;
     [SerializeField] private Image _handConnectTut;
+    [SerializeField] private Image _handChickenTut;
 
     public GameObject _handPanelPopHint;
     public GameObject _handPanelPopShuffle;
@@ -463,6 +467,7 @@ public class TutorialController : MonoBehaviour
             canvas.overrideSorting = true;
             canvas.sortingLayerName = "UI2";
             canvas.sortingOrder = 5;
+            _handChickenTut.transform.position = WinDialog.instance._chickenBank.transform.position;
         }
         isShowTut = true;
         isBlockSwipe = true;
@@ -508,6 +513,22 @@ public class TutorialController : MonoBehaviour
 
     }
 
+    public void ShowPopHoneyHeaderTut()
+    {
+        CPlayerPrefs.SetBool("HONEY_TUTORIAL", true);
+        if (WordRegion.instance != null)
+        {
+            var canvas = WordRegion.instance.bgHoney.GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI1";
+        }
+        isShowTut = true;
+        _overlay.SetActive(true);
+        _popHoneyHeader.SetActive(true);
+        _textTutorialHoneyHeader.text = contentHoneyHeader;
+
+    }
+
     public void HidenPopTut()
     {
         if (isTutBeehive && MainController.instance != null)
@@ -532,6 +553,7 @@ public class TutorialController : MonoBehaviour
             WordRegion.instance.btnHintTarget.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnSetting.GetComponent<Canvas>().overrideSorting = false;
             WordRegion.instance.btnHelp.GetComponent<Canvas>().overrideSorting = false;
+            WordRegion.instance.bgHoney.GetComponent<Canvas>().overrideSorting = false;
             if (LineTarget != null)
             {
                 LineTarget.GetComponent<Canvas>().overrideSorting = false;
@@ -568,6 +590,7 @@ public class TutorialController : MonoBehaviour
         if (_popChickenBank != null) _popChickenBank.SetActive(false);
         if (_popFreeBoosters != null) _popFreeBoosters.SetActive(false);
         if (_popCellAds != null) _popCellAds.SetActive(false);
+        if (_popHoneyHeader != null) _popHoneyHeader.SetActive(false);
         if (_overlay != null) _overlay.SetActive(false);
         if (_textTutorial != null) _textTutorial.text = "";
 

@@ -84,7 +84,8 @@ public class AdsManager : MonoBehaviour
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowVideoAds();
                 Debug.Log("Show Ads UNITY ADS");
-                SceneAnimate.Instance.ShowOverLayPauseGame(true);
+                if (UnityAdTest.instance.IsShowing())
+                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
             }
             else
             {
@@ -138,7 +139,8 @@ public class AdsManager : MonoBehaviour
             {
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowInterstitialAds();
-                SceneAnimate.Instance.ShowOverLayPauseGame(true);
+                if (UnityAdTest.instance.IsShowing())
+                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 Debug.Log("Show Interstitial Ads UNITY ADS");
             }
             else

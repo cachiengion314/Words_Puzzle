@@ -996,6 +996,11 @@ public class WordRegion : MonoBehaviour
         else
         {
             //LogController.Debug("If word that match flag'name do something");
+
+            //if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.flags.Count > 0)
+            //{
+            //    TutorialController.instance.ShowPopHoneyHeaderTut();
+            //}
             var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
             var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(line => line.isShown) : false;
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
