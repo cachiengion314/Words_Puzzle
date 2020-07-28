@@ -795,6 +795,7 @@ public class WordRegion : MonoBehaviour
             //board.SetNativeSize();
             //boardHighlight.color = new Color(1, 1, 1, 1);
         }
+        ObjectiveManager.instance.CheckTaskComplete();
     }
 
     private void SetupCellAds()
@@ -919,7 +920,7 @@ public class WordRegion : MonoBehaviour
         else
         {
             var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
-            var isShowBonusbox = lineCheckBonus.All(line => line.isShown);
+            var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(line => line.isShown) : false;
             if (_currLevel >= TutorialController.instance.bonusBoxLevel && isShowBonusbox && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && lines.Any(line => line.isShown) && _lineIsChecking.answers.Count > 1)
             {
                 TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentWordAgain, 0, false, "", false, _lineIsChecking);
@@ -958,7 +959,7 @@ public class WordRegion : MonoBehaviour
         if (isComplete)
         {
             //LogController.Debug("If word that match flag'name do something");
-          
+
 
             TweenControl.GetInstance().DelayCall(transform, 0f, () =>
             {
@@ -1425,7 +1426,6 @@ public class WordRegion : MonoBehaviour
                             Sound.instance.PlayButton(Sound.Button.MultipleHint);
                             SaveLevelProgress();
                             CheckGameComplete();
-
                             Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                         });
                     }

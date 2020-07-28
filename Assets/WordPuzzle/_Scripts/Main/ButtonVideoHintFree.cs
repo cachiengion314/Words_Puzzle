@@ -42,7 +42,7 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void CheckTheme()
     {
-        if(MainController.instance != null)
+        if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
             _animAds.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
@@ -53,7 +53,7 @@ public class ButtonVideoHintFree : MonoBehaviour
     private void OnDisable()
     {
         //if (_rewardController != null)
-            //_rewardController.onRewardedCallback -= OnCompleteVideo;
+        //_rewardController.onRewardedCallback -= OnCompleteVideo;
         if (AdsManager.instance != null)
             AdsManager.instance.onAdsClose -= OnAdsClosed;
     }
@@ -81,14 +81,15 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnCompleteVideo()
     {
-        Debug.Log("Cell: " + Cell.gameObject.name);
-        _btnAds.interactable = true;
-        //_rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-
-        gameObject.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
+            Debug.Log("Cell: " + Cell.gameObject.name);
+            _btnAds.interactable = true;
+            //_rewardController.onRewardedCallback -= OnCompleteVideo;
+
+            gameObject.SetActive(false);
+
             var line = WordRegion.instance.Lines.Single(li => li.cells.Contains(Cell));
             var tempAnswers = line.answers;
             for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
