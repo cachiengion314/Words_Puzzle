@@ -375,7 +375,8 @@ public class LineWord : MonoBehaviour
             CheckSetDataAnswer(answer);
             CheckLineDone();
             WordRegion.instance.SaveLevelProgress();
-            WordRegion.instance.CheckGameComplete();
+            string wordDone = isShown ? answer : "wordDone";
+            WordRegion.instance.CheckGameComplete(wordDone);
             ClearAds();
         });
         if (selectedhintFree > 0)
@@ -402,7 +403,6 @@ public class LineWord : MonoBehaviour
         if (isShown)
             _btnMeanWord.transform.SetAsLastSibling();
     }
-
     private void ShowDoneAllCell()
     {
         if (WordRegion.instance.CurLevel >= 5 && !CPlayerPrefs.HasKey("SHOW_TUT_CELL_STAR"))
@@ -417,8 +417,9 @@ public class LineWord : MonoBehaviour
         }
         foreach (var cell in cells)
         {
-            cell.bg.color = new Color(1, 1, 1, 1);
+            cell.bg.color = new Color(1, 1, 1, 1);            
         }
+      
         WordRegion.instance.ShowComplimentFX();
         WordRegion.instance.ShowBtnDictionaryInGamePlay();
         ShowBtnMeanByWord();

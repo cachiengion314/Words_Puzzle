@@ -7,6 +7,7 @@ using TMPro;
 using System;
 using PlayFab;
 using System.Linq;
+using PlayFab.Internal;
 
 public class MainController : BaseController
 {
@@ -35,7 +36,13 @@ public class MainController : BaseController
 
     private string wordLevelSave;
     private string _wordPassed;
-
+    public string WordPassed
+    {
+        get
+        {
+            return _wordPassed;
+        }
+    }
     public bool IsLevelClear
     {
         get
@@ -130,9 +137,10 @@ public class MainController : BaseController
             HoneyPointsController.instance.ShowHoneyPoints();
         });
     }
-
+    public string wordDone;
     public void SaveWordComplete(string wordDone)
     {
+        this.wordDone = wordDone;
         if (!CPlayerPrefs.HasKey("WordLevelSave"))
         {
             CPlayerPrefs.SetString("WordLevelSave", wordDone);

@@ -56,7 +56,8 @@ public class FlagTabController : MonoBehaviour
     }
     public void CheckAndSaveCountrykWord(string wordIsChecking)
     {
-        if (!flagItemWordHashset.Contains(wordIsChecking)) return;
+        LogController.Debug("wordIsChecking: " + wordIsChecking);
+        if (wordIsChecking == null || wordIsChecking == string.Empty || !flagItemWordHashset.Contains(wordIsChecking)) return;
 
         LogController.Debug("Player have found the suitable country word");
         AddToUnlockedWordDictionary(wordIsChecking);

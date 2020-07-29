@@ -33,13 +33,22 @@ public class FlagMeanDialog : Dialog
 
         yield return new WaitUntil(() => FlagTabController.instance.isGetCountryRequestDone);
 
-        flagImg.sprite = flagSprite;
-
+        flagImg.sprite = flagSprite != null ? flagSprite : defaultImage;
         countryNameTxt.text = FlagTabController.instance.countryInfo[COUNTRY_NAME].ToString();
         subRegionTxt.text = FlagTabController.instance.countryInfo[SUB_REGION].ToString();
         capitalTxt.text = FlagTabController.instance.countryInfo[CAPITAL].ToString();
-        areaTxt.text = FlagTabController.instance.countryInfo[AREA].ToString() + " m2";
-        populationTxt.text = FlagTabController.instance.countryInfo[POPULATION].ToString() + " people";
+        areaTxt.text = (float.Parse(FlagTabController.instance.countryInfo[AREA].ToString())).ToString("0,000") + " km²";
+        int population = int.Parse(FlagTabController.instance.countryInfo[POPULATION].ToString());
+        string populationStr = string.Empty;
+        if (population > 1000000)
+        {
+            populationStr = (population / 1000000f).ToString("0.000") + " million people";
+        }
+        else
+        {
+            populationStr = (population).ToString("0,000") + " thousand people";
+        }
+        populationTxt.text = populationStr;
 
     }
     public void OnClickCloseFlagMeanDialog()
@@ -47,5 +56,6 @@ public class FlagMeanDialog : Dialog
         TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f, () => {
             DictionaryDialog.instance.OverLayDialog.SetActive(false);
         });
+        Sound.instance.Play(Sound.Others.PopupClose);
     }
 }

@@ -708,6 +708,7 @@ public class WordRegion : MonoBehaviour
         if (line != null)
         {
             _lineIsChecking = line;
+           
             //if (!line.isShown)
             //{
             line.SetDataLetter(checkWord);
@@ -715,7 +716,8 @@ public class WordRegion : MonoBehaviour
             line.selectID = lineIsShown.Count;
             line.ShowAnswer();
             SaveLevelProgress();
-            CheckGameComplete();
+            string wordDone = _lineIsChecking != null ? _lineIsChecking.answer : "wordDone";
+            CheckGameComplete(wordDone);
             SetWordOpenInLevelAmount(checkWord);
 
             if (lineIndex > 0)
@@ -961,16 +963,15 @@ public class WordRegion : MonoBehaviour
         }
     }
 
-    public void CheckGameComplete()
+    public void CheckGameComplete(string wordDone = "wordDone")
     {
         var isComplete = lines.All(x => x.isShown);
 
         var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
         if (isComplete)
         {
-            //LogController.Debug("If word that match flag'name do something");
-            FlagTabController.instance.CheckAndSaveCountrykWord(_lineIsChecking.answer);
-
+               string wordIsChecking = wordDone == "wordDone" ? MainController.instance.wordDone : wordDone;
+               FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking);
             //if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
             //{
             //    TutorialController.instance.ShowPopHoneyHeaderTut();
@@ -1010,9 +1011,9 @@ public class WordRegion : MonoBehaviour
         }
         else
         {
-            //LogController.Debug("If word that match flag'name do something");
-            FlagTabController.instance.CheckAndSaveCountrykWord(_lineIsChecking.answer);
-            
+            string wordIsChecking = wordDone == "wordDone" ? MainController.instance.wordDone : wordDone;
+            FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking);
+
             var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
             var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(line => line.isShown) : false;
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
@@ -1377,7 +1378,8 @@ public class WordRegion : MonoBehaviour
                 Sound.instance.PlayButton(Sound.Button.Hint);
                 SetupNumhintFree();
                 SaveLevelProgress();
-                CheckGameComplete();
+                string wordDone = line.isShown ? line.answer : "wordDone";
+                CheckGameComplete(wordDone);
 
                 Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                 UserItemCallEventFirebase("item_hint");
@@ -1439,7 +1441,7 @@ public class WordRegion : MonoBehaviour
                             }
                             Sound.instance.audioSource.Stop();
                             Sound.instance.PlayButton(Sound.Button.MultipleHint);
-                            SaveLevelProgress();
+                            SaveLevelProgress();                         
                             CheckGameComplete();
                             Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                         });
