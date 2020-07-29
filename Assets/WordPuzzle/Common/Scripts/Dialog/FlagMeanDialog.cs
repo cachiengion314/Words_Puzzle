@@ -2,6 +2,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using PlayFab.Internal;
+using System;
 
 public class FlagMeanDialog : Dialog
 {
@@ -34,6 +36,19 @@ public class FlagMeanDialog : Dialog
         TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f);
         Sound.instance.Play(Sound.Others.PopupOpen);
         flagImg.sprite = defaultImage;
+        for (int i = 0; i < bigFlags.Length; i++)
+        {
+            if (bigFlags[i].name.Equals(DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagName, StringComparison.OrdinalIgnoreCase))
+            {
+                LogController.Debug(bigFlags[i].name);
+                LogController.Debug(DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagName);
+                flagImg.sprite = bigFlags[i];
+
+                break;
+            }
+        }
+        flagImg.SetNativeSize();
+
         titleNameTxt.text = "Loading...";
         countryNameTxt.text = "Loading... ";
         subRegionTxt.text = "Loading... ";
@@ -45,15 +60,6 @@ public class FlagMeanDialog : Dialog
 
         if (FlagTabController.instance.countryInfo.Count > 0)
         {
-            for (int i = 0; i < bigFlags.Length; i++)
-            {
-                if (bigFlags[i].name == DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagName)
-                {
-                    flagImg.sprite = bigFlags[i];
-                }
-            }
-            flagImg.sprite = flagSprite != null ? flagSprite : defaultImage;
-            flagImg.SetNativeSize();
             titleNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
             countryNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
             subRegionTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[SUB_REGION]);

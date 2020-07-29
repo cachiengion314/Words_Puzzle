@@ -55,7 +55,7 @@ public class FlagItemController : MonoBehaviour
         {
             LogController.Debug("Open flag mean dialog");
 
-            UnLockTheFlagDialog.indexOfFlagWhenClick = indexOfFlag;
+            FlagMeanDialog.indexOfFlagWhenClick = indexOfFlag;
             CheckConnection(this, (result) =>
             {
                 if (result != 0) // no internet conection
