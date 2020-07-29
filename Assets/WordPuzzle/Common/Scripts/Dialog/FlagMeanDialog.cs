@@ -11,6 +11,10 @@ public class FlagMeanDialog : Dialog
     public TextMeshProUGUI areaTxt;
     public TextMeshProUGUI populationTxt;
     public Image flagImg;
+    [Space]
+    public GameObject flagMeanItems;
+    public GameObject noInternet;
+    [Space]
     [Header("Default image when loading is not finish yet")]
     public Sprite defaultImage;
 
@@ -33,29 +37,40 @@ public class FlagMeanDialog : Dialog
 
         yield return new WaitUntil(() => FlagTabController.instance.isGetCountryRequestDone);
 
-        flagImg.sprite = flagSprite != null ? flagSprite : defaultImage;
-        countryNameTxt.text = FlagTabController.instance.countryInfo[COUNTRY_NAME].ToString();
-        subRegionTxt.text = FlagTabController.instance.countryInfo[SUB_REGION].ToString();
-        capitalTxt.text = FlagTabController.instance.countryInfo[CAPITAL].ToString();
-        areaTxt.text = (float.Parse(FlagTabController.instance.countryInfo[AREA].ToString())).ToString("0,000") + " km²";
-        int population = int.Parse(FlagTabController.instance.countryInfo[POPULATION].ToString());
-        string populationStr = string.Empty;
-        if (population > 1000000)
+        if (FlagTabController.instance.countryInfo.Count > 0)
         {
-            populationStr = (population / 1000000f).ToString("0.000") + " million people";
-        }
-        else
-        {
-            populationStr = (population).ToString("0,000") + " thousand people";
-        }
-        populationTxt.text = populationStr;
+            flagImg.sprite = flagSprite != null ? flagSprite : defaultImage;
 
+            countryNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
+            subRegionTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[SUB_REGION]);
+            capitalTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[CAPITAL]);
+            areaTxt.text = (float.Parse(CheckNullObject(FlagTabController.instance.countryInfo[AREA]))).ToString("0,000") + " km²";
+            int population = int.Parse(CheckNullObject(FlagTabController.instance.countryInfo[POPULATION]));
+            string populationStr = string.Empty;
+            if (population > 1000000)
+            {
+                populationStr = (population / 1000000f).ToString("0.000") + " million people";
+            }
+            else
+            {
+                populationStr = (population).ToString("0,000") + " thousand people";
+            }
+            populationTxt.text = populationStr;
+        }
     }
     public void OnClickCloseFlagMeanDialog()
     {
-        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f, () => {
+        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f, () =>
+        {
             DictionaryDialog.instance.OverLayDialog.SetActive(false);
         });
         Sound.instance.Play(Sound.Others.PopupClose);
+    }
+    private string CheckNullObject(object text)
+    {
+        string info = "0";
+        if (text != null) info = text.ToString();
+
+        return info;
     }
 }

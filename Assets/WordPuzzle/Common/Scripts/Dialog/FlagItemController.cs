@@ -21,14 +21,14 @@ public class FlagItemController : MonoBehaviour
 
     private void Start()
     {
-        if(flagImage != null)
+        if (flagImage != null)
         {
             flagImg.sprite = flagImage;
         }
         else
         {
             flagImg.sprite = defaultFlagImage;
-        }      
+        }
         nameTxt.text = flagName;
         if (isLocked)
         {
@@ -54,9 +54,25 @@ public class FlagItemController : MonoBehaviour
         else
         {
             LogController.Debug("Open flag mean dialog");
-            UnLockTheFlagDialog.indexOfFlagWhenClick = indexOfFlag;
 
-            StartCoroutine(FlagTabController.instance.GetCountryInfo(flagName));           
+            UnLockTheFlagDialog.indexOfFlagWhenClick = indexOfFlag;
+            CheckConnection(this, (result) =>
+            {
+                if (result != 0) // no internet conection
+                {
+                    FlagTabController.instance.isNoInternet = true;
+                    DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(false);
+                    DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(true);
+                }
+                else
+                {
+                    FlagTabController.instance.isNoInternet = false;
+                    DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(true);
+                    DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(false);
+                }
+            });
+
+            StartCoroutine(FlagTabController.instance.GetCountryInfo(flagName));
             StartCoroutine(DictionaryDialog.instance.flagMeanDialog.OnOpenFlagMeanDialog(flagImage));
         }
     }
@@ -90,7 +106,8 @@ public class FlagItemController : MonoBehaviour
     }
     public void OnClickCloseUnLockTheFlagDialog()
     {
-        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f,()=> {
+        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f, () =>
+        {
             DictionaryDialog.instance.OverLayDialog.SetActive(false);
         });
     }

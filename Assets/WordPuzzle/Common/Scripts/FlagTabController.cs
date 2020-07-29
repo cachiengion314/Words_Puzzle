@@ -85,6 +85,7 @@ public class FlagTabController : MonoBehaviour
         allWordsList.AddRange(tempAllWordsList);
     }
     [HideInInspector] public bool isGetCountryRequestDone;
+    [HideInInspector] public bool isNoInternet;
     public IEnumerator GetCountryInfo(string countryName)
     {
         isGetCountryRequestDone = false;
@@ -94,12 +95,16 @@ public class FlagTabController : MonoBehaviour
             while (!request.isDone)
                 yield return null;
             isGetCountryRequestDone = true;
-            byte[] result = request.downloadHandler.data;
-            string countryJSON = System.Text.Encoding.Default.GetString(result);
-            countryJSON = countryJSON.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
-            JObject jsonObject = JObject.Parse(countryJSON);
-            countryInfo.Clear();
-            countryInfo = jsonObject.ToObject<Dictionary<string, object>>();
+
+            if (!isNoInternet)
+            {
+                byte[] result = request.downloadHandler.data;
+                string countryJSON = System.Text.Encoding.Default.GetString(result);
+                countryJSON = countryJSON.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
+                JObject jsonObject = JObject.Parse(countryJSON);
+                countryInfo.Clear();
+                countryInfo = jsonObject.ToObject<Dictionary<string, object>>();
+            }           
         }
     }
     public void AddToUnlockedWordDictionary(string wordIsChecking)
