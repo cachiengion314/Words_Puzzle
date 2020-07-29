@@ -64,6 +64,7 @@ public class DictionaryDialog : Dialog
     public MeanDialog meanDialog;
 
     public GameObject shadowPanel;
+    public GameObject OverLayDialog;
     //static readonly string SAVE_FOLDER = Application.dataPath + "/saves/";
     //Dictionary dict;
 
@@ -225,6 +226,7 @@ public class DictionaryDialog : Dialog
     public void ShowMeanDialog()
     {
         shadowPanel.SetActive(true);
+        OverLayDialog.SetActive(true);
         TweenControl.GetInstance().ScaleFromZero(meanDialog.gameObject, 0.3f);
     }
 
@@ -233,6 +235,7 @@ public class DictionaryDialog : Dialog
         TweenControl.GetInstance().ScaleFromOne(meanDialog.gameObject, 0.3f, () =>
         {
             shadowPanel.SetActive(false);
+            OverLayDialog.SetActive(false);
         });
     }
 

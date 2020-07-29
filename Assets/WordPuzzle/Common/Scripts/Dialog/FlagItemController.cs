@@ -47,7 +47,7 @@ public class FlagItemController : MonoBehaviour
 
             UnLockTheFlagDialog.indexOfFlagWhenClick = indexOfFlag;
             DictionaryDialog.instance.unlockTheFlagDialog.CheckUnlockByPlayingOnOff();
-
+            DictionaryDialog.instance.OverLayDialog.SetActive(true);
             TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f);
             Sound.instance.Play(Sound.Others.PopupOpen);
         }
@@ -90,6 +90,7 @@ public class FlagItemController : MonoBehaviour
     }
     public void OnClickCloseUnLockTheFlagDialog()
     {
+        DictionaryDialog.instance.OverLayDialog.SetActive(false);
         TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f);
     }
 }

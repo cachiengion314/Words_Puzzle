@@ -21,6 +21,7 @@ public class FlagMeanDialog : Dialog
     private readonly string POPULATION = "population";
     public IEnumerator OnOpenFlagMeanDialog(Sprite flagSprite)
     {
+        DictionaryDialog.instance.OverLayDialog.SetActive(true);
         TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f);
         Sound.instance.Play(Sound.Others.PopupOpen);
         flagImg.sprite = defaultImage;
@@ -43,6 +44,7 @@ public class FlagMeanDialog : Dialog
     }
     public void OnClickCloseFlagMeanDialog()
     {
+        DictionaryDialog.instance.OverLayDialog.SetActive(false);
         TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f);
     }
 }
