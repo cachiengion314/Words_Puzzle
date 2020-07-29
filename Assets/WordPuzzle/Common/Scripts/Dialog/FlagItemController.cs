@@ -90,7 +90,8 @@ public class FlagItemController : MonoBehaviour
     }
     public void OnClickCloseUnLockTheFlagDialog()
     {
-        DictionaryDialog.instance.OverLayDialog.SetActive(false);
-        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f);
+        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f,()=> {
+            DictionaryDialog.instance.OverLayDialog.SetActive(false);
+        });
     }
 }

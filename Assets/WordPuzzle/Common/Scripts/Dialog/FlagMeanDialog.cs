@@ -44,7 +44,8 @@ public class FlagMeanDialog : Dialog
     }
     public void OnClickCloseFlagMeanDialog()
     {
-        DictionaryDialog.instance.OverLayDialog.SetActive(false);
-        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f);
+        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f, () => {
+            DictionaryDialog.instance.OverLayDialog.SetActive(false);
+        });
     }
 }
