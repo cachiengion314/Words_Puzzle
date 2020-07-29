@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class FlagMeanDialog : Dialog
 {
+    public static int indexOfFlagWhenClick;
+
     public TextMeshProUGUI countryNameTxt;
     public TextMeshProUGUI subRegionTxt;
     public TextMeshProUGUI capitalTxt;
     public TextMeshProUGUI areaTxt;
     public TextMeshProUGUI populationTxt;
+    [Space]
+    public Sprite[] bigFlags;
     public Image flagImg;
+    public TextMeshProUGUI titleNameTxt;
     [Space]
     public GameObject flagMeanItems;
     public GameObject noInternet;
@@ -29,6 +34,7 @@ public class FlagMeanDialog : Dialog
         TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f);
         Sound.instance.Play(Sound.Others.PopupOpen);
         flagImg.sprite = defaultImage;
+        titleNameTxt.text = "Loading...";
         countryNameTxt.text = "Loading... ";
         subRegionTxt.text = "Loading... ";
         capitalTxt.text = "Loading... ";
@@ -39,8 +45,15 @@ public class FlagMeanDialog : Dialog
 
         if (FlagTabController.instance.countryInfo.Count > 0)
         {
+            for (int i = 0; i < bigFlags.Length; i++)
+            {
+                if (bigFlags[i].name == DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagName)
+                {
+                    flagImg.sprite = bigFlags[i];
+                }
+            }
             flagImg.sprite = flagSprite != null ? flagSprite : defaultImage;
-
+            titleNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
             countryNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
             subRegionTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[SUB_REGION]);
             capitalTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[CAPITAL]);
