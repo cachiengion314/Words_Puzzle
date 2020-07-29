@@ -51,7 +51,9 @@ public class UnLockTheFlagDialog : Dialog
     }
     public void OnClickCloseUnLockTheFlagDialog()
     {
-        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f);
+        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f, () => {
+            DictionaryDialog.instance.OverLayDialog.SetActive(false);
+        });
     }
     public void CheckUnlockByPlayingOnOff()
     {
