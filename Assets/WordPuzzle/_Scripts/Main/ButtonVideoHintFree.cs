@@ -74,9 +74,9 @@ public class ButtonVideoHintFree : MonoBehaviour
         AdsManager.instance.ShowVideoAds();
 
         Sound.instance.Play(Sound.Others.PopupOpen);
-#if UNITY_EDITOR
-        OnCompleteVideo();
-#endif
+//#if UNITY_EDITOR
+//        OnCompleteVideo();
+//#endif
     }
 
     private void OnCompleteVideo()

@@ -82,8 +82,6 @@ public class DailyGiftsDialog : Dialog
         AdsManager.instance.onAdsRewarded += OnRewarded;
 
         _notifiCheckAds.text = "";
-        if (DateTime.Compare(DateTime.Now, nextDay) < 0)
-            CPlayerPrefs.SetBool(NEXT_DAY_KEY, false);
         UpdateNextDay();
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
         _sliderProgress.maxValue = _maxProgress;
@@ -412,6 +410,8 @@ public class DailyGiftsDialog : Dialog
             CPlayerPrefs.SetLong(TIME_NEXT_DAY_KEY, timeRefresh.Ticks);
             Debug.Log("NextDay New: " + nextDay);
         }
+        if (DateTime.Compare(DateTime.Now, nextDay) > 0)
+            CPlayerPrefs.SetBool(NEXT_DAY_KEY, false);
         if (DateTime.Compare(DateTime.Now, nextDay) > 0 && !isRefresh)
         {
             CPlayerPrefs.SetBool(NEXT_DAY_KEY, true);

@@ -771,9 +771,9 @@ public class WinDialog : Dialog
             }
             AdsManager.instance.ShowVideoAds(true, CheckShowAdsButton, CheckShowAdsButton);
 
-#if UNITY_EDITOR
-            OnCompleteReward();
-#endif
+//#if UNITY_EDITOR
+//            OnCompleteReward();
+//#endif
         });
         //CUtils.ShowInterstitialAd();
     }

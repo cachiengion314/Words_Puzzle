@@ -72,6 +72,7 @@ public class ThemesDialog : Dialog
         ClearItem();
         var iddthem = CPlayerPrefs.GetInt("CURR_THEMES", 0);
         _themes[iddthem].iconSelected.gameObject.SetActive(true);
+        _themeExits = true;
         //_themes[iddthem].btnTheme.interactable = false;
     }
 
