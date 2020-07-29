@@ -71,6 +71,7 @@ public class HomeController : BaseController
             chickenBankShadow.SetActive(false);
         }
         ShowIconNoti();
+        FreeBoostersShadow.SetActive(btnFreeBoosters.gameObject.activeSelf);
     }
 
     public void OnClick(int index)
