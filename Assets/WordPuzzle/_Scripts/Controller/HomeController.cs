@@ -16,6 +16,7 @@ public class HomeController : BaseController
     public Button btnChickenBank;
     public Button btnFreeBoosters;
     public GameObject FreeBoostersShadow;
+    public GameObject chickenBankShadow;
     public GameObject notiChickenMax;
     public GameObject notiOpenFreeBoosters;
     public Animator animatorTitle;
@@ -67,7 +68,7 @@ public class HomeController : BaseController
         if (!CPlayerPrefs.HasKey("FREEBOOSTERS_TUTORIAL"))
         {
             btnFreeBoosters.gameObject.SetActive(false);
-            FreeBoostersShadow.SetActive(false);
+            chickenBankShadow.SetActive(false);
         }
         ShowIconNoti();
     }
@@ -170,10 +171,14 @@ public class HomeController : BaseController
             var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
             var currStarBank = ChickenBankController.instance.CurrStarChicken;
             if (currStarBank < valueShow)
+            {
                 btnChickenBank.gameObject.SetActive(false);
+                chickenBankShadow.SetActive(false);
+            }
             else
             {
                 btnChickenBank.gameObject.SetActive(true);
+                chickenBankShadow.SetActive(true);
                 CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
             }
         }

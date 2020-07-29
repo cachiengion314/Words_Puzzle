@@ -204,6 +204,7 @@ public class ThemesControl : MonoBehaviour
             homeControl.shadowCurrency.SetNativeSize();
 
             homeControl.FreeBoostersShadow.SetActive(currTheme.uiData.showShadowHome);
+            homeControl.chickenBankShadow.SetActive(currTheme.uiData.showShadowHome);
             homeControl.shadowCurrency.gameObject.SetActive(currTheme.uiData.showShadowHome);
 
             //homeControl.FreeBoostersShadow.GetComponent<SpineControl>().thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
