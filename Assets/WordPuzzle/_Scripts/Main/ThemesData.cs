@@ -247,6 +247,8 @@ public class ObjectivesData
     public Sprite great;
     [Space]
     public Color colorTextProgress;
+    public Color colorTextBtnPlay;
+    public Color colorTextBtnCollect;
 }
 
 [Serializable]
