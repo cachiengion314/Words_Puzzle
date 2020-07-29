@@ -23,7 +23,11 @@ public class UnLockTheFlagDialog : Dialog
         if (DictionaryDialog.instance.HomeControllerGetter != null)
             DictionaryDialog.instance.HomeControllerGetter.OnClick(0);
         OnClickCloseUnLockTheFlagDialog();
-        DictionaryDialog.instance.Close();
+        var dialogsShow = FindObjectsOfType<Dialog>();
+        foreach (var dialog in dialogsShow)
+        {
+            dialog.Close();
+        }
     }
     public void OnClickUnlockWithHoneyPoint()
     {
@@ -51,7 +55,8 @@ public class UnLockTheFlagDialog : Dialog
     }
     public void OnClickCloseUnLockTheFlagDialog()
     {
-        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f, () => {
+        TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f, () =>
+        {
             DictionaryDialog.instance.OverLayDialog.SetActive(false);
         });
     }

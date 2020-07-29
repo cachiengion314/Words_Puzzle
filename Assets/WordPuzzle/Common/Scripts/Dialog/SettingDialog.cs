@@ -254,6 +254,12 @@ public class SettingDialog : Dialog
         CUtils.RateGame();
     }
 
+    public void OnClickCommunity()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        Application.OpenURL("https://www.facebook.com/wordgames.top");
+    }
+
     public void OnClickExitGame()
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
