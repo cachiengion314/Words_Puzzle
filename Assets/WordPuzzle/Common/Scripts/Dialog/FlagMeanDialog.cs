@@ -53,6 +53,7 @@ public class FlagMeanDialog : Dialog
                 }
             }
             flagImg.sprite = flagSprite != null ? flagSprite : defaultImage;
+            flagImg.SetNativeSize();
             titleNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
             countryNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
             subRegionTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[SUB_REGION]);
