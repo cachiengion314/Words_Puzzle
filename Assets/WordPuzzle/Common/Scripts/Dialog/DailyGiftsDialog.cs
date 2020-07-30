@@ -170,7 +170,6 @@ public class DailyGiftsDialog : Dialog
 
     private void InitTimeCountDown()
     {
-        UpdateNextDay();
         UpdateTimeValue();
     }
 
@@ -190,9 +189,9 @@ public class DailyGiftsDialog : Dialog
 
         // AdmobController.instance.ShowRewardBasedVideo();
         Sound.instance.Play(Sound.Others.PopupOpen);
-#if UNITY_EDITOR
-        OnRewarded();
-#endif
+//#if UNITY_EDITOR
+//        OnRewarded();
+//#endif
     }
     void OnRewarded()
     {

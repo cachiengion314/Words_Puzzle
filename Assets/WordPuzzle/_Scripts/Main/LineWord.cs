@@ -115,12 +115,12 @@ public class LineWord : MonoBehaviour
         }
         if (answer == "" || numberAnswerRightForLine > 1)
             answer = word;
-        CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
+        //CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
 
         for (int i = 0; i < cells.Count; i++)
         {
             int index = i;
-            cells[index].letter = word[index].ToString();
+            cells[index].letter = answer[index].ToString();
         }
     }
 
