@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,25 +8,28 @@ using UnityEngine;
 //[ExecuteInEditMode]
 public class ExecuteInEdit : MonoBehaviour
 {
-    public FlagTabController FlagTabController; 
+    public FlagTabController FlagTabController;
     void Awake()
     {
-        //string path = Application.persistentDataPath + "/FlagItemDic.json";
-        //string jsonData = File.ReadAllText(path);
-        //Dictionary<string, string> flagItemDic = new Dictionary<string, string>();
-        //flagItemDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonData);
-
-        //List<FlagItem> tempList = new List<FlagItem>();
-        //foreach (var pair in flagItemDic)
+        //for (int i = 0; i < FlagTabController.smallFlags.Length; i++)
         //{
-        //    FlagItem flagItem = new FlagItem();
-        //    flagItem.flagName = pair.Key;
-        //    flagItem.flagUnlockWord = pair.Value;
-        //    tempList.Add(flagItem);
+        //    for (int ii = 0; ii < FlagTabController.flagItemList.Count; ii++)
+        //    {
+        //        if (FlagTabController.smallFlags[i].name.Equals(FlagTabController.flagItemList[ii].flagName, StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            FlagTabController.flagItemList[ii].flagSmallImageIndex = i;
+        //        }
+        //    }
         //}
-        //FlagTabController.flagItemList.Clear();
-        //FlagTabController.flagItemList.AddRange(tempList); 
-    }
-
-
+        //for (int i = 0; i < FlagTabController.bigFlags.Length; i++)
+        //{
+        //    for (int ii = 0; ii < FlagTabController.flagItemList.Count; ii++)
+        //    {
+        //        if (FlagTabController.bigFlags[i].name.Equals(FlagTabController.flagItemList[ii].flagName, StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            FlagTabController.flagItemList[ii].flagBigImageIndex = i;
+        //        }
+        //    }
+        //}
+    }   
 }

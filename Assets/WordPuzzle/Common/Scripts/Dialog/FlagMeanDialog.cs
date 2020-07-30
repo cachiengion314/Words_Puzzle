@@ -30,23 +30,14 @@ public class FlagMeanDialog : Dialog
     private readonly string CAPITAL = "capital";
     private readonly string AREA = "area";
     private readonly string POPULATION = "population";
-    public IEnumerator OnOpenFlagMeanDialog(Sprite flagSprite)
+    public IEnumerator OnOpenFlagMeanDialog()
     {
         DictionaryDialog.instance.OverLayDialog.SetActive(true);
+
         TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f);
         Sound.instance.Play(Sound.Others.PopupOpen);
-        flagImg.sprite = defaultImage;
-        for (int i = 0; i < bigFlags.Length; i++)
-        {
-            if (bigFlags[i].name.Equals(DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagName, StringComparison.OrdinalIgnoreCase))
-            {
-                LogController.Debug(bigFlags[i].name);
-                LogController.Debug(DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagName);
-                flagImg.sprite = bigFlags[i];
 
-                break;
-            }
-        }
+        flagImg.sprite = FlagTabController.instance.bigFlags[DictionaryDialog.instance.flagList[indexOfFlagWhenClick].indexOfBigFlagImage];
         flagImg.SetNativeSize();
 
         titleNameTxt.text = "Loading...";
@@ -67,11 +58,15 @@ public class FlagMeanDialog : Dialog
             areaTxt.text = (float.Parse(CheckNullObject(FlagTabController.instance.countryInfo[AREA]))).ToString("0,000") + " km²";
             int population = int.Parse(CheckNullObject(FlagTabController.instance.countryInfo[POPULATION]));
             string populationStr = string.Empty;
-            if (population > 1000000)
+            if (population > 1000000000f)
+            {
+                populationStr = (population / 1000000000f).ToString("0.000") + " billion people";
+            }
+            else if (population > 1000000f)
             {
                 populationStr = (population / 1000000f).ToString("0.000") + " million people";
             }
-            else
+            else if (population < 1000000f)
             {
                 populationStr = (population).ToString("0,000") + " thousand people";
             }
@@ -88,9 +83,24 @@ public class FlagMeanDialog : Dialog
     }
     private string CheckNullObject(object text)
     {
-        string info = "0";
-        if (text != null) info = text.ToString();
-
+        string info;
+        if (text != null)
+        {
+            info = text.ToString();
+            if (info.IndexOf(',') != -1)
+            {
+                string[] infoArr = info.Split(new char[1] { ',' });
+                info = null;
+                for (int i = 0; i < infoArr.Length; i++)
+                {
+                    info += infoArr[i];
+                }
+            }
+        }
+        else
+        {
+            info = "0";
+        }
         return info;
     }
 }

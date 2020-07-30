@@ -14,9 +14,11 @@ using UnityEngine.SceneManagement;
 [Serializable]
 public class FlagItem
 {
-    public Sprite flagImage;
+    public int flagSmallImageIndex;
+    public int flagBigImageIndex;
     public string flagName;
     public string flagUnlockWord;
+    public string flagPopulation;
 }
 public class FlagTabController : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class FlagTabController : MonoBehaviour
     public Dictionary<string, object> countryInfo = new Dictionary<string, object>();
     public List<FlagItem> flagItemList;
     public List<string> allWordsList = new List<string>();
+    public Sprite[] smallFlags;
+    public Sprite[] bigFlags;
     public GameData gameData;
 
     public Action foundWordThatMathchFlagAction;
@@ -33,6 +37,8 @@ public class FlagTabController : MonoBehaviour
     // Hashset to speedup searching
     public HashSet<string> flagItemWordHashset = new HashSet<string>();
     public HashSet<string> unlockedWordHashset = new HashSet<string>();
+
+    private readonly string POPULATION = "population";
     private void Awake()
     {
         if (instance != null)
@@ -85,8 +91,8 @@ public class FlagTabController : MonoBehaviour
         allWordsList.AddRange(tempAllWordsList);
     }
     [HideInInspector] public bool isGetCountryRequestDone;
-    [HideInInspector] public bool isNoInternet;
-    public IEnumerator GetCountryInfo(string countryName)
+    [HideInInspector] public bool haveInternet;
+    public IEnumerator GetCountryInfo(string countryName, string countryPopulation = "0")
     {
         isGetCountryRequestDone = false;
         using (UnityWebRequest request = UnityWebRequest.Get("https://restcountries.eu/rest/v2/name/" + countryName))
@@ -96,15 +102,16 @@ public class FlagTabController : MonoBehaviour
                 yield return null;
             isGetCountryRequestDone = true;
 
-            if (!isNoInternet)
+            if (haveInternet)
             {
                 byte[] result = request.downloadHandler.data;
                 string countryJSON = System.Text.Encoding.Default.GetString(result);
-                countryJSON = countryJSON.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
-                JObject jsonObject = JObject.Parse(countryJSON);
+                JArray jsonArr = JArray.Parse(countryJSON);
+                Dictionary<string, object> tempDic = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonArr[0].ToString());
                 countryInfo.Clear();
-                countryInfo = jsonObject.ToObject<Dictionary<string, object>>();
-            }           
+                countryInfo = tempDic;
+                countryInfo[POPULATION] = countryPopulation;
+            }
         }
     }
     public void AddToUnlockedWordDictionary(string wordIsChecking)
@@ -120,15 +127,6 @@ public class FlagTabController : MonoBehaviour
     }
     public void SaveUnlockedWordData()
     {
-        //FacebookController.instance.user.unlockedFlagWords = new Dictionary<string, string>();
-        //Dictionary<string, string> merged = FacebookController.instance.user.unlockedFlagWords
-        //    .Concat(unlockedWordDic)
-        //    .ToDictionary(x => x.Key, y => y.Value);
-        //FacebookController.instance.user.unlockedFlagWords = merged;
-        //foreach (var pair in FacebookController.instance.user.unlockedFlagWords)
-        //{
-        //    LogController.Debug("pairFlag: " + pair.Value);
-        //}
         FacebookController.instance.SaveDataGame();
     }
     private void LoadHashsetData()

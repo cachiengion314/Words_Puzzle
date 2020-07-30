@@ -111,9 +111,11 @@ public class DictionaryDialog : Dialog
         for (int i = 0; i < FlagTabController.instance.flagItemList.Count; i++)
         {
             FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
-            flagItem.flagImage = FlagTabController.instance.flagItemList[i].flagImage;
+            flagItem.indexOfSmallFlagImage = FlagTabController.instance.flagItemList[i].flagSmallImageIndex;
+            flagItem.indexOfBigFlagImage = FlagTabController.instance.flagItemList[i].flagBigImageIndex;
             flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
             flagItem.flagUnlockWord = FlagTabController.instance.flagItemList[i].flagUnlockWord;
+            flagItem.flagPopulation = FlagTabController.instance.flagItemList[i].flagPopulation;
 
             string checkWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;
             if (FlagTabController.instance.unlockedWordHashset.Contains(checkWord))

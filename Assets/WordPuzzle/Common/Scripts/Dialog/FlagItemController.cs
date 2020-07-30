@@ -7,8 +7,12 @@ using static CUtils;
 public class FlagItemController : MonoBehaviour
 {
     public int indexOfFlag;
+    [Space]
+    public int indexOfSmallFlagImage;
+    public int indexOfBigFlagImage;
     public string flagName;
     public string flagUnlockWord;
+    public string flagPopulation;
     public bool isLocked;
     public Sprite defaultFlagImage;
 
@@ -21,14 +25,8 @@ public class FlagItemController : MonoBehaviour
 
     private void Start()
     {
-        if (flagImage != null)
-        {
-            flagImg.sprite = flagImage;
-        }
-        else
-        {
-            flagImg.sprite = defaultFlagImage;
-        }
+        flagImg.sprite = FlagTabController.instance.smallFlags[indexOfSmallFlagImage];
+
         nameTxt.text = flagName;
         if (isLocked)
         {
@@ -60,20 +58,20 @@ public class FlagItemController : MonoBehaviour
             {
                 if (result != 0) // no internet conection
                 {
-                    FlagTabController.instance.isNoInternet = true;
+                    FlagTabController.instance.haveInternet = false;
                     DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(false);
                     DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(true);
                 }
                 else
                 {
-                    FlagTabController.instance.isNoInternet = false;
+                    FlagTabController.instance.haveInternet = true;
                     DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(true);
                     DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(false);
                 }
             });
 
-            StartCoroutine(FlagTabController.instance.GetCountryInfo(flagName));
-            StartCoroutine(DictionaryDialog.instance.flagMeanDialog.OnOpenFlagMeanDialog(flagImage));
+            StartCoroutine(FlagTabController.instance.GetCountryInfo(flagName, flagPopulation));
+            StartCoroutine(DictionaryDialog.instance.flagMeanDialog.OnOpenFlagMeanDialog());
         }
     }
     public void UnlockFailed()

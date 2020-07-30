@@ -59,7 +59,7 @@ public class FacebookController : MonoBehaviour
         {
             CurrencyController.UpdateBalanceAndHintFree();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             LogController.Debug("NumWords: " + WordRegion.instance.NumWords);
             LogController.Debug("Best score: " + FacebookController.instance.bestScore);
