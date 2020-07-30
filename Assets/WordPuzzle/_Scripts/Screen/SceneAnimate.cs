@@ -36,6 +36,8 @@ public class SceneAnimate : MonoBehaviour
     [Space]
     [SerializeField] private Image _overlayPauseGame;
     [Space]
+    [SerializeField] private SafeAreaPanel _safeArea;
+    [SerializeField] private Image _bgFirstLoading;
     [SerializeField] private Image _bgLoading;
     [SerializeField] private Image _imgTip;
     [SerializeField] private SkeletonGraphic _animTip;
@@ -89,6 +91,7 @@ public class SceneAnimate : MonoBehaviour
     {
         if (DonotDestroyOnLoad.instance == null && donotDestroyOnLoad != null)
             Instantiate(donotDestroyOnLoad);
+        _safeArea.CheckSafeArea();
         LoadScenHomeWithProgress();
         if (isShowTest)
         {
@@ -193,6 +196,7 @@ public class SceneAnimate : MonoBehaviour
                 {
                     ShowTitleHome(false);
                     _loadingScreen.gameObject.SetActive(false);
+                    _bgFirstLoading.gameObject.SetActive(false);
                 }
                 asyncOp.allowSceneActivation = true;
                 //_loadingScreen.gameObject.SetActive(false);

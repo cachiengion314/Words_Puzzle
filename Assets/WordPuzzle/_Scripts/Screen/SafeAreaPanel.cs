@@ -12,9 +12,7 @@ public class SafeAreaPanel : MonoBehaviour
 
     void Awake()
     {
-        var safeArea = Screen.safeArea;
-        if (safeArea != _safeArea)
-            RefreshSafe(safeArea);
+        CheckSafeArea();
     }
 
     public RectTransform ThisRect
@@ -39,5 +37,12 @@ public class SafeAreaPanel : MonoBehaviour
 
         _rectTransform.anchorMin = anchorMin;
         _rectTransform.anchorMax = anchorMax;
+    }
+
+    public void CheckSafeArea()
+    {
+        var safeArea = Screen.safeArea;
+        if (safeArea != _safeArea)
+            RefreshSafe(safeArea);
     }
 }
