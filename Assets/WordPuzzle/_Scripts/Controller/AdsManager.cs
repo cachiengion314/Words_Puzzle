@@ -122,9 +122,13 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    private void ShowInterstitial(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
+    private void ShowInterstitial(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null, Action adsComplete = null)
     {
-        if (CUtils.IsAdsRemoved()) return;
+        if (CUtils.IsAdsRemoved())
+        {
+            adsComplete?.Invoke();
+            return;
+        }
 
         if (AudienceNetworkFbAd.instance.isIntersLoaded)
         {
@@ -154,6 +158,7 @@ public class AdsManager : MonoBehaviour
                 }
                 else
                 {
+                    adsNotReadyYetCallback?.Invoke();
                     //CUtils.CheckConnection(this, (result) =>
                     //{
                     //    if (result == 0)
@@ -221,7 +226,7 @@ public class AdsManager : MonoBehaviour
         _adsController.ShowBannerAds();
     }
 
-    public void ShowInterstitialAds()
+    public void ShowInterstitialAds(Action onCompleteAds = null)
     {
         CUtils.CheckConnection(this, (result) =>
         {
@@ -233,8 +238,18 @@ public class AdsManager : MonoBehaviour
                 Debug.Log("percent: " + percent);
                 if (randomNumber <= percent)
                 {
-                    ShowInterstitial();
+                    ShowInterstitial(true, () =>
+                    {
+                        onCompleteAds?.Invoke();
+                    }, null, () =>
+                    {
+                        onCompleteAds?.Invoke();
+                    });
                 }
+            }
+            else
+            {
+                onCompleteAds?.Invoke();
             }
         });
     }

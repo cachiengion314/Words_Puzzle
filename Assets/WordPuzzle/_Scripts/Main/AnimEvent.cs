@@ -127,7 +127,14 @@ public class AnimEvent : MonoBehaviour
                             AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.interstitialLevel;
                             AdsManager.instance.onAdsClose += OnCloseAdsInterstial;
                             AdsManager.instance.onAdsFailedToLoad += OnAdsFailedInterstial;
-                            AdsManager.instance.ShowInterstitialAds();
+
+                            AdsManager.instance.ShowInterstitialAds(()=> {
+                                ShowLevelClear();
+                            });
+                        }
+                        else
+                        {
+                            ShowLevelClear();
                         }
                     }
                 }
@@ -135,7 +142,7 @@ public class AnimEvent : MonoBehaviour
         }
     }
 
-    void OnCloseAdsInterstial()
+    private void ShowLevelClear()
     {
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -143,12 +150,14 @@ public class AnimEvent : MonoBehaviour
         });
     }
 
+    void OnCloseAdsInterstial()
+    {
+        ShowLevelClear();
+    }
+
     void OnAdsFailedInterstial()
     {
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
-        {
-            WinDialog.instance.ShowLevelChapterClear();
-        });
+        ShowLevelClear();
     }
 
     private List<bool> InitListRandom()
