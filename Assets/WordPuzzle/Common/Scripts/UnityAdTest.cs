@@ -60,24 +60,27 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     // Implement IUnityAdsListener interface methods:
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
-        // Define conditional logic for each ad completion status:
-        if (showResult == ShowResult.Finished)
+        if (placementId != ConfigController.instance.config.unityAdsId.interstitialLevel)
         {
-            // Reward the user for watching the ad to completion.
-            AdsManager.instance.onAdsRewarded?.Invoke();
-            SceneAnimate.Instance.ShowOverLayPauseGame(false);
-            //Debug.Log("You get a Reward!!!");
-        }
-        else if (showResult == ShowResult.Skipped)
-        {
-            // Do not reward the user for skipping the ad.
-            //Debug.Log("You don't get a Reward!!");
-            SceneAnimate.Instance.ShowOverLayPauseGame(false);
-        }
-        else if (showResult == ShowResult.Failed)
-        {
-            //Debug.LogWarning("The ad did not finish due to an error.");
-            SceneAnimate.Instance.ShowOverLayPauseGame(false);
+            // Define conditional logic for each ad completion status:
+            if (showResult == ShowResult.Finished)
+            {
+                // Reward the user for watching the ad to completion.
+                AdsManager.instance.onAdsRewarded?.Invoke();
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+                //Debug.Log("You get a Reward!!!");
+            }
+            else if (showResult == ShowResult.Skipped)
+            {
+                // Do not reward the user for skipping the ad.
+                //Debug.Log("You don't get a Reward!!");
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+            }
+            else if (showResult == ShowResult.Failed)
+            {
+                Debug.Log("UNITY Ads Load Failed!");
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+            }
         }
     }
 

@@ -10,7 +10,7 @@ public class Const
     public const int HINT_RANDOM_COST = 300;
     public const int HINT_TARGET_COST = 200;
     public const int REWARD_CHAPTER_CLEAR = 20;
-    public const int REWARD_ADS_LEVEL_CLEAR = 25;
+    public const int REWARD_ADS_LEVEL_CLEAR = 30;
     public const int REWARD_ADS_CHAPTER_CLEAR = 50;
     public const int SPIN_AGAIN = 100;
 

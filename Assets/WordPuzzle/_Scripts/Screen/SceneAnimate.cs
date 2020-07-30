@@ -207,6 +207,8 @@ public class SceneAnimate : MonoBehaviour
 
     public void ShowTip(bool show, Action callback = null)
     {
+        if (_bgFirstLoading.gameObject.activeInHierarchy)
+            _bgFirstLoading.gameObject.SetActive(false);
         var tweenControl = TweenControl.GetInstance();
         if (show)
         {

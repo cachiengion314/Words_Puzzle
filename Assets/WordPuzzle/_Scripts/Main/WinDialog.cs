@@ -817,7 +817,7 @@ public class WinDialog : Dialog
     void OnCompleteReward()
     {
         //_rewardControl.onRewardedCallback -= OnCompleteReward;
-        AdsManager.instance.onAdsRewarded -= OnCompleteReward;
+        //AdsManager.instance.onAdsRewarded -= OnCompleteReward;
 
         //RewardButton.GetComponent<Button>().interactable = false;
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
