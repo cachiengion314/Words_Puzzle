@@ -53,6 +53,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("Interstitial ad failed to load with error: " + error);
             //statusLabel.text = "Interstitial ad failed to load. Check console for details.";
+            AdsManager.instance.onAdsFailedToLoad?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
         interstitialAd.InterstitialAdWillLogImpression = delegate ()
@@ -66,7 +67,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         interstitialAd.InterstitialAdDidClose = delegate ()
         {
             Debug.Log("Interstitial ad did close.");
-            AdsManager.instance.onAdsRewarded?.Invoke();
+            AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
 
             didIntersClose = true;
@@ -197,7 +198,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         };
         rewardedVideoAd.RewardedVideoAdDidFailWithError = delegate (string error)
         {
-            //Debug.Log("RewardedVideo ad failed to load with error: " + error);
+            Debug.Log("RewardedVideo ad failed to load with error: " + error);
             //Debug.Log("RewardedVideo ad failed to load. Check console for details.");
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
@@ -216,12 +217,12 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         // https://developers.facebook.com/docs/audience-network/ios/rewarded-video#server-side-reward-validation
         rewardedVideoAd.RewardedVideoAdDidSucceed = delegate ()
         {
-            //Debug.Log("Rewarded video ad validated by server");
+            Debug.Log("Facebook Ads - Rewarded video ad validated by server");
         };
 
         rewardedVideoAd.RewardedVideoAdDidFail = delegate ()
         {
-            //Debug.Log("Rewarded video ad not validated, or no response from server");
+            Debug.Log("Rewarded video ad not validated - FaceBook Ads Failed!");
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
 

@@ -125,17 +125,30 @@ public class AnimEvent : MonoBehaviour
                             AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial;
                             UnityAdTest.instance.myInterstitialId = ConfigController.instance.config.unityAdsId.interstitialLevel;
                             AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.interstitialLevel;
-                            //AdsManager.instance.onAdsClose += OnCloseAdsInterstial;
+                            AdsManager.instance.onAdsClose += OnCloseAdsInterstial;
+                            AdsManager.instance.onAdsFailedToLoad += OnAdsFailedInterstial;
                             AdsManager.instance.ShowInterstitialAds();
                         }
-                        TweenControl.GetInstance().DelayCall(transform, 0.3f, () =>
-                        {
-                            WinDialog.instance.ShowLevelChapterClear();
-                        });
                     }
                 }
             }
         }
+    }
+
+    void OnCloseAdsInterstial()
+    {
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            WinDialog.instance.ShowLevelChapterClear();
+        });
+    }
+
+    void OnAdsFailedInterstial()
+    {
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
+            WinDialog.instance.ShowLevelChapterClear();
+        });
     }
 
     private List<bool> InitListRandom()
@@ -182,5 +195,17 @@ public class AnimEvent : MonoBehaviour
                 });
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        AdsManager.instance.onAdsClose -= OnCloseAdsInterstial;
+        AdsManager.instance.onAdsFailedToLoad -= OnAdsFailedInterstial;
+    }
+
+    private void OnDestroy()
+    {
+        AdsManager.instance.onAdsClose -= OnCloseAdsInterstial;
+        AdsManager.instance.onAdsFailedToLoad -= OnAdsFailedInterstial;
     }
 }

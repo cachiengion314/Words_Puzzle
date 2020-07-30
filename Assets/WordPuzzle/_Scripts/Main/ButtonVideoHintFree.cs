@@ -55,7 +55,19 @@ public class ButtonVideoHintFree : MonoBehaviour
         //if (_rewardController != null)
         //_rewardController.onRewardedCallback -= OnCompleteVideo;
         if (AdsManager.instance != null)
+        {
             AdsManager.instance.onAdsClose -= OnAdsClosed;
+            AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (AdsManager.instance != null)
+        {
+            AdsManager.instance.onAdsClose -= OnAdsClosed;
+            AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+        }
     }
 
     public void OnClickOpen()
@@ -74,9 +86,9 @@ public class ButtonVideoHintFree : MonoBehaviour
         AdsManager.instance.ShowVideoAds();
 
         Sound.instance.Play(Sound.Others.PopupOpen);
-//#if UNITY_EDITOR
-//        OnCompleteVideo();
-//#endif
+        //#if UNITY_EDITOR
+        //        OnCompleteVideo();
+        //#endif
     }
 
     private void OnCompleteVideo()

@@ -82,6 +82,29 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
                 SceneAnimate.Instance.ShowOverLayPauseGame(false);
             }
         }
+        else if (placementId == ConfigController.instance.config.unityAdsId.interstitialLevel)
+        {
+            if (showResult == ShowResult.Finished)
+            {
+                // Reward the user for watching the ad to completion.
+                AdsManager.instance.onAdsClose?.Invoke();
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+                //Debug.Log("You get a Reward!!!");
+            }
+            else if (showResult == ShowResult.Skipped)
+            {
+                // Do not reward the user for skipping the ad.
+                //Debug.Log("You don't get a Reward!!");
+                AdsManager.instance.onAdsClose?.Invoke();
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+            }
+            else if (showResult == ShowResult.Failed)
+            {
+                Debug.Log("UNITY Ads Load Failed!");
+                AdsManager.instance.onAdsFailedToLoad?.Invoke();
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+            }
+        }
     }
 
     public void OnUnityAdsReady(string placementId)

@@ -913,6 +913,16 @@ public class WinDialog : Dialog
         }
     }
 
+    private void OnDisable()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteReward;
+    }
+
+    private void OnDestroy()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteReward;
+    }
+
     private void OnApplicationPause(bool pause)
     {
         if (pause)

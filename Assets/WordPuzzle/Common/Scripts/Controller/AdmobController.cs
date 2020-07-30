@@ -222,6 +222,7 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleInterstitialFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         print("HandleInterstitialFailedToLoad event received with message: " + args.Message);
+        AdsManager.instance.onAdsFailedToLoad?.Invoke();
     }
 
     public void HandleInterstitialOpened(object sender, EventArgs args)
@@ -232,6 +233,7 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleInterstitialClosed(object sender, EventArgs args)
     {
         print("HandleInterstitialClosed event received");
+        AdsManager.instance.onAdsClose?.Invoke();
         RequestInterstitial();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
