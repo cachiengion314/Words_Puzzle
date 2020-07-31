@@ -414,7 +414,7 @@ public class DailyGiftsDialog : Dialog
         if (DateTime.Compare(DateTime.Now, nextDay) > 0 && !isRefresh)
         {
             CPlayerPrefs.SetBool(NEXT_DAY_KEY, true);
-            nextDay = DateTime.Now.Date.AddDays(1) + TimeSpan.FromSeconds(_valueTimeGift * 3600);
+            nextDay = DateTime.Now.Date.AddDays(1);
             Debug.Log("NextDay New Refresh: " + nextDay);
             CPlayerPrefs.SetLong(TIME_NEXT_DAY_KEY, nextDay.Ticks);
         }

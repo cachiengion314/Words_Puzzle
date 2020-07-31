@@ -27,7 +27,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         //AudienceNetworkAds.Initialize();
         instance = this;
 
-        CheckCurrentLevel();
+        //CheckCurrentLevel();
 
         SceneManager.activeSceneChanged += ChangedActiveSceneToLoadBanner;
     }
