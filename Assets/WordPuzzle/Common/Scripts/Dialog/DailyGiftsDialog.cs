@@ -318,8 +318,10 @@ public class DailyGiftsDialog : Dialog
     private void CheckTimeReward()
     {
         var isNextDay = CPlayerPrefs.GetBool(NEXT_DAY_KEY);
+        Debug.Log("isNextDay CheckTimeReward: " + isNextDay);
         if (isNextDay)
         {
+            CPlayerPrefs.SetBool(TIME_REWARD_KEY, false);
             CPlayerPrefs.SetInt(PROGRESS_KEY, 0);
             _currProgressValue = 0;
         }
@@ -396,6 +398,8 @@ public class DailyGiftsDialog : Dialog
     void UpdateNextDay()
     {
         var isRefresh = CPlayerPrefs.GetBool(NEXT_DAY_KEY, false);
+        Debug.Log("isRefresh UpdateNextDay(): " + isRefresh);
+        Debug.Log("has NEXT_DAY_KEY UpdateNextDay(): " + CPlayerPrefs.HasKey(NEXT_DAY_KEY));
         var timeRefresh = DateTime.Today + TimeSpan.FromSeconds(_valueTimeGift * 3600);
         if (CPlayerPrefs.HasKey(NEXT_DAY_KEY))
         {
