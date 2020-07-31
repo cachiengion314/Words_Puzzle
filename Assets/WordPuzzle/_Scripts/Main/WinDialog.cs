@@ -406,7 +406,7 @@ public class WinDialog : Dialog
         isColorFade = true;
 
         honeyPointsTxt.font = ThemesControl.instance.CurrTheme.fontData.fontAsset;
-        honeyPointsTxt.color = ThemesControl.instance.CurrTheme.fontData.colorTextNumStar;
+        honeyPointsTxt.color = ThemesControl.instance.CurrTheme.fontData.colorWin;
         honeyPointsTxt.text = "X" + honeyPoints.ToString();
 
         float alphaValue = 0;
@@ -415,7 +415,7 @@ public class WinDialog : Dialog
         yield return new WaitForSeconds(.2f);
         while (alphaValue <= 1)
         {
-            alphaValue += .05f;
+            alphaValue += 5 * Time.deltaTime;
             honeyPointsTxt.color = new Color(currentColor.r, currentColor.g, currentColor.b, alphaValue);
             yield return null;
         }
@@ -423,7 +423,7 @@ public class WinDialog : Dialog
 
         while (alphaValue >= 0)
         {
-            alphaValue -= .05f;
+            alphaValue -= 5 * Time.deltaTime;
             honeyPointsTxt.color = new Color(currentColor.r, currentColor.g, currentColor.b, alphaValue);
             yield return null;
         }

@@ -68,7 +68,7 @@ public class FlagMeanDialog : Dialog
             }
             else if (population < 1000000f)
             {
-                populationStr = (population).ToString("0,000") + " thousand people";
+                populationStr = (population / 1000f).ToString("0.000") + " thousand people";
             }
             populationTxt.text = populationStr;
         }
