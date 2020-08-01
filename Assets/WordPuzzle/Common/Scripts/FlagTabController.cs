@@ -39,6 +39,8 @@ public class FlagTabController : MonoBehaviour
     public HashSet<string> unlockedWordHashset = new HashSet<string>();
 
     private readonly string POPULATION = "population";
+
+    private bool isLoaded;
     private void Awake()
     {
         if (instance != null)
@@ -53,12 +55,13 @@ public class FlagTabController : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneWasLoaded;
     }
-
     private void OnSceneWasLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == 0) return;
-
-        LoadHashsetData();
+        if (!isLoaded)
+        {
+            LoadHashsetData();
+        }
     }
     public void CheckAndSaveCountrykWord(string wordIsChecking)
     {
@@ -138,7 +141,8 @@ public class FlagTabController : MonoBehaviour
         }
         foreach (var item in flagItemList)
         {
-            flagItemWordHashset.Add(item.flagUnlockWord);
+            flagItemWordHashset.Add(item.flagUnlockWord.ToLower());
         }
+        isLoaded = true;
     }
 }

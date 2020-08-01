@@ -971,7 +971,7 @@ public class WordRegion : MonoBehaviour
         if (isComplete)
         {
                string wordIsChecking = wordDone == "wordDone" ? MainController.instance.wordDone : wordDone;
-               FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking);
+               FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking.ToLower());
             //if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
             //{
             //    TutorialController.instance.ShowPopHoneyHeaderTut();
@@ -1012,7 +1012,7 @@ public class WordRegion : MonoBehaviour
         else
         {
             string wordIsChecking = wordDone == "wordDone" ? MainController.instance.wordDone : wordDone;
-            FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking);
+            FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking.ToLower());
 
             var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
             var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(line => line.isShown) : false;

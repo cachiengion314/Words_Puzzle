@@ -1,4 +1,5 @@
-﻿using Facebook.Unity;
+﻿using Facebook.MiniJSON;
+using Facebook.Unity;
 using Newtonsoft.Json;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -15,8 +16,6 @@ using UnityEngine.UI;
 public class FacebookController : MonoBehaviour
 {
     public static FacebookController instance;
-
-    public Action debugLogAction;
 
     [HideInInspector] public bool newLevel = false;
 
@@ -50,7 +49,7 @@ public class FacebookController : MonoBehaviour
 
     void Start()
     {
-        GetUserData();
+        GetUserData();     
     }
 
     void Update()
@@ -70,7 +69,7 @@ public class FacebookController : MonoBehaviour
             {
                 LogController.Debug(item);
             }
-            debugLogAction?.Invoke();
+
             HoneyPoints += 5000;
             FlagTabController.instance.AddToUnlockedWordDictionary("Albania");
             FlagTabController.instance.SaveUnlockedWordData();
@@ -237,6 +236,7 @@ public class FacebookController : MonoBehaviour
     {
         User userDefault = new User();
         userDefault.id = "";
+        userDefault.deviceId = "";
         userDefault.name = "";
         userDefault.email = "";
         userDefault.wordPassed = "";
@@ -318,6 +318,7 @@ public class FacebookController : MonoBehaviour
         User us = new User();
         var jsonData = JsonConvert.DeserializeObject<User>(value);
         us.id = jsonData.id;
+        us.deviceId = jsonData.deviceId;
         us.name = jsonData.name;
         us.email = jsonData.email;
         us.wordPassed = jsonData.wordPassed;
@@ -347,6 +348,7 @@ public class FacebookController : MonoBehaviour
 public struct User
 {
     public string id;
+    public string deviceId;
     public string name;
     public string email;
     public string wordPassed;
