@@ -65,11 +65,12 @@ public class FlagTabController : MonoBehaviour
     public void CheckAndSaveCountrykWord(string wordIsChecking)
     {
         LogController.Debug("wordIsChecking: " + wordIsChecking);
-        if (wordIsChecking == null || wordIsChecking == string.Empty || !flagItemWordHashset.Contains(wordIsChecking)) return;
+        string checkWord = wordIsChecking.ToLower();
+        if (wordIsChecking == null || wordIsChecking == string.Empty || !flagItemWordHashset.Contains(checkWord)) return;
 
         //string flagName = FindCountryNameWithUnlockedWord(wordIsChecking);
         //Toast.instance.ShowMessage(flagName.ToUpper() + " Country found");
-        AddToUnlockedWordDictionary(wordIsChecking);
+        AddToUnlockedWordDictionary(checkWord);
         SaveUnlockedWordData();
     }
     public void GetAllWordsList()
@@ -119,9 +120,9 @@ public class FlagTabController : MonoBehaviour
     }
     public void AddToUnlockedWordDictionary(string wordIsChecking)
     {
-        if (unlockedWordHashset.Add(wordIsChecking))
+        if (unlockedWordHashset.Add(wordIsChecking.ToLower()))
         {
-            FacebookController.instance.user.unlockedFlagWords.Add(wordIsChecking, wordIsChecking);
+            FacebookController.instance.user.unlockedFlagWords.Add(wordIsChecking.ToLower(), wordIsChecking.ToLower());
         }
         else
         {
@@ -136,7 +137,7 @@ public class FlagTabController : MonoBehaviour
     {
         foreach (var pair in FacebookController.instance.user.unlockedFlagWords)
         {
-            unlockedWordHashset.Add(pair.Value);
+            unlockedWordHashset.Add(pair.Value.ToLower());
             LogController.Debug("UnlockedWordDic: " + pair);
         }
         foreach (var item in flagItemList)

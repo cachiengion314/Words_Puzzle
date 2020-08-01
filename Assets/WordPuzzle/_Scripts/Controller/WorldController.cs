@@ -117,8 +117,8 @@ public class WorldController : BaseController
         {
             if (item.transform.position.y < posLast.position.y /*|| item.transform.position.y > posFirst.position.y*/)
                 item.gameObject.SetActive(false);
-            else
-                item.gameObject.SetActive(true);
+            //else
+            //    item.gameObject.SetActive(true);
         }
     }
 

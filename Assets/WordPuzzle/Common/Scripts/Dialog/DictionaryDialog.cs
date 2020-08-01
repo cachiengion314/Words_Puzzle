@@ -219,12 +219,12 @@ public class DictionaryDialog : Dialog
     }
 
     public void OnPlayClick()
-    {
+    {      
         if (homecontroller != null)
-        {
-            homecontroller.OnClick(0);
-            AudienceNetworkBanner.instance.LoadBanner();
-        }           
+        {          
+            homecontroller.OnClick(0);           
+        }
+        AudienceNetworkBanner.instance.LoadBanner();
         Close();
     }
 
@@ -255,15 +255,15 @@ public class DictionaryDialog : Dialog
     {
         meanDialog.wordMean = text;
     }
-    public void OnClickCloseDictionaryDialog()
+
+    public override void Close()
     {
         if (MainController.instance != null)
         {
             AudienceNetworkBanner.instance.LoadBanner();
         }
-        Close();
+        base.Close();
     }
-
 }
 
 
