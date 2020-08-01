@@ -31,7 +31,6 @@ public class FlagTabController : MonoBehaviour
     public Sprite[] bigFlags;
     public GameData gameData;
 
-    public Action foundWordThatMathchFlagAction;
     [HideInInspector] public readonly int priceToUnlockFlag = 500;
 
     // Hashset to speedup searching
@@ -68,7 +67,8 @@ public class FlagTabController : MonoBehaviour
         LogController.Debug("wordIsChecking: " + wordIsChecking);
         if (wordIsChecking == null || wordIsChecking == string.Empty || !flagItemWordHashset.Contains(wordIsChecking)) return;
 
-        LogController.Debug("Player have found the suitable country word");
+        //string flagName = FindCountryNameWithUnlockedWord(wordIsChecking);
+        //Toast.instance.ShowMessage(flagName.ToUpper() + " Country found");
         AddToUnlockedWordDictionary(wordIsChecking);
         SaveUnlockedWordData();
     }
@@ -144,5 +144,17 @@ public class FlagTabController : MonoBehaviour
             flagItemWordHashset.Add(item.flagUnlockWord.ToLower());
         }
         isLoaded = true;
+    }
+    private string FindCountryNameWithUnlockedWord(string unlockedWord)
+    {
+        FlagItem flagItem = flagItemList.Find(flag => flag.flagUnlockWord.Equals(unlockedWord, StringComparison.OrdinalIgnoreCase));
+        if (flagItem != null)
+        {
+            return flagItem.flagName;
+        }
+        else
+        {
+            return "nation";
+        }
     }
 }

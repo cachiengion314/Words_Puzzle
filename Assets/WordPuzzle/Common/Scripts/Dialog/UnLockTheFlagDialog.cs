@@ -28,6 +28,7 @@ public class UnLockTheFlagDialog : Dialog
         {
             dialog.Close();
         }
+        AudienceNetworkBanner.instance.LoadBanner();
     }
     public void OnClickUnlockWithHoneyPoint()
     {

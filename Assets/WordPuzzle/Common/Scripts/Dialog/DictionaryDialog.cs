@@ -118,7 +118,7 @@ public class DictionaryDialog : Dialog
             flagItem.flagPopulation = FlagTabController.instance.flagItemList[i].flagPopulation;
 
             string checkWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;
-            if (FlagTabController.instance.unlockedWordHashset.Contains(checkWord))
+            if (FlagTabController.instance.unlockedWordHashset.Contains(checkWord.ToLower()))
             {
                 flagItem.isLocked = false;
             }
@@ -221,7 +221,10 @@ public class DictionaryDialog : Dialog
     public void OnPlayClick()
     {
         if (homecontroller != null)
+        {
             homecontroller.OnClick(0);
+            AudienceNetworkBanner.instance.LoadBanner();
+        }           
         Close();
     }
 

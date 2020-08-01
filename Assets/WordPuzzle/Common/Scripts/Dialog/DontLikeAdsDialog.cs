@@ -34,18 +34,18 @@ public class DontLikeAdsDialog : Dialog
         {
             var currTheme = ThemesControl.instance.CurrTheme;
             _itemTop.sprite = currTheme.uiData.dontLikeAdsData.itemTop;
-            _bgItemSmall.sprite = currTheme.uiData.dontLikeAdsData.bgItemSmall;
-            _iconStarItem2.sprite = currTheme.uiData.dontLikeAdsData.iconStar;
-            _iconStarItem3.sprite = currTheme.uiData.dontLikeAdsData.iconStar;
-            _iconHintItem2.sprite = currTheme.uiData.dontLikeAdsData.iconHint;
-            _btnMore.sprite = currTheme.uiData.dontLikeAdsData.btnMore;
+            //_bgItemSmall.sprite = currTheme.uiData.dontLikeAdsData.bgItemSmall;
+            //_iconStarItem2.sprite = currTheme.uiData.dontLikeAdsData.iconStar;
+            //_iconStarItem3.sprite = currTheme.uiData.dontLikeAdsData.iconStar;
+            //_iconHintItem2.sprite = currTheme.uiData.dontLikeAdsData.iconHint;
+            //_btnMore.sprite = currTheme.uiData.dontLikeAdsData.btnMore;
 
             _itemTop.SetNativeSize();
-            _bgItemSmall.SetNativeSize();
-            _iconStarItem2.SetNativeSize();
-            _iconStarItem3.SetNativeSize();
-            _iconHintItem2.SetNativeSize();
-            _btnMore.SetNativeSize();
+            //_bgItemSmall.SetNativeSize();
+            //_iconStarItem2.SetNativeSize();
+            //_iconStarItem3.SetNativeSize();
+            //_iconHintItem2.SetNativeSize();
+            //_btnMore.SetNativeSize();
 
             var indexIcon = 0;
             foreach (var icon in _iconsNoAds)

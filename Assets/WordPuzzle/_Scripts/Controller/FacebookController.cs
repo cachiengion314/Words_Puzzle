@@ -31,7 +31,6 @@ public class FacebookController : MonoBehaviour
 
     private string _jsondata;
     private List<PlayerLeaderboardEntry> _players;
-
     public List<PlayerLeaderboardEntry> Players
     {
         get
