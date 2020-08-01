@@ -30,7 +30,7 @@ public class DontLikeAdsDialog : Dialog
 
     private void CheckTheme()
     {
-        if(MainController.instance != null)
+        if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
             _itemTop.sprite = currTheme.uiData.dontLikeAdsData.itemTop;
@@ -50,14 +50,16 @@ public class DontLikeAdsDialog : Dialog
             var indexIcon = 0;
             foreach (var icon in _iconsNoAds)
             {
-                icon.sprite = currTheme.uiData.dontLikeAdsData.iconsNoAds[indexIcon];
+                if (currTheme.uiData.dontLikeAdsData.iconsNoAds[indexIcon])
+                    icon.sprite = currTheme.uiData.dontLikeAdsData.iconsNoAds[indexIcon];
                 icon.SetNativeSize();
                 indexIcon++;
             }
 
             foreach (var btn in _btnPrice)
             {
-                btn.sprite = currTheme.uiData.dontLikeAdsData.btnPrice;
+                if (currTheme.uiData.dontLikeAdsData.btnPrice)
+                    btn.sprite = currTheme.uiData.dontLikeAdsData.btnPrice;
                 btn.SetNativeSize();
             }
 

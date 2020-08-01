@@ -11,6 +11,8 @@ public class UnLockTheFlagDialog : Dialog
     [Space]
     public TextMeshProUGUI unlockByPlayingTxt;
     public Button unlockByPlayingBtt;
+
+    public GameObject amin;
     private new void Start()
     {
         base.Start();
@@ -68,11 +70,13 @@ public class UnLockTheFlagDialog : Dialog
         {
             unlockByPlayingBtt.gameObject.SetActive(false);
             unlockByPlayingTxt.gameObject.SetActive(false);
+            amin.SetActive(true);
         }
         else
         {
             unlockByPlayingBtt.gameObject.SetActive(true);
             unlockByPlayingTxt.gameObject.SetActive(true);
+            amin.SetActive(false);
         }
     }
 }
