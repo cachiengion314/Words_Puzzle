@@ -13,6 +13,7 @@ public class TutorialController : MonoBehaviour
     [HideInInspector] public bool isShowTut;
     [HideInInspector] public bool isBlockSwipe;
     [HideInInspector] public bool isTutBeehive;
+    [HideInInspector] public bool isTutFlag;
     public string contentNext;
     public string contentWordAgain;
     public string contentManipulation;
@@ -31,6 +32,7 @@ public class TutorialController : MonoBehaviour
     public string contentFreeBoosters;
     public string contentCellAds;
     public string contentHoneyHeader;
+    public string contentFlag;
     [SerializeField] private GameObject _popText;
     [SerializeField] private GameObject _popHint;
     [SerializeField] private GameObject _popShuffle;
@@ -47,6 +49,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject _popFreeBoosters;
     [SerializeField] private GameObject _popCellAds;
     [SerializeField] private GameObject _popHoneyHeader;
+    [SerializeField] private GameObject _popFlag;
     [SerializeField] private GameObject _overlay;
     [SerializeField] private TextMeshProUGUI _textTutorial;
     [SerializeField] private TextMeshProUGUI _textTutorialHint;
@@ -63,10 +66,12 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textTutorialFreeBoosters;
     [SerializeField] private TextMeshProUGUI _textTutorialCellAds;
     [SerializeField] private TextMeshProUGUI _textTutorialHoneyHeader;
+    [SerializeField] private TextMeshProUGUI _textTutorialFlag;
     [Space]
     [SerializeField] private GameObject _handCellAdsTut;
     [SerializeField] private Image _handConnectTut;
     [SerializeField] private Image _handChickenTut;
+    [SerializeField] private Image _handFlagTut;
 
     public GameObject _handPanelPopHint;
     public GameObject _handPanelPopShuffle;
@@ -515,7 +520,6 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopHoneyHeaderTut()
     {
-        CPlayerPrefs.SetBool("HONEY_TUTORIAL", true);
         if (WordRegion.instance != null)
         {
             var canvas = WordRegion.instance.bgHoney.GetComponent<Canvas>();
@@ -523,10 +527,24 @@ public class TutorialController : MonoBehaviour
             canvas.sortingLayerName = "UI1";
         }
         isShowTut = true;
+        isTutFlag = true;
         _overlay.SetActive(true);
         _popHoneyHeader.SetActive(true);
         _textTutorialHoneyHeader.text = contentHoneyHeader;
 
+    }
+
+    public void ShowPopFlagTut(Transform posTarget)
+    {
+        CPlayerPrefs.SetBool("HONEY_TUTORIAL", true);
+        isShowTut = true;
+        _overlay.SetActive(true);
+        var canvasOverlay = _overlay.GetComponent<Canvas>();
+        canvasOverlay.sortingLayerName = "UI2";
+        canvasOverlay.sortingOrder = 5;
+        _popFlag.SetActive(true);
+        _textTutorialFlag.text = contentFlag;
+        _handFlagTut.transform.position = posTarget.position;
     }
 
     public void HidenPopTut()
@@ -575,6 +593,8 @@ public class TutorialController : MonoBehaviour
         isShowTut = false;
         isBlockSwipe = false;
         isTutBeehive = false;
+        isTutFlag = false;
+
         if (_popText != null) _popText.SetActive(false);
         if (_popHint != null) _popHint.SetActive(false);
         if (_popShuffle != null) _popShuffle.SetActive(false);
@@ -591,6 +611,7 @@ public class TutorialController : MonoBehaviour
         if (_popFreeBoosters != null) _popFreeBoosters.SetActive(false);
         if (_popCellAds != null) _popCellAds.SetActive(false);
         if (_popHoneyHeader != null) _popHoneyHeader.SetActive(false);
+        if (_popFlag != null) _popFlag.SetActive(false);
         if (_overlay != null) _overlay.SetActive(false);
         if (_textTutorial != null) _textTutorial.text = "";
 

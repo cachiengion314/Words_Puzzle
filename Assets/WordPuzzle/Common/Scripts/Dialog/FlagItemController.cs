@@ -21,7 +21,8 @@ public class FlagItemController : MonoBehaviour
     [SerializeField] private GameObject LockBgImg;
     [SerializeField] private TextMeshProUGUI nameTxt;
     [SerializeField] private Image lockImg;
-
+    [Space]
+    public Canvas canvas;
 
     private void Start()
     {
@@ -39,6 +40,13 @@ public class FlagItemController : MonoBehaviour
     }
     public void OnClickToTheFlag()
     {
+        canvas.overrideSorting = false;
+        if (TutorialController.instance != null)
+        {
+            if (TutorialController.instance.isShowTut)
+                CPlayerPrefs.SetBool("CLOSE_TUTORIAL_FLAG", true);
+            TutorialController.instance.HidenPopTut();
+        }
         if (isLocked)
         {
             LogController.Debug("Open unlock flag dialog");

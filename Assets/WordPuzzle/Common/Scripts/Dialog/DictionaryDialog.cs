@@ -21,6 +21,7 @@ public class DictionaryDialog : Dialog
     public GameObject flagTab;
     public List<FlagItemController> flagList = new List<FlagItemController>();
     public GameObject flagTabScrollViewContent;
+    public RectTransform scrollFlag;
     public GameObject flagItemPrefab;
     public GameObject FlagBtn;
     public TextMeshProUGUI visualHoneyTxt;
@@ -104,6 +105,29 @@ public class DictionaryDialog : Dialog
         }
         else
             OnClickVocabularyTab();
+
+
+        if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
+        {
+            TutorialController.instance.isBlockSwipe = true;
+            var flagTarget = flagList.Find(flag => !flag.isLocked);
+            //var sizeFlagTarget = Mathf.Abs(flagTarget.transform.localPosition.y);
+            //var resultContentPos = sizeFlagTarget + scrollFlag.sizeDelta.y - (flagTarget.transform as RectTransform).sizeDelta.y / 2;
+            flagTarget.canvas.overrideSorting = true;
+            flagTarget.canvas.sortingLayerName = "UI2";
+            flagTarget.canvas.sortingOrder = 6;
+            flagTarget.transform.SetAsFirstSibling();
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
+                TutorialController.instance.ShowPopFlagTut(flagTarget.transform);
+                //scrollFlag.GetComponent<ScrollRect>().content.anchoredPosition = new Vector3(flagTabScrollViewContent.transform.localPosition.x, resultContentPos);
+                //TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+                //{
+                //scrollFlag.GetComponent<ScrollRect>().content.anchoredPosition = new Vector3(flagTabScrollViewContent.transform.localPosition.x, resultContentPos);
+                //});
+
+            });
+        }
     }
     public void InstantiateFlags()
     {
@@ -219,10 +243,10 @@ public class DictionaryDialog : Dialog
     }
 
     public void OnPlayClick()
-    {      
+    {
         if (homecontroller != null)
-        {          
-            homecontroller.OnClick(0);           
+        {
+            homecontroller.OnClick(0);
         }
         AudienceNetworkBanner.instance.LoadBanner();
         Close();

@@ -75,9 +75,19 @@ public class FlagMeanDialog : Dialog
     }
     public void OnClickCloseFlagMeanDialog()
     {
+        var closeTutFlagKey = CPlayerPrefs.HasKey("CLOSE_TUTORIAL_FLAG");
         TweenControl.GetInstance().ScaleFromOne(DictionaryDialog.instance.flagMeanDialog.gameObject, 0.3f, () =>
         {
             DictionaryDialog.instance.OverLayDialog.SetActive(false);
+            if (closeTutFlagKey)
+            {
+                CPlayerPrefs.DeleteKey("CLOSE_TUTORIAL_FLAG");
+                var dialogsShow = FindObjectsOfType<Dialog>();
+                foreach (var dialog in dialogsShow)
+                {
+                    dialog.Close();
+                }
+            }
         });
         Sound.instance.Play(Sound.Others.PopupClose);
     }

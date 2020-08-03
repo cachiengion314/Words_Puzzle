@@ -708,7 +708,7 @@ public class WordRegion : MonoBehaviour
         if (line != null)
         {
             _lineIsChecking = line;
-           
+
             //if (!line.isShown)
             //{
             line.SetDataLetter(checkWord);
@@ -963,51 +963,48 @@ public class WordRegion : MonoBehaviour
         }
     }
 
+    public void ShowLevelClear()
+    {
+        var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
+        if (isLevelMisspelling)
+        {
+            Prefs.countLevelMisspelling += 1;
+            Prefs.countLevelMisspellingDaily += 1;
+        }
+
+        if (TutorialController.instance.isShowTut)
+        {
+            TutorialController.instance.HidenPopTut();
+            TutorialController.instance.isShowTut = false;
+            CPlayerPrefs.SetBool("TUTORIAL", true);
+        }
+
+        SaveLevelProgress();
+        BlockScreen.instance.Block(true);
+        MainController.instance.IsLevelClear = true;
+        ClearLevelProgress();
+        MainController.instance.OnComplete();
+        //if (lines.Count >= 6)
+        //{
+        //    compliment.ShowRandom();
+        //}
+
+        TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+        {
+            MainController.instance.animatorScene.SetBool("LevelComplete", true);
+            //SceneAnimate.Instance.animEvent.LevelClearCallback();
+        });
+    }
+
     public void CheckGameComplete(string wordDone = "wordDone")
     {
         var isComplete = lines.All(x => x.isShown);
 
-        var isLevelMisspelling = CPlayerPrefs.GetBool("LevelMisspelling", true);
         if (isComplete)
         {
-               string wordIsChecking = wordDone == "wordDone" ? MainController.instance.wordDone : wordDone;
-               FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking);
-            //if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
-            //{
-            //    TutorialController.instance.ShowPopHoneyHeaderTut();
-            //}
-            //else
-            //{
-                if (isLevelMisspelling)
-                {
-                    Prefs.countLevelMisspelling += 1;
-                    Prefs.countLevelMisspellingDaily += 1;
-                }
-
-                if (TutorialController.instance.isShowTut)
-                {
-                    TutorialController.instance.HidenPopTut();
-                    TutorialController.instance.isShowTut = false;
-                    CPlayerPrefs.SetBool("TUTORIAL", true);
-                }
-
-                SaveLevelProgress();
-                BlockScreen.instance.Block(true);
-                MainController.instance.IsLevelClear = true;
-                ClearLevelProgress();
-                MainController.instance.OnComplete();
-                //if (lines.Count >= 6)
-                //{
-                //    compliment.ShowRandom();
-                //}
-
-                TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
-                {
-                    MainController.instance.animatorScene.SetBool("LevelComplete", true);
-                    //SceneAnimate.Instance.animEvent.LevelClearCallback();
-                });
-            //};
-
+            string wordIsChecking = wordDone == "wordDone" ? MainController.instance.wordDone : wordDone;
+            FlagTabController.instance.CheckAndSaveCountrykWord(wordIsChecking);
+            ShowLevelClear();
         }
         else
         {
@@ -1041,6 +1038,10 @@ public class WordRegion : MonoBehaviour
                     BlockScreen.instance.Block(false);
                     TutorialController.instance.ShowPopWordTut(TutorialController.instance.contentManipulation, 0, false, TutorialController.instance.contentUnlockBonusBox, false, _lineIsChecking);
                 });
+            }
+            else if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
+            {
+                TutorialController.instance.ShowPopHoneyHeaderTut();
             }
             //else if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
             //{
@@ -1441,7 +1442,7 @@ public class WordRegion : MonoBehaviour
                             }
                             Sound.instance.audioSource.Stop();
                             Sound.instance.PlayButton(Sound.Button.MultipleHint);
-                            SaveLevelProgress();                         
+                            SaveLevelProgress();
                             CheckGameComplete();
                             Prefs.AddToNumHint(GameState.currentWorld, GameState.currentSubWorld, GameState.currentLevel);
                         });
