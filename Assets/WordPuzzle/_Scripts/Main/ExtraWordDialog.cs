@@ -105,6 +105,12 @@ public class ExtraWordDialog : Dialog
             _txtBtnReward.color = currTheme.uiData.bonusBoxData.colorTextBtnReward;
             _txtTotalProgress.color = _textCollectEnough.color = _bonusWordPfb.color = currTheme.fontData.colorContentDialog;
 
+            if (currTheme.uiData.bonusBoxData.alignCenterIcon)
+            {
+                _iconCandyStar.transform.localPosition = new Vector3(_iconCandyStar.transform.localPosition.x, 0);
+                _iconAds.transform.localPosition = new Vector3(_iconAds.transform.localPosition.x, 0);
+                _txtBtnReward.transform.localPosition = new Vector3(_txtBtnReward.transform.localPosition.x, 0);
+            }
             //_animBtnAdsReward.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             //_animBtnAdsReward.SetSkin(currTheme.animData.skinAnim);
         }

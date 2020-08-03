@@ -319,6 +319,7 @@ public class BonusBoxData
     public Sprite btnReward;
     public Sprite iconCandyStar;
     public Sprite iconAds;
+    public bool alignCenterIcon;
     public Color colorTextBoardTitle;
     public Color colorTextBtn;
     public Color colorTextBtnReward;
