@@ -102,12 +102,12 @@ public class RemoteConfigFirebase : MonoBehaviour
     }
     private string ConvertFirebaseStringToNormal(string firebasestr)
     {
-        string[] tempFirebaseStrArr = firebasestr.Split(new char[1] { '"' });
-        firebasestr = null;
-        foreach (string item in tempFirebaseStrArr)
-        {
-            firebasestr += item;
-        }
+        //string[] tempFirebaseStrArr = firebasestr.Split(new char[1] { '"' });
+        //firebasestr = null;
+        //foreach (string item in tempFirebaseStrArr)
+        //{
+        //    firebasestr += item;
+        //}
 
         return firebasestr;
     }
