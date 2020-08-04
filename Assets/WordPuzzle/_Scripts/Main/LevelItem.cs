@@ -42,7 +42,7 @@ public class LevelItem : MonoBehaviour
 
         if (world < unlockedWorld ||
             (world == unlockedWorld && subWorld < unlockedSubWorld) ||
-            (world == unlockedWorld && subWorld <= unlockedSubWorld && level < unlockedLevel))
+            (world == unlockedWorld && subWorld <= unlockedSubWorld && level < unlockedLevel) || Prefs.IsLevelEnd)
         {
             background.sprite = solvedSprite;
             solvedBtn.SetActive(true);
