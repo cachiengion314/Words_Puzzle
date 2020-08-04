@@ -199,7 +199,7 @@ public class ExtraWordDialog : Dialog
 
     public void Claim()
     {
-        extraProgress.current -= (int)extraProgress.target;
+        extraProgress.current = 0;
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
 
@@ -226,7 +226,7 @@ public class ExtraWordDialog : Dialog
 
     private void Collect()
     {
-        extraProgress.current -= (int)extraProgress.target;
+        extraProgress.current = 0;
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
 
