@@ -34,15 +34,15 @@ public class ObjectiveManager : MonoBehaviour
         if ((Prefs.countLevelDaily >= objectiveData.dailyDatas[0] && !CPlayerPrefs.GetBool("Completed_Daily_" + 0, false))||
             (Prefs.countAmazingDaily >= objectiveData.dailyDatas[1] && !CPlayerPrefs.GetBool("Completed_Daily_" + 1, false)) ||
             (Prefs.countSpellDaily >= objectiveData.dailyDatas[2] && !CPlayerPrefs.GetBool("Completed_Daily_" + 2, false)) ||
-            (Prefs.countLevel >= objectiveData.achievementsDatas[0]) ||
-            (Prefs.countGreat >= objectiveData.achievementsDatas[1]) ||
-            (Prefs.countAmazing >= objectiveData.achievementsDatas[2]) ||
-            (Prefs.countAwesome >= objectiveData.achievementsDatas[3]) ||
-            (Prefs.countExcellent >= objectiveData.achievementsDatas[4]) ||
-            (Prefs.countSpell >= objectiveData.achievementsDatas[5]) ||
-            (Prefs.countExtra >= objectiveData.achievementsDatas[6]) ||
-            (Prefs.countBooster >= objectiveData.achievementsDatas[7]) ||
-            (Prefs.countLevelMisspelling >= objectiveData.achievementsDatas[8]))
+            (Prefs.countLevel >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 0, objectiveData.achievementsDatas[0])) ||
+            (Prefs.countGreat >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 1, objectiveData.achievementsDatas[1])) ||
+            (Prefs.countAmazing >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 2, objectiveData.achievementsDatas[2])) ||
+            (Prefs.countAwesome >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 3, objectiveData.achievementsDatas[3])) ||
+            (Prefs.countExcellent >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 4, objectiveData.achievementsDatas[4])) ||
+            (Prefs.countSpell >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 5, objectiveData.achievementsDatas[5])) ||
+            (Prefs.countExtra >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 6, objectiveData.achievementsDatas[6])) ||
+            (Prefs.countBooster >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 7, objectiveData.achievementsDatas[7])) ||
+            (Prefs.countLevelMisspelling >= CPlayerPrefs.GetInt("OBJECTIVE_ACHIVE_" + 8, objectiveData.achievementsDatas[8])))
             ShowIcon(true);
         else
             ShowIcon(false);
