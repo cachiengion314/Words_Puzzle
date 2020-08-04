@@ -87,7 +87,7 @@ public class AdsManager : MonoBehaviour
                 if (UnityAdTest.instance.IsShowing())
                     SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 else
-                    onAdsClose?.Invoke();
+                    adsNotReadyYetCallback?.Invoke();
             }
             else
             {
