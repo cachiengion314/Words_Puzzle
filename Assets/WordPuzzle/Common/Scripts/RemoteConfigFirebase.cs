@@ -169,28 +169,37 @@ public class RemoteConfigFirebase : MonoBehaviour
                 ConfigController.instance.config.admob.interstitialLevel = CheckNull(admob_level_transition, AdmobController.instance.interstitialAdsId);
                 ConfigController.instance.config.admob.bannerLevel = CheckNull(admob_banner, AdmobController.instance.bannerAdsId);
                 // Min Level to load banner
-                AdsManager.instance.MinLevelToLoadBanner = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
+                AdsManager.instance.MinLevelToLoadBanner = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
                 LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadBanner);
                 // Min level to load rewarded video ads
-                AdsManager.instance.MinLevelToLoadRewardVideo = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
+                AdsManager.instance.MinLevelToLoadRewardVideo = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
                 LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadRewardVideo);
                 // Percent to load interstitial ads
-                AdsManager.instance.PercentToloadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
+                AdsManager.instance.PercentToloadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
                 LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.PercentToloadInterstitial);
                 // Min level to load interstitial ads
-                AdsManager.instance.MinLevelToLoadInterstitial = int.Parse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
+                AdsManager.instance.MinLevelToLoadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
                 LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadInterstitial);
             }
             else
             {
                 // no internet conection
-                AdsManager.instance.MinLevelToLoadBanner = 10;
-                AdsManager.instance.MinLevelToLoadRewardVideo = 10;
+                AdsManager.instance.MinLevelToLoadBanner = 50;
+                AdsManager.instance.MinLevelToLoadRewardVideo = 50;
                 AdsManager.instance.PercentToloadInterstitial = 50;
-                AdsManager.instance.MinLevelToLoadInterstitial = 10;
+                AdsManager.instance.MinLevelToLoadInterstitial = 50;
             }
         });
 
+    }
+    public int CheckIntParse(string stringValue)
+    {
+        int intValue = 50;
+        if (stringValue != null || stringValue != string.Empty)
+        {
+            if (int.TryParse(stringValue, out intValue)) ;
+        }
+        return intValue;
     }
     public string CheckNull(string idAds, string idAds2)
     {

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class WorldController : BaseController
 {
@@ -17,6 +18,7 @@ public class WorldController : BaseController
     [SerializeField] private WorldItem _wordItemPfb;
     [SerializeField] private Transform _root;
     [SerializeField] private ScrollRect _scroll;
+    private ScrollView scrollView;
 
     private bool _isCheckItem;
     private float _heightItem;
@@ -56,6 +58,7 @@ public class WorldController : BaseController
         _heightRoot = _heightItem * worldItems.Count;
         mainUI.anchoredPosition = scrollContent.anchoredPosition;
         SetPosScroll();
+      
     }
 
     private void Update()
@@ -93,45 +96,49 @@ public class WorldController : BaseController
             });
         }
     }
-
-
     void ScrollRectCallBack(Vector2 value)
     {
-        if (value.y <= 0.1f)
+
+        if (value.y <= .1f)
         {
-            foreach (var item in worldItems)
+            for (int i = 0; i < worldItems.Count; i++)
             {
-                if (!item.gameObject.activeInHierarchy)
+                if (!worldItems[i].gameObject.activeInHierarchy)
                 {
-                    item.gameObject.SetActive(true);
+                    worldItems[i].gameObject.SetActive(true);
                     break;
                 }
             }
         }
-        CheckShowItem();
-    }
-
-    private void CheckShowItem()
-    {
-        foreach (var item in worldItems)
+        else if (value.y > .2f)
         {
-            if (item.transform.position.y < posLast.position.y /*|| item.transform.position.y > posFirst.position.y*/)
-                item.gameObject.SetActive(false);
-            //else
-            //    item.gameObject.SetActive(true);
+            //for (int i = 0; i < worldItems.Count; i++)
+            //{
+            //    if (worldItems[i].transform.position.y < posLast.position.y)
+            //    {
+            //        worldItems[i].gameObject.SetActive(false);
+            //    }
+            //}
         }
     }
+    //private void CheckShowItem()
+    //{
+    //    foreach (var item in worldItems)
+    //    {
+    //        if (item.transform.position.y < posLast.position.y)
+    //            item.gameObject.SetActive(false);           
+    //    }
+    //}
 
-    private void SetlayoutItem()
-    {
-        foreach (var item in worldItems)
-        {
-            item.gameObject.SetActive(true);
-            item.gameObject.SetActive(false);
-        }
-        CheckShowItem();
-    }
-
+    //private void SetlayoutItem()
+    //{
+    //    foreach (var item in worldItems)
+    //    {
+    //        item.gameObject.SetActive(true);
+    //        item.gameObject.SetActive(false);
+    //    }
+    //    CheckShowItem();
+    //}
     private void FirstCreateWord()
     {
         worldItems.Clear();

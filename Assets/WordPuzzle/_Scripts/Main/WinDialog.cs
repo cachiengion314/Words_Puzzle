@@ -694,7 +694,11 @@ public class WinDialog : Dialog
                  CPlayerPrefs.SetBool("Received", true);
              Close();
              if (currlevel >= lastLevel.level)
+             {
+                 AudienceNetworkBanner.instance.DisposeAllBannerAd();
+                 Debug.Log("Banner disposed");
                  CUtils.LoadScene(Const.SCENE_HOME, true);
+             }              
              else
                  CUtils.LoadScene(Const.SCENE_MAIN, true);
          });
@@ -732,7 +736,11 @@ public class WinDialog : Dialog
                 CPlayerPrefs.SetBool("Received", true);
             Close();
             if (currlevel >= lastLevel.level)
+            {
+                //AudienceNetworkBanner.instance.DisposeAllBannerAd();
+                //Debug.Log("Banner disposed");
                 CUtils.LoadScene(Const.SCENE_HOME, true);
+            }               
             else
                 CUtils.LoadScene(Const.SCENE_MAIN, true);
         });
