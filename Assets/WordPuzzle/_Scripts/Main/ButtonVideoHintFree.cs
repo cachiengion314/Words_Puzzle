@@ -83,7 +83,7 @@ public class ButtonVideoHintFree : MonoBehaviour
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeLetter;
         AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeLetter;
 
-        AdsManager.instance.ShowVideoAds();
+        AdsManager.instance.ShowVideoAds(true, OnAdsClosed);
 
         Sound.instance.Play(Sound.Others.PopupOpen);
         //#if UNITY_EDITOR
