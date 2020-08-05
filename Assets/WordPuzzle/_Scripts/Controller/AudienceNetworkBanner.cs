@@ -32,7 +32,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         SceneManager.activeSceneChanged += ChangedActiveSceneToLoadBanner;
     }
     int nextSceneName;
-    bool hasLoadMainScene;
+ 
     private void ChangedActiveSceneToLoadBanner(Scene current, Scene next)
     {
         nextSceneName = next.buildIndex;
@@ -42,12 +42,10 @@ public class AudienceNetworkBanner : MonoBehaviour
             if (CUtils.IsAdsRemoved()) return;
 
             LoadBanner();
-
-            hasLoadMainScene = true;
         }
         else if (nextSceneName != 3)
         {
-            hasLoadMainScene = false;
+            DisposeAllBannerAd();
         }
     }
     public void DisposeAllBannerAd()

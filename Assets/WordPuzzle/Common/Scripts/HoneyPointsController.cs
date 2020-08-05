@@ -21,7 +21,7 @@ public class HoneyPointsController : MonoBehaviour
     public TextMeshProUGUI visualHoneyPointsTxt;
 
     private int totalTitlePoints;
-    private int[] titlePointsArray = new int[12] { 0, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4 };
+    private readonly int[] titlePointsArray = new int[12] { 0, 0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4 };
     private int lineIndex;
     public int LineIndex
     {

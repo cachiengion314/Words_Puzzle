@@ -695,8 +695,8 @@ public class WinDialog : Dialog
              Close();
              if (currlevel >= lastLevel.level)
              {
-                 AudienceNetworkBanner.instance.DisposeAllBannerAd();
-                 Debug.Log("Banner disposed");
+                 //AudienceNetworkBanner.instance.DisposeAllBannerAd();
+                
                  CUtils.LoadScene(Const.SCENE_HOME, true);
              }              
              else
@@ -738,7 +738,7 @@ public class WinDialog : Dialog
             if (currlevel >= lastLevel.level)
             {
                 //AudienceNetworkBanner.instance.DisposeAllBannerAd();
-                //Debug.Log("Banner disposed");
+             
                 CUtils.LoadScene(Const.SCENE_HOME, true);
             }               
             else
