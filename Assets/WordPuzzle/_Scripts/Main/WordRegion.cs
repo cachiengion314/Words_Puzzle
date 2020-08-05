@@ -1201,6 +1201,10 @@ public class WordRegion : MonoBehaviour
                 TutorialController.instance.ShowPopBonusBoxTut();
             });
         }
+        else if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
+        {
+            TutorialController.instance.ShowPopHoneyHeaderTut();
+        }
         else
             CheckShowDontLikeAdsDialog();
     }
