@@ -1172,10 +1172,12 @@ public class WordRegion : MonoBehaviour
 
     public void CheckShowBonusBoxTut()
     {
+        var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
+        var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(line => line.isShown) : false;
         var lastLineIsShown = lines.FindAll(li => li.isShown);
         if (lastLineIsShown.Count > 0)
             _lineIsChecking = lastLineIsShown[lastLineIsShown.Count - 1];
-        if (_currLevel >= TutorialController.instance.bonusBoxLevel && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking != null && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
+        if (_currLevel >= TutorialController.instance.bonusBoxLevel && isShowBonusbox && !CPlayerPrefs.HasKey("TUT_EXTRA_WORD") && _lineIsChecking != null && _lineIsChecking.isShown && _lineIsChecking.answers.Count > 1)
         {
             CPlayerPrefs.SetBool("TUTORIAL", false);
             BlockScreen.instance.Block(true);
