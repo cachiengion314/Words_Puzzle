@@ -17,6 +17,7 @@ public class HomeController : BaseController
     public Button btnFreeBoosters;
     public GameObject FreeBoostersShadow;
     public GameObject chickenBankShadow;
+    public GameObject honeyShadow;
     public GameObject notiChickenMax;
     public GameObject notiOpenFreeBoosters;
     public Animator animatorTitle;
@@ -72,6 +73,8 @@ public class HomeController : BaseController
         }
         ShowIconNoti();
         FreeBoostersShadow.SetActive(btnFreeBoosters.gameObject.activeSelf);
+        if (!CPlayerPrefs.GetBool("HONEY_TUTORIAL", false))
+            honeyShadow.SetActive(false);
     }
 
     public void OnClick(int index)
