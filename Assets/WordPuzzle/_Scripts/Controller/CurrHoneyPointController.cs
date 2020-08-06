@@ -11,6 +11,8 @@ public class CurrHoneyPointController : MonoBehaviour
 
     void Start()
     {
+        if (!CPlayerPrefs.GetBool("HONEY_TUTORIAL", false))
+            transform.parent.gameObject.SetActive(false);
         UpdateHoneyPoint();
         if (HoneyPointsController.instance != null)
             HoneyPointsController.instance.onChangedHoneyPoints += OnChangeHoneyPoint;

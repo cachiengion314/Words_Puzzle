@@ -522,6 +522,7 @@ public class TutorialController : MonoBehaviour
     {
         if (WordRegion.instance != null)
         {
+            WordRegion.instance.bgHoney.gameObject.SetActive(true);
             var canvas = WordRegion.instance.bgHoney.GetComponent<Canvas>();
             canvas.overrideSorting = true;
             canvas.sortingLayerName = "UI1";
