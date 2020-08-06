@@ -51,16 +51,20 @@ public class DontLikeAdsDialog : Dialog
             foreach (var icon in _iconsNoAds)
             {
                 if (icon != null)
+                {
                     icon.sprite = currTheme.uiData.dontLikeAdsData.iconsNoAds[indexIcon];
-                icon.SetNativeSize();
-                indexIcon++;
+                    icon.SetNativeSize();
+                    indexIcon++;
+                }
             }
 
             foreach (var btn in _btnPrice)
             {
                 if (btn != null)
+                {
                     btn.sprite = currTheme.uiData.dontLikeAdsData.btnPrice;
-                btn.SetNativeSize();
+                    btn.SetNativeSize();
+                }
             }
 
             foreach (var text in _textPrice)

@@ -84,14 +84,16 @@ public class AdsManager : MonoBehaviour
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowVideoAds();
                 Debug.Log("Show Ads UNITY ADS");
-                if (UnityAdTest.instance.IsShowing())
-                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
-                else
-                {
-                    if (showToast)
-                        Toast.instance.ShowMessage("Rewarded video is not ready");
-                    adsNotReadyYetCallback?.Invoke();
-                }
+                TweenControl.GetInstance().DelayCall(transform, 1f,()=> {
+                    if (UnityAdTest.instance.IsShowing())
+                        SceneAnimate.Instance.ShowOverLayPauseGame(true);
+                    else
+                    {
+                        if (showToast)
+                            Toast.instance.ShowMessage("Rewarded video is not ready");
+                        adsNotReadyYetCallback?.Invoke();
+                    }
+                });
             }
             else
             {
