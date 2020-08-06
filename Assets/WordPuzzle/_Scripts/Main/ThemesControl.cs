@@ -152,13 +152,13 @@ public class ThemesControl : MonoBehaviour
                 HoneyPointsController.instance.honeyTxt.color = currTheme.fontData.colorTextHeader;
                 HoneyPointsController.instance.honeyTxt.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
                 HoneyPointsController.instance.visualHoneyPointsTxt.font = currTheme.fontData.fontAsset;
-                Color currentColor = currTheme.fontData.colorTextHeader;
+                Color currentColor = currTheme.fontData.colorWhenPlusStar;
                 HoneyPointsController.instance.visualHoneyPointsTxt.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0);
             }
             if (MonoUtils.instance != null)
             {
                 MonoUtils.instance.textCollectDefault.font = currTheme.fontData.fontAsset;
-                Color currentColor = currTheme.fontData.colorTextHeader;
+                Color currentColor = currTheme.fontData.colorWhenPlusStar;
                 MonoUtils.instance.textCollectDefault.color = new Color(currentColor.r, currentColor.g, currentColor.b, 0);
             }
 

@@ -138,7 +138,6 @@ public class FlagTabController : MonoBehaviour
         foreach (var pair in FacebookController.instance.user.unlockedFlagWords)
         {
             unlockedWordHashset.Add(pair.Value.ToLower());
-            LogController.Debug("UnlockedWordDic: " + pair);
         }
         foreach (var item in flagItemList)
         {

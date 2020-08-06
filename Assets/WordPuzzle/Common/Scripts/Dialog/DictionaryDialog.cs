@@ -12,6 +12,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using System;
 using PlayFab;
+using Microsoft.SqlServer.Server;
 
 public class DictionaryDialog : Dialog
 {
@@ -24,6 +25,10 @@ public class DictionaryDialog : Dialog
     public RectTransform scrollFlag;
     public GameObject flagItemPrefab;
     public GameObject FlagBtn;
+
+    public TextMeshProUGUI titleFlagTabTxt;
+    private readonly string TITLE_CONTENT = "Unlock flags to discover the world";
+
     public TextMeshProUGUI visualHoneyTxt;
     public TextMeshProUGUI honeyTxt;
     public FlagMeanDialog flagMeanDialog;
@@ -95,17 +100,7 @@ public class DictionaryDialog : Dialog
             CloneListGroupWord();
         numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
 
-        InstantiateFlags();
-
-        if (HoneyFrameHomeScene.isClickOnThis || HoneyFrameMainScene.isClickOnThis)
-        {
-            OnClickFlagTab();
-            HoneyFrameHomeScene.isClickOnThis = false;
-            HoneyFrameMainScene.isClickOnThis = false;
-        }
-        else
-            OnClickVocabularyTab();
-
+        InitFlagTab();
 
         if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
         {
@@ -129,7 +124,42 @@ public class DictionaryDialog : Dialog
             });
         }
     }
-    public void InstantiateFlags()
+    private void InitFlagTab()
+    {
+        InstantiateFlags();
+
+        WriteFlagTabTitleContent();
+
+        if (HoneyFrameHomeScene.isClickOnThis || HoneyFrameMainScene.isClickOnThis)
+        {
+            OnClickFlagTab();
+            HoneyFrameHomeScene.isClickOnThis = false;
+            HoneyFrameMainScene.isClickOnThis = false;
+        }
+        else
+        {
+            OnClickVocabularyTab();
+        }
+    }
+    public void WriteFlagTabTitleContent()
+    {
+        string title_content;
+        int countUnlock = FlagTabController.instance.unlockedWordHashset.Count;
+        if (countUnlock == 0)
+        {
+            title_content = TITLE_CONTENT;
+        }
+        else if (countUnlock == 1)
+        {
+            title_content = string.Format("You have unlocked {0} flag", 1);
+        }
+        else
+        {
+            title_content = string.Format("You have unlocked {0} flags", countUnlock); ;
+        }
+        titleFlagTabTxt.text = title_content;
+    }
+    private void InstantiateFlags()
     {
         // Instantiate the flag tab
         for (int i = 0; i < FlagTabController.instance.flagItemList.Count; i++)

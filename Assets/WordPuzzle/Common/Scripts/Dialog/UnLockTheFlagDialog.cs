@@ -47,6 +47,7 @@ public class UnLockTheFlagDialog : Dialog
             {
                 FlagTabController.instance.AddToUnlockedWordDictionary(flagItemWhenClick.flagName);
             }
+            DictionaryDialog.instance.WriteFlagTabTitleContent();
             FlagTabController.instance.SaveUnlockedWordData();
             OnClickCloseUnLockTheFlagDialog();
         }

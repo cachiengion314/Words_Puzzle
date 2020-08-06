@@ -28,6 +28,9 @@ MonoBehaviour:
     colorTextHeader: {r: 1, g: 0.7294118, b: 0.46666667, a: 1}
     colorTextNumStar: {r: 0, g: 0, b: 0, a: 0}
     colorNotify: {r: 0, g: 0, b: 0, a: 0}
+    colorContentDialog: {r: 0, g: 0, b: 0, a: 0}
+    colorWin: {r: 0.9659842, g: 1, b: 0.2216981, a: 0}
+    colorWhenPlusStar: {r: 1, g: 1, b: 0.18431373, a: 0}
   uiData:
     iconStarFly: {fileID: 21300000, guid: d9d7ffc5a7b18dc47b5eb0cba61a4298, type: 3}
     showShadow: 1
@@ -63,12 +66,199 @@ MonoBehaviour:
     bgTutorialLine: {fileID: 0}
     iconHoney: {fileID: 0}
     bgHoney: {fileID: 0}
+    colorLinerender:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    colorParticle: {r: 0, g: 0, b: 0, a: 0}
+    colorParticle2: {r: 0, g: 0, b: 0, a: 0}
     showShadowHome: 1
     bgHome: {fileID: 0}
     shadowCurrencyHome: {fileID: 0}
     bgBoardDialog: {fileID: 21300000, guid: 84d1f0b7ca1fec146ae89a25ea982c4f, type: 3}
     imageTitleDialog: {fileID: 21300000, guid: 4144bf0d54214f744bc96a8f7f6af2c4, type: 3}
     btnCloseDialog: {fileID: 21300000, guid: 01add38953ffab040b42ffcd4e18024f, type: 3}
+    objectivesData:
+      foreGround: {fileID: 0}
+      btnDailyOn: {fileID: 0}
+      iconDailyOn: {fileID: 0}
+      iconDailyOff: {fileID: 0}
+      btnAchiveOn: {fileID: 0}
+      iconAchiveOn: {fileID: 0}
+      iconAchiveOff: {fileID: 0}
+      bgNote: {fileID: 0}
+      bgQuestDaily: {fileID: 0}
+      bgQuestAchive: {fileID: 0}
+      progressMask: {fileID: 0}
+      imageProgress: {fileID: 0}
+      bgProgress: {fileID: 0}
+      btnGo: {fileID: 0}
+      btnReward: {fileID: 0}
+      iconComplete: {fileID: 0}
+      iconStar: {fileID: 0}
+      spelling: {fileID: 0}
+      levelClear: {fileID: 0}
+      chappterClear: {fileID: 0}
+      extraWord: {fileID: 0}
+      booster: {fileID: 0}
+      levelMisspelling: {fileID: 0}
+      amazing: {fileID: 0}
+      awesome: {fileID: 0}
+      excelent: {fileID: 0}
+      good: {fileID: 0}
+      great: {fileID: 0}
+      colorTextProgress: {r: 0, g: 0, b: 0, a: 0}
+      colorTextBtnPlay: {r: 0, g: 0, b: 0, a: 0}
+      colorTextBtnCollect: {r: 0, g: 0, b: 0, a: 0}
+    menuData:
+      iconBtnNormal: {fileID: 0}
+      iconBtnTask: {fileID: 0}
+      iconBtnHelpFeddback: {fileID: 0}
+      iconHome: {fileID: 0}
+      iconTheme: {fileID: 0}
+      iconSetting: {fileID: 0}
+      iconObjective: {fileID: 0}
+      iconFeedback: {fileID: 0}
+      iconHelp: {fileID: 0}
+    freestarData:
+      btnWatch: {fileID: 0}
+      iconAds: {fileID: 0}
+      iconStar: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+    comingSoonData:
+      message: {fileID: 0}
+      btnClose: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+    helpData:
+      btnNomal: {fileID: 0}
+      btnFb: {fileID: 0}
+      btnMessager: {fileID: 0}
+      btnMail: {fileID: 0}
+      iconOther: {fileID: 0}
+      iconFb: {fileID: 0}
+      iconMessager: {fileID: 0}
+      iconMail: {fileID: 0}
+    feedbackData:
+      bgOption: {fileID: 0}
+      btnMissingWord: {fileID: 0}
+      btnLevelWord: {fileID: 0}
+      btnContact: {fileID: 0}
+      iconMissingWord: {fileID: 0}
+      iconLevelWord: {fileID: 0}
+      iconContact: {fileID: 0}
+    missingWordData:
+      boardMissingWord: {fileID: 0}
+      btnSend: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+      colorTextFiel: {r: 0, g: 0, b: 0, a: 0}
+    levelWordData:
+      btnSend: {fileID: 0}
+      boardWord: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+      wordNormal: {fileID: 0}
+      wordDone: {fileID: 0}
+      colorTextWordPfb: {r: 0, g: 0, b: 0, a: 0}
+    contactData:
+      boardContact: {fileID: 0}
+      btnSend: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+      colorTextFiel: {r: 0, g: 0, b: 0, a: 0}
+    meanWordData:
+      board: {fileID: 0}
+      arrowLeft: {fileID: 0}
+      arrowRight: {fileID: 0}
+      selectedPanigation: {fileID: 0}
+      disablePanigation: {fileID: 0}
+    rewardDialogData:
+      btnCollect: {fileID: 0}
+      colorBtn: {r: 0, g: 0, b: 0, a: 0}
+    settingData:
+      iconSound: {fileID: 0}
+      iconMusic: {fileID: 0}
+      iconEffect: {fileID: 0}
+      iconNotification: {fileID: 0}
+      iconOn: {fileID: 0}
+      iconOff: {fileID: 0}
+      iconArrow: {fileID: 0}
+      handle: {fileID: 0}
+      bgProgress: {fileID: 0}
+      fillProgress: {fileID: 0}
+      frameMask: {fileID: 0}
+      line: {fileID: 0}
+      line2: {fileID: 0}
+      btnFeedback: {fileID: 0}
+      btnRate: {fileID: 0}
+      colorTextBtnFeedback: {r: 0, g: 0, b: 0, a: 0}
+      colorTextBtnRate: {r: 0, g: 0, b: 0, a: 0}
+    freestarPlayData:
+      iconGift: {fileID: 0}
+      iconStar: {fileID: 0}
+      iconHint: {fileID: 0}
+      iconSelectedHint: {fileID: 0}
+      iconMultipleHint: {fileID: 0}
+      iconAds: {fileID: 0}
+      btnWatch: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+    collectFreestarPlayData:
+      iconGift: {fileID: 0}
+      iconStar: {fileID: 0}
+      btnCollect: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+    bonusBoxData:
+      btnHtpl: {fileID: 0}
+      board: {fileID: 0}
+      boardTitle: {fileID: 0}
+      iconStar: {fileID: 0}
+      bgProgress: {fileID: 0}
+      progressBar: {fileID: 0}
+      circleProgress: {fileID: 0}
+      btnCollect: {fileID: 0}
+      btnReward: {fileID: 0}
+      iconCandyStar: {fileID: 0}
+      iconAds: {fileID: 0}
+      alignCenterIcon: 0
+      colorTextBoardTitle: {r: 0, g: 0, b: 0, a: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+      colorTextBtnReward: {r: 0, g: 0, b: 0, a: 0}
+    howtoplayData:
+      arrowLeft: {fileID: 0}
+      arrowRight: {fileID: 0}
+      hand: {fileID: 0}
+      imagesCenter: []
+    dontLikeAdsData:
+      itemTop: {fileID: 0}
+      bgItemSmall: {fileID: 0}
+      iconStar: {fileID: 0}
+      iconHint: {fileID: 0}
+      btnPrice: {fileID: 0}
+      btnMore: {fileID: 0}
+      colorTextBtn: {r: 0, g: 0, b: 0, a: 0}
+      iconsNoAds: []
   animData:
     skinAnim: Woody
     boneFx: 

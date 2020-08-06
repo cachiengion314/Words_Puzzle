@@ -33,6 +33,7 @@ public class FontData
     public Color colorNotify;
     public Color colorContentDialog;
     public Color colorWin;
+    public Color colorWhenPlusStar;
 }
 
 [Serializable]
