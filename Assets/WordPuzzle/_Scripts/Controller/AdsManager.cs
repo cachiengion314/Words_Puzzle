@@ -87,7 +87,11 @@ public class AdsManager : MonoBehaviour
                 if (UnityAdTest.instance.IsShowing())
                     SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 else
+                {
+                    if (showToast)
+                        Toast.instance.ShowMessage("Rewarded video is not ready");
                     adsNotReadyYetCallback?.Invoke();
+                }
             }
             else
             {

@@ -19,7 +19,7 @@ public class FlagItemController : MonoBehaviour
     [HideInInspector] public Sprite flagImage;
     [SerializeField] private Image flagImg;
     [SerializeField] private GameObject LockBgImg;
-    [SerializeField] private TextMeshProUGUI nameTxt;
+    [SerializeField] private Text nameTxt;
     [SerializeField] private Image lockImg;
     [Space]
     public Canvas canvas;

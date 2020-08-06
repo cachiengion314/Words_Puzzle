@@ -793,7 +793,7 @@ public class WinDialog : Dialog
         //    if (!AdsManager.instance.AdsIsLoaded())
         //    {
         //        //_btnAdsDisable.SetActive(true);
-        RewardButton.gameObject.SetActive(false);
+        //RewardButton.gameObject.SetActive(false);
         //        //txtRewardByAds.color = _colorDisable;
         _nextButton.interactable = true;
         //    }
