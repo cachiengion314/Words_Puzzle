@@ -357,9 +357,8 @@ public class WinDialog : Dialog
                 {
                     tweenControl.Scale(button, Vector3.one, 0.3f,
                         () =>
-                        {
-                            //TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 1, .5f, () => { TweenControl.GetInstance().FadeAnfaText(honeyPointsTxt, 0, .5f); });
-                            if (!isColorFade) this.StartCoroutine(ColorFade());
+                        {                        
+                            if (!isColorFade) StartCoroutine(ColorFade());
                         }
                         , EaseType.InQuad);
                 });

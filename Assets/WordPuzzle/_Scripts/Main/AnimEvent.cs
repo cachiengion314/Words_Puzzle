@@ -23,7 +23,7 @@ public class AnimEvent : MonoBehaviour
         {
             var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
             BlockScreen.instance.Block(false);
-            
+
             if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0)
             {
                 //Timer.Schedule(this, 1f, () =>
@@ -108,11 +108,11 @@ public class AnimEvent : MonoBehaviour
                     TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.3f);
                     TweenControl.GetInstance().Scale(letter.gameObject, Vector3.zero, 0.3f, () =>
                     {
-                        if (EffectController.instance.IsEffectOn) 
+                        if (EffectController.instance.IsEffectOn)
                         {
                             var fxEffect = Instantiate(WordRegion.instance.compliment.fxHidenLetter, letter.transform);
                         }
-                       
+
                     }, EaseType.InQuad);
                 });
                 yield return new WaitForSeconds(0.2f);
@@ -128,36 +128,42 @@ public class AnimEvent : MonoBehaviour
                             AdsManager.instance.onAdsClose += OnCloseAdsInterstial;
                             AdsManager.instance.onAdsFailedToLoad += OnAdsFailedInterstial;
 
-                            AdsManager.instance.ShowInterstitialAds(()=> {
-                                ShowLevelClear();
+                            AdsManager.instance.ShowInterstitialAds(() =>
+                            {
+                                if (!isShowLevelClear)
+                                    ShowLevelClear();
                             });
                         }
                         else
                         {
-                            ShowLevelClear();
+                            if (!isShowLevelClear)
+                                ShowLevelClear();
                         }
                     }
                 }
             }
         }
     }
-
+    bool isShowLevelClear;
     private void ShowLevelClear()
     {
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             WinDialog.instance.ShowLevelChapterClear();
         });
+        isShowLevelClear = true;
     }
 
     void OnCloseAdsInterstial()
     {
-        ShowLevelClear();
+        if (!isShowLevelClear)
+            ShowLevelClear();
     }
 
     void OnAdsFailedInterstial()
     {
-        ShowLevelClear();
+        if (!isShowLevelClear)
+            ShowLevelClear();
     }
 
     private List<bool> InitListRandom()
