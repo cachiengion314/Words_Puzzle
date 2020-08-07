@@ -243,7 +243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3175309407184471962
 RectTransform:
   m_ObjectHideFlags: 0
@@ -312,8 +312,6 @@ GameObject:
   - component: {fileID: 5623614524212713148}
   - component: {fileID: 54718571958939877}
   - component: {fileID: 1550029431299390324}
-  - component: {fileID: 4266569784590694991}
-  - component: {fileID: 5270116212414581470}
   m_Layer: 8
   m_Name: FlagItem
   m_TagString: Untagged
@@ -360,13 +358,12 @@ MonoBehaviour:
   flagUnlockWord: 
   flagPopulation: 
   isLocked: 0
-  defaultFlagImage: {fileID: 21300000, guid: 5954c85301fad9f4ebb6e2ee63266b78, type: 3}
+  iconFlagLock: {fileID: 21300000, guid: 43879a76c00c70740b22abcf6e35edee, type: 3}
   flagImage: {fileID: 0}
   flagImg: {fileID: 6283713720252164437}
   LockBgImg: {fileID: 7585975160647670933}
   nameTxt: {fileID: 2809430870438106943}
   lockImg: {fileID: 4335409437122557989}
-  canvas: {fileID: 4266569784590694991}
 --- !u!222 &5623614524212713148
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -382,7 +379,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7960989243767277137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -463,41 +460,3 @@ MonoBehaviour:
   mRelatedObjects: []
   mInitialScale: {x: 1, y: 1}
   mLabelTMP: {fileID: 0}
---- !u!223 &4266569784590694991
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960989243767277137}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 1
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!114 &5270116212414581470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960989243767277137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295

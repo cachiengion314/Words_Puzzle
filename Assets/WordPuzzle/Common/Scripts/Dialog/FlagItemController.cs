@@ -14,20 +14,18 @@ public class FlagItemController : MonoBehaviour
     public string flagUnlockWord;
     public string flagPopulation;
     public bool isLocked;
-    public Sprite defaultFlagImage;
+    public Sprite iconFlagLock;
 
     [HideInInspector] public Sprite flagImage;
     [SerializeField] private Image flagImg;
     [SerializeField] private GameObject LockBgImg;
     [SerializeField] private Text nameTxt;
     [SerializeField] private Image lockImg;
-    [Space]
-    public Canvas canvas;
+    //[Space]
+    //public Canvas canvas;
 
     private void Start()
     {
-        flagImg.sprite = FlagTabController.instance.smallFlags[indexOfSmallFlagImage];
-
         nameTxt.text = flagName;
         if (isLocked)
         {
@@ -40,9 +38,12 @@ public class FlagItemController : MonoBehaviour
     }
     public void OnClickToTheFlag()
     {
-        canvas.overrideSorting = false;
+        //canvas.overrideSorting = false;
+
         if (TutorialController.instance != null)
         {
+            Destroy(gameObject.GetComponent<GraphicRaycaster>());
+            Destroy(gameObject.GetComponent<Canvas>());
             if (TutorialController.instance.isShowTut)
                 CPlayerPrefs.SetBool("CLOSE_TUTORIAL_FLAG", true);
             TutorialController.instance.HidenPopTut();
@@ -99,13 +100,15 @@ public class FlagItemController : MonoBehaviour
     {
         if (isOn)
         {
-            LockBgImg.gameObject.SetActive(false);
+            flagImg.sprite = FlagTabController.instance.smallFlags[indexOfSmallFlagImage];
+            //LockBgImg.gameObject.SetActive(false);
             nameTxt.gameObject.SetActive(false);
             lockImg.gameObject.SetActive(false);
         }
         else
         {
-            LockBgImg.gameObject.SetActive(true);
+            flagImg.sprite = iconFlagLock;
+            //LockBgImg.gameObject.SetActive(true);
             nameTxt.gameObject.SetActive(true);
             lockImg.gameObject.SetActive(true);
         }

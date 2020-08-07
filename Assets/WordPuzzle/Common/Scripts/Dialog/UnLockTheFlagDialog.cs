@@ -71,13 +71,15 @@ public class UnLockTheFlagDialog : Dialog
         {
             unlockByPlayingBtt.gameObject.SetActive(false);
             unlockByPlayingTxt.gameObject.SetActive(false);
-            amin.SetActive(true);
+            useHoneyToUnlockTxt.gameObject.SetActive(true);
+            //amin.SetActive(true);
         }
         else
         {
             unlockByPlayingBtt.gameObject.SetActive(true);
             unlockByPlayingTxt.gameObject.SetActive(true);
-            amin.SetActive(false);
+            useHoneyToUnlockTxt.gameObject.SetActive(false);
+            //amin.SetActive(false);
         }
     }
 }

@@ -26,7 +26,7 @@ public class DictionaryDialog : Dialog
     public GameObject flagItemPrefab;
     public GameObject FlagBtn;
 
-    public TextMeshProUGUI titleFlagTabTxt;
+    public Text titleFlagTabTxt;
     private readonly string TITLE_CONTENT = "Unlock flags to discover the world";
 
     public TextMeshProUGUI visualHoneyTxt;
@@ -44,7 +44,7 @@ public class DictionaryDialog : Dialog
     public ListGroupWord listGroupWord;
     public Transform content;
     public static DictionaryDialog instance;
-    public TextMeshProUGUI numWordPassedText;
+    public Text numWordPassedText;
     public List<string> listWordPassed;
 
     [HideInInspector] public ListGroupWord currListWord;
@@ -108,9 +108,12 @@ public class DictionaryDialog : Dialog
             var flagTarget = flagList.Find(flag => !flag.isLocked);
             //var sizeFlagTarget = Mathf.Abs(flagTarget.transform.localPosition.y);
             //var resultContentPos = sizeFlagTarget + scrollFlag.sizeDelta.y - (flagTarget.transform as RectTransform).sizeDelta.y / 2;
-            flagTarget.canvas.overrideSorting = true;
-            flagTarget.canvas.sortingLayerName = "UI2";
-            flagTarget.canvas.sortingOrder = 6;
+            var raycast = flagTarget.gameObject.AddComponent<GraphicRaycaster>();
+            flagTarget.gameObject.AddComponent<Canvas>();
+            var canvas = flagTarget.gameObject.GetComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "UI2";
+            canvas.sortingOrder = 6;
             flagTarget.transform.SetAsFirstSibling();
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
