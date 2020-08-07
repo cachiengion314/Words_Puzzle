@@ -13,6 +13,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     public string myPlacementId = "rewardedVideo";
     public string myInterstitialId = "myInterstitialId";
     public string bannerPlacementId = "bannerPlacement";
+    public bool isAdPlaySuccessAndPlayerCanClickClose;
 
     private void Awake()
     {
@@ -66,6 +67,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
             if (showResult == ShowResult.Finished)
             {
                 // Reward the user for watching the ad to completion.
+                isAdPlaySuccessAndPlayerCanClickClose = true;
                 AdsManager.instance.onAdsRewarded?.Invoke();
                 SceneAnimate.Instance.ShowOverLayPauseGame(false);
                 //Debug.Log("You get a Reward!!!");
@@ -74,6 +76,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
             {
                 // Do not reward the user for skipping the ad.
                 //Debug.Log("You don't get a Reward!!");
+                isAdPlaySuccessAndPlayerCanClickClose = true;
                 SceneAnimate.Instance.ShowOverLayPauseGame(false);
             }
             else if (showResult == ShowResult.Failed)
@@ -87,6 +90,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
             if (showResult == ShowResult.Finished)
             {
                 // Reward the user for watching the ad to completion.
+                isAdPlaySuccessAndPlayerCanClickClose = true;
                 AdsManager.instance.onAdsClose?.Invoke();
                 SceneAnimate.Instance.ShowOverLayPauseGame(false);
                 //Debug.Log("You get a Reward!!!");
@@ -95,6 +99,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
             {
                 // Do not reward the user for skipping the ad.
                 //Debug.Log("You don't get a Reward!!");
+                isAdPlaySuccessAndPlayerCanClickClose = true;
                 AdsManager.instance.onAdsClose?.Invoke();
                 SceneAnimate.Instance.ShowOverLayPauseGame(false);
             }

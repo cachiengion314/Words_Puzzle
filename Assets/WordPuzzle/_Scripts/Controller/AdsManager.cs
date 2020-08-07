@@ -59,6 +59,7 @@ public class AdsManager : MonoBehaviour
         if (UnityAdTest.instance != null)
         {
             UnityAdTest.instance.ReloadVideoAds();
+            UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose = false;
         }
         _isLoading = true;
     }
@@ -84,16 +85,20 @@ public class AdsManager : MonoBehaviour
                 _adsController = UnityAdTest.instance;
                 _adsController.ShowVideoAds();
                 Debug.Log("Show Ads UNITY ADS");
-                TweenControl.GetInstance().DelayCall(transform, 1f,()=> {
-                    if (UnityAdTest.instance.IsShowing())
-                        SceneAnimate.Instance.ShowOverLayPauseGame(true);
-                    else
+                if (!UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose)
+                {
+                    TweenControl.GetInstance().DelayCall(transform, 1f, () =>
                     {
-                        if (showToast)
-                            Toast.instance.ShowMessage("Rewarded video is not ready");
-                        adsNotReadyYetCallback?.Invoke();
-                    }
-                });
+                        if (UnityAdTest.instance.IsShowing())
+                            SceneAnimate.Instance.ShowOverLayPauseGame(true);
+                        else
+                        {
+                            if (showToast)
+                                Toast.instance.ShowMessage("Rewarded video is not ready");
+                            adsNotReadyYetCallback?.Invoke();
+                        }
+                    });
+                }
             }
             else
             {

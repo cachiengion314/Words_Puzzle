@@ -535,7 +535,7 @@ public class TutorialController : MonoBehaviour
 
     }
 
-    public void ShowPopFlagTut(Transform posTarget)
+    public void ShowPopFlagTut(FlagItemController flagItem)
     {
         CPlayerPrefs.SetBool("HONEY_TUTORIAL", true);
         isShowTut = true;
@@ -544,8 +544,9 @@ public class TutorialController : MonoBehaviour
         canvasOverlay.sortingLayerName = "UI2";
         canvasOverlay.sortingOrder = 5;
         _popFlag.SetActive(true);
-        _textTutorialFlag.text = contentFlag;
-        _handFlagTut.transform.position = posTarget.position;
+        string unlockWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;       
+        _textTutorialFlag.text = "You have found " + unlockWord.ToUpper() + " word to unlock " + flagItem.flagName.ToUpper() + " Flag.";
+        _handFlagTut.transform.position = flagItem.transform.position;
     }
 
     public void HidenPopTut()

@@ -117,7 +117,7 @@ public class DictionaryDialog : Dialog
             flagTarget.transform.SetAsFirstSibling();
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
-                TutorialController.instance.ShowPopFlagTut(flagTarget.transform);
+                TutorialController.instance.ShowPopFlagTut(flagTarget);
                 //scrollFlag.GetComponent<ScrollRect>().content.anchoredPosition = new Vector3(flagTabScrollViewContent.transform.localPosition.x, resultContentPos);
                 //TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
                 //{
