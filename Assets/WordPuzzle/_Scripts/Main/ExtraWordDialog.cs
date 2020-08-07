@@ -199,7 +199,7 @@ public class ExtraWordDialog : Dialog
 
     public void Claim()
     {
-        extraProgress.current = 0;
+        extraProgress.current = Mathf.Abs((int)extraProgress.current - (int)extraProgress.target);
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
 
@@ -226,7 +226,7 @@ public class ExtraWordDialog : Dialog
 
     private void Collect()
     {
-        extraProgress.current = 0;
+        extraProgress.current = Mathf.Abs((int)extraProgress.current - (int)extraProgress.target);
         Prefs.extraProgress = (int)extraProgress.current;
         UpdateUI();
 
