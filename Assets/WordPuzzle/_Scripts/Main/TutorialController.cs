@@ -545,7 +545,7 @@ public class TutorialController : MonoBehaviour
         canvasOverlay.sortingOrder = 5;
         _popFlag.SetActive(true);
         string unlockWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;       
-        _textTutorialFlag.text = "You have found " + unlockWord.ToUpper() + " word to unlock " + flagItem.flagName.ToUpper() + " Flag.";
+        _textTutorialFlag.text = "Tap on the flag to view information. You have found " + '"' + unlockWord.ToUpper() + '"' + " word to unlock " + flagItem.flagName.ToUpper() + " Flag.";
         _handFlagTut.transform.position = flagItem.transform.position;
     }
 
