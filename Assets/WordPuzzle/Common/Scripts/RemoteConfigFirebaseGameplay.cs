@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using Firebase.RemoteConfig;
+using System.Collections;
+
 public class RemoteConfigFirebaseGameplay : MonoBehaviour
 {
-    private static RemoteConfigFirebaseGameplay instance;
+    public static RemoteConfigFirebaseGameplay instance;
     // Audience NetWork Id ads
     public string fan_level_clear;
     public string fan_chapter_clear;
@@ -47,12 +49,20 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
     {
         if (RemoteConfigFirebase.instance != null) return;
 
-        FetchFireBase();
-        Invoke("GetAllIdAvertisement", 1.7f);
+        StartCoroutine(FetchDataWithDelay());      
     }
-    public void FetchFireBase()
+    public IEnumerator FetchDataWithDelay()
     {
-        FetchDataAsync();
+        yield return new WaitUntil(() => CrashlyticsInitializer.instance.isFirebaseReady);
+
+        CUtils.CheckConnection(this, (result) =>
+        {
+            if (result == 0)
+            {
+                FetchDataAsync();
+                Invoke("GetAllIdAvertisement", 1.7f);
+            }
+        });       
     }
     private string ConvertFirebaseStringToNormal(string firebasestr)
     {
@@ -150,7 +160,10 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
         int intValue = 50;
         if (stringValue != null || stringValue != string.Empty)
         {
-            if (int.TryParse(stringValue, out intValue)) ;
+            if (int.TryParse(stringValue, out intValue))
+            {
+                Debug.Log("intValue: " + intValue);
+            }
         }
         return intValue;
     }

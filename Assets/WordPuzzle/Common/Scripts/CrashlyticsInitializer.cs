@@ -8,6 +8,7 @@ using Firebase.Messaging;
 public class CrashlyticsInitializer : MonoBehaviour
 {
     public static CrashlyticsInitializer instance;
+    public bool isFirebaseReady;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -36,6 +37,7 @@ public class CrashlyticsInitializer : MonoBehaviour
                 FirebaseMessaging.TokenReceived += OnTokenReceived;
                 FirebaseMessaging.MessageReceived += OnMessageReceived;
                 // Set a flag here for indicating that your project is ready to use Firebase.
+                isFirebaseReady = true;
             }
             else
             {

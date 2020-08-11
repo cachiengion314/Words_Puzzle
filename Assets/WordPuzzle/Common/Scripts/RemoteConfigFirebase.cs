@@ -197,7 +197,10 @@ public class RemoteConfigFirebase : MonoBehaviour
         int intValue = 50;
         if (stringValue != null || stringValue != string.Empty)
         {
-            if (int.TryParse(stringValue, out intValue)) ;
+            if (int.TryParse(stringValue, out intValue))
+            {
+                Debug.Log("intValue: " + intValue);
+            }
         }
         return intValue;
     }
