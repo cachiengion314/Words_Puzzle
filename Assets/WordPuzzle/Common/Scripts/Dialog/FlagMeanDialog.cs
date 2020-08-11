@@ -15,7 +15,6 @@ public class FlagMeanDialog : Dialog
     public TextMeshProUGUI areaTxt;
     public TextMeshProUGUI populationTxt;
     [Space]
-    public Sprite[] bigFlags;
     public Image flagImg;
     public TextMeshProUGUI titleNameTxt;
     [Space]

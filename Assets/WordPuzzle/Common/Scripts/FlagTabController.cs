@@ -37,6 +37,10 @@ public class FlagTabController : MonoBehaviour
     public HashSet<string> flagItemWordHashset = new HashSet<string>();
     public HashSet<string> unlockedWordHashset = new HashSet<string>();
 
+    private readonly string COUNTRY_NAME = "name";
+    private readonly string SUB_REGION = "subregion";
+    private readonly string CAPITAL = "capital";
+    private readonly string AREA = "area";
     private readonly string POPULATION = "population";
 
     private bool isLoaded;
@@ -96,6 +100,7 @@ public class FlagTabController : MonoBehaviour
     }
     [HideInInspector] public bool isGetCountryRequestDone;
     [HideInInspector] public bool haveInternet;
+
     public IEnumerator GetCountryInfo(string countryName, string countryPopulation = "0")
     {
         isGetCountryRequestDone = false;
@@ -106,7 +111,7 @@ public class FlagTabController : MonoBehaviour
                 yield return null;
             isGetCountryRequestDone = true;
 
-            if (haveInternet)
+            if (haveInternet && !countryName.Equals("Wales", StringComparison.OrdinalIgnoreCase))
             {
                 byte[] result = request.downloadHandler.data;
                 string countryJSON = System.Text.Encoding.Default.GetString(result);
@@ -114,8 +119,18 @@ public class FlagTabController : MonoBehaviour
                 Dictionary<string, object> tempDic = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonArr[0].ToString());
                 countryInfo.Clear();
                 countryInfo = tempDic;
+                if (countryName.Equals("United Kingdom", StringComparison.OrdinalIgnoreCase))
+                {
+                    countryInfo[COUNTRY_NAME] = "United Kingdom";
+                }                
                 countryInfo[POPULATION] = countryPopulation;
             }
+            else if (haveInternet && countryName.Equals("Wales", StringComparison.OrdinalIgnoreCase))
+            {
+                countryInfo.Clear();
+                countryInfo = GetWalesCountryInfo();
+                countryInfo[POPULATION] = countryPopulation;
+            }          
         }
     }
     public void AddToUnlockedWordDictionary(string wordIsChecking)
@@ -144,6 +159,17 @@ public class FlagTabController : MonoBehaviour
             flagItemWordHashset.Add(item.flagUnlockWord.ToLower());
         }
         isLoaded = true;
+    }      
+    private Dictionary<string, object> GetWalesCountryInfo()
+    {
+        Dictionary<string, object> tempDic = new Dictionary<string, object>
+        {
+            [COUNTRY_NAME] = "Wales",
+            [SUB_REGION] = "Northern Europe",
+            [CAPITAL] = "Cardiff",
+            [AREA] = "20779"
+        };
+        return tempDic;
     }
     private string FindCountryNameWithUnlockedWord(string unlockedWord)
     {
