@@ -58,8 +58,6 @@ public class ExtraWordDialog : Dialog
         //    _rewardController = Instantiate(_rewardVideoPfb);
         //_rewardController.onRewardedCallback -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-        if (!AdsManager.instance.AdsIsLoaded())
-            AdsManager.instance.LoadDataAds();
 
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;

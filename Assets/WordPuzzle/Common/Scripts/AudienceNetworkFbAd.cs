@@ -53,7 +53,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("Interstitial ad failed to load with error: " + error);
             //statusLabel.text = "Interstitial ad failed to load. Check console for details.";
-            AdsManager.instance.onAdsFailedToLoad?.Invoke();
+            AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
         interstitialAd.InterstitialAdWillLogImpression = delegate ()
@@ -151,6 +151,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
         rewardedVideoAd.Show();
         isLoaded = false;
+        LoadVideoAds();
     }
     public void ShowBannerAds()
     {
@@ -200,6 +201,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("RewardedVideo ad failed to load with error: " + error);
             //Debug.Log("RewardedVideo ad failed to load. Check console for details.");
+            AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
         rewardedVideoAd.RewardedVideoAdWillLogImpression = delegate ()
@@ -223,6 +225,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         rewardedVideoAd.RewardedVideoAdDidFail = delegate ()
         {
             Debug.Log("Rewarded video ad not validated - FaceBook Ads Failed!");
+            AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
 

@@ -69,7 +69,6 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
                 // Reward the user for watching the ad to completion.
                 isAdPlaySuccessAndPlayerCanClickClose = true;
                 AdsManager.instance.onAdsRewarded?.Invoke();
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
                 //Debug.Log("You get a Reward!!!");
             }
             else if (showResult == ShowResult.Skipped)
@@ -77,12 +76,12 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
                 // Do not reward the user for skipping the ad.
                 //Debug.Log("You don't get a Reward!!");
                 isAdPlaySuccessAndPlayerCanClickClose = true;
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+                AdsManager.instance.onAdsClose?.Invoke();
             }
             else if (showResult == ShowResult.Failed)
             {
                 Debug.Log("UNITY Ads Load Failed!");
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+                AdsManager.instance.onAdsClose?.Invoke();
             }
         }
         else if (placementId == ConfigController.instance.config.unityAdsId.interstitialLevel)
@@ -91,8 +90,6 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
             {
                 // Reward the user for watching the ad to completion.
                 isAdPlaySuccessAndPlayerCanClickClose = true;
-                AdsManager.instance.onAdsClose?.Invoke();
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
                 //Debug.Log("You get a Reward!!!");
             }
             else if (showResult == ShowResult.Skipped)
@@ -101,15 +98,14 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
                 //Debug.Log("You don't get a Reward!!");
                 isAdPlaySuccessAndPlayerCanClickClose = true;
                 AdsManager.instance.onAdsClose?.Invoke();
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
             }
             else if (showResult == ShowResult.Failed)
             {
                 Debug.Log("UNITY Ads Load Failed!");
-                AdsManager.instance.onAdsFailedToLoad?.Invoke();
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+                AdsManager.instance.onAdsClose?.Invoke();
             }
         }
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
     public void OnUnityAdsReady(string placementId)
@@ -137,6 +133,7 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         Advertisement.Show(myPlacementId);
+        ReloadVideoAds();
     }
 
     public void ShowBannerAds()

@@ -22,13 +22,13 @@ public class AdmobController : MonoBehaviour, IAds
 
     private void Start()
     {
-        if (!CUtils.IsAdsRemoved())
-        {
+        //if (!CUtils.IsAdsRemoved())
+        //{
             //RequestInterstitial();
 
             InitRewardedVideo();
-            RequestRewardBasedVideo();
-        }
+            //RequestRewardBasedVideo();
+        //}
     }
     private void InitRewardedVideo()
     {
@@ -302,6 +302,7 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
+        RequestRewardBasedVideo();
         if (videoAdsId == null) return;
 
 
@@ -316,7 +317,6 @@ public class AdmobController : MonoBehaviour, IAds
             {
                 if (result == 0)
                 {
-                    RequestRewardBasedVideo();
                     adsNotReadyYetCallback?.Invoke();
                 }
                 else

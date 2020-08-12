@@ -34,11 +34,6 @@ public class AdsManager : MonoBehaviour
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
 
-    void Start()
-    {
-        LoadDataAds();
-    }
-
     public void LoadDataAds()
     {
         if (_isLoading)
@@ -74,7 +69,7 @@ public class AdsManager : MonoBehaviour
         if (AudienceNetworkFbAd.instance.isLoaded)
         {
             _adsController = AudienceNetworkFbAd.instance;
-            _adsController.ShowVideoAds();
+            _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
             Debug.Log("Show Ads FB");
             SceneAnimate.Instance.ShowOverLayPauseGame(true);
         }
@@ -83,7 +78,7 @@ public class AdsManager : MonoBehaviour
             if (UnityAdTest.instance.IsInitialized() && UnityAdTest.instance.IsLoaded())
             {
                 _adsController = UnityAdTest.instance;
-                _adsController.ShowVideoAds();
+                _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
                 Debug.Log("Show Ads UNITY ADS");
                 if (!UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose)
                 {
@@ -105,7 +100,7 @@ public class AdsManager : MonoBehaviour
                 if (AdmobController.instance.rewardBasedVideo.IsLoaded())
                 {
                     _adsController = AdmobController.instance;
-                    _adsController.ShowVideoAds();
+                    _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
                     Debug.Log("Show Ads Admob");
                     SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 }
@@ -120,7 +115,6 @@ public class AdsManager : MonoBehaviour
                             if (showToast)
                                 Toast.instance.ShowMessage("Rewarded video is not ready");
                             _isLoading = false;
-                            LoadDataAds();
                             adsNotReadyYetCallback?.Invoke();
                         }
                         else
@@ -212,7 +206,6 @@ public class AdsManager : MonoBehaviour
                     if (textMeshNoti != null)
                         textMeshNoti.text = "Rewarded video is not ready";
                     _isLoading = false;
-                    LoadDataAds();
                     checkComplete?.Invoke();
                 }
                 else
