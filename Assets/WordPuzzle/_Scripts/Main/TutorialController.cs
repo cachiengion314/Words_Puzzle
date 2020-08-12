@@ -72,6 +72,7 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private Image _handConnectTut;
     [SerializeField] private Image _handChickenTut;
     [SerializeField] private Image _handFlagTut;
+    [SerializeField] private SpineControl _animBeehiveTut;
 
     public GameObject _handPanelPopHint;
     public GameObject _handPanelPopShuffle;
@@ -436,6 +437,12 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopBeeTut()
     {
+        if(ThemesControl.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _animBeehiveTut.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
+            _animBeehiveTut.SetSkin(currTheme.animData.skinAnim);
+        }
         isShowTut = true;
         isBlockSwipe = true;
         isTutBeehive = true;
