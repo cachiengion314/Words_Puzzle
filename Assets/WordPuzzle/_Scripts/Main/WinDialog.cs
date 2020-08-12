@@ -126,9 +126,6 @@ public class WinDialog : Dialog
 
         //_rewardControl.onRewardedCallback -= OnCompleteReward;
         AdsManager.instance.onAdsRewarded -= OnCompleteReward;
-        isAdsLoaed = AdsManager.instance.AdsIsLoaded();
-        if (!isAdsLoaed)
-            AdsManager.instance.LoadDataAds();
         CheckShowAdsButton();
         isSound = false;
         _btnBee.transform.position = new Vector3(_btnBee.transform.position.x, WordRegion.instance.animBtnHintTarget.transform.position.y);
