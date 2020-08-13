@@ -99,7 +99,7 @@ public class FlagItemController : MonoBehaviour
         FlagItemOnOff(true);
         HoneyPointsController.ShowAndFade(string.Empty, -FlagTabController.instance.priceToUnlockFlag, 0, DictionaryDialog.instance.visualHoneyTxt);
         FacebookController.instance.HoneyPoints -= FlagTabController.instance.priceToUnlockFlag;
-        DictionaryDialog.instance.honeyTxt.text = AbbrevationUtility.AbbreviateNumber(FacebookController.instance.HoneyPoints);
+        HoneyPointsController.instance.onChangedHoneyPoints?.Invoke();
         FacebookController.instance.SaveDataGame();
     }
     private void FlagItemOnOff(bool isOn)
