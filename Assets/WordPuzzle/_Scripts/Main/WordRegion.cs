@@ -1172,6 +1172,7 @@ public class WordRegion : MonoBehaviour
 
     public void CheckShowBonusBoxTut()
     {
+        _lineIsChecking = lines.Find(line => line.isShown && line.answers.Count > 1);
         var lineCheckBonus = lines.FindAll(line => _lineIsChecking != null && line.cells.Count == _lineIsChecking.cells.Count);
         var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(line => line.isShown) : false;
         var lastLineIsShown = lines.FindAll(li => li.isShown);
