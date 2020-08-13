@@ -37,8 +37,11 @@ public class ButtonOpenDialog : MyButton
 
     private void CheckShowCollectionDialog()
     {
+        var gameData = Resources.Load<GameData>("GameData");
+        var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
+        var currlevel = (GameState.currentLevel + numlevels * GameState.currentSubWorld + gameData.words[0].subWords.Count * numlevels * GameState.currentWorld) + 1;
         Sound.instance.Play(Sound.Others.PopupOpen);
-        if (!CPlayerPrefs.GetBool("HONEY_TUTORIAL", false))
+        if (!CPlayerPrefs.GetBool("HONEY_TUTORIAL", false) && currlevel < 11)
         {
             DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.REPLACE_CURRENT, contentTitle, contentMesage);
         }
