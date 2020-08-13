@@ -169,10 +169,14 @@ public class DictionaryDialog : Dialog
         {
             FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
             flagItem.indexOfSmallFlagImage = FlagTabController.instance.flagItemList[i].flagSmallImageIndex;
-            flagItem.indexOfBigFlagImage = FlagTabController.instance.flagItemList[i].flagBigImageIndex;
-            flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
+            flagItem.indexOfBigFlagImage = FlagTabController.instance.flagItemList[i].flagBigImageIndex;          
             flagItem.flagUnlockWord = FlagTabController.instance.flagItemList[i].flagUnlockWord;
-            flagItem.flagPopulation = FlagTabController.instance.flagItemList[i].flagPopulation;
+
+            flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
+            flagItem.subRegion = FlagTabController.instance.flagItemList[i].subRegion;
+            flagItem.capital = FlagTabController.instance.flagItemList[i].capital;
+            flagItem.population = FlagTabController.instance.flagItemList[i].population;
+            flagItem.area = FlagTabController.instance.flagItemList[i].area;
 
             string checkWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;
             if (FlagTabController.instance.unlockedWordHashset.Contains(checkWord.ToLower()))

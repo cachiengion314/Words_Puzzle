@@ -10,9 +10,15 @@ public class FlagItemController : MonoBehaviour
     [Space]
     public int indexOfSmallFlagImage;
     public int indexOfBigFlagImage;
+
     public string flagName;
+    public string subRegion;
+    public string capital;
+    public string population;
+    public string area;
+
     public string flagUnlockWord;
-    public string flagPopulation;
+   
     public bool isLocked;
     public Sprite iconFlagLock;
 
@@ -79,7 +85,7 @@ public class FlagItemController : MonoBehaviour
                 }
             });
 
-            StartCoroutine(FlagTabController.instance.GetCountryInfo(flagName, flagPopulation));
+            //StartCoroutine(FlagTabController.instance.GetCoutryInfoOffline(flagName));
             StartCoroutine(DictionaryDialog.instance.flagMeanDialog.OnOpenFlagMeanDialog());
         }
     }

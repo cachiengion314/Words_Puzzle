@@ -46,16 +46,17 @@ public class FlagMeanDialog : Dialog
         areaTxt.text = "Loading... ";
         populationTxt.text = "Loading... ";
 
-        yield return new WaitUntil(() => FlagTabController.instance.isGetCountryRequestDone);
+        //yield return new WaitUntil(() => FlagTabController.instance.isGetCountryRequestDone);
+        yield return null;
 
-        if (FlagTabController.instance.countryInfo.Count > 0)
+        //if (FlagTabController.instance.countryInfo.Count > 0)
         {
-            titleNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
-            countryNameTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[COUNTRY_NAME]);
-            subRegionTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[SUB_REGION]);
-            capitalTxt.text = CheckNullObject(FlagTabController.instance.countryInfo[CAPITAL]);
-            areaTxt.text = (float.Parse(CheckNullObject(FlagTabController.instance.countryInfo[AREA]))).ToString("0,000") + " km²";
-            int population = int.Parse(CheckNullObject(FlagTabController.instance.countryInfo[POPULATION]));
+            titleNameTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].flagName);
+            countryNameTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].flagName);
+            subRegionTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].subRegion);
+            capitalTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].capital);
+            areaTxt.text = (float.Parse(CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].area))).ToString("0,000") + " km²";
+            int population = int.Parse(CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].population));
             string populationStr = string.Empty;
             if (population > 1000000000f)
             {

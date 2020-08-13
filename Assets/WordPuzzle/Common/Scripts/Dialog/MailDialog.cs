@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
+//using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.UI;
 using Utilities.Common;
 
