@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using Utilities.Components;
 using UnityEngine.SceneManagement;
+using Superpow;
 
 public class ShopDialog : Dialog
 {
@@ -311,11 +312,18 @@ public class ShopDialog : Dialog
 
     void GetShopItemInContent()
     {
+        var world = Prefs.unlockedWorld;
+        var subWorld = Prefs.unlockedSubWorld;
+        var level = Prefs.unlockedLevel;
+        var numlevels = Utils.GetNumLevels(world, subWorld);
+        var gameData = Resources.Load<GameData>("GameData");
+        var currlevel = (level + numlevels * subWorld + world * gameData.words[0].subWords.Count * numlevels);
         var valueShow = (ConfigController.instance.config.gameParameters.minBank * 10 / 100) + ConfigController.instance.config.gameParameters.minBank;
         var currStarBank = ChickenBankController.instance.CurrStarChicken;
         int count = 0;
         var openBundle = CPlayerPrefs.HasKey("HINT_TUTORIAL") && CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") && CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL");
         var openBeehive = CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0;
+        var removeAds = currlevel >= AdsManager.instance.MinLevelToLoadBanner;
 
         btnMore.gameObject.SetActive(false);
         shopItemObject = new GameObject[contentItemShop.transform.childCount];
@@ -358,6 +366,9 @@ public class ShopDialog : Dialog
                         {
                             shopItemObject[i].gameObject.SetActive(false);
                         }
+
+                        if (Purchaser.instance.iapItems[itemShop].removeAds && !removeAds)
+                            shopItemObject[i].gameObject.SetActive(false);
                     }
 
                     if (shopItemObject[i].activeInHierarchy)

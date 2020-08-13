@@ -5,6 +5,7 @@ using Utilities.Common;
 
 public class ButtonOpenDialog : MyButton
 {
+    public bool isCollection;
     public bool isObjectives;
     public string contentTitle;
     public string contentMesage;
@@ -16,6 +17,8 @@ public class ButtonOpenDialog : MyButton
         base.OnButtonClick();
         if (isObjectives)
             CheckShowObjectivesDialog();
+        else if (isCollection)
+            CheckShowCollectionDialog();
         else
             DialogController.instance.ShowDialog(dialogType, dialogShow, contentTitle, contentMesage);
     }
@@ -30,5 +33,18 @@ public class ButtonOpenDialog : MyButton
             DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.STACK_DONT_HIDEN, contentTitle, contentMesage.Replace("\\n", "\n"));
         else
             DialogController.instance.ShowDialog(DialogType.Objective, DialogShow.STACK_DONT_HIDEN);
+    }
+
+    private void CheckShowCollectionDialog()
+    {
+        Sound.instance.Play(Sound.Others.PopupOpen);
+        if (!CPlayerPrefs.GetBool("HONEY_TUTORIAL", false))
+        {
+            DialogController.instance.ShowDialog(DialogType.ComingSoon, DialogShow.REPLACE_CURRENT, contentTitle, contentMesage);
+        }
+        else
+        {
+            DialogController.instance.ShowDialog(DialogType.Dictionary, DialogShow.REPLACE_CURRENT);
+        }
     }
 }
