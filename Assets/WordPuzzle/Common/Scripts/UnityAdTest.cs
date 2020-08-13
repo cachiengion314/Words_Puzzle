@@ -19,11 +19,11 @@ public class UnityAdTest : MonoBehaviour, IUnityAdsListener, IAds
     {
         instance = this;
     }
-    private void Start()
-    {
-        Advertisement.Initialize(androidGameId, testMode);
-        Advertisement.AddListener(this);
-    }
+    //private void Start()
+    //{
+    //    Advertisement.Initialize(androidGameId, testMode);
+    //    Advertisement.AddListener(this);
+    //}
     public bool IsLoaded()
     {
         if (myPlacementId == null) return false;

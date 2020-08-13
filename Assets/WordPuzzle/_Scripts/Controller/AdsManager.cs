@@ -51,11 +51,11 @@ public class AdsManager : MonoBehaviour
             AdmobController.instance.RequestInterstitial();
         }
 
-        if (UnityAdTest.instance != null)
-        {
-            UnityAdTest.instance.ReloadVideoAds();
-            UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose = false;
-        }
+        //if (UnityAdTest.instance != null)
+        //{
+        //    UnityAdTest.instance.ReloadVideoAds();
+        //    UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose = false;
+        //}
         _isLoading = true;
     }
     private void ChangedActiveScene(Scene current, Scene next)
@@ -75,28 +75,28 @@ public class AdsManager : MonoBehaviour
         }
         else
         {
-            if (UnityAdTest.instance.IsInitialized() && UnityAdTest.instance.IsLoaded())
-            {
-                _adsController = UnityAdTest.instance;
-                _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
-                Debug.Log("Show Ads UNITY ADS");
-                if (!UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose)
-                {
-                    TweenControl.GetInstance().DelayCall(transform, 1f, () =>
-                    {
-                        if (UnityAdTest.instance.IsShowing())
-                            SceneAnimate.Instance.ShowOverLayPauseGame(true);
-                        else
-                        {
-                            if (showToast)
-                                Toast.instance.ShowMessage("Rewarded video is not ready");
-                            adsNotReadyYetCallback?.Invoke();
-                        }
-                    });
-                }
-            }
-            else
-            {
+            //if (UnityAdTest.instance.IsInitialized() && UnityAdTest.instance.IsLoaded())
+            //{
+            //    _adsController = UnityAdTest.instance;
+            //    _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
+            //    Debug.Log("Show Ads UNITY ADS");
+            //    if (!UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose)
+            //    {
+            //        TweenControl.GetInstance().DelayCall(transform, 1f, () =>
+            //        {
+            //            if (UnityAdTest.instance.IsShowing())
+            //                SceneAnimate.Instance.ShowOverLayPauseGame(true);
+            //            else
+            //            {
+            //                if (showToast)
+            //                    Toast.instance.ShowMessage("Rewarded video is not ready");
+            //                adsNotReadyYetCallback?.Invoke();
+            //            }
+            //        });
+            //    }
+            //}
+            //else
+            //{
                 if (AdmobController.instance.rewardBasedVideo.IsLoaded())
                 {
                     _adsController = AdmobController.instance;
@@ -125,7 +125,7 @@ public class AdsManager : MonoBehaviour
                         }
                     });
                 }
-            }
+            //}
         }
     }
 
@@ -146,18 +146,18 @@ public class AdsManager : MonoBehaviour
         }
         else
         {
-            if (UnityAdTest.instance.IsInitialized() && UnityAdTest.instance.IsLoadedInterstitial())
-            {
-                _adsController = UnityAdTest.instance;
-                _adsController.ShowInterstitialAds();
-                if (UnityAdTest.instance.IsShowing())
-                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
-                else
-                    adsNotReadyYetCallback?.Invoke();
-                Debug.Log("Show Interstitial Ads UNITY ADS");
-            }
-            else
-            {
+            //if (UnityAdTest.instance.IsInitialized() && UnityAdTest.instance.IsLoadedInterstitial())
+            //{
+            //    _adsController = UnityAdTest.instance;
+            //    _adsController.ShowInterstitialAds();
+            //    if (UnityAdTest.instance.IsShowing())
+            //        SceneAnimate.Instance.ShowOverLayPauseGame(true);
+            //    else
+            //        adsNotReadyYetCallback?.Invoke();
+            //    Debug.Log("Show Interstitial Ads UNITY ADS");
+            //}
+            //else
+            //{
                 if (AdmobController.instance.interstitial != null && AdmobController.instance.interstitial.IsLoaded())
                 {
                     _adsController = AdmobController.instance;
@@ -185,13 +185,13 @@ public class AdsManager : MonoBehaviour
                     //    }
                     //});
                 }
-            }
+            //}
         }
     }
 
     public bool AdsIsLoaded(bool showToast = false, Text textNoti = null, TextMeshProUGUI textMeshNoti = null, Action checkComplete = null)
     {
-        if (AudienceNetworkFbAd.instance.isLoaded || AdmobController.instance.rewardBasedVideo.IsLoaded() || UnityAdTest.instance.IsLoaded())
+        if (AudienceNetworkFbAd.instance.isLoaded || AdmobController.instance.rewardBasedVideo.IsLoaded()/* || UnityAdTest.instance.IsLoaded()*/)
             return true;
         else
         {
