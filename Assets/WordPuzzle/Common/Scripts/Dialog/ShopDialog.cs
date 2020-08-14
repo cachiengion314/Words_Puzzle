@@ -333,16 +333,14 @@ public class ShopDialog : Dialog
             if (result == 0)
             {
                 specialGift.gameObject.SetActive(openBundle);
-                CheckShowItem(currStarBank, valueShow, openBundle, openBeehive, removeAds, count);
             }
             else
             {
                 specialGift.gameObject.SetActive(false);
-                CheckShowItem(currStarBank, valueShow, openBundle, openBeehive, removeAds, count);
             }
         });
 
-       
+        CheckShowItem(currStarBank, valueShow, openBundle, openBeehive, removeAds, count);
     }
 
     private void CheckShowItem(double currStarBank, int valueShow, bool openBundle, bool openBeehive, bool removeAds, int count)
@@ -351,49 +349,52 @@ public class ShopDialog : Dialog
         {
             //if (contentItemShop.transform.GetChild(i).gameObject != specialGift)
             //{
-                if (currStarBank < valueShow)
-                    chickenBank.SetActive(false);
-                else
-                {
-                    chickenBank.SetActive(true);
-                    if (!CPlayerPrefs.HasKey("OPEN_CHICKEN"))
-                        CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
-                }
+            if (currStarBank < valueShow)
+                chickenBank.SetActive(false);
+            else
+            {
+                chickenBank.SetActive(true);
+                if (!CPlayerPrefs.HasKey("OPEN_CHICKEN"))
+                    CPlayerPrefs.SetBool("OPEN_CHICKEN", true);
+            }
 
-                shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
+            shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
+            shopItemObject[i].transform.localScale = Vector3.zero;
+            if (contentItemShop.transform.GetChild(i).gameObject != specialGift)
+            {
                 var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
                 //if (i > 0)
                 //{
-                    shopItemObject[i].transform.localScale = Vector3.zero;
-                    if (ConfigController.instance.isShopHint)
-                    {
-                        if (Purchaser.instance.iapItems[itemShop].valueHint > 0 || Purchaser.instance.iapItems[itemShop].valueMultipleHint > 0 || Purchaser.instance.iapItems[itemShop].valueSelectedHint > 0)
-                            shopItemObject[i].gameObject.SetActive(true);
-                        else
-                            shopItemObject[i].gameObject.SetActive(false);
-                    }
+
+                if (ConfigController.instance.isShopHint)
+                {
+                    if (Purchaser.instance.iapItems[itemShop].valueHint > 0 || Purchaser.instance.iapItems[itemShop].valueMultipleHint > 0 || Purchaser.instance.iapItems[itemShop].valueSelectedHint > 0)
+                        shopItemObject[i].gameObject.SetActive(true);
                     else
+                        shopItemObject[i].gameObject.SetActive(false);
+                }
+                else
+                {
+                    if (Purchaser.instance.iapItems[itemShop].isSpecial && !Purchaser.instance.iapItems[itemShop].isBeehive && !openBundle)
                     {
-                        if (Purchaser.instance.iapItems[itemShop].isSpecial && !Purchaser.instance.iapItems[itemShop].isBeehive && !openBundle)
-                        {
-                            shopItemObject[i].gameObject.SetActive(false);
-                        }
-
-                        if (Purchaser.instance.iapItems[itemShop].isBeehive && !openBeehive)
-                        {
-                            shopItemObject[i].gameObject.SetActive(false);
-                        }
-
-                        if (Purchaser.instance.iapItems[itemShop].removeAds && !removeAds)
-                            shopItemObject[i].gameObject.SetActive(false);
+                        shopItemObject[i].gameObject.SetActive(false);
                     }
 
-                    if (shopItemObject[i].activeInHierarchy)
+                    if (Purchaser.instance.iapItems[itemShop].isBeehive && !openBeehive)
                     {
-                        StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
-                        count++;
+                        shopItemObject[i].gameObject.SetActive(false);
                     }
-                //}
+
+                    if (Purchaser.instance.iapItems[itemShop].removeAds && !removeAds)
+                        shopItemObject[i].gameObject.SetActive(false);
+                }
+            }
+            if (shopItemObject[i].activeInHierarchy)
+            {
+                StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
+                count++;
+            }
+            //}
             //}
         }
     }
