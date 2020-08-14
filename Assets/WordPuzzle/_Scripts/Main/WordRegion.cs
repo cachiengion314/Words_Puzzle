@@ -804,6 +804,7 @@ public class WordRegion : MonoBehaviour
         if (lineIndex > compliment.sprites.Length - 1)
         {
             lineIndex = compliment.sprites.Length - 1;
+            HoneyPointsController.instance.LineIndex = lineIndex;
             //board.sprite = _spriteExcellent;
             //board.SetNativeSize();
             //boardHighlight.color = new Color(1, 1, 1, 1);
