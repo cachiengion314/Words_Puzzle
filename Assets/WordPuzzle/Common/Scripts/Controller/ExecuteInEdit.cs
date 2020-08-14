@@ -3,6 +3,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
 
 namespace WordPuzzle
 {
@@ -40,26 +41,26 @@ namespace WordPuzzle
             //    }
             //}
 
-            Object jsonDataObject = Resources.Load("data");
-            string jsonData = jsonDataObject.ToString();
-            Dictionary<string, object> tempDic = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonData);
-            JArray jsonArr = JArray.Parse(tempDic["Sheet1"].ToString());
-            for (int i = 0; i < jsonArr.Count; i++)
-            {
-                Dictionary<string, string> tempCountryDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonArr[i].ToString());
+            //Object jsonDataObject = Resources.Load("data");
+            //string jsonData = jsonDataObject.ToString();
+            //Dictionary<string, object> tempDic = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonData);
+            //JArray jsonArr = JArray.Parse(tempDic["Sheet1"].ToString());
+            //for (int i = 0; i < jsonArr.Count; i++)
+            //{
+            //    Dictionary<string, string> tempCountryDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonArr[i].ToString());
 
-                for (int ii = 0; ii < FlagTabController.flagItemList.Count; ii++)
-                {
-                    if (FlagTabController.flagItemList[ii].flagName.Equals(tempCountryDic[COUNTRY_NAME], System.StringComparison.OrdinalIgnoreCase))
-                    {
-                        FlagTabController.flagItemList[ii].flagName = tempCountryDic[COUNTRY_NAME];
-                        FlagTabController.flagItemList[ii].subRegion = tempCountryDic[SUB_REGION];
-                        FlagTabController.flagItemList[ii].capital = tempCountryDic[CAPITAL];
-                        FlagTabController.flagItemList[ii].population = tempCountryDic[POPULATION];
-                        FlagTabController.flagItemList[ii].area = tempCountryDic[AREA];
-                    }
-                }
-            }
+            //    for (int ii = 0; ii < FlagTabController.flagItemList.Count; ii++)
+            //    {
+            //        if (FlagTabController.flagItemList[ii].flagName.Equals(tempCountryDic[COUNTRY_NAME], System.StringComparison.OrdinalIgnoreCase))
+            //        {
+            //            FlagTabController.flagItemList[ii].flagName = tempCountryDic[COUNTRY_NAME];
+            //            FlagTabController.flagItemList[ii].subRegion = tempCountryDic[SUB_REGION];
+            //            FlagTabController.flagItemList[ii].capital = tempCountryDic[CAPITAL];
+            //            FlagTabController.flagItemList[ii].population = tempCountryDic[POPULATION];
+            //            FlagTabController.flagItemList[ii].area = tempCountryDic[AREA];
+            //        }
+            //    }
+            //}
 
         }
     }
