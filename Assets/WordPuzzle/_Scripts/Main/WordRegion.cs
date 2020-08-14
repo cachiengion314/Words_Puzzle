@@ -646,6 +646,7 @@ public class WordRegion : MonoBehaviour
 
             var cellTarget = CheckCellTarget(line.cells);
             CalculateRatioScaleBtnAds(cellTarget);
+            _btnHintADS.Cell = cellTarget;
             if (!CPlayerPrefs.HasKey("CELL_ADS_TUTORIAL") && !TutorialController.instance.isShowTut)
                 TutorialController.instance.ShowPopCellAdsTut();
         }
