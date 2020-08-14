@@ -48,7 +48,7 @@ public class FacebookController : MonoBehaviour
 
     void Start()
     {
-        GetUserData();     
+        GetUserData();
     }
 
     void Update()
@@ -84,6 +84,8 @@ public class FacebookController : MonoBehaviour
     {
         get
         {
+            if (user.honeyPoint <= 0)
+                user.honeyPoint = 0;
             return user.honeyPoint;
         }
         set

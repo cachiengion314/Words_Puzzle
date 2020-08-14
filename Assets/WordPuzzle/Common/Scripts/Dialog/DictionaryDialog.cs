@@ -169,7 +169,7 @@ public class DictionaryDialog : Dialog
         {
             FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
             flagItem.indexOfSmallFlagImage = FlagTabController.instance.flagItemList[i].flagSmallImageIndex;
-            flagItem.indexOfBigFlagImage = FlagTabController.instance.flagItemList[i].flagBigImageIndex;          
+            flagItem.indexOfBigFlagImage = FlagTabController.instance.flagItemList[i].flagBigImageIndex;
             flagItem.flagUnlockWord = FlagTabController.instance.flagItemList[i].flagUnlockWord;
 
             flagItem.flagName = FlagTabController.instance.flagItemList[i].flagName;
@@ -325,6 +325,26 @@ public class DictionaryDialog : Dialog
         }
         base.Close();
     }
+
+    //==Test
+    public void UnlockAllFlag()
+    {
+        foreach (var flag in flagList)
+        {
+            flag.UnlockSuccess();
+            if (flag.flagUnlockWord != string.Empty)
+            {
+                FlagTabController.instance.AddToUnlockedWordDictionary(flag.flagUnlockWord);
+            }
+            else
+            {
+                FlagTabController.instance.AddToUnlockedWordDictionary(flag.flagName);
+            }
+            WriteFlagTabTitleContent();
+            FlagTabController.instance.SaveUnlockedWordData();
+        }
+    }
+    //==
 }
 
 
