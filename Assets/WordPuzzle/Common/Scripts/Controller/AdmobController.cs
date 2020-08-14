@@ -22,8 +22,8 @@ public class AdmobController : MonoBehaviour, IAds
 
     private void Start()
     {
-        MobileAds.Initialize(initStatus => 
-        {
+        //MobileAds.Initialize(initStatus => 
+        //{
             if (!CUtils.IsAdsRemoved())
             {
                 InitRewardedVideo();
@@ -31,7 +31,7 @@ public class AdmobController : MonoBehaviour, IAds
                 RequestRewardBasedVideo();
                 Debug.Log("Initialize invoke");
             }
-        });
+        //});
     }
     public void InitRewardedVideo()
     {
