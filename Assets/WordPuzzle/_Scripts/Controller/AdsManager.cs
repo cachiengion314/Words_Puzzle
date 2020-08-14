@@ -47,8 +47,8 @@ public class AdsManager : MonoBehaviour
         }
         if (AdmobController.instance != null)
         {
-            AdmobController.instance.RequestRewardBasedVideo();
-            AdmobController.instance.RequestInterstitial();
+            //AdmobController.instance.RequestRewardBasedVideo();
+            //AdmobController.instance.RequestInterstitial();
         }
 
         //if (UnityAdTest.instance != null)

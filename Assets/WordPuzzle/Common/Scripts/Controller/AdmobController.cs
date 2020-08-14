@@ -11,9 +11,9 @@ public class AdmobController : MonoBehaviour, IAds
     public static AdmobController instance;
     public float bannerHeight;
 
-    public string videoAdsId;
-    public string interstitialAdsId;
-    public string bannerAdsId;
+    public string videoAdsId = "ca-app-pub-3940256099942544/5224354917";
+    public string interstitialAdsId = "ca-app-pub-3940256099942544/1033173712";
+    public string bannerAdsId = "ca-app-pub-3212738706492790/6113697308";
 
     private void Awake()
     {
@@ -22,15 +22,17 @@ public class AdmobController : MonoBehaviour, IAds
 
     private void Start()
     {
-        //if (!CUtils.IsAdsRemoved())
-        //{
-            //RequestInterstitial();
-
-            InitRewardedVideo();
-            //RequestRewardBasedVideo();
-        //}
+        MobileAds.Initialize(initStatus => 
+        {
+            if (!CUtils.IsAdsRemoved())
+            {
+                InitRewardedVideo();
+                RequestInterstitial();
+                RequestRewardBasedVideo();
+            }
+        });
     }
-    private void InitRewardedVideo()
+    public void InitRewardedVideo()
     {
         // Get singleton reward based video ad reference.
         this.rewardBasedVideo = RewardBasedVideoAd.Instance;
@@ -168,6 +170,7 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleAdLoaded(object sender, EventArgs args)
     {
         // HandleAdLoaded event received
+        Debug.Log(transform.name + "_HandleAdLoaded");
         MonoBehaviour.print(String.Format("Banner Height: {0}, Banner width: {1}, " +
             "Device HeightDp: {2}, Device WidthDp: {3}, " +
             "Device Heigh: {4}, Device Width: {5}, " +
@@ -223,7 +226,6 @@ public class AdmobController : MonoBehaviour, IAds
     {
         print("HandleInterstitialFailedToLoad event received with message: " + args.Message);
         AdsManager.instance.onAdsClose?.Invoke();
-        RequestInterstitial();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
@@ -258,7 +260,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         MonoBehaviour.print(
             "HandleRewardBasedVideoFailedToLoad event received with message: " + args.Message);
-        RequestRewardBasedVideo();
+      
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
@@ -276,7 +278,7 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleRewardBasedVideoClosed(object sender, EventArgs args)
     {
         RequestRewardBasedVideo();
-        //MonoBehaviour.print("HandleRewardBasedVideoClosed event received");
+        // HandleRewardBasedVideoClosed event received;
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }

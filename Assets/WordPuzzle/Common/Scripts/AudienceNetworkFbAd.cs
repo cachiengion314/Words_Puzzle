@@ -201,7 +201,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("RewardedVideo ad failed to load with error: " + error);
             //Debug.Log("RewardedVideo ad failed to load. Check console for details.");
-            LoadVideoAds();
+            //LoadVideoAds();
             AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };
