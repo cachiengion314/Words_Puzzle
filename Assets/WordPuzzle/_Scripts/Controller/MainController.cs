@@ -83,6 +83,7 @@ public class MainController : BaseController
         ThemesControl.instance.LoadThemeDataDialog(currTheme);
 
         gameLevel = Utils.Load(world, subWorld, level);
+        WordRegion.instance.CalculateScaleSizeBoardRegionAndPan();
         Pan.instance.Load(gameLevel);
         WordRegion.instance.Load(gameLevel, currlevel);
         BeeManager.instance.Load(CPlayerPrefs.GetInt("amount_bee", 0));
