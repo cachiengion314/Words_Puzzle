@@ -47,7 +47,7 @@ public class FlagMeanDialog : Dialog
             subRegionTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].subRegion);
             capitalTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].capital);
             areaTxt.text = (float.Parse(CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].area))).ToString("0,000") + " km²";
-            int population = int.Parse(CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].population));
+            float population = float.Parse(CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].population));
             string populationStr = string.Empty;
             if (population > 1000000000f)
             {
