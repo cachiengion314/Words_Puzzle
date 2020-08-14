@@ -333,17 +333,24 @@ public class ShopDialog : Dialog
             if (result == 0)
             {
                 specialGift.gameObject.SetActive(openBundle);
+                CheckShowItem(currStarBank, valueShow, openBundle, openBeehive, removeAds, count);
             }
             else
             {
                 specialGift.gameObject.SetActive(false);
+                CheckShowItem(currStarBank, valueShow, openBundle, openBeehive, removeAds, count);
             }
         });
 
+       
+    }
+
+    private void CheckShowItem(double currStarBank, int valueShow, bool openBundle, bool openBeehive, bool removeAds, int count)
+    {
         for (int i = 0; i < contentItemShop.transform.childCount; i++)
         {
-            if (contentItemShop.transform.GetChild(i).gameObject != specialGift)
-            {
+            //if (contentItemShop.transform.GetChild(i).gameObject != specialGift)
+            //{
                 if (currStarBank < valueShow)
                     chickenBank.SetActive(false);
                 else
@@ -355,8 +362,8 @@ public class ShopDialog : Dialog
 
                 shopItemObject[i] = contentItemShop.transform.GetChild(i).gameObject;
                 var itemShop = shopItemObject[i].gameObject.GetComponent<ItemShop>().idProduct;
-                if (i > 0)
-                {
+                //if (i > 0)
+                //{
                     shopItemObject[i].transform.localScale = Vector3.zero;
                     if (ConfigController.instance.isShopHint)
                     {
@@ -386,8 +393,8 @@ public class ShopDialog : Dialog
                         StartCoroutine(DelayPlayAnimation(shopItemObject[i], count * 0.1f + 0.5f));
                         count++;
                     }
-                }
-            }
+                //}
+            //}
         }
     }
 
