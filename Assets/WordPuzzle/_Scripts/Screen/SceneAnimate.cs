@@ -275,6 +275,7 @@ public class SceneAnimate : MonoBehaviour
         CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
         BeeManager.instance.CreaditAmountBee(numBee);
         FacebookController.instance.HoneyPoints += 10000;
+        FacebookController.instance.onChangedHoneyPoints?.Invoke();
         FacebookController.instance.SaveDataGame();
         if (HomeController.instance != null)
             HomeController.instance.ShowChickenBank();

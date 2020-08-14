@@ -14,8 +14,10 @@ public class CurrHoneyPointController : MonoBehaviour
         if (!CPlayerPrefs.GetBool("HONEY_TUTORIAL", false))
             transform.parent.gameObject.SetActive(false);
         UpdateHoneyPoint();
-        if (HoneyPointsController.instance != null)
-            HoneyPointsController.instance.onChangedHoneyPoints += OnChangeHoneyPoint;
+        if (FacebookController.instance != null)
+        {
+            FacebookController.instance.onChangedHoneyPoints += OnChangeHoneyPoint;
+        }
     }
 
     void OnChangeHoneyPoint()
@@ -30,7 +32,9 @@ public class CurrHoneyPointController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (HoneyPointsController.instance != null)
-            HoneyPointsController.instance.onChangedHoneyPoints -= OnChangeHoneyPoint;
+        if (FacebookController.instance != null)
+        {
+            FacebookController.instance.onChangedHoneyPoints -= OnChangeHoneyPoint;
+        }     
     }
 }

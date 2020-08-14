@@ -91,6 +91,7 @@ public class FacebookController : MonoBehaviour
             user.honeyPoint = value;
         }
     }
+    public Action onChangedHoneyPoints;
     public void UpdateStaticsUser()
     {
         if (PlayFabClientAPI.IsClientLoggedIn())

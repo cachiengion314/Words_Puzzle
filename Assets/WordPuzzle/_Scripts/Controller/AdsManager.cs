@@ -45,11 +45,11 @@ public class AdsManager : MonoBehaviour
             AudienceNetworkFbAd.instance.LoadInterstitial();
 #endif
         }
-        if (AdmobController.instance != null)
-        {
-            AdmobController.instance.RequestRewardBasedVideo();
-            AdmobController.instance.RequestInterstitial();
-        }
+        //if (AdmobController.instance != null)
+        //{
+        //    AdmobController.instance.RequestRewardBasedVideo();
+        //    AdmobController.instance.RequestInterstitial();
+        //}
 
         //if (UnityAdTest.instance != null)
         //{
