@@ -76,7 +76,7 @@ public class UnLockTheFlagDialog : Dialog
         }
         else
         {
-            unlockByPlayingTxt.text = "Find *" + DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagUnlockWord + "* to unlock this flag.";
+            unlockByPlayingTxt.text = "Find \"" + DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagUnlockWord + "\" word to unlock this flag.";
             unlockByPlayingBtt.gameObject.SetActive(true);
             unlockByPlayingTxt.gameObject.SetActive(true);
             useHoneyToUnlockTxt.gameObject.SetActive(false);
