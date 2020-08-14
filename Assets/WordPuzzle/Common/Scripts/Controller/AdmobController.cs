@@ -222,7 +222,9 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleInterstitialFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         print("HandleInterstitialFailedToLoad event received with message: " + args.Message);
-        AdsManager.instance.onAdsFailedToLoad?.Invoke();
+        AdsManager.instance.onAdsClose?.Invoke();
+        RequestInterstitial();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
     public void HandleInterstitialOpened(object sender, EventArgs args)
@@ -257,6 +259,8 @@ public class AdmobController : MonoBehaviour, IAds
         MonoBehaviour.print(
             "HandleRewardBasedVideoFailedToLoad event received with message: " + args.Message);
         RequestRewardBasedVideo();
+        AdsManager.instance.onAdsClose?.Invoke();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
     public void HandleRewardBasedVideoOpened(object sender, EventArgs args)

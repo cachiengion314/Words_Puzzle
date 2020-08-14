@@ -103,6 +103,7 @@ public class UIData
     public BonusBoxData bonusBoxData;
     public HowtoplayData howtoplayData;
     public DontLikeAdsData dontLikeAdsData;
+    public BeehiveData beehiveData;
 }
 
 [Serializable]
@@ -337,4 +338,10 @@ public class DontLikeAdsData
     public Sprite btnMore;
     public Color colorTextBtn;
     public List<Sprite> iconsNoAds;
+}
+
+[Serializable]
+public class BeehiveData
+{
+    public Sprite imgBeehive;
 }

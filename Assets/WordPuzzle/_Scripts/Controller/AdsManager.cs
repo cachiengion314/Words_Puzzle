@@ -97,34 +97,34 @@ public class AdsManager : MonoBehaviour
             //}
             //else
             //{
-                if (AdmobController.instance.rewardBasedVideo.IsLoaded())
+            if (AdmobController.instance.rewardBasedVideo.IsLoaded())
+            {
+                _adsController = AdmobController.instance;
+                _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
+                Debug.Log("Show Ads Admob");
+                SceneAnimate.Instance.ShowOverLayPauseGame(true);
+            }
+            else
+            {
+                if (WordRegion.instance != null && WordRegion.instance.BtnADS != null)
+                    WordRegion.instance.BtnADS._btnAds.interactable = true;
+                CUtils.CheckConnection(this, (result) =>
                 {
-                    _adsController = AdmobController.instance;
-                    _adsController.ShowVideoAds(adsNotReadyYetCallback, noInternetCallback);
-                    Debug.Log("Show Ads Admob");
-                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
-                }
-                else
-                {
-                    if (WordRegion.instance != null && WordRegion.instance.BtnADS != null)
-                        WordRegion.instance.BtnADS._btnAds.interactable = true;
-                    CUtils.CheckConnection(this, (result) =>
+                    if (result == 0)
                     {
-                        if (result == 0)
-                        {
-                            if (showToast)
-                                Toast.instance.ShowMessage("Rewarded video is not ready");
-                            _isLoading = false;
-                            adsNotReadyYetCallback?.Invoke();
-                        }
-                        else
-                        {
-                            if (showToast)
-                                Toast.instance.ShowMessage("No Internet Connection");
-                            noInternetCallback?.Invoke();
-                        }
-                    });
-                }
+                        if (showToast)
+                            Toast.instance.ShowMessage("Rewarded video is not ready");
+                        _isLoading = false;
+                        adsNotReadyYetCallback?.Invoke();
+                    }
+                    else
+                    {
+                        if (showToast)
+                            Toast.instance.ShowMessage("No Internet Connection");
+                        noInternetCallback?.Invoke();
+                    }
+                });
+            }
             //}
         }
     }
@@ -143,6 +143,10 @@ public class AdsManager : MonoBehaviour
             _adsController.ShowInterstitialAds();
             SceneAnimate.Instance.ShowOverLayPauseGame(true);
             Debug.Log("Show Interstitial Ads FB");
+#if UNITY_EDITOR
+            adsComplete?.Invoke();
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
         }
         else
         {
@@ -158,33 +162,37 @@ public class AdsManager : MonoBehaviour
             //}
             //else
             //{
-                if (AdmobController.instance.interstitial != null && AdmobController.instance.interstitial.IsLoaded())
-                {
-                    _adsController = AdmobController.instance;
-                    _adsController.ShowInterstitialAds();
-                    SceneAnimate.Instance.ShowOverLayPauseGame(true);
-                    Debug.Log("Show Interstitial Ads Admob");
-                }
-                else
-                {
-                    adsNotReadyYetCallback?.Invoke();
-                    //CUtils.CheckConnection(this, (result) =>
-                    //{
-                    //    if (result == 0)
-                    //    {
-                    //        if (showToast)
-                    //            Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
-                    //        LoadDataAds();
-                    //        adsNotReadyYetCallback?.Invoke();
-                    //    }
-                    //    else
-                    //    {
-                    //        if (showToast)
-                    //            Toast.instance.ShowMessage("No Internet Connection");
-                    //        noInternetCallback?.Invoke();
-                    //    }
-                    //});
-                }
+            if (AdmobController.instance.interstitial != null && AdmobController.instance.interstitial.IsLoaded())
+            {
+                _adsController = AdmobController.instance;
+                _adsController.ShowInterstitialAds();
+                SceneAnimate.Instance.ShowOverLayPauseGame(true);
+                Debug.Log("Show Interstitial Ads Admob");
+#if UNITY_EDITOR
+                adsComplete?.Invoke();
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
+            }
+            else
+            {
+                adsNotReadyYetCallback?.Invoke();
+                //CUtils.CheckConnection(this, (result) =>
+                //{
+                //    if (result == 0)
+                //    {
+                //        if (showToast)
+                //            Toast.instance.ShowMessage("This feature can not be used right now. Please try again later!");
+                //        LoadDataAds();
+                //        adsNotReadyYetCallback?.Invoke();
+                //    }
+                //    else
+                //    {
+                //        if (showToast)
+                //            Toast.instance.ShowMessage("No Internet Connection");
+                //        noInternetCallback?.Invoke();
+                //    }
+                //});
+            }
             //}
         }
     }

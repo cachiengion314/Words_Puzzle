@@ -23,13 +23,14 @@ public class BeeDialog : Dialog
 
     public GameObject contentItemShop;
     public GameObject[] shopItemObject;
-
+    [Header("UI CHANGE THEME")]
+    [SerializeField] private Image _imgBeehive;
 
     //public GameObject shadowPanelHowToPlay;
     protected override void Start()
     {
         base.Start();
-
+        CheckTheme();
 #if IAP && UNITY_PURCHASING
         Purchaser.instance.onItemBeePurchased += OnItemPurchased;
 
@@ -76,11 +77,6 @@ public class BeeDialog : Dialog
 #endif
     }
 
-    private void Update()
-    {
-
-    }
-
     public void OnBuyProduct(int index)
     {
 #if IAP && UNITY_PURCHASING
@@ -89,6 +85,15 @@ public class BeeDialog : Dialog
 #else
         Debug.LogError("Please enable, import and install Unity IAP to use this function");
 #endif
+    }
+
+    private void CheckTheme()
+    {
+        if(MainController.instance != null)
+        {
+            var currTheme = ThemesControl.instance.CurrTheme;
+            _imgBeehive.sprite = currTheme.uiData.beehiveData.imgBeehive;
+        }
     }
 
 #if IAP && UNITY_PURCHASING
