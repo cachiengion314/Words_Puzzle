@@ -1136,10 +1136,12 @@ public class WordRegion : MonoBehaviour
             animBeehive2.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             animBeehive3.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             animBeehive4.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            //animBeehive1.SetSkin(currTheme.animData.skinAnim);
-            //animBeehive2.SetSkin(currTheme.animData.skinAnim);
-            //animBeehive3.SetSkin(currTheme.animData.skinAnim);
-            //animBeehive4.SetSkin(currTheme.animData.skinAnim);
+            TweenControl.GetInstance().DelayCall(transform, 0.2f,()=> {
+                animBeehive1.SetSkin(currTheme.animData.skinAnim);
+                animBeehive2.SetSkin(currTheme.animData.skinAnim);
+                animBeehive3.SetSkin(currTheme.animData.skinAnim);
+                animBeehive4.SetSkin(currTheme.animData.skinAnim);
+            });
         }
         BlockScreen.instance.Block(true);
         int count = 0;

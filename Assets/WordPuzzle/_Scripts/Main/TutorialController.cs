@@ -437,11 +437,14 @@ public class TutorialController : MonoBehaviour
 
     public void ShowPopBeeTut()
     {
-        if(ThemesControl.instance != null)
+        if (ThemesControl.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
             _animBeehiveTut.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
-            _animBeehiveTut.SetSkin(currTheme.animData.skinAnim);
+            TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+            {
+                _animBeehiveTut.SetSkin(currTheme.animData.skinAnim);
+            });
         }
         isShowTut = true;
         isBlockSwipe = true;
@@ -449,6 +452,7 @@ public class TutorialController : MonoBehaviour
         _overlay.SetActive(true);
         _popBeehive.SetActive(true);
         _textTutorialBeehive.text = contentBeehive;
+        BeeManager.instance.CreaditAmountBee(3);
     }
 
     public void BeeFly()
@@ -551,7 +555,7 @@ public class TutorialController : MonoBehaviour
         canvasOverlay.sortingLayerName = "UI2";
         canvasOverlay.sortingOrder = 5;
         _popFlag.SetActive(true);
-        string unlockWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;       
+        string unlockWord = flagItem.flagUnlockWord != string.Empty ? flagItem.flagUnlockWord : flagItem.flagName;
         _textTutorialFlag.text = "Tap on the flag to view information. You have found " + '"' + unlockWord.ToUpper() + '"' + " word to unlock " + flagItem.flagName.ToUpper() + " Flag.";
         _handFlagTut.transform.position = flagItem.transform.position;
     }
@@ -642,7 +646,6 @@ public class TutorialController : MonoBehaviour
         {
             if ((currlevel >= beehiveLevel && !CPlayerPrefs.HasKey("BEE_TUTORIAL")) || (BeeManager.instance.CurrBee > 0 && !CPlayerPrefs.HasKey("BEE_TUTORIAL")))
             {
-                BeeManager.instance.CreaditAmountBee(3);
                 ShowPopBeeTut();
             }
             else if ((currlevel >= hintLevel && !CPlayerPrefs.HasKey("HINT_TUTORIAL")) || (CurrencyController.GetHintFree() > 0 && !CPlayerPrefs.HasKey("HINT_TUTORIAL")))
