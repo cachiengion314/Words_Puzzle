@@ -9,8 +9,7 @@ using UnityEngine;
 public class HoneyPointsController : MonoBehaviour
 {
     public static HoneyPointsController instance;
-    public Action onChangedHoneyPoints;
-    public Action showHoneyPointsInThisLevel;
+
     public bool isLevelComplete;
 
     private bool isGameplayEnd;
@@ -109,12 +108,12 @@ public class HoneyPointsController : MonoBehaviour
             honeyPoints = 10 + WordRegion.instance.listWordCorrect.Count + totalTitlePoints + timePoints;
             //int honeyWithoutTitlePoints = honeyPoints - totalTitlePoints + titlePointsArray[lineIndex];
 
-            WinDialog.instance.honeyPoints = honeyPoints;          
+            WinDialog.instance.honeyPoints = honeyPoints;
             //StartCoroutine(ShowAndFadeDelay(honeyWithoutTitlePoints, visualHoneyPointsTxt));
 
             FacebookController.instance.HoneyPoints += honeyPoints;
             FacebookController.instance.SaveDataGame();
-            onChangedHoneyPoints?.Invoke();
+            FacebookController.instance.onChangedHoneyPoints?.Invoke();
         }
         else
         {

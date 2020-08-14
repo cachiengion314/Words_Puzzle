@@ -60,6 +60,7 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
             if (result == 0)
             {
                 FetchDataAsync();
+                Debug.Log("FetchDataAsynce invoked");
                 Invoke("GetAllIdAvertisement", 1.7f);
             }
         });       

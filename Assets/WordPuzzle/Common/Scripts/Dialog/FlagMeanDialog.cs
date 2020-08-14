@@ -20,15 +20,6 @@ public class FlagMeanDialog : Dialog
     [Space]
     public GameObject flagMeanItems;
     public GameObject noInternet;
-    [Space]
-    [Header("Default image when loading is not finish yet")]
-    public Sprite defaultImage;
-
-    private readonly string COUNTRY_NAME = "name";
-    private readonly string SUB_REGION = "subregion";
-    private readonly string CAPITAL = "capital";
-    private readonly string AREA = "area";
-    private readonly string POPULATION = "population";
     public IEnumerator OnOpenFlagMeanDialog()
     {
         DictionaryDialog.instance.OverLayDialog.SetActive(true);

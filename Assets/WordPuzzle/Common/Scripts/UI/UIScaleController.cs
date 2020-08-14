@@ -14,14 +14,6 @@ public class UIScaleController : MonoBehaviour
 {
     public static UIScaleController instance;
 
-    public Button btnHintTarget;
-    public Button btnHint;
-    public Button btnMultipleHint;
-    public Button btnShuffle;
-    public Button btnRewardAds;
-    public Button btnBonusBox;
-    public Button btnHelp;
-
     public GameObject rootUI;
     public Vector3 rootUIOriginPos;
     public Vector3 rootUINewPos;
@@ -56,34 +48,5 @@ public class UIScaleController : MonoBehaviour
                 BannerShowAndScaleEvent();
             }
         }
-    }
-    private void ArrangeUIElementWithScaleValue(float newScaleValue, GameObject uiElement, Camera mainCamera)
-    {
-        Vector3 uiElementScreenPoint = mainCamera.WorldToScreenPoint(uiElement.transform.position);
-        uiElementScreenPoint = new Vector3(uiElementScreenPoint.x, newScaleValue * Screen.height, uiElementScreenPoint.z);
-        Vector3 uiElementWorldPoint = mainCamera.ScreenToWorldPoint(uiElementScreenPoint);
-        uiElement.transform.position = uiElementWorldPoint;
-    }
-    private float GetCurrentScaleOfUIElement(GameObject uiElement, Camera mainCamera)
-    {
-        Vector3 uiElementScreenPoint = mainCamera.WorldToScreenPoint(uiElement.transform.position);
-        float scaleValue = uiElementScreenPoint.y / Screen.height;
-        return scaleValue;
-    }
-    private List<ScaleAndUIElement> SortList(List<GameObject> uiElementList, Camera mainCamera)
-    {
-        List<ScaleAndUIElement> scaleUIElementPair = new List<ScaleAndUIElement>();
-        for (int i = 0; i < uiElementList.Count; i++)
-        {
-            float scaleValue = GetCurrentScaleOfUIElement(uiElementList[i], mainCamera);
-            scaleUIElementPair.Add(new ScaleAndUIElement() { scaleValue = scaleValue, uiElement = uiElementList[i] });
-        }
-        scaleUIElementPair.Sort(
-            delegate (ScaleAndUIElement a, ScaleAndUIElement b)
-            {
-                return a.scaleValue.CompareTo(b.scaleValue);
-            }
-            );
-        return scaleUIElementPair;
     }
 }
