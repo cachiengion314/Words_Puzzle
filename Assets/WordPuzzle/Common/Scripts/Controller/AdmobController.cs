@@ -22,18 +22,15 @@ public class AdmobController : MonoBehaviour, IAds
 
     private void Start()
     {
-        MobileAds.Initialize(initStatus => 
-        {
-            if (!CUtils.IsAdsRemoved())
-            {
-                RequestInterstitial();
-              
-                RequestRewardBasedVideo();
-                InitRewardedVideo();
-            }
-        });
+        //if (!CUtils.IsAdsRemoved())
+        //{
+            //RequestInterstitial();
+
+            InitRewardedVideo();
+            //RequestRewardBasedVideo();
+        //}
     }
-    public void InitRewardedVideo()
+    private void InitRewardedVideo()
     {
         // Get singleton reward based video ad reference.
         this.rewardBasedVideo = RewardBasedVideoAd.Instance;
