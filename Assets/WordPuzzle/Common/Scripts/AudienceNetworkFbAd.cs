@@ -151,7 +151,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
         rewardedVideoAd.Show();
         isLoaded = false;
-        LoadVideoAds();
+        //LoadVideoAds();
     }
     public void ShowBannerAds()
     {
@@ -201,6 +201,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("RewardedVideo ad failed to load with error: " + error);
             //Debug.Log("RewardedVideo ad failed to load. Check console for details.");
+            LoadVideoAds();
             AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
         };

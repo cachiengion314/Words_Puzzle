@@ -254,8 +254,9 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void HandleRewardBasedVideoFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        //MonoBehaviour.print(
-        //    "HandleRewardBasedVideoFailedToLoad event received with message: " + args.Message);
+        MonoBehaviour.print(
+            "HandleRewardBasedVideoFailedToLoad event received with message: " + args.Message);
+        RequestRewardBasedVideo();
     }
 
     public void HandleRewardBasedVideoOpened(object sender, EventArgs args)
@@ -302,7 +303,7 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        RequestRewardBasedVideo();
+        //RequestRewardBasedVideo();
         if (videoAdsId == null) return;
 
 
