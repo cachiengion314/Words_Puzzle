@@ -104,7 +104,11 @@ public class FreeStarsDialog : Dialog
             });
         });
     }
-
+    public override void Close()
+    {
+        base.Close();
+        AudienceNetworkFbAd.instance.LoadVideoAds();
+    }
     private void OnCompleteVideo()
     {
         Debug.Log("OnCompleteVideo freestar invoke");

@@ -29,6 +29,7 @@ public class AdmobController : MonoBehaviour, IAds
                 InitRewardedVideo();
                 RequestInterstitial();
                 RequestRewardBasedVideo();
+                Debug.Log("Initialize invoke");
             }
         });
     }

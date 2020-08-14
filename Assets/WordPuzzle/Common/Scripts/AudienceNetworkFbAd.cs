@@ -240,7 +240,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             if (rewardedVideoAd != null)
             {
                 rewardedVideoAd.Dispose();
-            }
+            }          
         };
 
 #if UNITY_ANDROID

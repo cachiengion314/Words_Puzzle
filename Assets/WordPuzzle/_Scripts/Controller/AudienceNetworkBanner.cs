@@ -16,6 +16,7 @@ public class AudienceNetworkBanner : MonoBehaviour
     private AdPosition currentAdViewPosition;
     private ScreenOrientation currentScreenOrientation;
     public Text statusLabel;
+
     void OnDestroy()
     {
         // Dispose of banner ad when the scene is destroyed
@@ -29,7 +30,7 @@ public class AudienceNetworkBanner : MonoBehaviour
         SceneManager.activeSceneChanged += ChangedActiveSceneToLoadBanner;
     }
     int nextSceneName;
- 
+
     private void ChangedActiveSceneToLoadBanner(Scene current, Scene next)
     {
         nextSceneName = next.buildIndex;
@@ -57,9 +58,10 @@ public class AudienceNetworkBanner : MonoBehaviour
     }
     public void LoadBanner()
     {
-        CheckCurrentLevel();
+        if (AdsManager.instance.MinLevelToLoadBanner == 0) return;
+        int currentLevel = CheckCurrentLevel();
 
-        if (currlevel >= AdsManager.instance.MinLevelToLoadBanner && MainController.instance != null)
+        if (currentLevel >= AdsManager.instance.MinLevelToLoadBanner && MainController.instance != null)
         {
             CUtils.CheckConnection(this, (result) =>
             {

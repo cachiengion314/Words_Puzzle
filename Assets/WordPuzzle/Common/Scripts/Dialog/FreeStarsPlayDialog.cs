@@ -74,7 +74,7 @@ public class FreeStarsPlayDialog : Dialog
             {
                 if (item.itemType == ItemType.CURRENCY_BALANCE)
                     item.iconItem = currTheme.uiData.freestarPlayData.iconStar;
-                else if(item.itemType == ItemType.HINT)
+                else if (item.itemType == ItemType.HINT)
                     item.iconItem = currTheme.uiData.freestarPlayData.iconHint;
                 else if (item.itemType == ItemType.HINT_SELECT)
                     item.iconItem = currTheme.uiData.freestarPlayData.iconSelectedHint;
@@ -197,8 +197,11 @@ public class FreeStarsPlayDialog : Dialog
           }
         );
     }
-
-
+    public override void Close()
+    {
+        base.Close();
+        AudienceNetworkFbAd.instance.LoadVideoAds();
+    }
 
     [Serializable]
     public class ItemCollectData
