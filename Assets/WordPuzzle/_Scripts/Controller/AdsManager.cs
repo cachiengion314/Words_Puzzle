@@ -43,6 +43,10 @@ public class AdsManager : MonoBehaviour
             instance = this;
 
         //SceneManager.activeSceneChanged += ChangedActiveScene;
+    }
+
+    private void Start()
+    {
         LoadDataAds();
     }
 
