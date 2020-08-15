@@ -275,6 +275,7 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void HandleRewardBasedVideoClosed(object sender, EventArgs args)
     {
+        MonoBehaviour.print("Admob Video close !");
         AudienceNetworkFbAd.instance.LoadVideoAds();
         RequestRewardBasedVideo();
         AdsManager.instance.IsLoading = true;

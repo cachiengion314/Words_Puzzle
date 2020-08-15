@@ -67,6 +67,10 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         interstitialAd.InterstitialAdDidClose = delegate ()
         {
             Debug.Log("Interstitial ad did close.");
+            AdmobController.instance.RequestInterstitial();
+            LoadInterstitial();
+            AdsManager.instance.IsLoading = true;
+
             AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
 
@@ -75,9 +79,6 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 interstitialAd.Dispose();
             }
-            AdmobController.instance.RequestInterstitial();
-            LoadInterstitial();
-            AdsManager.instance.IsLoading = true;
         };
 
 #if UNITY_ANDROID
@@ -235,6 +236,9 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
             Debug.Log("Rewarded video ad did close.");
+            AdmobController.instance.RequestRewardBasedVideo();
+            LoadVideoAds();
+            AdsManager.instance.IsLoading = true;
             AdsManager.instance.onAdsRewarded?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
             didClose = true;
@@ -242,9 +246,6 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 rewardedVideoAd.Dispose();
             }
-            AdmobController.instance.RequestRewardBasedVideo();
-            LoadVideoAds();
-            AdsManager.instance.IsLoading = true;
         };
 
 #if UNITY_ANDROID
