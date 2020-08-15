@@ -198,7 +198,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             string isAdValid = rewardedVideoAd.IsValid() ? "valid" : "invalid";
             //Debug.Log("Ad loaded and is " + isAdValid + ". Click show to present!");
 
-            Debug.Log("FacebookAds isLoad: " + isLoaded);
+            Debug.Log("FacebookAds video isLoad: " + isLoaded);
         };
         rewardedVideoAd.RewardedVideoAdDidFailWithError = delegate (string error)
         {
@@ -236,8 +236,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
             Debug.Log("Rewarded video ad did close.");
-            AdmobController.instance.RequestRewardBasedVideo();
             LoadVideoAds();
+            AdmobController.instance.RequestRewardBasedVideo();
             AdsManager.instance.IsLoading = true;
             AdsManager.instance.onAdsRewarded?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
