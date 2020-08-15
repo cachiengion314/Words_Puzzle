@@ -41,7 +41,7 @@ namespace WordPuzzle
             //    }
             //}
 
-            //Object jsonDataObject = Resources.Load("data");
+            //System.Object jsonDataObject = Resources.Load("data");
             //string jsonData = jsonDataObject.ToString();
             //Dictionary<string, object> tempDic = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonData);
             //JArray jsonArr = JArray.Parse(tempDic["Sheet1"].ToString());

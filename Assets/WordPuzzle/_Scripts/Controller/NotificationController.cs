@@ -132,7 +132,7 @@ public class NotificationController : MonoBehaviour
             else if (randomIndex == 1) PushFindWordsNotification(tempSeconds + (i * dayToSecondsValue));
             else if (randomIndex == 2) PushFreeBoostersNotification(tempSeconds + (i * dayToSecondsValue));
         }
-    }   
+    }
     private string RandomDailyTimePick(string DAILY_TIME1, string DAILY_TIME2)
     {
         string dailyTime = DAILY_TIME1;
@@ -160,11 +160,27 @@ public class NotificationController : MonoBehaviour
     }
     private string CheckUnfinishLine()
     {
-        string unFinishWordDefault = "A , B, C";
+        string unFinishWordDefault = "A, B, C";
 
         if (PlayerPrefs.GetString(unFinishWord) != null)
         {
             unFinishWordDefault = PlayerPrefs.GetString(unFinishWord);
+            string[] stringArr = unFinishWordDefault.Split();
+            unFinishWordDefault = string.Empty;
+            if (stringArr.Length > 1)
+            {
+                for (int i = 0; i < stringArr.Length; i++)
+                {
+                    if (i < stringArr.Length - 1)
+                    {
+                        unFinishWordDefault += stringArr[i] + ", ";
+                    }
+                    else if (i == stringArr.Length - 1)
+                    {
+                        unFinishWordDefault += stringArr[i];
+                    }
+                }
+            }
         }
 
         return unFinishWordDefault;
