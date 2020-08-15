@@ -25,33 +25,44 @@ public class AdsManager : MonoBehaviour
     public int MinLevelToLoadInterstitial;
 
     private bool _isLoading;
+    public bool IsLoading
+    {
+        get
+        {
+            return _isLoading;
+        }
+        set
+        {
+            _isLoading = value;
+        }
+    }
 
     void Awake()
     {
         if (instance == null)
             instance = this;
 
-        SceneManager.activeSceneChanged += ChangedActiveScene;
+        //SceneManager.activeSceneChanged += ChangedActiveScene;
+        LoadDataAds();
     }
 
     public void LoadDataAds()
     {
         if (_isLoading)
             return;
+#if UNITY_ANDROID && !UNITY_EDITOR
         if (AudienceNetworkFbAd.instance != null)
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
             AudienceNetworkFbAd.instance.LoadVideoAds();
             AudienceNetworkFbAd.instance.LoadInterstitial();
-#endif
         }
         if (AdmobController.instance != null)
         {
             //Debug.Log(transform.name + "_LoadDataAds");
-            //AdmobController.instance.RequestRewardBasedVideo();
-            //AdmobController.instance.RequestInterstitial();
+            AdmobController.instance.RequestRewardBasedVideo();
+            AdmobController.instance.RequestInterstitial();
         }
-
+#endif
         //if (UnityAdTest.instance != null)
         //{
         //    UnityAdTest.instance.ReloadVideoAds();
@@ -117,6 +128,7 @@ public class AdsManager : MonoBehaviour
                             Toast.instance.ShowMessage("Rewarded video is not ready");
                         _isLoading = false;
                         adsNotReadyYetCallback?.Invoke();
+                        LoadDataAds();
                     }
                     else
                     {
@@ -232,7 +244,7 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    #region Show Ads Handle
+#region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
@@ -258,6 +270,7 @@ public class AdsManager : MonoBehaviour
                     ShowInterstitial(true, () =>
                     {
                         onCompleteAds?.Invoke();
+                        LoadDataAds();
                     }, null, () =>
                     {
                         onCompleteAds?.Invoke();
@@ -270,6 +283,6 @@ public class AdsManager : MonoBehaviour
             }
         });
     }
-    #endregion
+#endregion
 
 }

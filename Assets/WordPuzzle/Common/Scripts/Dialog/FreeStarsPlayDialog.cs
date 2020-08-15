@@ -24,20 +24,21 @@ public class FreeStarsPlayDialog : Dialog
     [SerializeField] private TextMeshProUGUI _txtContent;
     [SerializeField] private TextMeshProUGUI _txtContent2;
 
-    private RewardVideoController _rewardControl;
+    //private RewardVideoController _rewardControl;
     private List<int> listRandom = new List<int>();
 
     private void OnEnable()
     {
-        _rewardControl = FindObjectOfType<RewardVideoController>();
-        if (_rewardControl == null)
-            _rewardControl = Instantiate(_rewardVideoPfb);
+        //_rewardControl = FindObjectOfType<RewardVideoController>();
+        //if (_rewardControl == null)
+        //    _rewardControl = Instantiate(_rewardVideoPfb);
 
 
-        _rewardControl.onRewardedCallback -= OnCompleteVideo;
-        _rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
+        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //_rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
 
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
     }
 
     protected override void Start()
@@ -122,11 +123,16 @@ public class FreeStarsPlayDialog : Dialog
 
     private void OnDestroy()
     {
-        if (_rewardControl != null)
-        {
-            _rewardControl.onRewardedCallback -= OnCompleteVideo;
-            _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        }
+        //if (_rewardControl != null)
+        //{
+        //    _rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //    _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        //}
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+    }
+
+    private void OnDisable()
+    {
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
@@ -137,33 +143,23 @@ public class FreeStarsPlayDialog : Dialog
 
     public void OnClickOpen()
     {
-        _rewardControl.onRewardedCallback += OnCompleteVideo;
+        //_rewardControl.onRewardedCallback += OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
         AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeStars;
 
-        AdsManager.instance.ShowVideoAds();
+        AdsManager.instance.ShowVideoAds(true, Close, Close);
         //AdmobController.instance.ShowRewardBasedVideo();
 
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            CUtils.CheckConnection(this, (result) =>
-            {
-                if (result == 0)
-                {
 #if UNITY_EDITOR
-                    OnCompleteVideo();
+            OnCompleteVideo();
 #endif
-                }
-                else
-                {
-                    Close();
-                }
-            });
         });
     }
 
@@ -177,9 +173,8 @@ public class FreeStarsPlayDialog : Dialog
         SceneAnimate.Instance.imageItem.sprite = itemTarget.iconItem;
         SceneAnimate.Instance.imageItem.SetNativeSize();
         //Debug.Log("OnCompleteVideo freestar invoke");
-        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-        _rewardControl.onRewardedCallback -= OnCompleteVideo;
-        _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
+        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
+        //_rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _panelWatch.transform.localScale = Vector3.zero;
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
@@ -200,7 +195,6 @@ public class FreeStarsPlayDialog : Dialog
     public override void Close()
     {
         base.Close();
-        AudienceNetworkFbAd.instance.LoadVideoAds();
     }
 
     [Serializable]

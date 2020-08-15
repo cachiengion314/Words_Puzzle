@@ -22,6 +22,7 @@ public class AdmobController : MonoBehaviour, IAds
 
     private void Start()
     {
+<<<<<<< HEAD
         //MobileAds.Initialize(initStatus => 
         //{
             if (!CUtils.IsAdsRemoved())
@@ -32,6 +33,18 @@ public class AdmobController : MonoBehaviour, IAds
                 Debug.Log("Initialize invoke");
             }
         //});
+=======
+        InitRewardedVideo();
+        MobileAds.Initialize(initStatus =>
+        {
+            //if (!CUtils.IsAdsRemoved())
+            //{
+            //RequestInterstitial();
+            //RequestRewardBasedVideo();
+            //Debug.Log("Initialize invoke");
+            //}
+        });
+>>>>>>> - fix ads event callback
     }
     public void InitRewardedVideo()
     {
@@ -238,8 +251,9 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleInterstitialClosed(object sender, EventArgs args)
     {
         print("HandleInterstitialClosed event received");
-        AdsManager.instance.onAdsClose?.Invoke();
         RequestInterstitial();
+        AdsManager.instance.IsLoading = true;
+        AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
 
@@ -261,7 +275,7 @@ public class AdmobController : MonoBehaviour, IAds
     {
         MonoBehaviour.print(
             "HandleRewardBasedVideoFailedToLoad event received with message: " + args.Message);
-      
+
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
     }
@@ -279,6 +293,7 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleRewardBasedVideoClosed(object sender, EventArgs args)
     {
         RequestRewardBasedVideo();
+        AdsManager.instance.IsLoading = true;
         // HandleRewardBasedVideoClosed event received;
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);

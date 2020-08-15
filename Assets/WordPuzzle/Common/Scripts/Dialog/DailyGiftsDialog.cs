@@ -59,6 +59,12 @@ public class DailyGiftsDialog : Dialog
         PlayerPrefs.SetInt("Max_FreeBooster_Progress", _maxProgress);
     }
 
+    void OnEnable()
+    {
+        AdsManager.instance.onAdsRewarded -= OnRewarded;
+        AdsManager.instance.onAdsRewarded += OnRewarded;
+    }
+
     void Start()
     {
         base.Start();
@@ -75,9 +81,6 @@ public class DailyGiftsDialog : Dialog
         //    _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
         //_rewardedVideoControl.onRewardedCallback -= OnRewarded;
         //_rewardedVideoControl.onRewardedCallback += OnRewarded;
-
-        AdsManager.instance.onAdsRewarded -= OnRewarded;
-        AdsManager.instance.onAdsRewarded += OnRewarded;
 
         _notifiCheckAds.text = "";
         UpdateNextDay();
@@ -183,13 +186,13 @@ public class DailyGiftsDialog : Dialog
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeBoosters;
         AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeBoosters;
 
+        Sound.instance.Play(Sound.Others.PopupOpen);
         AdsManager.instance.ShowVideoAds();
 
         // AdmobController.instance.ShowRewardBasedVideo();
-        Sound.instance.Play(Sound.Others.PopupOpen);
-//#if UNITY_EDITOR
-//        OnRewarded();
-//#endif
+        //#if UNITY_EDITOR
+        //        OnRewarded();
+        //#endif
     }
     void OnRewarded()
     {
@@ -438,8 +441,13 @@ public class DailyGiftsDialog : Dialog
     {
         if (_fxEffect != null)
             Destroy(_fxEffect);
+        AdsManager.instance.onAdsRewarded -= OnRewarded;
+    }
 
-        //_rewardedVideoControl.onRewardedCallback -= OnRewarded;
+    private void OnDisable()
+    {
+        if (_fxEffect != null)
+            Destroy(_fxEffect);
         AdsManager.instance.onAdsRewarded -= OnRewarded;
     }
 

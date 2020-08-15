@@ -75,7 +75,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 interstitialAd.Dispose();
             }
-
+            LoadInterstitial();
+            AdsManager.instance.IsLoading = true;
         };
 
 #if UNITY_ANDROID
@@ -232,8 +233,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
-            //Debug.Log("Rewarded video ad did close.");
-
+            Debug.Log("Rewarded video ad did close.");
             AdsManager.instance.onAdsRewarded?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
             didClose = true;
@@ -241,6 +241,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 rewardedVideoAd.Dispose();
             }          
+            LoadVideoAds();
+            AdsManager.instance.IsLoading = true;
         };
 
 #if UNITY_ANDROID

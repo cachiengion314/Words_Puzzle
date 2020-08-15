@@ -83,9 +83,9 @@ public class ButtonVideoHintFree : MonoBehaviour
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeLetter;
         AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeLetter;
 
+        Sound.instance.Play(Sound.Others.PopupOpen);
         AdsManager.instance.ShowVideoAds(true, OnAdsClosed);
 
-        Sound.instance.Play(Sound.Others.PopupOpen);
         //#if UNITY_EDITOR
         //        OnCompleteVideo();
         //#endif
@@ -93,7 +93,6 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnCompleteVideo()
     {
-        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             Debug.Log("Cell: " + Cell.gameObject.name);
@@ -135,6 +134,5 @@ public class ButtonVideoHintFree : MonoBehaviour
     void OnAdsClosed()
     {
         _btnAds.interactable = true;
-        AdsManager.instance.onAdsClose -= OnAdsClosed;
     }
 }

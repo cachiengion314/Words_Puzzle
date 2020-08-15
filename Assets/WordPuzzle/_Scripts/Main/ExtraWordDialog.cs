@@ -67,6 +67,22 @@ public class ExtraWordDialog : Dialog
         ShowPanelCurrLevel();
     }
 
+    private void OnEnable()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
+    }
+
+    private void OnDisable()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+    }
+
+    private void OnDestroy()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+    }
+
     private void CheckTheme()
     {
         if (MainController.instance != null)
@@ -116,9 +132,6 @@ public class ExtraWordDialog : Dialog
 
     void OnCompleteVideo()
     {
-        //_rewardController.onRewardedCallback -= OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
@@ -154,15 +167,11 @@ public class ExtraWordDialog : Dialog
 
     public void OnClickShowVideoAds()
     {
-        //_rewardController.onRewardedCallback += OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
-
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedBonusBox;
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedBonusBox;
         AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedBonusBox;
 
         AdsManager.instance.ShowVideoAds();
-        // AdmobController.instance.ShowRewardBasedVideo();
 
         Sound.instance.Play(Sound.Others.PopupOpen);
 #if UNITY_EDITOR
