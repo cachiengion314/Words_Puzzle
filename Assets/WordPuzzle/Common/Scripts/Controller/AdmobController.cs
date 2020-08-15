@@ -233,6 +233,7 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleInterstitialClosed(object sender, EventArgs args)
     {
         print("HandleInterstitialClosed event received");
+        AudienceNetworkFbAd.instance.LoadInterstitial();
         RequestInterstitial();
         AdsManager.instance.IsLoading = true;
         AdsManager.instance.onAdsClose?.Invoke();
@@ -274,6 +275,7 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void HandleRewardBasedVideoClosed(object sender, EventArgs args)
     {
+        AudienceNetworkFbAd.instance.LoadVideoAds();
         RequestRewardBasedVideo();
         AdsManager.instance.IsLoading = true;
         // HandleRewardBasedVideoClosed event received;

@@ -144,7 +144,6 @@ public class FreeStarsPlayDialog : Dialog
     public void OnClickOpen()
     {
         //_rewardControl.onRewardedCallback += OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
         AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
         UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;

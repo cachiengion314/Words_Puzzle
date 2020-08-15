@@ -75,6 +75,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 interstitialAd.Dispose();
             }
+            AdmobController.instance.RequestInterstitial();
             LoadInterstitial();
             AdsManager.instance.IsLoading = true;
         };
@@ -240,7 +241,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             if (rewardedVideoAd != null)
             {
                 rewardedVideoAd.Dispose();
-            }          
+            }
+            AdmobController.instance.RequestRewardBasedVideo();
             LoadVideoAds();
             AdsManager.instance.IsLoading = true;
         };
