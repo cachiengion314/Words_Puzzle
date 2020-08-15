@@ -1511,6 +1511,8 @@ public class WordRegion : MonoBehaviour
         Prefs.answersProgress = resultAnswers.ToArray();
         FacebookController.instance.user.levelProgress = Prefs.levelProgress;
         FacebookController.instance.user.answerProgress = Prefs.answersProgress;
+        LineWord lineWord = Lines.Find(line => !line.isShown && line.answer != string.Empty);
+        if (lineWord != null) { PlayerPrefs.SetString(NotificationController.instance.unFinishWord, lineWord.answer.ToString().ToUpper()); LogController.Debug("Unfinish word: " + lineWord.answer.ToString().ToUpper()); } 
         FacebookController.instance.SaveDataGame();
     }
 

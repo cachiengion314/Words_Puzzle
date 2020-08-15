@@ -31,7 +31,9 @@ public class NotificationController : MonoBehaviour
     public int currentFreeBoostersProgress;
     public double currentChickenBank;
     public int maxChickenBank;
-   
+    public string unFinishWord = "Unfinish_Word";
+    private string findWordMessage = "Find the words built from the letters ";
+
     private bool isNotificationOn;
     public bool IsNotificationOn
     {
@@ -156,7 +158,17 @@ public class NotificationController : MonoBehaviour
 
         CancelAndPushManyNotification();
     }
+    private string CheckUnfinishLine()
+    {
+        string unFinishWordDefault = "A , B, C";
 
+        if (PlayerPrefs.GetString(unFinishWord) != null)
+        {
+            unFinishWordDefault = PlayerPrefs.GetString(unFinishWord);
+        }
+
+        return unFinishWordDefault;
+    }
     private void PushChickenBankNotification(double delay)
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -169,7 +181,7 @@ public class NotificationController : MonoBehaviour
     private void PushFindWordsNotification(double delay)
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-        string message = "Find the words built from the letters A, B, C. ";
+        string message = findWordMessage + CheckUnfinishLine();
         NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
 #endif
     }
