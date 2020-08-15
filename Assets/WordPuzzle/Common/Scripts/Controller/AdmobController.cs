@@ -22,29 +22,11 @@ public class AdmobController : MonoBehaviour, IAds
 
     private void Start()
     {
-<<<<<<< HEAD
-        //MobileAds.Initialize(initStatus => 
-        //{
-            if (!CUtils.IsAdsRemoved())
-            {
-                InitRewardedVideo();
-                RequestInterstitial();
-                RequestRewardBasedVideo();
-                Debug.Log("Initialize invoke");
-            }
-        //});
-=======
         InitRewardedVideo();
         MobileAds.Initialize(initStatus =>
         {
-            //if (!CUtils.IsAdsRemoved())
-            //{
-            //RequestInterstitial();
-            //RequestRewardBasedVideo();
-            //Debug.Log("Initialize invoke");
-            //}
+
         });
->>>>>>> - fix ads event callback
     }
     public void InitRewardedVideo()
     {
