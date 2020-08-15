@@ -23,10 +23,10 @@ public class AdmobController : MonoBehaviour, IAds
     private void Start()
     {
         InitRewardedVideo();
-        MobileAds.Initialize(initStatus =>
-        {
+        //MobileAds.Initialize(initStatus =>
+        //{
 
-        });
+        //});
     }
     public void InitRewardedVideo()
     {
