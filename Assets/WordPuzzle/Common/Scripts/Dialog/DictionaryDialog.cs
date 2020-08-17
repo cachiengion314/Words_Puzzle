@@ -143,6 +143,10 @@ public class DictionaryDialog : Dialog
         {
             OnClickVocabularyTab();
         }
+
+        var unlockAll = CPlayerPrefs.GetBool("UNLOCK_ALL_FLAG", false);
+        if (unlockAll)
+            UnlockAllFlag();
     }
     public void WriteFlagTabTitleContent()
     {
@@ -327,21 +331,24 @@ public class DictionaryDialog : Dialog
     }
 
     //==Test
-    public void UnlockAllFlag()
+    private void UnlockAllFlag()
     {
         foreach (var flag in flagList)
         {
-            flag.UnlockSuccess();
-            if (flag.flagUnlockWord != string.Empty)
+            if (flag.isLocked)
             {
-                FlagTabController.instance.AddToUnlockedWordDictionary(flag.flagUnlockWord);
+                flag.UnlockSuccess();
+                if (flag.flagUnlockWord != string.Empty)
+                {
+                    FlagTabController.instance.AddToUnlockedWordDictionary(flag.flagUnlockWord);
+                }
+                else
+                {
+                    FlagTabController.instance.AddToUnlockedWordDictionary(flag.flagName);
+                }
+                WriteFlagTabTitleContent();
+                FlagTabController.instance.SaveUnlockedWordData();
             }
-            else
-            {
-                FlagTabController.instance.AddToUnlockedWordDictionary(flag.flagName);
-            }
-            WriteFlagTabTitleContent();
-            FlagTabController.instance.SaveUnlockedWordData();
         }
     }
     //==

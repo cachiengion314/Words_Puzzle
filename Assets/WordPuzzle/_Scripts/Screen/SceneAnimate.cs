@@ -19,7 +19,6 @@ public class SceneAnimate : MonoBehaviour
     public Animator animatorScene;
     public GameObject _loadingScreen;
     public Slider _progressLoading;
-    public GameObject btnTest;
     public TextMeshProUGUI _textProgress;
     [Space]
     public Button _btnPlay;
@@ -53,7 +52,9 @@ public class SceneAnimate : MonoBehaviour
     [Header("UI TEST")]
     [SerializeField] private bool isShowTest;
     [SerializeField] private Dropdown _levels;
-
+    [SerializeField] private GameObject _reporter;
+    [SerializeField] private GameObject _btnTest;
+    [SerializeField] private GameObject _btnUnlockAllFlag;
 
     private List<LevelData> _levelDatas;
     private const int PLAY = 0;
@@ -93,15 +94,15 @@ public class SceneAnimate : MonoBehaviour
             Instantiate(donotDestroyOnLoad);
         _safeArea.CheckSafeArea();
         LoadScenHomeWithProgress();
+
+        _btnTest.gameObject.SetActive(isShowTest);
+        _reporter.gameObject.SetActive(isShowTest);
+        _btnUnlockAllFlag.gameObject.SetActive(isShowTest);
         if (isShowTest)
         {
-            btnTest.gameObject.SetActive(true);
             LoadOptionData();
+            _levels.onValueChanged.RemoveAllListeners();
             _levels.onValueChanged.AddListener(OnUnlockLevel);
-        }
-        else
-        {
-            btnTest.gameObject.SetActive(false);
         }
     }
 
@@ -265,6 +266,12 @@ public class SceneAnimate : MonoBehaviour
     //}
 
     //TEST
+    public void OnUnlockAllFlag()
+    {
+        CPlayerPrefs.SetBool("UNLOCK_ALL_FLAG", true);
+        CPlayerPrefs.SetBool("HONEY_TUTORIAL", true);
+    }
+
     public void OnAddStarAndBeeTest(int numBee)
     {
         CurrencyController.CreditBalance(10000);
