@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class SettingDialog : Dialog
 {
     [SerializeField]
+    private int bundleVersionCode;
+    [SerializeField]
     GameObject soundButton;
     [SerializeField]
     GameObject musicButton;
@@ -64,6 +66,7 @@ public class SettingDialog : Dialog
     protected override void Start()
     {
         base.Start();
+        _textContents[_textContents.Count - 1].text = "Build " + bundleVersionCode;
         CheckTheme();
         if (EffectController.instance.IsEffectOn)
         {
