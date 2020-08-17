@@ -21,8 +21,7 @@ public class GooglePerformance : MonoBehaviour
         {
             Scene = Scene.AssetswordpuzzleScenesmain,
             LoadingState = LoadingState.Loading,
-            Difficulty = Difficulty.Medium
-            //GameDifficulty = Difficulty.Medium
+            Gamedifficulty = Difficulty.Medium
         });
         tuner.SetFidelityParameters(new FidelityParams
         {
@@ -38,7 +37,7 @@ public class GooglePerformance : MonoBehaviour
             {
                 Scene = Scene.AssetswordpuzzleScenesmain,
                 LoadingState = LoadingState.NotLoading,
-                Difficulty = Difficulty.Medium
+                Gamedifficulty = Difficulty.Medium
             });
         };
     }

@@ -22,28 +22,28 @@ namespace Google.Android.PerformanceTuner {
     static DevTuningforkReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChRkZXZfdHVuaW5nZm9yay5wcm90byJqCgpBbm5vdGF0aW9uEiQKDWxvYWRp",
+            "ChRkZXZfdHVuaW5nZm9yay5wcm90byJuCgpBbm5vdGF0aW9uEiQKDWxvYWRp",
             "bmdfc3RhdGUYASABKA4yDS5Mb2FkaW5nU3RhdGUSFQoFc2NlbmUYAiABKA4y",
-            "Bi5TY2VuZRIfCgpkaWZmaWN1bHR5GAMgASgOMgsuRGlmZmljdWx0eSJwCg5G",
-            "aWRlbGl0eVBhcmFtcxIaChJ0ZXh0dXJlX3Jlc29sdXRpb24YASABKAUSKAoP",
-            "c2hhZG93X3F1YWx0aXR5GAIgASgOMg8uU2hhZG93UXVhbHRpdHkSGAoQcGFy",
-            "dGljbGVfZGV0YWlscxgDIAEoAipgCgxMb2FkaW5nU3RhdGUSGAoUTE9BRElO",
-            "R1NUQVRFX0lOVkFMSUQQABIcChhMT0FESU5HU1RBVEVfTk9UX0xPQURJTkcQ",
-            "ARIYChRMT0FESU5HU1RBVEVfTE9BRElORxACKsABCgVTY2VuZRIRCg1TQ0VO",
-            "RV9JTlZBTElEEAASKAokU0NFTkVfQVNTRVRTV09SRFBVWlpMRV9TQ0VORVNM",
-            "T0FESU5HEAESJQohU0NFTkVfQVNTRVRTV09SRFBVWlpMRV9TQ0VORVNIT01F",
-            "EAISLAooU0NFTkVfQVNTRVRTV09SRFBVWlpMRV9TQ0VORVNTRUxFQ1RXT1JM",
-            "RBADEiUKIVNDRU5FX0FTU0VUU1dPUkRQVVpaTEVfU0NFTkVTTUFJThAEKmUK",
-            "CkRpZmZpY3VsdHkSFgoSRElGRklDVUxUWV9JTlZBTElEEAASEwoPRElGRklD",
-            "VUxUWV9FQVNZEAESFQoRRElGRklDVUxUWV9NRURJVU0QAhITCg9ESUZGSUNV",
-            "TFRZX0hBUkQQAyp4Cg5TaGFkb3dRdWFsdGl0eRIaChZTSEFET1dRVUFMVElU",
-            "WV9JTlZBTElEEAASFgoSU0hBRE9XUVVBTFRJVFlfTE9XEAESGQoVU0hBRE9X",
-            "UVVBTFRJVFlfTUVESVVNEAISFwoTU0hBRE9XUVVBTFRJVFlfSElHSBADQiKq",
-            "Ah9Hb29nbGUuQW5kcm9pZC5QZXJmb3JtYW5jZVR1bmVyYgZwcm90bzM="));
+            "Bi5TY2VuZRIjCg5nYW1lZGlmZmljdWx0eRgDIAEoDjILLkRpZmZpY3VsdHki",
+            "cAoORmlkZWxpdHlQYXJhbXMSGgoSdGV4dHVyZV9yZXNvbHV0aW9uGAEgASgF",
+            "EigKD3NoYWRvd19xdWFsdGl0eRgCIAEoDjIPLlNoYWRvd1F1YWx0aXR5EhgK",
+            "EHBhcnRpY2xlX2RldGFpbHMYAyABKAIqYAoMTG9hZGluZ1N0YXRlEhgKFExP",
+            "QURJTkdTVEFURV9JTlZBTElEEAASHAoYTE9BRElOR1NUQVRFX05PVF9MT0FE",
+            "SU5HEAESGAoUTE9BRElOR1NUQVRFX0xPQURJTkcQAirAAQoFU2NlbmUSEQoN",
+            "U0NFTkVfSU5WQUxJRBAAEigKJFNDRU5FX0FTU0VUU1dPUkRQVVpaTEVfU0NF",
+            "TkVTTE9BRElORxABEiUKIVNDRU5FX0FTU0VUU1dPUkRQVVpaTEVfU0NFTkVT",
+            "SE9NRRACEiwKKFNDRU5FX0FTU0VUU1dPUkRQVVpaTEVfU0NFTkVTU0VMRUNU",
+            "V09STEQQAxIlCiFTQ0VORV9BU1NFVFNXT1JEUFVaWkxFX1NDRU5FU01BSU4Q",
+            "BCplCgpEaWZmaWN1bHR5EhYKEkRJRkZJQ1VMVFlfSU5WQUxJRBAAEhMKD0RJ",
+            "RkZJQ1VMVFlfRUFTWRABEhUKEURJRkZJQ1VMVFlfTUVESVVNEAISEwoPRElG",
+            "RklDVUxUWV9IQVJEEAMqeAoOU2hhZG93UXVhbHRpdHkSGgoWU0hBRE9XUVVB",
+            "TFRJVFlfSU5WQUxJRBAAEhYKElNIQURPV1FVQUxUSVRZX0xPVxABEhkKFVNI",
+            "QURPV1FVQUxUSVRZX01FRElVTRACEhcKE1NIQURPV1FVQUxUSVRZX0hJR0gQ",
+            "A0IiqgIfR29vZ2xlLkFuZHJvaWQuUGVyZm9ybWFuY2VUdW5lcmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Google.Android.PerformanceTuner.LoadingState), typeof(global::Google.Android.PerformanceTuner.Scene), typeof(global::Google.Android.PerformanceTuner.Difficulty), typeof(global::Google.Android.PerformanceTuner.ShadowQualtity), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Android.PerformanceTuner.Annotation), global::Google.Android.PerformanceTuner.Annotation.Parser, new[]{ "LoadingState", "Scene", "Difficulty" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Android.PerformanceTuner.Annotation), global::Google.Android.PerformanceTuner.Annotation.Parser, new[]{ "LoadingState", "Scene", "Gamedifficulty" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Android.PerformanceTuner.FidelityParams), global::Google.Android.PerformanceTuner.FidelityParams.Parser, new[]{ "TextureResolution", "ShadowQualtity", "ParticleDetails" }, null, null, null)
           }));
     }
@@ -108,7 +108,7 @@ namespace Google.Android.PerformanceTuner {
     public Annotation(Annotation other) : this() {
       loadingState_ = other.loadingState_;
       scene_ = other.scene_;
-      difficulty_ = other.difficulty_;
+      gamedifficulty_ = other.gamedifficulty_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -138,14 +138,14 @@ namespace Google.Android.PerformanceTuner {
       }
     }
 
-    /// <summary>Field number for the "difficulty" field.</summary>
-    public const int DifficultyFieldNumber = 3;
-    private global::Google.Android.PerformanceTuner.Difficulty difficulty_ = 0;
+    /// <summary>Field number for the "gamedifficulty" field.</summary>
+    public const int GamedifficultyFieldNumber = 3;
+    private global::Google.Android.PerformanceTuner.Difficulty gamedifficulty_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Google.Android.PerformanceTuner.Difficulty Difficulty {
-      get { return difficulty_; }
+    public global::Google.Android.PerformanceTuner.Difficulty Gamedifficulty {
+      get { return gamedifficulty_; }
       set {
-        difficulty_ = value;
+        gamedifficulty_ = value;
       }
     }
 
@@ -164,7 +164,7 @@ namespace Google.Android.PerformanceTuner {
       }
       if (LoadingState != other.LoadingState) return false;
       if (Scene != other.Scene) return false;
-      if (Difficulty != other.Difficulty) return false;
+      if (Gamedifficulty != other.Gamedifficulty) return false;
       return true;
     }
 
@@ -173,7 +173,7 @@ namespace Google.Android.PerformanceTuner {
       int hash = 1;
       if (LoadingState != 0) hash ^= LoadingState.GetHashCode();
       if (Scene != 0) hash ^= Scene.GetHashCode();
-      if (Difficulty != 0) hash ^= Difficulty.GetHashCode();
+      if (Gamedifficulty != 0) hash ^= Gamedifficulty.GetHashCode();
       return hash;
     }
 
@@ -192,9 +192,9 @@ namespace Google.Android.PerformanceTuner {
         output.WriteRawTag(16);
         output.WriteEnum((int) Scene);
       }
-      if (Difficulty != 0) {
+      if (Gamedifficulty != 0) {
         output.WriteRawTag(24);
-        output.WriteEnum((int) Difficulty);
+        output.WriteEnum((int) Gamedifficulty);
       }
     }
 
@@ -207,8 +207,8 @@ namespace Google.Android.PerformanceTuner {
       if (Scene != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Scene);
       }
-      if (Difficulty != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Difficulty);
+      if (Gamedifficulty != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Gamedifficulty);
       }
       return size;
     }
@@ -224,8 +224,8 @@ namespace Google.Android.PerformanceTuner {
       if (other.Scene != 0) {
         Scene = other.Scene;
       }
-      if (other.Difficulty != 0) {
-        Difficulty = other.Difficulty;
+      if (other.Gamedifficulty != 0) {
+        Gamedifficulty = other.Gamedifficulty;
       }
     }
 
@@ -246,7 +246,7 @@ namespace Google.Android.PerformanceTuner {
             break;
           }
           case 24: {
-            difficulty_ = (global::Google.Android.PerformanceTuner.Difficulty) input.ReadEnum();
+            gamedifficulty_ = (global::Google.Android.PerformanceTuner.Difficulty) input.ReadEnum();
             break;
           }
         }
