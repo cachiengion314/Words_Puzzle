@@ -11,9 +11,9 @@ public class AdmobController : MonoBehaviour, IAds
     public static AdmobController instance;
     public float bannerHeight;
 
-    public string videoAdsId = "ca-app-pub-3940256099942544/5224354917";
-    public string interstitialAdsId = "ca-app-pub-3940256099942544/1033173712";
-    public string bannerAdsId = "ca-app-pub-3212738706492790/6113697308";
+    [HideInInspector] public string videoAdsId = "ca-app-pub-3940256099942544/5224354917";
+    [HideInInspector] public string interstitialAdsId = "ca-app-pub-3940256099942544/1033173712";
+    [HideInInspector] public string bannerAdsId = "ca-app-pub-3212738706492790/6113697308";
 
     private void Awake()
     {

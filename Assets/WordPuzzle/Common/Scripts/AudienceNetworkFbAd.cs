@@ -32,8 +32,8 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     }
     private void Start()
     {
-        //LoadInterstitial();
-        //LoadVideoAds();
+        LoadInterstitial();
+        LoadVideoAds();
     }
     public void LoadInterstitial()
     {

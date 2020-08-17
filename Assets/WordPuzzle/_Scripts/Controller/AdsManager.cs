@@ -67,15 +67,17 @@ public class AdsManager : MonoBehaviour
                 AudienceNetworkFbAd.instance.LoadInterstitial();
             isFacebookAdLoad = true;
         }
-        if (AdmobController.instance != null)
-        {
-            //Debug.Log(transform.name + "_LoadDataAds");
-            if (isLoadVideo)
-                AdmobController.instance.RequestRewardBasedVideo();
-            if (isLoadIntersial)
-                AdmobController.instance.RequestInterstitial();
-        }
+       
 #endif
+        //if (AdmobController.instance != null)
+        //{
+        //    //Debug.Log(transform.name + "_LoadDataAds");
+        //    if (isLoadVideo)
+        //        AdmobController.instance.RequestRewardBasedVideo();
+        //    if (isLoadIntersial)
+        //        AdmobController.instance.RequestInterstitial();
+        //}
+
         //if (UnityAdTest.instance != null)
         //{
         //    UnityAdTest.instance.ReloadVideoAds();

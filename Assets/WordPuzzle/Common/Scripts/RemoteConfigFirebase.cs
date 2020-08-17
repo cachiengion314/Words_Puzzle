@@ -180,7 +180,7 @@ public class RemoteConfigFirebase : MonoBehaviour
                 AdsManager.instance.MinLevelToLoadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
                 LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadInterstitial);
 
-                AdsManager.instance.LoadAndConfigAdsId();
+                //AdsManager.instance.LoadAndConfigAdsId();
             }
             else
             {
@@ -190,7 +190,7 @@ public class RemoteConfigFirebase : MonoBehaviour
                 AdsManager.instance.PercentToloadInterstitial = 50;
                 AdsManager.instance.MinLevelToLoadInterstitial = 50;
 
-                AdsManager.instance.LoadAndConfigAdsId();
+                //AdsManager.instance.LoadAndConfigAdsId();
             }
         });
 
