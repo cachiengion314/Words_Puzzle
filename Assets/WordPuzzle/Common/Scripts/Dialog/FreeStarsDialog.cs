@@ -23,6 +23,8 @@ public class FreeStarsDialog : Dialog
     {
         base.Start();
         CheckTheme();
+
+        //StartCoroutine(AdsManager.instance.LoadAndConfigAdsId());
     }
 
     private void OnEnable()
@@ -81,13 +83,8 @@ public class FreeStarsDialog : Dialog
 
     public void OnClickOpen()
     {
-        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
-        UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
-        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeStars;
-
         AdsManager.instance.ShowVideoAds(true, Close, Close);
-        //AdmobController.instance.ShowRewardBasedVideo();
-
+    
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>

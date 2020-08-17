@@ -8,8 +8,8 @@ using System;
 
 public class AudienceNetworkFbAd : MonoBehaviour, IAds
 {
-    public string rewardIdFaceAds = "583616318955925_583618328955724";
-    public string intersititialIdFaceAds = "583616318955925_583618328955724";
+    [HideInInspector] public string rewardIdFaceAds = "670089180215126_670103063547071"; // "583616318955925_583618328955724";
+    [HideInInspector] public string intersititialIdFaceAds = "670089180215126_670103063547071";         //"583616318955925_583618328955724";
 
     public static AudienceNetworkFbAd instance;
     public RewardedVideoAd rewardedVideoAd;
@@ -29,6 +29,11 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 #if UNITY_ANDROID && !UNITY_EDITOR
         AudienceNetworkAds.Initialize();
 #endif
+    }
+    private void Start()
+    {
+        //LoadInterstitial();
+        //LoadVideoAds();
     }
     public void LoadInterstitial()
     {
@@ -68,7 +73,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         {
             Debug.Log("Interstitial ad did close.");
             AdmobController.instance.RequestInterstitial();
-            LoadInterstitial();
+            
             AdsManager.instance.IsLoading = true;
 
             AdsManager.instance.onAdsClose?.Invoke();
@@ -79,6 +84,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 interstitialAd.Dispose();
             }
+            //LoadInterstitial();
         };
 
 #if UNITY_ANDROID
@@ -154,7 +160,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 
         rewardedVideoAd.Show();
         isLoaded = false;
-        //LoadVideoAds();
+     
     }
     public void ShowBannerAds()
     {
@@ -236,7 +242,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
             Debug.Log("Rewarded video ad did close.");
-            LoadVideoAds();
+           
             AdmobController.instance.RequestRewardBasedVideo();
             AdsManager.instance.IsLoading = true;
             AdsManager.instance.onAdsRewarded?.Invoke();
@@ -246,6 +252,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 rewardedVideoAd.Dispose();
             }
+            //LoadVideoAds();
         };
 
 #if UNITY_ANDROID

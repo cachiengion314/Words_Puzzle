@@ -4,6 +4,7 @@ using UnityEngine;
 using Firebase.RemoteConfig;
 using TMPro;
 using UnityScript.Steps;
+using System.Collections;
 
 public class RemoteConfigFirebase : MonoBehaviour
 {
@@ -78,16 +79,16 @@ public class RemoteConfigFirebase : MonoBehaviour
                     HomeController.instance.CheckShowFreeBooster();
             }
         };
+        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
     }
     private void Start()
     {
-        if (!isNeedToFetch) return;
-        isNeedToFetch = false;
-
         FetchFireBase();
 
-        Invoke("ShowIngameNotify", 1.7f);
-        Invoke("GetAllIdAvertisement", 1.7f);
+        //Invoke("ShowIngameNotify", 1.7f);
+        //Invoke("GetAllIdAvertisement", 1.7f);
+
+        //StartCoroutine(AdsManager.instance.LoadAndConfigAdsId());
     }
 
     public void FetchFireBase()
@@ -100,15 +101,13 @@ public class RemoteConfigFirebase : MonoBehaviour
             }
         });
     }
+    private IEnumerator GetAllIdAvertisementWhenFetchingDone()
+    {
+        yield return new WaitUntil(() => IsFetchingDone);
+        GetAllIdAvertisement();
+    }
     private string ConvertFirebaseStringToNormal(string firebasestr)
     {
-        //string[] tempFirebaseStrArr = firebasestr.Split(new char[1] { '"' });
-        //firebasestr = null;
-        //foreach (string item in tempFirebaseStrArr)
-        //{
-        //    firebasestr += item;
-        //}
-
         return firebasestr;
     }
     public void GetAllIdAvertisement()
@@ -180,6 +179,8 @@ public class RemoteConfigFirebase : MonoBehaviour
                 // Min level to load interstitial ads
                 AdsManager.instance.MinLevelToLoadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
                 LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadInterstitial);
+
+                AdsManager.instance.LoadAndConfigAdsId();
             }
             else
             {
@@ -188,6 +189,8 @@ public class RemoteConfigFirebase : MonoBehaviour
                 AdsManager.instance.MinLevelToLoadRewardVideo = 50;
                 AdsManager.instance.PercentToloadInterstitial = 50;
                 AdsManager.instance.MinLevelToLoadInterstitial = 50;
+
+                AdsManager.instance.LoadAndConfigAdsId();
             }
         });
 
@@ -246,6 +249,7 @@ public class RemoteConfigFirebase : MonoBehaviour
         return fetchTask.ContinueWith(FetchComplete);
     }
 
+    public bool IsFetchingDone { get; private set; }
     void FetchComplete(Task fetchTask)
     {
         if (fetchTask.IsCanceled)
@@ -260,6 +264,7 @@ public class RemoteConfigFirebase : MonoBehaviour
         {
             //Debug.Log("Fetch completed successfully!");
             // don't put callback in here. It doesn work properly.
+
         }
 
         var info = FirebaseRemoteConfig.Info;
@@ -269,6 +274,9 @@ public class RemoteConfigFirebase : MonoBehaviour
                 FirebaseRemoteConfig.ActivateFetched();
                 //Debug.Log(String.Format("Remote data loaded and ready (last fetch time {0}).",
                 //    info.FetchTime));
+                IsFetchingDone = true;
+
+                Debug.Log("isFetchingDone: " + IsFetchingDone);
                 break;
             case LastFetchStatus.Failure:
                 switch (info.LastFetchFailureReason)

@@ -44,12 +44,23 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+
+        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
     }
     private void Start()
     {
         if (RemoteConfigFirebase.instance != null) return;
 
-        StartCoroutine(FetchDataWithDelay());      
+        //StartCoroutine(FetchDataWithDelay());
+
+
+        //StartCoroutine(AdsManager.instance.LoadAndConfigAdsId());
+    }
+    private IEnumerator GetAllIdAvertisementWhenFetchingDone()
+    {
+        yield return new WaitUntil(() => IsFetchingDone);
+        GetAllIdAvertisement();
     }
     public IEnumerator FetchDataWithDelay()
     {
@@ -145,6 +156,8 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
                 // Min level to load interstitial ads
                 AdsManager.instance.MinLevelToLoadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
                 LogController.Debug("Remoteconfig gameplay load active_interstitial_level: " + AdsManager.instance.MinLevelToLoadInterstitial);
+
+                AdsManager.instance.LoadAndConfigAdsId();
             }
             else
             {
@@ -153,6 +166,8 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
                 AdsManager.instance.MinLevelToLoadRewardVideo = 50;
                 AdsManager.instance.PercentToloadInterstitial = 50;
                 AdsManager.instance.MinLevelToLoadInterstitial = 50;
+
+                AdsManager.instance.LoadAndConfigAdsId();
             }
         });
     }
@@ -192,7 +207,7 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
         Task fetchTask = FirebaseRemoteConfig.FetchAsync(TimeSpan.Zero);
         return fetchTask.ContinueWith(FetchComplete);
     }
-
+    public bool IsFetchingDone { get; private set; }
     void FetchComplete(Task fetchTask)
     {
         if (fetchTask.IsCanceled)
@@ -216,6 +231,7 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
                 FirebaseRemoteConfig.ActivateFetched();
                 //Debug.Log(String.Format("Remote data loaded and ready (last fetch time {0}).",
                 //    info.FetchTime));
+                IsFetchingDone = true;
                 break;
             case LastFetchStatus.Failure:
                 switch (info.LastFetchFailureReason)

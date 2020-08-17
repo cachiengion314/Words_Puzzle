@@ -46,6 +46,8 @@ public class FreeStarsPlayDialog : Dialog
         base.Start();
         CheckTheme();
         InitListRandom();
+
+        //StartCoroutine(AdsManager.instance.LoadAndConfigAdsId());
     }
 
     private void CheckTheme()
@@ -145,13 +147,8 @@ public class FreeStarsPlayDialog : Dialog
     {
         //_rewardControl.onRewardedCallback += OnCompleteVideo;
 
-        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
-        UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
-        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeStars;
-
         AdsManager.instance.ShowVideoAds(true, Close, Close);
-        //AdmobController.instance.ShowRewardBasedVideo();
-
+       
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>

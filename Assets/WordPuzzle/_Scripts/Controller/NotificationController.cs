@@ -6,6 +6,7 @@ using System;
 using Superpow;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class NotificationController : MonoBehaviour
 {
@@ -165,19 +166,33 @@ public class NotificationController : MonoBehaviour
         if (PlayerPrefs.GetString(unFinishWord) != null)
         {
             unFinishWordDefault = PlayerPrefs.GetString(unFinishWord);
-            string[] stringArr = unFinishWordDefault.Split();
-            unFinishWordDefault = string.Empty;
-            if (stringArr.Length > 1)
+            if (unFinishWordDefault == null || unFinishWordDefault == string.Empty)
             {
-                for (int i = 0; i < stringArr.Length; i++)
+                if (FacebookController.instance.user.answerProgress[0] != null || FacebookController.instance.user.answerProgress[0] != string.Empty)
                 {
-                    if (i < stringArr.Length - 1)
+                    unFinishWordDefault = FacebookController.instance.user.answerProgress[0];
+                }
+                else
+                {
+                    unFinishWordDefault = "A, B, C";
+                }
+            }
+            string[] stringArr = unFinishWordDefault.Split();
+            List<string> stringList = new List<string>();
+            stringList.AddRange(stringArr);
+            stringList.Sort();
+            unFinishWordDefault = string.Empty;
+            if (stringList.Count > 1)
+            {
+                for (int i = 0; i < stringList.Count; i++)
+                {
+                    if (i < stringList.Count - 1)
                     {
-                        unFinishWordDefault += stringArr[i] + ", ";
+                        unFinishWordDefault += stringList[i] + ", ";
                     }
-                    else if (i == stringArr.Length - 1)
+                    else if (i == stringList.Count - 1)
                     {
-                        unFinishWordDefault += stringArr[i];
+                        unFinishWordDefault += stringList[i];
                     }
                 }
             }

@@ -41,30 +41,39 @@ public class AdsManager : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-
-        //SceneManager.activeSceneChanged += ChangedActiveScene;
     }
-
-    private void Start()
+    public void LoadAndConfigAdsId()
     {
+        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
+        UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
+        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeStars;
+
+        Debug.Log("LoadAndConfigAdsId AudienceNetworkFbAd.instance.rewardIdFaceAds: " + AudienceNetworkFbAd.instance.rewardIdFaceAds);
+        Debug.Log("LoadAndConfigAdsId AdmobController.instance.videoAdsId: " + AdmobController.instance.videoAdsId);
+
         LoadDataAds();
     }
-
-    public void LoadDataAds()
+    bool isFacebookAdLoad;
+    public void LoadDataAds(bool isLoadVideo = true, bool isLoadIntersial = true)
     {
         if (_isLoading)
             return;
 #if UNITY_ANDROID && !UNITY_EDITOR
-        if (AudienceNetworkFbAd.instance != null)
+        if (AudienceNetworkFbAd.instance != null && !isFacebookAdLoad)
         {
-            AudienceNetworkFbAd.instance.LoadVideoAds();
-            AudienceNetworkFbAd.instance.LoadInterstitial();
+            if (isLoadVideo)
+                AudienceNetworkFbAd.instance.LoadVideoAds();
+            if (isLoadIntersial)
+                AudienceNetworkFbAd.instance.LoadInterstitial();
+            isFacebookAdLoad = true;
         }
         if (AdmobController.instance != null)
         {
             //Debug.Log(transform.name + "_LoadDataAds");
-            AdmobController.instance.RequestRewardBasedVideo();
-            AdmobController.instance.RequestInterstitial();
+            if (isLoadVideo)
+                AdmobController.instance.RequestRewardBasedVideo();
+            if (isLoadIntersial)
+                AdmobController.instance.RequestInterstitial();
         }
 #endif
         //if (UnityAdTest.instance != null)
@@ -73,10 +82,6 @@ public class AdsManager : MonoBehaviour
         //    UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose = false;
         //}
         _isLoading = true;
-    }
-    private void ChangedActiveScene(Scene current, Scene next)
-    {
-        LoadDataAds();
     }
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {

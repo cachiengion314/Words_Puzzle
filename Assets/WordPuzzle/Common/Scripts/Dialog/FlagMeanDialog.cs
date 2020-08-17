@@ -47,7 +47,7 @@ public class FlagMeanDialog : Dialog
             subRegionTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].subRegion);
             capitalTxt.text = CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].capital);
             float area = float.Parse(CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].area));
-            if(area> 1000)
+            if (area > 1000)
             {
                 areaTxt.text = area.ToString("0,000") + " km²";
             }
@@ -55,20 +55,20 @@ public class FlagMeanDialog : Dialog
             {
                 areaTxt.text = area.ToString() + " km²";
             }
-           
+
             float population = float.Parse(CheckNullObject(FlagTabController.instance.flagItemList[indexOfFlagWhenClick].population));
             string populationStr = string.Empty;
             if (population > 1000000000f)
             {
-                populationStr = (population / 1000000000f).ToString("0.000") + " billion people";
+                populationStr = (population / 1000000000f).ToString("0.00") + " billion people";
             }
             else if (population > 1000000f)
             {
-                populationStr = (population / 1000000f).ToString("0.000") + " million people";
+                populationStr = (population / 1000000f).ToString("0.00") + " million people";
             }
             else if (population < 1000000f)
             {
-                populationStr = (population / 1000f).ToString("0.000") + " thousand people";
+                populationStr = (population / 1000f).ToString("0.00") + " thousand people";
             }
             populationTxt.text = populationStr;
         }
