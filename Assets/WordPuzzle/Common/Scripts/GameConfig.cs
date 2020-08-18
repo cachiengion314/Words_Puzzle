@@ -29,39 +29,41 @@ public class GameConfig
 [System.Serializable]
 public class Admob
 {
-    [HideInInspector] public string rewardedLevel;
-    [HideInInspector] public string rewardedChapter;
-    [HideInInspector] public string rewardedBonusBox;
-    [HideInInspector] public string rewardedFreeBoosters;
-    [HideInInspector] public string rewardedFreeStars;
-    [HideInInspector] public string rewardedFreeLetter;
-    [HideInInspector] public string interstitialLevel;
-    [HideInInspector] public string bannerLevel;
+    public string admob_level_transition = "ca-app-pub-3940256099942544/1033173712";
+
+    public string admob_chapter_clear = "ca-app-pub-3940256099942544/5224354917";
+    public string admob_level_clear = "ca-app-pub-3940256099942544/5224354917"; 
+    public string admob_bonus_box = "ca-app-pub-3940256099942544/5224354917";
+    public string admob_free_boosters = "ca-app-pub-3940256099942544/5224354917";
+    public string admob_free_letter = "ca-app-pub-3940256099942544/5224354917";
+    public string admob_free_stars = "ca-app-pub-3940256099942544/5224354917";
+
+    public string admob_banner = "ca-app-pub-3212738706492790/6113697308";
 }
 [System.Serializable]
 public class UnityAdsId
 {
-    [HideInInspector] public string interstitialLevel = "levelTransition";
+    public string interstitialLevel = "levelTransition";
 
-    [HideInInspector] public string rewardedChapter = "chapterClear";
-    [HideInInspector] public string rewardedLevel = "levelClear";
-    [HideInInspector] public string rewardedBonusBox = "bonusBox";
-    [HideInInspector] public string rewardedFreeLetter = "freeLetter";
-    [HideInInspector] public string rewardedFreeStars = "freeStars";
-    [HideInInspector] public string rewardedFreeBoosters = "freeBoosters";
+    public string rewardedChapter = "chapterClear";
+    public string rewardedLevel = "levelClear";
+    public string rewardedBonusBox = "bonusBox";
+    public string rewardedFreeLetter = "freeLetter";
+    public string rewardedFreeStars = "freeStars";
+    public string rewardedFreeBoosters = "freeBoosters";
 }
 
 [System.Serializable]
 public class FacebookAdsId
 {
-    [HideInInspector] public string intersititial = "670089180215126_670102936880417";
+    public string intersititial = "670089180215126_670102936880417";
 
-    [HideInInspector] public string rewardedBonusBox = "670089180215126_670109416879769";
-    [HideInInspector] public string rewardedChapterClear = "670089180215126_670109660213078";
-    [HideInInspector] public string rewardedLevelClear = "670089180215126_670109563546421";
-    [HideInInspector] public string rewardedFreeBoosters = "670089180215126_670106246880086";
-    [HideInInspector] public string rewardedFreeStars = "670089180215126_670103063547071";
-    [HideInInspector] public string rewardedFreeLetter = "670089180215126_670089596881751";
+    public string rewardedBonusBox = "670089180215126_670109416879769";
+    public string rewardedChapterClear = "670089180215126_670109660213078";
+    public string rewardedLevelClear = "670089180215126_670109563546421";
+    public string rewardedFreeBoosters = "670089180215126_670106246880086";
+    public string rewardedFreeStars = "670089180215126_670103063547071";
+    public string rewardedFreeLetter = "670089180215126_670089596881751";
 }
 
 [System.Serializable]

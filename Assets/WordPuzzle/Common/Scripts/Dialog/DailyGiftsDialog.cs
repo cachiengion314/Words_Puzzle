@@ -181,10 +181,6 @@ public class DailyGiftsDialog : Dialog
 
     public void OnClickReward()
     {
-        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeBoosters;
-        UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeBoosters;
-        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeBoosters;
-
         Sound.instance.Play(Sound.Others.PopupOpen);
         AdsManager.instance.ShowVideoAds();
 

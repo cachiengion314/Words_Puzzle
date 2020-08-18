@@ -9,7 +9,7 @@ using System;
 public class AudienceNetworkFbAd : MonoBehaviour, IAds
 {
     [HideInInspector] public string rewardIdFaceAds = "670089180215126_670103063547071"; // "583616318955925_583618328955724";
-    [HideInInspector] public string intersititialIdFaceAds = "670089180215126_670103063547071";         //"583616318955925_583618328955724";
+    [HideInInspector] public string intersititialIdFaceAds = "670089180215126_670103063547071"; // "583616318955925_583618328955724";
 
     public static AudienceNetworkFbAd instance;
     public RewardedVideoAd rewardedVideoAd;
@@ -28,13 +28,6 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         instance = this;
 #if UNITY_ANDROID && !UNITY_EDITOR
         AudienceNetworkAds.Initialize();
-#endif
-    }
-    private void Start()
-    {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        LoadInterstitial();
-        LoadVideoAds();
 #endif
     }
     public void LoadInterstitial()
@@ -74,19 +67,16 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         interstitialAd.InterstitialAdDidClose = delegate ()
         {
             Debug.Log("Interstitial ad did close.");
-            AdmobController.instance.RequestInterstitial();
-            
+            //AdmobController.instance.RequestInterstitial();
             AdsManager.instance.IsLoading = true;
-
             AdsManager.instance.onAdsClose?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
-
             didIntersClose = true;
             if (interstitialAd != null)
             {
                 interstitialAd.Dispose();
             }
-            //LoadInterstitial();
+            LoadInterstitial();
         };
 
 #if UNITY_ANDROID
@@ -157,12 +147,9 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     /// Implement Interface
     /// </summary>
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
-    {
-        if (rewardIdFaceAds == null) { isLoaded = false; return; }
-
+    {       
         rewardedVideoAd.Show();
         isLoaded = false;
-     
     }
     public void ShowBannerAds()
     {
@@ -244,8 +231,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         rewardedVideoAd.RewardedVideoAdDidClose = delegate ()
         {
             Debug.Log("Rewarded video ad did close.");
-           
-            AdmobController.instance.RequestRewardBasedVideo();
+            //AdmobController.instance.RequestRewardBasedVideo();
             AdsManager.instance.IsLoading = true;
             AdsManager.instance.onAdsRewarded?.Invoke();
             SceneAnimate.Instance.ShowOverLayPauseGame(false);
@@ -254,7 +240,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
             {
                 rewardedVideoAd.Dispose();
             }
-            //LoadVideoAds();
+            LoadVideoAds();
         };
 
 #if UNITY_ANDROID

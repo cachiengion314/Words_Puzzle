@@ -47,7 +47,6 @@ public class FreeStarsPlayDialog : Dialog
         CheckTheme();
         InitListRandom();
 
-        //StartCoroutine(AdsManager.instance.LoadAndConfigAdsId());
     }
 
     private void CheckTheme()

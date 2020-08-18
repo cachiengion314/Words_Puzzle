@@ -122,9 +122,6 @@ public class AnimEvent : MonoBehaviour
                     {
                         if (/*IsShowAds() && */WordRegion.instance.CurLevel >= AdsManager.instance.MinLevelToLoadInterstitial)
                         {
-                            AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial;
-                            UnityAdTest.instance.myInterstitialId = ConfigController.instance.config.unityAdsId.interstitialLevel;
-                            AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.interstitialLevel;
                             AdsManager.instance.onAdsClose += OnCloseAdsInterstial;
                             AdsManager.instance.onAdsFailedToLoad += OnAdsFailedInterstial;
 

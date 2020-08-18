@@ -86,11 +86,6 @@ public class RewardController : MonoBehaviour
         //overLay.SetActive(false);
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-
-            AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
-            UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
-            AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeStars;
-           
             AdsManager.instance.ShowVideoAds();
 
             Sound.instance.Play(Sound.Others.PopupOpen);

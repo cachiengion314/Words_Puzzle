@@ -42,48 +42,36 @@ public class AdsManager : MonoBehaviour
         if (instance == null)
             instance = this;
     }
-    public void LoadAndConfigAdsId()
+    private void Start()
     {
-        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
-        UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedFreeStars;
-        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedFreeStars;
-
-        Debug.Log("LoadAndConfigAdsId AudienceNetworkFbAd.instance.rewardIdFaceAds: " + AudienceNetworkFbAd.instance.rewardIdFaceAds);
-        Debug.Log("LoadAndConfigAdsId AdmobController.instance.videoAdsId: " + AdmobController.instance.videoAdsId);
-
         LoadDataAds();
     }
-    bool isFacebookAdLoad;
     public void LoadDataAds(bool isLoadVideo = true, bool isLoadIntersial = true)
     {
         if (_isLoading)
             return;
 #if UNITY_ANDROID && !UNITY_EDITOR
-        if (AudienceNetworkFbAd.instance != null && !isFacebookAdLoad)
+        if (AudienceNetworkFbAd.instance != null)
         {
             if (isLoadVideo)
                 AudienceNetworkFbAd.instance.LoadVideoAds();
             if (isLoadIntersial)
-                AudienceNetworkFbAd.instance.LoadInterstitial();
-            isFacebookAdLoad = true;
-        }
-       
+                AudienceNetworkFbAd.instance.LoadInterstitial();         
+        }       
 #endif
-        //if (AdmobController.instance != null)
-        //{
-        //    //Debug.Log(transform.name + "_LoadDataAds");
-        //    if (isLoadVideo)
-        //        AdmobController.instance.RequestRewardBasedVideo();
-        //    if (isLoadIntersial)
-        //        AdmobController.instance.RequestInterstitial();
-        //}
+        if (AdmobController.instance != null)
+        {
+            AdmobController.instance.InitRewardedVideo();
+             AdmobController.instance.RequestRewardBasedVideo();
+             AdmobController.instance.RequestInterstitial();
+        }
 
         //if (UnityAdTest.instance != null)
         //{
         //    UnityAdTest.instance.ReloadVideoAds();
         //    UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose = false;
         //}
-        _isLoading = true;
+        //_isLoading = true;
     }
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
@@ -138,8 +126,7 @@ public class AdsManager : MonoBehaviour
                         if (showToast)
                             Toast.instance.ShowMessage("Rewarded video is not ready");
                         _isLoading = false;
-                        adsNotReadyYetCallback?.Invoke();
-                        LoadDataAds();
+                        adsNotReadyYetCallback?.Invoke();                      
                     }
                     else
                     {
@@ -281,7 +268,7 @@ public class AdsManager : MonoBehaviour
                     ShowInterstitial(true, () =>
                     {
                         onCompleteAds?.Invoke();
-                        LoadDataAds();
+                      
                     }, null, () =>
                     {
                         onCompleteAds?.Invoke();

@@ -167,10 +167,7 @@ public class ExtraWordDialog : Dialog
 
     public void OnClickShowVideoAds()
     {
-        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedBonusBox;
-        UnityAdTest.instance.myPlacementId = ConfigController.instance.config.unityAdsId.rewardedBonusBox;
-        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.rewardedBonusBox;
-
+    
         AdsManager.instance.ShowVideoAds();
 
         Sound.instance.Play(Sound.Others.PopupOpen);

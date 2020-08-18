@@ -18,15 +18,10 @@ public class AdmobController : MonoBehaviour, IAds
     private void Awake()
     {
         instance = this;
-    }
+        MobileAds.Initialize(initStatus =>
+        {
 
-    private void Start()
-    {
-        InitRewardedVideo();
-        //MobileAds.Initialize(initStatus =>
-        //{
-
-        //});
+        });
     }
     public void InitRewardedVideo()
     {
@@ -233,11 +228,10 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleInterstitialClosed(object sender, EventArgs args)
     {
         print("HandleInterstitialClosed event received");
-        AudienceNetworkFbAd.instance.LoadInterstitial();
-        RequestInterstitial();
         AdsManager.instance.IsLoading = true;
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
+        RequestInterstitial();
     }
 
     public void HandleInterstitialLeftApplication(object sender, EventArgs args)
@@ -276,12 +270,11 @@ public class AdmobController : MonoBehaviour, IAds
     public void HandleRewardBasedVideoClosed(object sender, EventArgs args)
     {
         MonoBehaviour.print("Admob Video close !");
-        AudienceNetworkFbAd.instance.LoadVideoAds();
-        RequestRewardBasedVideo();
         AdsManager.instance.IsLoading = true;
         // HandleRewardBasedVideoClosed event received;
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
+        RequestRewardBasedVideo();
     }
 
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
@@ -310,7 +303,6 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
-        //RequestRewardBasedVideo();
         if (videoAdsId == null) return;
 
 
@@ -320,7 +312,7 @@ public class AdmobController : MonoBehaviour, IAds
         }
         else
         {
-            //MonoBehaviour.print("Reward based video ad is not ready yet");
+            // Reward based video ad is not ready yet
             CUtils.CheckConnection(this, (result) =>
             {
                 if (result == 0)
@@ -329,8 +321,8 @@ public class AdmobController : MonoBehaviour, IAds
                 }
                 else
                 {
-                    noInternetCallback?.Invoke();
-                    //Debug.Log("No Internet Connection");
+                    // no internet
+                    noInternetCallback?.Invoke();                   
                 }
             });
         }
@@ -343,8 +335,9 @@ public class AdmobController : MonoBehaviour, IAds
 
     public void ShowInterstitialAds()
     {
-        if (interstitialAdsId == null) return;
+        if (interstitialAdsId == null || CUtils.IsAdsRemoved()) return;
 
-        CUtils.ShowInterstitialAd();
+        ShowInterstitial();
+        //CUtils.ShowInterstitialAd();
     }
 }

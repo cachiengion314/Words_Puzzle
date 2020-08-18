@@ -24,7 +24,6 @@ public class FreeStarsDialog : Dialog
         base.Start();
         CheckTheme();
 
-        //StartCoroutine(AdsManager.instance.LoadAndConfigAdsId());
     }
 
     private void OnEnable()
