@@ -106,6 +106,7 @@ public class FreeStarsDialog : Dialog
         //_rewardControl.onRewardedCallback -= OnCompleteVideo;
         //_rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _panelWatch.transform.localScale = Vector3.zero;
+        HidenOverlay();
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
             Sound.instance.Play(Sound.Others.PopupOpen);

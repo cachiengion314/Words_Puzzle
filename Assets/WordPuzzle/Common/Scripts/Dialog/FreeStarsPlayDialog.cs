@@ -172,10 +172,11 @@ public class FreeStarsPlayDialog : Dialog
         //_rewardControl.onRewardedCallback -= OnCompleteVideo;
         //_rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
         _panelWatch.transform.localScale = Vector3.zero;
+        HidenOverlay();
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.CollectFreestarPlay, DialogShow.REPLACE_CURRENT, null, null, true);
+            DialogController.instance.ShowDialog(DialogType.CollectFreestarPlay, DialogShow.REPLACE_CURRENT);
         });
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(
