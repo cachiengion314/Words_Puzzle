@@ -328,7 +328,7 @@ public class ShopDialog : Dialog
         btnMore.gameObject.SetActive(false);
         shopItemObject = new GameObject[contentItemShop.transform.childCount];
         //btnMore.transform.localScale = Vector3.zero;
-        specialGift.gameObject.SetActive(openBundle);
+        specialGift.gameObject.SetActive(false);
         CUtils.CheckConnection(this, (result) =>
         {
             if (result == 0)
