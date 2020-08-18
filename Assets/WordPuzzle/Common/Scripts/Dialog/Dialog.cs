@@ -25,6 +25,7 @@ public class Dialog : MonoBehaviour
     public bool enableEscape = true;
     public bool scaleDialog = false;
     public bool resestAnim = true;
+    public Image imgOverlay;
 
 
     private AnimatorStateInfo info;
@@ -61,6 +62,14 @@ public class Dialog : MonoBehaviour
     public void SetMessageContent(string content)
     {
         if (message != null) message.SetText(content);
+    }
+
+    public void HidenOverlay()
+    {
+        if (imgOverlay != null)
+        {
+            imgOverlay.color = new Color(1,1,1,0);
+        }
     }
 
     public virtual void ShowNoAnim()

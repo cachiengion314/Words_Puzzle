@@ -175,7 +175,7 @@ public class FreeStarsPlayDialog : Dialog
         TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
         {
             Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.CollectFreestarPlay, DialogShow.REPLACE_CURRENT);
+            DialogController.instance.ShowDialog(DialogType.CollectFreestarPlay, DialogShow.REPLACE_CURRENT, null, null, true);
         });
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(

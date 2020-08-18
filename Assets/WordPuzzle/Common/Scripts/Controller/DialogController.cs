@@ -81,7 +81,7 @@ public class DialogController : MonoBehaviour
         ShowDialog((DialogType)type, DialogShow.DONT_SHOW_IF_OTHERS_SHOWING);
     }
 
-    public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT, string contentTitle = null, string contentMessage = null)
+    public void ShowDialog(DialogType type, DialogShow option = DialogShow.REPLACE_CURRENT, string contentTitle = null, string contentMessage = null, bool hidenThisOverlay = false)
     {
         Dialog dialog = GetDialog(type);
         ShowDialog(dialog, option);
@@ -89,6 +89,8 @@ public class DialogController : MonoBehaviour
             dialog.SetTitleContent(contentTitle);
         if (contentMessage != null || contentMessage != "")
             dialog.SetMessageContent(contentMessage);
+        if (hidenThisOverlay)
+            dialog.HidenOverlay();
     }
 
     public void ShowYesNoDialog(string title, string content, Action onYesListener, Action onNoListenter, DialogShow option = DialogShow.REPLACE_CURRENT)
