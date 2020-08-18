@@ -108,9 +108,9 @@ public class WordRegion : MonoBehaviour
     public Image bgHoney;
     public Image imageGround;
     [Space]
-    public Image imgLeafTopLeft;
-    public Image imgLeafTopRight;
-    public GameObject imgLeafBoardWordRegion;
+    //public Image imgLeafTopLeft;
+    //public Image imgLeafTopRight;
+    //public GameObject imgLeafBoardWordRegion;
     public GameObject iconLevelTitle;
     public TextMeshProUGUI textNumberStar;
     [Space]

@@ -25,7 +25,6 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private string _idleAnim = "Daily Gift";
     [SerializeField] private string _collectAnim = "Daily Gift Collect";
     [SerializeField] private string _collectLoopAnim = "Daily Collect Loop";
-    [SerializeField] private Transform _posStart;
     [SerializeField] private GameObject _overlayCollect;
     [SerializeField] private TextMeshProUGUI _textHintCollect;
     [SerializeField] private TextMeshProUGUI _textMultipleHintCollect;
@@ -302,19 +301,19 @@ public class DailyGiftsDialog : Dialog
         //});
     }
 
-    private IEnumerator ShowEffectCollect(int value)
-    {
-        MonoUtils.instance.ShowTotalStarCollect(value, null);
-        for (int i = 0; i < value; i++)
-        {
-            if (i < 5)
-            {
-                MonoUtils.instance.ShowEffect(value / 5, null, null, _posStart);
-            }
-            yield return new WaitForSeconds(0.02f);
-        }
+    //private IEnumerator ShowEffectCollect(int value)
+    //{
+    //    MonoUtils.instance.ShowTotalStarCollect(value, null);
+    //    for (int i = 0; i < value; i++)
+    //    {
+    //        if (i < 5)
+    //        {
+    //            MonoUtils.instance.ShowEffect(value / 5, null, null, _posStart);
+    //        }
+    //        yield return new WaitForSeconds(0.02f);
+    //    }
 
-    }
+    //}
 
     private void CheckTimeReward()
     {
