@@ -199,6 +199,7 @@ public class AdsManager : MonoBehaviour
             //}
         }
 #if UNITY_EDITOR
+        adsComplete?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
 #endif
     }
@@ -264,7 +265,12 @@ public class AdsManager : MonoBehaviour
             {
                 onCompleteAds?.Invoke();
 
-            }, null, null);
+            }, null,
+            () =>
+            {
+                onCompleteAds?.Invoke();
+
+            });
         }
     }
     #endregion

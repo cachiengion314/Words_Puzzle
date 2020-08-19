@@ -756,7 +756,7 @@ public class WordRegion : MonoBehaviour
         else
         {
             var lineCheckBonus = lines.FindAll(li => _lineIsChecking != null && li.cells.Count == _lineIsChecking.cells.Count);
-            var isShowBonusbox = lineCheckBonus.All(li => li.isShown);
+            var isShowBonusbox = (lineCheckBonus != null && lineCheckBonus.Count > 0) ? lineCheckBonus.All(li => li.isShown) : false;
             LineWord lineExist = lines.Find(x => x.answers.Contains(checkWord) && x.isShown && !TutorialController.instance.isShowTut);
             if (lineExist != null && lineExist.answer == checkWord)
             {

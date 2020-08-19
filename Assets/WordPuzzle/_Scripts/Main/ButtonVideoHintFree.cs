@@ -13,8 +13,6 @@ public class ButtonVideoHintFree : MonoBehaviour
     public SimpleTMPButton _btnAds;
     public SkeletonGraphic animbutton;
     private Cell _cell;
-    [SerializeField] private RewardVideoController _rewardVideoPfb;
-    private RewardVideoController _rewardController;
 
     [SerializeField] private SpineControl _animAds;
 
@@ -32,11 +30,6 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void Start()
     {
-        //_rewardController = FindObjectOfType<RewardVideoController>();
-        //if (_rewardController == null)
-        //    _rewardController = Instantiate(_rewardVideoPfb);
-        //_rewardController.onRewardedCallback -= OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         CheckTheme();
     }
 
@@ -50,10 +43,16 @@ public class ButtonVideoHintFree : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+        AdsManager.instance.onAdsClose -= OnAdsClosed;
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
+        AdsManager.instance.onAdsClose += OnAdsClosed;
+    }
+
     private void OnDisable()
     {
-        //if (_rewardController != null)
-        //_rewardController.onRewardedCallback -= OnCompleteVideo;
         if (AdsManager.instance != null)
         {
             AdsManager.instance.onAdsClose -= OnAdsClosed;
@@ -74,17 +73,8 @@ public class ButtonVideoHintFree : MonoBehaviour
     {
         TutorialController.instance.HidenPopTut();
         _btnAds.interactable = false;
-        //_rewardController.onRewardedCallback += OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
-        AdsManager.instance.onAdsClose += OnAdsClosed;
-        //AdmobController.instance.ShowRewardBasedVideo();
-
         Sound.instance.Play(Sound.Others.PopupOpen);
         AdsManager.instance.ShowVideoAds(true, OnAdsClosed);
-
-        //#if UNITY_EDITOR
-        //        OnCompleteVideo();
-        //#endif
     }
 
     private void OnCompleteVideo()
@@ -93,7 +83,6 @@ public class ButtonVideoHintFree : MonoBehaviour
         {
             Debug.Log("Cell: " + Cell.gameObject.name);
             _btnAds.interactable = true;
-            //_rewardController.onRewardedCallback -= OnCompleteVideo;
 
             gameObject.SetActive(false);
 
@@ -106,7 +95,6 @@ public class ButtonVideoHintFree : MonoBehaviour
                     tempAnswers.Remove(l.answer);
             }
             line.SetDataLetter(tempAnswers[UnityEngine.Random.Range(0, tempAnswers.Count)]);
-            //line.SetDataLetter(line.answers[UnityEngine.Random.Range(0, line.answers.Count)]);
             Cell.ShowHint();
             line.CheckSetDataAnswer(line.answer);
             line.CheckLineDone();
@@ -123,7 +111,6 @@ public class ButtonVideoHintFree : MonoBehaviour
               }
             );
         });
-        //_rewardController.gameObject.SetActive(true);
         CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
     }
 

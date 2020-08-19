@@ -417,9 +417,9 @@ public class LineWord : MonoBehaviour
         }
         foreach (var cell in cells)
         {
-            cell.bg.color = new Color(1, 1, 1, 1);            
+            cell.bg.color = new Color(1, 1, 1, 1);
         }
-      
+
         WordRegion.instance.ShowComplimentFX();
         WordRegion.instance.ShowBtnDictionaryInGamePlay();
         ShowBtnMeanByWord();
@@ -610,7 +610,8 @@ public class LineWord : MonoBehaviour
         if (isAds)
         {
             CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
-            WordRegion.instance.BtnADS.gameObject.SetActive(false);
+            if (WordRegion.instance.BtnADS != null)
+                WordRegion.instance.BtnADS.gameObject.SetActive(false);
             isAds = false;
             CPlayerPrefs.SetBool(gameObject.name + "_ADS", isAds);
         }

@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: 6f6b3ada153d4684ebf41a184b9b0d09, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -209,8 +210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _btnAds: {fileID: 3985860092662310851}
   animbutton: {fileID: 6900428891933712571}
-  _rewardVideoPfb: {fileID: 679568237335923316, guid: 6a6c5a43263ccfe42a21893a9cacc9a6,
-    type: 3}
   _animAds: {fileID: 5352862244513641538}
 --- !u!223 &2011632863105813483
 Canvas:
@@ -227,7 +226,7 @@ Canvas:
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
+  m_OverridePixelPerfect: 1
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
@@ -311,6 +310,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
