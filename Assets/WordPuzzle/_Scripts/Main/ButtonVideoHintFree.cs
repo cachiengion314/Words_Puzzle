@@ -33,23 +33,11 @@ public class ButtonVideoHintFree : MonoBehaviour
     private void Start()
     {
         CheckTheme();
-        _lineTarget = null;
     }
 
     public void SetLineFreeletter(LineWord line)
     {
         _lineTarget = line;
-        if (_lineTarget != null)
-        {
-            var tempAnswers = _lineTarget.answers;
-            for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
-            {
-                var l = WordRegion.instance.Lines[i];
-                if (l != _lineTarget && !l.isShown && l.answer != "")
-                    tempAnswers.Remove(l.answer);
-            }
-            _lineTarget.SetDataLetter(tempAnswers[UnityEngine.Random.Range(0, tempAnswers.Count)]);
-        }
     }
 
     private void CheckTheme()
@@ -72,20 +60,15 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     private void OnDisable()
     {
-        if (AdsManager.instance != null)
-        {
-            AdsManager.instance.onAdsClose -= OnAdsClosed;
-            AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-        }
+        AdsManager.instance.onAdsClose -= OnAdsClosed;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+
     }
 
     private void OnDestroy()
     {
-        if (AdsManager.instance != null)
-        {
-            AdsManager.instance.onAdsClose -= OnAdsClosed;
-            AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-        }
+        AdsManager.instance.onAdsClose -= OnAdsClosed;
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
     public void OnClickOpen()
@@ -107,6 +90,15 @@ public class ButtonVideoHintFree : MonoBehaviour
 
                 gameObject.SetActive(false);
 
+                var tempAnswers = _lineTarget.answers;
+                for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+                {
+                    var l = WordRegion.instance.Lines[i];
+                    if (l != _lineTarget && !l.isShown && l.answer != "")
+                        tempAnswers.Remove(l.answer);
+                }
+                _lineTarget.SetDataLetter(tempAnswers[UnityEngine.Random.Range(0, tempAnswers.Count)]);
+
                 Cell.ShowHint();
                 _lineTarget.CheckSetDataAnswer(_lineTarget.answer);
                 _lineTarget.CheckLineDone();
@@ -123,6 +115,8 @@ public class ButtonVideoHintFree : MonoBehaviour
                   }
                 );
             }
+            else
+                OnAdsClosed();
         });
         CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
     }
