@@ -111,6 +111,18 @@ public class Pan : MonoBehaviour
                 letterTexts[i].transform.localScale = Vector3.zero;
             }
         });
+
+        GetCurrentLevelAllLetter();
+    }
+    public void GetCurrentLevelAllLetter()
+    {
+        string allLetter = string.Empty;
+        for (int i = 0; i < letterTexts.Count; i++)
+        {
+            allLetter += letterTexts[i].text.ToString();
+        }
+        NotificationController.instance.CurrentLevelAllLetter = allLetter;
+        LogController.Debug("CurrentLevelAllLetter: " + NotificationController.instance.CurrentLevelAllLetter);
     }
     public void ReloadLetterPositionPoints()
     {

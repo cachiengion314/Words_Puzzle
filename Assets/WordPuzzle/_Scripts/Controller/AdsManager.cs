@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class AdsManager : MonoBehaviour
@@ -46,19 +44,24 @@ public class AdsManager : MonoBehaviour
     {
         LoadDataAds();
     }
-    public void LoadDataAds(bool isLoadVideo = true, bool isLoadIntersial = true)
+    public void LoadDataAds()
     {
         if (_isLoading)
             return;
+
+        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
+        AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
 #if UNITY_ANDROID && !UNITY_EDITOR
         if (AudienceNetworkFbAd.instance != null)
         {
-            if (isLoadVideo)
-                AudienceNetworkFbAd.instance.LoadVideoAds();
-            if (isLoadIntersial)
-                AudienceNetworkFbAd.instance.LoadInterstitial();         
-        }       
+            AudienceNetworkFbAd.instance.LoadVideoAds();
+            AudienceNetworkFbAd.instance.LoadInterstitial();
+        }
 #endif
+
+        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.admob_free_stars;
+        AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.admob_level_transition;
+        AdmobController.instance.bannerAdsId = ConfigController.instance.config.admob.admob_banner;
         if (AdmobController.instance != null)
         {
             AdmobController.instance.InitRewardedVideo();
@@ -154,6 +157,10 @@ public class AdsManager : MonoBehaviour
             _adsController.ShowInterstitialAds();
             SceneAnimate.Instance.ShowOverLayPauseGame(true);
             Debug.Log("Show Interstitial Ads FB");
+#if UNITY_EDITOR
+            adsComplete?.Invoke();
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
         }
         else
         {
@@ -175,6 +182,10 @@ public class AdsManager : MonoBehaviour
                 _adsController.ShowInterstitialAds();
                 SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 Debug.Log("Show Interstitial Ads Admob");
+#if UNITY_EDITOR
+                adsComplete?.Invoke();
+                SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
             }
             else
             {
@@ -198,10 +209,6 @@ public class AdsManager : MonoBehaviour
             }
             //}
         }
-#if UNITY_EDITOR
-        adsComplete?.Invoke();
-        SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
     }
 
     public bool AdsIsLoaded(bool showToast = false, Text textNoti = null, TextMeshProUGUI textMeshNoti = null, Action checkComplete = null)
@@ -242,10 +249,6 @@ public class AdsManager : MonoBehaviour
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
-#if UNITY_EDITOR
-        onAdsRewarded?.Invoke();
-        SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
     }
 
     public void ShowBannerAds()
@@ -255,23 +258,31 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAds(Action onCompleteAds = null)
     {
-        float percent = (float)PercentToloadInterstitial / 100f;
-        float randomNumber = UnityEngine.Random.Range(0f, 1f);
-        Debug.Log("RandomNumber: " + randomNumber);
-        Debug.Log("percent: " + percent);
-        if (randomNumber <= percent)
+        CUtils.CheckConnection(this, (result) =>
         {
-            ShowInterstitial(true, () =>
+            if (result == 0)
+            {
+                float percent = (float)PercentToloadInterstitial / 100f;
+                float randomNumber = UnityEngine.Random.Range(0f, 1f);
+                Debug.Log("RandomNumber: " + randomNumber);
+                Debug.Log("percent: " + percent);
+                if (randomNumber <= percent)
+                {
+                    ShowInterstitial(true, () =>
+                    {
+                        onCompleteAds?.Invoke();
+
+                    }, null, () =>
+                    {
+                        onCompleteAds?.Invoke();
+                    });
+                }
+            }
+            else
             {
                 onCompleteAds?.Invoke();
-
-            }, null,
-            () =>
-            {
-                onCompleteAds?.Invoke();
-
-            });
-        }
+            }
+        });
     }
     #endregion
 

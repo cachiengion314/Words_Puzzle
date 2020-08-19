@@ -10,6 +10,9 @@ using System.Linq;
 
 public class NotificationController : MonoBehaviour
 {
+    private const string CURRENT_LEVEL_ALL_LETTER = "Current_Level_All_Letter";
+    private readonly string findWordMessage = "Find the words built from the letters ";
+
     private const double NOTI_DELAY_1 = 1 * 24 * 3600;
     private const double NOTI_DELAY_2 = 2 * 24 * 3600;
     private const double NOTI_DELAY_3 = 4 * 24 * 3600;
@@ -32,9 +35,20 @@ public class NotificationController : MonoBehaviour
     public int currentFreeBoostersProgress;
     public double currentChickenBank;
     public int maxChickenBank;
-    public string unFinishWord = "Unfinish_Word";
-    private string findWordMessage = "Find the words built from the letters ";
-
+    private string currentLevelAllLetter;
+    public string CurrentLevelAllLetter
+    {
+        set
+        {
+            currentLevelAllLetter = value;
+            PlayerPrefs.SetString(CURRENT_LEVEL_ALL_LETTER, currentLevelAllLetter);
+        }
+        get
+        {
+            currentLevelAllLetter = PlayerPrefs.GetString(CURRENT_LEVEL_ALL_LETTER);
+            return currentLevelAllLetter;
+        }
+    }
     private bool isNotificationOn;
     public bool IsNotificationOn
     {
@@ -159,46 +173,38 @@ public class NotificationController : MonoBehaviour
 
         CancelAndPushManyNotification();
     }
-    private string CheckUnfinishLine()
+    public string GetCurrentLevelAllLetter()
     {
-        string unFinishWordDefault = "A, B, C";
+        string letterInCurrentLevel = "A, B, C";
 
-        if (PlayerPrefs.GetString(unFinishWord) != null)
+        if (CurrentLevelAllLetter != null || CurrentLevelAllLetter != string.Empty)
         {
-            unFinishWordDefault = PlayerPrefs.GetString(unFinishWord);
-            if (unFinishWordDefault == null || unFinishWordDefault == string.Empty)
+            letterInCurrentLevel = CurrentLevelAllLetter;
+
+            List<char> charList = new List<char>();
+            for (int i = 0; i < letterInCurrentLevel.Length; i++)
             {
-                if (FacebookController.instance.user.answerProgress[0] != null || FacebookController.instance.user.answerProgress[0] != string.Empty)
-                {
-                    unFinishWordDefault = FacebookController.instance.user.answerProgress[0];
-                }
-                else
-                {
-                    unFinishWordDefault = "A, B, C";
-                }
+                charList.Add(letterInCurrentLevel[i]);
             }
-            string[] stringArr = unFinishWordDefault.Split();
-            List<string> stringList = new List<string>();
-            stringList.AddRange(stringArr);
-            stringList.Sort();
-            unFinishWordDefault = string.Empty;
-            if (stringList.Count > 1)
+            List<char> charListDistinct = charList.Distinct<char>().ToList();
+            charListDistinct.Sort();
+          
+            letterInCurrentLevel = string.Empty;
+
+            for (int i = 0; i < charListDistinct.Count; i++)
             {
-                for (int i = 0; i < stringList.Count; i++)
+                if (i < charListDistinct.Count - 1)
                 {
-                    if (i < stringList.Count - 1)
-                    {
-                        unFinishWordDefault += stringList[i] + ", ";
-                    }
-                    else if (i == stringList.Count - 1)
-                    {
-                        unFinishWordDefault += stringList[i];
-                    }
+                    letterInCurrentLevel += (charListDistinct[i] + ", ");
+                }
+                else if (i == charListDistinct.Count - 1)
+                {
+                    letterInCurrentLevel += charListDistinct[i];
                 }
             }
         }
-
-        return unFinishWordDefault;
+        LogController.Debug(findWordMessage + letterInCurrentLevel);
+        return letterInCurrentLevel;
     }
     private void PushChickenBankNotification(double delay)
     {
@@ -212,7 +218,8 @@ public class NotificationController : MonoBehaviour
     private void PushFindWordsNotification(double delay)
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-        string message = findWordMessage + CheckUnfinishLine();
+        string messageLetters = GetCurrentLevelAllLetter();
+        string message = findWordMessage + messageLetters;
         NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(delay), "Word Puzzle Connect", message, new Color(0, 0.6f, 1), NotificationIcon.Message);
 #endif
     }

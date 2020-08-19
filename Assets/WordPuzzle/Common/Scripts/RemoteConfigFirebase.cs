@@ -83,8 +83,8 @@ public class RemoteConfigFirebase : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(FetchFireBase());
-        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
+        //StartCoroutine(FetchFireBase());
+        //StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
     }
     private IEnumerator GetAllIdAvertisementWhenFetchingDone()
     {

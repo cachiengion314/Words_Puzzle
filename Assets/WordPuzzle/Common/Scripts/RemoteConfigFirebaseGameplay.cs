@@ -47,10 +47,10 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
     }
     private void Start()
     {
-        if (RemoteConfigFirebase.instance != null) return;
+        //if (RemoteConfigFirebase.instance != null) return;
 
-        StartCoroutine(FetchFireBase());
-        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
+        //StartCoroutine(FetchFireBase());
+        //StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
     }
     private IEnumerator GetAllIdAvertisementWhenFetchingDone()
     {
@@ -164,7 +164,7 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
         {
             if (int.TryParse(stringValue, out intValue))
             {
-                Debug.Log("intValue: " + intValue);
+                LogController.Debug("intValue: " + intValue);
             }
         }
         return intValue;

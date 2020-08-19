@@ -59,23 +59,22 @@ public class FacebookController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            LogController.Debug("NumWords: " + WordRegion.instance.NumWords);
-            LogController.Debug("Best score: " + FacebookController.instance.bestScore);
-            LogController.Debug("HoneyPoints: " + FacebookController.instance.HoneyPoints);
+            //LogController.Debug("NumWords: " + WordRegion.instance.NumWords);
+            //LogController.Debug("Best score: " + FacebookController.instance.bestScore);
+            //LogController.Debug("HoneyPoints: " + FacebookController.instance.HoneyPoints);
 
-            FlagTabController.instance.GetAllWordsList();
-            foreach (var item in WordRegion.instance.listWordInLevel)
-            {
-                LogController.Debug(item);
-            }
-
-            HoneyPoints += 5000;
-            FlagTabController.instance.AddToUnlockedWordDictionary("Albania");
-            FlagTabController.instance.SaveUnlockedWordData();
-            foreach (var pair in user.unlockedFlagWords)
-            {
-                LogController.Debug(pair.Value);
-            }
+            //FlagTabController.instance.GetAllWordsList();
+            //foreach (var item in WordRegion.instance.listWordInLevel)
+            //{
+            //    LogController.Debug(item);
+            //}
+            //FlagTabController.instance.AddToUnlockedWordDictionary("Albania");
+            //FlagTabController.instance.SaveUnlockedWordData();
+            //foreach (var pair in user.unlockedFlagWords)
+            //{
+            //    LogController.Debug(pair.Value);
+            //}
+            NotificationController.instance.GetCurrentLevelAllLetter();
         }
     }
 
