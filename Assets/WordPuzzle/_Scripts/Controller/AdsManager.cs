@@ -197,10 +197,10 @@ public class AdsManager : MonoBehaviour
                 //});
             }
             //}
-#if UNITY_EDITOR
-            SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
         }
+#if UNITY_EDITOR
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
     }
 
     public bool AdsIsLoaded(bool showToast = false, Text textNoti = null, TextMeshProUGUI textMeshNoti = null, Action checkComplete = null)
