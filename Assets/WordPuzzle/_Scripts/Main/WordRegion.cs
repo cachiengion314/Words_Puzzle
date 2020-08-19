@@ -416,12 +416,13 @@ public class WordRegion : MonoBehaviour
         }
         if (!CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL"))
             btnMultipleHint.gameObject.SetActive(false);
+        var openBtnReward = !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") || !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") || !CPlayerPrefs.HasKey("HINT_TUTORIAL");
+        btnRewardAds.gameObject.SetActive(false);
         CUtils.CheckConnection(this, (result) =>
         {
             if (result == 0)
             {
-                if (/*_currLevel < AdsManager.instance.MinLevelToLoadRewardVideo &&*/ !CPlayerPrefs.HasKey("MULTIPLE_HINT_TUTORIAL") || !CPlayerPrefs.HasKey("SELECTED_HINT_TUTORIAL") || !CPlayerPrefs.HasKey("HINT_TUTORIAL"))
-                    btnRewardAds.gameObject.SetActive(false);
+                btnRewardAds.gameObject.SetActive(openBtnReward);
             }
             else
             {
