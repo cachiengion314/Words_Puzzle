@@ -53,11 +53,6 @@ public class ExtraWordDialog : Dialog
         CheckTheme();
         if (MainController.instance != null)
             MainController.instance.canvasCollect.gameObject.SetActive(true);
-        //_rewardController = FindObjectOfType<RewardVideoController>();
-        //if (_rewardController == null)
-        //    _rewardController = Instantiate(_rewardVideoPfb);
-        //_rewardController.onRewardedCallback -= OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
 
         extraProgress.target = Prefs.extraTarget;
         extraProgress.current = Prefs.extraProgress;
@@ -132,21 +127,23 @@ public class ExtraWordDialog : Dialog
 
     void OnCompleteVideo()
     {
-        gameObject.GetComponent<GraphicRaycaster>().enabled = false;
-        TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
-        {
-            StartCoroutine(ShowEffectCollect(_reward, rewardButton.transform));
-            Collect();
-        });
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(
-          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
-          new Firebase.Analytics.Parameter[] {
+        TweenControl.GetInstance().DelayCall(transform, 0.1f,()=> {
+            gameObject.GetComponent<GraphicRaycaster>().enabled = false;
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
+                StartCoroutine(ShowEffectCollect(_reward, rewardButton.transform));
+                Collect();
+            });
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterValue, _reward),
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "bonus_box"),
-          }
-        );
+              }
+            );
+        });
     }
 
     private IEnumerator ShowEffectCollect(int value, Transform posStart)
@@ -241,19 +238,6 @@ public class ExtraWordDialog : Dialog
             UpdateUI();
         }
     }
-
-    //private IEnumerator ClaimEffect()
-    //{
-    //    Transform rubyBalance = GameObject.FindWithTag("RubyBalance").transform;
-    //    //var middlePoint = CUtils.GetMiddlePoint(claimTr.position, rubyBalance.position, -0.4f);
-    //    //Vector3[] waypoints = { claimTr.position, middlePoint, rubyBalance.position };
-    //    for (int i = 0; i < claimQuantity; i++)
-    //    {
-    //        if (i < 5)
-    //            MonoUtils.instance.ShowEffect(claimQuantity / 5, rubyBalance);
-    //        yield return new WaitForSeconds(0.02f);
-    //    }
-    //}
 
     private void UpdateUI()
     {
