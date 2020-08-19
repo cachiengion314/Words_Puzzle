@@ -79,15 +79,22 @@ public class RemoteConfigFirebase : MonoBehaviour
                     HomeController.instance.CheckShowFreeBooster();
             }
         };
-        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
+
     }
     private void Start()
     {
-        FetchFireBase();
+        StartCoroutine(FetchFireBase());
+        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
     }
-
-    public void FetchFireBase()
+    private IEnumerator GetAllIdAvertisementWhenFetchingDone()
     {
+        yield return new WaitUntil(() => IsFetchingDone);
+        GetAllIdAvertisement();
+    }
+    public IEnumerator FetchFireBase()
+    {
+        yield return new WaitUntil(() => CrashlyticsInitializer.instance.isFirebaseReady);
+
         CUtils.CheckConnection(this, (result) =>
         {
             if (result == 0)
@@ -95,11 +102,6 @@ public class RemoteConfigFirebase : MonoBehaviour
                 FetchDataAsync();
             }
         });
-    }
-    private IEnumerator GetAllIdAvertisementWhenFetchingDone()
-    {
-        yield return new WaitUntil(() => IsFetchingDone);
-        GetAllIdAvertisement();
     }
     private string ConvertFirebaseStringToNormal(string firebasestr)
     {
@@ -164,16 +166,16 @@ public class RemoteConfigFirebase : MonoBehaviour
                 //ConfigController.instance.config.admob.admob_banner = CheckNull(admob_banner, AdmobController.instance.bannerAdsId);
                 // Min Level to load banner
                 AdsManager.instance.MinLevelToLoadBanner = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
-                LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadBanner);
+                Debug.Log("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadBanner);
                 // Min level to load rewarded video ads
                 AdsManager.instance.MinLevelToLoadRewardVideo = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
-                LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadRewardVideo);
+                Debug.Log("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadRewardVideo);
                 // Percent to load interstitial ads
                 AdsManager.instance.PercentToloadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
-                LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.PercentToloadInterstitial);
+                Debug.Log("MinLevelToLoadBanner: " + AdsManager.instance.PercentToloadInterstitial);
                 // Min level to load interstitial ads
                 AdsManager.instance.MinLevelToLoadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
-                LogController.Debug("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadInterstitial);
+                Debug.Log("MinLevelToLoadBanner: " + AdsManager.instance.MinLevelToLoadInterstitial);
 
                 //AdsManager.instance.LoadAndConfigAdsId();
             }
@@ -277,10 +279,12 @@ public class RemoteConfigFirebase : MonoBehaviour
                 switch (info.LastFetchFailureReason)
                 {
                     case FetchFailureReason.Error:
-                        //Debug.Log("Fetch failed for unknown reason");
+                        // Fetch failed for unknown reason
+
                         break;
                     case Firebase.RemoteConfig.FetchFailureReason.Throttled:
-                        //Debug.Log("Fetch throttled until " + info.ThrottledEndTime);
+                        // Fetch throttled until " + info.ThrottledEndTime
+
                         break;
                 }
                 break;

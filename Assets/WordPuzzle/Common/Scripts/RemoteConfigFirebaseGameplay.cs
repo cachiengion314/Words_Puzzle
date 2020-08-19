@@ -44,25 +44,20 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-
-
-        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
     }
     private void Start()
     {
         if (RemoteConfigFirebase.instance != null) return;
 
-        //StartCoroutine(FetchDataWithDelay());
-
-
-        //StartCoroutine(AdsManager.instance.LoadAndConfigAdsId());
+        StartCoroutine(FetchFireBase());
+        StartCoroutine(GetAllIdAvertisementWhenFetchingDone());
     }
     private IEnumerator GetAllIdAvertisementWhenFetchingDone()
     {
         yield return new WaitUntil(() => IsFetchingDone);
         GetAllIdAvertisement();
     }
-    public IEnumerator FetchDataWithDelay()
+    public IEnumerator FetchFireBase()
     {
         yield return new WaitUntil(() => CrashlyticsInitializer.instance.isFirebaseReady);
 
@@ -137,16 +132,16 @@ public class RemoteConfigFirebaseGameplay : MonoBehaviour
                 //ConfigController.instance.config.admob.admob_banner = CheckNull(admob_banner, AdmobController.instance.bannerAdsId);
                 // Min Level to load banner
                 AdsManager.instance.MinLevelToLoadBanner = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_banner_level").StringValue));
-                LogController.Debug("Remoteconfig gameplay load active_banner_level: " + AdsManager.instance.MinLevelToLoadBanner);
+                Debug.Log("Remoteconfig gameplay load active_banner_level: " + AdsManager.instance.MinLevelToLoadBanner);
                 // Min level to load rewarded video ads
                 AdsManager.instance.MinLevelToLoadRewardVideo = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_rewarded_level").StringValue));
-                LogController.Debug("Remoteconfig gameplay load active_rewarded_level: " + AdsManager.instance.MinLevelToLoadRewardVideo);
+                Debug.Log("Remoteconfig gameplay load active_rewarded_level: " + AdsManager.instance.MinLevelToLoadRewardVideo);
                 // Percent to load interstitial ads
                 AdsManager.instance.PercentToloadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("interstitial_showing_ratio").StringValue));
-                LogController.Debug("Remoteconfig gameplay load interstitial_showing_ratio: " + AdsManager.instance.PercentToloadInterstitial);
+                Debug.Log("Remoteconfig gameplay load interstitial_showing_ratio: " + AdsManager.instance.PercentToloadInterstitial);
                 // Min level to load interstitial ads
                 AdsManager.instance.MinLevelToLoadInterstitial = CheckIntParse(ConvertFirebaseStringToNormal(FirebaseRemoteConfig.GetValue("active_interstitial_level").StringValue));
-                LogController.Debug("Remoteconfig gameplay load active_interstitial_level: " + AdsManager.instance.MinLevelToLoadInterstitial);
+                Debug.Log("Remoteconfig gameplay load active_interstitial_level: " + AdsManager.instance.MinLevelToLoadInterstitial);
 
                 //AdsManager.instance.LoadAndConfigAdsId();
             }
