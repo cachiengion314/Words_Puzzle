@@ -141,6 +141,10 @@ public class AdsManager : MonoBehaviour
             }
             //}
         }
+#if UNITY_EDITOR
+        onAdsRewarded?.Invoke();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
     }
 
     private void ShowInterstitial(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null, Action adsComplete = null)
@@ -245,10 +249,6 @@ public class AdsManager : MonoBehaviour
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
-#if UNITY_EDITOR
-        onAdsRewarded?.Invoke();
-        SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
     }
 
     public void ShowBannerAds()
