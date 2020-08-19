@@ -49,8 +49,9 @@ public class AdsManager : MonoBehaviour
         if (_isLoading)
             return;
 
-        AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
-        AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars;
+        //AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars.Trim();
+        //AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars.Trim();
+        //Debug.Log("AudienceNetworkFbAd.instance.rewardIdFaceAds " + AudienceNetworkFbAd.instance.rewardIdFaceAds);
 #if UNITY_ANDROID && !UNITY_EDITOR
         if (AudienceNetworkFbAd.instance != null)
         {
@@ -59,9 +60,9 @@ public class AdsManager : MonoBehaviour
         }
 #endif
 
-        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.admob_free_stars;
-        AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.admob_level_transition;
-        AdmobController.instance.bannerAdsId = ConfigController.instance.config.admob.admob_banner;
+        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.admob_free_stars.Trim();
+        AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.admob_level_transition.Trim();
+        AdmobController.instance.bannerAdsId = ConfigController.instance.config.admob.admob_banner.Trim();
         if (AdmobController.instance != null)
         {
             AdmobController.instance.InitRewardedVideo();
@@ -245,7 +246,7 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-    #region Show Ads Handle
+#region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
@@ -284,6 +285,6 @@ public class AdsManager : MonoBehaviour
             }
         });
     }
-    #endregion
+#endregion
 
 }
