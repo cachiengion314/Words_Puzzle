@@ -157,10 +157,6 @@ public class AdsManager : MonoBehaviour
             _adsController.ShowInterstitialAds();
             SceneAnimate.Instance.ShowOverLayPauseGame(true);
             Debug.Log("Show Interstitial Ads FB");
-#if UNITY_EDITOR
-            adsComplete?.Invoke();
-            SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
         }
         else
         {
@@ -182,10 +178,6 @@ public class AdsManager : MonoBehaviour
                 _adsController.ShowInterstitialAds();
                 SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 Debug.Log("Show Interstitial Ads Admob");
-#if UNITY_EDITOR
-                adsComplete?.Invoke();
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
             }
             else
             {
@@ -209,6 +201,10 @@ public class AdsManager : MonoBehaviour
             }
             //}
         }
+#if UNITY_EDITOR
+        adsComplete?.Invoke();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
     }
 
     public bool AdsIsLoaded(bool showToast = false, Text textNoti = null, TextMeshProUGUI textMeshNoti = null, Action checkComplete = null)
@@ -249,6 +245,10 @@ public class AdsManager : MonoBehaviour
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
+#if UNITY_EDITOR
+        onAdsRewarded?.Invoke();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
     }
 
     public void ShowBannerAds()
