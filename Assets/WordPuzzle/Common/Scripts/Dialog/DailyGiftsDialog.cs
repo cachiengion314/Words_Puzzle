@@ -183,11 +183,6 @@ public class DailyGiftsDialog : Dialog
     {
         Sound.instance.Play(Sound.Others.PopupOpen);
         AdsManager.instance.ShowVideoAds();
-
-        // AdmobController.instance.ShowRewardBasedVideo();
-        //#if UNITY_EDITOR
-        //        OnRewarded();
-        //#endif
     }
     void OnRewarded()
     {

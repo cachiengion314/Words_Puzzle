@@ -62,8 +62,8 @@ public class AdsManager : MonoBehaviour
         if (AdmobController.instance != null)
         {
             AdmobController.instance.InitRewardedVideo();
-             AdmobController.instance.RequestRewardBasedVideo();
-             AdmobController.instance.RequestInterstitial();
+            AdmobController.instance.RequestRewardBasedVideo();
+            AdmobController.instance.RequestInterstitial();
         }
 
         //if (UnityAdTest.instance != null)
@@ -126,7 +126,7 @@ public class AdsManager : MonoBehaviour
                         if (showToast)
                             Toast.instance.ShowMessage("Rewarded video is not ready");
                         _isLoading = false;
-                        adsNotReadyYetCallback?.Invoke();                      
+                        adsNotReadyYetCallback?.Invoke();
                     }
                     else
                     {
@@ -154,10 +154,6 @@ public class AdsManager : MonoBehaviour
             _adsController.ShowInterstitialAds();
             SceneAnimate.Instance.ShowOverLayPauseGame(true);
             Debug.Log("Show Interstitial Ads FB");
-#if UNITY_EDITOR
-            adsComplete?.Invoke();
-            SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
         }
         else
         {
@@ -179,10 +175,6 @@ public class AdsManager : MonoBehaviour
                 _adsController.ShowInterstitialAds();
                 SceneAnimate.Instance.ShowOverLayPauseGame(true);
                 Debug.Log("Show Interstitial Ads Admob");
-#if UNITY_EDITOR
-                adsComplete?.Invoke();
-                SceneAnimate.Instance.ShowOverLayPauseGame(false);
-#endif
             }
             else
             {
@@ -205,6 +197,9 @@ public class AdsManager : MonoBehaviour
                 //});
             }
             //}
+#if UNITY_EDITOR
+            SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
         }
     }
 
@@ -242,10 +237,14 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-#region Show Ads Handle
+    #region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
+#if UNITY_EDITOR
+        onAdsRewarded?.Invoke();
+        SceneAnimate.Instance.ShowOverLayPauseGame(false);
+#endif
     }
 
     public void ShowBannerAds()
@@ -255,32 +254,19 @@ public class AdsManager : MonoBehaviour
 
     public void ShowInterstitialAds(Action onCompleteAds = null)
     {
-        CUtils.CheckConnection(this, (result) =>
+        float percent = (float)PercentToloadInterstitial / 100f;
+        float randomNumber = UnityEngine.Random.Range(0f, 1f);
+        Debug.Log("RandomNumber: " + randomNumber);
+        Debug.Log("percent: " + percent);
+        if (randomNumber <= percent)
         {
-            if (result == 0)
-            {
-                float percent = (float)PercentToloadInterstitial / 100f;
-                float randomNumber = UnityEngine.Random.Range(0f, 1f);
-                Debug.Log("RandomNumber: " + randomNumber);
-                Debug.Log("percent: " + percent);
-                if (randomNumber <= percent)
-                {
-                    ShowInterstitial(true, () =>
-                    {
-                        onCompleteAds?.Invoke();
-                      
-                    }, null, () =>
-                    {
-                        onCompleteAds?.Invoke();
-                    });
-                }
-            }
-            else
+            ShowInterstitial(true, () =>
             {
                 onCompleteAds?.Invoke();
-            }
-        });
+
+            }, null, null);
+        }
     }
-#endregion
+    #endregion
 
 }

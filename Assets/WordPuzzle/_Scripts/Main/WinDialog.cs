@@ -114,18 +114,19 @@ public class WinDialog : Dialog
         CheckTheme();
     }
 
+    private void OnEnable()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteReward;
+        AdsManager.instance.onAdsRewarded += OnCompleteReward;
+    }
+
     protected override void Start()
     {
         base.Start();
         ShowStars();
         CheckUnlock();
         SaveProgressComplete();
-        //_rewardControl = GameObject.FindObjectOfType<RewardVideoController>();
-        //if (_rewardControl == null)
-        //    _rewardControl = Instantiate(_rewardVideoPfb, transform);
 
-        //_rewardControl.onRewardedCallback -= OnCompleteReward;
-        AdsManager.instance.onAdsRewarded -= OnCompleteReward;
         CheckShowAdsButton();
         isSound = false;
         _btnBee.transform.position = new Vector3(_btnBee.transform.position.x, WordRegion.instance.animBtnHintTarget.transform.position.y);
@@ -753,7 +754,6 @@ public class WinDialog : Dialog
         _isWatchAds = true;
         _nextButton.interactable = false;
         //_rewardControl.onRewardedCallback += OnCompleteReward;
-        AdsManager.instance.onAdsRewarded += OnCompleteReward;
 
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
@@ -816,17 +816,10 @@ public class WinDialog : Dialog
 
     void OnCompleteReward()
     {
-        //_rewardControl.onRewardedCallback -= OnCompleteReward;
-        //AdsManager.instance.onAdsRewarded -= OnCompleteReward;
-
-        //RewardButton.GetComponent<Button>().interactable = false;
         gameObject.GetComponent<GraphicRaycaster>().enabled = false;
         txtReward.text = "X" + Const.REWARD_ADS_CHAPTER_CLEAR;
         if (level == numLevels - 1)
         {
-            //var value = Const.REWARD_ADS_CHAPTER_CLEAR;
-            //CurrencyController.CreditBalance(value);
-
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
                 StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_CHAPTER_CLEAR));
@@ -845,7 +838,6 @@ public class WinDialog : Dialog
         {
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
-                //CurrencyController.CreditBalance(Const.REWARD_ADS_LEVEL_CLEAR);
                 StartCoroutine(ShowEffectCollect(Const.REWARD_ADS_LEVEL_CLEAR));
                 //Debug.Log("reward Level: " + Const.REWARD_ADS_LEVEL_CLEAR);
             });

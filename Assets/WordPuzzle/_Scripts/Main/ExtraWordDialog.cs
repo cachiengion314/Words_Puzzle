@@ -171,9 +171,6 @@ public class ExtraWordDialog : Dialog
         AdsManager.instance.ShowVideoAds();
 
         Sound.instance.Play(Sound.Others.PopupOpen);
-#if UNITY_EDITOR
-        OnCompleteVideo();
-#endif
     }
 
     private void ShowPanelCurrLevel()

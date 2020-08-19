@@ -21,12 +21,8 @@ public class OpenWordDictionaryDialog : Dialog
 
     private void OnEnable()
     {
-        //_rewardControl = FindObjectOfType<RewardVideoController>();
-        //if (_rewardControl == null)
-        //    _rewardControl = Instantiate(_rewardVideoPfb);
-        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
-        //_rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
 
         CheckShowTextTitle();
         ShowBtnLater(false);
@@ -53,37 +49,21 @@ public class OpenWordDictionaryDialog : Dialog
         //_btnWatch.gameObject.SetActive(IsAvailableToShow);
     }
 
+    private void OnDisable()
+    {
+        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
+    }
+
     private void OnDestroy()
     {
-        //if (_rewardControl != null)
-        //{
-        //    _rewardControl.onRewardedCallback -= OnCompleteVideo;
-        //    _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        //}
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
     public void OnClickOpen()
     {
-        //_rewardControl.onRewardedCallback += OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded += OnCompleteVideo;
-
-        AdsManager.instance.ShowVideoAds(false,LoadAdsFailed, NoInterNet);
-
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
-        {
-            CUtils.CheckConnection(this, (result) =>
-            {
-                if (result == 0)
-                {
-#if UNITY_EDITOR
-                    OnCompleteVideo();
-#endif
-                }
-            });
-        });
+        AdsManager.instance.ShowVideoAds(false,LoadAdsFailed, NoInterNet);
     }
 
     void LoadAdsFailed()
@@ -100,16 +80,15 @@ public class OpenWordDictionaryDialog : Dialog
 
     private void OnCompleteVideo()
     {
-        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
-
-        //_rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        _panelWatch.transform.localScale = Vector3.zero;
-        GetComponent<Image>().enabled = false;
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            DictionaryDialog.instance.currListWord.OnCompleteReward();
-            Close();
+            _panelWatch.transform.localScale = Vector3.zero;
+            GetComponent<Image>().enabled = false;
+            TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+            {
+                DictionaryDialog.instance.currListWord.OnCompleteReward();
+                Close();
+            });
         });
     }
 

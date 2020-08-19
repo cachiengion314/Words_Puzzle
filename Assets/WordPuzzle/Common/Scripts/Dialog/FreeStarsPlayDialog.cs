@@ -24,19 +24,10 @@ public class FreeStarsPlayDialog : Dialog
     [SerializeField] private TextMeshProUGUI _txtContent;
     [SerializeField] private TextMeshProUGUI _txtContent2;
 
-    //private RewardVideoController _rewardControl;
     private List<int> listRandom = new List<int>();
 
     private void OnEnable()
     {
-        //_rewardControl = FindObjectOfType<RewardVideoController>();
-        //if (_rewardControl == null)
-        //    _rewardControl = Instantiate(_rewardVideoPfb);
-
-
-        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
-        //_rewardControl.onUpdateBtnAdsCallback += CheckBtnShowUpdate;
-
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         AdsManager.instance.onAdsRewarded += OnCompleteVideo;
     }
@@ -124,11 +115,6 @@ public class FreeStarsPlayDialog : Dialog
 
     private void OnDestroy()
     {
-        //if (_rewardControl != null)
-        //{
-        //    _rewardControl.onRewardedCallback -= OnCompleteVideo;
-        //    _rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        //}
         AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
     }
 
@@ -144,49 +130,40 @@ public class FreeStarsPlayDialog : Dialog
 
     public void OnClickOpen()
     {
-        //_rewardControl.onRewardedCallback += OnCompleteVideo;
-
-        AdsManager.instance.ShowVideoAds(true, Close, Close);
-       
         Sound.instance.audioSource.Stop();
         Sound.instance.Play(Sound.Others.PopupOpen);
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
-        {
-#if UNITY_EDITOR
-            OnCompleteVideo();
-#endif
-        });
+        AdsManager.instance.ShowVideoAds(true, Close, Close);
     }
 
     private void OnCompleteVideo()
     {
-        var resultRandom = RandomSingle(listRandom);
-        var itemTarget = _itemsCollect[resultRandom];
-        SceneAnimate.Instance.itemType = itemTarget.itemType;
-        SceneAnimate.Instance.itemValue = itemTarget.value;
-        SceneAnimate.Instance.textItem.text = itemTarget.value.ToString();
-        SceneAnimate.Instance.imageItem.sprite = itemTarget.iconItem;
-        SceneAnimate.Instance.imageItem.SetNativeSize();
-        //Debug.Log("OnCompleteVideo freestar invoke");
-        //_rewardControl.onRewardedCallback -= OnCompleteVideo;
-        //_rewardControl.onUpdateBtnAdsCallback -= CheckBtnShowUpdate;
-        _panelWatch.transform.localScale = Vector3.zero;
-        HidenOverlay();
-        TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            Sound.instance.Play(Sound.Others.PopupOpen);
-            DialogController.instance.ShowDialog(DialogType.CollectFreestarPlay, DialogShow.REPLACE_CURRENT);
-        });
+            var resultRandom = RandomSingle(listRandom);
+            var itemTarget = _itemsCollect[resultRandom];
+            SceneAnimate.Instance.itemType = itemTarget.itemType;
+            SceneAnimate.Instance.itemValue = itemTarget.value;
+            SceneAnimate.Instance.textItem.text = itemTarget.value.ToString();
+            SceneAnimate.Instance.imageItem.sprite = itemTarget.iconItem;
+            SceneAnimate.Instance.imageItem.SetNativeSize();
+            _panelWatch.transform.localScale = Vector3.zero;
+            HidenOverlay();
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
+                Sound.instance.Play(Sound.Others.PopupOpen);
+                DialogController.instance.ShowDialog(DialogType.CollectFreestarPlay, DialogShow.REPLACE_CURRENT);
+            });
 
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(
-          Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
-          new Firebase.Analytics.Parameter[] {
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(
+              Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+              new Firebase.Analytics.Parameter[] {
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterValue, 20),
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "free_stars_main"),
-          }
-        );
+              }
+            );
+        });
     }
     public override void Close()
     {

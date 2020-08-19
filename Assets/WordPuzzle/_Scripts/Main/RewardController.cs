@@ -89,9 +89,6 @@ public class RewardController : MonoBehaviour
             AdsManager.instance.ShowVideoAds();
 
             Sound.instance.Play(Sound.Others.PopupOpen);
-#if UNITY_EDITOR
-            OnCompleteVideo();
-#endif
         });
     }
 
@@ -102,8 +99,6 @@ public class RewardController : MonoBehaviour
 
     public void OnClose(GameObject obj)
     {
-        //_rewardVideoControl.onRewardedCallback -= OnCompleteVideo;
-        AdsManager.instance.onAdsRewarded -= OnCompleteVideo;
         if (ExtraWord.instance != null)
             ExtraWord.instance.OnClaimed();
         
