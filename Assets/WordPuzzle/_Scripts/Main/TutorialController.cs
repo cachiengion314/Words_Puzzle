@@ -93,6 +93,7 @@ public class TutorialController : MonoBehaviour
     public int shuffleLevel = 5;
     public int cellStarLevel = 8;
     public int helpLevel = 16;
+    public int chickenBankLevel = 48;
 
     private LineWord _lineTarget;
     private string _answerTarget;

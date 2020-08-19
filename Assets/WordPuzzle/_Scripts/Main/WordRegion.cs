@@ -647,6 +647,7 @@ public class WordRegion : MonoBehaviour
             var cellTarget = CheckCellTarget(line.cells);
             CalculateRatioScaleBtnAds(cellTarget);
             _btnHintADS.Cell = cellTarget;
+            _btnHintADS.SetLineFreeletter();
             if (!CPlayerPrefs.HasKey("CELL_ADS_TUTORIAL") && !TutorialController.instance.isShowTut)
                 TutorialController.instance.ShowPopCellAdsTut();
         }
@@ -661,6 +662,7 @@ public class WordRegion : MonoBehaviour
     {
         var ratioScale = cell.GetComponent<RectTransform>().rect.width / _btnHintADS._btnAds.img.rectTransform.rect.width;
         _btnHintADS.Cell = cell;
+        _btnHintADS.SetLineFreeletter();
         _btnHintADS._btnAds.img.rectTransform.localScale = _btnHintADS._btnAds.img.rectTransform.localScale * ratioScale;
     }
 
@@ -859,6 +861,7 @@ public class WordRegion : MonoBehaviour
                 CPlayerPrefs.SetFloat(keyLevel + "POS_ADS_BUTTON_Y", _btnHintADS.transform.localPosition.y);
                 CPlayerPrefs.SetFloat(keyLevel + "POS_ADS_BUTTON_Z", _btnHintADS.transform.localPosition.z);
                 _btnHintADS.Cell = cellRandom;
+                _btnHintADS.SetLineFreeletter();
                 CalculateRatioScaleBtnAds(cellRandom);
             }
             if (!CPlayerPrefs.HasKey("CELL_ADS_TUTORIAL") && !TutorialController.instance.isShowTut)
@@ -889,6 +892,7 @@ public class WordRegion : MonoBehaviour
             SaveLevelProgress();
             _btnHintADS.transform.position = cellRandom.transform.position;
             _btnHintADS.Cell = cellRandom;
+            _btnHintADS.SetLineFreeletter();
             CalculateRatioScaleBtnAds(cellRandom);
         }
     }

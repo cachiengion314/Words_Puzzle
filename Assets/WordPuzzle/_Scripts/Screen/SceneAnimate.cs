@@ -50,7 +50,7 @@ public class SceneAnimate : MonoBehaviour
     [HideInInspector] public ItemType itemType;
     [HideInInspector] public int itemValue;
     [Header("UI TEST")]
-    [SerializeField] private bool isShowTest;
+    public bool isShowTest;
     [SerializeField] private Dropdown _levels;
     [SerializeField] private GameObject _reporter;
     [SerializeField] private GameObject _btnTest;
@@ -272,14 +272,19 @@ public class SceneAnimate : MonoBehaviour
         CPlayerPrefs.SetBool("HONEY_TUTORIAL", true);
     }
 
+    public void OnClickFullBonusBox()
+    {
+        Prefs.extraProgress = Prefs.totalExtraAdded = Prefs.extraTarget;
+    }
+
     public void OnAddStarAndBeeTest(int numBee)
     {
         CurrencyController.CreditBalance(10000);
         CurrencyController.CreditHintFree(3);
-        CPlayerPrefs.SetBool("HINT_TUTORIAL", true);
-        CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
-        CPlayerPrefs.SetBool("MULTIPLE_HINT_TUTORIAL", true);
-        CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
+        //CPlayerPrefs.SetBool("HINT_TUTORIAL", true);
+        //CPlayerPrefs.SetBool("SELECTED_HINT_TUTORIAL", true);
+        //CPlayerPrefs.SetBool("MULTIPLE_HINT_TUTORIAL", true);
+        //CPlayerPrefs.SetBool("BEE_TUTORIAL", true);
         BeeManager.instance.CreaditAmountBee(numBee);
         FacebookController.instance.HoneyPoints += 10000;
         FacebookController.instance.onChangedHoneyPoints?.Invoke();

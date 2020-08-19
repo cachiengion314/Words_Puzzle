@@ -36,7 +36,14 @@ public class BaseController : MonoBehaviour
 #endif
         if (!Music.instance.audioSource.isPlaying)
             Music.instance.Play(music);
-
+        if (TutorialController.instance != null && SceneAnimate.Instance.isShowTest)
+        {
+            TutorialController.instance.helpLevel = 13;
+            TutorialController.instance.selectedHintLevel = 14;
+            TutorialController.instance.multipleHintLevel = 15;
+            TutorialController.instance.beehiveLevel = 16;
+            TutorialController.instance.chickenBankLevel = 17;
+        }
         //CUtils.ShowBannerAd();
     }
 

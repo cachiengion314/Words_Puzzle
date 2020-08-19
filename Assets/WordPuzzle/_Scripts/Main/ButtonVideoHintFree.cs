@@ -16,6 +16,8 @@ public class ButtonVideoHintFree : MonoBehaviour
 
     [SerializeField] private SpineControl _animAds;
 
+    private LineWord _lineTarget;
+
     public Cell Cell
     {
         get
@@ -31,6 +33,23 @@ public class ButtonVideoHintFree : MonoBehaviour
     private void Start()
     {
         CheckTheme();
+        _lineTarget = null;
+    }
+
+    public void SetLineFreeletter()
+    {
+        _lineTarget = WordRegion.instance.Lines.Single(li => li.cells.Contains(Cell));
+        if (_lineTarget != null)
+        {
+            var tempAnswers = _lineTarget.answers;
+            for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+            {
+                var l = WordRegion.instance.Lines[i];
+                if (l != _lineTarget && !l.isShown && l.answer != "")
+                    tempAnswers.Remove(l.answer);
+            }
+            _lineTarget.SetDataLetter(tempAnswers[UnityEngine.Random.Range(0, tempAnswers.Count)]);
+        }
     }
 
     private void CheckTheme()
@@ -81,35 +100,29 @@ public class ButtonVideoHintFree : MonoBehaviour
     {
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
-            Debug.Log("Cell: " + Cell.gameObject.name);
-            _btnAds.interactable = true;
-
-            gameObject.SetActive(false);
-
-            var line = WordRegion.instance.Lines.Single(li => li.cells.Contains(Cell));
-            var tempAnswers = line.answers;
-            for (int i = 0; i < WordRegion.instance.Lines.Count; i++)
+            if (_lineTarget != null)
             {
-                var l = WordRegion.instance.Lines[i];
-                if (l != line && !l.isShown && l.answer != "")
-                    tempAnswers.Remove(l.answer);
-            }
-            line.SetDataLetter(tempAnswers[UnityEngine.Random.Range(0, tempAnswers.Count)]);
-            Cell.ShowHint();
-            line.CheckSetDataAnswer(line.answer);
-            line.CheckLineDone();
-            WordRegion.instance.SaveLevelProgress();
-            WordRegion.instance.CheckGameComplete();
+                Debug.Log("Cell: " + Cell.gameObject.name);
+                _btnAds.interactable = true;
 
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(
-              Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
-              new Firebase.Analytics.Parameter[] {
+                gameObject.SetActive(false);
+
+                Cell.ShowHint();
+                _lineTarget.CheckSetDataAnswer(_lineTarget.answer);
+                _lineTarget.CheckLineDone();
+                WordRegion.instance.SaveLevelProgress();
+                WordRegion.instance.CheckGameComplete();
+
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(
+                  Firebase.Analytics.FirebaseAnalytics.EventEarnVirtualCurrency,
+                  new Firebase.Analytics.Parameter[] {
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterValue, 0),
             new Firebase.Analytics.Parameter(
               Firebase.Analytics.FirebaseAnalytics.ParameterVirtualCurrencyName, "free_letter"),
-              }
-            );
+                  }
+                );
+            }
         });
         CPlayerPrefs.SetBool(WordRegion.instance.keyLevel + "ADS_HINT_FREE", true);
     }
