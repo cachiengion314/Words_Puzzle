@@ -73,6 +73,8 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private Image _handChickenTut;
     [SerializeField] private Image _handFlagTut;
     [SerializeField] private SpineControl _animBeehiveTut;
+    [SerializeField] private Image _amountBeehiveTut;
+    [SerializeField] private TextMeshProUGUI _textNumBeeTut;
 
     public GameObject _handPanelPopHint;
     public GameObject _handPanelPopShuffle;
@@ -440,6 +442,9 @@ public class TutorialController : MonoBehaviour
         if (ThemesControl.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
+            _amountBeehiveTut.sprite = currTheme.uiData.numBooster;
+            _amountBeehiveTut.SetNativeSize();
+            _textNumBeeTut.font = currTheme.fontData.fontAsset;
             _animBeehiveTut.thisSkeletonControl.initialSkinName = currTheme.animData.skinAnim;
             TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
             {
