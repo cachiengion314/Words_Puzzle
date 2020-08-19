@@ -36,9 +36,9 @@ public class ButtonVideoHintFree : MonoBehaviour
         _lineTarget = null;
     }
 
-    public void SetLineFreeletter()
+    public void SetLineFreeletter(LineWord line)
     {
-        _lineTarget = WordRegion.instance.Lines.Single(li => li.cells.Contains(Cell));
+        _lineTarget = line;
         if (_lineTarget != null)
         {
             var tempAnswers = _lineTarget.answers;
