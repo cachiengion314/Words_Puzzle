@@ -256,16 +256,6 @@ public class WordRegion : MonoBehaviour
 
     public void CalculateScaleSizeBoardRegionAndPan()
     {
-        //var ratio = (float)Screen.width / (float)Screen.height;
-        //var ratio916 = 9f / 16f;
-        //var resultRatio = ratio916 / ratio;
-        ////Debug.Log("resultRatio: " + resultRatio);
-        //var ratioBoard = resultRatio;
-        //var ratioPan = resultRatio;
-        //var boardSizeX = board.rectTransform.sizeDelta.x;
-        //var boardSizeY = board.rectTransform.sizeDelta.y * ratioBoard;
-        //var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        //var panSizeY = imageGround.rectTransform.sizeDelta.y * ratioPan;
         var boardSizeX = board.rectTransform.sizeDelta.x;
         var panSizeX = imageGround.rectTransform.sizeDelta.x;
         var sizeOutSafeArea = Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? ((int)(_rectCanvas.rect.height) - Screen.safeArea.height) / 2 :
@@ -287,6 +277,31 @@ public class WordRegion : MonoBehaviour
         imageGround.rectTransform.sizeDelta = new Vector2(panSizeX, panSizeY);
     }
 
+    private void SetValidWords(List<string> words)
+    {
+        var tempLinesShown = lines.FindAll(li => li.isShown);
+        foreach (var word in ExtraWord.instance.extraWords)
+        {
+            words.Remove(word);
+        }
+
+        foreach (var line in tempLinesShown)
+        {
+            words.Remove(line.answer);
+        }
+
+        validWords = words;
+        if (SceneAnimate.Instance.isShowTest)
+        {
+            var validWordsLog = "";
+            foreach (var word in validWords)
+            {
+                validWordsLog += word + " | ";
+            }
+            Debug.Log("Valid Words: "+validWordsLog);
+        }
+    }
+
     public void Load(GameLevel gameLevel, int level)
     {
         keyLevel = level.ToString();
@@ -295,9 +310,6 @@ public class WordRegion : MonoBehaviour
         _extraWord = gameLevel.numExtra;
         LevelStartCallEventFirebase();
         var wordList = CUtils.BuildListFromString<string>(this.gameLevel.answers);
-        //validWords = CUtils.BuildListFromString<string>(this.gameLevel.validWords);
-        //wordList = wordList.Count <= 4 ? wordList : GetExtraWordRandom(wordList);
-
         numWords = wordList.Count - _extraWord;
         HoneyPointsController.instance.NumberOfWordsInLevelWithoutExtra = numWords;
 
@@ -507,6 +519,7 @@ public class WordRegion : MonoBehaviour
             }
         }
         ShowBtnDictionaryInGamePlay();
+        SetValidWords(wordList);
     }
 
     private void GetCellShowHint(LineWord line)
