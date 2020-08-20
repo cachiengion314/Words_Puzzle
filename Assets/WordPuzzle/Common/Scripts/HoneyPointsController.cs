@@ -83,8 +83,7 @@ public class HoneyPointsController : MonoBehaviour
         if (isGameplayEnd) return;
 
         timeLeft -= Time.deltaTime;
-        //timeTxt.text = "TimeLeft: " + timeLeft.ToString("0");
-
+      
         if (timeLeft < timeGameplay && timeLeft > 0)
         {
             timePoints = 10;
@@ -157,6 +156,5 @@ public class HoneyPointsController : MonoBehaviour
                 tweenControl.FadeAnfaText(textCollect, 1, duration, () => { tweenControl.FadeAnfaText(textCollect, 0, duration); });
             }
             );
-
     }
 }

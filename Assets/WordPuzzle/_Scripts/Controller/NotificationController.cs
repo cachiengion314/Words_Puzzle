@@ -24,7 +24,7 @@ public class NotificationController : MonoBehaviour
     private const string DAILYTIME_MORNING = "10:00:00"; // 10:00:00 +3 more hours 
     private const string DAILYTIME_AFTERNOON = "18:00:00"; // 18:00:00 +3 more hours
 
-    private string DAILYTIME_CUSTOM = "17:00:00";
+    private string DAILYTIME_CUSTOM = "16:03:00";
 
     private int MAX_CURRENT_LOOP = 7; // 7
     private readonly double dayToSecondsValue = 24 * 3600; // 24 * 3600

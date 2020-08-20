@@ -122,7 +122,6 @@ public class Pan : MonoBehaviour
             allLetter += letterTexts[i].text.ToString();
         }
         NotificationController.instance.CurrentLevelAllLetter = allLetter;
-        LogController.Debug("CurrentLevelAllLetter: " + NotificationController.instance.CurrentLevelAllLetter);
     }
     public void ReloadLetterPositionPoints()
     {

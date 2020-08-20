@@ -26,9 +26,9 @@ public class UIScaleController : MonoBehaviour
         instance = this;
         SceneManager.sceneLoaded += OnSceneWasLoaded;
     }
-    public void BannerShowAndScaleEvent() // invoke in request and load banner
+    public void BannerShowAndScaleEvent(float bannerHeight = 0) // invoke in request and load banner
     {
-        float bannerScale = AdmobController.instance.bannerHeight / Screen.safeArea.height;
+        float bannerScale = bannerHeight / Screen.safeArea.height;
         float distance = bannerScale * WordRegion.instance.RectCanvas.rect.height;
         newSize = new Vector2(originSize.x, originSize.y - distance);
         rectRoot.sizeDelta = newSize;
@@ -43,10 +43,7 @@ public class UIScaleController : MonoBehaviour
             rectRoot = rootUI.GetComponent<RectTransform>();
             originSize = rectRoot.sizeDelta;
 
-            if (AdmobController.instance.bannerHeight > 0)
-            {
-                BannerShowAndScaleEvent();
-            }
+            BannerShowAndScaleEvent(AdmobController.instance.bannerHeight);
         }
     }
 }

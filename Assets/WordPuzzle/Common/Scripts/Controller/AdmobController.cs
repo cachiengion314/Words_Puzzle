@@ -131,7 +131,7 @@ public class AdmobController : MonoBehaviour, IAds
         if (bannerView != null)
         {
             bannerView.Show();
-            UIScaleController.instance.BannerShowAndScaleEvent();
+            UIScaleController.instance.BannerShowAndScaleEvent(bannerHeight);
         }
         else
         {
@@ -181,7 +181,7 @@ public class AdmobController : MonoBehaviour, IAds
             ));
 
         bannerHeight = this.bannerView.GetHeightInPixels();
-        UIScaleController.instance.BannerShowAndScaleEvent();
+        UIScaleController.instance.BannerShowAndScaleEvent(bannerHeight);
     }
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {

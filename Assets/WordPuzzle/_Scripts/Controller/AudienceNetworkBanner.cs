@@ -37,8 +37,6 @@ public class AudienceNetworkBanner : MonoBehaviour
 
         if (nextSceneName == 3)
         {
-            if (CUtils.IsAdsRemoved()) return;
-
             LoadBanner();
         }
         else if (nextSceneName != 3)
@@ -52,16 +50,17 @@ public class AudienceNetworkBanner : MonoBehaviour
         {
             adView.Dispose();
         }
-        //Debug.Log("AdViewTest was destroyed!");
+        // AdViewTest was destroyed!
 
         AdmobController.instance.HideBanner();
     }
     public void LoadBanner()
     {
-        if (AdsManager.instance.MinLevelToLoadBanner == 0) return;
         int currentLevel = CheckCurrentLevel();
 
-        if (currentLevel >= AdsManager.instance.MinLevelToLoadBanner && MainController.instance != null)
+        if (currentLevel >= AdsManager.instance.MinLevelToLoadBanner
+            && MainController.instance != null
+            && !CUtils.IsAdsRemoved())
         {
             CUtils.CheckConnection(this, (result) =>
             {
@@ -70,6 +69,13 @@ public class AudienceNetworkBanner : MonoBehaviour
                     StartCoroutine(LoadBannerWithDelay());
                 }
             });
+        }
+        else if (currentLevel >= AdsManager.instance.MinLevelToLoadBanner
+           && MainController.instance != null
+           && CUtils.IsAdsRemoved())
+        {
+            DisposeAllBannerAd();
+            UIScaleController.instance.BannerShowAndScaleEvent();
         }
     }
     public void LoadAudienceNetworkBanner()
@@ -98,8 +104,6 @@ public class AudienceNetworkBanner : MonoBehaviour
         };
         adView.AdViewDidFailWithError = delegate (string error)
         {
-
-
             // "Banner failed to load with error: " + error;
         };
         adView.AdViewWillLogImpression = delegate ()
