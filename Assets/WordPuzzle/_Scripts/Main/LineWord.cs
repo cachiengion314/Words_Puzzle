@@ -35,6 +35,16 @@ public class LineWord : MonoBehaviour
     {
         this.RTL = RTL;
         answerrandom = answers[Random.Range(0, answers.Count)];
+        if (SceneAnimate.Instance.isShowTest)
+        {
+            Debug.Log(gameObject.name + "| answer: " + answerrandom);
+            var result = "";
+            foreach (var ans in answers)
+            {
+                result += " | " + ans;
+            }
+            Debug.Log(gameObject.name + "| valid_answers: " + result);
+        }
         //numLetters = answer.Length;
         float cellGap = cellSize * Const.CELL_GAP_COEF_X + spacing;
 
@@ -114,7 +124,19 @@ public class LineWord : MonoBehaviour
             }
         }
         if (answer == "" || numberAnswerRightForLine > 1)
+        {
             answer = word;
+            if (SceneAnimate.Instance.isShowTest)
+            {
+                Debug.Log(gameObject.name + "| answer: " + answer);
+                var result = "";
+                foreach (var ans in answers)
+                {
+                    result += " | " + ans;
+                }
+                Debug.Log(gameObject.name + "| valid_answers: " + result);
+            }
+        }
         //CPlayerPrefs.SetString(gameObject.name + "_Chapter_" + GameState.currentSubWorld + "_Level_" + GameState.currentLevel, answer);
 
         for (int i = 0; i < cells.Count; i++)
