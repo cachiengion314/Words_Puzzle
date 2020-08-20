@@ -221,6 +221,8 @@ public class ThemesControl : MonoBehaviour
         //PlayerPrefs.SetInt("CURR_THEMES", indexTheme);
         var currTheme = _themesDatas[indexTheme];
         _currTheme = currTheme;
+        starPfb.sprite = currTheme.uiData.iconStarFly;
+        starPfb.SetNativeSize();
 
         if (_dialogPfb.Count > 0)
         {
