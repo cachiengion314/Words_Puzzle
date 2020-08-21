@@ -24,6 +24,7 @@ public class WorldItem : MonoBehaviour {
     int unlockedWorld, unlockedSubWorld, unlockedLevel;
 
     public ScrollRect scroll;
+    public CanvasGroup canvasGroup;
 
     [HideInInspector] public WorldController worldController;
 
@@ -34,27 +35,9 @@ public class WorldItem : MonoBehaviour {
         //world = transform.parent.parent.GetSiblingIndex();
         //subWorld = transform.GetSiblingIndex();
         int numLevels = 0;
-        if (!itemTemp)
-        {
-            numLevels = Superpow.Utils.GetNumLevels(0, 0);
-            var numLevelReality = Superpow.Utils.GetNumLevels(world, subWorld);
-            unlockedWorld = Prefs.unlockedWorld;
-            unlockedSubWorld = Prefs.unlockedSubWorld;
-            unlockedLevel = Prefs.unlockedLevel;
-
-            //Load level
-            for (int i = 0; i < numLevelReality; i++)
-            {
-                LevelItem levelButton = Instantiate(levelItemPrefab);
-                levelButton.numlevels = numLevels;
-                levelButton.world = world;
-                levelButton.subWorld = subWorld;
-                levelButton.level = i;
-                levelButton.transform.SetParent(levelGrid);
-                levelButton.transform.localScale = Vector3.one;
-                levelButton.transform.SetLocalZ(0);
-            }
-        }
+        unlockedWorld = Prefs.unlockedWorld;
+        unlockedSubWorld = Prefs.unlockedSubWorld;
+        unlockedLevel = Prefs.unlockedLevel;
 
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
         {
@@ -109,6 +92,26 @@ public class WorldItem : MonoBehaviour {
 
     public void OnButtonClick()
     {
+        if (!itemTemp)
+        {
+            var numLevels = Superpow.Utils.GetNumLevels(0, 0);
+            var numLevelReality = Superpow.Utils.GetNumLevels(world, subWorld);
+            if (levelGrid.childCount <= 0)
+            {
+                //Load level
+                for (int i = 0; i < numLevelReality; i++)
+                {
+                    LevelItem levelButton = Instantiate(levelItemPrefab);
+                    levelButton.numlevels = numLevels;
+                    levelButton.world = world;
+                    levelButton.subWorld = subWorld;
+                    levelButton.level = i;
+                    levelButton.transform.SetParent(levelGrid);
+                    levelButton.transform.localScale = Vector3.one;
+                    levelButton.transform.SetLocalZ(0);
+                }
+            }
+        }
         //worldController.scrollContent.GetComponent<VerticalLayoutGroup>().enabled = true;
         //worldController.scrollContent.GetComponent<ContentSizeFitter>().enabled = true;
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))

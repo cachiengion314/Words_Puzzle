@@ -11,6 +11,8 @@ public class WorldController : BaseController
     public RectTransform mainUI, scrollContent;
     //public VerticalLayoutGroup contentLayoutGroup;
     //public SnapScrollRect snapScroll;
+    public ContentSizeFitter contentSize;
+    public VerticalLayoutGroup verticalLayoutGroup;
 
     public GameObject title;
     [HideInInspector] public List<WorldItem> worldItems;
@@ -50,6 +52,13 @@ public class WorldController : BaseController
         float screenHeight = Screen.height;
         float screenAspect = screenWidth * 1.0f / screenHeight;
 
+        for (int i = 0; i < worldItems.Count; i++)
+        {
+            if (!worldItems[i].gameObject.activeInHierarchy)
+            {
+                worldItems[i].gameObject.SetActive(true);
+            }
+        }
         //var numlevels = Utils.GetNumLevels(Prefs.unlockedSubWorld, Prefs.unlockedWorld);
         if (Prefs.unlockedWorld >= _data.words.Count)
             Prefs.unlockedWorld = _data.words.Count - 1;
@@ -57,8 +66,10 @@ public class WorldController : BaseController
         _heightItem = (_wordItemPfb.transform as RectTransform).rect.height;
         _heightRoot = _heightItem * worldItems.Count;
         mainUI.anchoredPosition = scrollContent.anchoredPosition;
-        SetPosScroll();
-      
+        SetPosScroll(() =>
+        {
+            CheckShowItem();
+        });
     }
 
     private void Update()
@@ -98,37 +109,42 @@ public class WorldController : BaseController
     }
     void ScrollRectCallBack(Vector2 value)
     {
-
-        if (value.y <= .1f)
+        CheckShowItem();
+        //if (value.y <= .1f)
+        //{
+        //    //for (int i = 0; i < worldItems.Count; i++)
+        //    //{
+        //    //    if (!worldItems[i].gameObject.activeInHierarchy)
+        //    //    {
+        //    //        worldItems[i].gameObject.SetActive(true);
+        //    //        break;
+        //    //    }
+        //    //}
+        //}
+        //else if (value.y > .2f)
+        //{
+        //    //for (int i = 0; i < worldItems.Count; i++)
+        //    //{
+        //    //    if (worldItems[i].transform.position.y < posLast.position.y)
+        //    //    {
+        //    //        worldItems[i].gameObject.SetActive(false);
+        //    //    }
+        //    //}
+        //}
+    }
+    private void CheckShowItem()
+    {
+        contentSize.enabled = false;
+        //verticalLayoutGroup.enabled = false;
+        foreach (var item in worldItems)
         {
-            for (int i = 0; i < worldItems.Count; i++)
-            {
-                if (!worldItems[i].gameObject.activeInHierarchy)
-                {
-                    worldItems[i].gameObject.SetActive(true);
-                    break;
-                }
-            }
-        }
-        else if (value.y > .2f)
-        {
-            //for (int i = 0; i < worldItems.Count; i++)
-            //{
-            //    if (worldItems[i].transform.position.y < posLast.position.y)
-            //    {
-            //        worldItems[i].gameObject.SetActive(false);
-            //    }
-            //}
+            var posItem = Camera.main.ScreenToWorldPoint(item.transform.position);
+            if (posItem.y > posLast.position.y && posItem.y < posFirst.position.y)
+                item.gameObject.SetActive(true);
+            else
+                item.gameObject.SetActive(false);
         }
     }
-    //private void CheckShowItem()
-    //{
-    //    foreach (var item in worldItems)
-    //    {
-    //        if (item.transform.position.y < posLast.position.y)
-    //            item.gameObject.SetActive(false);           
-    //    }
-    //}
 
     //private void SetlayoutItem()
     //{
