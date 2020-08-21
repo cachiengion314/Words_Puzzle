@@ -75,7 +75,10 @@ public class WorldController : BaseController
         mainUI.anchoredPosition = scrollContent.anchoredPosition;
         SetPosScroll(() =>
         {
-            CheckShowItem();
+            TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+            {
+                CheckShowItem();
+            });
         });
     }
 
