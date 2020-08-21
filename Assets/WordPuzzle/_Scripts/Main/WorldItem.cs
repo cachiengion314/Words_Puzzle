@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class WorldItem : MonoBehaviour {
+public class WorldItem : MonoBehaviour
+{
     [HideInInspector] public bool itemTemp;
     public GameObject rootBg;
     public MaskableGraphic itemNumber, itemNumberBack;
@@ -41,7 +42,7 @@ public class WorldItem : MonoBehaviour {
 
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
         {
-            // button.interactable = false;
+            button.interactable = false;
             SetStateWord(playUnactive, spriteBgLock, colorTextLock, "0" + "/" + numLevels);
             itemNumberBack.gameObject.SetActive(false);
             //star.gameObject.SetActive(false);
@@ -92,6 +93,7 @@ public class WorldItem : MonoBehaviour {
 
     public void OnButtonClick()
     {
+        worldController.verticalLayoutGroup.enabled = true;
         if (!itemTemp)
         {
             var numLevels = Superpow.Utils.GetNumLevels(0, 0);
@@ -116,18 +118,32 @@ public class WorldItem : MonoBehaviour {
         //worldController.scrollContent.GetComponent<ContentSizeFitter>().enabled = true;
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
         {
-            
+
         }
-        else {
+        else
+        {
+            var index = worldController.worldItems.IndexOf(this);
+            for (int i = index; i < worldController.worldItems.Count; i++)
+            {
+                var item = worldController.worldItems[i];
+                item.gameObject.SetActive(true);
+            }
             CloseAllChapter();
             GameState.currentSubWorldName = subWorldName.text;
 
             levelGrid.gameObject.SetActive(!levelGrid.gameObject.activeSelf);
-
+            
             if (levelGrid.gameObject.activeSelf)
             {
-                if (scroll.verticalNormalizedPosition <= 0.05f) scroll.DOVerticalNormalizedPos(0f, 0.5f);
+                if (scroll.verticalNormalizedPosition <= 0.05f) scroll.DOVerticalNormalizedPos(0f, 0.1f);
             }
+            
+            TweenControl.GetInstance().KillDelayCall(transform);
+            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
+            {
+                worldController.verticalLayoutGroup.enabled = false;
+                worldController.CheckShowItem();
+            });
             Sound.instance.Play(Sound.Others.PopupOpen);
             //TweenControl.GetInstance().DelayCall(transform, 0.1f,()=> {
             //    worldController.scrollContent.GetComponent<VerticalLayoutGroup>().enabled = false;
