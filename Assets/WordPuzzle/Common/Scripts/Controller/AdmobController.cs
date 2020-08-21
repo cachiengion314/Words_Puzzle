@@ -22,6 +22,7 @@ public class AdmobController : MonoBehaviour, IAds
         {
 
         });
+     
     }
     public void InitRewardedVideo()
     {
@@ -232,6 +233,7 @@ public class AdmobController : MonoBehaviour, IAds
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
         RequestInterstitial();
+
     }
 
     public void HandleInterstitialLeftApplication(object sender, EventArgs args)
@@ -275,6 +277,7 @@ public class AdmobController : MonoBehaviour, IAds
         AdsManager.instance.onAdsClose?.Invoke();
         SceneAnimate.Instance.ShowOverLayPauseGame(false);
         RequestRewardBasedVideo();
+
     }
 
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
@@ -322,7 +325,7 @@ public class AdmobController : MonoBehaviour, IAds
                 else
                 {
                     // no internet
-                    noInternetCallback?.Invoke();                   
+                    noInternetCallback?.Invoke();
                 }
             });
         }

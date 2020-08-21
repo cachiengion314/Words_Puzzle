@@ -42,16 +42,17 @@ public class AdsManager : MonoBehaviour
     }
     private void Start()
     {
-        LoadDataAds();
+        StartCoroutine(LoadDataAds());
     }
-    public void LoadDataAds()
+    public IEnumerator LoadDataAds()
     {
-        if (_isLoading)
-            return;
+        if (!_isLoading)
+        {
+            while (true)
+            {
+                AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars.Trim();
+                AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.intersititial.Trim();
 
-        //AudienceNetworkFbAd.instance.rewardIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars.Trim();
-        //AudienceNetworkFbAd.instance.intersititialIdFaceAds = ConfigController.instance.config.facebookAdsId.rewardedFreeStars.Trim();
-        //Debug.Log("AudienceNetworkFbAd.instance.rewardIdFaceAds " + AudienceNetworkFbAd.instance.rewardIdFaceAds);
 #if UNITY_ANDROID && !UNITY_EDITOR
         if (AudienceNetworkFbAd.instance != null)
         {
@@ -59,23 +60,26 @@ public class AdsManager : MonoBehaviour
             AudienceNetworkFbAd.instance.LoadInterstitial();
         }
 #endif
+                AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.admob_free_stars.Trim();
+                AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.admob_level_transition.Trim();
+                AdmobController.instance.bannerAdsId = ConfigController.instance.config.admob.admob_banner.Trim();
+                if (AdmobController.instance != null)
+                {
+                    AdmobController.instance.InitRewardedVideo();
+                    AdmobController.instance.RequestRewardBasedVideo();
+                    AdmobController.instance.RequestInterstitial();
+                }
 
-        AdmobController.instance.videoAdsId = ConfigController.instance.config.admob.admob_free_stars.Trim();
-        AdmobController.instance.interstitialAdsId = ConfigController.instance.config.admob.admob_level_transition.Trim();
-        AdmobController.instance.bannerAdsId = ConfigController.instance.config.admob.admob_banner.Trim();
-        if (AdmobController.instance != null)
-        {
-            AdmobController.instance.InitRewardedVideo();
-            AdmobController.instance.RequestRewardBasedVideo();
-            AdmobController.instance.RequestInterstitial();
+                //if (UnityAdTest.instance != null)
+                //{
+                //    UnityAdTest.instance.ReloadVideoAds();
+                //    UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose = false;
+                //}
+                //_isLoading = true;
+                yield return new WaitForSeconds(60 * 30);
+            }
+
         }
-
-        //if (UnityAdTest.instance != null)
-        //{
-        //    UnityAdTest.instance.ReloadVideoAds();
-        //    UnityAdTest.instance.isAdPlaySuccessAndPlayerCanClickClose = false;
-        //}
-        //_isLoading = true;
     }
     private IEnumerator ShowVideo(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
@@ -246,7 +250,7 @@ public class AdsManager : MonoBehaviour
         }
     }
 
-#region Show Ads Handle
+    #region Show Ads Handle
     public void ShowVideoAds(bool showToast = true, Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
     {
         StartCoroutine(ShowVideo(showToast, adsNotReadyYetCallback, noInternetCallback));
@@ -285,6 +289,6 @@ public class AdsManager : MonoBehaviour
             }
         });
     }
-#endregion
+    #endregion
 
 }

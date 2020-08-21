@@ -8,8 +8,8 @@ using System;
 
 public class AudienceNetworkFbAd : MonoBehaviour, IAds
 {
-    [HideInInspector] public string rewardIdFaceAds = "670089180215126_670103063547071"; // "583616318955925_583618328955724";
-    [HideInInspector] public string intersititialIdFaceAds = "670089180215126_670103063547071"; // "583616318955925_583618328955724";
+  [HideInInspector]  public string rewardIdFaceAds;
+  [HideInInspector]  public string intersititialIdFaceAds;
 
     public static AudienceNetworkFbAd instance;
     public RewardedVideoAd rewardedVideoAd;
@@ -29,6 +29,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
 #if UNITY_ANDROID && !UNITY_EDITOR
         AudienceNetworkAds.Initialize();
 #endif
+     
     }
     public void LoadInterstitial()
     {
@@ -43,10 +44,10 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
         // Set delegates to get notified on changes or when the user interacts with the ad.
         interstitialAd.InterstitialAdDidLoad = delegate ()
         {
-            Debug.Log("Interstitial ad loaded.");
             isIntersLoaded = true;
             didIntersClose = false;
             string isAdValid = interstitialAd.IsValid() ? "valid" : "invalid";
+            Debug.Log("Interstitial ad loaded." + isAdValid);
             //statusLabel.text = "Ad loaded and is " + isAdValid + ". Click show to present!";
         };
         interstitialAd.InterstitialAdDidFailWithError = delegate (string error)
@@ -147,7 +148,7 @@ public class AudienceNetworkFbAd : MonoBehaviour, IAds
     /// Implement Interface
     /// </summary>
     public void ShowVideoAds(Action adsNotReadyYetCallback = null, Action noInternetCallback = null)
-    {       
+    {
         rewardedVideoAd.Show();
         isLoaded = false;
     }
