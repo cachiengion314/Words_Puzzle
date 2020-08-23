@@ -771,13 +771,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 5bb94e4770968e041a079ecb4bd803be, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3028,7 +3028,7 @@ GameObject:
   - component: {fileID: 3976193250255487742}
   - component: {fileID: 1016434469364191612}
   m_Layer: 8
-  m_Name: ImgRubyBg
+  m_Name: Balance Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3161,7 +3161,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: f351d26fab504f8489637e375f47888a, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3669,7 +3669,7 @@ GameObject:
   - component: {fileID: 5337427817772201593}
   - component: {fileID: 3482396313331340457}
   m_Layer: 8
-  m_Name: ImgAdd
+  m_Name: Plus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3796,7 +3796,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 481445eda5876d542ab79090e4f69a86, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8858,13 +8858,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 5bb94e4770968e041a079ecb4bd803be, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9142,7 +9142,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: f351d26fab504f8489637e375f47888a, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9323,7 +9323,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 481445eda5876d542ab79090e4f69a86, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9629,7 +9629,7 @@ GameObject:
   - component: {fileID: 7092242206825767005}
   - component: {fileID: 3064366121027175964}
   m_Layer: 8
-  m_Name: ImgRuby
+  m_Name: Star
   m_TagString: RubyBalance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10088,6 +10088,11 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4027882451853474753, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4036387009271367434, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_fontSize
@@ -10279,6 +10284,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 07e506d6a7d188344bf242158c701641,
         type: 3}
+    - target: {fileID: 5316455340094712258, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5377768827871783794, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11105,6 +11115,11 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4027882451853474753, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4036387009271367434, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_fontSize
@@ -11296,6 +11311,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 07e506d6a7d188344bf242158c701641,
         type: 3}
+    - target: {fileID: 5316455340094712258, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5377768827871783794, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15983,6 +16003,11 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4027882451853474753, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4036387009271367434, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_subTextObjects.Array.data[1]
@@ -16164,6 +16189,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 07e506d6a7d188344bf242158c701641,
         type: 3}
+    - target: {fileID: 5316455340094712258, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5377768827871783794, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20672,6 +20702,11 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4027882451853474753, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4036387009271367434, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_fontSize
@@ -20863,6 +20898,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 07e506d6a7d188344bf242158c701641,
         type: 3}
+    - target: {fileID: 5316455340094712258, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5377768827871783794, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24097,6 +24137,11 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4027882451853474753, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4036387009271367434, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_fontSize
@@ -24298,6 +24343,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 07e506d6a7d188344bf242158c701641,
         type: 3}
+    - target: {fileID: 5316455340094712258, guid: a82e702018fd3fd439c4a0af99874532,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5377768827871783794, guid: a82e702018fd3fd439c4a0af99874532,
         type: 3}
       propertyPath: m_LocalPosition.x
