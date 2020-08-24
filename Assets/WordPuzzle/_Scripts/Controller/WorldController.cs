@@ -9,11 +9,6 @@ using Utilites;
 
 public class WorldController : BaseController
 {
-    public RectTransform mainUI, scrollContent;
-    public ContentSizeFitter contentSize;
-    public VerticalLayoutGroup verticalLayoutGroup;
-
-    public GameObject title;
     [HideInInspector] public List<WorldItem> worldItems;
     public int target;
     [SerializeField] private int countChapterMax = 650;

@@ -43,10 +43,8 @@ public class WorldItem : EnhancedScrollerCellView
     public void Setup()
     {
         button.interactable = true;
-        itemName.text = "CHAPTER " + (/*transform.GetSiblingIndex()*/subWorld + world * totalSubword + 1);
+        itemName.text = "CHAPTER " + (subWorld + world * totalSubword + 1);
 
-        //world = transform.parent.parent.GetSiblingIndex();
-        //subWorld = transform.GetSiblingIndex();
         int numLevels = 0;
         unlockedWorld = Prefs.unlockedWorld;
         unlockedSubWorld = Prefs.unlockedSubWorld;
@@ -57,21 +55,17 @@ public class WorldItem : EnhancedScrollerCellView
             button.interactable = false;
             SetStateWord(playUnactive, spriteBgLock, colorTextLock, "0" + "/" + numLevels);
             itemNumberBack.gameObject.SetActive(false);
-            //star.gameObject.SetActive(false);
             levelGrid.gameObject.SetActive(false);
         }
         else if (world == unlockedWorld && subWorld == unlockedSubWorld)
         {
             SetStateWord(playIng, spriteBgUnlock, colorTextUnLock, unlockedLevel + "/" + numLevels);
-            //star.gameObject.SetActive(true);
             levelGrid.gameObject.SetActive(false);
-            //levelGrid.gameObject.SetActive(true);
             //scroll.DOVerticalNormalizedPos(1f - ((float)transform.GetSiblingIndex() / (float)transform.parent.childCount), 0f);
         }
         else
         {
             SetStateWord(playClear, spriteBgUnlock, colorTextUnLock, "Clear");
-            //star.gameObject.SetActive(true);
             levelGrid.gameObject.SetActive(false);
         }
 
@@ -107,7 +101,6 @@ public class WorldItem : EnhancedScrollerCellView
 
     public void OnButtonClick()
     {
-        worldController.verticalLayoutGroup.enabled = true;
         if (!itemTemp)
         {
             var numLevels = Superpow.Utils.GetNumLevels(0, 0);
@@ -128,8 +121,6 @@ public class WorldItem : EnhancedScrollerCellView
                 }
             }
         }
-        //worldController.scrollContent.GetComponent<VerticalLayoutGroup>().enabled = true;
-        //worldController.scrollContent.GetComponent<ContentSizeFitter>().enabled = true;
         if (world > unlockedWorld || (world == unlockedWorld && subWorld > unlockedSubWorld))
         {
 
