@@ -86,7 +86,7 @@ public class ObjectiveDialog : Dialog
 
         _iconStar.SetNativeSize();
         _iconAdd.SetNativeSize();
-        _bgCurrency.SetNativeSize();
+        //_bgCurrency.SetNativeSize();
 
         _textNumberStar.font = currTheme.fontData.fontAsset;
         _textNumberStar.fontSizeMax = currTheme.fontData.fontSizeMaxNumStar;
@@ -106,20 +106,20 @@ public class ObjectiveDialog : Dialog
         _bgNote.sprite = currTheme.uiData.objectivesData.bgNote;
         _bgNoteAchie.sprite = currTheme.uiData.objectivesData.bgNote;
 
-        _bgNote.SetNativeSize();
-        _bgNoteAchie.SetNativeSize();
+        //_bgNote.SetNativeSize();
+        //_bgNoteAchie.SetNativeSize();
 
         foreach (var task in _dailys)
         {
             task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestDaily;
-            task.bgQuest.SetNativeSize();
+            //task.bgQuest.SetNativeSize();
             task.LoadThemeData();
             CheckIconTask(task, currTheme);
         }
         foreach (var task in _achievements)
         {
             task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestAchive;
-            task.bgQuest.SetNativeSize();
+            //task.bgQuest.SetNativeSize();
             task.LoadThemeData();
             CheckIconTask(task, currTheme);
         }

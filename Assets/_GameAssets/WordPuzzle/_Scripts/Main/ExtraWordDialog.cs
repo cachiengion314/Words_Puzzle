@@ -97,12 +97,12 @@ public class ExtraWordDialog : Dialog
             _iconAds.sprite = currTheme.uiData.bonusBoxData.iconAds;
 
             _btnHtpl.SetNativeSize();
-            _board.SetNativeSize();
-            _boardTitle.SetNativeSize();
+            //_board.SetNativeSize();
+            //_boardTitle.SetNativeSize();
             _iconStar.SetNativeSize();
-            _bgProgress.SetNativeSize();
-            _progressMask.SetNativeSize();
-            _progressBar.SetNativeSize();
+            //_bgProgress.SetNativeSize();
+            //_progressMask.SetNativeSize();
+            //_progressBar.SetNativeSize();
             _circleProgress.SetNativeSize();
             _btnCollect.SetNativeSize();
             _btnReward.SetNativeSize();

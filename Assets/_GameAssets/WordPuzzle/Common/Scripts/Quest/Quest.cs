@@ -108,9 +108,9 @@ public class Quest : MonoBehaviour
         _textPlay.color = currTheme.uiData.objectivesData.colorTextBtnPlay;
         _textCollect.color = currTheme.uiData.objectivesData.colorTextBtnCollect;
 
-        _imageProgress.SetNativeSize();
-        _progressMask.SetNativeSize();
-        _bgProgress.SetNativeSize();
+        //_imageProgress.SetNativeSize();
+        //_progressMask.SetNativeSize();
+        //_bgProgress.SetNativeSize();
     }
 
     private void ResetupAchie()

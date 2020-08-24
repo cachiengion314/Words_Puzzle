@@ -114,12 +114,12 @@ public class ThemesControl : MonoBehaviour
             //wordRegion.board.SetNativeSize();
             wordRegion.iconStar.SetNativeSize();
             wordRegion.iconAdd.SetNativeSize();
-            wordRegion.bgCurrency.SetNativeSize();
-            wordRegion.bgLevelTitle.SetNativeSize();
+            //wordRegion.bgCurrency.SetNativeSize();
+            //wordRegion.bgLevelTitle.SetNativeSize();
             wordRegion.iconSetting.SetNativeSize();
             wordRegion.iconDictionary.SetNativeSize();
             wordRegion.iconHoney.SetNativeSize();
-            wordRegion.bgHoney.SetNativeSize();
+            //wordRegion.bgHoney.SetNativeSize();
 
             wordRegion.imgNumHint.SetNativeSize();
             wordRegion.imgNumMultipleHint.SetNativeSize();
