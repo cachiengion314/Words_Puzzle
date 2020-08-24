@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using EnhancedUI.EnhancedScroller;
 
-public class WorldItem : MonoBehaviour
+public class WorldItem : EnhancedScrollerCellView
 {
     [HideInInspector] public bool itemTemp;
     public GameObject rootBg;
@@ -21,17 +22,28 @@ public class WorldItem : MonoBehaviour
     public RectTransform levelGrid;
     public Color colorTextLock;
     public Color colorTextUnLock;
-    public int world, subWorld;
+    public int world, subWorld, totalSubword;
     int unlockedWorld, unlockedSubWorld, unlockedLevel;
 
-    public ScrollRect scroll;
-    public CanvasGroup canvasGroup;
+    public LayoutElement layoutElement;
+
+    public VerticalLayoutGroup levelGridVerticalLayout;
+    public VerticalLayoutGroup thisVerticalLayout;
 
     [HideInInspector] public WorldController worldController;
 
+    private float _sizeItemOpen;
+
     private void Start()
     {
-        itemName.text = "CHAPTER " + (transform.GetSiblingIndex() + 1);
+        layoutElement = gameObject.GetComponent<LayoutElement>();
+        _sizeItemOpen = bg.rectTransform.sizeDelta.y + levelGrid.sizeDelta.y - (levelGridVerticalLayout.spacing - thisVerticalLayout.spacing);
+    }
+
+    public void Setup()
+    {
+        button.interactable = true;
+        itemName.text = "CHAPTER " + (/*transform.GetSiblingIndex()*/subWorld + world * totalSubword + 1);
 
         //world = transform.parent.parent.GetSiblingIndex();
         //subWorld = transform.GetSiblingIndex();
@@ -54,7 +66,7 @@ public class WorldItem : MonoBehaviour
             //star.gameObject.SetActive(true);
             levelGrid.gameObject.SetActive(false);
             //levelGrid.gameObject.SetActive(true);
-            scroll.DOVerticalNormalizedPos(1f - ((float)transform.GetSiblingIndex() / (float)transform.parent.childCount), 0f);
+            //scroll.DOVerticalNormalizedPos(1f - ((float)transform.GetSiblingIndex() / (float)transform.parent.childCount), 0f);
         }
         else
         {
@@ -63,7 +75,7 @@ public class WorldItem : MonoBehaviour
             levelGrid.gameObject.SetActive(false);
         }
 
-        button.onClick.AddListener(OnButtonClick);
+        //button.onClick.AddListener(OnButtonClick);
     }
 
     private void SetStateWord(Sprite spritePlay, Sprite spriteBG, Color color, string processContent = "")
@@ -86,8 +98,10 @@ public class WorldItem : MonoBehaviour
     {
         foreach (var word in worldController.worldItems)
         {
-            if (word != this)
-                word.levelGrid.gameObject.SetActive(false);
+            if (word != this && word.levelGrid.gameObject.activeInHierarchy)
+            {
+                word.OnButtonClick();
+            }
         }
     }
 
@@ -122,33 +136,19 @@ public class WorldItem : MonoBehaviour
         }
         else
         {
-            var index = worldController.worldItems.IndexOf(this);
-            for (int i = index; i < worldController.worldItems.Count; i++)
-            {
-                var item = worldController.worldItems[i];
-                item.gameObject.SetActive(true);
-            }
             CloseAllChapter();
             GameState.currentSubWorldName = subWorldName.text;
 
             levelGrid.gameObject.SetActive(!levelGrid.gameObject.activeSelf);
-            
+
             if (levelGrid.gameObject.activeSelf)
             {
-                if (scroll.verticalNormalizedPosition <= 0.05f) scroll.DOVerticalNormalizedPos(0f, 0.1f);
+                layoutElement.minHeight = _sizeItemOpen;
+                //if (scroll.verticalNormalizedPosition <= 0.05f) scroll.DOVerticalNormalizedPos(0f, 0.1f);
             }
-            
-            TweenControl.GetInstance().KillDelayCall(transform);
-            TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
-            {
-                worldController.verticalLayoutGroup.enabled = false;
-                worldController.CheckShowItem();
-            });
+            else
+                layoutElement.minHeight = bg.rectTransform.sizeDelta.y;
             Sound.instance.Play(Sound.Others.PopupOpen);
-            //TweenControl.GetInstance().DelayCall(transform, 0.1f,()=> {
-            //    worldController.scrollContent.GetComponent<VerticalLayoutGroup>().enabled = false;
-            //    worldController.scrollContent.GetComponent<ContentSizeFitter>().enabled = false;
-            //});
         }
     }
 }
