@@ -22,9 +22,9 @@ public class WordRegion : MonoBehaviour
     [SerializeField] private List<RectTransform> _posTarget;
     [SerializeField] private Transform _posBottom;
 
-    [SerializeField] private Sprite _spriteExcellent;
+    //[SerializeField] private Sprite _spriteExcellent;
     [SerializeField] private Sprite _spriteNormal;
-    public Image boardHighlight;
+    //public Image boardHighlight;
     public Image board;
     [Space]
     public TextMeshProUGUI _textLevel;
@@ -47,8 +47,8 @@ public class WordRegion : MonoBehaviour
     public GameObject shadowHelp;
     public GameObject starCollectPfb;
     [Space]
-    [SerializeField] private RectTransform _headerBlock;
-    [SerializeField] private RectTransform _centerBlock;
+    //[SerializeField] private RectTransform _headerBlock;
+    //[SerializeField] private RectTransform _centerBlock;
     [SerializeField] private RectTransform _rectCanvas;
     [SerializeField] private SafeAreaPanel _canvasSafeArea;
     public RectTransform RectCanvas
@@ -182,7 +182,7 @@ public class WordRegion : MonoBehaviour
     {
         instance = this;
         rt = GetComponent<RectTransform>();
-        boardHighlight.gameObject.SetActive(false);
+        //boardHighlight.gameObject.SetActive(false);
         FacebookController.instance.bonusNewLevel = 0;
         FacebookController.instance.newWordOpenInLevel = new List<string>();
         FacebookController.instance.existWord = new List<string>();
@@ -254,28 +254,18 @@ public class WordRegion : MonoBehaviour
         return words;
     }
 
-    public void CalculateScaleSizeBoardRegionAndPan()
-    {
-        var boardSizeX = board.rectTransform.sizeDelta.x;
-        var panSizeX = imageGround.rectTransform.sizeDelta.x;
-        var sizeOutSafeArea = Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? ((int)(_rectCanvas.rect.height) - Screen.safeArea.height) / 2 :
-            Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? (Screen.safeArea.height - (int)(_rectCanvas.rect.height)) / 2 : 0;
-        var boardSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height - (Screen.safeArea.height < 1920f ? 0 : (Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? sizeOutSafeArea : (Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? -sizeOutSafeArea : 0)));
-        var panSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2 - (Screen.safeArea.height < 1920f ? 0 : (Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? sizeOutSafeArea : (Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? -sizeOutSafeArea : 0)));
-        //Debug.Log("sizeOutSafeArea: " + sizeOutSafeArea);
-        //Debug.Log("boardSizeY: " + boardSizeY);
-        //var boardSizeY = (Screen.safeArea.height < 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height;
-        //var panSizeY = (Screen.safeArea.height < 1920f ? (int)(_rectCanvas.rect.height) : Screen.safeArea.height) / 2 - _centerBlock.rect.height / 2;
-        //Debug.Log("Screen.safeArea.height: " + Screen.safeArea.height);
-        //Debug.Log("_rectCanvas.rect.height: " + _rectCanvas.rect.height);
-        //Debug.Log("_centerBlock.rect.height / 2: " + _centerBlock.rect.height / 2);
-        //Debug.Log("_headerBlock.rect.height: " + _headerBlock.rect.height);
-        //Debug.Log("boardSizeY: " + boardSizeY);
-        //Debug.Log("panSizeY: " + panSizeY);
+    //public void CalculateScaleSizeBoardRegionAndPan()
+    //{
+    //    var boardSizeX = board.rectTransform.sizeDelta.x;
+    //    var panSizeX = imageGround.rectTransform.sizeDelta.x;
+    //    var sizeOutSafeArea = Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? ((int)(_rectCanvas.rect.height) - Screen.safeArea.height) / 2 :
+    //        Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? (Screen.safeArea.height - (int)(_rectCanvas.rect.height)) / 2 : 0;
+    //    var boardSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2 - _headerBlock.rect.height - (Screen.safeArea.height < 1920f ? 0 : (Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? sizeOutSafeArea : (Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? -sizeOutSafeArea : 0)));
+    //    var panSizeY = (int)(_rectCanvas.rect.height) / 2 - _centerBlock.rect.height / 2 - (Screen.safeArea.height < 1920f ? 0 : (Screen.safeArea.height < (int)(_rectCanvas.rect.height) ? sizeOutSafeArea : (Screen.safeArea.height > (int)(_rectCanvas.rect.height) ? -sizeOutSafeArea : 0)));
 
-        board.rectTransform.sizeDelta = new Vector2(boardSizeX, boardSizeY);
-        imageGround.rectTransform.sizeDelta = new Vector2(panSizeX, panSizeY);
-    }
+    //    board.rectTransform.sizeDelta = new Vector2(boardSizeX, boardSizeY);
+    //    imageGround.rectTransform.sizeDelta = new Vector2(panSizeX, panSizeY);
+    //}
 
     private void SetValidWords(List<string> words)
     {
@@ -348,8 +338,8 @@ public class WordRegion : MonoBehaviour
         else
         {
             float coef = (maxCellInWidth + (maxCellInWidth - numCol) * Const.CELL_GAP_COEF_X + (numCol - 1) * Const.COL_GAP_COEF);
-            cellSize = boardHighlight.rectTransform.rect.height / (numRow + (numRow - 1) * Const.CELL_GAP_COEF_Y);
-            float maxSize = boardHighlight.rectTransform.rect.width / (maxCellInWidth + (maxCellInWidth - 1) * Const.CELL_GAP_COEF_X);
+            cellSize = rt.rect.height / (numRow + (numRow - 1) * Const.CELL_GAP_COEF_Y);
+            float maxSize = rt.rect.width / (maxCellInWidth + (maxCellInWidth - 1) * Const.CELL_GAP_COEF_X);
 
             if (maxSize < cellSize)
             {
@@ -632,7 +622,7 @@ public class WordRegion : MonoBehaviour
                 //else
                 //{
                 float gapY = cellSize + cellSize * Const.CELL_GAP_COEF_Y;
-                y = gapY * (count - 1 - i) + (boardHighlight.rectTransform.rect.height - gapY * count + cellSize * Const.CELL_GAP_COEF_Y) / 2f;
+                y = gapY * (count - 1 - i) + (rt.rect.height - gapY * count + cellSize * Const.CELL_GAP_COEF_Y) / 2f;
                 //}
                 lines[i].transform.localPosition = new Vector2(x, y);
                 lines[i].gameObject.AddComponent<GraphicRaycaster>();
