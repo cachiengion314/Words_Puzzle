@@ -103,7 +103,7 @@ public class SettingDialog : Dialog
 
     private void CheckTheme()
     {
-        if(MainController.instance != null)
+        if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
             _iconSound.sprite = currTheme.uiData.settingData.iconSound;
@@ -120,8 +120,10 @@ public class SettingDialog : Dialog
             _handleSound.sprite = _handleMusic.sprite = currTheme.uiData.settingData.handle;
             _frameMaskSound.sprite = _frameMaskMusic.sprite = currTheme.uiData.settingData.frameMask;
             _bgProgressSound.sprite = _bgProgressMusic.sprite = currTheme.uiData.settingData.bgProgress;
-            _fillProgressSound.sprite = _fillProgressMusic.sprite = currTheme.uiData.settingData.fillProgress;
-            _fillSound.sprite = _fillMusic.sprite = currTheme.uiData.settingData.fillProgress;
+            if (_fillProgressSound != null)
+                _fillProgressSound.sprite = _fillProgressMusic.sprite = currTheme.uiData.settingData.fillProgress;
+            if (_fillSound != null)
+                _fillSound.sprite = _fillMusic.sprite = currTheme.uiData.settingData.fillProgress;
 
             _line.sprite = currTheme.uiData.settingData.line;
             _line2.sprite = currTheme.uiData.settingData.line2;
@@ -133,7 +135,8 @@ public class SettingDialog : Dialog
 
             foreach (var text in _textContents)
             {
-                text.color = currTheme.fontData.colorContentDialog;
+                if (text != null)
+                    text.color = currTheme.fontData.colorContentDialog;
             }
         }
     }
@@ -289,13 +292,13 @@ public class SettingDialog : Dialog
     {
         if (PlayFab.PlayFabClientAPI.IsClientLoggedIn())
         {
-            _textNameUser.text = FacebookController.instance.user.name;
-            _btnLogout.SetActive(true);
+            if (_textNameUser != null) _textNameUser.text = FacebookController.instance.user.name;
+            if (_btnLogout != null) _btnLogout.SetActive(true);
         }
         else
         {
-            _textNameUser.text = "";
-            _btnLogout.SetActive(false);
+            if (_textNameUser != null) _textNameUser.text = "";
+            if (_btnLogout != null) _btnLogout.SetActive(false);
         }
     }
 }

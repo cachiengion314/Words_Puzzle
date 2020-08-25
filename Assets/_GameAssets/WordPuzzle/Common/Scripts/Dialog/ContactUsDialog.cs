@@ -48,8 +48,8 @@ public class ContactUsDialog : Dialog
             var currTheme = ThemesControl.instance.CurrTheme;
             _boardContact.sprite = currTheme.uiData.contactData.boardContact;
             _btnSend.sprite = currTheme.uiData.contactData.btnSend;
-            _boardContact.SetNativeSize();
-            _btnSend.SetNativeSize();
+            //_boardContact.SetNativeSize();
+            //_btnSend.SetNativeSize();
 
             _txtSend.color = currTheme.uiData.contactData.colorTextBtn;
             inputFieldYourEmail.textComponent.color = inputFieldBody.textComponent.color = inputFieldYourEmail.placeholder.color = inputFieldBody.placeholder.color =
