@@ -79,8 +79,8 @@ public class ThemesControl : MonoBehaviour
             var wordRegion = WordRegion.instance;
             wordRegion.btnDictionary.image.sprite = currTheme.uiData.btnDictionary;
             wordRegion.btnSetting.image.sprite = currTheme.uiData.btnSetting;
-            wordRegion.btnDictionary.image.SetNativeSize();
-            wordRegion.btnSetting.image.SetNativeSize();
+            //wordRegion.btnDictionary.image.SetNativeSize();
+            //wordRegion.btnSetting.image.SetNativeSize();
             wordRegion.board.sprite = currTheme.uiData.boardWordRegion;
             wordRegion.SpriteNormal = currTheme.uiData.boardWordRegion;
 
