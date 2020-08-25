@@ -38,7 +38,7 @@ public class HowToPlayDialog : Dialog
 
     private void CheckTheme()
     {
-        if(MainController.instance != null)
+        if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
             var arrowLeft = arrowLeftObject.GetComponent<Image>();
@@ -65,8 +65,9 @@ public class HowToPlayDialog : Dialog
             var indexItem = 0;
             foreach (var image in _imageCenter)
             {
-                image.sprite = currTheme.uiData.howtoplayData.imagesCenter[indexItem];
-                image.SetNativeSize();
+                if (image != null)
+                    image.sprite = currTheme.uiData.howtoplayData.imagesCenter[indexItem];
+                //image.SetNativeSize();
                 indexItem++;
             }
         }
