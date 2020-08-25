@@ -120,8 +120,10 @@ public class SettingDialog : Dialog
             _handleSound.sprite = _handleMusic.sprite = currTheme.uiData.settingData.handle;
             _frameMaskSound.sprite = _frameMaskMusic.sprite = currTheme.uiData.settingData.frameMask;
             _bgProgressSound.sprite = _bgProgressMusic.sprite = currTheme.uiData.settingData.bgProgress;
-            _fillProgressSound.sprite = _fillProgressMusic.sprite = currTheme.uiData.settingData.fillProgress;
-            _fillSound.sprite = _fillMusic.sprite = currTheme.uiData.settingData.fillProgress;
+            if (_fillProgressSound != null)
+                _fillProgressSound.sprite = _fillProgressMusic.sprite = currTheme.uiData.settingData.fillProgress;
+            if (_fillSound != null)
+                _fillSound.sprite = _fillMusic.sprite = currTheme.uiData.settingData.fillProgress;
 
             _line.sprite = currTheme.uiData.settingData.line;
             _line2.sprite = currTheme.uiData.settingData.line2;
@@ -133,7 +135,8 @@ public class SettingDialog : Dialog
 
             foreach (var text in _textContents)
             {
-                text.color = currTheme.fontData.colorContentDialog;
+                if (text != null)
+                    text.color = currTheme.fontData.colorContentDialog;
             }
         }
     }

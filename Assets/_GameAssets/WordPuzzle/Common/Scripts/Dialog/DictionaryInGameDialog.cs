@@ -68,7 +68,8 @@ public class DictionaryInGameDialog : Dialog
         if(MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
-            _board.sprite = currTheme.uiData.meanWordData.board;
+            if(_board != null)
+                _board.sprite = currTheme.uiData.meanWordData.board;
             _arrowLeft.sprite = currTheme.uiData.meanWordData.arrowLeft;
             _arrowRight.sprite = currTheme.uiData.meanWordData.arrowRight;
 

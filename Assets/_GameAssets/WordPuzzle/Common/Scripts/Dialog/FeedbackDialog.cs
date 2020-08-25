@@ -42,7 +42,7 @@ public class FeedbackDialog : Dialog
         if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
-            _bgOption.sprite = currTheme.uiData.feedbackData.bgOption;
+            if (_bgOption != null) _bgOption.sprite = currTheme.uiData.feedbackData.bgOption;
             _btnMissingWord.sprite = currTheme.uiData.feedbackData.btnMissingWord;
             _btnLevelWord.sprite = currTheme.uiData.feedbackData.btnLevelWord;
             _btnContact.sprite = currTheme.uiData.feedbackData.btnContact;
@@ -50,7 +50,7 @@ public class FeedbackDialog : Dialog
             _iconLevelWord.sprite = currTheme.uiData.feedbackData.iconLevelWord;
             _iconContact.sprite = currTheme.uiData.feedbackData.iconContact;
 
-            _bgOption.SetNativeSize();
+            if (_bgOption != null) _bgOption.SetNativeSize();
             _btnMissingWord.SetNativeSize();
             _btnLevelWord.SetNativeSize();
             _btnContact.SetNativeSize();
