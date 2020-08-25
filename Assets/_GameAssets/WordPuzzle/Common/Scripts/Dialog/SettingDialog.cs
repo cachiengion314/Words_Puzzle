@@ -103,7 +103,7 @@ public class SettingDialog : Dialog
 
     private void CheckTheme()
     {
-        if(MainController.instance != null)
+        if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
             _iconSound.sprite = currTheme.uiData.settingData.iconSound;
@@ -289,13 +289,13 @@ public class SettingDialog : Dialog
     {
         if (PlayFab.PlayFabClientAPI.IsClientLoggedIn())
         {
-            _textNameUser.text = FacebookController.instance.user.name;
-            _btnLogout.SetActive(true);
+            if (_textNameUser != null) _textNameUser.text = FacebookController.instance.user.name;
+            if (_btnLogout != null) _btnLogout.SetActive(true);
         }
         else
         {
-            _textNameUser.text = "";
-            _btnLogout.SetActive(false);
+            if (_textNameUser != null) _textNameUser.text = "";
+            if (_btnLogout != null) _btnLogout.SetActive(false);
         }
     }
 }
