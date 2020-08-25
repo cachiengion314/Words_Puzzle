@@ -109,9 +109,12 @@ public class ShopDialog : Dialog
                 if (_numMultipleHintTexts[i] != null) _numMultipleHintTexts[i].text = "" + Purchaser.instance.iapItems[i].valueMultipleHint;
                 if (_numSelectedHintTexts[i] != null) _numSelectedHintTexts[i].text = "" + Purchaser.instance.iapItems[i].valueSelectedHint;
 
-                var txtSale = Purchaser.instance.iapItems[i].txtSale;
-                if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
-                else saleTexts[i].text = txtSale;
+                if (saleTexts[i] != null)
+                {
+                    var txtSale = Purchaser.instance.iapItems[i].txtSale;
+                    if (txtSale.Equals("")) saleTexts[i].transform.parent.gameObject.SetActive(false);
+                    else saleTexts[i].text = txtSale;
+                }
 
                 if (Purchaser.instance.iapItems[i].isBonus && Purchaser.instance.iapItems[i].productID == "chicken_bank")
                 {
@@ -325,7 +328,9 @@ public class ShopDialog : Dialog
         var openBeehive = CPlayerPrefs.HasKey("BEE_TUTORIAL") || BeeManager.instance.CurrBee > 0;
         var removeAds = currlevel >= AdsManager.instance.MinLevelToLoadBanner;
 
-        btnMore.gameObject.SetActive(false);
+        if (btnMore != null)
+            btnMore.gameObject.SetActive(false);
+
         shopItemObject = new GameObject[contentItemShop.transform.childCount];
         //btnMore.transform.localScale = Vector3.zero;
         specialGift.gameObject.SetActive(false);
