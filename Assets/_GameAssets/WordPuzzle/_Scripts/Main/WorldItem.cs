@@ -76,8 +76,8 @@ public class WorldItem : EnhancedScrollerCellView
     {
         play.sprite = spritePlay;
         bg.sprite = spriteBG;
-        bg.SetNativeSize();
-        play.SetNativeSize();
+        //bg.SetNativeSize();
+        //play.SetNativeSize();
 
         processText.text = processContent;
         subWorldName.color = color;
