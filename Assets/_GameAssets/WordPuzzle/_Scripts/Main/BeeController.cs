@@ -8,22 +8,6 @@ using UnityEngine.UI;
 
 public class BeeController : MonoBehaviour
 {
-    [SerializeField] private Image _beeImage;
-    [SerializeField] private TextMeshProUGUI _textAmountBee;
-    [Header("TEST")]
-    [SerializeField] private int _number = 1;
-
-    void Start()
-    {
-        //UpdateAmountBee();
-        //OnBeeButtonClick();
-    }
-
-    private void UpdateAmountBee()
-    {
-        _textAmountBee.text = BeeManager.instance.CurrBee.ToString();
-    }
-
     public void OnBeeButtonClick()
     {
         var numlevels = Utils.GetNumLevels(GameState.currentWorld, GameState.currentSubWorld);
@@ -43,7 +27,6 @@ public class BeeController : MonoBehaviour
             }
             else
                 WordRegion.instance.BeeClick();
-            UpdateAmountBee();
         }
         else
         {
@@ -54,12 +37,4 @@ public class BeeController : MonoBehaviour
         }
     }
 
-
-    #region TEST BEE
-    public void AddAmountBee()
-    {
-        BeeManager.instance.CreaditAmountBee(_number);
-        UpdateAmountBee();
-    }
-    #endregion
 }
