@@ -37,8 +37,8 @@ public class WinDialog : Dialog
     private GameObject StartGroup;
     [SerializeField]
     private GameObject EggBig;
-    [SerializeField]
-    private GameObject light;
+    //[SerializeField]
+    //private GameObject light;
 
     [SerializeField]
     private Image FadeImage;
@@ -150,9 +150,9 @@ public class WinDialog : Dialog
 
         _iconStar.SetNativeSize();
         _iconAdd.SetNativeSize();
-        _bgCurrency.SetNativeSize();
+        //_bgCurrency.SetNativeSize();
         _iconDictionary.SetNativeSize();
-        _bgHoney.SetNativeSize();
+        //_bgHoney.SetNativeSize();
         _iconHoney.SetNativeSize();
         _imgNumBee.SetNativeSize();
 
@@ -174,7 +174,7 @@ public class WinDialog : Dialog
         level = GameState.currentLevel;
 
         isLastLevel = Prefs.IsSaveLevelProgress();
-        light.SetActive(false);
+        //light.SetActive(false);
         GroupButton.SetActive(false);
         SetupStars();
 
@@ -548,7 +548,7 @@ public class WinDialog : Dialog
         }
         else if (eventData.Data.Name == "LIGHT_OPEN")
         {
-            light.SetActive(true);
+            //light.SetActive(true);
         }
     }
 
