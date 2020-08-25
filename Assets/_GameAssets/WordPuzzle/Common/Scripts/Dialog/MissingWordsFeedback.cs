@@ -57,8 +57,8 @@ public class MissingWordsFeedback : Dialog
             _boardMissingWord.sprite = currTheme.uiData.missingWordData.boardMissingWord;
             _btnSend.sprite = currTheme.uiData.missingWordData.btnSend;
 
-            _boardMissingWord.SetNativeSize();
-            _btnSend.SetNativeSize();
+            //_boardMissingWord.SetNativeSize();
+            //_btnSend.SetNativeSize();
 
             _txtSend.color = currTheme.uiData.missingWordData.colorTextBtn;
             _txtTitle.color = currTheme.fontData.colorContentDialog;

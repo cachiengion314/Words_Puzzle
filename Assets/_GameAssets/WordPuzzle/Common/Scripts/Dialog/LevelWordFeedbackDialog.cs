@@ -61,7 +61,7 @@ public class LevelWordFeedbackDialog : Dialog
             _btnSend.sprite = currTheme.uiData.levelWordData.btnSend;
             _boardWord.sprite = currTheme.uiData.levelWordData.boardWord;
 
-            _boardWord.SetNativeSize();
+            //_boardWord.SetNativeSize();
 
             _txtTitle.color = currTheme.fontData.colorContentDialog;
             _txtSend.color = currTheme.uiData.levelWordData.colorTextBtn;
