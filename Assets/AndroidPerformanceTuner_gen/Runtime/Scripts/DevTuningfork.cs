@@ -29,17 +29,18 @@ namespace Google.Android.PerformanceTuner {
             "EigKD3NoYWRvd19xdWFsdGl0eRgCIAEoDjIPLlNoYWRvd1F1YWx0aXR5EhgK",
             "EHBhcnRpY2xlX2RldGFpbHMYAyABKAIqYAoMTG9hZGluZ1N0YXRlEhgKFExP",
             "QURJTkdTVEFURV9JTlZBTElEEAASHAoYTE9BRElOR1NUQVRFX05PVF9MT0FE",
-            "SU5HEAESGAoUTE9BRElOR1NUQVRFX0xPQURJTkcQAirAAQoFU2NlbmUSEQoN",
-            "U0NFTkVfSU5WQUxJRBAAEigKJFNDRU5FX0FTU0VUU1dPUkRQVVpaTEVfU0NF",
-            "TkVTTE9BRElORxABEiUKIVNDRU5FX0FTU0VUU1dPUkRQVVpaTEVfU0NFTkVT",
-            "SE9NRRACEiwKKFNDRU5FX0FTU0VUU1dPUkRQVVpaTEVfU0NFTkVTU0VMRUNU",
-            "V09STEQQAxIlCiFTQ0VORV9BU1NFVFNXT1JEUFVaWkxFX1NDRU5FU01BSU4Q",
-            "BCplCgpEaWZmaWN1bHR5EhYKEkRJRkZJQ1VMVFlfSU5WQUxJRBAAEhMKD0RJ",
-            "RkZJQ1VMVFlfRUFTWRABEhUKEURJRkZJQ1VMVFlfTUVESVVNEAISEwoPRElG",
-            "RklDVUxUWV9IQVJEEAMqeAoOU2hhZG93UXVhbHRpdHkSGgoWU0hBRE9XUVVB",
-            "TFRJVFlfSU5WQUxJRBAAEhYKElNIQURPV1FVQUxUSVRZX0xPVxABEhkKFVNI",
-            "QURPV1FVQUxUSVRZX01FRElVTRACEhcKE1NIQURPV1FVQUxUSVRZX0hJR0gQ",
-            "A0IiqgIfR29vZ2xlLkFuZHJvaWQuUGVyZm9ybWFuY2VUdW5lcmIGcHJvdG8z"));
+            "SU5HEAESGAoUTE9BRElOR1NUQVRFX0xPQURJTkcQAirsAQoFU2NlbmUSEQoN",
+            "U0NFTkVfSU5WQUxJRBAAEjMKL1NDRU5FX0FTU0VUU19HQU1FQVNTRVRTV09S",
+            "RFBVWlpMRV9TQ0VORVNMT0FESU5HEAESMAosU0NFTkVfQVNTRVRTX0dBTUVB",
+            "U1NFVFNXT1JEUFVaWkxFX1NDRU5FU0hPTUUQAhI3CjNTQ0VORV9BU1NFVFNf",
+            "R0FNRUFTU0VUU1dPUkRQVVpaTEVfU0NFTkVTU0VMRUNUV09STEQQAxIwCixT",
+            "Q0VORV9BU1NFVFNfR0FNRUFTU0VUU1dPUkRQVVpaTEVfU0NFTkVTTUFJThAE",
+            "KmUKCkRpZmZpY3VsdHkSFgoSRElGRklDVUxUWV9JTlZBTElEEAASEwoPRElG",
+            "RklDVUxUWV9FQVNZEAESFQoRRElGRklDVUxUWV9NRURJVU0QAhITCg9ESUZG",
+            "SUNVTFRZX0hBUkQQAyp4Cg5TaGFkb3dRdWFsdGl0eRIaChZTSEFET1dRVUFM",
+            "VElUWV9JTlZBTElEEAASFgoSU0hBRE9XUVVBTFRJVFlfTE9XEAESGQoVU0hB",
+            "RE9XUVVBTFRJVFlfTUVESVVNEAISFwoTU0hBRE9XUVVBTFRJVFlfSElHSBAD",
+            "QiKqAh9Hb29nbGUuQW5kcm9pZC5QZXJmb3JtYW5jZVR1bmVyYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Google.Android.PerformanceTuner.LoadingState), typeof(global::Google.Android.PerformanceTuner.Scene), typeof(global::Google.Android.PerformanceTuner.Difficulty), typeof(global::Google.Android.PerformanceTuner.ShadowQualtity), }, new pbr::GeneratedClrTypeInfo[] {
@@ -59,10 +60,10 @@ namespace Google.Android.PerformanceTuner {
 
   public enum Scene {
     [pbr::OriginalName("SCENE_INVALID")] Invalid = 0,
-    [pbr::OriginalName("SCENE_ASSETSWORDPUZZLE_SCENESLOADING")] AssetswordpuzzleScenesloading = 1,
-    [pbr::OriginalName("SCENE_ASSETSWORDPUZZLE_SCENESHOME")] AssetswordpuzzleSceneshome = 2,
-    [pbr::OriginalName("SCENE_ASSETSWORDPUZZLE_SCENESSELECTWORLD")] AssetswordpuzzleScenesselectworld = 3,
-    [pbr::OriginalName("SCENE_ASSETSWORDPUZZLE_SCENESMAIN")] AssetswordpuzzleScenesmain = 4,
+    [pbr::OriginalName("SCENE_ASSETS_GAMEASSETSWORDPUZZLE_SCENESLOADING")] AssetsGameassetswordpuzzleScenesloading = 1,
+    [pbr::OriginalName("SCENE_ASSETS_GAMEASSETSWORDPUZZLE_SCENESHOME")] AssetsGameassetswordpuzzleSceneshome = 2,
+    [pbr::OriginalName("SCENE_ASSETS_GAMEASSETSWORDPUZZLE_SCENESSELECTWORLD")] AssetsGameassetswordpuzzleScenesselectworld = 3,
+    [pbr::OriginalName("SCENE_ASSETS_GAMEASSETSWORDPUZZLE_SCENESMAIN")] AssetsGameassetswordpuzzleScenesmain = 4,
   }
 
   public enum Difficulty {

@@ -19,7 +19,7 @@ public class GooglePerformance : MonoBehaviour
     {
         tuner.SetCurrentAnnotation(new Annotation
         {
-            Scene = Scene.AssetswordpuzzleScenesmain,
+            Scene = Scene.AssetsGameassetswordpuzzleScenesmain,
             LoadingState = LoadingState.Loading,
             Gamedifficulty = Difficulty.Medium
         });
@@ -35,7 +35,7 @@ public class GooglePerformance : MonoBehaviour
         {
             tuner.SetCurrentAnnotation(new Annotation
             {
-                Scene = Scene.AssetswordpuzzleScenesmain,
+                Scene = Scene.AssetsGameassetswordpuzzleScenesmain,
                 LoadingState = LoadingState.NotLoading,
                 Gamedifficulty = Difficulty.Medium
             });
