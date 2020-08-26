@@ -59,13 +59,6 @@ public class DictionaryDialog : Dialog
 
     [HideInInspector] public List<ListGroupWord> groupWords = new List<ListGroupWord>();
     HomeController homecontroller;
-    public HomeController HomeControllerGetter
-    {
-        get
-        {
-            return homecontroller;
-        }
-    }
 
     public MeanDialog meanDialog;
 

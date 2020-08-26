@@ -22,8 +22,8 @@ public class UnLockTheFlagDialog : Dialog
     }
     public void OnClickPlayTheGame()
     {
-        if (DictionaryDialog.instance.HomeControllerGetter != null)
-            DictionaryDialog.instance.HomeControllerGetter.OnClick(0);
+        if (HomeController.instance != null)
+            HomeController.instance.OnClick(0);
         OnClickCloseUnLockTheFlagDialog();
         var dialogsShow = FindObjectsOfType<Dialog>();
         foreach (var dialog in dialogsShow)
