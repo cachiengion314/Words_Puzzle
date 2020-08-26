@@ -10,7 +10,6 @@ public class DailyGiftsDialog : Dialog
     [SerializeField] private RewardVideoController _rewardedVideoPfb;
     [SerializeField] private Button _btnWatch;
     [SerializeField] private Button _collectButton;
-    [SerializeField] private GameObject _btnAdsDisable;
     //[SerializeField] private string _contentReward = "Completely watching 10 rewarded ads, you will get 2 Multiple Hints and 5 Hints";
     [SerializeField] private Text _currProgress;
     [SerializeField] private Text _startrogress;
@@ -75,12 +74,6 @@ public class DailyGiftsDialog : Dialog
 
     private void InitProgress()
     {
-        //_rewardedVideoControl = FindObjectOfType<RewardVideoController>();
-        //if (_rewardedVideoControl == null)
-        //    _rewardedVideoControl = Instantiate(_rewardedVideoPfb);
-        //_rewardedVideoControl.onRewardedCallback -= OnRewarded;
-        //_rewardedVideoControl.onRewardedCallback += OnRewarded;
-
         _notifiCheckAds.text = "";
         UpdateNextDay();
         _currProgressValue = CPlayerPrefs.GetInt(PROGRESS_KEY, 0);
@@ -291,20 +284,6 @@ public class DailyGiftsDialog : Dialog
         CheckTimeReward();
         //});
     }
-
-    //private IEnumerator ShowEffectCollect(int value)
-    //{
-    //    MonoUtils.instance.ShowTotalStarCollect(value, null);
-    //    for (int i = 0; i < value; i++)
-    //    {
-    //        if (i < 5)
-    //        {
-    //            MonoUtils.instance.ShowEffect(value / 5, null, null, _posStart);
-    //        }
-    //        yield return new WaitForSeconds(0.02f);
-    //    }
-
-    //}
 
     private void CheckTimeReward()
     {
