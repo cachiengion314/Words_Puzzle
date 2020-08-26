@@ -13,18 +13,15 @@ public class ExtraWordDialog : Dialog
     public GameObject rewardButton;
     public TextMeshProUGUI progressText;
     //public TextMeshProUGUI wordText;
-    public TextMeshProUGUI claimQuantityText;
+    //public TextMeshProUGUI claimQuantityText;
     public CanvasGroup panelNewLevel;
     public CanvasGroup panelOldLevel;
     [SerializeField] private TextMeshProUGUI _bonusWordPfb;
     [SerializeField] private TextMeshProUGUI _textCollectEnough;
     [SerializeField] private Transform _contentScroll;
     [Space]
-    [SerializeField] private RewardVideoController _rewardVideoPfb;
     [SerializeField] private int _reward = 40;
     [SerializeField] private int _amountWordTarget = 2;
-    [SerializeField] private Transform _currBanlancePos;
-    [SerializeField] private GameObject _btnAdsDisable;
     [Header("THEME UI CHANGE")]
     [SerializeField] private Image _btnHtpl;
     [SerializeField] private Image _board;
@@ -44,8 +41,7 @@ public class ExtraWordDialog : Dialog
     [SerializeField] private TextMeshProUGUI _txtBtnReward;
     //[SerializeField] private SpineControl _animBtnAdsReward;
 
-    private RewardVideoController _rewardController;
-    private int numWords, claimQuantity;
+    private int claimQuantity;
 
     protected override void Start()
     {
@@ -104,8 +100,8 @@ public class ExtraWordDialog : Dialog
             //_progressMask.SetNativeSize();
             //_progressBar.SetNativeSize();
             _circleProgress.SetNativeSize();
-            _btnCollect.SetNativeSize();
-            _btnReward.SetNativeSize();
+            //_btnCollect.SetNativeSize();
+            //_btnReward.SetNativeSize();
             _iconCandyStar.SetNativeSize();
             _iconAds.SetNativeSize();
 
@@ -241,14 +237,7 @@ public class ExtraWordDialog : Dialog
 
     private void UpdateUI()
     {
-        if (AdsManager.instance != null)
-        {
-            if (!AdsManager.instance.AdsIsLoaded())
-                _btnAdsDisable.SetActive(true);
-            else
-                _btnAdsDisable.SetActive(false);
-        }
-        claimQuantityText.text = claimQuantity.ToString();
+        //claimQuantityText.text = claimQuantity.ToString();
         _textCollectEnough.gameObject.SetActive(extraProgress.current < extraProgress.target);
         claimButton.SetActive(extraProgress.current >= extraProgress.target);
         rewardButton.SetActive(extraProgress.current >= extraProgress.target);

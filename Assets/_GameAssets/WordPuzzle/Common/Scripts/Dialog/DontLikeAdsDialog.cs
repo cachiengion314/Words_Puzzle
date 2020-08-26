@@ -53,7 +53,7 @@ public class DontLikeAdsDialog : Dialog
                 if (icon != null)
                 {
                     icon.sprite = currTheme.uiData.dontLikeAdsData.iconsNoAds[indexIcon];
-                    icon.SetNativeSize();
+                    //icon.SetNativeSize();
                     indexIcon++;
                 }
             }
@@ -63,7 +63,7 @@ public class DontLikeAdsDialog : Dialog
                 if (btn != null)
                 {
                     btn.sprite = currTheme.uiData.dontLikeAdsData.btnPrice;
-                    btn.SetNativeSize();
+                    //btn.SetNativeSize();
                 }
             }
 
