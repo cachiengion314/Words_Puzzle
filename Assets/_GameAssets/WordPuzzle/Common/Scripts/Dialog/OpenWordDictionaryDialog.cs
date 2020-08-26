@@ -86,7 +86,7 @@ public class OpenWordDictionaryDialog : Dialog
             GetComponent<Image>().enabled = false;
             TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
             {
-                DictionaryDialog.instance.currListWord.OnCompleteReward();
+                DictionaryDialog.instance.currListWord.CheckOpenListWord();
                 Close();
             });
         });

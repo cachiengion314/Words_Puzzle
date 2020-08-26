@@ -16,6 +16,9 @@ using Microsoft.SqlServer.Server;
 
 public class DictionaryDialog : Dialog
 {
+    [SerializeField] private DictionaryScrollerController _dictionaryScrollerController;
+    [SerializeField] private FlagScrollerController _flagScrollerController;
+    [Space]
     public Color colorOn;
     public Color colorOff;
     [Space]
@@ -39,10 +42,10 @@ public class DictionaryDialog : Dialog
 
     [Space]
     public GameObject buttonWord;
-    public GameObject groupWord;
+    //public GameObject groupWord;
     public GameObject noInternet;
     public ListGroupWord listGroupWord;
-    public Transform content;
+    //public Transform content;
     public static DictionaryDialog instance;
     public Text numWordPassedText;
     public List<string> listWordPassed;
@@ -70,6 +73,14 @@ public class DictionaryDialog : Dialog
     [HideInInspector]
     public static string wordPassed;
 
+    public Dictionary<string, List<string>> Itemsdictionary
+    {
+        get
+        {
+            return groupWordDiction;
+        }
+    }
+
     protected override void Awake()
     {
         if (instance == null)
@@ -90,7 +101,7 @@ public class DictionaryDialog : Dialog
     {
         base.Start();
         if (listWordPassed != null)
-            CloneListGroupWord();
+            _dictionaryScrollerController.InitDictionaryScroller();
         numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
 
         InitFlagTab();
@@ -245,36 +256,36 @@ public class DictionaryDialog : Dialog
             }
         }
     }
-    public void CloneListGroupWord()
-    {
-        ListGroupWord listGroupWordClone;
-        GameObject buttonWordClone;
-        groupWordDiction.Distinct();
-        foreach (var item in groupWordDiction)
-        {
-            listGroupWordClone = Instantiate(listGroupWord, content.transform);
-            groupWords.Add(listGroupWordClone/*.GetComponent<ListGroupWord>()*/);
-            listGroupWordClone.firstButtonText.text = item.Key + ".";
-            if (item.Value.Count > 0)
-            {
-                if (item.Value.Count == 1)
-                {
-                    listGroupWordClone.numberWordText.text = item.Value.Count + " word";
-                }
-                else
-                {
-                    listGroupWordClone.numberWordText.text = item.Value.Count + " words";
-                }
-                listGroupWordClone.numberWord = item.Value.Count;
-            }
-            foreach (var word in item.Value)
-            {
-                //Debug.Log(item.Key + ": " + word);
-                buttonWordClone = Instantiate(buttonWord, listGroupWordClone.groupWord);
-                buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
-            }
-        }
-    }
+    //public void CloneListGroupWord()
+    //{
+    //    ListGroupWord listGroupWordClone;
+    //    GameObject buttonWordClone;
+    //    groupWordDiction.Distinct();
+    //    foreach (var item in groupWordDiction)
+    //    {
+    //        listGroupWordClone = Instantiate(listGroupWord, content.transform);
+    //        groupWords.Add(listGroupWordClone/*.GetComponent<ListGroupWord>()*/);
+    //        listGroupWordClone.firstButtonText.text = item.Key + ".";
+    //        if (item.Value.Count > 0)
+    //        {
+    //            if (item.Value.Count == 1)
+    //            {
+    //                listGroupWordClone.numberWordText.text = item.Value.Count + " word";
+    //            }
+    //            else
+    //            {
+    //                listGroupWordClone.numberWordText.text = item.Value.Count + " words";
+    //            }
+    //            listGroupWordClone.numberWord = item.Value.Count;
+    //        }
+    //        foreach (var word in item.Value)
+    //        {
+    //            //Debug.Log(item.Key + ": " + word);
+    //            buttonWordClone = Instantiate(buttonWord, listGroupWordClone.groupWord);
+    //            buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
+    //        }
+    //    }
+    //}
 
     public void OnPlayClick()
     {
