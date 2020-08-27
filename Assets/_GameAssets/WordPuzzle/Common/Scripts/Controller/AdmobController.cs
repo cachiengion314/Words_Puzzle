@@ -18,11 +18,15 @@ public class AdmobController : MonoBehaviour, IAds
     private void Awake()
     {
         instance = this;
+    }
+    public void InitializeAdmob()
+    {
         MobileAds.Initialize(initStatus =>
         {
-
+            InitRewardedVideo();
+            RequestRewardBasedVideo();
+            RequestInterstitial();
         });
-     
     }
     public void InitRewardedVideo()
     {
