@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using EnhancedUI.EnhancedScroller;
+using System.Linq;
 
 public class ListGroupWord : EnhancedScrollerCellView
 {
@@ -42,13 +43,14 @@ public class ListGroupWord : EnhancedScrollerCellView
         CloseAllGroupWord();
         if (transform.GetChild(1).childCount > 0)
         {
-            transform.GetChild(1).gameObject.SetActive(statusGroupWord);
+            groupWord.gameObject.SetActive(statusGroupWord);
         }
         else
         {
-            transform.GetChild(2).gameObject.SetActive(statusGroupWord);
+            textWordsNull.gameObject.SetActive(statusGroupWord);
         }
-        TweenControl.GetInstance().DelayCall(transform, 0.1f,()=> {
+        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        {
             if (groupWord.gameObject.activeInHierarchy || textWordsNull.gameObject.activeInHierarchy)
             {
                 thisLayoutElement.minHeight = (textWordsNull.gameObject.activeInHierarchy ? textWordsNull.rectTransform.sizeDelta.y : 0) +
@@ -69,6 +71,31 @@ public class ListGroupWord : EnhancedScrollerCellView
 
     public void ResetState()
     {
+        GameObject buttonWordClone;
+        var _dictionaryDialog = DictionaryDialog.instance;
+        var item = _dictionaryDialog.Itemsdictionary.ToList()[dataIndex];
+        ClearAllChildGroupWord();
+        foreach (var word in item.Value)
+        {
+            buttonWordClone = Instantiate(_dictionaryDialog.buttonWord, groupWord);
+            buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
+        }
+
+        if (item.Value.Count > 0)
+        {
+            if (item.Value.Count == 1)
+            {
+                numberWordText.text = item.Value.Count + " word";
+            }
+            else
+            {
+                numberWordText.text = item.Value.Count + " words";
+            }
+            numberWord = item.Value.Count;
+        }
+        else
+            numberWordText.text = "";
+
         statusGroupWord = false;
         groupWord.gameObject.SetActive(false);
         textWordsNull.gameObject.SetActive(false);
@@ -82,10 +109,7 @@ public class ListGroupWord : EnhancedScrollerCellView
             var groupWord = DictionaryDialog.instance.groupWords[i];
             if (groupWord != this)
             {
-                groupWord.thisLayoutElement.minHeight = groupWord.layoutElement.minHeight;
-                groupWord.transform.GetChild(1).gameObject.SetActive(false);
-                groupWord.transform.GetChild(2).gameObject.SetActive(false);
-                groupWord.statusGroupWord = false;
+                groupWord.ResetState();
             }
         }
         statusGroupWord = !statusGroupWord;

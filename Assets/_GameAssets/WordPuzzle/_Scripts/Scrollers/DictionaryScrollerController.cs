@@ -17,24 +17,15 @@ public class DictionaryScrollerController : MonoBehaviour, IEnhancedScrollerDele
         _dictionaryDialog.Itemsdictionary.Distinct();
         enhancedScroller.Delegate = this;
         enhancedScroller.ReloadData();
-        //enhancedScroller.cellViewReused = OnCellViewReused;
-        enhancedScroller.scrollerScrollingChanged = OnScroll;
+        enhancedScroller.cellViewReused = OnCellViewReused;
+        //enhancedScroller.scrollerScrollingChanged = OnScroll;
         enhancedScroller.ScrollRect.content.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
-    void OnScroll(EnhancedScroller scroller, bool scrolling)
+    private void OnCellViewReused(EnhancedScroller scroller, EnhancedScrollerCellView cellView)
     {
-        if(scrolling)
-        {
-            scroller.RefreshActiveCellViews();
-        }
+        cellView.RefreshCellView();
     }
-
-    //void OnCellViewReused(EnhancedScroller scroller, EnhancedScrollerCellView cellView)
-    //{
-    //    var cell = cellView.GetComponent<ListGroupWord>();
-    //    cell.ResetState();
-    //}
 
     public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
     {
@@ -43,6 +34,13 @@ public class DictionaryScrollerController : MonoBehaviour, IEnhancedScrollerDele
         var item = _dictionaryDialog.Itemsdictionary.ToList()[dataIndex];
         DictionaryDialog.instance.groupWords.Add(cellView);
         cellView.firstButtonText.text = item.Key + ".";
+
+        cellView.ClearAllChildGroupWord();
+        foreach (var word in item.Value)
+        {
+            buttonWordClone = Instantiate(_dictionaryDialog.buttonWord, cellView.groupWord);
+            buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
+        }
 
         if (item.Value.Count > 0)
         {
@@ -56,13 +54,8 @@ public class DictionaryScrollerController : MonoBehaviour, IEnhancedScrollerDele
             }
             cellView.numberWord = item.Value.Count;
         }
-
-        cellView.ClearAllChildGroupWord();
-        foreach (var word in item.Value)
-        {
-            buttonWordClone = Instantiate(_dictionaryDialog.buttonWord, cellView.groupWord);
-            buttonWordClone.transform.GetChild(0).GetComponent<Text>().text = word;
-        }
+        else
+            cellView.numberWordText.text = "";
         return cellView;
     }
 
@@ -75,5 +68,4 @@ public class DictionaryScrollerController : MonoBehaviour, IEnhancedScrollerDele
     {
         return DictionaryDialog.instance.Itemsdictionary.Count;
     }
-
 }
