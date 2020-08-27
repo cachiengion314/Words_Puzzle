@@ -38,7 +38,8 @@ public class PanelCollectItem : MonoBehaviour
 
     public void ShowItemCollect(Sprite sprite, int value)
     {
-        _textPrice.text = _priceAgain.ToString();
+        if(_textPrice != null)
+            _textPrice.text = _priceAgain.ToString();
         if (sprite != null)
         {
             _imageItem.sprite = sprite;
