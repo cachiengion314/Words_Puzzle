@@ -23,9 +23,10 @@ public class DictionaryDialog : Dialog
     public Color colorOff;
     [Space]
     public GameObject flagTab;
+    public Transform rootFlagList;
     public List<FlagItemController> flagList = new List<FlagItemController>();
-    public GameObject flagTabScrollViewContent;
-    public RectTransform scrollFlag;
+    //public GameObject flagTabScrollViewContent;
+    //public RectTransform scrollFlag;
     public GameObject flagItemPrefab;
     public GameObject FlagBtn;
 
@@ -94,31 +95,31 @@ public class DictionaryDialog : Dialog
         }
         GetWordPassed();
 
-        flagTab.gameObject.SetActive(false);
+        //flagTab.gameObject.SetActive(false);
     }
 
     protected override void Start()
     {
         base.Start();
-        if (listWordPassed != null)
-            _dictionaryScrollerController.InitDictionaryScroller();
-        numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
+        InitFlagList();
+        InitCollectionTab();
+        CheckShowTutFlag();
+    }
 
-        InitFlagTab();
-
+    private void CheckShowTutFlag()
+    {
         if (!CPlayerPrefs.HasKey("HONEY_TUTORIAL") && !TutorialController.instance.isShowTut && FacebookController.instance.user.unlockedFlagWords.Count > 0)
         {
             TutorialController.instance.isBlockSwipe = true;
             var flagTarget = flagList.Find(flag => !flag.isLocked);
-            //var sizeFlagTarget = Mathf.Abs(flagTarget.transform.localPosition.y);
-            //var resultContentPos = sizeFlagTarget + scrollFlag.sizeDelta.y - (flagTarget.transform as RectTransform).sizeDelta.y / 2;
             var raycast = flagTarget.gameObject.AddComponent<GraphicRaycaster>();
             flagTarget.gameObject.AddComponent<Canvas>();
             var canvas = flagTarget.gameObject.GetComponent<Canvas>();
             canvas.overrideSorting = true;
             canvas.sortingLayerName = "UI2";
             canvas.sortingOrder = 6;
-            flagTarget.transform.SetAsFirstSibling();
+            var indexTarget = flagList.IndexOf(flagTarget) / 2;
+            _flagScrollerController.JumScrollToIndex(indexTarget);
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
                 TutorialController.instance.ShowPopFlagTut(flagTarget);
@@ -131,10 +132,14 @@ public class DictionaryDialog : Dialog
             });
         }
     }
-    private void InitFlagTab()
-    {
-        InstantiateFlags();
 
+    private void InitCollectionTab()
+    {
+        if (listWordPassed != null)
+            _dictionaryScrollerController.InitDictionaryScroller();
+        numWordPassedText.text = "You have collected " + listWordPassed.Count + " words";
+
+        _flagScrollerController.InitFlagScroller();
         WriteFlagTabTitleContent();
 
         if (HoneyFrameHomeScene.isClickOnThis || HoneyFrameMainScene.isClickOnThis)
@@ -170,12 +175,13 @@ public class DictionaryDialog : Dialog
         }
         titleFlagTabTxt.text = title_content;
     }
-    private void InstantiateFlags()
+    private void InitFlagList()
     {
         // Instantiate the flag tab
         for (int i = 0; i < FlagTabController.instance.flagItemList.Count; i++)
         {
-            FlagItemController flagItem = Instantiate(flagItemPrefab, flagTabScrollViewContent.transform).GetComponent<FlagItemController>();
+            FlagItemController flagItem = Instantiate(flagItemPrefab, rootFlagList).GetComponent<FlagItemController>();
+            flagItem.gameObject.SetActive(false);
             flagItem.indexOfSmallFlagImage = FlagTabController.instance.flagItemList[i].flagSmallImageIndex;
             flagItem.indexOfBigFlagImage = FlagTabController.instance.flagItemList[i].flagBigImageIndex;
             flagItem.flagUnlockWord = FlagTabController.instance.flagItemList[i].flagUnlockWord;
@@ -200,6 +206,7 @@ public class DictionaryDialog : Dialog
             flagList.Add(flagItem);
         }
     }
+
     void SetTabActive(GameObject tab, GameObject tabBtn, bool status)
     {
         tab.SetActive(status);
@@ -218,7 +225,6 @@ public class DictionaryDialog : Dialog
     }
     public void OnClickFlagTab()
     {
-
         SetTabActive(flagTab, FlagBtn, true);
         SetTabActive(vocabularyTab, vocabularyBtn, false);
     }
