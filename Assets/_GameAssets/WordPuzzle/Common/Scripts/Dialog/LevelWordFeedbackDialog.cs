@@ -69,7 +69,7 @@ public class LevelWordFeedbackDialog : Dialog
             var wordToggle = wordDoneByPlayerPrefab.GetComponent<WordDoneByPlayerToggle>();
             wordToggle.wordNormal.sprite = currTheme.uiData.levelWordData.wordNormal;
             wordToggle.wordDone.sprite = currTheme.uiData.levelWordData.wordDone;
-            wordToggle.wordNormal.SetNativeSize();
+            //wordToggle.wordNormal.SetNativeSize();
 
             wordToggle.txtWord.color = currTheme.uiData.levelWordData.colorTextWordPfb;
         }
