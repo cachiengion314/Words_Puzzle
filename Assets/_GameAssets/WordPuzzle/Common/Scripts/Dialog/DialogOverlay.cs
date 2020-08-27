@@ -73,7 +73,10 @@ public class DialogOverlay : MonoBehaviour
     private void OnDialogClosed()
     {
         if (DialogController.instance.current == null)
+        {
             overlay.enabled = false;
+            overlay.color = new Color32(0, 0, 0, 113);
+        }
     }
 
     private void OnDestroy()

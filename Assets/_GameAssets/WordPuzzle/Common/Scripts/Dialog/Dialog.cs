@@ -27,7 +27,7 @@ public class Dialog : MonoBehaviour
     public bool resestAnim = true;
     public Image imgOverlay;
 
-
+    private Image _thisImage;
     private AnimatorStateInfo info;
     private bool isShowing;
     [HideInInspector] public bool isSound = true;
@@ -39,6 +39,7 @@ public class Dialog : MonoBehaviour
 
     protected virtual void Start()
     {
+        _thisImage = gameObject.GetComponent<Image>();
         onDialogCompleteClosed += OnDialogCompleteClosed;
         var canvas = GetComponent<Canvas>();
         canvas.worldCamera = Camera.main;
@@ -68,7 +69,7 @@ public class Dialog : MonoBehaviour
     {
         if (imgOverlay != null)
         {
-            imgOverlay.color = new Color(1,1,1,0);
+            imgOverlay.color = new Color(1, 1, 1, 0);
         }
     }
 
@@ -136,6 +137,7 @@ public class Dialog : MonoBehaviour
 
     public virtual void Close()
     {
+        var _tweenControll = TweenControl.GetInstance();
         if (isShowing == false) return;
         if (isSound) Sound.instance.Play(Sound.Others.PopupClose);
         isShowing = false;
@@ -147,9 +149,14 @@ public class Dialog : MonoBehaviour
                 {
                     var canvasGroup = anim.GetComponent<CanvasGroup>();
                     if (canvasGroup.alpha == 1)
-                        TweenControl.GetInstance().FadeAnfa(canvasGroup, 0, 0.3f);
+                        _tweenControll.FadeAnfa(canvasGroup, 0, 0.3f);
                 }
-                TweenControl.GetInstance().ScaleFromOne(anim.gameObject, 0.3f, () =>
+                if (_thisImage != null)
+                    _tweenControll.FadeAnfa(_thisImage, 0, 0.3f);
+                _tweenControll.FadeAnfa(_thisImage, 0, 0.3f);
+                if (DialogOverlay.instance != null && DialogController.instance.dialogs.Count == 1)
+                    _tweenControll.FadeAnfa(DialogOverlay.instance.Overlay, 0, 0.3f);
+                _tweenControll.ScaleFromOne(anim.gameObject, 0.3f, () =>
                 {
                     DoClose();
                 });
@@ -158,8 +165,12 @@ public class Dialog : MonoBehaviour
             {
                 anim.SetTrigger("hide");
                 //Timer.Schedule(this, hidingAnimation.length, DoClose);
-                TweenControl.GetInstance().KillDelayCall(transform);
-                TweenControl.GetInstance().DelayCall(transform, hidingAnimation.length, () =>
+                _tweenControll.KillDelayCall(transform);
+                if (_thisImage != null)
+                    _tweenControll.FadeAnfa(_thisImage, 0, hidingAnimation.length);
+                if (DialogOverlay.instance != null && DialogController.instance.dialogs.Count == 1)
+                    _tweenControll.FadeAnfa(DialogOverlay.instance.Overlay, 0, 0.3f);
+                _tweenControll.DelayCall(transform, hidingAnimation.length, () =>
                 {
                     DoClose();
                 });
