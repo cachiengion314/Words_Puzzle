@@ -32,7 +32,7 @@ public class CollectFreestarPlayDialog : Dialog
             _imgBtn.sprite = currTheme.uiData.collectFreestarPlayData.btnCollect;
 
             _iconGift.SetNativeSize();
-            _imgBtn.SetNativeSize();
+            //_imgBtn.SetNativeSize();
 
             _txtBtnWatch.color = currTheme.uiData.collectFreestarPlayData.colorTextBtn;
             _txtContent.color = _txtContent2.color = _txtItemValue.color = currTheme.fontData.colorContentDialog;

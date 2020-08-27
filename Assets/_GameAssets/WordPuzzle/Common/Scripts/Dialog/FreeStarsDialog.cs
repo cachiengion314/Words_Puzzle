@@ -56,7 +56,7 @@ public class FreeStarsDialog : Dialog
             _iconAds.sprite = currTheme.uiData.freestarData.iconAds;
             _iconStar.sprite = currTheme.uiData.freestarData.iconStar;
 
-            _btnWatch.image.SetNativeSize();
+            //_btnWatch.image.SetNativeSize();
             _iconAds.SetNativeSize();
             _iconStar.SetNativeSize();
 

@@ -58,7 +58,7 @@ public class FreeStarsPlayDialog : Dialog
             _iconHint.SetNativeSize();
             _iconSelectedHint.SetNativeSize();
             _iconMultipleHint.SetNativeSize();
-            _imgBtn.SetNativeSize();
+            //_imgBtn.SetNativeSize();
 
             _txtBtnWatch.color = currTheme.uiData.freestarPlayData.colorTextBtn;
             _txtContent.color = _txtContent2.color = currTheme.fontData.colorContentDialog;
