@@ -24,7 +24,7 @@ public class BeeDialog : Dialog
     public GameObject contentItemShop;
     public GameObject[] shopItemObject;
     [Header("UI CHANGE THEME")]
-    [SerializeField] private Image _imgBeehive;
+    [SerializeField] private List<Image> _imgsBeehive;
 
     //public GameObject shadowPanelHowToPlay;
     protected override void Start()
@@ -92,7 +92,15 @@ public class BeeDialog : Dialog
         if(MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
-            _imgBeehive.sprite = currTheme.uiData.beehiveData.imgBeehive;
+            var index = 0;
+            foreach (var image in _imgsBeehive)
+            {
+                if (image != null)
+                {
+                    image.sprite = currTheme.uiData.beehiveData.imgsBeehive[index];
+                }
+                index++;
+            }
         }
     }
 

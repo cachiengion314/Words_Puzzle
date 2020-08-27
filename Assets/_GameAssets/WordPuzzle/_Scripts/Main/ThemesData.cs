@@ -343,5 +343,5 @@ public class DontLikeAdsData
 [Serializable]
 public class BeehiveData
 {
-    public Sprite imgBeehive;
+    public List<Sprite> imgsBeehive;
 }
