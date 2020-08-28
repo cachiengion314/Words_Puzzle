@@ -38,7 +38,6 @@ public class SceneAnimate : MonoBehaviour
     [SerializeField] private SafeAreaPanel _safeArea;
     [SerializeField] private Image _bgFirstLoading;
     [SerializeField] private Image _bgLoading;
-    [SerializeField] private Image _imgTip;
     [SerializeField] private SkeletonGraphic _animTip;
     [SerializeField] private Text _textTip;
     [SerializeField] private Color _colorNor;

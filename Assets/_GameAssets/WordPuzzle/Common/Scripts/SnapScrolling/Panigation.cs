@@ -24,6 +24,7 @@ public class Panigation : MonoBehaviour
             selectedSprite = currTheme.uiData.meanWordData.selectedPanigation;
             unSelectSprite = currTheme.uiData.meanWordData.disablePanigation;
         }
+        SetSprite(false);
     }
     
     public void SetSprite(bool selected)
