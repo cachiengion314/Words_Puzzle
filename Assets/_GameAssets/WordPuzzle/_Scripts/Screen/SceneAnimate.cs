@@ -18,7 +18,7 @@ public class SceneAnimate : MonoBehaviour
     [SerializeField] private string _closeScene;
     public Animator animatorScene;
     public GameObject _loadingScreen;
-    public Slider _progressLoading;
+    //public Slider _progressLoading;
     public TextMeshProUGUI _textProgress;
     [Space]
     public Button _btnPlay;
@@ -60,6 +60,8 @@ public class SceneAnimate : MonoBehaviour
     private const int PLAY = 0;
     private const int FACEBOOK = 1;
     private bool isShowBtnTest;
+    private float currProgress = 0;
+    private float maxProgress = 100;
 
     public string CloseSceneName
     {
@@ -172,7 +174,8 @@ public class SceneAnimate : MonoBehaviour
 
     public IEnumerator RunProgressLoading()
     {
-        _progressLoading.value = 0;
+        //_progressLoading.value = 0;
+        currProgress = 0;
         _loadingScreen.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         var isTut = CPlayerPrefs.GetBool("TUTORIAL", false);
@@ -185,13 +188,13 @@ public class SceneAnimate : MonoBehaviour
         }
         var asyncOp = SceneManager.LoadSceneAsync((GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut && !isFirstGame) ? Const.SCENE_MAIN : Const.SCENE_HOME);
         asyncOp.allowSceneActivation = false;
-        while (_progressLoading.value < _progressLoading.maxValue)
+        while (currProgress < maxProgress)
         {
-            _progressLoading.value = asyncOp.progress * 100;
-            _textProgress.text = "Loading " + (int)_progressLoading.value + "%";
+            currProgress = asyncOp.progress * 100;
+            _textProgress.text = "Loading " + (int)currProgress + "%";
             if (asyncOp.progress >= 0.9f)
             {
-                _progressLoading.value = _progressLoading.maxValue;
+                currProgress = maxProgress;
                 _textProgress.text = "Loading 100%";
                 if (GameState.currentLevel == 0 && GameState.currentSubWorld == 0 && GameState.currentWorld == 0 && !isTut && !isFirstGame)
                 {
