@@ -7,7 +7,9 @@ public class RateDialog : YesNoDialog {
 	public override void OnYesClick()
     {
         base.OnYesClick();
-        CUtils.RateGame();
+        //CUtils.RateGame();
+
+        InAppReviewManger.instance.LauchInAppReviewMethod();
     }
 
     public override void OnNoClick()
