@@ -45,14 +45,8 @@ public class RemoteConfigFirebase : MonoBehaviour
     public string admob_banner;
     private void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
 
         notifyIngameCall += () =>
