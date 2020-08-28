@@ -74,7 +74,11 @@ public class FacebookController : MonoBehaviour
             //{
             //    LogController.Debug(pair.Value);
             //}
-            NotificationController.instance.GetCurrentLevelAllLetter();
+            //NotificationController.instance.GetCurrentLevelAllLetter();
+            foreach (var item in user.unlockedFlagWords)
+            {
+                LogController.Debug(item.Value);
+            }
         }
     }
 

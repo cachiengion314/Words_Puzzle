@@ -108,14 +108,12 @@ public class FlagItemController : MonoBehaviour
         if (isOn)
         {
             flagImg.sprite = FlagTabController.instance.smallFlags[indexOfSmallFlagImage];
-            //LockBgImg.gameObject.SetActive(false);
             nameTxt.gameObject.SetActive(false);
             lockImg.gameObject.SetActive(false);
         }
         else
         {
             flagImg.sprite = iconFlagLock;
-            //LockBgImg.gameObject.SetActive(true);
             nameTxt.gameObject.SetActive(true);
             lockImg.gameObject.SetActive(true);
         }

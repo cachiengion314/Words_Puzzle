@@ -33,7 +33,7 @@ public class FlagScrollerCellView : EnhancedScrollerCellView
                 flagItem.isLocked = true;
             }
 
-            flagItem.indexOfFlag = i;
+            flagItem.indexOfFlag = index;
         }
     }
 
