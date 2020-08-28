@@ -58,7 +58,7 @@ public class FlagItemController : MonoBehaviour
         {
             LogController.Debug("Open unlock flag dialog");
 
-            UnLockTheFlagDialog.indexOfFlagWhenClick = indexOfFlag;
+            DictionaryDialog.instance.unlockTheFlagDialog.flagItemTarget = this;
             DictionaryDialog.instance.unlockTheFlagDialog.CheckUnlockByPlayingOnOff();
             DictionaryDialog.instance.OverLayDialog.SetActive(true);
             TweenControl.GetInstance().ScaleFromZero(DictionaryDialog.instance.unlockTheFlagDialog.gameObject, 0.3f);

@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class UnLockTheFlagDialog : Dialog
 {
-    public static int indexOfFlagWhenClick;
+    public int indexOfFlagWhenClick;
+    public FlagItemController flagItemTarget;
 
     public TextMeshProUGUI priceTxt;
     public TextMeshProUGUI useHoneyToUnlockTxt;
@@ -37,15 +38,15 @@ public class UnLockTheFlagDialog : Dialog
         // Success buying flag
         if (FacebookController.instance.HoneyPoints >= FlagTabController.instance.priceToUnlockFlag)
         {
-            FlagItemController flagItemWhenClick = DictionaryDialog.instance.flagList[indexOfFlagWhenClick];
-            flagItemWhenClick.UnlockSuccess();
-            if (flagItemWhenClick.flagUnlockWord != string.Empty)
+            //FlagItemController flagItemWhenClick = DictionaryDialog.instance.flagList[indexOfFlagWhenClick];
+            flagItemTarget.UnlockSuccess();
+            if (flagItemTarget.flagUnlockWord != string.Empty)
             {
-                FlagTabController.instance.AddToUnlockedWordDictionary(flagItemWhenClick.flagUnlockWord);
+                FlagTabController.instance.AddToUnlockedWordDictionary(flagItemTarget.flagUnlockWord);
             }
             else
             {
-                FlagTabController.instance.AddToUnlockedWordDictionary(flagItemWhenClick.flagName);
+                FlagTabController.instance.AddToUnlockedWordDictionary(flagItemTarget.flagName);
             }
             DictionaryDialog.instance.WriteFlagTabTitleContent();
             FlagTabController.instance.SaveUnlockedWordData();
@@ -54,7 +55,7 @@ public class UnLockTheFlagDialog : Dialog
         // Buying flag failed
         else
         {
-            DictionaryDialog.instance.flagList[indexOfFlagWhenClick].UnlockFailed();
+            flagItemTarget.UnlockFailed();
         }
     }
     public void OnClickCloseUnLockTheFlagDialog()
