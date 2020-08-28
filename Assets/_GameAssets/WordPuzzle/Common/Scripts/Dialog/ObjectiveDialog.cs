@@ -111,14 +111,16 @@ public class ObjectiveDialog : Dialog
 
         foreach (var task in _dailys)
         {
-            task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestDaily;
+            task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuest;
+            task.bgQuestType.sprite = currTheme.uiData.objectivesData.bgQuestDaily;
             //task.bgQuest.SetNativeSize();
             task.LoadThemeData();
             CheckIconTask(task, currTheme);
         }
         foreach (var task in _achievements)
         {
-            task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuestAchive;
+            task.bgQuest.sprite = currTheme.uiData.objectivesData.bgQuest;
+            task.bgQuestType.sprite = currTheme.uiData.objectivesData.bgQuestAchive;
             //task.bgQuest.SetNativeSize();
             task.LoadThemeData();
             CheckIconTask(task, currTheme);

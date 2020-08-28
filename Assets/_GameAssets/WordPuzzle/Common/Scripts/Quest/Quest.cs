@@ -11,6 +11,7 @@ public class Quest : MonoBehaviour
     public int idQuest;
     public string nameTask;
     public Image bgQuest;
+    public Image bgQuestType;
     public TaskType taskType;
     [Space]
     public QuestGoal goal;

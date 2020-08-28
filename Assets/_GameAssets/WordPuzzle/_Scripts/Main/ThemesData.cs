@@ -227,6 +227,7 @@ public class ObjectivesData
     public Sprite iconAchiveOn;
     public Sprite iconAchiveOff;
     public Sprite bgNote;
+    public Sprite bgQuest;
     public Sprite bgQuestDaily;
     public Sprite bgQuestAchive;
     public Sprite progressMask;
