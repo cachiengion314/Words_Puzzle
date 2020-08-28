@@ -429,7 +429,6 @@ public class SceneAnimate : MonoBehaviour
 public class TipData
 {
     public TipType tipType;
-    public Sprite iconTip;
     public string contentTip;
 }
 
