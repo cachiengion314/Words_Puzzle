@@ -15,8 +15,10 @@ public class InAppReviewManger : MonoBehaviour
     }
     private void Start()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         _reviewManager = new ReviewManager();
         StartCoroutine(InvokeInAppReview());
+#endif
     }
 
     private IEnumerator InvokeInAppReview()
