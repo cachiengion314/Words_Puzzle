@@ -65,10 +65,10 @@ public class DictionaryInGameDialog : Dialog
 
     private void CheckTheme()
     {
-        if(MainController.instance != null)
+        if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
-            if(_board != null)
+            if (_board != null)
                 _board.sprite = currTheme.uiData.meanWordData.board;
             _arrowLeft.sprite = currTheme.uiData.meanWordData.arrowLeft;
             _arrowRight.sprite = currTheme.uiData.meanWordData.arrowRight;
@@ -154,7 +154,8 @@ public class DictionaryInGameDialog : Dialog
                     {
                         if (result == 0)
                         {
-                            Dictionary.instance.GetDataFromApi(word);
+                            //Dictionary.instance.GetDataFromApi(word);
+                            StartCoroutine(Dictionary.instance.GetDataFromApiDelay(word));
                             meanItemDictionary.SetMeanText("Loading...");
                         }
                         else

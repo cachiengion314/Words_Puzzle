@@ -10,7 +10,7 @@ using System.Net;
 using System.Linq;
 using TMPro;
 using System.IO;
-
+using UnityEngine.Networking;
 
 public class Dictionary: MonoBehaviour
 {
@@ -86,24 +86,86 @@ public class Dictionary: MonoBehaviour
             
     }
     
-    public void GetDataFromApi(string word)
-    {
-        string meaning = "";
-        url = "https://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=" + limit + "&includeRelated=" + includeRelated + "&sourceDictionaries=" + sourceDictionaries + "&useCanonical=" + useCanonical + "&includeTags=" + includeTags + "&api_key=" + keyApi;
+    //public void GetDataFromApi(string word)
+    //{
+    //    string meaning = "";
+    //    wordData = new WordData();
+    //    url = "https://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=" + limit + "&includeRelated=" + includeRelated + "&sourceDictionaries=" + sourceDictionaries + "&useCanonical=" + useCanonical + "&includeTags=" + includeTags + "&api_key=" + keyApi;
         
-        var client = new WebClient();
-        client.DownloadStringCompleted += (sender, args) =>
+    //    var client = new WebClient();
+    //    client.DownloadStringCompleted += (sender, args) =>
+    //    {
+    //        if (args.Error == null)
+    //        {
+    //            var text = args.Result;
+
+    //            Debug.Log(text);
+
+    //            JArray arrayJson = JArray.Parse(text);
+    //            for (int i = 0; i < arrayJson.Count; i++)
+    //            {
+    //                wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
+
+    //                Debug.Log(wordData);
+
+    //                meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+    //                Debug.Log(meaning);
+    //            }
+                
+    //            SaveWord(word, meaning.ToString());
+
+    //            if (DictionaryDialog.instance != null)
+    //            {
+    //                DictionaryDialog.instance.SetTextMeanDialog(word, meaning);
+    //            }
+
+    //            if (DictionaryInGameDialog.instance != null)
+    //            {
+    //                DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (DictionaryDialog.instance != null)
+    //            {
+    //                DictionaryDialog.instance.SetTextMeanDialog(word, "There was an error. Please try again later");
+    //            }
+                
+    //            if (DictionaryInGameDialog.instance != null)
+    //            {
+    //                DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, "There was an error. Please try again later");
+    //            }
+    //        }
+    //    };
+    //    client.DownloadStringAsync(new Uri(url));
+    //}
+    public IEnumerator GetDataFromApiDelay(string word, Action<WordData> onSuccess = null)
+    {
         {
-            if (args.Error == null)
+            string meaning = "";
+            url = "https://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=" + limit + "&includeRelated=" + includeRelated + "&sourceDictionaries=" + sourceDictionaries + "&useCanonical=" + useCanonical + "&includeTags=" + includeTags + "&api_key=" + keyApi;
+            using (UnityWebRequest req = UnityWebRequest.Get(String.Format(url)))
             {
-                var text = args.Result;
+                yield return req.SendWebRequest();
+                while (!req.isDone)
+                    yield return null;
+
+                byte[] result = req.downloadHandler.data;
+                string text = System.Text.Encoding.Default.GetString(result);
+
+                Debug.Log(text);
+
                 JArray arrayJson = JArray.Parse(text);
                 for (int i = 0; i < arrayJson.Count; i++)
                 {
                     wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
-                    meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+
+                    Debug.Log(wordData);
+
+                    meaning += (i + 1) + ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+                    Debug.Log(meaning);
                 }
-                
+
                 SaveWord(word, meaning.ToString());
 
                 if (DictionaryDialog.instance != null)
@@ -115,23 +177,11 @@ public class Dictionary: MonoBehaviour
                 {
                     DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
                 }
+
+
             }
-            else
-            {
-                if (DictionaryDialog.instance != null)
-                {
-                    DictionaryDialog.instance.SetTextMeanDialog(word, "There was an error. Please try again later");
-                }
-                
-                if (DictionaryInGameDialog.instance != null)
-                {
-                    DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, "There was an error. Please try again later");
-                }
-            }
-        };
-        client.DownloadStringAsync(new Uri(url));
+        }
     }
-    
 
     public bool CheckWExistInDictWordSaved(string word)
     {
