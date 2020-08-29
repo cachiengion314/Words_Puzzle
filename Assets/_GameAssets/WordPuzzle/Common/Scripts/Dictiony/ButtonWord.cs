@@ -16,7 +16,7 @@ public class ButtonWord : MyButton
 
         if (!Dictionary.instance.CheckWExistInDictWordSaved(text))
         {
-            WaitTimeGetData();
+            StartCoroutine(WaitTimeGetData());
         }
         else
         {
@@ -34,7 +34,7 @@ public class ButtonWord : MyButton
         //DialogController.instance.ShowDialog(dialogType, dialogShow);
     }
 
-    void WaitTimeGetData()
+    IEnumerator WaitTimeGetData()
     {
         DictionaryDialog.instance.SetTextMeanDialog(text, "Loading...");
         CUtils.CheckConnection(this, (result) =>
@@ -47,12 +47,12 @@ public class ButtonWord : MyButton
                 DictionaryDialog.instance.noInternet.SetActive(false);
             }
             else
-        {
-            DictionaryDialog.instance.SetTextMeanDialog(text, "");
-            DictionaryDialog.instance.noInternet.SetActive(true);
-        }
-    });
-
-        DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
+            {
+                DictionaryDialog.instance.SetTextMeanDialog(text, "");
+                DictionaryDialog.instance.noInternet.SetActive(true);
+            }
+        });
+        //DictionaryDialog.instance.SetTextMeanDialog(text, Dictionary.instance.dictWordSaved[text]);
+        yield return null;
     }
 }

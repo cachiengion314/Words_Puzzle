@@ -85,13 +85,13 @@ public class Dictionary: MonoBehaviour
         }
             
     }
-    
+
     //public void GetDataFromApi(string word)
     //{
     //    string meaning = "";
     //    wordData = new WordData();
     //    url = "https://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=" + limit + "&includeRelated=" + includeRelated + "&sourceDictionaries=" + sourceDictionaries + "&useCanonical=" + useCanonical + "&includeTags=" + includeTags + "&api_key=" + keyApi;
-        
+
     //    var client = new WebClient();
     //    client.DownloadStringCompleted += (sender, args) =>
     //    {
@@ -108,10 +108,10 @@ public class Dictionary: MonoBehaviour
 
     //                Debug.Log(wordData);
 
-    //                meaning +=(i+1)+ ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+    //                meaning += (i + 1) + ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
     //                Debug.Log(meaning);
     //            }
-                
+
     //            SaveWord(word, meaning.ToString());
 
     //            if (DictionaryDialog.instance != null)
@@ -130,7 +130,7 @@ public class Dictionary: MonoBehaviour
     //            {
     //                DictionaryDialog.instance.SetTextMeanDialog(word, "There was an error. Please try again later");
     //            }
-                
+
     //            if (DictionaryInGameDialog.instance != null)
     //            {
     //                DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, "There was an error. Please try again later");
@@ -143,9 +143,7 @@ public class Dictionary: MonoBehaviour
     {
         {
             string meaning = "";
-
             wordData = new WordData();
-
             url = "https://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=" + limit + "&includeRelated=" + includeRelated + "&sourceDictionaries=" + sourceDictionaries + "&useCanonical=" + useCanonical + "&includeTags=" + includeTags + "&api_key=" + keyApi;
             using (UnityWebRequest req = UnityWebRequest.Get(String.Format(url)))
             {
@@ -153,35 +151,24 @@ public class Dictionary: MonoBehaviour
                 while (!req.isDone)
                     yield return null;
 
+               
                 byte[] result = req.downloadHandler.data;
                 string text = System.Text.Encoding.Default.GetString(result);
-
-                Debug.Log(text);
-
                 JArray arrayJson = JArray.Parse(text);
                 for (int i = 0; i < arrayJson.Count; i++)
                 {
                     wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
-
-                    Debug.Log(wordData);
-
                     meaning += (i + 1) + ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
-                    Debug.Log(meaning);
                 }
-
                 SaveWord(word, meaning.ToString());
-
                 if (DictionaryDialog.instance != null)
                 {
                     DictionaryDialog.instance.SetTextMeanDialog(word, meaning);
                 }
-
                 if (DictionaryInGameDialog.instance != null)
                 {
                     DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
                 }
-
-
             }
         }
     }

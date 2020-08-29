@@ -150,19 +150,19 @@ public class DictionaryInGameDialog : Dialog
 
                 if (!Dictionary.instance.CheckWExistInDictWordSaved(word))
                 {
-                    //CUtils.CheckConnection(this, (result) =>
-                    //{
-                    //    if (result == 0)
+                    CUtils.CheckConnection(this, (result) =>
+                    {
+                        if (result == 0)
                         {
                             //Dictionary.instance.GetDataFromApi(word);
                             StartCoroutine(Dictionary.instance.GetDataFromApiDelay(word));
                             meanItemDictionary.SetMeanText("Loading...");
                         }
-                        //else
-                        //{
-                        //    noInternet.SetActive(true);
-                        //}
-                    //});
+                        else
+                        {
+                            noInternet.SetActive(true);
+                        }
+                    });
                 }
                 else
                 {
