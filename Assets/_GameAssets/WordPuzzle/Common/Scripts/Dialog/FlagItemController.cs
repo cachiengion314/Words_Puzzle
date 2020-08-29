@@ -73,13 +73,13 @@ public class FlagItemController : MonoBehaviour
             {
                 if (result != 0) // no internet conection
                 {
-                    FlagTabController.instance.haveInternet = false;
+                   
                     DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(false);
                     DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(true);
                 }
                 else
                 {
-                    FlagTabController.instance.haveInternet = true;
+                  
                     DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(true);
                     DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(false);
                 }

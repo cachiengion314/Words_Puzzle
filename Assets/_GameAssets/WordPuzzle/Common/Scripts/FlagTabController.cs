@@ -21,7 +21,6 @@ public class FlagTabController : MonoBehaviour
 
     public Dictionary<string, object> countryInfo = new Dictionary<string, object>();
     public List<FlagItem> flagItemList;
-    public List<string> allWordsList = new List<string>();
     public Sprite[] smallFlags;
     public Sprite[] bigFlags;
     public GameData gameData;
