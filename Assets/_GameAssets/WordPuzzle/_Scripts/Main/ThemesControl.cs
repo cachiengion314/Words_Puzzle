@@ -65,7 +65,7 @@ public class ThemesControl : MonoBehaviour
         bgLetter.sprite = currTheme.uiData.bgLetter;
         bgLetter.SetNativeSize();
         starPfb.sprite = currTheme.uiData.iconStarFly;
-        starPfb.SetNativeSize();
+        //starPfb.SetNativeSize();
         if (WordRegion.instance != null)
         {
             if (LineDrawer.instance != null)
@@ -127,7 +127,7 @@ public class ThemesControl : MonoBehaviour
             wordRegion.imgPriceHint.SetNativeSize();
             wordRegion.imgPriceMultipleHint.SetNativeSize();
             wordRegion.imgPriceSelectedHint.SetNativeSize();
-            starFly.SetNativeSize();
+            //starFly.SetNativeSize();
 
             wordRegion.shadowBonuxbox.SetActive(currTheme.uiData.showShadow);
             wordRegion.shadowHelp.SetActive(currTheme.uiData.showShadow);
@@ -190,7 +190,7 @@ public class ThemesControl : MonoBehaviour
         var currTheme = _themesDatas[indexTheme];
         _currTheme = currTheme;
         starPfb.sprite = currTheme.uiData.iconStarFly;
-        starPfb.SetNativeSize();
+        //starPfb.SetNativeSize();
         if (HomeController.instance != null)
         {
             var homeControl = HomeController.instance;
@@ -222,6 +222,6 @@ public class ThemesControl : MonoBehaviour
         var currTheme = _themesDatas[indexTheme];
         _currTheme = currTheme;
         starPfb.sprite = currTheme.uiData.iconStarFly;
-        starPfb.SetNativeSize();
+        //starPfb.SetNativeSize();
     }
 }
