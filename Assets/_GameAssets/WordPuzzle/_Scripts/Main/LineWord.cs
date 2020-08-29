@@ -47,7 +47,7 @@ public class LineWord : MonoBehaviour
             float a = (cellSize / 135f);
             cell.letterText.fontSize = (int)(ConfigController.Config.fontSizeInCellMainScene * a);
             cell.letterText.margin = new Vector4(cell.letterText.margin.x, cell.letterText.margin.y, cell.letterText.margin.z, cell.letterText.margin.w * a);
-            cell.bg.rectTransform.sizeDelta = new Vector2(cell.bg.rectTransform.sizeDelta.x * a, cell.bg.rectTransform.sizeDelta.y * a);
+            //cell.bg.rectTransform.sizeDelta = new Vector2(cell.bg.rectTransform.sizeDelta.x * a, cell.bg.rectTransform.sizeDelta.y * a);
 
             RectTransform cellTransform = cell.GetComponent<RectTransform>();
             cellTransform.SetParent(transform);
