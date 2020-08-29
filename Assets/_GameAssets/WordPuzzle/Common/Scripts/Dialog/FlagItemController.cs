@@ -57,7 +57,6 @@ public class FlagItemController : MonoBehaviour
         if (isLocked)
         {
             LogController.Debug("Open unlock flag dialog");
-
             DictionaryDialog.instance.unlockTheFlagDialog.flagItemTarget = this;
             DictionaryDialog.instance.unlockTheFlagDialog.CheckUnlockByPlayingOnOff();
             DictionaryDialog.instance.OverLayDialog.SetActive(true);

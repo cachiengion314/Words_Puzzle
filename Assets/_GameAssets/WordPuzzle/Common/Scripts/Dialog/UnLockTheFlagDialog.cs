@@ -67,8 +67,8 @@ public class UnLockTheFlagDialog : Dialog
     }
     public void CheckUnlockByPlayingOnOff()
     {
-        if (DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagUnlockWord == null
-            || DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagUnlockWord == string.Empty)
+        if (flagItemTarget.flagUnlockWord == null
+            || flagItemTarget.flagUnlockWord == string.Empty)
         {
             unlockByPlayingBtt.gameObject.SetActive(false);
             unlockByPlayingTxt.gameObject.SetActive(false);
@@ -77,7 +77,7 @@ public class UnLockTheFlagDialog : Dialog
         }
         else
         {
-            unlockByPlayingTxt.text = "Find \"" + DictionaryDialog.instance.flagList[indexOfFlagWhenClick].flagUnlockWord + "\" word to unlock this flag.";
+            unlockByPlayingTxt.text = "Find \"" + flagItemTarget.flagUnlockWord + "\" word to unlock this flag.";
             unlockByPlayingBtt.gameObject.SetActive(true);
             unlockByPlayingTxt.gameObject.SetActive(true);
             useHoneyToUnlockTxt.gameObject.SetActive(false);
