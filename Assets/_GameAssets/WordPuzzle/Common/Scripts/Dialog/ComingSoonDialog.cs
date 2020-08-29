@@ -26,8 +26,8 @@ public class ComingSoonDialog : Dialog
             _imgMessage.sprite = currTheme.uiData.comingSoonData.message;
             _btnClose.image.sprite = currTheme.uiData.comingSoonData.btnClose;
 
-            _imgMessage.SetNativeSize();
-            _btnClose.image.SetNativeSize();
+            //_imgMessage.SetNativeSize();
+            //_btnClose.image.SetNativeSize();
 
             _txtMessage.color = currTheme.fontData.colorContentDialog;
             _txtBtnClose.color = currTheme.uiData.comingSoonData.colorTextBtn;
