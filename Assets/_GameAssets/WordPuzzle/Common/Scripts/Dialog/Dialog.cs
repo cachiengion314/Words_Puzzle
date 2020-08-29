@@ -60,7 +60,7 @@ public class Dialog : MonoBehaviour
     private void CheckTheme()
     {
         var indexTheme = 0;
-        if(MainController.instance != null)
+        if (MainController.instance != null)
             indexTheme = CPlayerPrefs.GetInt("CURR_THEMES", 0);
         var currTheme = ThemesControl.instance.ThemesDatas[indexTheme];
         if (!isCustomTheme)
@@ -126,7 +126,8 @@ public class Dialog : MonoBehaviour
 
     private void ShowMainCanvas(bool show)
     {
-        if (HidenMainCanvas)
+        var isFirstTheme = CPlayerPrefs.GetBool("THEME_DIALOG", false);
+        if (HidenMainCanvas && !isFirstTheme)
         {
             if (MainController.instance != null)
                 MainController.instance.mainCanvas.gameObject.SetActive(show);
@@ -160,7 +161,8 @@ public class Dialog : MonoBehaviour
             else
             {
                 anim.SetTrigger("show");
-                TweenControl.GetInstance().DelayCall(anim.transform, anim.GetCurrentAnimatorClipInfo(0).Length,()=> {
+                TweenControl.GetInstance().DelayCall(anim.transform, anim.GetCurrentAnimatorClipInfo(0).Length, () =>
+                {
                     ShowMainCanvas(false);
                 });
             }
