@@ -143,6 +143,9 @@ public class Dictionary: MonoBehaviour
     {
         {
             string meaning = "";
+
+            wordData = new WordData();
+
             url = "https://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=" + limit + "&includeRelated=" + includeRelated + "&sourceDictionaries=" + sourceDictionaries + "&useCanonical=" + useCanonical + "&includeTags=" + includeTags + "&api_key=" + keyApi;
             using (UnityWebRequest req = UnityWebRequest.Get(String.Format(url)))
             {
