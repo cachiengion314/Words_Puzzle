@@ -40,7 +40,7 @@ public class DontLikeAdsDialog : Dialog
             //_iconHintItem2.sprite = currTheme.uiData.dontLikeAdsData.iconHint;
             //_btnMore.sprite = currTheme.uiData.dontLikeAdsData.btnMore;
 
-            _itemTop.SetNativeSize();
+            //_itemTop.SetNativeSize();
             //_bgItemSmall.SetNativeSize();
             //_iconStarItem2.SetNativeSize();
             //_iconStarItem3.SetNativeSize();
