@@ -13,6 +13,7 @@ public class HomeController : BaseController
     private const int FACEBOOK = 1;
     private const string TIME_REWARD_KEY = "TIME_REWARD";
     private const int THEME_WOODY = 0;
+    public Canvas mainCanvas;
     public Button btnChickenBank;
     public Button btnFreeBoosters;
     public GameObject FreeBoostersShadow;

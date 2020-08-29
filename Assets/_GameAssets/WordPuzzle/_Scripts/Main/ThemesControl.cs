@@ -223,28 +223,5 @@ public class ThemesControl : MonoBehaviour
         _currTheme = currTheme;
         starPfb.sprite = currTheme.uiData.iconStarFly;
         starPfb.SetNativeSize();
-
-        if (_dialogPfb.Count > 0)
-        {
-            foreach (var dialog in _dialogPfb)
-            {
-                if (!dialog.isCustomTheme)
-                {
-                    if (dialog.bgBoard != null)
-                    {
-                        dialog.bgBoard.sprite = currTheme.uiData.bgBoardDialog;
-                    }
-                    if (dialog.imageTitle != null)
-                    {
-                        dialog.imageTitle.sprite = currTheme.uiData.imageTitleDialog;
-                    }
-                    if (dialog.btnClose != null)
-                    {
-                        dialog.btnClose.sprite = currTheme.uiData.btnCloseDialog;
-                        dialog.btnClose.SetNativeSize();
-                    }
-                }
-            }
-        }
     }
 }

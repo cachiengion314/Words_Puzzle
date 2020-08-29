@@ -26,6 +26,7 @@ public class Dialog : MonoBehaviour
     public bool scaleDialog = false;
     public bool resestAnim = true;
     public Image imgOverlay;
+    public bool HidenMainCanvas;
 
     private Image _thisImage;
     private AnimatorStateInfo info;
@@ -35,6 +36,7 @@ public class Dialog : MonoBehaviour
     protected virtual void Awake()
     {
         if (anim == null) anim = GetComponent<Animator>();
+
     }
 
     protected virtual void Start()
@@ -54,6 +56,31 @@ public class Dialog : MonoBehaviour
             Close();
         }
     }
+
+    private void CheckTheme()
+    {
+        var indexTheme = 0;
+        if(MainController.instance != null)
+            indexTheme = CPlayerPrefs.GetInt("CURR_THEMES", 0);
+        var currTheme = ThemesControl.instance.ThemesDatas[indexTheme];
+        if (!isCustomTheme)
+        {
+            if (bgBoard != null)
+            {
+                bgBoard.sprite = currTheme.uiData.bgBoardDialog;
+            }
+            if (imageTitle != null)
+            {
+                imageTitle.sprite = currTheme.uiData.imageTitleDialog;
+            }
+            if (btnClose != null)
+            {
+                btnClose.sprite = currTheme.uiData.btnCloseDialog;
+                btnClose.SetNativeSize();
+            }
+        }
+    }
+
 
     public void SetTitleContent(string content)
     {
@@ -97,6 +124,17 @@ public class Dialog : MonoBehaviour
         }
     }
 
+    private void ShowMainCanvas(bool show)
+    {
+        if (HidenMainCanvas)
+        {
+            if (MainController.instance != null)
+                MainController.instance.mainCanvas.gameObject.SetActive(show);
+            if (HomeController.instance != null)
+                HomeController.instance.mainCanvas.gameObject.SetActive(show);
+        }
+    }
+
     public virtual void Show()
     {
         if (gameObject != null)
@@ -116,12 +154,15 @@ public class Dialog : MonoBehaviour
                 }
                 TweenControl.GetInstance().ScaleFromZero(anim.gameObject, 0.5f, () =>
                 {
-
+                    ShowMainCanvas(false);
                 });
             }
             else
             {
                 anim.SetTrigger("show");
+                TweenControl.GetInstance().DelayCall(anim.transform, anim.GetCurrentAnimatorClipInfo(0).Length,()=> {
+                    ShowMainCanvas(false);
+                });
             }
             onDialogOpened(this);
         }
@@ -158,6 +199,7 @@ public class Dialog : MonoBehaviour
                     _tweenControll.FadeAnfa(DialogOverlay.instance.Overlay, 0, 0.3f);
                 _tweenControll.ScaleFromOne(anim.gameObject, 0.3f, () =>
                 {
+                    ShowMainCanvas(true);
                     DoClose();
                 });
             }
@@ -172,6 +214,7 @@ public class Dialog : MonoBehaviour
                     _tweenControll.FadeAnfa(DialogOverlay.instance.Overlay, 0, 0.3f);
                 _tweenControll.DelayCall(transform, hidingAnimation.length, () =>
                 {
+                    ShowMainCanvas(true);
                     DoClose();
                 });
             }

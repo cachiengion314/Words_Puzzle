@@ -21,6 +21,7 @@ public class MainController : BaseController
     public Canvas canvasPopup;
     public Canvas canvasFx;
     public Canvas canvasCollect;
+    public Canvas mainCanvas;
 
     private int world, subWorld, level;
     private bool _isGameComplete;
