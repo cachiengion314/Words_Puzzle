@@ -112,17 +112,19 @@ public class DictionaryDialog : Dialog
         {
             TutorialController.instance.isBlockSwipe = true;
             var flagTarget = flagList.Find(flag => !flag.isLocked);
-            var raycast = flagTarget.gameObject.AddComponent<GraphicRaycaster>();
-            flagTarget.gameObject.AddComponent<Canvas>();
-            var canvas = flagTarget.gameObject.GetComponent<Canvas>();
-            canvas.overrideSorting = true;
-            canvas.sortingLayerName = "UI2";
-            canvas.sortingOrder = 6;
             var indexTarget = flagList.IndexOf(flagTarget) / 2;
-            _flagScrollerController.JumScrollToIndex(indexTarget);
+            var flagTutorial = _flagScrollerController.JumScrollToIndex(indexTarget);
             TweenControl.GetInstance().DelayCall(transform, 0.5f, () =>
             {
-                TutorialController.instance.ShowPopFlagTut(flagTarget);
+                var item = flagTutorial.gameObject.GetComponentInChildren<FlagItemController>();
+                item.gameObject.AddComponent<GraphicRaycaster>();
+                item.gameObject.AddComponent<Canvas>();
+                var canvas = item.gameObject.GetComponent<Canvas>();
+                canvas.overrideSorting = true;
+                canvas.sortingLayerName = "UI2";
+                canvas.sortingOrder = 6;
+                if (item != null)
+                    TutorialController.instance.ShowPopFlagTut(item);
                 //scrollFlag.GetComponent<ScrollRect>().content.anchoredPosition = new Vector3(flagTabScrollViewContent.transform.localPosition.x, resultContentPos);
                 //TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
                 //{

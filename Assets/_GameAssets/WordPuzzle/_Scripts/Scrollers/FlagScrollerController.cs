@@ -31,10 +31,11 @@ public class FlagScrollerController : MonoBehaviour, IEnhancedScrollerDelegate
         return FlagTabController.instance.flagItemList.Count / 2;
     }
 
-    public void JumScrollToIndex(int index)
+    public FlagScrollerCellView JumScrollToIndex(int index)
     {
         enhancedScroller.JumpToDataIndex(index);
+        return enhancedScroller.GetCellViewAtDataIndex(index) as FlagScrollerCellView;
     }
 
-   
+
 }
