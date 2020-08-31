@@ -757,6 +757,7 @@ public class WordRegion : MonoBehaviour
                 textPreview.ClearText();
             if (!btnDictionary.gameObject.activeInHierarchy)
                 btnDictionary.gameObject.SetActive(true);
+            ObjectiveManager.instance.CheckTaskComplete();
         }
         else
         {
@@ -969,8 +970,9 @@ public class WordRegion : MonoBehaviour
             lineIndex = 0;
             if (HoneyPointsController.instance != null) { HoneyPointsController.instance.LineIndex = 0; };
 
-            compliment.ResetAnimTree();
+            //compliment.ResetAnimTree();
         }
+        ObjectiveManager.instance.CheckTaskComplete();
     }
 
     private void ClickTutHoney(System.Action callback = null)
