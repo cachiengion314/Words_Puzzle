@@ -9,11 +9,6 @@ public class DontLikeAdsDialog : Dialog
 {
     [Header("THEME UI CHANGE")]
     [SerializeField] private Image _itemTop;
-    [SerializeField] private Image _bgItemSmall;
-    [SerializeField] private Image _iconStarItem2;
-    [SerializeField] private Image _iconStarItem3;
-    [SerializeField] private Image _iconHintItem2;
-    [SerializeField] private Image _btnMore;
     [SerializeField] private List<Image> _iconsNoAds;
     [SerializeField] private List<Image> _btnPrice;
     [SerializeField] private List<Text> _textPrice;

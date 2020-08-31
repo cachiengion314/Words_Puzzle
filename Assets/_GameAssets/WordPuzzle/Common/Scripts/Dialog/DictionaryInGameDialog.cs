@@ -34,6 +34,7 @@ public class DictionaryInGameDialog : Dialog
 
     [Header("THEME UI CHANGE")]
     [SerializeField] private Image _board;
+    [SerializeField] private Image _boardContent;
     [SerializeField] private Image _arrowLeft;
     [SerializeField] private Image _arrowRight;
 
@@ -70,6 +71,8 @@ public class DictionaryInGameDialog : Dialog
             var currTheme = ThemesControl.instance.CurrTheme;
             if (_board != null)
                 _board.sprite = currTheme.uiData.meanWordData.board;
+            if (_boardContent != null)
+                _boardContent.sprite = currTheme.uiData.meanWordData.boardContentDialog;
             _arrowLeft.sprite = currTheme.uiData.meanWordData.arrowLeft;
             _arrowRight.sprite = currTheme.uiData.meanWordData.arrowRight;
 

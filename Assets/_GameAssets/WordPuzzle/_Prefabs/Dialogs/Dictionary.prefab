@@ -453,6 +453,7 @@ MonoBehaviour:
   scaleDialog: 1
   resestAnim: 1
   imgOverlay: {fileID: 0}
+  HidenMainCanvas: 0
   isSound: 1
   snapScrolling: {fileID: 1424917917917079767}
   scrollRect: {fileID: 5518009952281306902}
@@ -464,7 +465,8 @@ MonoBehaviour:
   arrowRightObject: {fileID: 8927527286470991709}
   noInternet: {fileID: 7796812402327402589}
   listWordInLevel: []
-  _board: {fileID: 0}
+  _board: {fileID: 6067480470250491408}
+  _boardContent: {fileID: 6449755005900838717}
   _arrowLeft: {fileID: 6529315100321301651}
   _arrowRight: {fileID: 4370623593728548983}
 --- !u!1 &877413377160116939
@@ -1323,7 +1325,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -73.5}
-  m_SizeDelta: {x: 713, y: 550}
+  m_SizeDelta: {x: 692, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2720418866954776049
 CanvasRenderer:
@@ -1346,13 +1348,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 0641fd7f2c2289542b62c1c3bb781716, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

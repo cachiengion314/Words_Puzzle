@@ -41,6 +41,7 @@ public class Dialog : MonoBehaviour
 
     protected virtual void Start()
     {
+        CheckTheme();
         _thisImage = gameObject.GetComponent<Image>();
         onDialogCompleteClosed += OnDialogCompleteClosed;
         var canvas = GetComponent<Canvas>();

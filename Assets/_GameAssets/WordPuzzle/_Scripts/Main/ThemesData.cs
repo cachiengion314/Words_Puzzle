@@ -203,6 +203,7 @@ public class ContactData
 public class MeanWordData
 {
     public Sprite board;
+    public Sprite boardContentDialog;
     public Sprite arrowLeft;
     public Sprite arrowRight;
     public Sprite selectedPanigation;
@@ -305,7 +306,22 @@ public class HowtoplayData
     public Sprite arrowLeft;
     public Sprite arrowRight;
     public Sprite hand;
+
+    public Sprite iconButton;
+    public Sprite iconHint;
+    public Sprite iconSelectedHint;
+    public Sprite iconMultipleHint;
+    public Sprite iconShuffle;
+    public Sprite iconCellsMultipleHint;
+    public Sprite iconCellsBee;
+    public Sprite iconBee;
+    public Sprite iconBeeBtn;
+    public Sprite iconCellsEmpty;
+    public Sprite iconCellsOpen;
+    public Sprite boardOverlay;
     public List<Sprite> imagesCenter;
+    public List<Sprite> imagesOther;
+
 }
 
 [Serializable]
@@ -332,11 +348,7 @@ public class BonusBoxData
 public class DontLikeAdsData
 {
     public Sprite itemTop;
-    public Sprite bgItemSmall;
-    public Sprite iconStar;
-    public Sprite iconHint;
     public Sprite btnPrice;
-    public Sprite btnMore;
     public Color colorTextBtn;
     public List<Sprite> iconsNoAds;
 }

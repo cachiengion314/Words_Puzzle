@@ -11,7 +11,6 @@ using UnityEngine.UI;
 public class FeedbackDialog : Dialog
 {
     [Header("THEME UI CHANGE")]
-    [SerializeField] private Image _bgOption;
     [SerializeField] private Image _btnMissingWord;
     [SerializeField] private Image _btnLevelWord;
     [SerializeField] private Image _btnContact;
@@ -21,6 +20,7 @@ public class FeedbackDialog : Dialog
     [SerializeField] private Text _txtMissingWord;
     [SerializeField] private Text _txtLevelWord;
     [SerializeField] private Text _txtContact;
+    [SerializeField] private List<Image> _bgOptions;
 
 
     private string fromEmail = "goofyart314@gmail.com"; // your Gmail Account From Where You Want To Send Email
@@ -42,7 +42,6 @@ public class FeedbackDialog : Dialog
         if (MainController.instance != null)
         {
             var currTheme = ThemesControl.instance.CurrTheme;
-            if (_bgOption != null) _bgOption.sprite = currTheme.uiData.feedbackData.bgOption;
             _btnMissingWord.sprite = currTheme.uiData.feedbackData.btnMissingWord;
             _btnLevelWord.sprite = currTheme.uiData.feedbackData.btnLevelWord;
             _btnContact.sprite = currTheme.uiData.feedbackData.btnContact;
@@ -50,7 +49,7 @@ public class FeedbackDialog : Dialog
             _iconLevelWord.sprite = currTheme.uiData.feedbackData.iconLevelWord;
             _iconContact.sprite = currTheme.uiData.feedbackData.iconContact;
 
-            if (_bgOption != null) _bgOption.SetNativeSize();
+            //if (_bgOption != null) _bgOption.SetNativeSize();
             _btnMissingWord.SetNativeSize();
             _btnLevelWord.SetNativeSize();
             _btnContact.SetNativeSize();
@@ -59,6 +58,12 @@ public class FeedbackDialog : Dialog
             _iconContact.SetNativeSize();
 
             _txtMissingWord.color = _txtLevelWord.color = _txtContact.color = currTheme.fontData.colorContentDialog;
+
+            foreach (var option in _bgOptions)
+            {
+                if (option != null)
+                    option.sprite = currTheme.uiData.feedbackData.bgOption;
+            }
         }
     }
 

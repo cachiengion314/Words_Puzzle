@@ -168,7 +168,7 @@ MonoBehaviour:
       iconMessager: {fileID: 21300000, guid: e06aa1eb03da8fd44867cd2e965e5195, type: 3}
       iconMail: {fileID: 21300000, guid: 37630acbf278c0449a43cd4fa9dbb872, type: 3}
     feedbackData:
-      bgOption: {fileID: 21300000, guid: 4e78f0f30a5fa99408ddb7ea006018d7, type: 3}
+      bgOption: {fileID: 21300000, guid: 0dc6272f8ed84466593f58f0fceb8eba, type: 3}
       btnMissingWord: {fileID: 21300000, guid: 6915b1d7acbd57241b6376c55f456d2c, type: 3}
       btnLevelWord: {fileID: 21300000, guid: 82d8101adf8e4374ab826a4cad82c732, type: 3}
       btnContact: {fileID: 21300000, guid: fbc990267ad87a04f8790eec1e4f7d62, type: 3}
@@ -195,7 +195,9 @@ MonoBehaviour:
       colorTextBtn: {r: 1, g: 1, b: 1, a: 1}
       colorTextFiel: {r: 0.7176471, g: 0.5176471, b: 0.37254903, a: 1}
     meanWordData:
-      board: {fileID: 21300000, guid: 4b5015db7c53a1341be888ee687e8889, type: 3}
+      board: {fileID: 21300000, guid: f1e91aa1ae18343068929911e1fb6dd4, type: 3}
+      boardContentDialog: {fileID: 21300000, guid: 0641fd7f2c2289542b62c1c3bb781716,
+        type: 3}
       arrowLeft: {fileID: 21300000, guid: 31e87237c47c5834bb89965b1b9349c7, type: 3}
       arrowRight: {fileID: 21300000, guid: efde257d2d7961348aec0b0fc4b07dbd, type: 3}
       selectedPanigation: {fileID: 21300000, guid: b31de4c4960a8754e9fe2f86543c58e5,
@@ -260,6 +262,21 @@ MonoBehaviour:
       arrowLeft: {fileID: 21300000, guid: 31e87237c47c5834bb89965b1b9349c7, type: 3}
       arrowRight: {fileID: 21300000, guid: efde257d2d7961348aec0b0fc4b07dbd, type: 3}
       hand: {fileID: 21300000, guid: 11bb65950522eff4f8f142e13fd4bdca, type: 3}
+      iconButton: {fileID: 21300000, guid: 0c27be1a8f37d04438c3d78e4d763387, type: 3}
+      iconHint: {fileID: 21300000, guid: 5af14cafef81242478fb98846dbbd662, type: 3}
+      iconSelectedHint: {fileID: 21300000, guid: 79dc99ee9a77cec41888464adbc804ac,
+        type: 3}
+      iconMultipleHint: {fileID: 21300000, guid: 9d5deceff295af741991c94d7f9ef91a,
+        type: 3}
+      iconShuffle: {fileID: 21300000, guid: af14da8f5f5a78a4c968a22bd5e1b4b4, type: 3}
+      iconCellsMultipleHint: {fileID: 21300000, guid: a49682681c682e94c938249411861e54,
+        type: 3}
+      iconCellsBee: {fileID: 21300000, guid: f3425b23843ff4b4b9d3efc4c4c812a6, type: 3}
+      iconBee: {fileID: 21300000, guid: 249efe380dcd7a7418e400af67ebb101, type: 3}
+      iconBeeBtn: {fileID: 21300000, guid: 1406b6e766df5e747be009028f70fd5c, type: 3}
+      iconCellsEmpty: {fileID: 21300000, guid: 7e08a22272528af4b8bbbcb2d5e967cb, type: 3}
+      iconCellsOpen: {fileID: 21300000, guid: 0db83434b3613e349b4c1075e1eae8af, type: 3}
+      boardOverlay: {fileID: 21300000, guid: 8ff35f1975d262748b2f02d8fb81cc47, type: 3}
       imagesCenter:
       - {fileID: 21300000, guid: ebbfacd96fafbb54eb022231f8742071, type: 3}
       - {fileID: 21300000, guid: 40d22dc56c695b84c8d3feecb41e26c4, type: 3}
@@ -272,18 +289,34 @@ MonoBehaviour:
       - {fileID: 21300000, guid: fcd242a357e66314bbd3a404644b6494, type: 3}
       - {fileID: 21300000, guid: fcd242a357e66314bbd3a404644b6494, type: 3}
       - {fileID: 21300000, guid: fcd242a357e66314bbd3a404644b6494, type: 3}
+      imagesOther:
+      - {fileID: 21300000, guid: 08295190e11433746a31dc93130f0241, type: 3}
+      - {fileID: 21300000, guid: 01406e4acbc366541a1fc35ffe8d5f66, type: 3}
+      - {fileID: 21300000, guid: 6f0d294c7f57e9a47b51c20e05f78f8d, type: 3}
+      - {fileID: 21300000, guid: c7cec048ad6fa214ba70e2a1c799a517, type: 3}
+      - {fileID: 21300000, guid: 39517c0b8d7d48445b46da0c1f48fea6, type: 3}
+      - {fileID: 21300000, guid: 3ef41e4de63e9d843ab3a6d9ba125a02, type: 3}
+      - {fileID: 21300000, guid: bc915fa54adec0e40a8316caeb57847f, type: 3}
+      - {fileID: 21300000, guid: d5d6a49fc354d9444955695116183a18, type: 3}
+      - {fileID: 21300000, guid: 1b62643a3f9f49f4292611f591c3a033, type: 3}
+      - {fileID: 21300000, guid: 6915b1d7acbd57241b6376c55f456d2c, type: 3}
+      - {fileID: 21300000, guid: 83da7232c61f02640b515efc6720e1a0, type: 3}
+      - {fileID: 21300000, guid: bc915fa54adec0e40a8316caeb57847f, type: 3}
+      - {fileID: 21300000, guid: d5d6a49fc354d9444955695116183a18, type: 3}
+      - {fileID: 21300000, guid: 1b62643a3f9f49f4292611f591c3a033, type: 3}
+      - {fileID: 21300000, guid: 0c27be1a8f37d04438c3d78e4d763387, type: 3}
+      - {fileID: 21300000, guid: cd9db95eb172b944dbbc2d047cc3a924, type: 3}
+      - {fileID: 21300000, guid: bc915fa54adec0e40a8316caeb57847f, type: 3}
+      - {fileID: 21300000, guid: d5d6a49fc354d9444955695116183a18, type: 3}
+      - {fileID: 21300000, guid: 1b62643a3f9f49f4292611f591c3a033, type: 3}
+      - {fileID: 21300000, guid: 6915b1d7acbd57241b6376c55f456d2c, type: 3}
+      - {fileID: 21300000, guid: 1aa8e5d89c3efb04286f33fd2bf959fe, type: 3}
     dontLikeAdsData:
       itemTop: {fileID: 21300000, guid: 4897dc05262e64cf4b8c0819419d9fb2, type: 3}
-      bgItemSmall: {fileID: 21300000, guid: 5d6a68929e4418e409b237cec045fcda, type: 3}
-      iconStar: {fileID: 21300000, guid: e4790bb6898370441bd77c0f7f0249fc, type: 3}
-      iconHint: {fileID: 21300000, guid: 5af14cafef81242478fb98846dbbd662, type: 3}
       btnPrice: {fileID: 21300000, guid: 12a7a8bf4991840a5b5833177a695bb8, type: 3}
-      btnMore: {fileID: 21300000, guid: 46e227b47dc9ce44da429950b69bbd41, type: 3}
       colorTextBtn: {r: 1, g: 1, b: 1, a: 1}
       iconsNoAds:
       - {fileID: 21300000, guid: 8dd320e2264293d43bbf9174c9c758d5, type: 3}
-      - {fileID: 21300000, guid: beaddae801ec1144fb0efb0b572be476, type: 3}
-      - {fileID: 21300000, guid: beaddae801ec1144fb0efb0b572be476, type: 3}
     beehiveData:
       imgsBeehive:
       - {fileID: 21300000, guid: 7dd7b9c8a4a8b4fb1a4ebbf266e14308, type: 3}
