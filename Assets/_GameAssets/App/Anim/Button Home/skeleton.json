@@ -1,0 +1,133 @@
+{
+"skeleton": {
+	"hash": "kwvnYgmP4ULp/QlTXAREUyxTb+o",
+	"spine": "3.8.97",
+	"x": -237.7,
+	"y": -527.64,
+	"width": 450,
+	"height": 535.6,
+	"images": "../Spine/Button Home/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone2", "parent": "root", "y": -178.11 },
+	{ "name": "Trong", "parent": "bone2", "rotation": 7.11, "x": -533.54, "y": -536.03 },
+	{ "name": "Trongg", "parent": "bone2", "x": -1.72, "y": -5.93 },
+	{ "name": "Ngoai", "parent": "bone2", "x": 19.37, "y": -2.09 },
+	{ "name": "bone", "parent": "bone2", "x": -46.55, "y": 72.83 },
+	{ "name": "bone3", "parent": "bone2", "x": -7.93, "y": 9.3 },
+	{ "name": "SD", "parent": "root", "y": -316.65 }
+],
+"slots": [
+	{ "name": "shadow", "bone": "SD", "attachment": "shadow" },
+	{ "name": "Layer 70", "bone": "bone2", "attachment": "Layer 70" },
+	{ "name": "Layer 1078", "bone": "bone2", "attachment": "Layer 1078" },
+	{ "name": "ngoaii", "bone": "Ngoai", "attachment": "ngoaii" },
+	{ "name": "ngoai", "bone": "bone", "attachment": "ngoai" },
+	{ "name": "Layer 1077", "bone": "bone2", "attachment": "Layer 1077" },
+	{ "name": "trongg", "bone": "Trongg", "attachment": "trongg" },
+	{ "name": "Layer 1225", "bone": "bone3", "attachment": "Layer 1225" },
+	{ "name": "trong", "bone": "Trong", "attachment": "trong" },
+	{ "name": "Layer 1179", "bone": "bone2", "attachment": "Layer 1179" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Layer 70": {
+				"Layer 70": { "x": -5.66, "y": -13.44, "width": 397, "height": 399 }
+			},
+			"Layer 1077": {
+				"Layer 1077": { "x": -5.66, "y": 7.01, "width": 296, "height": 296 }
+			},
+			"Layer 1078": {
+				"Layer 1078": { "x": -5.48, "y": -3.13, "width": 373, "height": 372 }
+			},
+			"Layer 1179": {
+				"Layer 1179": { "x": -5.27, "y": 14.85, "width": 319, "height": 336 }
+			},
+			"Layer 1225": {
+				"Layer 1225": { "x": 13.44, "y": 2.52, "width": 162, "height": 180 }
+			},
+			"ngoai": {
+				"ngoai": { "x": -51.99, "y": -17.8, "width": 339, "height": 596 }
+			},
+			"ngoaii": {
+				"ngoaii": {
+					"type": "clipping",
+					"end": "ngoai",
+					"vertexCount": 32,
+					"vertices": [ -211.01, -25.2, -212.22, 6.07, -209.18, 36.83, -200.25, 65.93, -186.53, 92.92, -169.67, 117.14, -151.23, 138.02, -129.29, 154.12, -93.39, 172.93, -55.72, 183.42, -13.84, 185.34, 27.35, 177.99, 61.38, 164.85, 95.31, 141.69, 119.99, 118.18, 140.37, 86.76, 155.13, 50.77, 162.06, 12.18, 161, -25.11, 153.35, -58.47, 140.25, -89.56, 122.51, -116.4, 95.5, -143.89, 66.42, -165.17, 28.71, -179.48, -11.75, -187.72, -56.22, -184.59, -99.95, -172.41, -134.13, -152.88, -162.61, -127.84, -187.28, -94.06, -203.75, -56.6 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"shadow": {
+				"shadow": { "x": -12.7, "y": 15.51, "width": 450, "height": 453 }
+			},
+			"trong": {
+				"trong": { "x": 233.72, "y": 615.84, "width": 617, "height": 611 }
+			},
+			"trongg": {
+				"trongg": {
+					"type": "clipping",
+					"end": "trong",
+					"vertexCount": 32,
+					"vertices": [ -147.09, -26.68, -151.82, -3.65, -152.16, 23.32, -148.09, 47.53, -140.19, 73.36, -127.3, 94.94, -110.64, 115.31, -93.51, 130.53, -67.25, 147.06, -36.94, 156.69, -5.19, 160.62, 23.63, 157.63, 53.59, 148.32, 80.32, 134.01, 103.31, 113.56, 120.94, 92.09, 133.92, 66.14, 141.98, 36.66, 143.41, 9.66, 140.17, -19.81, 131.68, -46.45, 117.15, -71.57, 98.54, -93.08, 75.41, -112.24, 48.68, -125.8, 18.02, -133.68, -13.22, -134.76, -44.45, -128.87, -71.71, -118.76, -97.79, -101.92, -120.86, -78.7, -137.59, -50.45 ],
+					"color": "4a3aceff"
+				}
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"Trong": {
+				"rotate": [
+					{ "angle": -5.15, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "angle": -51.2 }
+				],
+				"translate": [
+					{ "x": 89.59, "y": 76.58 }
+				]
+			},
+			"bone": {
+				"rotate": [
+					{ "angle": -24.58 }
+				],
+				"translate": [
+					{ "x": -171.03, "y": 145.05, "curve": 0.543, "c2": 0.01, "c3": 0.541 },
+					{ "time": 1.7333, "x": 347.32, "y": -270.62 }
+				]
+			},
+			"bone2": {
+				"translate": [
+					{ "y": -78.06, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.3333, "curve": 0.25, "c3": 0.75 },
+					{ "time": 4.6667, "y": -78.06 }
+				]
+			},
+			"bone3": {
+				"rotate": [
+					{ "time": 3.6333 },
+					{ "time": 3.7333, "angle": 4.37 },
+					{ "time": 3.8333, "angle": -7.14 },
+					{ "time": 3.9333, "angle": 10.67 },
+					{ "time": 4.0333, "angle": -17.59 },
+					{ "time": 4.1333, "angle": 10.67 },
+					{ "time": 4.2333, "angle": -17.59 },
+					{ "time": 4.3333 }
+				]
+			},
+			"SD": {
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 2.3333, "x": 0.85, "y": 0.85, "curve": 0.25, "c3": 0.75 },
+					{ "time": 4.6667 }
+				]
+			}
+		}
+	}
+}
+}

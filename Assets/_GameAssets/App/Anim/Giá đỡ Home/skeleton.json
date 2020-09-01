@@ -1,0 +1,80 @@
+{
+"skeleton": {
+	"hash": "nctxbSqvo1A2md1kCwpiMgcLibg",
+	"spine": "3.8.97",
+	"x": -469.9,
+	"y": -983.84,
+	"width": 962.01,
+	"height": 276,
+	"images": "../Spine/Giá đỡ Home/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "go", "parent": "root", "x": 11.11, "y": -831.55 },
+	{ "name": "sd", "parent": "root", "x": 11.11, "y": -831.55 }
+],
+"slots": [
+	{ "name": "sd", "bone": "sd", "attachment": "sd" },
+	{ "name": "go", "bone": "go", "attachment": "go" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"go": {
+				"go": { "y": -3.21, "width": 962, "height": 111 }
+			},
+			"sd": {
+				"sd": { "y": -14.29, "width": 913, "height": 276 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation2": {
+		"bones": {
+			"go": {
+				"translate": [
+					{ "y": -243.88, "curve": 0.215, "c2": 0.51, "c3": 0.449 },
+					{ "time": 0.3, "y": 43.68, "curve": 0.468, "c3": 0.75 },
+					{ "time": 0.4333, "y": -14.56 },
+					{ "time": 0.5 }
+				],
+				"scale": [
+					{ "x": 0.418, "curve": 0.215, "c2": 0.51, "c3": 0.449 },
+					{ "time": 0.3 }
+				]
+			},
+			"sd": {
+				"translate": [
+					{ "y": -249.34, "curve": 0.215, "c2": 0.51, "c3": 0.449 },
+					{ "time": 0.3333, "y": 25.48 },
+					{ "time": 0.4333, "y": -8.62 },
+					{ "time": 0.5, "y": 1.82 }
+				],
+				"scale": [
+					{ "x": 0.381, "curve": 0.215, "c2": 0.51, "c3": 0.449 },
+					{ "time": 0.3333, "x": 0.967, "y": 1.173 },
+					{ "time": 0.4333, "y": 1.014 },
+					{ "time": 0.5 }
+				]
+			}
+		}
+	},
+	"anim rỗng": {
+		"slots": {
+			"go": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			},
+			"sd": {
+				"color": [
+					{ "color": "ffffff00" }
+				]
+			}
+		}
+	}
+}
+}
