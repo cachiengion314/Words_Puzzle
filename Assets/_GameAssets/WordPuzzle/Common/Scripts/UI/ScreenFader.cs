@@ -62,7 +62,8 @@ public class ScreenFader : MonoBehaviour
 
     public void GotoSceneNoFade(string sceneName)
     {
-        SceneManager.LoadSceneAsync(sceneName);
+        //SceneManager.LoadSceneAsync(sceneName);
+        StartCoroutine(SceneAnimate.Instance.ShowLoadingProgress(sceneName));
     }
 
     public void DelayCall(float timeDelay, Action onComplete)

@@ -20,16 +20,21 @@ public class HowToPlayDialog : Dialog
     [SerializeField] private Image _iconMultipleHint;
     [SerializeField] private Image _iconShuffle;
     [SerializeField] private Image _iconBee;
+    [SerializeField] private Image _boardPreview;
     [SerializeField] private List<Text> _textTitles;
     [SerializeField] private List<TextMeshProUGUI> _textContent;
     [SerializeField] private List<Image> _imageCenter;
     [SerializeField] private List<Image> _cellsEmpty;
     [SerializeField] private List<Image> _cellsOpen;
+    [SerializeField] private List<Image> _letters;
+    [SerializeField] private List<Image> _cellsPreview;
     [SerializeField] private List<Image> _cellsMultipleHint;
     [SerializeField] private List<Image> _cellsBee;
     [SerializeField] private List<Image> _bees;
     [SerializeField] private List<Image> _overlays;
     [SerializeField] private List<Image> _buttons;
+    [SerializeField] private List<Text> _textsLetter;
+    [SerializeField] private List<Image> _iconCandys;
     [SerializeField] private List<Image> _imagesOther;
 
     private void Awake()
@@ -66,6 +71,7 @@ public class HowToPlayDialog : Dialog
             _iconMultipleHint.sprite = currTheme.uiData.howtoplayData.iconMultipleHint;
             _iconShuffle.sprite = currTheme.uiData.howtoplayData.iconShuffle;
             _iconBee.sprite = currTheme.uiData.howtoplayData.iconBeeBtn;
+            _boardPreview.sprite = currTheme.uiData.howtoplayData.boardPreview;
 
             _hand.SetNativeSize();
             _iconHint.SetNativeSize();
@@ -116,8 +122,15 @@ public class HowToPlayDialog : Dialog
                 if (image != null)
                 {
                     image.sprite = currTheme.uiData.howtoplayData.iconCellsOpen;
-                    if(image.GetComponentInChildren<Image>() != null)
-                        image.GetComponentInChildren<Image>().sprite = currTheme.uiData.howtoplayData.iconCellsOpen;
+                }
+                //image.SetNativeSize();
+            }
+
+            foreach (var image in _letters)
+            {
+                if (image != null)
+                {
+                    image.sprite = currTheme.uiData.howtoplayData.iconBgLetter;
                 }
                 //image.SetNativeSize();
             }
@@ -155,6 +168,36 @@ public class HowToPlayDialog : Dialog
                 if (image != null)
                 {
                     image.sprite = currTheme.uiData.howtoplayData.iconButton;
+                    image.SetNativeSize();
+                }
+            }
+
+            foreach (var text in _textsLetter)
+            {
+                if (text != null)
+                {
+                    text.font = currTheme.fontData.fontNormal;
+                    text.color = currTheme.fontData.colorCell;
+                    if (!currTheme.fontData.fontScale)
+                    {
+                        text.fontSize = currTheme.fontData.fontSize;
+                    }
+                }
+            }
+
+            foreach (var image in _cellsPreview)
+            {
+                if (image != null)
+                {
+                    image.sprite = currTheme.uiData.howtoplayData.iconCellsPreview;
+                }
+            }
+
+            foreach (var image in _iconCandys)
+            {
+                if (image != null)
+                {
+                    image.sprite = currTheme.uiData.howtoplayData.iconCandy;
                     image.SetNativeSize();
                 }
             }

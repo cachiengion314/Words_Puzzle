@@ -40,6 +40,7 @@ public class SceneAnimate : MonoBehaviour
     [SerializeField] private Image _bgLoading;
     [SerializeField] private SkeletonGraphic _animTip;
     [SerializeField] private Text _textTip;
+    [SerializeField] private TextMeshProUGUI _textProgressTip;
     [SerializeField] private Color _colorNor;
     [SerializeField] private List<TipData> _tipDatas;
     [Space]
@@ -208,6 +209,26 @@ public class SceneAnimate : MonoBehaviour
         }
     }
 
+    public IEnumerator ShowLoadingProgress(string nameScene)
+    {
+        currProgress = 0;
+        yield return new WaitForSeconds(0.1f);
+        var asyncOp = SceneManager.LoadSceneAsync(nameScene);
+        asyncOp.allowSceneActivation = false;
+        while (currProgress < maxProgress)
+        {
+            currProgress = asyncOp.progress * 100;
+            _textProgressTip.text = "Loading " + (int)currProgress + "%";
+            if (asyncOp.progress >= 0.9f)
+            {
+                currProgress = maxProgress;
+                _textProgressTip.text = "Loading 100%";
+                asyncOp.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+    }
+
     public void ShowTip(bool show, Action callback = null)
     {
         if (_bgFirstLoading.gameObject.activeInHierarchy)
@@ -225,6 +246,7 @@ public class SceneAnimate : MonoBehaviour
             _animTip.color = new Color(1, 1, 1, 1);
             _bgLoading.color = new Color(1, 1, 1, 1);
             _bgLoading.gameObject.SetActive(true);
+            _textProgressTip.text = "Loading " + 0 + "%";
         }
         else
         {

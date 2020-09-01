@@ -312,13 +312,17 @@ public class HowtoplayData
     public Sprite iconSelectedHint;
     public Sprite iconMultipleHint;
     public Sprite iconShuffle;
+    public Sprite iconCellsPreview;
+    public Sprite iconCandy;
     public Sprite iconCellsMultipleHint;
     public Sprite iconCellsBee;
     public Sprite iconBee;
     public Sprite iconBeeBtn;
     public Sprite iconCellsEmpty;
     public Sprite iconCellsOpen;
+    public Sprite iconBgLetter;
     public Sprite boardOverlay;
+    public Sprite boardPreview;
     public List<Sprite> imagesCenter;
     public List<Sprite> imagesOther;
 

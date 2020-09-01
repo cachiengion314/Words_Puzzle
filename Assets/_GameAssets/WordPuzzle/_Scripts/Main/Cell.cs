@@ -43,7 +43,7 @@ public class Cell : MonoBehaviour
         ShowText();
         //letterText.transform.localScale = Vector3.one * 1.1f;
         if (!showAnsScale)
-            bg.transform.localPosition = new Vector3(0, -55, 0);
+            bg.transform.localPosition = new Vector3(0, -38, 0);
         else
             letterTextNor.transform.localScale = Vector3.zero;
         var canvasGroup = bg.GetComponent<CanvasGroup>();
