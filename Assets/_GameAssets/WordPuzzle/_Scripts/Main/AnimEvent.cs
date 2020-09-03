@@ -127,13 +127,13 @@ public class AnimEvent : MonoBehaviour
 
                             AdsManager.instance.ShowInterstitialAds(() =>
                             {
-                                if (!isShowLevelClear)
+                                //if (!isShowLevelClear)
                                     ShowLevelClear();
                             });
                         }
                         else
                         {
-                            if (!isShowLevelClear)
+                            //if (!isShowLevelClear)
                                 ShowLevelClear();
                         }
                     }
@@ -141,25 +141,25 @@ public class AnimEvent : MonoBehaviour
             }
         }
     }
-    bool isShowLevelClear;
+    //bool isShowLevelClear;
     private void ShowLevelClear()
     {
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             WinDialog.instance.ShowLevelChapterClear();
         });
-        isShowLevelClear = true;
+        //isShowLevelClear = true;
     }
 
     void OnCloseAdsInterstial()
     {
-        if (!isShowLevelClear)
+        //if (!isShowLevelClear)
             ShowLevelClear();
     }
 
     void OnAdsFailedInterstial()
     {
-        if (!isShowLevelClear)
+        //if (!isShowLevelClear)
             ShowLevelClear();
     }
 
