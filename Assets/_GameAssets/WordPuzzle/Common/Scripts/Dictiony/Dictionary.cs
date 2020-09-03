@@ -153,21 +153,25 @@ public class Dictionary: MonoBehaviour
 
                
                 byte[] result = req.downloadHandler.data;
-                string text = System.Text.Encoding.Default.GetString(result);
-                JArray arrayJson = JArray.Parse(text);
-                for (int i = 0; i < arrayJson.Count; i++)
+                if (result.Length > 0)
                 {
-                    wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
-                    meaning += (i + 1) + ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
-                }
-                SaveWord(word, meaning.ToString());
-                if (DictionaryDialog.instance != null)
-                {
-                    DictionaryDialog.instance.SetTextMeanDialog(word, meaning);
-                }
-                if (DictionaryInGameDialog.instance != null)
-                {
-                    DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
+                    string text = System.Text.Encoding.Default.GetString(result);
+
+                    JArray arrayJson = JArray.Parse(text);
+                    for (int i = 0; i < arrayJson.Count; i++)
+                    {
+                        wordData = JsonConvert.DeserializeObject<WordData>(arrayJson[i].ToString());
+                        meaning += (i + 1) + ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
+                    }
+                    SaveWord(word, meaning.ToString());
+                    if (DictionaryDialog.instance != null)
+                    {
+                        DictionaryDialog.instance.SetTextMeanDialog(word, meaning);
+                    }
+                    if (DictionaryInGameDialog.instance != null)
+                    {
+                        DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
+                    }
                 }
             }
         }
