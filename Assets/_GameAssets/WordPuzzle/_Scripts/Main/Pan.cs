@@ -210,8 +210,9 @@ public class Pan : MonoBehaviour
             var timeMove = /*distance / velocityArg*/0.2f;
             if (text != letterTexts[0])
             {
+                var canvasGroup = text.gameObject.GetComponent<CanvasGroup>();
                 //canvas.sortingOrder = 3;
-                //tweenControl.FadeAnfaText(text, 0, timeMove);
+                tweenControl.FadeAnfa(canvasGroup, 0, timeMove);
             }
             //iTween.MoveTo(text.gameObject, iTween.Hash("position", letterLocalPositions[indexes.IndexOf(i)], "time", 0.15f, "isLocal", true));
             tweenControl.LocalRotate(text.transform, new Vector3(0, 0, 360 * 2 + 360 / letterTexts.Count * i), 0.3f, () =>
@@ -228,8 +229,9 @@ public class Pan : MonoBehaviour
                      {
                          if (text != letterTexts[0])
                          {
+                             var canvasGroup = text.gameObject.GetComponent<CanvasGroup>();
                              //canvas.sortingOrder = 2;
-                             //tweenControl.FadeAnfaText(text, 1, timeMove);
+                             tweenControl.FadeAnfa(canvasGroup, 1, timeMove);
                          }
                          tweenControl.PlayTweener(text.transform);
                          tweenControl.MoveLocal(text.transform, oldPos, timeMove);
