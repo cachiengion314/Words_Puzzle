@@ -145,10 +145,11 @@ public class AnimEvent : MonoBehaviour
 
     private void ShowLevelClear()
     {
-        TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
-        {
+        Debug.Log("Show level Clear Dialog !");
+        //TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
+        //{
             WinDialog.instance.ShowLevelChapterClear();
-        });
+        //});
     }
 
     void OnCloseAdsInterstial()
