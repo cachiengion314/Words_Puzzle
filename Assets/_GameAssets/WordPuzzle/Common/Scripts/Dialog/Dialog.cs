@@ -128,7 +128,7 @@ public class Dialog : MonoBehaviour
     private void ShowMainCanvas(bool show)
     {
         var isFirstTheme = CPlayerPrefs.GetBool("THEME_DIALOG", false);
-        if (HidenMainCanvas && !isFirstTheme)
+        if (HidenMainCanvas && isFirstTheme)
         {
             if (MainController.instance != null)
                 MainController.instance.mainCanvas.gameObject.SetActive(show);
