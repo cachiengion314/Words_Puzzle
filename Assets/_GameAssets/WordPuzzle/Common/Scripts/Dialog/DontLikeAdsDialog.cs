@@ -14,8 +14,9 @@ public class DontLikeAdsDialog : Dialog
     [SerializeField] private List<Text> _textPrice;
     [SerializeField] private List<Text> _textContent;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
 #if IAP && UNITY_PURCHASING
         Purchaser.instance.onItemPurchased += OnItemPurchased;
 

@@ -141,7 +141,8 @@ public class HomeController : BaseController
             {
                 tweenControl.MoveRectY(_panelTopRect, 0, 0.5f, () =>
                 {
-                    if ((!LoginBonusController.instance.isShowLoginbonus && (RemoteConfigFirebase.instance != null ? !RemoteConfigFirebase.instance.isShowNoti : false)) || LoginBonusController.instance.HidenSpin)
+                    var isNoti = RemoteConfigFirebase.instance != null ? !RemoteConfigFirebase.instance.isShowNoti : false;
+                    if ((!LoginBonusController.instance.isShowLoginbonus && !isNoti) || LoginBonusController.instance.HidenSpin)
                         CheckShowFreeBooster();
                 });
             });
