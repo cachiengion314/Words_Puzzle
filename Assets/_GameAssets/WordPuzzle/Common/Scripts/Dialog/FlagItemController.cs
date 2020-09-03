@@ -18,7 +18,7 @@ public class FlagItemController : MonoBehaviour
     public string area;
 
     public string flagUnlockWord;
-   
+
     public bool isLocked;
     public Sprite iconFlagLock;
 
@@ -68,21 +68,21 @@ public class FlagItemController : MonoBehaviour
             LogController.Debug("Open flag mean dialog");
 
             FlagMeanDialog.indexOfFlagWhenClick = indexOfFlag;
-            CheckConnection(this, (result) =>
-            {
-                if (result != 0) // no internet conection
-                {
-                   
-                    DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(false);
-                    DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(true);
-                }
-                else
-                {
-                  
-                    DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(true);
-                    DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(false);
-                }
-            });
+            //CheckConnection(this, (result) =>
+            //{
+            //    if (result != 0) // no internet conection
+            //    {
+
+            //        DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(false);
+            //        DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(true);
+            //    }
+            //    else
+            //    {
+
+            DictionaryDialog.instance.flagMeanDialog.flagMeanItems.gameObject.SetActive(true);
+            DictionaryDialog.instance.flagMeanDialog.noInternet.gameObject.SetActive(false);
+            //    }
+            //});
 
             //StartCoroutine(FlagTabController.instance.GetCoutryInfoOffline(flagName));
             StartCoroutine(DictionaryDialog.instance.flagMeanDialog.OnOpenFlagMeanDialog());
