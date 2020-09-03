@@ -120,46 +120,46 @@ public class AnimEvent : MonoBehaviour
                 {
                     if (WinDialog.instance != null)
                     {
-                        if (/*IsShowAds() && */WordRegion.instance.CurLevel >= AdsManager.instance.MinLevelToLoadInterstitial)
-                        {
-                            AdsManager.instance.onAdsClose += OnCloseAdsInterstial;
-                            AdsManager.instance.onAdsFailedToLoad += OnAdsFailedInterstial;
+                        //if (/*IsShowAds() && */WordRegion.instance.CurLevel >= AdsManager.instance.MinLevelToLoadInterstitial)
+                        //{
+                        //    AdsManager.instance.onAdsClose += OnCloseAdsInterstial;
+                        //    AdsManager.instance.onAdsFailedToLoad += OnAdsFailedInterstial;
 
-                            AdsManager.instance.ShowInterstitialAds(() =>
-                            {
-                                //if (!isShowLevelClear)
-                                    ShowLevelClear();
-                            });
-                        }
-                        else
-                        {
-                            //if (!isShowLevelClear)
-                                ShowLevelClear();
-                        }
+                        //    AdsManager.instance.ShowInterstitialAds(() =>
+                        //    {
+                        //        if (!WinDialog.instance.isLevelComplete)
+                        //            ShowLevelClear();
+                        //    });
+                        //}
+                        //else
+                        //{
+                        //    if (!WinDialog.instance.isLevelComplete)
+                        //        ShowLevelClear();
+                        //}
+                        ShowLevelClear();
                     }
                 }
             }
         }
     }
-    //bool isShowLevelClear;
+
     private void ShowLevelClear()
     {
         TweenControl.GetInstance().DelayCall(transform, 0.1f, () =>
         {
             WinDialog.instance.ShowLevelChapterClear();
         });
-        //isShowLevelClear = true;
     }
 
     void OnCloseAdsInterstial()
     {
-        //if (!isShowLevelClear)
+        if (!WinDialog.instance.isLevelComplete)
             ShowLevelClear();
     }
 
     void OnAdsFailedInterstial()
     {
-        //if (!isShowLevelClear)
+        if (!WinDialog.instance.isLevelComplete)
             ShowLevelClear();
     }
 

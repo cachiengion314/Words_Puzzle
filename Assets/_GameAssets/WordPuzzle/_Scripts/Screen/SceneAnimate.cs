@@ -246,7 +246,7 @@ public class SceneAnimate : MonoBehaviour
             _animTip.color = new Color(1, 1, 1, 1);
             _bgLoading.color = new Color(1, 1, 1, 1);
             _bgLoading.gameObject.SetActive(true);
-            _textProgressTip.text = "Loading " + 0 + "%";
+            _textProgressTip.text = "Loading";
         }
         else
         {

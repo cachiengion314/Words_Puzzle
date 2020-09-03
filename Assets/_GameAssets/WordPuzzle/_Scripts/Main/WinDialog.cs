@@ -103,6 +103,8 @@ public class WinDialog : Dialog
     private List<GameObject> _stars;
     //private RewardVideoController _rewardControl;
 
+    [HideInInspector] public bool isLevelComplete = false;
+
     public static WinDialog instance;
 
     private void Awake()
@@ -184,6 +186,7 @@ public class WinDialog : Dialog
 
     public void ShowLevelChapterClear()
     {
+        isLevelComplete = true;
         _panelDialog.SetActive(true);
         DialogOverlay.instance.Overlay.enabled = true;
         ShowTitleAnim();

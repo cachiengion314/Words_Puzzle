@@ -12,17 +12,17 @@ using TMPro;
 using System.IO;
 using UnityEngine.Networking;
 
-public class Dictionary: MonoBehaviour
+public class Dictionary : MonoBehaviour
 {
     public static Dictionary instance;
     private string SAVE_FOLDER;
     public Dictionary<string, string> dictWordSaved;
-    
+
     public bool includeRelated;
     public bool useCanonical;
     public bool includeTags;
     public string limit;
-    
+
     string sourceDictionaries = "wiktionary";
     string keyApi = "l7bgsd9titsbw82vtpzparyfrmt9yg2hibbeihv5uex8e5maa";
     string url;
@@ -38,7 +38,7 @@ public class Dictionary: MonoBehaviour
         {
             Directory.CreateDirectory(SAVE_FOLDER);
         }
-       
+
     }
     private void Start()
     {
@@ -68,11 +68,11 @@ public class Dictionary: MonoBehaviour
     public void load()
     {
         //Debug.Log("loading words..");
-        if(File.Exists(SAVE_FOLDER + "saveword.txt"))
+        if (File.Exists(SAVE_FOLDER + "saveword.txt"))
         {
             string text = File.ReadAllText(SAVE_FOLDER + "saveword.txt");
             List<string> listWordSaved = text.Split('|').OfType<string>().ToList<string>();
-            listWordSaved.RemoveAt(listWordSaved.Count-1);
+            listWordSaved.RemoveAt(listWordSaved.Count - 1);
             WordSave wordSave;
             foreach (string word in listWordSaved)
             {
@@ -83,7 +83,7 @@ public class Dictionary: MonoBehaviour
                 }
             }
         }
-            
+
     }
 
     //public void GetDataFromApi(string word)
@@ -151,10 +151,9 @@ public class Dictionary: MonoBehaviour
                 while (!req.isDone)
                     yield return null;
 
-               
-                byte[] result = req.downloadHandler.data;
-                if (result.Length > 0)
+                try
                 {
+                    byte[] result = req.downloadHandler.data;
                     string text = System.Text.Encoding.Default.GetString(result);
 
                     JArray arrayJson = JArray.Parse(text);
@@ -164,16 +163,25 @@ public class Dictionary: MonoBehaviour
                         meaning += (i + 1) + ". (" + wordData.partOfSpeech + ") " + wordData.text.Replace("<xref>", "").Replace("</xref>", "") + "\n";
                     }
                     SaveWord(word, meaning.ToString());
-                    if (DictionaryDialog.instance != null)
-                    {
-                        DictionaryDialog.instance.SetTextMeanDialog(word, meaning);
-                    }
-                    if (DictionaryInGameDialog.instance != null)
-                    {
-                        DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
-                    }
+                    SetMeanWord(word, meaning);
+                }
+                catch (Exception)
+                {
+                    SetMeanWord(word, "No Data");
                 }
             }
+        }
+    }
+
+    private void SetMeanWord(string word, string meaning)
+    {
+        if (DictionaryDialog.instance != null)
+        {
+            DictionaryDialog.instance.SetTextMeanDialog(word, meaning);
+        }
+        if (DictionaryInGameDialog.instance != null)
+        {
+            DictionaryInGameDialog.instance.SetDataForMeanItemGetAPI(word, meaning);
         }
     }
 
