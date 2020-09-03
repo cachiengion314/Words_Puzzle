@@ -27,8 +27,10 @@ public class CreateAsset : MonoBehaviour
         Word word = new Word();
         word.subWords = new List<SubWord>();
         _jsonBuilder.GetGameLevels();
+        Debug.Log("Levels: " + _jsonBuilder.gameLevels.Count);
         double numChapter = _jsonBuilder.gameLevels.Count / numLevelInChapter;
         var numChapterRound = Math.Round(numChapter, 0, MidpointRounding.AwayFromZero);
+        Debug.Log("numChapter: " + numChapterRound);
         for (int j = 0; j < numChapterRound; j++)
         {
             SubWord subWord = new SubWord();
@@ -36,8 +38,8 @@ public class CreateAsset : MonoBehaviour
         }
         var result = numChapterRound / numChapterInWord;
         var numWordRound = Math.Round(result, 0, MidpointRounding.AwayFromZero);
-        Debug.Log("resultRound: " + numWordRound);
         _numWord = (int)numWordRound < 1 ? 1 : (int)numWordRound;
+        Debug.Log("numWord: " + _numWord);
         for (int i = 0; i < _numWord; i++)
         {
             _gameData.words.Add(word);
