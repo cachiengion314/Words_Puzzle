@@ -81,8 +81,16 @@ public class CreateAsset : MonoBehaviour
             }
             indexSubword++;
         }
-
+        //if(index >= _numWord)
+        //{
+        //    foreach (var word in _gameData.words)
+        //    {
+        //        foreach (var subWord in word.subWords)
+        //        {
+        //            if (subWord.gameLevels.Count <= 0)
+        //                word.subWords.Remove(subWord);
+        //        }
+        //    }
+        //}
     }
-
-
 }
